@@ -1,0 +1,38 @@
+<!-- -*- mode: xml -*- -->
+<Project
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:foaf="http://xmlns.com/foaf/0.1/"
+  xmlns:gnome="http://api.gnome.org/doap-extensions#"
+  xmlns="http://usefulinc.com/ns/doap#"
+>
+  <name>Workbench</name>
+  <shortdesc>A playground for HTML/CSS/JavaScript</shortdesc>
+  <description
+  >Something clever.</description>
+
+  <homepage rdf:resource="https://workbench.sonny.re" />
+  <bug-database rdf:resource="https://workbench.sonny.re/feedback" />
+  <programming-language>JavaScript</programming-language>
+
+  <maintainer>
+    <foaf:Person>
+      <foaf:name>Sonny Piers</foaf:name>
+      <foaf:mbox rdf:resource="mailto:sonny@fastmail.net" />
+      <foaf:account>
+        <foaf:OnlineAccount>
+            <foaf:accountServiceHomepage rdf:resource="https://github.com/" />
+            <foaf:accountName>sonnyp</foaf:accountName>
+        </foaf:OnlineAccount>
+      </foaf:account>
+      <foaf:account>
+        <foaf:OnlineAccount>
+          <foaf:accountServiceHomepage
+            rdf:resource="https://gitlab.gnome.org"
+          />
+          <foaf:accountName>sonny</foaf:accountName>
+        </foaf:OnlineAccount>
+      </foaf:account>
+    </foaf:Person>
+  </maintainer>
+</Project>

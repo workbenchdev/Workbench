@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg height="128px" viewBox="0 0 128 128" width="128px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <linearGradient id="a" gradientUnits="userSpaceOnUse" x1="4" x2="124" y1="66.000977" y2="66.000977">
+        <stop offset="0" stop-color="#e6a50a"/>
+        <stop offset="0.0333333" stop-color="#f5c211"/>
+        <stop offset="0.0666667" stop-color="#e6a50a"/>
+        <stop offset="0.933333" stop-color="#e6a50a"/>
+        <stop offset="0.966667" stop-color="#f5c211"/>
+        <stop offset="1" stop-color="#e6a50a"/>
+    </linearGradient>
+    <path d="m 64 12 c -0.941406 0 -1.875 0.167969 -2.761719 0.492188 c -1.777343 0.65625 -3.269531 1.921874 -4.203125 3.570312 l -51.960937 91.9375 h -1.074219 v 4 h 0.121094 c 0 4.371094 3.507812 7.933594 7.878906 8 h 104 c 4.40625 -0.015625 7.96875 -3.59375 7.96875 -8 h 0.03125 v -4 h -1.074219 l -51.960937 -91.9375 c -1.417969 -2.507812 -4.082032 -4.0625 -6.964844 -4.0625 z m 0 24.257812 l 38.289062 67.742188 h -76.578124 z m 0 0" fill="url(#a)"/>
+    <path d="m 12 112 h 104 l -52 -92 z m 0 0" fill="#e5a50a"/>
+    <path d="m 12 108 h 104 l -52 -92 z m 0 0" fill="#f5c211" stroke="#f5c211" stroke-linejoin="round" stroke-width="16"/>
+    <path d="m 12 108 h 104 l -52 -92 z m 0 0" fill="none" stroke="#3d3846" stroke-linejoin="round" stroke-width="8"/>
+    <path d="m 12 108 h 104 l -52 -92 z m 0 0" fill="#f5c211"/>
+    <path d="m 62 56 h 6 v 44 h -6 z m 0 0" fill="#3d3846"/>
+    <path d="m 92.088386 -262.997365 c 0 11.046874 -8.953124 19.999999 -19.999998 19.999999" fill="none" stroke="#3d3846" stroke-linejoin="round" stroke-width="8" transform="matrix(0.75 0 0 -0.75 -4.066295 -104.998039)"/>
+    <g fill="#3d3846">
+        <path d="m 65 43 l -9.25 15 h 18.5 z m 0 0"/>
+        <path d="m 38 77.25 l 15 9.25 v -18.5 z m 0 0"/>
+    </g>
+</svg>

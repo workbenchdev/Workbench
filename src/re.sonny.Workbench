@@ -1,0 +1,15 @@
+#!/usr/bin/env -S gjs -m
+
+// -*- mode: js; -*-
+
+globalThis.__DEV__ = false;
+
+import { programInvocationName } from "system";
+
+// eslint-disable-next-line import/no-unresolved
+import main from "file://@pkgdatadir@/main.js";
+
+main([programInvocationName, ...ARGV], {
+  version: "@PACKAGE_VERSION@",
+  datadir: "@datadir@",
+});

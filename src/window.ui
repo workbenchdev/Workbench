@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<interface>
+  <object class="AdwApplicationWindow" id="window">
+    <property name="default-width">800</property>
+    <property name="default-height">600</property>
+    <property name="maximized">true</property>
+    <property name="content">
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="AdwHeaderBar">
+            <child type="start">
+               <object class="GtkToggleButton" id="button_console">
+                 <property name="label">Console</property>
+                 <property name="active">true</property>
+               </object>
+            </child>
+            <child type="title">
+              <object class="GtkBox">
+                <property name="orientation">horizontal</property>
+                <style>
+                  <class name="linked" />
+                </style>
+                <child>
+                  <object class="GtkToggleButton" id="button_javascript">
+                    <property name="label">JavaScript</property>
+                    <property name="active">true</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkToggleButton" id="button_ui">
+                    <property name="label">UI</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkToggleButton" id="button_css">
+                    <property name="label">CSS</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkToggleButton" id="button_output">
+                    <property name="label">Output</property>
+                    <property name="active">true</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child type="end">
+              <object class="GtkMenuButton" id="button_menu">
+                <property name="menu-model">menu_app</property>
+                <property name="icon-name">open-menu-symbolic</property>
+              </object>
+            </child>
+            <child type="end">
+              <object class="GtkButton" id="button_style_mode">
+                <property name="icon-name">weather-clear-night-symbolic</property>
+                <property name="label">Toggle dark mode</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox">
+            <property name="orientation">horizontal</property>
+            <property name="vexpand">true</property>
+            <property name="homogeneous">true</property>
+            <child>
+              <object class="GtkScrolledWindow">
+                <child>
+                  <object class="GtkSourceView" id="source_view_javascript">
+                    <property name="buffer">
+                      <object class="GtkSourceBuffer" />
+                    </property>
+                    <property name="monospace">true</property>
+                    <property name="auto-indent">true</property>
+                    <property name="background-pattern">grid</property>
+                    <property name="highlight-current-line">true</property>
+                    <property name="indent-on-tab">true</property>
+                    <property name="indent-width">2</property>
+                    <property
+                      name="insert-spaces-instead-of-tabs"
+                    >true</property>
+                    <property name="show-line-marks">true</property>
+                    <property name="show-line-numbers">true</property>
+                    <property name="smart-backspace">true</property>
+                    <property name="tab-width">2</property>
+                    <property name="wrap-mode">GTK_WRAP_WORD_CHAR</property>
+                    <!-- <property name="smart-home-end"></property> -->
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkScrolledWindow">
+                <child>
+                  <object class="GtkSourceView" id="source_view_ui">
+                    <property name="buffer">
+                      <object class="GtkSourceBuffer" />
+                    </property>
+                    <property name="monospace">true</property>
+                    <property name="auto-indent">true</property>
+                    <property name="background-pattern">grid</property>
+                    <property name="highlight-current-line">true</property>
+                    <property name="indent-on-tab">true</property>
+                    <property name="indent-width">2</property>
+                    <property
+                      name="insert-spaces-instead-of-tabs"
+                    >true</property>
+                    <property name="show-line-marks">true</property>
+                    <property name="show-line-numbers">true</property>
+                    <property name="smart-backspace">true</property>
+                    <property name="tab-width">2</property>
+                    <property name="wrap-mode">GTK_WRAP_WORD_CHAR</property>
+                    <!-- <property name="smart-home-end"></property> -->
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkScrolledWindow">
+                <child>
+                  <object class="GtkSourceView" id="source_view_css">
+                    <property name="buffer">
+                      <object class="GtkSourceBuffer" />
+                    </property>
+                    <property name="monospace">true</property>
+                    <property name="auto-indent">true</property>
+                    <property name="background-pattern">grid</property>
+                    <property name="highlight-current-line">true</property>
+                    <property name="indent-on-tab">true</property>
+                    <property name="indent-width">2</property>
+                    <property
+                      name="insert-spaces-instead-of-tabs"
+                    >true</property>
+                    <property name="show-line-marks">true</property>
+                    <property name="show-line-numbers">true</property>
+                    <property name="smart-backspace">true</property>
+                    <property name="tab-width">2</property>
+                    <property name="wrap-mode">GTK_WRAP_WORD_CHAR</property>
+                    <!-- <property name="smart-home-end"></property> -->
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkBox" id="output" />
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkRevealer" id="console">
+            <property name="transition-type">slide-up</property>
+            <property name="reveal-child">true</property>
+            <child>
+              <object class="VteTerminal">
+
+              </object>
+            </child>
+          </object>
+         </child>
+      </object>
+    </property>
+  </object>
+  <menu id="menu_app">
+    <section>
+      <item>
+        <attribute
+          name="label"
+          translatable="yes"
+        >Keyboard Shortcuts</attribute>
+        <attribute name="action">app.shortcuts</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">About Workbench</attribute>
+        <attribute name="action">app.about</attribute>
+      </item>
+    </section>
+  </menu>
+</interface>

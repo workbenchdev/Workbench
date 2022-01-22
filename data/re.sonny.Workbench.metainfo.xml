@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<component type="desktop">
+  <id>re.sonny.Workbench</id>
+  <launchable type="desktop-id">re.sonny.Workbench.desktop</launchable>
+  <name translatable="no">Workbench</name>
+  <developer_name translatable="no">Sonny Piers</developer_name>
+  <update_contact>sonny@fastmail.net</update_contact>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0</project_license>
+  <summary>A playground for HTML/CSS/JavaScript</summary>
+  <translation type="gettext">re.sonny.Workbench</translation>
+  <description>
+    <p>Something clever</p>
+  </description>
+  <url type="homepage">https://workbench.sonny.re</url>
+  <url type="bugtracker">https://workbench.sonny.re/feedback</url>
+  <url type="donation">https://workbench.sonny.re/donate</url>
+  <url type="translate">https://workbench.sonny.re/translate</url>
+  <content_rating type="oars-1.1" />
+  <releases>
+  </releases>
+  <kudos>
+    <kudo>HiDpiIcon</kudo>
+    <kudo>HighContrast</kudo>
+    <kudo>ModernToolkit</kudo>
+  </kudos>
+</component>

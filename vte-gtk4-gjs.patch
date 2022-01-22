@@ -1,0 +1,16 @@
+# https://gitlab.gnome.org/GNOME/vte/-/issues/2539
+
+diff --git a/bindings/gir/meson.build b/bindings/gir/meson.build
+index d5f77fc6..1618c9ad 100644
+--- a/bindings/gir/meson.build
++++ b/bindings/gir/meson.build
+@@ -51,7 +51,7 @@ if get_option('gtk4')
+   # Ideally, the gir would be named something like "VteGtk4" instead,
+   # but it seems that's not possible. So work around it using "Vte"
+   # as namespace with this nsversion hack:
+-  gir_nsversion_gtk4 = '4:' + vte_api_version
++  gir_nsversion_gtk4 = '4-' + vte_api_version
+
+   libvte_gtk4_gir = gnome.generate_gir(
+     libvte_gtk4,
+

@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=re.sonny.Workbench
+Exec=@bindir@/re.sonny.Workbench --gapplication-service

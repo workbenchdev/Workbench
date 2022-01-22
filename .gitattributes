@@ -1,0 +1,7 @@
+package-lock.json -diff
+data/icons/re.sonny.Workbench-symbolic.svg -diff
+data/icons/re.sonny.Workbench.Devel.svg -diff
+data/icons/re.sonny.Workbench.svg -diff
+
+# po/re.sonny.Workbench.pot -diff
+# po/*.po -diff
