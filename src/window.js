@@ -1,13 +1,10 @@
 import Gtk from "gi://Gtk";
-// import Gdk from "gi://Gdk";
 import GObject from "gi://GObject";
 import Gio from "gi://Gio";
 import Source from "gi://GtkSource?version=5";
 import Adw from 'gi://Adw?version=1'
 import Vte from 'gi://Vte?version=4-2.91'
-
-//log(imports.gi['Vte-4:2.91'])
-
+import GLib from 'gi://GLib'
 
 import { relativePath } from "./util.js";
 import Shortcuts from "./Shortcuts.js";
@@ -27,7 +24,18 @@ export default function Window({ application }) {
   Vte.Terminal.new()
   const builder = Gtk.Builder.new_from_file(relativePath("./window.ui"));
 
-  const terminal = builder.get_object('console')
+  const devtools = builder.get_object('devtools')
+  const terminal = devtools.get_first_child()
+  terminal.set_cursor_blink_mode(Vte.CursorBlinkMode.ON)
+  terminal.spawn_sync(
+            Vte.PtyFlags.DEFAULT,
+            '/',
+            ['/bin/tail', '-f', '/tmp/workbench'],
+            [],
+            GLib.SpawnFlags.DO_NOT_REAP_CHILD,
+            null,
+            null
+        )
 
   const window = builder.get_object("window");
   if (__DEV__) window.add_css_class("devel");
@@ -40,10 +48,11 @@ export default function Window({ application }) {
     language_manager.get_language("js"),
   );
   source_view_javascript.buffer.set_text(`
-    console.log('Welcome to Workbench!')
+console.log('Welcome to Workbench!')
 
-    workbench.append(workbench.builder.get_object('main'))
+const builder = workbench.builder;
 
+workbench.append(builder.get_object('main'));
 `.trim(), -1)
 
   const source_view_ui = builder.get_object("source_view_ui");
@@ -53,8 +62,12 @@ export default function Window({ application }) {
 <interface>
   <requires lib="gtk" version="4.0"/>
   <requires lib="adw" version="1.0"/>
-  <object class="GtkLabel" id="main">
-    <property name="label">Ok this is kinda cool</property>
+  <object class="GtkBox" id="main">
+    <child>
+      <object class="GtkLabel">
+        <property name="label">Welcome to Workbench!</property>
+      </object>
+    </child>
   </object>
 </interface>`.trim(), -1);
 
@@ -66,7 +79,7 @@ export default function Window({ application }) {
   const button_ui = builder.get_object("button_ui");
   const button_css = builder.get_object("button_css");
   const button_output = builder.get_object("button_output");
-  const button_console = builder.get_object("button_console");
+  const button_devtools = builder.get_object("button_devtools");
   const button_style_mode = builder.get_object("button_style_mode")
 
   const source_views = [source_view_javascript, source_view_ui, source_view_css]
@@ -129,8 +142,8 @@ export default function Window({ application }) {
     Gio.SettingsBindFlags.DEFAULT,
   );
   settings.bind(
-    "show-console",
-    button_console,
+    "show-devtools",
+    button_devtools,
     "active",
     Gio.SettingsBindFlags.DEFAULT,
   );
@@ -163,9 +176,9 @@ export default function Window({ application }) {
     GObject.BindingFlags.SYNC_CREATE,
   );
 
-  button_console.bind_property(
+  button_devtools.bind_property(
     "active",
-    terminal,
+    devtools,
     "reveal-child",
     GObject.BindingFlags.SYNC_CREATE,
   );

@@ -10,7 +10,7 @@
         <child>
           <object class="AdwHeaderBar">
             <child type="start">
-               <object class="GtkToggleButton" id="button_console">
+               <object class="GtkToggleButton" id="button_devtools">
                  <property name="label">Console</property>
                  <property name="active">true</property>
                </object>
@@ -148,12 +148,11 @@
           </object>
         </child>
         <child>
-          <object class="GtkRevealer" id="console">
+          <object class="GtkRevealer" id="devtools">
             <property name="transition-type">slide-up</property>
             <property name="reveal-child">true</property>
             <child>
               <object class="VteTerminal">
-
               </object>
             </child>
           </object>
