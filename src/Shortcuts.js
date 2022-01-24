@@ -32,6 +32,8 @@ export default function Shortcuts({
   //   shortcutController.add_shortcut(shortcut);
   // });
 
+  application.set_accels_for_action("win.run", ["<Primary>Return"]);
+
   application.set_accels_for_action("app.quit", ["<Primary>Q"]);
   application.set_accels_for_action("app.shortcuts", ["<Primary>question"]);
 

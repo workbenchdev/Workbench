@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version='1.0' encoding='UTF-8'?>
 <interface>
   <object class="AdwApplicationWindow" id="window">
     <property name="default-width">800</property>
@@ -10,10 +10,19 @@
         <child>
           <object class="AdwHeaderBar">
             <child type="start">
-               <object class="GtkToggleButton" id="button_devtools">
-                 <property name="label">Console</property>
-                 <property name="active">true</property>
-               </object>
+              <object class="GtkButton" id="button_run">
+                <property name="child">
+                  <object class="AdwButtonContent">
+                    <property name="icon-name">media-playback-start-symbolic</property>
+                    <property name="label" translatable="yes">Run</property>
+                  </object>
+                </property>
+                <property name="action-name">win.run</property>
+                <property name="tooltip-text">&lt;Primary&gt;Return</property>
+                <style>
+                  <class name="suggested-action" />
+                </style>
+              </object>
             </child>
             <child type="title">
               <object class="GtkBox">
@@ -57,6 +66,12 @@
                 <property name="label">Toggle dark mode</property>
               </object>
             </child>
+            <child type="end">
+              <object class="GtkToggleButton" id="button_devtools">
+                <property name="label">Console</property>
+                <property name="active">true</property>
+              </object>
+            </child>
           </object>
         </child>
         <child>
@@ -77,15 +92,12 @@
                     <property name="highlight-current-line">true</property>
                     <property name="indent-on-tab">true</property>
                     <property name="indent-width">2</property>
-                    <property
-                      name="insert-spaces-instead-of-tabs"
-                    >true</property>
+                    <property name="insert-spaces-instead-of-tabs">true</property>
                     <property name="show-line-marks">true</property>
                     <property name="show-line-numbers">true</property>
                     <property name="smart-backspace">true</property>
                     <property name="tab-width">2</property>
                     <property name="wrap-mode">GTK_WRAP_WORD_CHAR</property>
-                    <!-- <property name="smart-home-end"></property> -->
                   </object>
                 </child>
               </object>
@@ -103,15 +115,12 @@
                     <property name="highlight-current-line">true</property>
                     <property name="indent-on-tab">true</property>
                     <property name="indent-width">2</property>
-                    <property
-                      name="insert-spaces-instead-of-tabs"
-                    >true</property>
+                    <property name="insert-spaces-instead-of-tabs">true</property>
                     <property name="show-line-marks">true</property>
                     <property name="show-line-numbers">true</property>
                     <property name="smart-backspace">true</property>
                     <property name="tab-width">2</property>
                     <property name="wrap-mode">GTK_WRAP_WORD_CHAR</property>
-                    <!-- <property name="smart-home-end"></property> -->
                   </object>
                 </child>
               </object>
@@ -129,15 +138,12 @@
                     <property name="highlight-current-line">true</property>
                     <property name="indent-on-tab">true</property>
                     <property name="indent-width">2</property>
-                    <property
-                      name="insert-spaces-instead-of-tabs"
-                    >true</property>
+                    <property name="insert-spaces-instead-of-tabs">true</property>
                     <property name="show-line-marks">true</property>
                     <property name="show-line-numbers">true</property>
                     <property name="smart-backspace">true</property>
                     <property name="tab-width">2</property>
                     <property name="wrap-mode">GTK_WRAP_WORD_CHAR</property>
-                    <!-- <property name="smart-home-end"></property> -->
                   </object>
                 </child>
               </object>
@@ -156,17 +162,14 @@
               </object>
             </child>
           </object>
-         </child>
+        </child>
       </object>
     </property>
   </object>
   <menu id="menu_app">
     <section>
       <item>
-        <attribute
-          name="label"
-          translatable="yes"
-        >Keyboard Shortcuts</attribute>
+        <attribute name="label" translatable="yes">Keyboard Shortcuts</attribute>
         <attribute name="action">app.shortcuts</attribute>
       </item>
       <item>

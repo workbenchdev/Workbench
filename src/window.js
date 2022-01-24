@@ -28,14 +28,14 @@ export default function Window({ application }) {
   const terminal = devtools.get_first_child()
   terminal.set_cursor_blink_mode(Vte.CursorBlinkMode.ON)
   terminal.spawn_sync(
-            Vte.PtyFlags.DEFAULT,
-            '/',
-            ['/bin/tail', '-f', '/tmp/workbench'],
-            [],
-            GLib.SpawnFlags.DO_NOT_REAP_CHILD,
-            null,
-            null
-        )
+    Vte.PtyFlags.DEFAULT,
+    '/',
+    ['/bin/tail', '-f', '/tmp/workbench'],
+    [],
+    GLib.SpawnFlags.DO_NOT_REAP_CHILD,
+    null,
+    null
+  );
 
   const window = builder.get_object("window");
   if (__DEV__) window.add_css_class("devel");
@@ -183,9 +183,9 @@ workbench.append(builder.get_object('main'));
     GObject.BindingFlags.SYNC_CREATE,
   );
 
-  source_view_ui.buffer.connect("changed", updatePreview);
-  source_view_css.buffer.connect("changed", updatePreview);
-  source_view_javascript.buffer.connect("changed", updatePreview);
+  // source_view_ui.buffer.connect("changed", updatePreview);
+  // source_view_css.buffer.connect("changed", updatePreview);
+  // source_view_javascript.buffer.connect("changed", updatePreview);
 
   const workbench = globalThis.workbench = output;
 
@@ -209,9 +209,16 @@ workbench.append(builder.get_object('main'));
   }
   updatePreview();
 
-  window.present();
+  const runAction = new Gio.SimpleAction({
+    name: "run",
+    parameter_type: null,
+  });
+  runAction.connect("activate", updatePreview);
+  window.add_action(runAction);
 
   Shortcuts({ window, application });
+
+  window.present();
 
   return { window };
 }
