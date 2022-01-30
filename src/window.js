@@ -69,7 +69,11 @@ console.log('Welcome to Workbench!')
 
   const source_view_css = builder.get_object("source_view_css");
   source_view_css.buffer.set_language(language_manager.get_language("css"));
-  source_view_css.buffer.set_text(``.trim(), -1)
+  source_view_css.buffer.set_text(`
+box > label {
+  color: #e66100;
+}
+`.trim(), -1)
 
   const button_javascript = builder.get_object("button_javascript");
   const button_ui = builder.get_object("button_ui");
@@ -186,6 +190,8 @@ console.log('Welcome to Workbench!')
 
   const workbench = globalThis.workbench = output;
 
+  let css_provider = null
+
   function updatePreview() {
     while (output.get_first_child()) {
       output.remove(output.get_first_child())
@@ -203,8 +209,31 @@ console.log('Welcome to Workbench!')
       return
     }
 
-    // Update preview
+    // Update preview with UI
     workbench.append(workbench.builder.get_object('main'));
+
+    // Update preview with CSS
+    if (css_provider) {
+      Gtk.StyleContext.remove_provider_for_display(output.get_display(), css_provider);
+      css_provider = null;
+    }
+    const style = source_view_css.buffer.text;
+    if (!style) return;
+    css_provider = new Gtk.CssProvider();
+    css_provider.load_from_data(style);
+    // Unfortunally this styles the widget to which the style_context belongs to only
+    // so the only option is to style the whole display (app)
+    // would be cool if the preview was its own display but I don't know if that's possible
+    // but actually as Tobias pointed out - we can prefix all selectors with an id or something
+    // workbench.get_style_context().add_provider(
+    //   css_provider,
+    //   Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
+    // );
+    Gtk.StyleContext.add_provider_for_display(
+      output.get_display(),
+      css_provider,
+      Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
+    );
   }
   updatePreview();
 
