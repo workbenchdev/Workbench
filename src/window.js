@@ -30,7 +30,7 @@ export default function Window({ application }) {
   terminal.spawn_sync(
     Vte.PtyFlags.DEFAULT,
     '/',
-    ['/bin/tail', '-f', '/tmp/workbench'],
+    ['/bin/tail', '-f', '-n', '+1', '/tmp/workbench'],
     [],
     GLib.SpawnFlags.DO_NOT_REAP_CHILD,
     null,
