@@ -56,8 +56,6 @@ console.log('Welcome to Workbench!')
   source_view_ui.buffer.set_text(`
 <?xml version="1.0" encoding="UTF-8" ?>
 <interface>
-  <requires lib="gtk" version="4.0"/>
-  <requires lib="adw" version="1.0"/>
   <object class="GtkBox" id="main">
     <child>
       <object class="GtkLabel">
