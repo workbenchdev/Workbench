@@ -49,10 +49,6 @@ export default function Window({ application }) {
   );
   source_view_javascript.buffer.set_text(`
 console.log('Welcome to Workbench!')
-
-const builder = workbench.builder;
-
-workbench.append(builder.get_object('main'));
 `.trim(), -1)
 
   const source_view_ui = builder.get_object("source_view_ui");
@@ -183,8 +179,9 @@ workbench.append(builder.get_object('main'));
     GObject.BindingFlags.SYNC_CREATE,
   );
 
-  // source_view_ui.buffer.connect("changed", updatePreview);
-  // source_view_css.buffer.connect("changed", updatePreview);
+  source_view_ui.buffer.connect("changed", updatePreview);
+  source_view_css.buffer.connect("changed", updatePreview);
+  // We do not support auto run of JavaScript ATM
   // source_view_javascript.buffer.connect("changed", updatePreview);
 
   const workbench = globalThis.workbench = output;
@@ -203,17 +200,23 @@ workbench.append(builder.get_object('main'));
       workbench.builder.add_from_string(text, -1)
     } catch (err) {
       logError(err)
+      return
     }
 
-    eval(source_view_javascript.buffer.text)
+    // Update preview
+    workbench.append(workbench.builder.get_object('main'));
   }
   updatePreview();
+
+  function run() {
+    eval(source_view_javascript.buffer.text)
+  }
 
   const runAction = new Gio.SimpleAction({
     name: "run",
     parameter_type: null,
   });
-  runAction.connect("activate", updatePreview);
+  runAction.connect("activate", run);
   window.add_action(runAction);
 
   Shortcuts({ window, application });
