@@ -96,7 +96,7 @@ function readFile(file) {
   let data
 
   try {
-    [,data] = file.load_contents(null, -1);
+    [,data] = file.load_contents(null);
     data = text_decoder.decode(data);
   } catch (err) {
     logError(err)

@@ -34,17 +34,19 @@ export default function Actions({application, datadir, version}) {
   });
   application.add_action(showShortCutsWindow);
 
-  // const file_filter = Gtk.Builder.new_from_file(relativePath("./window.ui")).get_object('file_filter');
   const action_open_file = new Gio.SimpleAction({
     name: "open",
     parameter_type: null,
   });
   action_open_file.connect("activate", () => {
+    const builder = Gtk.Builder.new_from_file(relativePath("./window.ui"))
+    const file_filter = builder.get_object('file_filter');
+
     const file_chooser = new Gtk.FileChooserNative({
       title: "Open File",
       action: Gtk.FileChooserAction.OPEN
     });
-    // file_chooser.set_filter(file_filter);
+    file_chooser.set_filter(file_filter);
 
     file_chooser.connect('response', (self, response) => {
       if (response === Gtk.ResponseType.ACCEPT) {
