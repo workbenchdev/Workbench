@@ -27,7 +27,7 @@ export default function Window({ application, data }) {
     '/',
     // +2 so we skip the line written by "script"
     // Script started on ...
-    ['/bin/tail', '-f', '-n', '+2', '/tmp/workbench'],
+    ['/bin/tail', '-f', '-n', '+2', '/var/tmp/workbench'],
     [],
     GLib.SpawnFlags.DO_NOT_REAP_CHILD,
     null,

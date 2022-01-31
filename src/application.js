@@ -11,7 +11,7 @@ const style_manager = Adw.StyleManager.get_default();
 export default function Application({ version, datadir }) {
   const application = new Adw.Application({
     application_id: "re.sonny.Workbench",
-    flags: Gio.ApplicationFlags.HANDLES_OPEN | Gio.ApplicationFlags.NON_UNIQUE,
+    flags: Gio.ApplicationFlags.HANDLES_OPEN,
   });
 
   application.connect('open', (self, files, hint) => {

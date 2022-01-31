@@ -68,7 +68,7 @@
                     "type" : "script",
                     "dest-filename" : "workbench",
                     "commands" : [
-                        "SHELL=/bin/sh script --flush --quiet --return /tmp/workbench --command \"re.sonny.Workbench \"$@\"\""
+                        "SHELL=/bin/sh script --flush --quiet --return /var/tmp/workbench --command \"re.sonny.Workbench \"$@\"\""
                     ]
                 }
             ]
@@ -82,6 +82,10 @@
                     "type" : "dir",
                     "path" : "./"
                 }
+            ],
+            "post-install": [
+              "desktop-file-edit --set-key=Exec --set-value='/app/bin/workbench %U' /app/share/applications/re.sonny.Workbench.desktop",
+              "sed -i 's/re.sonny.Workbench --gapplication-service/workbench --gapplication-service/g' /app/share/dbus-1/services/re.sonny.Workbench.service"
             ]
         }
     ]
