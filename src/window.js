@@ -20,7 +20,7 @@ const scheme_manager = Source.StyleSchemeManager.get_default()
 const language_manager = Source.LanguageManager.get_default();
 const style_manager = Adw.StyleManager.get_default();
 
-export default function Window({ application }) {
+export default function Window({ application, data }) {
   Vte.Terminal.new()
   const builder = Gtk.Builder.new_from_file(relativePath("./window.ui"));
 
@@ -30,7 +30,9 @@ export default function Window({ application }) {
   terminal.spawn_sync(
     Vte.PtyFlags.DEFAULT,
     '/',
-    ['/bin/tail', '-f', '-n', '+1', '/tmp/workbench'],
+    // +2 so we skip the line written by "script"
+    // Script started on ...
+    ['/bin/tail', '-f', '-n', '+2', '/tmp/workbench'],
     [],
     GLib.SpawnFlags.DO_NOT_REAP_CHILD,
     null,
@@ -47,31 +49,15 @@ export default function Window({ application }) {
   source_view_javascript.buffer.set_language(
     language_manager.get_language("js"),
   );
-  source_view_javascript.buffer.set_text(`
-console.log('Welcome to Workbench!');
-`.trim(), -1)
+  source_view_javascript.buffer.set_text(data.js, -1)
 
   const source_view_ui = builder.get_object("source_view_ui");
   source_view_ui.buffer.set_language(language_manager.get_language("xml"));
-  source_view_ui.buffer.set_text(`
-<?xml version="1.0" encoding="UTF-8" ?>
-<interface>
-  <object class="GtkBox" id="main">
-    <child>
-      <object class="GtkLabel">
-        <property name="label">Welcome to Workbench!</property>
-      </object>
-    </child>
-  </object>
-</interface>`.trim(), -1);
+  source_view_ui.buffer.set_text(data.xml, -1);
 
   const source_view_css = builder.get_object("source_view_css");
   source_view_css.buffer.set_language(language_manager.get_language("css"));
-  source_view_css.buffer.set_text(`
-box > label {
-  color: #e66100;
-}
-`.trim(), -1)
+  source_view_css.buffer.set_text(data.css, -1)
 
   const button_javascript = builder.get_object("button_javascript");
   const button_ui = builder.get_object("button_ui");
@@ -213,7 +199,9 @@ box > label {
     }
 
     // Update preview with UI
-    workbench.append(workbench.builder.get_object('main'));
+    if (workbench.builder.get_object('main')) {
+      workbench.append(workbench.builder.get_object('main'));
+    }
 
     // Update preview with CSS
     if (css_provider) {

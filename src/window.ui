@@ -172,6 +172,10 @@
     </property>
   </object>
   <menu id="menu_app">
+    <item>
+      <attribute name="label" translatable="yes">Open File</attribute>
+      <attribute name="action">app.open</attribute>
+    </item>
     <section>
       <item>
         <attribute name="label" translatable="yes">Keyboard Shortcuts</attribute>
@@ -183,4 +187,18 @@
       </item>
     </section>
   </menu>
+  <object class="GtkFileFilter" id="file_filter">
+    <mime-types>
+      <mime-type>text/css</mime-type>
+      <mime-type>text/javascript</mime-type>
+      <mime-type>application/javascript</mime-type>
+      <mime-type>application/x-gtk-builder</mime-type>
+    </mime-types>
+    <patterns>
+      <pattern>*.js</pattern>
+      <pattern>*.ui</pattern>
+      <pattern>*.xml.ui</pattern>
+      <pattern>*.css</pattern>
+    </patterns>
+  </object>
 </interface>

@@ -1,81 +1,88 @@
 {
-  "app-id": "re.sonny.Workbench",
-  "runtime": "org.gnome.Platform",
-  "runtime-version": "master",
-  "sdk": "org.gnome.Sdk",
-  "sdk-extensions": ["org.freedesktop.Sdk.Extension.node16"],
-  "command": "workbench",
-  "build-options": {
-    "append-path": "/usr/lib/sdk/node16/bin"
-  },
-  "finish-args": [
-    "--share=ipc",
-    "--socket=fallback-x11",
-    "--socket=wayland",
-    "--require-version=1.1.2",
-    "--device=dri",
-    "--share=network"
-  ],
-  "modules": [
-   {
-        "name" : "vte",
-        "buildsystem" : "meson",
-        "config-opts": [
-            "-Ddocs=false",
-            "-Dgtk3=false",
-            "-Dgtk4=true",
-            "-Dvapi=false",
-            "-Dglade=false"
-        ],
-        "sources" : [
-            {
-                "type": "git",
-                "url": "https://gitlab.gnome.org/GNOME/vte.git"
-            },
-                   {
-          "type": "patch",
-          "path": "vte-gtk4-gjs.patch"
-        }
-        ]
+    "app-id" : "re.sonny.Workbench",
+    "runtime" : "org.gnome.Platform",
+    "runtime-version" : "master",
+    "sdk" : "org.gnome.Sdk",
+    "sdk-extensions" : [
+        "org.freedesktop.Sdk.Extension.node16"
+    ],
+    "command" : "workbench",
+    "build-options" : {
+        "append-path" : "/usr/lib/sdk/node16/bin"
     },
-    {
-      "name": "gtksourceview",
-      "buildsystem": "meson",
-      "config-opts": ["-Dtests=false", "-Dexamples=false", "-Dvapi=false"],
-      "sources": [
+    "finish-args" : [
+        "--share=ipc",
+        "--socket=fallback-x11",
+        "--socket=wayland",
+        "--require-version=1.1.2",
+        "--device=dri",
+        "--share=network"
+    ],
+    "x-run-args" : [],
+    "modules" : [
         {
-          "type": "archive",
-          "url": "https://download.gnome.org/sources/gtksourceview/5.2/gtksourceview-5.2.0.tar.xz",
-          "sha256": "c9b34fa02654f56ce22fa08827d89db4ba81631b2e6d7d31ea65d13c729430e9"
-        }
-      ]
-    },
-    {
-      "name": "wrapper",
-      "buildsystem": "simple",
-      "build-commands": [
-        "install -D workbench /app/bin/workbench"
-      ],
-      "sources": [
+            "name" : "vte",
+            "buildsystem" : "meson",
+            "config-opts" : [
+                "-Ddocs=false",
+                "-Dgtk3=false",
+                "-Dgtk4=true",
+                "-Dvapi=false",
+                "-Dglade=false"
+            ],
+            "sources" : [
+                {
+                    "type" : "git",
+                    "url" : "https://gitlab.gnome.org/GNOME/vte.git"
+                },
+                {
+                    "type" : "patch",
+                    "path" : "vte-gtk4-gjs.patch"
+                }
+            ]
+        },
         {
-          "type": "script",
-          "dest-filename": "workbench",
-          "commands": [
-            "SHELL=env script --flush --quiet --return /tmp/workbench --command \"re.sonny.Workbench\""
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Workbench",
-      "buildsystem": "meson",
-      "builddir": true,
-      "sources": [
+            "name" : "gtksourceview",
+            "buildsystem" : "meson",
+            "config-opts" : [
+                "-Dtests=false",
+                "-Dexamples=false",
+                "-Dvapi=false"
+            ],
+            "sources" : [
+                {
+                    "type" : "archive",
+                    "url" : "https://download.gnome.org/sources/gtksourceview/5.2/gtksourceview-5.2.0.tar.xz",
+                    "sha256" : "c9b34fa02654f56ce22fa08827d89db4ba81631b2e6d7d31ea65d13c729430e9"
+                }
+            ]
+        },
         {
-          "type": "dir",
-          "path": "./"
+            "name" : "wrapper",
+            "buildsystem" : "simple",
+            "build-commands" : [
+                "install -D workbench /app/bin/workbench"
+            ],
+            "sources" : [
+                {
+                    "type" : "script",
+                    "dest-filename" : "workbench",
+                    "commands" : [
+                        "SHELL=/bin/sh script --flush --quiet --return /tmp/workbench --command \"re.sonny.Workbench \"$@\"\""
+                    ]
+                }
+            ]
+        },
+        {
+            "name" : "Workbench",
+            "buildsystem" : "meson",
+            "builddir" : true,
+            "sources" : [
+                {
+                    "type" : "dir",
+                    "path" : "./"
+                }
+            ]
         }
-      ]
-    }
-  ]
+    ]
 }
