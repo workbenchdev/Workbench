@@ -1,6 +1,7 @@
 import Gtk from "gi://Gtk";
 import GLib from "gi://GLib";
 import Gdk from "gi://Gdk";
+import Gio from "gi://Gio";
 
 export function logEnum(obj, value) {
   console.log(
@@ -25,4 +26,9 @@ export function loadStyleSheet(path) {
     Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
   );
 }
+
+export const settings = new Gio.Settings({
+  schema_id: "re.sonny.Workbench",
+  path: "/re/sonny/Workbench/",
+});
 

@@ -52,8 +52,8 @@
             "sources" : [
                 {
                     "type" : "archive",
-                    "url" : "https://download.gnome.org/sources/gtksourceview/5.2/gtksourceview-5.2.0.tar.xz",
-                    "sha256" : "c9b34fa02654f56ce22fa08827d89db4ba81631b2e6d7d31ea65d13c729430e9"
+                    "url" : "https://download.gnome.org/sources/gtksourceview/5.3/gtksourceview-5.3.2.tar.xz",
+                    "sha256" : "af7736e2ee3cdbc1013090e8caf35fb89d65cf41c9c399cac5d8992d955ded30"
                 }
             ]
         },

@@ -6,13 +6,8 @@ import Adw from 'gi://Adw?version=1'
 import Vte from 'gi://Vte?version=4-2.91'
 import GLib from 'gi://GLib'
 
-import { relativePath } from "./util.js";
+import { relativePath, settings } from "./util.js";
 import Shortcuts from "./Shortcuts.js";
-
-const settings = new Gio.Settings({
-  schema_id: "re.sonny.Workbench",
-  path: "/re/sonny/Workbench/",
-});
 
 Source.init();
 
@@ -90,17 +85,6 @@ export default function Window({ application, data }) {
       settings.set_boolean('toggle-color-scheme', !settings.get_boolean('toggle-color-scheme'));
     }
   )
-
-  function setColorScheme() {
-    const toggle_color_scheme = settings.get_boolean('toggle-color-scheme');
-    if (toggle_color_scheme) {
-      style_manager.set_color_scheme(style_manager.dark ? Adw.ColorScheme.FORCE_LIGHT : Adw.ColorScheme.FORCE_DARK)
-    } else {
-      style_manager.set_color_scheme(Adw.ColorScheme.DEFAULT)
-    }
-  }
-  setColorScheme()
-  settings.connect('changed::toggle-color-scheme', setColorScheme)
 
   settings.bind(
     "show-ui",
