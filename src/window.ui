@@ -39,11 +39,13 @@
                 <child>
                   <object class="GtkToggleButton" id="button_ui">
                     <property name="label">UI</property>
+                    <property name="active">true</property>
                   </object>
                 </child>
                 <child>
                   <object class="GtkToggleButton" id="button_css">
                     <property name="label">CSS</property>
+                    <property name="active">true</property>
                   </object>
                 </child>
                 <child>

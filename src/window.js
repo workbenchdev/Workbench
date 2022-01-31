@@ -86,37 +86,6 @@ export default function Window({ application, data }) {
     }
   )
 
-  settings.bind(
-    "show-ui",
-    button_ui,
-    "active",
-    Gio.SettingsBindFlags.DEFAULT,
-  );
-  settings.bind(
-    "show-css",
-    button_css,
-    "active",
-    Gio.SettingsBindFlags.DEFAULT,
-  );
-  settings.bind(
-    "show-javascript",
-    button_javascript,
-    "active",
-    Gio.SettingsBindFlags.DEFAULT,
-  );
-  settings.bind(
-    "show-output",
-    button_output,
-    "active",
-    Gio.SettingsBindFlags.DEFAULT,
-  );
-  settings.bind(
-    "show-devtools",
-    button_devtools,
-    "active",
-    Gio.SettingsBindFlags.DEFAULT,
-  );
-
   button_ui.bind_property(
     "active",
     source_view_ui.parent,

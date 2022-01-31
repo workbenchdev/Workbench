@@ -1,21 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <schemalist gettext-domain="re.sonny.Workbench">
   <schema id="re.sonny.Workbench" path="/re/sonny/Workbench/">
-    <key name="show-ui" type="b">
-      <default>true</default>
-    </key>
-    <key name="show-css" type="b">
-      <default>false</default>
-    </key>
-    <key name="show-javascript" type="b">
-      <default>true</default>
-    </key>
-    <key name="show-output" type="b">
-      <default>true</default>
-    </key>
-    <key name="show-devtools" type="b">
-      <default>true</default>
-    </key>
     <key name="toggle-color-scheme" type="b">
       <default>false</default>
     </key>

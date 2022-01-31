@@ -11,19 +11,8 @@ const style_manager = Adw.StyleManager.get_default();
 export default function Application({ version, datadir }) {
   const application = new Adw.Application({
     application_id: "re.sonny.Workbench",
-    flags: Gio.ApplicationFlags.HANDLES_OPEN,
+    flags: Gio.ApplicationFlags.HANDLES_OPEN | Gio.ApplicationFlags.NON_UNIQUE,
   });
-
-  function setColorScheme() {
-    const toggle_color_scheme = settings.get_boolean('toggle-color-scheme');
-    if (toggle_color_scheme) {
-      style_manager.set_color_scheme(style_manager.dark ? Adw.ColorScheme.FORCE_LIGHT : Adw.ColorScheme.FORCE_DARK)
-    } else {
-      style_manager.set_color_scheme(Adw.ColorScheme.DEFAULT)
-    }
-  }
-  setColorScheme()
-  settings.connect('changed::toggle-color-scheme', setColorScheme)
 
   application.connect('open', (self, files, hint) => {
     for (const file of files) {
@@ -145,3 +134,13 @@ const default_data = {
   xml: placeholder_xml
 }
 
+  function setColorScheme() {
+    const toggle_color_scheme = settings.get_boolean('toggle-color-scheme');
+    if (toggle_color_scheme) {
+      style_manager.set_color_scheme(style_manager.dark ? Adw.ColorScheme.FORCE_LIGHT : Adw.ColorScheme.FORCE_DARK)
+    } else {
+      style_manager.set_color_scheme(Adw.ColorScheme.DEFAULT)
+    }
+  }
+  setColorScheme()
+  settings.connect('changed::toggle-color-scheme', setColorScheme)
