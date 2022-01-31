@@ -24,9 +24,9 @@ export default function Window({ application }) {
   Vte.Terminal.new()
   const builder = Gtk.Builder.new_from_file(relativePath("./window.ui"));
 
-  const devtools = builder.get_object('devtools')
-  const terminal = devtools.get_first_child()
-  terminal.set_cursor_blink_mode(Vte.CursorBlinkMode.ON)
+  const devtools = builder.get_object('devtools');
+  const terminal = devtools.get_first_child();
+  terminal.set_cursor_blink_mode(Vte.CursorBlinkMode.ON);
   terminal.spawn_sync(
     Vte.PtyFlags.DEFAULT,
     '/',
@@ -48,7 +48,7 @@ export default function Window({ application }) {
     language_manager.get_language("js"),
   );
   source_view_javascript.buffer.set_text(`
-console.log('Welcome to Workbench!')
+console.log('Welcome to Workbench!');
 `.trim(), -1)
 
   const source_view_ui = builder.get_object("source_view_ui");
@@ -78,6 +78,7 @@ box > label {
   const button_css = builder.get_object("button_css");
   const button_output = builder.get_object("button_output");
   const button_devtools = builder.get_object("button_devtools");
+  const button_inspector = builder.get_object("button_inspector");
   const button_style_mode = builder.get_object("button_style_mode")
 
   const source_views = [source_view_javascript, source_view_ui, source_view_css]
@@ -180,6 +181,10 @@ box > label {
     "reveal-child",
     GObject.BindingFlags.SYNC_CREATE,
   );
+
+  button_inspector.connect('clicked', () =>{
+    Gtk.Window.set_interactive_debugging(true);
+  });
 
   source_view_ui.buffer.connect("changed", updatePreview);
   source_view_css.buffer.connect("changed", updatePreview);

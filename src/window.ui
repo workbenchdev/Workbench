@@ -72,6 +72,11 @@
                 <property name="active">true</property>
               </object>
             </child>
+            <child type="end">
+              <object class="GtkButton" id="button_inspector">
+                <property name="label">Inspector</property>
+              </object>
+            </child>
           </object>
         </child>
         <child>
