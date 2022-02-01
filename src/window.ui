@@ -68,17 +68,6 @@
                 <property name="label">Toggle dark mode</property>
               </object>
             </child>
-            <child type="end">
-              <object class="GtkToggleButton" id="button_devtools">
-                <property name="label">Console</property>
-                <property name="active">true</property>
-              </object>
-            </child>
-            <child type="end">
-              <object class="GtkButton" id="button_inspector">
-                <property name="label">Inspector</property>
-              </object>
-            </child>
           </object>
         </child>
         <child>
@@ -161,12 +150,29 @@
           </object>
         </child>
         <child>
+          <object class="GtkBox">
+            <child>
+              <object class="GtkToggleButton" id="button_devtools">
+                <property name="label">Console</property>
+                <property name="active">true</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="button_inspector">
+                <property name="label">Inspector</property>
+              </object>
+            </child>
+            <style>
+              <class name="toolbar"/>
+            </style>
+          </object>
+        </child>
+        <child>
           <object class="GtkRevealer" id="devtools">
             <property name="transition-type">slide-up</property>
             <property name="reveal-child">true</property>
             <child>
-              <object class="VteTerminal">
-              </object>
+              <object class="VteTerminal" id="terminal"/>
             </child>
           </object>
         </child>

@@ -20,7 +20,7 @@ export default function Window({ application, data }) {
   const builder = Gtk.Builder.new_from_file(relativePath("./window.ui"));
 
   const devtools = builder.get_object('devtools');
-  const terminal = devtools.get_first_child();
+  const terminal = builder.get_object('terminal')
   terminal.set_cursor_blink_mode(Vte.CursorBlinkMode.ON);
   terminal.spawn_sync(
     Vte.PtyFlags.DEFAULT,
