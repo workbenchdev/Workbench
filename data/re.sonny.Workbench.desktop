@@ -2,7 +2,7 @@
 # TRANSLATORS: Don't translate
 Name=Workbench
 Comment=A playground for GNOME technologies
-Exec=re.sonny.Workbench %U
+Exec=workbench %U
 Terminal=false
 Type=Application
 Categories=WebDevelopment;Development;IDE;GNOME;GTK;

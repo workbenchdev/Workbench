@@ -1,0 +1,3 @@
+#!/bin/sh
+
+SHELL=/bin/sh script --flush --quiet --return /var/tmp/workbench --command "re.sonny.Workbench $@"
