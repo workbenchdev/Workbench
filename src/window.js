@@ -54,6 +54,7 @@ export default function Window({ application, data }) {
   source_view_css.buffer.set_language(language_manager.get_language("css"));
   source_view_css.buffer.set_text(data.css, -1)
 
+  const button_run = builder.get_object('button_run');
   const button_javascript = builder.get_object("button_javascript");
   const button_ui = builder.get_object("button_ui");
   const button_css = builder.get_object("button_css");
@@ -182,7 +183,21 @@ export default function Window({ application, data }) {
   updatePreview();
 
   function run() {
-    eval(source_view_javascript.buffer.text)
+    updatePreview();
+
+    const code = source_view_javascript.buffer.text;
+    if (!code.trim()) return;
+
+    button_run.set_sensitive(false);
+    // We have to create a new file each time
+    // because gjs doesn't appear to use etag for module caching
+    // ?foo=Date.now() also does not work as expected
+    // TODO: File a bug
+    const [file_javascript] = Gio.File.new_tmp('workbench-XXXXXX.js');
+    file_javascript.replace_contents(code, null, false, Gio.FileCreateFlags.NONE, null);
+    import(`file://${file_javascript.get_path()}`).catch(logError).finally(() => {
+      button_run.set_sensitive(true);
+    })
   }
 
   const runAction = new Gio.SimpleAction({
