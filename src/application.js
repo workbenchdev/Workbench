@@ -118,7 +118,7 @@ box > label {
 const placeholder_xml = `
 <?xml version="1.0" encoding="UTF-8" ?>
 <interface>
-  <object class="GtkBox" id="main">
+  <object class="GtkBox">
     <child>
       <object class="GtkLabel">
         <property name="label">Welcome to Workbench!</property>

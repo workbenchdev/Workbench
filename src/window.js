@@ -9,6 +9,7 @@ import GLib from 'gi://GLib'
 import { relativePath, settings } from "./util.js";
 import Shortcuts from "./Shortcuts.js";
 import * as css from './css.js'
+import parse from './ltx.js'
 
 Source.init();
 
@@ -143,8 +144,17 @@ export default function Window({ application, data }) {
 
     workbench.builder = new Gtk.Builder()
 
-    const text = source_view_ui.buffer.text
-    if (!text) return
+    let text = source_view_ui.buffer.text.trim();
+    if (!text) return;
+    let target_id
+
+    try {
+      [target_id, text] = targetBuildable(text);
+    } catch (err) {
+      // logError(err);
+    }
+
+    if (!target_id) return;
 
     try {
       workbench.builder.add_from_string(text, -1)
@@ -154,8 +164,8 @@ export default function Window({ application, data }) {
     }
 
     // Update preview with UI
-    if (workbench.builder.get_object('main')) {
-      workbench.append(workbench.builder.get_object('main'));
+    if (workbench.builder.get_object(target_id)) {
+      workbench.append(workbench.builder.get_object(target_id));
     }
 
     // Update preview with CSS
@@ -233,4 +243,39 @@ function scopeStylesheet(style) {
   }
 
   return css.stringify(ast);
+}
+
+function targetBuildable(code) {
+  const tree = parse(code);
+
+  const child = tree.children.find((child) => {
+    if (typeof child === 'string') return false
+
+    const class_name = child.attrs.class;
+    if (!class_name) return false;
+
+    const split = class_name.split(/(?=[A-Z])/);
+    if (split.length < 2) return false;
+
+    const [ns, ...rest] = split;
+    const klass = imports.gi[ns]?.[rest.join('')];
+    if (!klass) return false;
+
+    // TODO: Figure out a better way to find out if a klass
+    // inherits from GtkWidget
+    const instance = new klass()
+    if (typeof instance.get_parent !== 'function') return false
+
+    return true;
+  })
+
+  if (!child) {
+    return [null, '']
+  }
+
+  if (!child.attrs.id) {
+    child.attrs.id = 'workbench_target';
+  }
+
+  return [child.attrs.id, tree.toString()]
 }

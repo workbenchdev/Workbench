@@ -146,7 +146,7 @@
             </child>
             <child>
               <object class="GtkBox" id="output">
-                <!-- For some reason prefixing selectors with #output doesn't work so we use a  class name instead -->
+                <!-- For some reason prefixing selectors with #output doesn't work so we use a class name instead -->
                 <style>
                   <class name="workbench_output"/>
                 </style>>
