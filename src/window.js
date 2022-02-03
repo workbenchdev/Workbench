@@ -8,8 +8,7 @@ import GLib from 'gi://GLib'
 
 import { relativePath, settings } from "./util.js";
 import Shortcuts from "./Shortcuts.js";
-
-import * as csstree from './csstree.js'
+import * as css from './css.js'
 
 Source.init();
 
@@ -148,7 +147,6 @@ export default function Window({ application, data }) {
     if (!text) return
 
     try {
-
       workbench.builder.add_from_string(text, -1)
     } catch (err) {
       logError(err)
@@ -168,9 +166,11 @@ export default function Window({ application, data }) {
     let style = source_view_css.buffer.text;
     if (!style) return;
 
-    style = scopeStylesheet(style);
-    log(style);
-
+    try {
+      style = scopeStylesheet(style);
+    } catch (err) {
+      // logError(err);
+    }
 
     css_provider = new Gtk.CssProvider();
     css_provider.load_from_data(style);
@@ -223,28 +223,14 @@ export default function Window({ application, data }) {
   return { window };
 }
 
-
-// console.log(csstree)
-
-const scoping_selector = {
-  "type": "ClassSelector",
-  "loc": null,
-  "name": "workbench_output"
-}
-
 function scopeStylesheet(style) {
-  const ast = csstree.parse(style, {
-    positions: true,
-    flename: 'cool.css',
-  });
+  const ast = css.parse(style);
 
-  csstree.walk(ast, (node) => {
-    if (node.type !== 'Selector') return;
-    node.children.unshift(scoping_selector);
-  });
+  for (const {selectors} of ast.stylesheet.rules) {
+    for (let i = 0; i < selectors.length; i++) {
+      selectors[i] = ".workbench_output " + selectors[i]
+    }
+  }
 
-  const result = csstree.generate(ast, {sourceMap: true, mode: 'spec'});
-  console.log(result);
-
-  return result.css;
+  return css.stringify(ast);
 }

@@ -1,4 +1,10 @@
 package-lock.json -diff
+
+test/assert.js -diff
+test/uvu.js -diff
+
+src/css.js -diff
+
 data/icons/re.sonny.Workbench-symbolic.svg -diff
 data/icons/re.sonny.Workbench.Devel.svg -diff
 data/icons/re.sonny.Workbench.svg -diff
