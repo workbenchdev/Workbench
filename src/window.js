@@ -9,6 +9,8 @@ import GLib from 'gi://GLib'
 import { relativePath, settings } from "./util.js";
 import Shortcuts from "./Shortcuts.js";
 
+import * as csstree from './csstree.js'
+
 Source.init();
 
 const scheme_manager = Source.StyleSchemeManager.get_default()
@@ -146,6 +148,7 @@ export default function Window({ application, data }) {
     if (!text) return
 
     try {
+
       workbench.builder.add_from_string(text, -1)
     } catch (err) {
       logError(err)
@@ -162,8 +165,13 @@ export default function Window({ application, data }) {
       Gtk.StyleContext.remove_provider_for_display(output.get_display(), css_provider);
       css_provider = null;
     }
-    const style = source_view_css.buffer.text;
+    let style = source_view_css.buffer.text;
     if (!style) return;
+
+    style = scopeStylesheet(style);
+    log(style);
+
+
     css_provider = new Gtk.CssProvider();
     css_provider.load_from_data(style);
     // Unfortunally this styles the widget to which the style_context belongs to only
@@ -183,12 +191,13 @@ export default function Window({ application, data }) {
   updatePreview();
 
   function run() {
+    button_run.set_sensitive(false);
+
     updatePreview();
 
     const code = source_view_javascript.buffer.text;
     if (!code.trim()) return;
 
-    button_run.set_sensitive(false);
     // We have to create a new file each time
     // because gjs doesn't appear to use etag for module caching
     // ?foo=Date.now() also does not work as expected
@@ -212,4 +221,30 @@ export default function Window({ application, data }) {
   window.present();
 
   return { window };
+}
+
+
+// console.log(csstree)
+
+const scoping_selector = {
+  "type": "ClassSelector",
+  "loc": null,
+  "name": "workbench_output"
+}
+
+function scopeStylesheet(style) {
+  const ast = csstree.parse(style, {
+    positions: true,
+    flename: 'cool.css',
+  });
+
+  csstree.walk(ast, (node) => {
+    if (node.type !== 'Selector') return;
+    node.children.unshift(scoping_selector);
+  });
+
+  const result = csstree.generate(ast, {sourceMap: true, mode: 'spec'});
+  console.log(result);
+
+  return result.css;
 }
