@@ -37,14 +37,14 @@
                   </object>
                 </child>
                 <child>
-                  <object class="GtkToggleButton" id="button_ui">
-                    <property name="label">UI</property>
-                    <property name="active">true</property>
+                  <object class="GtkToggleButton" id="button_css">
+                    <property name="label">CSS</property>
+                    <property name="active">false</property>
                   </object>
                 </child>
                 <child>
-                  <object class="GtkToggleButton" id="button_css">
-                    <property name="label">CSS</property>
+                  <object class="GtkToggleButton" id="button_ui">
+                    <property name="label">UI</property>
                     <property name="active">true</property>
                   </object>
                 </child>
@@ -101,7 +101,7 @@
             <child>
               <object class="GtkScrolledWindow">
                 <child>
-                  <object class="GtkSourceView" id="source_view_ui">
+                  <object class="GtkSourceView" id="source_view_css">
                     <property name="buffer">
                       <object class="GtkSourceBuffer" />
                     </property>
@@ -124,7 +124,7 @@
             <child>
               <object class="GtkScrolledWindow">
                 <child>
-                  <object class="GtkSourceView" id="source_view_css">
+                  <object class="GtkSourceView" id="source_view_ui">
                     <property name="buffer">
                       <object class="GtkSourceBuffer" />
                     </property>
