@@ -42,6 +42,10 @@ export default function Window({ application, data }) {
 
   const output = builder.get_object('output')
 
+  const panel_javascript = builder.get_object('panel_javascript');
+  const panel_css = builder.get_object('panel_css');
+  const panel_ui = builder.get_object('panel_ui');
+
   const source_view_javascript = builder.get_object("source_view_javascript");
   source_view_javascript.buffer.set_language(
     language_manager.get_language("js"),
@@ -91,21 +95,21 @@ export default function Window({ application, data }) {
 
   button_ui.bind_property(
     "active",
-    source_view_ui.parent,
+    panel_ui,
     "visible",
     GObject.BindingFlags.SYNC_CREATE,
   );
 
   button_css.bind_property(
     "active",
-    source_view_css.parent,
+    panel_css,
     "visible",
     GObject.BindingFlags.SYNC_CREATE,
   );
 
   button_javascript.bind_property(
     "active",
-    source_view_javascript.parent,
+    panel_javascript,
     "visible",
     GObject.BindingFlags.SYNC_CREATE,
   );

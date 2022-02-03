@@ -76,70 +76,136 @@
             <property name="vexpand">true</property>
             <property name="homogeneous">true</property>
             <child>
-              <object class="GtkScrolledWindow">
+              <object class="GtkBox" id="panel_javascript">
+                <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkSourceView" id="source_view_javascript">
-                    <property name="buffer">
-                      <object class="GtkSourceBuffer" />
-                    </property>
-                    <property name="monospace">true</property>
-                    <property name="auto-indent">true</property>
-                    <property name="background-pattern">grid</property>
-                    <property name="highlight-current-line">true</property>
-                    <property name="indent-on-tab">true</property>
-                    <property name="indent-width">2</property>
-                    <property name="insert-spaces-instead-of-tabs">true</property>
-                    <property name="show-line-marks">true</property>
-                    <property name="show-line-numbers">true</property>
-                    <property name="smart-backspace">true</property>
-                    <property name="tab-width">2</property>
-                    <property name="wrap-mode">GTK_WRAP_WORD_CHAR</property>
+                  <object class="GtkBox">
+                    <child>
+                      <object class="GtkButton">
+                        <property name="label">JavaScript</property>
+                        <property name="sensitive">false</property>
+                        <style>
+                          <class name="flat"/>
+                        </style>
+                      </object>
+                    </child>
+                    <style>
+                      <class name="toolbar"/>
+                    </style>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkScrolledWindow">
+                    <property name="vexpand">true</property>
+                    <child>
+                      <object class="GtkSourceView" id="source_view_javascript">
+                        <property name="buffer">
+                          <object class="GtkSourceBuffer" />
+                        </property>
+                        <property name="monospace">true</property>
+                        <property name="auto-indent">true</property>
+                        <property name="background-pattern">grid</property>
+                        <property name="highlight-current-line">true</property>
+                        <property name="indent-on-tab">true</property>
+                        <property name="indent-width">2</property>
+                        <property name="insert-spaces-instead-of-tabs">true</property>
+                        <property name="show-line-marks">true</property>
+                        <property name="show-line-numbers">true</property>
+                        <property name="smart-backspace">true</property>
+                        <property name="tab-width">2</property>
+                        <property name="wrap-mode">GTK_WRAP_WORD_CHAR</property>
+                      </object>
+                    </child>
                   </object>
                 </child>
               </object>
             </child>
             <child>
-              <object class="GtkScrolledWindow">
+              <object class="GtkBox" id="panel_css">
+                <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkSourceView" id="source_view_css">
-                    <property name="buffer">
-                      <object class="GtkSourceBuffer" />
-                    </property>
-                    <property name="monospace">true</property>
-                    <property name="auto-indent">true</property>
-                    <property name="background-pattern">grid</property>
-                    <property name="highlight-current-line">true</property>
-                    <property name="indent-on-tab">true</property>
-                    <property name="indent-width">2</property>
-                    <property name="insert-spaces-instead-of-tabs">true</property>
-                    <property name="show-line-marks">true</property>
-                    <property name="show-line-numbers">true</property>
-                    <property name="smart-backspace">true</property>
-                    <property name="tab-width">2</property>
-                    <property name="wrap-mode">GTK_WRAP_WORD_CHAR</property>
+                  <object class="GtkBox">
+                    <child>
+                      <object class="GtkButton">
+                        <property name="label">CSS</property>
+                        <property name="sensitive">false</property>
+                        <style>
+                          <class name="flat"/>
+                        </style>
+                      </object>
+                    </child>
+                    <style>
+                      <class name="toolbar"/>
+                    </style>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkScrolledWindow">
+                    <property name="vexpand">true</property>
+                    <child>
+                      <object class="GtkSourceView" id="source_view_css">
+                        <property name="buffer">
+                          <object class="GtkSourceBuffer" />
+                        </property>
+                        <property name="monospace">true</property>
+                        <property name="auto-indent">true</property>
+                        <property name="background-pattern">grid</property>
+                        <property name="highlight-current-line">true</property>
+                        <property name="indent-on-tab">true</property>
+                        <property name="indent-width">2</property>
+                        <property name="insert-spaces-instead-of-tabs">true</property>
+                        <property name="show-line-marks">true</property>
+                        <property name="show-line-numbers">true</property>
+                        <property name="smart-backspace">true</property>
+                        <property name="tab-width">2</property>
+                        <property name="wrap-mode">GTK_WRAP_WORD_CHAR</property>
+                      </object>
+                    </child>
                   </object>
                 </child>
               </object>
             </child>
             <child>
-              <object class="GtkScrolledWindow">
+              <object class="GtkBox" id="panel_ui">
+                <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkSourceView" id="source_view_ui">
-                    <property name="buffer">
-                      <object class="GtkSourceBuffer" />
-                    </property>
-                    <property name="monospace">true</property>
-                    <property name="auto-indent">true</property>
-                    <property name="background-pattern">grid</property>
-                    <property name="highlight-current-line">true</property>
-                    <property name="indent-on-tab">true</property>
-                    <property name="indent-width">2</property>
-                    <property name="insert-spaces-instead-of-tabs">true</property>
-                    <property name="show-line-marks">true</property>
-                    <property name="show-line-numbers">true</property>
-                    <property name="smart-backspace">true</property>
-                    <property name="tab-width">2</property>
-                    <property name="wrap-mode">GTK_WRAP_WORD_CHAR</property>
+                  <object class="GtkBox">
+                    <child>
+                      <object class="GtkButton">
+                        <property name="label">UI</property>
+                        <property name="sensitive">false</property>
+                        <style>
+                          <class name="flat"/>
+                        </style>
+                      </object>
+                    </child>
+                    <style>
+                      <class name="toolbar"/>
+                    </style>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkScrolledWindow">
+                    <property name="vexpand">true</property>
+                    <child>
+                      <object class="GtkSourceView" id="source_view_ui">
+                        <property name="buffer">
+                          <object class="GtkSourceBuffer" />
+                        </property>
+                        <property name="monospace">true</property>
+                        <property name="auto-indent">true</property>
+                        <property name="background-pattern">grid</property>
+                        <property name="highlight-current-line">true</property>
+                        <property name="indent-on-tab">true</property>
+                        <property name="indent-width">2</property>
+                        <property name="insert-spaces-instead-of-tabs">true</property>
+                        <property name="show-line-marks">true</property>
+                        <property name="show-line-numbers">true</property>
+                        <property name="smart-backspace">true</property>
+                        <property name="tab-width">2</property>
+                        <property name="wrap-mode">GTK_WRAP_WORD_CHAR</property>
+                      </object>
+                    </child>
                   </object>
                 </child>
               </object>
