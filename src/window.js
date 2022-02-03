@@ -8,6 +8,7 @@ import GLib from 'gi://GLib'
 
 import { relativePath, settings } from "./util.js";
 import Shortcuts from "./Shortcuts.js";
+import * as css from './css.js'
 
 Source.init();
 
@@ -162,8 +163,15 @@ export default function Window({ application, data }) {
       Gtk.StyleContext.remove_provider_for_display(output.get_display(), css_provider);
       css_provider = null;
     }
-    const style = source_view_css.buffer.text;
+    let style = source_view_css.buffer.text;
     if (!style) return;
+
+    try {
+      style = scopeStylesheet(style);
+    } catch (err) {
+      // logError(err);
+    }
+
     css_provider = new Gtk.CssProvider();
     css_provider.load_from_data(style);
     // Unfortunally this styles the widget to which the style_context belongs to only
@@ -183,12 +191,13 @@ export default function Window({ application, data }) {
   updatePreview();
 
   function run() {
+    button_run.set_sensitive(false);
+
     updatePreview();
 
     const code = source_view_javascript.buffer.text;
     if (!code.trim()) return;
 
-    button_run.set_sensitive(false);
     // We have to create a new file each time
     // because gjs doesn't appear to use etag for module caching
     // ?foo=Date.now() also does not work as expected
@@ -212,4 +221,16 @@ export default function Window({ application, data }) {
   window.present();
 
   return { window };
+}
+
+function scopeStylesheet(style) {
+  const ast = css.parse(style);
+
+  for (const {selectors} of ast.stylesheet.rules) {
+    for (let i = 0; i < selectors.length; i++) {
+      selectors[i] = ".workbench_output " + selectors[i]
+    }
+  }
+
+  return css.stringify(ast);
 }
