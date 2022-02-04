@@ -106,6 +106,25 @@ function readFile(file) {
 }
 
 const placeholder_js = `
+import Gtk from 'gi://Gtk';
+
+workbench.homogeneous = true;
+
+// https://gjs-docs.gnome.org/gtk40/gtk.button
+const button = new Gtk.Button({
+  label: "Press me",
+});
+button.connect('clicked', greet);
+workbench.get_first_child().append(button);
+
+function greet() {
+  // https://gjs-docs.gnome.org/gtk40/gtk.messagedialog
+  const dialog = new Gtk.MessageDialog({
+    text: 'Hello World!'
+  })
+  dialog.present();
+}
+
 console.log('Welcome to Workbench!');
 `.trim()
 
@@ -119,6 +138,9 @@ const placeholder_xml = `
 <?xml version="1.0" encoding="UTF-8" ?>
 <interface>
   <object class="GtkBox">
+    <property name="orientation">vertical</property>
+    <property name="valign">center</property>
+    <property name="halign">center</property>
     <child>
       <object class="GtkLabel">
         <property name="label">Welcome to Workbench!</property>

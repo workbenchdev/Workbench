@@ -138,6 +138,7 @@ export default function Window({ application, data }) {
   // source_view_javascript.buffer.connect("changed", updatePreview);
 
   const workbench = globalThis.workbench = output;
+  workbench.window = window;
 
   let css_provider = null
 

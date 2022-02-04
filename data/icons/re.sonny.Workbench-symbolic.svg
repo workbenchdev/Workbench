@@ -1,9 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg height="16px" viewBox="0 0 16 16" width="16px" xmlns="http://www.w3.org/2000/svg">
-    <g fill="#3d3846">
-        <path d="m 9 4 h 2 v 12 h -2 z m 0 0"/>
-        <path d="m 9 13.417969 c 0 -2.222657 -1.777344 -4 -4 -4 v -2 c 3.300781 0 6 2.695312 6 6 z m 0 0"/>
-        <path d="m 10 0 l -3.082031 5 h 6.164062 z m 0 0"/>
-        <path d="m 1 8.417969 l 5 3.082031 v -6.167969 z m 0 0"/>
+<svg height="16px" viewBox="0 0 16 16" width="16px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <filter id="a" height="100%" width="100%" x="0%" y="0%">
+        <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0"/>
+    </filter>
+    <mask id="b">
+        <g filter="url(#a)">
+            <rect fill-opacity="0.4" height="16" width="16"/>
+        </g>
+    </mask>
+    <clipPath id="c">
+        <rect height="152" width="192"/>
+    </clipPath>
+    <mask id="d">
+        <g filter="url(#a)">
+            <rect fill-opacity="0.4" height="16" width="16"/>
+        </g>
+    </mask>
+    <clipPath id="e">
+        <rect height="152" width="192"/>
+    </clipPath>
+    <mask id="f">
+        <g filter="url(#a)">
+            <rect fill-opacity="0.4" height="16" width="16"/>
+        </g>
+    </mask>
+    <clipPath id="g">
+        <rect height="152" width="192"/>
+    </clipPath>
+    <g clip-path="url(#c)" mask="url(#b)" transform="matrix(1 0 0 1 -168 -16)">
+        <path d="m 96 96 h 6 c 0.550781 0 1 0.449219 1 1 s -0.449219 1 -1 1 h -6 c -0.550781 0 -1 -0.449219 -1 -1 s 0.449219 -1 1 -1 z m 0 0" fill="#8f3200"/>
+    </g>
+    <g clip-path="url(#e)" mask="url(#d)" transform="matrix(1 0 0 1 -168 -16)">
+        <path d="m 96 100 h 6 c 0.550781 0 1 0.449219 1 1 s -0.449219 1 -1 1 h -6 c -0.550781 0 -1 -0.449219 -1 -1 s 0.449219 -1 1 -1 z m 0 0" fill="#8f3200"/>
+    </g>
+    <g clip-path="url(#g)" mask="url(#f)" transform="matrix(1 0 0 1 -168 -16)">
+        <path d="m 96 104 h 6 c 0.550781 0 1 0.449219 1 1 s -0.449219 1 -1 1 h -6 c -0.550781 0 -1 -0.449219 -1 -1 s 0.449219 -1 1 -1 z m 0 0" fill="#8f3200"/>
+    </g>
+    <g fill="#241f31">
+        <path d="m 7.875 2 h 2.25 v 2 h -2.25 z m 0 0"/>
+        <path d="m 5.5 1 h 2 c 0.277344 0 0.5 0.25 0.5 0.554688 v 2.890624 c 0 0.304688 -0.222656 0.554688 -0.5 0.554688 h -2 c -0.277344 0 -0.5 -0.25 -0.5 -0.554688 v -2.890624 c 0 -0.304688 0.222656 -0.554688 0.5 -0.554688 z m 0 0"/>
+        <path d="m 9.375 1 h 3.25 c 0.207031 0 0.375 0.167969 0.375 0.375 v 3.25 c 0 0.207031 -0.167969 0.375 -0.375 0.375 h -3.25 c -0.207031 0 -0.375 -0.167969 -0.375 -0.375 v -3.25 c 0 -0.207031 0.167969 -0.375 0.375 -0.375 z m 0 0"/>
+        <path d="m 12.375 3.25 c 1.589844 0 2.320312 -0.253906 3.875 0.8125 l 0.375 -0.1875 c -0.625 -2.5 -2.707031 -2.875 -3.761719 -2.875 h -1.863281 z m 0 0"/>
+        <path d="m 10 6 h 2 v 9 h -2 z m 0 0"/>
+        <path d="m 12.375 3.25 c 1.589844 0 2.320312 -0.253906 3.875 0.8125 l 0.375 -0.1875 c -0.625 -2.5 -2.707031 -2.875 -3.761719 -2.875 h -1.863281 z m 0 0"/>
+        <path d="m 2 3 h 1 v 7 h -1 z m 0 0"/>
+        <path d="m 1.75 1 h 1.5 l 0.75 3 h -3 z m 0 0"/>
+        <path d="m 2 8 h 1 c 0.550781 0 1 0.449219 1 1 v 5 c 0 0.550781 -0.449219 1 -1 1 h -1 c -0.550781 0 -1 -0.449219 -1 -1 v -5 c 0 -0.550781 0.449219 -1 1 -1 z m 0 0"/>
     </g>
 </svg>

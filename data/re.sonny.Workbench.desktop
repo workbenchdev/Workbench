@@ -1,7 +1,7 @@
 [Desktop Entry]
 # TRANSLATORS: Don't translate
 Name=Workbench
-Comment=A playground for GNOME technologies
+Comment=Playground for GNOME development
 Exec=workbench %U
 Terminal=false
 Type=Application

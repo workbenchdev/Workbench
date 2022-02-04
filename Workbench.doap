@@ -7,7 +7,7 @@
   xmlns="http://usefulinc.com/ns/doap#"
 >
   <name>Workbench</name>
-  <shortdesc>A playground for HTML/CSS/JavaScript</shortdesc>
+  <shortdesc>Playground for GNOME development</shortdesc>
   <description
   >Something clever.</description>
 
