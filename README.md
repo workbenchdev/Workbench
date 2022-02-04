@@ -11,7 +11,7 @@ Playground for GNOME development
 Workbench aims to provide a great developer experience for the following use cases
 
 1. An application to learn GNOME development - learning by doing with an instant feedback loop
-2. A stratchpad for experienced developers who want to try or prototype something quickly
+2. A scratchpad for experienced developers who want to try or prototype something quickly
 
 Workbench will never be a full fledged IDE or code editor. I see it as the little brother of [GNOME Builder](https://apps.gnome.org/app/org.gnome.Builder/).
 
