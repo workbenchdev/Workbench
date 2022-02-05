@@ -29,10 +29,31 @@ export default [
   },
 
   {
-    input: "node_modules/ltx/src/parse.js",
+    input: "node_modules/ltx/src/ltx.js",
     output: {
       file: "src/ltx.js",
     },
     plugins: [nodePolyfills(), nodeResolve()]
+  },
+
+  {
+    input: "node_modules/prettier/esm/standalone.mjs",
+    output: {
+      file: "src/prettier.js",
+    }
+  },
+
+  {
+    input: "node_modules/prettier/esm/parser-babel.mjs",
+    output: {
+      file: "src/prettier-babel.js",
+    }
+  },
+
+  {
+    input: "node_modules/prettier/esm/parser-postcss.mjs",
+    output: {
+      file: "src/prettier-postcss.js",
+    }
   }
 ];

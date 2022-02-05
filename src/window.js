@@ -9,7 +9,10 @@ import GLib from 'gi://GLib'
 import { relativePath, settings } from "./util.js";
 import Shortcuts from "./Shortcuts.js";
 import * as css from './css.js'
-import parse from './ltx.js'
+import * as ltx from './ltx.js'
+import prettier from './prettier.js'
+import parserBabel from "./prettier-babel.js";
+import parserPostCSS from "./prettier-postcss.js";
 
 Source.init();
 
@@ -205,7 +208,17 @@ export default function Window({ application, data }) {
   }
   updatePreview();
 
+  function xmlFormat(code) {
+    return `<?xml version="1.0" encoding="UTF-8" ?>\n${ltx.stringify(ltx.parse(code), 2)}`;
+  }
+
   function run() {
+    // auto format code
+    source_view_javascript.buffer.text = prettier.format(source_view_javascript.buffer.text, {parser: "babel", plugins: [parserBabel], trailingComma: "all"});
+    source_view_css.buffer.text = prettier.format(source_view_css.buffer.text, {parser: "css", plugins: [parserPostCSS]});
+    // source_view_ui.buffer.text = xmlFormat(source_view_ui.buffer.text);
+
+
     button_run.set_sensitive(false);
 
     updatePreview();
@@ -251,7 +264,7 @@ function scopeStylesheet(style) {
 }
 
 function targetBuildable(code) {
-  const tree = parse(code);
+  const tree = ltx.parse(code);
 
   const child = tree.children.find((child) => {
     if (typeof child === 'string') return false

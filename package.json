@@ -7,6 +7,7 @@
     "eslint": "^8.4.1",
     "eslint-plugin-import": "^2.25.3",
     "ltx": "^3.0.0",
+    "prettier": "^2.5.1",
     "rollup": "^2.67.0",
     "rollup-plugin-ignore": "^1.0.10",
     "rollup-plugin-node-polyfills": "^0.2.1",

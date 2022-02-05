@@ -4,6 +4,10 @@ test/assert.js -diff
 test/uvu.js -diff
 
 src/css.js -diff
+src/ltx.js -diff
+src/prettier.js -diff
+src/prettier-babel.js -diff
+src/prettier-postcss.js -diff
 
 data/icons/re.sonny.Workbench-symbolic.svg -diff
 data/icons/re.sonny.Workbench.Devel.svg -diff
