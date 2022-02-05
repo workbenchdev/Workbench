@@ -105,8 +105,8 @@ function readFile(file) {
   }
 }
 
-const placeholder_js = `
-import Gtk from 'gi://Gtk';
+const placeholder_js =
+`import Gtk from "gi://Gtk";
 
 workbench.homogeneous = true;
 
@@ -114,28 +114,28 @@ workbench.homogeneous = true;
 const button = new Gtk.Button({
   label: "Press me",
 });
-button.connect('clicked', greet);
+button.connect("clicked", greet);
 workbench.get_first_child().append(button);
 
 function greet() {
   // https://gjs-docs.gnome.org/gtk40/gtk.messagedialog
   const dialog = new Gtk.MessageDialog({
-    text: 'Hello World!'
-  })
+    text: "Hello World!",
+  });
   dialog.present();
 }
 
-console.log('Welcome to Workbench!');
-`.trim()
+console.log("Welcome to Workbench!");
+`
 
-const placeholder_css = `
-box > label {
+const placeholder_css =
+`box > label {
   color: #e66100;
 }
-`.trim()
+`
 
-const placeholder_xml = `
-<?xml version="1.0" encoding="UTF-8" ?>
+const placeholder_xml =
+`<?xml version="1.0" encoding="UTF-8" ?>
 <interface>
   <object class="GtkBox">
     <property name="orientation">vertical</property>
@@ -148,7 +148,7 @@ const placeholder_xml = `
     </child>
   </object>
 </interface>
-`.trim()
+`;
 
 const default_data = {
   js: placeholder_js,

@@ -5,7 +5,7 @@ export default function About({ application, datadir, version }) {
   const dialog = new Gtk.AboutDialog({
     application,
     authors: ["Sonny Piers https://sonny.re"],
-    // artists: ["Tobias Bernard <tbernard@gnome.org>"],
+    artists: ["Tobias Bernard <tbernard@gnome.org>"],
     comments: _("Playground for GNOME development"),
     copyright: "Copyright 2022 Sonny Piers",
     license_type: Gtk.License.GPL_3_0_ONLY,
