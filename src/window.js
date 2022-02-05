@@ -8,11 +8,11 @@ import GLib from 'gi://GLib'
 
 import { relativePath, settings } from "./util.js";
 import Shortcuts from "./Shortcuts.js";
-import * as css from './css.js'
-import * as ltx from './ltx.js'
-import prettier from './prettier.js'
-import parserBabel from "./prettier-babel.js";
-import parserPostCSS from "./prettier-postcss.js";
+import * as ltx from './lib/ltx.js'
+import prettier from './lib/prettier.js'
+import parserBabel from "./lib/prettier-babel.js";
+import parserPostCSS from "./lib/prettier-postcss.js";
+import postcss from './lib/postcss.js'
 
 Source.init();
 
@@ -187,7 +187,7 @@ export default function Window({ application, data }) {
     try {
       style = scopeStylesheet(style);
     } catch (err) {
-      // logError(err);
+      logError(err);
     }
 
     css_provider = new Gtk.CssProvider();
@@ -251,16 +251,24 @@ export default function Window({ application, data }) {
   return { window };
 }
 
+// We are using postcss because it's also a dependency of prettier
+// it would be great to keep the ast around and pass that to prettier
+// so there is no need to re-parse but that's not supported yet
+// https://github.com/prettier/prettier/issues/9114
+// We are not using https://github.com/pazams/postcss-scopify
+// because it's not compatible with postcss 8
 function scopeStylesheet(style) {
-  const ast = css.parse(style);
+  const ast = postcss.parse(style);
 
-  for (const {selectors} of ast.stylesheet.rules) {
-    for (let i = 0; i < selectors.length; i++) {
-      selectors[i] = ".workbench_output " + selectors[i]
-    }
-  }
+   for (const node of ast.nodes) {
+     node.selector = ".workbench_output " + node.selector;
+   }
 
-  return css.stringify(ast);
+  let str = ''
+  postcss.stringify(ast, (s) => {
+    str += s
+  });
+  return str;
 }
 
 function targetBuildable(code) {
