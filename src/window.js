@@ -10,8 +10,9 @@ import { relativePath, settings } from "./util.js";
 import Shortcuts from "./Shortcuts.js";
 import * as ltx from './lib/ltx.js';
 import prettier from './lib/prettier.js';
-import parserBabel from "./lib/prettier-babel.js";;
-import parserPostCSS from "./lib/prettier-postcss.js";
+import prettier_babel from "./lib/prettier-babel.js";
+import prettier_postcss from "./lib/prettier-postcss.js";
+import prettier_xml from './lib/prettier-xml.js';
 import postcss from './lib/postcss.js';
 
 Source.init();
@@ -208,16 +209,11 @@ export default function Window({ application, data }) {
   }
   updatePreview();
 
-  function xmlFormat(code) {
-    return `<?xml version="1.0" encoding="UTF-8" ?>\n${ltx.stringify(ltx.parse(code), 2)}`;
-  }
-
   function run() {
     // auto format code
-    source_view_javascript.buffer.text = prettier.format(source_view_javascript.buffer.text, {parser: "babel", plugins: [parserBabel], trailingComma: "all"});
-    source_view_css.buffer.text = prettier.format(source_view_css.buffer.text, {parser: "css", plugins: [parserPostCSS]});
-    source_view_ui.buffer.text = xmlFormat(source_view_ui.buffer.text);
-
+    source_view_javascript.buffer.text = prettier.format(source_view_javascript.buffer.text, {parser: "babel", plugins: [prettier_babel], trailingComma: "all"});
+    source_view_css.buffer.text = prettier.format(source_view_css.buffer.text, {parser: "css", plugins: [prettier_postcss]});
+    source_view_ui.buffer.text = prettier.format(source_view_ui.buffer.text, {parser: "xml", plugins: [prettier_xml], xmlWhitespaceSensitivity: "ignore"});
 
     button_run.set_sensitive(false);
 
