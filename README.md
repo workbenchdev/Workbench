@@ -21,6 +21,7 @@ Features:
 * [GNOME JavaScript](https://gjs.guide/) for quick and easy scripting
 * Syntax highlighting
 * Opens `.js`, `.css` and `.ui` files
+* Auto format
 * [More to come](https://github.com/sonnyp/Workbench/issues)
 
 Workbench is a work in progress, [feedback and help welcome](https://github.com/sonnyp/Workbench/discussions/new).

@@ -209,28 +209,60 @@ export default function Window({ application, data }) {
   }
   updatePreview();
 
-  function run() {
-    // auto format code
-    source_view_javascript.buffer.text = prettier.format(source_view_javascript.buffer.text, {parser: "babel", plugins: [prettier_babel], trailingComma: "all"});
-    source_view_css.buffer.text = prettier.format(source_view_css.buffer.text, {parser: "css", plugins: [prettier_postcss]});
-    source_view_ui.buffer.text = prettier.format(source_view_ui.buffer.text, {parser: "xml", plugins: [prettier_xml], xmlWhitespaceSensitivity: "ignore"});
+  function format(buffer, formatter) {
+    const mark = buffer.get_insert();
+    const iter = buffer.get_iter_at_mark(mark);
+    const cursor_position = iter.get_offset();
 
+    const code = formatter(buffer.text);
+
+    buffer.begin_user_action();
+
+    buffer.delete(buffer.get_start_iter(), buffer.get_end_iter());
+    buffer.insert(buffer.get_start_iter(), code, -1);
+    buffer.place_cursor(buffer.get_iter_at_offset(cursor_position));
+
+    buffer.end_user_action();
+
+    return code;
+  }
+
+  function run() {
     button_run.set_sensitive(false);
+
+    const javascript = format(source_view_javascript.buffer, (text) => {
+      return prettier.format(source_view_javascript.buffer.text, {
+        parser: "babel",
+        plugins: [prettier_babel],
+        trailingComma: "all"
+      });
+    });
+
+    format(source_view_css.buffer, (text) => {
+      return prettier.format(text, {parser: "css", plugins: [prettier_postcss]});
+    });
+
+    format(source_view_ui.buffer, (text) => {
+      return prettier.format(text, {
+        parser: "xml",
+        plugins: [prettier_xml],
+        xmlWhitespaceSensitivity: "ignore"
+      });
+    });
 
     updatePreview();
 
-    const code = source_view_javascript.buffer.text;
-    if (!code.trim()) return;
+    if (!javascript.trim()) return;
 
     // We have to create a new file each time
     // because gjs doesn't appear to use etag for module caching
     // ?foo=Date.now() also does not work as expected
     // TODO: File a bug
     const [file_javascript] = Gio.File.new_tmp('workbench-XXXXXX.js');
-    file_javascript.replace_contents(code, null, false, Gio.FileCreateFlags.NONE, null);
+    file_javascript.replace_contents(javascript, null, false, Gio.FileCreateFlags.NONE, null);
     import(`file://${file_javascript.get_path()}`).catch(logError).finally(() => {
       button_run.set_sensitive(true);
-    })
+    });
   }
 
   const runAction = new Gio.SimpleAction({
