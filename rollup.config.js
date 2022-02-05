@@ -1,7 +1,7 @@
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 import commonjs from '@rollup/plugin-commonjs';
 import ignore from "rollup-plugin-ignore"
-// import nodePolyfills from 'rollup-plugin-node-polyfills';
+import nodePolyfills from 'rollup-plugin-node-polyfills';
 
 export default [
   {
@@ -25,7 +25,7 @@ export default [
     output: {
       file: "src/lib/ltx.js",
     },
-    plugins: [nodeResolve({resolveOnly: ['events']})]
+    plugins: [nodePolyfills()]
   },
 
   {

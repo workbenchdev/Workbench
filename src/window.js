@@ -8,11 +8,11 @@ import GLib from 'gi://GLib'
 
 import { relativePath, settings } from "./util.js";
 import Shortcuts from "./Shortcuts.js";
-import * as ltx from './lib/ltx.js'
-import prettier from './lib/prettier.js'
-import parserBabel from "./lib/prettier-babel.js";
+import * as ltx from './lib/ltx.js';
+import prettier from './lib/prettier.js';
+import parserBabel from "./lib/prettier-babel.js";;
 import parserPostCSS from "./lib/prettier-postcss.js";
-import postcss from './lib/postcss.js'
+import postcss from './lib/postcss.js';
 
 Source.init();
 
@@ -216,7 +216,7 @@ export default function Window({ application, data }) {
     // auto format code
     source_view_javascript.buffer.text = prettier.format(source_view_javascript.buffer.text, {parser: "babel", plugins: [parserBabel], trailingComma: "all"});
     source_view_css.buffer.text = prettier.format(source_view_css.buffer.text, {parser: "css", plugins: [parserPostCSS]});
-    // source_view_ui.buffer.text = xmlFormat(source_view_ui.buffer.text);
+    source_view_ui.buffer.text = xmlFormat(source_view_ui.buffer.text);
 
 
     button_run.set_sensitive(false);
