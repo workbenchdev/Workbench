@@ -188,7 +188,7 @@ export default function Window({ application, data }) {
     try {
       style = scopeStylesheet(style);
     } catch (err) {
-      logError(err);
+      // logError(err);
     }
 
     css_provider = new Gtk.CssProvider();

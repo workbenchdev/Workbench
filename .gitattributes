@@ -8,6 +8,7 @@ src/lib/postcss.js -diff
 src/lib/prettier.js -diff
 src/lib/prettier-babel.js -diff
 src/lib/prettier-postcss.js -diff
+src/lib/prettier-xml.js -diff
 
 data/icons/re.sonny.Workbench-symbolic.svg -diff
 data/icons/re.sonny.Workbench.Devel.svg -diff
