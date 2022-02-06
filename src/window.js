@@ -26,8 +26,11 @@ export default function Window({ application, data }) {
   const builder = Gtk.Builder.new_from_file(relativePath("./window.ui"));
 
   const devtools = builder.get_object('devtools');
-  const terminal = builder.get_object('terminal')
-  terminal.set_cursor_blink_mode(Vte.CursorBlinkMode.ON);
+  const terminal = builder.get_object('terminal');
+  const MAKE_CURSOR_INVISIBLE = '\u001b[?25l';
+  terminal.feed(MAKE_CURSOR_INVISIBLE);
+  // terminal.set_cursor_blink_mode(Vte.CursorBlinkMode.ON);
+  // terminal.set_input_enabled(true);
   terminal.spawn_sync(
     Vte.PtyFlags.DEFAULT,
     '/',
@@ -39,6 +42,15 @@ export default function Window({ application, data }) {
     null,
     null
   );
+
+  function clearTerminal() {
+    // https://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797
+    const ERASE_ENTIRE_SCREEN = '\u001b[2J';
+    const ERASE_SAVED_LINES = '\u001b[3J';
+    const MOVE_CURSOR_HOME = '\u001b[H'; // 0,0
+    terminal.feed(`${ERASE_ENTIRE_SCREEN}${ERASE_SAVED_LINES}${MOVE_CURSOR_HOME}`);
+    // terminal.reset(true, true);
+  }
 
   const window = builder.get_object("window");
   if (__DEV__) window.add_css_class("devel");
@@ -230,6 +242,8 @@ export default function Window({ application, data }) {
   function run() {
     button_run.set_sensitive(false);
 
+    clearTerminal();
+
     const javascript = format(source_view_javascript.buffer, (text) => {
       return prettier.format(source_view_javascript.buffer.text, {
         parser: "babel",
@@ -265,12 +279,19 @@ export default function Window({ application, data }) {
     });
   }
 
-  const runAction = new Gio.SimpleAction({
+  const action_run = new Gio.SimpleAction({
     name: "run",
     parameter_type: null,
   });
-  runAction.connect("activate", run);
-  window.add_action(runAction);
+  action_run.connect("activate", run);
+  window.add_action(action_run);
+
+  const action_clear = new Gio.SimpleAction({
+    name: "clear",
+    parameter_type: null,
+  });
+  action_clear.connect("activate", clearTerminal);
+  window.add_action(action_clear);
 
   Shortcuts({ window, application });
 

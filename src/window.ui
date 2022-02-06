@@ -221,21 +221,25 @@
           </object>
         </child>
         <child>
-          <object class="GtkBox">
-            <child>
+          <object class="GtkActionBar">
+            <child type="start">
               <object class="GtkToggleButton" id="button_devtools">
                 <property name="label">Console</property>
                 <property name="active">true</property>
               </object>
             </child>
-            <child>
+            <child type="start">
               <object class="GtkButton" id="button_inspector">
                 <property name="label">Inspector</property>
               </object>
             </child>
-            <style>
-              <class name="toolbar"/>
-            </style>
+            <child type="end">
+              <object class="GtkButton" id="button_clear">
+                <property name="label">Clear</property>
+                <property name="action-name">win.clear</property>
+                <property name="tooltip-text">&lt;Primary&gt;K</property>
+              </object>
+            </child>
           </object>
         </child>
         <child>

@@ -1,4 +1,5 @@
 import GLib from "gi://GLib";
+import Gio from 'gi://Gio';
 import { bindtextdomain, textdomain } from "gettext";
 
 import Application from "./application.js";
