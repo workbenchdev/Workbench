@@ -222,11 +222,9 @@ export default function Window({ application, data }) {
   updatePreview();
 
   function format(buffer, formatter) {
-    const mark = buffer.get_insert();
-    const iter = buffer.get_iter_at_mark(mark);
-    const cursor_position = iter.get_offset();
+    const {cursor_position} = buffer;
 
-    const code = formatter(buffer.text);
+    const code = formatter(buffer.text.trim());
 
     buffer.begin_user_action();
 
