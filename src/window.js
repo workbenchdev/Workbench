@@ -4,16 +4,16 @@ import Gio from "gi://Gio";
 import Source from "gi://GtkSource?version=5";
 import Adw from 'gi://Adw?version=1'
 import Vte from 'gi://Vte?version=4-2.91'
-import GLib from 'gi://GLib'
 
 import { relativePath, settings } from "./util.js";
 import Shortcuts from "./Shortcuts.js";
-import * as ltx from './lib/ltx.js';
+import Terminal from './terminal.js';
+import {targetBuildable, scopeStylesheet} from './code.js';
+
 import prettier from './lib/prettier.js';
 import prettier_babel from "./lib/prettier-babel.js";
 import prettier_postcss from "./lib/prettier-postcss.js";
 import prettier_xml from './lib/prettier-xml.js';
-import postcss from './lib/postcss.js';
 
 Source.init();
 
@@ -25,32 +25,9 @@ export default function Window({ application, data }) {
   Vte.Terminal.new()
   const builder = Gtk.Builder.new_from_file(relativePath("./window.ui"));
 
-  const devtools = builder.get_object('devtools');
-  const terminal = builder.get_object('terminal');
-  const MAKE_CURSOR_INVISIBLE = '\u001b[?25l';
-  terminal.feed(MAKE_CURSOR_INVISIBLE);
-  // terminal.set_cursor_blink_mode(Vte.CursorBlinkMode.ON);
-  // terminal.set_input_enabled(true);
-  terminal.spawn_sync(
-    Vte.PtyFlags.DEFAULT,
-    '/',
-    // +2 so we skip the line written by "script"
-    // Script started on ...
-    ['/bin/tail', '-f', '-n', '+2', '/var/tmp/workbench'],
-    [],
-    GLib.SpawnFlags.DO_NOT_REAP_CHILD,
-    null,
-    null
-  );
+  const terminal = Terminal({builder});
 
-  function clearTerminal() {
-    // https://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797
-    const ERASE_ENTIRE_SCREEN = '\u001b[2J';
-    const ERASE_SAVED_LINES = '\u001b[3J';
-    const MOVE_CURSOR_HOME = '\u001b[H'; // 0,0
-    terminal.feed(`${ERASE_ENTIRE_SCREEN}${ERASE_SAVED_LINES}${MOVE_CURSOR_HOME}`);
-    // terminal.reset(true, true);
-  }
+  const devtools = builder.get_object('devtools');
 
   const window = builder.get_object("window");
   if (__DEV__) window.add_css_class("devel");
@@ -240,7 +217,7 @@ export default function Window({ application, data }) {
   function run() {
     button_run.set_sensitive(false);
 
-    clearTerminal();
+    terminal.clear();
 
     const javascript = format(source_view_javascript.buffer, (text) => {
       return prettier.format(source_view_javascript.buffer.text, {
@@ -288,7 +265,7 @@ export default function Window({ application, data }) {
     name: "clear",
     parameter_type: null,
   });
-  action_clear.connect("activate", clearTerminal);
+  action_clear.connect("activate", terminal.clear);
   window.add_action(action_clear);
 
   Shortcuts({ window, application });
@@ -298,57 +275,3 @@ export default function Window({ application, data }) {
   return { window };
 }
 
-// We are using postcss because it's also a dependency of prettier
-// it would be great to keep the ast around and pass that to prettier
-// so there is no need to re-parse but that's not supported yet
-// https://github.com/prettier/prettier/issues/9114
-// We are not using https://github.com/pazams/postcss-scopify
-// because it's not compatible with postcss 8
-function scopeStylesheet(style) {
-  const ast = postcss.parse(style);
-
-   for (const node of ast.nodes) {
-     node.selector = ".workbench_output " + node.selector;
-   }
-
-  let str = ''
-  postcss.stringify(ast, (s) => {
-    str += s
-  });
-  return str;
-}
-
-function targetBuildable(code) {
-  const tree = ltx.parse(code);
-
-  const child = tree.children.find((child) => {
-    if (typeof child === 'string') return false
-
-    const class_name = child.attrs.class;
-    if (!class_name) return false;
-
-    const split = class_name.split(/(?=[A-Z])/);
-    if (split.length < 2) return false;
-
-    const [ns, ...rest] = split;
-    const klass = imports.gi[ns]?.[rest.join('')];
-    if (!klass) return false;
-
-    // TODO: Figure out a better way to find out if a klass
-    // inherits from GtkWidget
-    const instance = new klass()
-    if (typeof instance.get_parent !== 'function') return false
-
-    return true;
-  })
-
-  if (!child) {
-    return [null, '']
-  }
-
-  if (!child.attrs.id) {
-    child.attrs.id = 'workbench_target';
-  }
-
-  return [child.attrs.id, tree.toString()]
-}

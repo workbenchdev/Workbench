@@ -1,36 +1,5 @@
-import Gtk from "gi://Gtk";
-import GLib from "gi://GLib";
-import Gdk from "gi://Gdk";
-import Gio from "gi://Gio";
-
-export function logEnum(obj, value) {
-  console.log(
-    Object.entries(obj).find(([k, v]) => {
-      return v === value;
-    })[0],
-  );
-}
-
-export function relativePath(path) {
-  const [filename] = GLib.filename_from_uri(import.meta.url);
-  const dirname = GLib.path_get_dirname(filename);
-  return GLib.canonicalize_filename(path, dirname);
-}
-
-export function loadStyleSheet(path) {
-  const provider = new Gtk.CssProvider();
-  provider.load_from_path(path);
-  Gtk.StyleContext.add_provider_for_display(
-    Gdk.Display.get_default(),
-    provider,
-    Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
-  );
-}
-
-export const settings = new Gio.Settings({
-  schema_id: "re.sonny.Workbench",
-  path: "/re/sonny/Workbench/",
-});
+import * as ltx from './lib/ltx.js';
+import postcss from './lib/postcss.js';
 
 // We are using postcss because it's also a dependency of prettier
 // it would be great to keep the ast around and pass that to prettier
@@ -38,7 +7,7 @@ export const settings = new Gio.Settings({
 // https://github.com/prettier/prettier/issues/9114
 // We are not using https://github.com/pazams/postcss-scopify
 // because it's not compatible with postcss 8
-function scopeStylesheet(style) {
+export function scopeStylesheet(style) {
   const ast = postcss.parse(style);
 
    for (const node of ast.nodes) {
@@ -52,7 +21,7 @@ function scopeStylesheet(style) {
   return str;
 }
 
-function targetBuildable(code) {
+export function targetBuildable(code) {
   const tree = ltx.parse(code);
 
   const child = tree.children.find((child) => {
