@@ -48,25 +48,6 @@ const text_decoder = new TextDecoder();
 function readFile(file) {
   let content_type
 
-  // Here is how you can build a x-gjs uri
-  // const uri = GLib.Uri.build(GLib.UriFlags.NONE, 'x-gjs', null, null, null, 'console.log("hello")', null, null)
-  // console.log(uri.to_string())
-  if (file.has_uri_scheme("x-gjs")) {
-    let uri
-    try {
-      uri = GLib.Uri.parse(file.get_uri(), GLib.UriFlags.NONE)
-    } catch (err) {
-      logError(err);
-      return default_data;
-    }
-
-    return {
-      css: '',
-      js: uri.get_path(),
-      xml: ''
-    };
-  }
-
    try {
       const info = file.query_info(
         "standard::content-type",
