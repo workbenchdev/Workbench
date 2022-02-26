@@ -44,6 +44,8 @@ export default function Actions({ application, datadir, version }) {
     const file_chooser = new Gtk.FileChooserNative({
       title: "Open File",
       action: Gtk.FileChooserAction.OPEN,
+      modal: true,
+      transient_for: application.get_active_window(),
     });
     file_chooser.set_filter(file_filter);
 

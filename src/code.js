@@ -55,3 +55,10 @@ export function targetBuildable(code) {
 
   return [child.attrs.id, tree.toString()];
 }
+
+export function replaceBufferText(buffer, text) {
+  buffer.begin_user_action();
+  buffer.delete(buffer.get_start_iter(), buffer.get_end_iter());
+  buffer.insert(buffer.get_start_iter(), text, -1);
+  buffer.end_user_action();
+}

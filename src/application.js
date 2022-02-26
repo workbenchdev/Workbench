@@ -13,17 +13,18 @@ export default function Application({ version, datadir }) {
     flags: Gio.ApplicationFlags.HANDLES_OPEN,
   });
 
+  let window;
+
   application.connect("open", (self, files, hint) => {
+    if (!window) return;
+
     for (const file of files) {
-      Window({
-        application,
-        data: readFile(file),
-      });
+      window.openFile(file);
     }
   });
 
   application.connect("activate", () => {
-    Window({
+    window = Window({
       application,
       data: default_data,
     });
@@ -41,48 +42,6 @@ export default function Application({ version, datadir }) {
   Actions({ application, datadir, version });
 
   return application;
-}
-
-const text_decoder = new TextDecoder();
-function readFile(file) {
-  let content_type;
-
-  try {
-    const info = file.query_info(
-      "standard::content-type",
-      Gio.FileQueryInfoFlags.NONE,
-      null
-    );
-    content_type = info.get_content_type();
-  } catch (err) {
-    logError(err);
-  }
-
-  if (!content_type) {
-    return default_data;
-  }
-
-  let data;
-
-  try {
-    [, data] = file.load_contents(null);
-    data = text_decoder.decode(data);
-  } catch (err) {
-    logError(err);
-    return default_data;
-  }
-
-  const js = content_type.includes("/javascript") ? data : "";
-  const css = content_type.includes("text/css") ? data : "";
-  const xml = content_type.includes("application/x-gtk-builder") ? data : "";
-
-  if (!js && !css && !xml) return default_data;
-
-  return {
-    js,
-    css,
-    xml,
-  };
 }
 
 function readFileContent(relative_path) {

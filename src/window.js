@@ -8,7 +8,7 @@ import Vte from "gi://Vte?version=4-2.91";
 import { relativePath, settings } from "./util.js";
 import Shortcuts from "./Shortcuts.js";
 import Terminal from "./terminal.js";
-import { targetBuildable, scopeStylesheet } from "./code.js";
+import { targetBuildable, scopeStylesheet, replaceBufferText } from "./code.js";
 
 import prettier from "./lib/prettier.js";
 import prettier_babel from "./lib/prettier-babel.js";
@@ -207,17 +207,12 @@ export default function Window({ application, data }) {
   updatePreview();
 
   function format(buffer, formatter) {
-    const { cursor_position } = buffer;
-
     const code = formatter(buffer.text.trim());
 
-    buffer.begin_user_action();
+    const { cursor_position } = buffer;
 
-    buffer.delete(buffer.get_start_iter(), buffer.get_end_iter());
-    buffer.insert(buffer.get_start_iter(), code, -1);
+    replaceBufferText(buffer, code);
     buffer.place_cursor(buffer.get_iter_at_offset(cursor_position));
-
-    buffer.end_user_action();
 
     return code;
   }
@@ -291,5 +286,47 @@ export default function Window({ application, data }) {
 
   window.present();
 
-  return { window };
+  const text_decoder = new TextDecoder();
+  function openFile(file) {
+    let content_type;
+
+    try {
+      const info = file.query_info(
+        "standard::content-type",
+        Gio.FileQueryInfoFlags.NONE,
+        null
+      );
+      content_type = info.get_content_type();
+    } catch (err) {
+      logError(err);
+    }
+
+    if (!content_type) {
+      return;
+    }
+
+    let data;
+
+    try {
+      [, data] = file.load_contents(null);
+      data = text_decoder.decode(data);
+    } catch (err) {
+      logError(err);
+      return;
+    }
+
+    function load(buffer, data) {
+      replaceBufferText(buffer, data);
+      buffer.place_cursor(buffer.get_start_iter());
+    }
+
+    if (content_type.includes("/javascript")) {
+      load(source_view_javascript.buffer, data);
+    } else if (content_type.include("text/css")) {
+      load(source_view_css.buffer, data);
+    } else if (content_type.includes("application/x-gtk-builder")) {
+      load(source_view_ui.buffer, data);
+    }
+  }
+  return { window, openFile };
 }
