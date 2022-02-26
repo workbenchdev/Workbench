@@ -85,55 +85,17 @@ function readFile(file) {
   }
 }
 
-const placeholder_js =
-`import Gtk from "gi://Gtk";
-
-workbench.homogeneous = true;
-
-// https://gjs-docs.gnome.org/gtk40/gtk.button
-const button = new Gtk.Button({
-  label: "Press me",
-});
-button.connect("clicked", greet);
-workbench.get_first_child().append(button);
-
-function greet() {
-  // https://gjs-docs.gnome.org/gtk40/gtk.messagedialog
-  const dialog = new Gtk.MessageDialog({
-    text: "Hello World!",
-  });
-  dialog.present();
+function readFileContent(relative_path) {
+  const decoder = new TextDecoder("utf-8");
+  return decoder.decode(
+    Gio.File.new_for_path(relativePath(relative_path)).load_contents(null)[1]
+  );
 }
-
-console.log("Welcome to Workbench!");
-`
-
-const placeholder_css =
-`box > label {
-  color: #e66100;
-}
-`
-
-const placeholder_xml =
-`<?xml version="1.0" encoding="UTF-8" ?>
-<interface>
-  <object class="GtkBox">
-    <property name="orientation">vertical</property>
-    <property name="valign">center</property>
-    <property name="halign">center</property>
-    <child>
-      <object class="GtkLabel">
-        <property name="label">Welcome to Workbench!</property>
-      </object>
-    </child>
-  </object>
-</interface>
-`;
 
 const default_data = {
-  js: placeholder_js,
-  css: placeholder_css,
-  xml: placeholder_xml
+  js: readFileContent('./welcome.js'),
+  css: readFileContent('./welcome.css'),
+  xml: readFileContent('./welcome.ui'),
 }
 
   function setColorScheme() {

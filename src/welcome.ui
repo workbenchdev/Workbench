@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<interface>
+  <object class="GtkBox">
+    <property name="orientation">vertical</property>
+    <property name="valign">center</property>
+    <property name="halign">center</property>
+    <child>
+      <object class="GtkLabel">
+        <property name="label">Welcome to Workbench!</property>
+      </object>
+    </child>
+  </object>
+</interface>

@@ -3,7 +3,7 @@
 build
 builddir
 /flatpak
-node_modules/
+node_modules
 repo
 install
 .eslintcache
