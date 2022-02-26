@@ -1,6 +1,5 @@
 import Gio from "gi://Gio";
 import Adw from "gi://Adw";
-import GLib from 'gi://GLib';
 
 import Window from "./window.js";
 import Actions from './actions.js';

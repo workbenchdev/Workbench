@@ -33,11 +33,8 @@
             "sources" : [
                 {
                     "type" : "git",
-                    "url" : "https://gitlab.gnome.org/GNOME/vte.git"
-                },
-                {
-                    "type" : "patch",
-                    "path" : "vte-gtk4-gjs.patch"
+                    "url" : "https://gitlab.gnome.org/GNOME/vte.git",
+                    "commit": "f4b915aea367d407f8ac527e1aed9425b8cea9e2"
                 }
             ]
         },
