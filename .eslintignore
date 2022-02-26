@@ -3,3 +3,4 @@ install/
 flatpak/
 node_modules/
 repo/
+src/lib/

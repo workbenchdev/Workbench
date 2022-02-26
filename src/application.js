@@ -2,7 +2,7 @@ import Gio from "gi://Gio";
 import Adw from "gi://Adw";
 
 import Window from "./window.js";
-import Actions from './actions.js';
+import Actions from "./actions.js";
 import { relativePath, loadStyleSheet, settings } from "./util.js";
 
 const style_manager = Adw.StyleManager.get_default();
@@ -13,11 +13,11 @@ export default function Application({ version, datadir }) {
     flags: Gio.ApplicationFlags.HANDLES_OPEN,
   });
 
-  application.connect('open', (self, files, hint) => {
+  application.connect("open", (self, files, hint) => {
     for (const file of files) {
       Window({
         application,
-        data: readFile(file)
+        data: readFile(file),
       });
     }
   });
@@ -25,7 +25,7 @@ export default function Application({ version, datadir }) {
   application.connect("activate", () => {
     Window({
       application,
-      data: default_data
+      data: default_data,
     });
   });
 
@@ -38,51 +38,51 @@ export default function Application({ version, datadir }) {
   // TODO: Add examples
   // application.set_option_context_summary("");
 
-  Actions({application, datadir, version});
+  Actions({ application, datadir, version });
 
   return application;
 }
 
 const text_decoder = new TextDecoder();
 function readFile(file) {
-  let content_type
-
-   try {
-      const info = file.query_info(
-        "standard::content-type",
-        Gio.FileQueryInfoFlags.NONE,
-        null,
-      );
-      content_type = info.get_content_type();
-    } catch (err) {
-      logError(err);
-    }
-
-    if (!content_type) {
-      return default_data
-    }
-
-  let data
+  let content_type;
 
   try {
-    [,data] = file.load_contents(null);
-    data = text_decoder.decode(data);
+    const info = file.query_info(
+      "standard::content-type",
+      Gio.FileQueryInfoFlags.NONE,
+      null
+    );
+    content_type = info.get_content_type();
   } catch (err) {
-    logError(err)
-    return default_data
+    logError(err);
   }
 
-  const js = content_type.includes('/javascript') ? data : '';
-  const css = content_type.includes('text/css') ? data : '';
-  const xml = content_type.includes('application/x-gtk-builder') ? data : '';
+  if (!content_type) {
+    return default_data;
+  }
 
-  if (!js && !css && !xml) return default_data
+  let data;
+
+  try {
+    [, data] = file.load_contents(null);
+    data = text_decoder.decode(data);
+  } catch (err) {
+    logError(err);
+    return default_data;
+  }
+
+  const js = content_type.includes("/javascript") ? data : "";
+  const css = content_type.includes("text/css") ? data : "";
+  const xml = content_type.includes("application/x-gtk-builder") ? data : "";
+
+  if (!js && !css && !xml) return default_data;
 
   return {
     js,
     css,
-    xml
-  }
+    xml,
+  };
 }
 
 function readFileContent(relative_path) {
@@ -93,18 +93,22 @@ function readFileContent(relative_path) {
 }
 
 const default_data = {
-  js: readFileContent('./welcome.js'),
-  css: readFileContent('./welcome.css'),
-  xml: readFileContent('./welcome.ui'),
-}
+  js: readFileContent("./welcome.js"),
+  css: readFileContent("./welcome.css"),
+  xml: readFileContent("./welcome.ui"),
+};
 
-  function setColorScheme() {
-    const toggle_color_scheme = settings.get_boolean('toggle-color-scheme');
-    if (toggle_color_scheme) {
-      style_manager.set_color_scheme(style_manager.dark ? Adw.ColorScheme.FORCE_LIGHT : Adw.ColorScheme.FORCE_DARK)
-    } else {
-      style_manager.set_color_scheme(Adw.ColorScheme.DEFAULT)
-    }
+function setColorScheme() {
+  const toggle_color_scheme = settings.get_boolean("toggle-color-scheme");
+  if (toggle_color_scheme) {
+    style_manager.set_color_scheme(
+      style_manager.dark
+        ? Adw.ColorScheme.FORCE_LIGHT
+        : Adw.ColorScheme.FORCE_DARK
+    );
+  } else {
+    style_manager.set_color_scheme(Adw.ColorScheme.DEFAULT);
   }
-  setColorScheme()
-  settings.connect('changed::toggle-color-scheme', setColorScheme)
+}
+setColorScheme();
+settings.connect("changed::toggle-color-scheme", setColorScheme);

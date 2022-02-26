@@ -1,5 +1,4 @@
 import GLib from "gi://GLib";
-import Gio from 'gi://Gio';
 import { bindtextdomain, textdomain } from "gettext";
 
 import Application from "./application.js";
@@ -10,7 +9,7 @@ GLib.set_application_name("Workbench");
 export default function main(argv, { version, datadir }) {
   bindtextdomain(
     "re.sonny.Workbench",
-    GLib.build_filenamev([datadir, "locale"]),
+    GLib.build_filenamev([datadir, "locale"])
   );
   textdomain("re.sonny.Workbench");
 

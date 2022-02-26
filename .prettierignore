@@ -1,5 +1,7 @@
-build/
+_build/
 install/
 flatpak/
+.flatpak/
 node_modules/
 repo/
+src/lib

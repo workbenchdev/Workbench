@@ -7,7 +7,7 @@ export function logEnum(obj, value) {
   console.log(
     Object.entries(obj).find(([k, v]) => {
       return v === value;
-    })[0],
+    })[0]
   );
 }
 
@@ -23,7 +23,7 @@ export function loadStyleSheet(path) {
   Gtk.StyleContext.add_provider_for_display(
     Gdk.Display.get_default(),
     provider,
-    Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
+    Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
   );
 }
 

@@ -1,5 +1,3 @@
-
-
 <img style="vertical-align: middle;" src="data/icons/re.sonny.Workbench.svg" width="120" height="120" align="left">
 
 # Workbench
@@ -17,12 +15,12 @@ Workbench will never be a full fledged IDE or code editor. I see it as the littl
 
 Features:
 
-* Live GTK/CSS preview
-* [GNOME JavaScript](https://gjs.guide/) for quick and easy scripting
-* Syntax highlighting
-* Opens `.js`, `.css` and `.ui` files
-* Auto format
-* [More to come](https://github.com/sonnyp/Workbench/issues)
+- Live GTK/CSS preview
+- [GNOME JavaScript](https://gjs.guide/) for quick and easy scripting
+- Syntax highlighting
+- Opens `.js`, `.css` and `.ui` files
+- Auto format
+- [More to come](https://github.com/sonnyp/Workbench/issues)
 
 Workbench is a work in progress, [feedback and help welcome](https://github.com/sonnyp/Workbench/discussions/new).
 
@@ -42,34 +40,35 @@ Workbench uses the [prettier](https://prettier.io/) code formatter. If you need 
 
 [JavaScript](https://prettier.io/docs/en/ignore.html#javascript)
 
-  ```js
-  // prettier-ignore
-  matrix(
-    1, 0, 0,
-    0, 1, 0,
-    0, 0, 1
-  );
-  ```
+```js
+// prettier-ignore
+matrix(
+  1, 0, 0,
+  0, 1, 0,
+  0, 0, 1
+);
+```
 
 [XML](https://github.com/prettier/plugin-xml#ignore-ranges)
 
-  ```xml
-  <foo>
-    <!-- prettier-ignore-start -->
-      <this-content-will-not-be-formatted     />
-    <!-- prettier-ignore-end -->
-  </foo>
-  ```
+```xml
+<foo>
+  <!-- prettier-ignore-start -->
+    <this-content-will-not-be-formatted     />
+  <!-- prettier-ignore-end -->
+</foo>
+```
 
 [CSS](https://prettier.io/docs/en/ignore.html#css)
 
-  ```css
-  /* prettier-ignore */
-  .my    ugly rule
-  {
+```css
+/* prettier-ignore */
+.my    ugly rule
+{
 
-  }
-  ```
+}
+```
+
 </details>
 
 ## Development

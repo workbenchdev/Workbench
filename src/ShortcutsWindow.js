@@ -4,7 +4,7 @@ import { relativePath } from "./util.js";
 
 export default function ShortcutsWindow({ application }) {
   const builder = Gtk.Builder.new_from_file(
-    relativePath("./ShortcutsWindow.ui"),
+    relativePath("./ShortcutsWindow.ui")
   );
 
   const window = builder.get_object("shortcuts_window");

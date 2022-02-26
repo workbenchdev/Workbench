@@ -1,68 +1,62 @@
 {
-    "app-id" : "re.sonny.Workbench",
-    "runtime" : "org.gnome.Platform",
-    "runtime-version" : "master",
-    "sdk" : "org.gnome.Sdk",
-    "sdk-extensions" : [
-        "org.freedesktop.Sdk.Extension.node16"
-    ],
-    "command" : "workbench",
-    "build-options" : {
-        "append-path" : "/usr/lib/sdk/node16/bin"
-    },
-    "finish-args" : [
-        "--share=ipc",
-        "--socket=fallback-x11",
-        "--socket=wayland",
-        "--device=dri",
-        "--share=network"
-    ],
-    "x-run-args" : [],
-    "modules" : [
+  "app-id": "re.sonny.Workbench",
+  "runtime": "org.gnome.Platform",
+  "runtime-version": "master",
+  "sdk": "org.gnome.Sdk",
+  "sdk-extensions": ["org.freedesktop.Sdk.Extension.node16"],
+  "command": "workbench",
+  "build-options": {
+    "append-path": "/usr/lib/sdk/node16/bin"
+  },
+  "finish-args": [
+    "--share=ipc",
+    "--socket=fallback-x11",
+    "--socket=wayland",
+    "--device=dri",
+    "--share=network"
+  ],
+  "x-run-args": [],
+  "modules": [
+    {
+      "name": "vte",
+      "buildsystem": "meson",
+      "config-opts": [
+        "-Ddocs=false",
+        "-Dgtk3=false",
+        "-Dgtk4=true",
+        "-Dvapi=false",
+        "-Dglade=false"
+      ],
+      "sources": [
         {
-            "name" : "vte",
-            "buildsystem" : "meson",
-            "config-opts" : [
-                "-Ddocs=false",
-                "-Dgtk3=false",
-                "-Dgtk4=true",
-                "-Dvapi=false",
-                "-Dglade=false"
-            ],
-            "sources" : [
-                {
-                    "type" : "git",
-                    "url" : "https://gitlab.gnome.org/GNOME/vte.git",
-                    "commit": "f4b915aea367d407f8ac527e1aed9425b8cea9e2"
-                }
-            ]
-        },
-        {
-            "name" : "gtksourceview",
-            "buildsystem" : "meson",
-            "config-opts" : [
-                "-Dtests=false",
-                "-Dexamples=false",
-                "-Dvapi=false"
-            ],
-            "sources" : [
-                {
-                    "type" : "archive",
-                    "url" : "https://download.gnome.org/sources/gtksourceview/5.3/gtksourceview-5.3.2.tar.xz",
-                    "sha256" : "af7736e2ee3cdbc1013090e8caf35fb89d65cf41c9c399cac5d8992d955ded30"
-                }
-            ]
-        },
-        {
-            "name" : "Workbench",
-            "buildsystem" : "meson",
-            "builddir" : true,
-            "sources" : [
-                {
-                    "type" : "dir",
-                    "path" : "./"
-                }
-            ]
+          "type": "git",
+          "url": "https://gitlab.gnome.org/GNOME/vte.git",
+          "commit": "f4b915aea367d407f8ac527e1aed9425b8cea9e2"
         }
-    ]
+      ]
+    },
+    {
+      "name": "gtksourceview",
+      "buildsystem": "meson",
+      "config-opts": ["-Dtests=false", "-Dexamples=false", "-Dvapi=false"],
+      "sources": [
+        {
+          "type": "archive",
+          "url": "https://download.gnome.org/sources/gtksourceview/5.3/gtksourceview-5.3.2.tar.xz",
+          "sha256": "af7736e2ee3cdbc1013090e8caf35fb89d65cf41c9c399cac5d8992d955ded30"
+        }
+      ]
+    },
+    {
+      "name": "Workbench",
+      "buildsystem": "meson",
+      "builddir": true,
+      "sources": [
+        {
+          "type": "dir",
+          "path": "./"
+        }
+      ]
+    }
+  ]
 }

@@ -1,12 +1,11 @@
-import Gtk from 'gi://Gtk';
-import Gio from 'gi://Gio';
+import Gtk from "gi://Gtk";
+import Gio from "gi://Gio";
 
 import About from "./about.js";
 import ShortcutsWindow from "./ShortcutsWindow.js";
-import {relativePath} from './util.js';
+import { relativePath } from "./util.js";
 
-
-export default function Actions({application, datadir, version}) {
+export default function Actions({ application, datadir, version }) {
   const quit = new Gio.SimpleAction({
     name: "quit",
     parameter_type: null,
@@ -39,23 +38,23 @@ export default function Actions({application, datadir, version}) {
     parameter_type: null,
   });
   action_open_file.connect("activate", () => {
-    const builder = Gtk.Builder.new_from_file(relativePath("./window.ui"))
-    const file_filter = builder.get_object('file_filter');
+    const builder = Gtk.Builder.new_from_file(relativePath("./window.ui"));
+    const file_filter = builder.get_object("file_filter");
 
     const file_chooser = new Gtk.FileChooserNative({
       title: "Open File",
-      action: Gtk.FileChooserAction.OPEN
+      action: Gtk.FileChooserAction.OPEN,
     });
     file_chooser.set_filter(file_filter);
 
-    file_chooser.connect('response', (self, response) => {
+    file_chooser.connect("response", (self, response) => {
       if (response === Gtk.ResponseType.ACCEPT) {
         const file = file_chooser.get_file();
-        application.open([file], 'open');
+        application.open([file], "open");
       }
 
       file_chooser.destroy();
-    })
+    });
 
     file_chooser.show();
   });

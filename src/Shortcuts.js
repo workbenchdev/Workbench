@@ -1,7 +1,4 @@
-export default function Shortcuts({
-  application,
-  window,
-}) {
+export default function Shortcuts({ application, window }) {
   application.set_accels_for_action("win.clear", ["<Primary>K"]);
   application.set_accels_for_action("win.run", ["<Primary>Return"]);
   application.set_accels_for_action("app.quit", ["<Primary>Q"]);

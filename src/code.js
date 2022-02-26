@@ -1,5 +1,5 @@
-import * as ltx from './lib/ltx.js';
-import postcss from './lib/postcss.js';
+import * as ltx from "./lib/ltx.js";
+import postcss from "./lib/postcss.js";
 
 // We are using postcss because it's also a dependency of prettier
 // it would be great to keep the ast around and pass that to prettier
@@ -10,13 +10,13 @@ import postcss from './lib/postcss.js';
 export function scopeStylesheet(style) {
   const ast = postcss.parse(style);
 
-   for (const node of ast.nodes) {
-     node.selector = ".workbench_output " + node.selector;
-   }
+  for (const node of ast.nodes) {
+    node.selector = ".workbench_output " + node.selector;
+  }
 
-  let str = ''
+  let str = "";
   postcss.stringify(ast, (s) => {
-    str += s
+    str += s;
   });
   return str;
 }
@@ -25,7 +25,7 @@ export function targetBuildable(code) {
   const tree = ltx.parse(code);
 
   const child = tree.children.find((child) => {
-    if (typeof child === 'string') return false
+    if (typeof child === "string") return false;
 
     const class_name = child.attrs.class;
     if (!class_name) return false;
@@ -34,24 +34,24 @@ export function targetBuildable(code) {
     if (split.length < 2) return false;
 
     const [ns, ...rest] = split;
-    const klass = imports.gi[ns]?.[rest.join('')];
+    const klass = imports.gi[ns]?.[rest.join("")];
     if (!klass) return false;
 
     // TODO: Figure out a better way to find out if a klass
     // inherits from GtkWidget
-    const instance = new klass()
-    if (typeof instance.get_parent !== 'function') return false
+    const instance = new klass();
+    if (typeof instance.get_parent !== "function") return false;
 
     return true;
-  })
+  });
 
   if (!child) {
-    return [null, '']
+    return [null, ""];
   }
 
   if (!child.attrs.id) {
-    child.attrs.id = 'workbench_target';
+    child.attrs.id = "workbench_target";
   }
 
-  return [child.attrs.id, tree.toString()]
+  return [child.attrs.id, tree.toString()];
 }
