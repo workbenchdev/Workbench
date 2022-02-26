@@ -26,7 +26,6 @@ export default function Application({ version, datadir }) {
   application.connect("activate", () => {
     window = Window({
       application,
-      data: default_data,
     });
   });
 
@@ -43,19 +42,6 @@ export default function Application({ version, datadir }) {
 
   return application;
 }
-
-function readFileContent(relative_path) {
-  const decoder = new TextDecoder("utf-8");
-  return decoder.decode(
-    Gio.File.new_for_path(relativePath(relative_path)).load_contents(null)[1]
-  );
-}
-
-const default_data = {
-  js: readFileContent("./welcome.js"),
-  css: readFileContent("./welcome.css"),
-  xml: readFileContent("./welcome.ui"),
-};
 
 function setColorScheme() {
   const toggle_color_scheme = settings.get_boolean("toggle-color-scheme");

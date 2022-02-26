@@ -10,10 +10,10 @@ globals:
   Intl: readonly
   imports: readonly
   pkg: readonly
-  # log: readonly
+  log: readonly
   logError: readonly
-  # print: readonly
-  # printerr: readonly
+  print: readonly
+  printerr: readonly
   ARGV: readonly
   window: readonly
   globalThis: readonly

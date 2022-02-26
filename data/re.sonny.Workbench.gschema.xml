@@ -4,5 +4,17 @@
     <key name="toggle-color-scheme" type="b">
       <default>false</default>
     </key>
+    <key name="show-code" type="b">
+      <default>true</default>
+    </key>
+    <key name="show-style" type="b">
+      <default>false</default>
+    </key>
+    <key name="show-ui" type="b">
+      <default>true</default>
+    </key>
+    <key name="show-preview" type="b">
+      <default>true</default>
+    </key>
   </schema>
 </schemalist>

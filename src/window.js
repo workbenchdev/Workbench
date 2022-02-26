@@ -9,6 +9,7 @@ import { relativePath, settings } from "./util.js";
 import Shortcuts from "./Shortcuts.js";
 import Terminal from "./terminal.js";
 import { targetBuildable, scopeStylesheet, replaceBufferText } from "./code.js";
+import Document from "./Document.js";
 
 import prettier from "./lib/prettier.js";
 import prettier_babel from "./lib/prettier-babel.js";
@@ -18,10 +19,9 @@ import prettier_xml from "./lib/prettier-xml.js";
 Source.init();
 
 const scheme_manager = Source.StyleSchemeManager.get_default();
-const language_manager = Source.LanguageManager.get_default();
 const style_manager = Adw.StyleManager.get_default();
 
-export default function Window({ application, data }) {
+export default function Window({ application }) {
   Vte.Terminal.new();
   const builder = Gtk.Builder.new_from_file(relativePath("./window.ui"));
 
@@ -40,18 +40,36 @@ export default function Window({ application, data }) {
   const panel_ui = builder.get_object("panel_ui");
 
   const source_view_javascript = builder.get_object("source_view_javascript");
-  source_view_javascript.buffer.set_language(
-    language_manager.get_language("js")
+  const documents = [];
+
+  documents.push(
+    Document({
+      source_view: source_view_javascript,
+      lang: "js",
+      placeholder_path: relativePath("./welcome.js"),
+      ext: "js",
+    })
   );
-  source_view_javascript.buffer.set_text(data.js, -1);
 
   const source_view_ui = builder.get_object("source_view_ui");
-  source_view_ui.buffer.set_language(language_manager.get_language("xml"));
-  source_view_ui.buffer.set_text(data.xml, -1);
+  documents.push(
+    Document({
+      source_view: source_view_ui,
+      lang: "xml",
+      placeholder_path: relativePath("./welcome.ui"),
+      ext: "ui",
+    })
+  );
 
   const source_view_css = builder.get_object("source_view_css");
-  source_view_css.buffer.set_language(language_manager.get_language("css"));
-  source_view_css.buffer.set_text(data.css, -1);
+  documents.push(
+    Document({
+      source_view: source_view_css,
+      lang: "css",
+      placeholder_path: relativePath("./welcome.css"),
+      ext: "css",
+    })
+  );
 
   const button_run = builder.get_object("button_run");
   const button_javascript = builder.get_object("button_javascript");
@@ -91,6 +109,7 @@ export default function Window({ application, data }) {
     );
   });
 
+  settings.bind("show-ui", button_ui, "active", Gio.SettingsBindFlags.DEFAULT);
   button_ui.bind_property(
     "active",
     panel_ui,
@@ -98,6 +117,12 @@ export default function Window({ application, data }) {
     GObject.BindingFlags.SYNC_CREATE
   );
 
+  settings.bind(
+    "show-style",
+    button_css,
+    "active",
+    Gio.SettingsBindFlags.DEFAULT
+  );
   button_css.bind_property(
     "active",
     panel_css,
@@ -105,6 +130,12 @@ export default function Window({ application, data }) {
     GObject.BindingFlags.SYNC_CREATE
   );
 
+  settings.bind(
+    "show-code",
+    button_javascript,
+    "active",
+    Gio.SettingsBindFlags.DEFAULT
+  );
   button_javascript.bind_property(
     "active",
     panel_javascript,
@@ -112,6 +143,12 @@ export default function Window({ application, data }) {
     GObject.BindingFlags.SYNC_CREATE
   );
 
+  settings.bind(
+    "show-preview",
+    button_output,
+    "active",
+    Gio.SettingsBindFlags.DEFAULT
+  );
   button_output.bind_property(
     "active",
     output,
@@ -281,6 +318,20 @@ export default function Window({ application, data }) {
   });
   action_clear.connect("activate", terminal.clear);
   window.add_action(action_clear);
+
+  const action_reset = new Gio.SimpleAction({
+    name: "reset",
+    parameter_type: null,
+  });
+  action_reset.connect("activate", () => {
+    settings.reset("show-code");
+    settings.reset("show-style");
+    settings.reset("show-ui");
+    settings.reset("show-preview");
+    settings.reset("toggle-color-scheme");
+    documents.forEach((document) => document.reset());
+  });
+  window.add_action(action_reset);
 
   Shortcuts({ window, application });
 

@@ -276,7 +276,11 @@
   </object>
   <menu id="menu_app">
     <item>
-      <attribute name="label" translatable="yes">Open File</attribute>
+      <attribute name="label" translatable="yes">Open Demo</attribute>
+      <attribute name="action">win.reset</attribute>
+    </item>
+    <item>
+      <attribute name="label" translatable="yes">Open File…</attribute>
       <attribute name="action">app.open</attribute>
     </item>
     <section>
