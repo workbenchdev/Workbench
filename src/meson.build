@@ -1,5 +1,3 @@
-install_subdir('.', install_dir : pkgdatadir, exclude_files: ['re.sonny.Workbench', 'meson.build'])
-
 bin_conf = configuration_data()
 bin_conf.set('GJS', find_program('gjs').path())
 bin_conf.set('PACKAGE_VERSION', meson.project_version())

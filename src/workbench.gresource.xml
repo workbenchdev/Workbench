@@ -1,9 +1,48 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <gresources>
-  <gresource prefix="/re/sonny/Workbench/icons/scalable">
-    <file preprocess="xml-stripblanks">actions/code-symbolic.svg</file>
-    <file preprocess="xml-stripblanks">actions/preview-symbolic.svg</file>
-    <file preprocess="xml-stripblanks">actions/style-symbolic.svg</file>
-    <file preprocess="xml-stripblanks">actions/ui-symbolic.svg</file>
+  <gresource prefix="/re/sonny/Workbench">
+    <file>window.ui</file>
+    <file>ShortcutsWindow.ui</file>
+    <file>style.css</file>
+    <file>welcome.js</file>
+    <file>welcome.ui</file>
+    <file>welcome.css</file>
+  </gresource>
+  <gresource prefix="/re/sonny/Workbench/js">
+    <file>lib/ltx.js</file>
+    <file>lib/postcss.js</file>
+    <file>lib/prettier-babel.js</file>
+    <file>lib/prettier-postcss.js</file>
+    <file>lib/prettier-xml.js</file>
+    <file>lib/prettier.js</file>
+    <file>about.js</file>
+    <file>actions.js</file>
+    <file>application.js</file>
+    <file>code.js</file>
+    <file>Document.js</file>
+    <file>main.js</file>
+    <file>Shortcuts.js</file>
+    <file>ShortcutsWindow.js</file>
+    <file>terminal.js</file>
+    <file>util.js</file>
+    <file>window.js</file>
+  </gresource>
+  <gresource prefix="/re/sonny/Workbench/icons/scalable/actions">
+    <file
+      preprocess="xml-stripblanks"
+      alias="code-symbolic.svg"
+    >icons/code-symbolic.svg</file>
+    <file
+      preprocess="xml-stripblanks"
+      alias="preview-symbolic.svg"
+    >icons/preview-symbolic.svg</file>
+    <file
+      preprocess="xml-stripblanks"
+      alias="style-symbolic.svg"
+    >icons/style-symbolic.svg</file>
+    <file
+      preprocess="xml-stripblanks"
+      alias="ui-symbolic.svg"
+    >icons/ui-symbolic.svg</file>
   </gresource>
 </gresources>

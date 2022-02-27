@@ -1,9 +1,11 @@
 import Gio from "gi://Gio";
 import Adw from "gi://Adw";
+import Gtk from "gi://Gtk";
+import Gdk from "gi://Gdk";
 
 import Window from "./window.js";
 import Actions from "./actions.js";
-import { relativePath, loadStyleSheet, settings } from "./util.js";
+import { settings } from "./util.js";
 
 const style_manager = Adw.StyleManager.get_default();
 
@@ -30,7 +32,13 @@ export default function Application({ version, datadir }) {
   });
 
   application.connect("startup", () => {
-    loadStyleSheet(relativePath("./style.css"));
+    const provider = new Gtk.CssProvider();
+    provider.load_from_resource("/re/sonny/Workbench/style.css");
+    Gtk.StyleContext.add_provider_for_display(
+      Gdk.Display.get_default(),
+      provider,
+      Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+    );
   });
 
   application.set_option_context_description("<https://workbench.sonny.re>");

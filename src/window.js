@@ -5,7 +5,7 @@ import Source from "gi://GtkSource?version=5";
 import Adw from "gi://Adw?version=1";
 import Vte from "gi://Vte?version=4-2.91";
 
-import { relativePath, settings } from "./util.js";
+import { settings } from "./util.js";
 import Shortcuts from "./Shortcuts.js";
 import Terminal from "./terminal.js";
 import { targetBuildable, scopeStylesheet, replaceBufferText } from "./code.js";
@@ -23,14 +23,16 @@ const style_manager = Adw.StyleManager.get_default();
 
 export default function Window({ application }) {
   Vte.Terminal.new();
-  const builder = Gtk.Builder.new_from_file(relativePath("./window.ui"));
+  const builder = Gtk.Builder.new_from_resource(
+    "/re/sonny/Workbench/window.ui"
+  );
 
   const terminal = Terminal({ builder });
 
   const devtools = builder.get_object("devtools");
 
   const window = builder.get_object("window");
-  if (__DEV__) window.add_css_class("devel");
+  // window.add_css_class("devel");
   window.set_application(application);
 
   const output = builder.get_object("output");
@@ -46,7 +48,10 @@ export default function Window({ application }) {
     Document({
       source_view: source_view_javascript,
       lang: "js",
-      placeholder_path: relativePath("./welcome.js"),
+      placeholder_path: Gio.resources_lookup_data(
+        "/re/sonny/Workbench/welcome.js",
+        Gio.ResourceLookupFlags.NONE
+      ),
       ext: "js",
     })
   );
@@ -56,7 +61,10 @@ export default function Window({ application }) {
     Document({
       source_view: source_view_ui,
       lang: "xml",
-      placeholder_path: relativePath("./welcome.ui"),
+      placeholder_path: Gio.resources_lookup_data(
+        "/re/sonny/Workbench/welcome.ui",
+        Gio.ResourceLookupFlags.NONE
+      ),
       ext: "ui",
     })
   );
@@ -66,7 +74,10 @@ export default function Window({ application }) {
     Document({
       source_view: source_view_css,
       lang: "css",
-      placeholder_path: relativePath("./welcome.css"),
+      placeholder_path: Gio.resources_lookup_data(
+        "/re/sonny/Workbench/welcome.css",
+        Gio.ResourceLookupFlags.NONE
+      ),
       ext: "css",
     })
   );
@@ -324,6 +335,8 @@ export default function Window({ application }) {
     parameter_type: null,
   });
   action_reset.connect("activate", () => {
+    // FIXME: add a confirm dialog
+    // also for open file
     settings.reset("show-code");
     settings.reset("show-style");
     settings.reset("show-ui");

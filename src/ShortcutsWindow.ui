@@ -8,6 +8,12 @@
           <object class="GtkShortcutsGroup">
             <child>
               <object class="GtkShortcutsShortcut">
+                <property name="accelerator">&lt;Primary&gt;Return</property>
+                <property name="title" translatable="yes">Run</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut">
                 <property name="accelerator">&lt;Primary&gt;question</property>
                 <property
                   name="title"

@@ -3,7 +3,6 @@ import Gio from "gi://Gio";
 
 import About from "./about.js";
 import ShortcutsWindow from "./ShortcutsWindow.js";
-import { relativePath } from "./util.js";
 
 export default function Actions({ application, datadir, version }) {
   const quit = new Gio.SimpleAction({
@@ -38,7 +37,9 @@ export default function Actions({ application, datadir, version }) {
     parameter_type: null,
   });
   action_open_file.connect("activate", () => {
-    const builder = Gtk.Builder.new_from_file(relativePath("./window.ui"));
+    const builder = Gtk.Builder.new_from_resource(
+      "/re/sonny/Workbench/window.ui"
+    );
     const file_filter = builder.get_object("file_filter");
 
     const file_chooser = new Gtk.FileChooserNative({

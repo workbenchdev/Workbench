@@ -1,11 +1,19 @@
 #!/usr/bin/env -S gjs -m
 
 import { programInvocationName } from "system";
+import Gio from "gi://Gio";
+
+const resource = Gio.resource_load(
+  "/app/share/re.sonny.Workbench/workbench.gresource"
+);
+Gio.resources_register(resource);
 
 // eslint-disable-next-line import/no-unresolved
-import main from "file://@pkgdatadir@/main.js";
-
-main([programInvocationName, ...ARGV], {
-  version: "@PACKAGE_VERSION@",
-  datadir: "@datadir@",
-});
+import("resource:///re/sonny/Workbench/js/main.js")
+  .then((main) => {
+    main.default([programInvocationName, ...ARGV], {
+      version: "@PACKAGE_VERSION@",
+      datadir: "@datadir@",
+    });
+  })
+  .catch(logError);
