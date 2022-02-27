@@ -183,15 +183,18 @@ export default function Window({ application }) {
   // We do not support auto run of JavaScript ATM
   // source_view_javascript.buffer.connect("changed", updatePreview);
 
-  const workbench = (globalThis.workbench = output);
-  workbench.window = window;
+  const workbench = (globalThis.workbench = {
+    window,
+    application,
+  });
 
   let css_provider = null;
 
   function updatePreview() {
     output.set_child(null);
 
-    workbench.builder = new Gtk.Builder();
+    const builder = new Gtk.Builder();
+    workbench.builder = builder;
 
     let text = source_view_ui.buffer.text.trim();
     if (!text) return;
@@ -206,15 +209,16 @@ export default function Window({ application }) {
     if (!target_id) return;
 
     try {
-      workbench.builder.add_from_string(text, -1);
+      builder.add_from_string(text, -1);
     } catch (err) {
       logError(err);
       return;
     }
 
     // Update preview with UI
-    if (workbench.builder.get_object(target_id)) {
-      workbench.set_child(workbench.builder.get_object(target_id));
+    const object_preview = builder.get_object(target_id);
+    if (object_preview) {
+      output.set_child(object_preview);
     }
 
     // Update preview with CSS

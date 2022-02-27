@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <interface>
-  <object class="GtkBox">
+  <object class="GtkBox" id="main">
     <property name="orientation">vertical</property>
     <property name="valign">center</property>
     <property name="halign">center</property>

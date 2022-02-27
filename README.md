@@ -16,6 +16,7 @@ Workbench will never be a full fledged IDE or code editor. I see it as the littl
 Features:
 
 - Live GTK/CSS preview
+- Undo and redo
 - [GNOME JavaScript](https://gjs.guide/) for quick and easy scripting
 - Syntax highlighting
 - Opens `.js`, `.css` and `.ui` files
