@@ -30,39 +30,110 @@
               <object class="GtkBox">
                 <property name="spacing">6</property>
                 <property name="orientation">horizontal</property>
+                <property name="homogeneous">true</property>
                 <child>
                   <object class="GtkToggleButton" id="button_javascript">
-                    <property name="label">Code</property>
-                    <property name="active">true</property>
+                    <property name="child">
+                      <object class="GtkBox">
+                        <property name="halign">center</property>
+                        <child>
+                          <object class="GtkImage">
+                            <property name="icon-name">code-symbolic</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkLabel">
+                            <property
+                              name="label"
+                              translatable="yes"
+                            >Code</property>
+                          </object>
+                        </child>
+                      </object>
+                    </property>
                     <style>
                       <class name="flat" />
+                      <class name="view-toggler" />
                     </style>
                   </object>
                 </child>
                 <child>
                   <object class="GtkToggleButton" id="button_css">
-                    <property name="label">Style</property>
-                    <property name="active">false</property>
+                    <property name="child">
+                      <object class="GtkBox">
+                        <property name="halign">center</property>
+                        <child>
+                          <object class="GtkImage">
+                            <property name="icon-name">style-symbolic</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkLabel">
+                            <property
+                              name="label"
+                              translatable="yes"
+                            >Style</property>
+                          </object>
+                        </child>
+                      </object>
+                    </property>
                     <style>
                       <class name="flat" />
+                      <class name="view-toggler" />
                     </style>
                   </object>
                 </child>
                 <child>
                   <object class="GtkToggleButton" id="button_ui">
-                    <property name="label">UI</property>
-                    <property name="active">true</property>
+                    <property name="child">
+                      <object class="GtkBox">
+                        <property name="halign">center</property>
+                        <child>
+                          <object class="GtkImage">
+                            <property name="icon-name">ui-symbolic</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkLabel">
+                            <property
+                              name="label"
+                              translatable="yes"
+                            >UI</property>
+                          </object>
+                        </child>
+                      </object>
+                    </property>
                     <style>
                       <class name="flat" />
+                      <class name="view-toggler" />
                     </style>
                   </object>
                 </child>
                 <child>
                   <object class="GtkToggleButton" id="button_output">
-                    <property name="label">Preview</property>
-                    <property name="active">true</property>
+                    <property name="child">
+                      <object class="GtkBox">
+                        <property name="halign">center</property>
+                        <child>
+                          <object class="GtkImage">
+                            <property
+                              name="icon-name"
+                            >preview-symbolic</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkLabel">
+                            <property
+                              name="label"
+                              translatable="yes"
+                            >Preview</property>
+                          </object>
+                        </child>
+                      </object>
+                    </property>
                     <style>
                       <class name="flat" />
+                      <class name="view-toggler" />
                     </style>
                   </object>
                 </child>

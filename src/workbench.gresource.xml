@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<gresources>
+  <gresource prefix="/re/sonny/Workbench/icons/scalable">
+    <file preprocess="xml-stripblanks">actions/code-symbolic.svg</file>
+    <file preprocess="xml-stripblanks">actions/preview-symbolic.svg</file>
+    <file preprocess="xml-stripblanks">actions/style-symbolic.svg</file>
+    <file preprocess="xml-stripblanks">actions/ui-symbolic.svg</file>
+  </gresource>
+</gresources>

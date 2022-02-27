@@ -17,7 +17,6 @@ globals:
   ARGV: readonly
   window: readonly
   globalThis: readonly
-  __DEV__: readonly
   console: readonly
   TextEncoder: readonly
   TextDecoder: readonly

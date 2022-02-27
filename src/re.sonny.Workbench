@@ -1,9 +1,5 @@
 #!/usr/bin/env -S gjs -m
 
-// -*- mode: js; -*-
-
-globalThis.__DEV__ = false;
-
 import { programInvocationName } from "system";
 
 // eslint-disable-next-line import/no-unresolved

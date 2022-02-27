@@ -9,6 +9,13 @@ bin_conf.set('libdir', join_paths(get_option('prefix'), get_option('libdir')))
 bin_conf.set('datadir', datadir)
 bin_conf.set('pkgdatadir', pkgdatadir)
 
+data_res = gnome.compile_resources('workbench',
+  'workbench.gresource.xml',
+  gresource_bundle: true,
+  install: true,
+  install_dir: pkgdatadir,
+)
+
 configure_file(
   input: 're.sonny.Workbench',
   output: 're.sonny.Workbench',
