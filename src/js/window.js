@@ -11,10 +11,10 @@ import Terminal from "./terminal.js";
 import { targetBuildable, scopeStylesheet, replaceBufferText } from "./code.js";
 import Document from "./Document.js";
 
-import prettier from "./lib/prettier.js";
-import prettier_babel from "./lib/prettier-babel.js";
-import prettier_postcss from "./lib/prettier-postcss.js";
-import prettier_xml from "./lib/prettier-xml.js";
+import prettier from "../lib/prettier.js";
+import prettier_babel from "../lib/prettier-babel.js";
+import prettier_postcss from "../lib/prettier-postcss.js";
+import prettier_xml from "../lib/prettier-xml.js";
 
 Source.init();
 

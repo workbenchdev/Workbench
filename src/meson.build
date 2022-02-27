@@ -1,3 +1,6 @@
+install_subdir('js', install_dir : pkgdatadir)
+install_subdir('lib', install_dir : pkgdatadir)
+
 bin_conf = configuration_data()
 bin_conf.set('GJS', find_program('gjs').path())
 bin_conf.set('PACKAGE_VERSION', meson.project_version())
@@ -29,4 +32,3 @@ configure_file(
   install: true,
   install_dir: get_option('bindir')
 )
-

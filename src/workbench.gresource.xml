@@ -8,25 +8,6 @@
     <file>welcome.ui</file>
     <file>welcome.css</file>
   </gresource>
-  <gresource prefix="/re/sonny/Workbench/js">
-    <file>lib/ltx.js</file>
-    <file>lib/postcss.js</file>
-    <file>lib/prettier-babel.js</file>
-    <file>lib/prettier-postcss.js</file>
-    <file>lib/prettier-xml.js</file>
-    <file>lib/prettier.js</file>
-    <file>about.js</file>
-    <file>actions.js</file>
-    <file>application.js</file>
-    <file>code.js</file>
-    <file>Document.js</file>
-    <file>main.js</file>
-    <file>Shortcuts.js</file>
-    <file>ShortcutsWindow.js</file>
-    <file>terminal.js</file>
-    <file>util.js</file>
-    <file>window.js</file>
-  </gresource>
   <gresource prefix="/re/sonny/Workbench/icons/scalable/actions">
     <file
       preprocess="xml-stripblanks"
