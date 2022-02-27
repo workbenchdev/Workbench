@@ -52,7 +52,7 @@ function setColorScheme() {
         : Adw.ColorScheme.FORCE_DARK
     );
   } else {
-    style_manager.set_color_scheme(Adw.ColorScheme.DEFAULT);
+    style_manager.set_color_scheme(Adw.ColorScheme.PREFER_DARK);
   }
 }
 setColorScheme();
