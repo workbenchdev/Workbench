@@ -18,7 +18,7 @@ try {
   }
 }
 
-export default function Document({ source_view, lang, placeholder_path, ext }) {
+export default function Document({ source_view, lang, placeholder, ext }) {
   const { buffer } = source_view;
 
   buffer.set_language(language_manager.get_language(lang));
@@ -33,16 +33,9 @@ export default function Document({ source_view, lang, placeholder_path, ext }) {
 
   load();
 
-  buffer.connect("changed", () => {
-    log("changed");
-  });
-
   buffer.connect("modified-changed", () => {
-    // log("modified-changed");
     const modified = buffer.get_modified();
     if (!modified) return;
-
-    log("modified");
     save();
   });
 
@@ -83,9 +76,7 @@ export default function Document({ source_view, lang, placeholder_path, ext }) {
 
   function reset() {
     const decoder = new TextDecoder("utf-8");
-    const text = decoder.decode(
-      Gio.File.new_for_path(placeholder_path).load_contents(null)[1]
-    );
+    const text = decoder.decode(placeholder.get_data());
     buffer.set_text(text, -1);
   }
 

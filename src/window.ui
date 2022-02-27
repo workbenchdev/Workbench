@@ -302,11 +302,11 @@
               </object>
             </child>
             <child>
-              <object class="GtkBox" id="output">
-                <!-- For some reason prefixing selectors with #output doesn't work so we use a class name instead -->
+              <object class="GtkScrolledWindow" id="output">
                 <style>
+                  <!-- For some reason prefixing selectors with #output doesn't work so we use a class name instead -->
                   <class name="workbench_output" />
-                </style>>
+                </style>
               </object>
             </child>
           </object>

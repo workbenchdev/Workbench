@@ -48,7 +48,7 @@ export default function Window({ application }) {
     Document({
       source_view: source_view_javascript,
       lang: "js",
-      placeholder_path: Gio.resources_lookup_data(
+      placeholder: Gio.resources_lookup_data(
         "/re/sonny/Workbench/welcome.js",
         Gio.ResourceLookupFlags.NONE
       ),
@@ -61,7 +61,7 @@ export default function Window({ application }) {
     Document({
       source_view: source_view_ui,
       lang: "xml",
-      placeholder_path: Gio.resources_lookup_data(
+      placeholder: Gio.resources_lookup_data(
         "/re/sonny/Workbench/welcome.ui",
         Gio.ResourceLookupFlags.NONE
       ),
@@ -74,7 +74,7 @@ export default function Window({ application }) {
     Document({
       source_view: source_view_css,
       lang: "css",
-      placeholder_path: Gio.resources_lookup_data(
+      placeholder: Gio.resources_lookup_data(
         "/re/sonny/Workbench/welcome.css",
         Gio.ResourceLookupFlags.NONE
       ),
@@ -189,9 +189,7 @@ export default function Window({ application }) {
   let css_provider = null;
 
   function updatePreview() {
-    while (output.get_first_child()) {
-      output.remove(output.get_first_child());
-    }
+    output.set_child(null);
 
     workbench.builder = new Gtk.Builder();
 
@@ -216,7 +214,7 @@ export default function Window({ application }) {
 
     // Update preview with UI
     if (workbench.builder.get_object(target_id)) {
-      workbench.append(workbench.builder.get_object(target_id));
+      workbench.set_child(workbench.builder.get_object(target_id));
     }
 
     // Update preview with CSS
