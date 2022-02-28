@@ -27,9 +27,9 @@ export default function Window({ application }) {
     "/re/sonny/Workbench/window.ui"
   );
 
-  const terminal = Terminal({ builder });
-
   const devtools = builder.get_object("devtools");
+
+  const terminal = Terminal({ devtools, builder });
 
   const window = builder.get_object("window");
   // window.add_css_class("devel");
@@ -167,6 +167,12 @@ export default function Window({ application }) {
     GObject.BindingFlags.SYNC_CREATE
   );
 
+  settings.bind(
+    "show-devtools",
+    button_devtools,
+    "active",
+    Gio.SettingsBindFlags.DEFAULT
+  );
   button_devtools.bind_property(
     "active",
     devtools,
@@ -344,6 +350,7 @@ export default function Window({ application }) {
     settings.reset("show-ui");
     settings.reset("show-preview");
     settings.reset("toggle-color-scheme");
+    settings.reset("show-devtools");
     documents.forEach((document) => document.reset());
   });
   window.add_action(action_reset);

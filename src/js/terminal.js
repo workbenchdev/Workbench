@@ -1,5 +1,6 @@
 import Vte from "gi://Vte?version=4-2.91";
 import GLib from "gi://GLib";
+import GObject from "gi://GObject";
 
 // https://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797
 const ERASE_ENTIRE_SCREEN = "\u001b[2J";
@@ -7,7 +8,7 @@ const ERASE_SAVED_LINES = "\u001b[3J";
 const MOVE_CURSOR_HOME = "\u001b[H"; // 0,0
 const MAKE_CURSOR_INVISIBLE = "\u001b[?25l";
 
-export default function Terminal({ builder }) {
+export default function Terminal({ devtools, builder }) {
   const terminal = builder.get_object("terminal");
 
   terminal.feed(MAKE_CURSOR_INVISIBLE);
@@ -31,6 +32,14 @@ export default function Terminal({ builder }) {
     );
     // terminal.reset(true, true);
   }
+
+  const button_clear = builder.get_object("button_clear");
+  devtools.bind_property(
+    "reveal-child",
+    button_clear,
+    "visible",
+    GObject.BindingFlags.SYNC_CREATE
+  );
 
   return {
     clear,

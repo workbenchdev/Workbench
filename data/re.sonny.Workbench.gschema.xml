@@ -16,5 +16,8 @@
     <key name="show-preview" type="b">
       <default>true</default>
     </key>
+    <key name="show-devtools" type="b">
+      <default>true</default>
+    </key>
   </schema>
 </schemalist>
