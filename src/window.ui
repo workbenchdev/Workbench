@@ -216,7 +216,7 @@
                         <property name="show-line-numbers">true</property>
                         <property name="smart-backspace">true</property>
                         <property name="tab-width">2</property>
-                        <property name="wrap-mode">GTK_WRAP_WORD_CHAR</property>
+                        <!-- <property name="wrap-mode">GTK_WRAP_WORD_CHAR</property> -->
                       </object>
                     </child>
                   </object>
@@ -263,7 +263,7 @@
                         <property name="show-line-numbers">true</property>
                         <property name="smart-backspace">true</property>
                         <property name="tab-width">2</property>
-                        <property name="wrap-mode">GTK_WRAP_WORD_CHAR</property>
+                        <!-- <property name="wrap-mode">GTK_WRAP_WORD_CHAR</property> -->
                       </object>
                     </child>
                   </object>
@@ -310,7 +310,7 @@
                         <property name="show-line-numbers">true</property>
                         <property name="smart-backspace">true</property>
                         <property name="tab-width">2</property>
-                        <property name="wrap-mode">GTK_WRAP_WORD_CHAR</property>
+                        <!-- <property name="wrap-mode">GTK_WRAP_WORD_CHAR</property> -->
                       </object>
                     </child>
                   </object>
