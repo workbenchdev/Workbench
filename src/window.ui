@@ -435,6 +435,13 @@
     <section>
       <attribute name="label" translatable="yes">Reference</attribute>
       <item>
+        <attribute name="label" translatable="yes">JavaScript</attribute>
+        <attribute name="action">app.open_uri</attribute>
+        <attribute
+          name="target"
+        >https://developer.mozilla.org/docs/Web/JavaScript/Guide</attribute>
+      </item>
+      <item>
         <attribute name="label" translatable="yes">GJS</attribute>
         <attribute name="action">app.open_uri</attribute>
         <attribute name="target">https://gjs-docs.gnome.org/</attribute>
