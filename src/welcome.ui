@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <interface>
-  <object class="GtkBox" id="main">
+  <object class="GtkBox" id="welcome">
     <property name="orientation">vertical</property>
     <property name="valign">center</property>
     <property name="halign">center</property>
@@ -28,20 +28,16 @@
       <object class="GtkLabel">
         <property
           name="label"
-        >A sandbox for learning and playing with GNOME app &#xA; ideas or experiments.</property>
-        <property name="justify">center</property>
+        >A sandbox to learn and prototype with GTK</property>
         <property name="margin-bottom">24</property>
       </object>
     </child>
     <child>
       <object class="GtkBox">
-        <property name="halign">start</property>
         <property name="margin-bottom">12</property>
         <child>
           <object class="GtkImage">
-            <property name="name">logo</property>
             <property name="icon-name">update-symbolic</property>
-            <property name="icon-size">inherit</property>
             <property name="margin-end">12</property>
           </object>
         </child>
@@ -49,36 +45,50 @@
           <object class="GtkLabel">
             <property
               name="label"
-            >&#32;Style and UI automatically reloads Preview</property>
-            <property name="justify">center</property>
+            >Edit Style and UI to reload the Preview</property>
           </object>
         </child>
       </object>
     </child>
     <child>
       <object class="GtkBox">
-        <property name="halign">start</property>
+        <property name="margin-bottom">12</property>
         <child>
           <object class="GtkImage">
             <property name="icon-name">media-playback-start-symbolic</property>
-            <property name="icon-size">normal</property>
             <property name="margin-end">12</property>
           </object>
         </child>
         <child>
           <object class="GtkLabel">
-            <property name="label">&#32;Hit&#32;&#32;</property>
-            <property name="justify">center</property>
+            <property name="label">Hit</property>
           </object>
         </child>
         <child>
           <object class="GtkShortcutsShortcut">
             <property name="accelerator">&lt;Primary&gt;Return</property>
+            <property name="margin-start">12</property>
           </object>
         </child>
         <child>
           <object class="GtkLabel">
             <property name="label">to format and run Code</property>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkBox">
+        <property name="margin-bottom">12</property>
+        <child>
+          <object class="GtkImage">
+            <property name="icon-name">user-bookmarks-symbolic</property>
+            <property name="margin-end">12</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel">
+            <property name="label">Checkout the bookmarks to learn</property>
           </object>
         </child>
       </object>

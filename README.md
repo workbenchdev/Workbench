@@ -79,6 +79,12 @@ matrix(
 
 Use [GNOME Builder](https://apps.gnome.org/app/org.gnome.Builder/).
 
+## Contributing
+
+If you can help, here is a list of issues that would make Workbench better
+
+- [GtkSourceView - Make URIs clickable](https://gitlab.gnome.org/GNOME/gtksourceview/-/issues/125)
+
 ## Copyright
 
 © 2022 [Sonny Piers](https://github.com/sonnyp)

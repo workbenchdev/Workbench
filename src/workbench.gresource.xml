@@ -2,7 +2,7 @@
 <gresources>
   <gresource prefix="/re/sonny/Workbench">
     <file>window.ui</file>
-    <file>ShortcutsWindow.ui</file>
+    <file>shortcutsWindow.ui</file>
     <file>style.css</file>
     <file>welcome.js</file>
     <file>welcome.ui</file>
@@ -22,7 +22,7 @@
     <file>Document.js</file>
     <file>main.js</file>
     <file>Shortcuts.js</file>
-    <file>ShortcutsWindow.js</file>
+    <file>shortcutsWindow.js</file>
     <file>terminal.js</file>
     <file>util.js</file>
     <file>window.js</file>

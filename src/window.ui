@@ -28,7 +28,7 @@
             </child>
             <child type="start">
               <object class="GtkMenuButton">
-                <property name="label" translatable="yes">Bookmarks</property>
+                <property name="icon-name">user-bookmarks-symbolic</property>
                 <property name="menu_model">menu_bookmarks</property>
                 <style>
                   <class name="flat" />
@@ -363,12 +363,12 @@
   </object>
   <menu id="menu_app">
     <item>
-      <attribute name="label" translatable="yes">Reset to Demo</attribute>
-      <attribute name="action">win.reset</attribute>
-    </item>
-    <item>
       <attribute name="label" translatable="yes">Open File…</attribute>
       <attribute name="action">app.open</attribute>
+    </item>
+    <item>
+      <attribute name="label" translatable="yes">Factory reset</attribute>
+      <attribute name="action">win.reset</attribute>
     </item>
     <section>
       <item>

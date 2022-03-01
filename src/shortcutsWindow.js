@@ -2,7 +2,7 @@ import Gtk from "gi://Gtk";
 
 export default function ShortcutsWindow({ application }) {
   const builder = Gtk.Builder.new_from_resource(
-    "/re/sonny/Workbench/ShortcutsWindow.ui"
+    "/re/sonny/Workbench/shortcutsWindow.ui"
   );
 
   const window = builder.get_object("shortcuts_window");

@@ -297,7 +297,23 @@ export default function Window({ application }) {
       return prettier.format(text, {
         parser: "xml",
         plugins: [prettier_xml],
-        xmlWhitespaceSensitivity: "ignore",
+        // xmlWhitespaceSensitivity: "ignore",
+        // breaks the following
+        // <child>
+        //   <object class="GtkLabel">
+        //     <property name="label">Edit Style and UI to reload the Preview</property>
+        //     <property name="justify">center</property>
+        //   </object>
+        // </child>
+        // by moving the value of the property label to a new line
+        // <child>
+        //   <object class="GtkLabel">
+        //     <property name="label">
+        //       Edit Style and UI to reload the Preview
+        //     </property>
+        //     <property name="justify">center</property>
+        //   </object>
+        // </child>
       });
     });
 

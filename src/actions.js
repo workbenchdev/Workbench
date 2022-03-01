@@ -4,7 +4,7 @@ import GLib from "gi://GLib";
 import Gdk from "gi://Gdk";
 
 import About from "./about.js";
-import ShortcutsWindow from "./ShortcutsWindow.js";
+import shortcutsWindow from "./shortcutsWindow.js";
 
 export default function Actions({ application, datadir, version }) {
   const quit = new Gio.SimpleAction({
@@ -30,7 +30,7 @@ export default function Actions({ application, datadir, version }) {
     parameter_type: null,
   });
   showShortCutsWindow.connect("activate", () => {
-    ShortcutsWindow({ application });
+    shortcutsWindow({ application });
   });
   application.add_action(showShortCutsWindow);
 

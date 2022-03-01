@@ -24,4 +24,7 @@
     <kudo>HighContrast</kudo>
     <kudo>ModernToolkit</kudo>
   </kudos>
+  <custom>
+    <value key="GnomeSoftware::key-colors">[(51, 209, 122)]</value>
+  </custom>
 </component>
