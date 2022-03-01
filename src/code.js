@@ -1,5 +1,5 @@
-import * as ltx from "../lib/ltx.js";
-import postcss from "../lib/postcss.js";
+import * as ltx from "./lib/ltx.js";
+import postcss from "./lib/postcss.js";
 
 // We are using postcss because it's also a dependency of prettier
 // it would be great to keep the ast around and pass that to prettier
