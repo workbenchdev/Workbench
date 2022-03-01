@@ -26,6 +26,15 @@
                 </style>
               </object>
             </child>
+            <child type="start">
+              <object class="GtkMenuButton">
+                <property name="label" translatable="yes">Bookmarks</property>
+                <property name="menu_model">menu_bookmarks</property>
+                <style>
+                  <class name="flat" />
+                </style>
+              </object>
+            </child>
             <child type="title">
               <object class="GtkBox">
                 <property name="spacing">6</property>
@@ -143,6 +152,7 @@
               <object class="GtkMenuButton" id="button_menu">
                 <property name="menu-model">menu_app</property>
                 <property name="icon-name">open-menu-symbolic</property>
+                <property name="primary">true</property>
               </object>
             </child>
             <child type="end">
@@ -150,7 +160,10 @@
                 <property
                   name="icon-name"
                 >weather-clear-night-symbolic</property>
-                <property name="label">Toggle dark mode</property>
+                <property
+                  name="label"
+                  translatable="yes"
+                >Toggle dark mode</property>
               </object>
             </child>
           </object>
@@ -167,7 +180,10 @@
                   <object class="GtkBox">
                     <child>
                       <object class="GtkButton">
-                        <property name="label">JavaScript</property>
+                        <property
+                          name="label"
+                          translatable="yes"
+                        >JavaScript</property>
                         <property name="sensitive">false</property>
                         <style>
                           <class name="flat" />
@@ -214,7 +230,7 @@
                   <object class="GtkBox">
                     <child>
                       <object class="GtkButton">
-                        <property name="label">CSS</property>
+                        <property name="label" translatable="yes">CSS</property>
                         <property name="sensitive">false</property>
                         <style>
                           <class name="flat" />
@@ -261,7 +277,7 @@
                   <object class="GtkBox">
                     <child>
                       <object class="GtkButton">
-                        <property name="label">XML</property>
+                        <property name="label" translatable="yes">XML</property>
                         <property name="sensitive">false</property>
                         <style>
                           <class name="flat" />
@@ -315,18 +331,18 @@
           <object class="GtkActionBar">
             <child type="start">
               <object class="GtkToggleButton" id="button_devtools">
-                <property name="label">Console</property>
+                <property name="label" translatable="yes">Console</property>
                 <property name="active">true</property>
               </object>
             </child>
             <child type="start">
               <object class="GtkButton" id="button_inspector">
-                <property name="label">Inspector</property>
+                <property name="label" translatable="yes">Inspector</property>
               </object>
             </child>
             <child type="end">
               <object class="GtkButton" id="button_clear">
-                <property name="label">Clear</property>
+                <property name="label" translatable="yes">Clear</property>
                 <property name="action-name">win.clear</property>
                 <property name="tooltip-text">&lt;Primary&gt;K</property>
               </object>
@@ -382,4 +398,88 @@
       <pattern>*.css</pattern>
     </patterns>
   </object>
+  <menu id="menu_bookmarks">
+    <section>
+      <attribute name="label" translatable="yes">Learn</attribute>
+      <item>
+        <attribute
+          name="label"
+          translatable="yes"
+        >GNOME JavaScript (GJS)</attribute>
+        <attribute name="action">app.open_uri</attribute>
+        <attribute name="target">https://gjs.guide/</attribute>
+      </item>
+      <item>
+        <attribute
+          name="label"
+          translatable="yes"
+        >Human Interface Guidelines (HIG)</attribute>
+        <attribute name="action">app.open_uri</attribute>
+        <attribute name="target">https://developer.gnome.org/hig/</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">UI components</attribute>
+        <attribute name="action">app.open_uri</attribute>
+        <attribute
+          name="target"
+        >https://developer.gnome.org/documentation/tutorials/beginners/components.html</attribute>
+      </item>
+      <item>
+        <attribute
+          name="label"
+          translatable="yes"
+        >Platform components</attribute>
+        <attribute name="action">app.open_uri</attribute>
+        <attribute
+          name="target"
+        >https://developer.gnome.org/documentation/introduction/components.html</attribute>
+      </item>
+    </section>
+    <section>
+      <attribute name="label" translatable="yes">Reference</attribute>
+      <item>
+        <attribute name="label" translatable="yes">GJS</attribute>
+        <attribute name="action">app.open_uri</attribute>
+        <attribute name="target">https://gjs-docs.gnome.org/</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Gtk</attribute>
+        <attribute name="action">app.open_uri</attribute>
+        <attribute name="target">https://docs.gtk.org/gtk4/</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Adwaita</attribute>
+        <attribute name="action">app.open_uri</attribute>
+        <attribute
+          name="target"
+        >https://gnome.pages.gitlab.gnome.org/libadwaita/</attribute>
+      </item>
+    </section>
+    <section>
+      <attribute name="label" translatable="yes">Get help</attribute>
+      <item>
+        <attribute name="label" translatable="yes">Discourse</attribute>
+        <attribute name="action">app.open_uri</attribute>
+        <attribute
+          name="target"
+        >https://discourse.gnome.org/c/platform/5</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Stack Overflow</attribute>
+        <attribute name="action">app.open_uri</attribute>
+        <attribute
+          name="target"
+        >https://stackoverflow.com/questions/tagged/gjs</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">Matrix</attribute>
+        <attribute name="action">app.open_uri</attribute>
+        <attribute name="icon-name">external-link-symbolic</attribute>
+        <attribute
+          name="target"
+        >hhttps://matrix.to/#/#javascript:gnome.org</attribute>
+      </item>
+
+    </section>
+  </menu>
 </interface>

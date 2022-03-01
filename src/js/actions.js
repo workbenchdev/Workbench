@@ -1,5 +1,7 @@
 import Gtk from "gi://Gtk";
 import Gio from "gi://Gio";
+import GLib from "gi://GLib";
+import Gdk from "gi://Gdk";
 
 import About from "./about.js";
 import ShortcutsWindow from "./ShortcutsWindow.js";
@@ -62,4 +64,17 @@ export default function Actions({ application, datadir, version }) {
     file_chooser.show();
   });
   application.add_action(action_open_file);
+
+  const open_uri = new Gio.SimpleAction({
+    name: "open_uri",
+    parameter_type: new GLib.VariantType("s"),
+  });
+  open_uri.connect("activate", (self, target) => {
+    Gtk.show_uri(
+      application.get_active_window(),
+      target.unpack(),
+      Gdk.CURRENT_TIME
+    );
+  });
+  application.add_action(open_uri);
 }

@@ -21,6 +21,9 @@ Features:
 - Syntax highlighting
 - Opens `.js`, `.css` and `.ui` files
 - Auto format
+- Auto save and restore
+- Console logs
+- Dark mode switcher
 - [More to come](https://github.com/sonnyp/Workbench/issues)
 
 Workbench is a work in progress, [feedback and help welcome](https://github.com/sonnyp/Workbench/discussions/new).
