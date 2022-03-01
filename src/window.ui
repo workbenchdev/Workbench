@@ -183,7 +183,7 @@
                         <property
                           name="label"
                           translatable="yes"
-                        >JavaScript</property>
+                        >Code - JavaScript</property>
                         <property name="sensitive">false</property>
                         <style>
                           <class name="flat" />
@@ -230,7 +230,10 @@
                   <object class="GtkBox">
                     <child>
                       <object class="GtkButton">
-                        <property name="label" translatable="yes">CSS</property>
+                        <property
+                          name="label"
+                          translatable="yes"
+                        >Style - CSS</property>
                         <property name="sensitive">false</property>
                         <style>
                           <class name="flat" />
@@ -277,7 +280,10 @@
                   <object class="GtkBox">
                     <child>
                       <object class="GtkButton">
-                        <property name="label" translatable="yes">XML</property>
+                        <property
+                          name="label"
+                          translatable="yes"
+                        >UI - XML</property>
                         <property name="sensitive">false</property>
                         <style>
                           <class name="flat" />
