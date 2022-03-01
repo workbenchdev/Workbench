@@ -11,9 +11,6 @@ export default function About({ application, datadir, version }) {
     license_type: Gtk.License.GPL_3_0_ONLY,
     version,
     website: "https://workbench.sonny.re",
-    transient_for: application.get_active_window(),
-    // Prevents input on Workbench when clicking on a link
-    // modal: true,
     logo_icon_name: "re.sonny.Workbench",
     // TRANSLATORS: eg. 'Translator Name <your.email@domain.com>' or 'Translator Name https://website.example'
     translator_credits: _("translator-credits"),

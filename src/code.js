@@ -11,13 +11,16 @@ export function scopeStylesheet(style) {
   const ast = postcss.parse(style);
 
   for (const node of ast.nodes) {
-    node.selector = ".workbench_output " + node.selector;
+    if (node.selector) {
+      node.selector = ".workbench_output " + node.selector;
+    }
   }
 
   let str = "";
   postcss.stringify(ast, (s) => {
     str += s;
   });
+
   return str;
 }
 

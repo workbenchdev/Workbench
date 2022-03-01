@@ -34,6 +34,10 @@
     >icons/code-symbolic.svg</file>
     <file
       preprocess="xml-stripblanks"
+      alias="external-link-symbolic.svg"
+    >icons/external-link-symbolic.svg</file>
+    <file
+      preprocess="xml-stripblanks"
       alias="preview-symbolic.svg"
     >icons/preview-symbolic.svg</file>
     <file
@@ -44,5 +48,9 @@
       preprocess="xml-stripblanks"
       alias="ui-symbolic.svg"
     >icons/ui-symbolic.svg</file>
+    <file
+      preprocess="xml-stripblanks"
+      alias="update-symbolic.svg"
+    >icons/update-symbolic.svg</file>
   </gresource>
 </gresources>

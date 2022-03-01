@@ -363,7 +363,7 @@
   </object>
   <menu id="menu_app">
     <item>
-      <attribute name="label" translatable="yes">Open Demo</attribute>
+      <attribute name="label" translatable="yes">Reset to Demo</attribute>
       <attribute name="action">win.reset</attribute>
     </item>
     <item>
