@@ -12,7 +12,7 @@ export function scopeStylesheet(style) {
 
   for (const node of ast.nodes) {
     if (node.selector) {
-      node.selector = ".workbench_output " + node.selector;
+      node.selector = "#workbench_output " + node.selector;
     }
   }
 
