@@ -6,7 +6,7 @@ export default function About({ application, datadir, version }) {
     application,
     authors: ["Sonny Piers https://sonny.re"],
     artists: ["Tobias Bernard <tbernard@gnome.org>"],
-    comments: _("Playground for GNOME development"),
+    comments: _("Sandbox to learn and prototype with GNOME techologies"),
     copyright: "Copyright 2022 Sonny Piers",
     license_type: Gtk.License.GPL_3_0_ONLY,
     version,

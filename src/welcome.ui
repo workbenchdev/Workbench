@@ -28,8 +28,9 @@
       <object class="GtkLabel">
         <property
           name="label"
-        >A sandbox to learn and prototype with GTK</property>
+        >A sandbox to learn and prototype with&#10;GNOME techologies</property>
         <property name="margin-bottom">24</property>
+        <property name="justify">center</property>
       </object>
     </child>
     <child>

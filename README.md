@@ -2,7 +2,7 @@
 
 # Workbench
 
-Playground for GNOME development
+A sandbox to learn and prototype with GNOME techologies
 
 ![](data/screenshot.png)
 
