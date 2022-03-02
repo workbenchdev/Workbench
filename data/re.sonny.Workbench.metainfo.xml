@@ -25,8 +25,21 @@
   <url type="bugtracker">https://workbench.sonny.re/feedback</url>
   <url type="donation">https://workbench.sonny.re/donate</url>
   <url type="translate">https://workbench.sonny.re/translate</url>
+  <screenshots>
+    <screenshot type="default">
+      <image>
+        https://raw.githubusercontent.com/sonnyp/Workbench/main/data/screenshot.png
+      </image>
+      <caption
+      >Side by side editors with live preview on the right and console in the bottom</caption>
+    </screenshot>
+  </screenshots>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="1.0.0" date="2022-03-02">
+      <description
+      >This is the first release of Workbench. We hope you like it.</description>
+    </release>
   </releases>
   <kudos>
     <kudo>HiDpiIcon</kudo>
