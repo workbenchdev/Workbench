@@ -8,13 +8,13 @@
           <object class="GtkShortcutsGroup">
             <child>
               <object class="GtkShortcutsShortcut">
-                <property name="accelerator">&lt;Primary&gt;Return</property>
+                <property name="accelerator">&lt;Control&gt;Return</property>
                 <property name="title" translatable="yes">Run</property>
               </object>
             </child>
             <child>
               <object class="GtkShortcutsShortcut">
-                <property name="accelerator">&lt;Primary&gt;K</property>
+                <property name="accelerator">&lt;Control&gt;K</property>
                 <property
                   name="title"
                   translatable="yes"
@@ -25,13 +25,13 @@
               <object class="GtkShortcutsShortcut">
                 <property
                   name="accelerator"
-                >&lt;Primary&gt;&lt;Shift&gt;I</property>
+                >&lt;Control&gt;&lt;Shift&gt;I</property>
                 <property name="title" translatable="yes">Inspector</property>
               </object>
             </child>
             <child>
               <object class="GtkShortcutsShortcut">
-                <property name="accelerator">&lt;Primary&gt;question</property>
+                <property name="accelerator">&lt;Control&gt;question</property>
                 <property
                   name="title"
                   translatable="yes"
@@ -40,7 +40,7 @@
             </child>
             <child>
               <object class="GtkShortcutsShortcut">
-                <property name="accelerator">&lt;Primary&gt;Q</property>
+                <property name="accelerator">&lt;Control&gt;Q</property>
                 <property name="title" translatable="yes">Quit</property>
               </object>
             </child>

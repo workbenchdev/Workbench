@@ -79,6 +79,12 @@ matrix(
 
 Use [GNOME Builder](https://apps.gnome.org/app/org.gnome.Builder/).
 
+## Packaging
+
+Please do not attempt to package Workbench any other way than as a Flatpak application.
+
+It is unsupported and may put users at risk.
+
 ## Contributing
 
 If you can help, here is a list of issues that would make Workbench better

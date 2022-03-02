@@ -6,7 +6,6 @@ import Adw from "gi://Adw?version=1";
 import Vte from "gi://Vte?version=4-2.91";
 
 import { settings } from "./util.js";
-import Shortcuts from "./Shortcuts.js";
 import Terminal from "./terminal.js";
 import { targetBuildable, scopeStylesheet, replaceBufferText } from "./code.js";
 import Document from "./Document.js";
@@ -370,8 +369,6 @@ export default function Window({ application }) {
     documents.forEach((document) => document.reset());
   });
   window.add_action(action_reset);
-
-  Shortcuts({ window, application });
 
   window.present();
 
