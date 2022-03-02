@@ -149,18 +149,19 @@
             <child type="end">
               <object class="GtkButton" id="button_style_mode">
                 <property
-                  name="icon-name"
-                >weather-clear-night-symbolic</property>
-                <property
-                  name="label"
+                  name="tooltip-text"
                   translatable="yes"
-                >Toggle dark mode</property>
+                >Switch between light and dark mode</property>
               </object>
             </child>
             <child type="end">
               <object class="GtkMenuButton">
                 <property name="icon-name">user-bookmarks-symbolic</property>
                 <property name="menu_model">menu_bookmarks</property>
+                <property
+                  name="tooltip-text"
+                  translatable="yes"
+                >Bookmarks</property>
                 <style>
                   <class name="flat" />
                 </style>
