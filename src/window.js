@@ -29,8 +29,6 @@ export default function Window({ application }) {
 
   const devtools = builder.get_object("devtools");
 
-  const terminal = Terminal({ devtools, builder });
-
   const window = builder.get_object("window");
   // window.add_css_class("devel");
   window.set_application(application);
@@ -272,6 +270,8 @@ export default function Window({ application }) {
 
     return code;
   }
+
+  const terminal = Terminal({ application, window, devtools, builder });
 
   function run() {
     button_run.set_sensitive(false);

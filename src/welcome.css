@@ -7,7 +7,7 @@ label {
 
 #logo {
   animation-name: breathing;
-  animation-duration: 5s;
+  animation-duration: 3s;
   animation-timing-function: ease-out;
   animation-iteration-count: infinite;
   animation-direction: normal;

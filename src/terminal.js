@@ -14,16 +14,17 @@ export default function Terminal({ devtools, builder }) {
   terminal.feed(MAKE_CURSOR_INVISIBLE);
   // terminal.set_cursor_blink_mode(Vte.CursorBlinkMode.ON);
   // terminal.set_input_enabled(true);
-  terminal.spawn_sync(
-    Vte.PtyFlags.DEFAULT,
-    "/",
-    // +2 so we skip the line written by "script"
-    // Script started on ...
-    ["/bin/tail", "-f", "-n", "+2", "/var/tmp/workbench"],
-    [],
-    GLib.SpawnFlags.DO_NOT_REAP_CHILD,
+
+  terminal.spawn_async(
+    Vte.PtyFlags.DEFAULT, // pty_flags
+    null, // working_directory
+    ["/bin/tail", "--line=0", "--follow", "/var/tmp/workbench"], // argv
+    [], // envv
+    GLib.SpawnFlags.DEFAULT, // spawn_flags
     null,
-    null
+    -1, // timeout
+    null, // cancellable
+    null // child_setup
   );
 
   function clear() {
