@@ -33,6 +33,11 @@ export default function Terminal({ devtools, builder }) {
     // terminal.reset(true, true);
   }
 
+  function scrollToEnd() {
+    const adj = terminal.get_vadjustment();
+    adj.set_value(adj.get_upper());
+  }
+
   const button_clear = builder.get_object("button_clear");
   devtools.bind_property(
     "reveal-child",
@@ -41,7 +46,14 @@ export default function Terminal({ devtools, builder }) {
     GObject.BindingFlags.SYNC_CREATE
   );
 
+  devtools.connect("notify::reveal-child", (self) => {
+    if (self.reveal_child) {
+      scrollToEnd();
+    }
+  });
+
   return {
     clear,
+    scrollToEnd,
   };
 }

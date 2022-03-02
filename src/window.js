@@ -337,6 +337,7 @@ export default function Window({ application }) {
       .catch(logError)
       .finally(() => {
         button_run.set_sensitive(true);
+        terminal.scrollToEnd();
       });
   }
 
