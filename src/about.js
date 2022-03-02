@@ -10,6 +10,8 @@ export default function About({ application, datadir, version }) {
     copyright: "Copyright 2022 Sonny Piers",
     license_type: Gtk.License.GPL_3_0_ONLY,
     version,
+    transient_for: application.get_active_window(),
+    modal: true,
     website: "https://workbench.sonny.re",
     logo_icon_name: "re.sonny.Workbench",
     // TRANSLATORS: eg. 'Translator Name <your.email@domain.com>' or 'Translator Name https://website.example'
