@@ -48,12 +48,6 @@ export default function Application({ version, datadir }) {
 
   Actions({ application, datadir, version });
 
-  application.set_accels_for_action("win.clear", ["<Control>K"]);
-  application.set_accels_for_action("win.run", ["<Control>Return"]);
-  application.set_accels_for_action("app.quit", ["<Control>Q"]);
-  application.set_accels_for_action("app.shortcuts", ["<Control>question"]);
-  application.set_accels_for_action("app.open", ["<Control>O"]);
-
   return application;
 }
 

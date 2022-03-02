@@ -345,6 +345,17 @@ export default function Window({ application }) {
   });
   action_run.connect("activate", run);
   window.add_action(action_run);
+  application.set_accels_for_action("win.run", ["<Control>Return"]);
+
+  const action_console = new Gio.SimpleAction({
+    name: "console",
+    parameter_type: null,
+  });
+  action_console.connect("activate", () => {
+    devtools.reveal_child = !devtools.reveal_child;
+  });
+  window.add_action(action_console);
+  application.set_accels_for_action("win.console", ["<Control><Shift>K"]);
 
   const action_clear = new Gio.SimpleAction({
     name: "clear",
@@ -352,6 +363,7 @@ export default function Window({ application }) {
   });
   action_clear.connect("activate", terminal.clear);
   window.add_action(action_clear);
+  application.set_accels_for_action("win.clear", ["<Control>K"]);
 
   const action_reset = new Gio.SimpleAction({
     name: "reset",

@@ -15,6 +15,7 @@ export default function Actions({ application, datadir, version }) {
     application.quit();
   });
   application.add_action(quit);
+  application.set_accels_for_action("app.quit", ["<Control>Q"]);
 
   const showAboutDialog = new Gio.SimpleAction({
     name: "about",
@@ -33,6 +34,7 @@ export default function Actions({ application, datadir, version }) {
     shortcutsWindow({ application });
   });
   application.add_action(showShortCutsWindow);
+  application.set_accels_for_action("app.shortcuts", ["<Control>question"]);
 
   const action_open_file = new Gio.SimpleAction({
     name: "open",
@@ -64,6 +66,7 @@ export default function Actions({ application, datadir, version }) {
     file_chooser.show();
   });
   application.add_action(action_open_file);
+  application.set_accels_for_action("app.open", ["<Control>O"]);
 
   const open_uri = new Gio.SimpleAction({
     name: "open_uri",

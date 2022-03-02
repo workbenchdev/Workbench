@@ -20,7 +20,16 @@
                   </object>
                 </property>
                 <property name="action-name">win.run</property>
-                <property name="tooltip-text">&lt;Primary&gt;Return</property>
+                <property
+                  name="tooltip-text"
+                  translatable="yes"
+                >Run (Ctrl+⏎)</property>
+                <accessibility>
+                  <property
+                    name="label"
+                    translatable="yes"
+                  >Run (Ctrl+⏎)</property>
+                </accessibility>
                 <style>
                   <class name="suggested-action" />
                 </style>
@@ -152,6 +161,12 @@
                   name="tooltip-text"
                   translatable="yes"
                 >Switch between light and dark mode</property>
+                <accessibility>
+                  <property
+                    name="label"
+                    translatable="yes"
+                  >Switch between light and dark mode</property>
+                </accessibility>
               </object>
             </child>
             <child type="end">
@@ -162,6 +177,9 @@
                   name="tooltip-text"
                   translatable="yes"
                 >Bookmarks</property>
+                <accessibility>
+                  <property name="label" translatable="yes">Bookmarks</property>
+                </accessibility>
                 <style>
                   <class name="flat" />
                 </style>
@@ -217,7 +235,6 @@
                         <property name="show-line-numbers">true</property>
                         <property name="smart-backspace">true</property>
                         <property name="tab-width">2</property>
-                        <!-- <property name="wrap-mode">GTK_WRAP_WORD_CHAR</property> -->
                       </object>
                     </child>
                   </object>
@@ -267,7 +284,6 @@
                         <property name="show-line-numbers">true</property>
                         <property name="smart-backspace">true</property>
                         <property name="tab-width">2</property>
-                        <!-- <property name="wrap-mode">GTK_WRAP_WORD_CHAR</property> -->
                       </object>
                     </child>
                   </object>
@@ -317,7 +333,6 @@
                         <property name="show-line-numbers">true</property>
                         <property name="smart-backspace">true</property>
                         <property name="tab-width">2</property>
-                        <!-- <property name="wrap-mode">GTK_WRAP_WORD_CHAR</property> -->
                       </object>
                     </child>
                   </object>
@@ -335,20 +350,28 @@
           <object class="GtkActionBar">
             <child type="start">
               <object class="GtkToggleButton" id="button_devtools">
+                <property name="action-name">win.console</property>
                 <property name="label" translatable="yes">Console</property>
-                <property name="active">true</property>
+                <property
+                  name="tooltip-text"
+                  translatable="yes"
+                >Show logs (Ctrl+Shift+K)</property>
               </object>
             </child>
             <child type="start">
               <object class="GtkButton" id="button_inspector">
                 <property name="label" translatable="yes">Inspector</property>
+                <property
+                  name="tooltip-text"
+                  translatable="yes"
+                >Open GTK Inspector (Ctrl+Shift+I)</property>
               </object>
             </child>
             <child type="end">
               <object class="GtkButton" id="button_clear">
                 <property name="label" translatable="yes">Clear</property>
                 <property name="action-name">win.clear</property>
-                <property name="tooltip-text">&lt;Primary&gt;K</property>
+                <property name="tooltip-text">Clear console (Ctrl+K)</property>
               </object>
             </child>
           </object>
@@ -490,7 +513,6 @@
           name="target"
         >hhttps://matrix.to/#/#javascript:gnome.org</attribute>
       </item>
-
     </section>
   </menu>
 </interface>

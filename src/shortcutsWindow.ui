@@ -14,19 +14,30 @@
             </child>
             <child>
               <object class="GtkShortcutsShortcut">
-                <property name="accelerator">&lt;Control&gt;K</property>
                 <property
-                  name="title"
-                  translatable="yes"
-                >Clear Console</property>
+                  name="accelerator"
+                >&lt;Control&gt;&lt;Shift&gt;I</property>
+                <property name="title" translatable="yes">Inspector</property>
               </object>
             </child>
             <child>
               <object class="GtkShortcutsShortcut">
                 <property
                   name="accelerator"
-                >&lt;Control&gt;&lt;Shift&gt;I</property>
-                <property name="title" translatable="yes">Inspector</property>
+                >&lt;Control&gt;&lt;Shift&gt;K</property>
+                <property
+                  name="title"
+                  translatable="yes"
+                >Open Console</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="accelerator">&lt;Control&gt;K</property>
+                <property
+                  name="title"
+                  translatable="yes"
+                >Clear Console</property>
               </object>
             </child>
             <child>
