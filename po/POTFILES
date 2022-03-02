@@ -2,6 +2,6 @@ data/re.sonny.Workbench.desktop
 data/re.sonny.Workbench.gschema.xml
 data/re.sonny.Workbench.metainfo.xml
 src/about.js
-src/ShortcutsWindow.ui
+src/shortcutsWindow.ui
+src/window.js
 src/window.ui
-

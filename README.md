@@ -6,34 +6,15 @@ A sandbox to learn and prototype with GNOME techologies
 
 ![](data/screenshot.png)
 
-Workbench aims to provide a great developer experience for the following use cases
+Workbench goal is to let you experiment with GNOME technologies, no matter if it's tinkering for the first time or building and testing a custom GTK widget.
 
-1. An application to learn GNOME development - learning by doing with an instant feedback loop
-2. A scratchpad for experienced developers who want to try or prototype something quickly
+Among other things, Workbench comes with
 
-Workbench will never be a full fledged IDE or code editor. I see it as the little brother of [GNOME Builder](https://apps.gnome.org/app/org.gnome.Builder/).
-
-Features:
-
-- Live GTK/CSS preview
-- Undo and redo
-- [GNOME JavaScript](https://gjs.guide/) for quick and easy scripting
-- Syntax highlighting
-- Opens `.js`, `.css` and `.ui` files
-- Auto format
-- Auto save and restore
-- Console logs
-- Dark mode switcher
-- [More to come](https://github.com/sonnyp/Workbench/issues)
-
-Workbench is a work in progress, [feedback and help welcome](https://github.com/sonnyp/Workbench/discussions/new).
-
-## Test
-
-1. Install [GNOME Builder](https://apps.gnome.org/app/org.gnome.Builder/)
-2. Open Builder and select "Clone Repository..."
-3. Clone `https://github.com/sonnyp/Workbench.git`
-4. Press the Run ▶ button
+- realtime GTK/CSS preview
+- [JavaScript](https://gjs.guide/) for quick and easy scripting
+- Syntax highlighting, undo/redo, autosave
+- code fomatter
+- terminal
 
 ## Tips and tricks
 
@@ -77,7 +58,10 @@ matrix(
 
 ## Development
 
-Use [GNOME Builder](https://apps.gnome.org/app/org.gnome.Builder/).
+1. Install [GNOME Builder](https://apps.gnome.org/app/org.gnome.Builder/)
+2. Open Builder and select "Clone Repository..."
+3. Clone `https://github.com/sonnyp/Workbench.git`
+4. Press the Run ▶ button
 
 ## Packaging
 
