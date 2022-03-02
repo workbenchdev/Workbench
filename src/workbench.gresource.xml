@@ -37,6 +37,10 @@
     >icons/external-link-symbolic.svg</file>
     <file
       preprocess="xml-stripblanks"
+      alias="moon-alt-symbolic.svg"
+    >icons/moon-alt-symbolic.svg</file>
+    <file
+      preprocess="xml-stripblanks"
       alias="preview-symbolic.svg"
     >icons/preview-symbolic.svg</file>
     <file

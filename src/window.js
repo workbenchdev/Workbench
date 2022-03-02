@@ -106,7 +106,7 @@ export default function Window({ application }) {
     if (dark) {
       button_style_mode.icon_name = "weather-clear-symbolic";
     } else {
-      button_style_mode.icon_name = "weather-clear-night-symbolic";
+      button_style_mode.icon_name = "moon-alt-symbolic";
     }
   }
   updateStyle();
@@ -426,5 +426,6 @@ export default function Window({ application }) {
       load(source_view_ui.buffer, data);
     }
   }
+
   return { window, openFile };
 }
