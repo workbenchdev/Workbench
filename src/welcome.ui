@@ -40,6 +40,7 @@
           <object class="GtkImage">
             <property name="icon-name">update-symbolic</property>
             <property name="margin-end">12</property>
+            <property name="icon-size">normal</property>
           </object>
         </child>
         <child>
@@ -58,6 +59,7 @@
           <object class="GtkImage">
             <property name="icon-name">media-playback-start-symbolic</property>
             <property name="margin-end">12</property>
+            <property name="icon-size">normal</property>
           </object>
         </child>
         <child>
@@ -85,6 +87,7 @@
           <object class="GtkImage">
             <property name="icon-name">user-bookmarks-symbolic</property>
             <property name="margin-end">12</property>
+            <property name="icon-size">normal</property>
           </object>
         </child>
         <child>
@@ -101,6 +104,7 @@
           <object class="GtkImage">
             <property name="icon-name">media-floppy-symbolic</property>
             <property name="margin-end">12</property>
+            <property name="icon-size">normal</property>
           </object>
         </child>
         <child>
