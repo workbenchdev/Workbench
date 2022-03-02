@@ -12,8 +12,7 @@
     "--share=ipc",
     "--socket=fallback-x11",
     "--socket=wayland",
-    "--device=dri",
-    "--share=network"
+    "--device=dri"
   ],
   "x-run-args": [],
   "modules": [
@@ -99,7 +98,7 @@
       "sources": [
         {
           "type": "dir",
-          "path": "./"
+          "path": "."
         }
       ]
     }
