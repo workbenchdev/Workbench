@@ -4,8 +4,9 @@ import Gio from "gi://Gio";
 import Source from "gi://GtkSource?version=5";
 import Adw from "gi://Adw?version=1";
 import Vte from "gi://Vte?version=4-2.91";
+import { gettext as _ } from "gettext";
 
-import { settings } from "./util.js";
+import { confirm, settings } from "./util.js";
 import Terminal from "./terminal.js";
 import { targetBuildable, scopeStylesheet, replaceBufferText } from "./code.js";
 import Document from "./Document.js";
@@ -369,9 +370,20 @@ export default function Window({ application }) {
     name: "reset",
     parameter_type: null,
   });
-  action_reset.connect("activate", () => {
-    // FIXME: add a confirm dialog
-    // also for open file
+  action_reset.connect("activate", reset);
+  window.add_action(action_reset);
+
+  function confirmDiscard() {
+    return confirm({
+      transient_for: window,
+      text: _("Are you sure you want to discard your changes?"),
+    });
+  }
+
+  async function reset() {
+    const agreed = await confirmDiscard();
+    if (!agreed) return;
+
     settings.reset("show-code");
     settings.reset("show-style");
     settings.reset("show-ui");
@@ -379,10 +391,7 @@ export default function Window({ application }) {
     settings.reset("toggle-color-scheme");
     settings.reset("show-devtools");
     documents.forEach((document) => document.reset());
-  });
-  window.add_action(action_reset);
-
-  window.present();
+  }
 
   const text_decoder = new TextDecoder();
   function openFile(file) {
@@ -413,7 +422,10 @@ export default function Window({ application }) {
       return;
     }
 
-    function load(buffer, data) {
+    async function load(buffer, data) {
+      const agreed = await confirmDiscard();
+      if (!agreed) return;
+
       replaceBufferText(buffer, data);
       buffer.place_cursor(buffer.get_start_iter());
     }

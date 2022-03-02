@@ -1,5 +1,6 @@
 import GLib from "gi://GLib";
 import Gio from "gi://Gio";
+import Gtk from "gi://Gtk";
 
 export function logEnum(obj, value) {
   console.log(
@@ -21,3 +22,24 @@ export const settings = new Gio.Settings({
   schema_id: "re.sonny.Workbench",
   path: "/re/sonny/Workbench/",
 });
+
+export function promise(object, signal) {
+  return new Promise((resolve) => {
+    const handler_id = object.connect(signal, (self, ...args) => {
+      object.disconnect(handler_id);
+      resolve(args);
+    });
+  });
+}
+
+export async function confirm(params) {
+  const dialog = new Gtk.MessageDialog({
+    ...params,
+    modal: true,
+    buttons: Gtk.ButtonsType.YES_NO,
+  });
+  dialog.present();
+  const [response_id] = await promise(dialog, "response");
+  dialog.close();
+  return response_id === Gtk.ResponseType.YES;
+}

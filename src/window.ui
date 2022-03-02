@@ -394,7 +394,7 @@
       <attribute name="action">app.open</attribute>
     </item>
     <item>
-      <attribute name="label" translatable="yes">Factory reset</attribute>
+      <attribute name="label" translatable="yes">Reset to demo</attribute>
       <attribute name="action">win.reset</attribute>
     </item>
     <section>

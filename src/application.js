@@ -26,9 +26,12 @@ export default function Application({ version, datadir }) {
   });
 
   application.connect("activate", () => {
-    window = Window({
-      application,
-    });
+    window =
+      window ||
+      Window({
+        application,
+      });
+    window.window.present();
   });
 
   application.connect("startup", () => {
