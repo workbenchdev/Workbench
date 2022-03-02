@@ -26,15 +26,6 @@
                 </style>
               </object>
             </child>
-            <child type="start">
-              <object class="GtkMenuButton">
-                <property name="icon-name">user-bookmarks-symbolic</property>
-                <property name="menu_model">menu_bookmarks</property>
-                <style>
-                  <class name="flat" />
-                </style>
-              </object>
-            </child>
             <child type="title">
               <object class="GtkBox">
                 <property name="spacing">6</property>
@@ -164,6 +155,15 @@
                   name="label"
                   translatable="yes"
                 >Toggle dark mode</property>
+              </object>
+            </child>
+            <child type="end">
+              <object class="GtkMenuButton">
+                <property name="icon-name">user-bookmarks-symbolic</property>
+                <property name="menu_model">menu_bookmarks</property>
+                <style>
+                  <class name="flat" />
+                </style>
               </object>
             </child>
           </object>
