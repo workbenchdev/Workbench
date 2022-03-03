@@ -11,11 +11,11 @@
   <translation type="gettext">re.sonny.Workbench</translation>
   <description>
     <p
-    >Workbench goal is to let you experiment with GNOME technologies, no matter if it's tinkering for the first time or building and testing a custom GTK widget.</p>
+    >Workbench goal is to let you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a custom GTK widget.</p>
     <p>Among other things, Workbench comes with</p>
     <ul>
       <li>realtime GTK/CSS preview</li>
-      <li>[JavaScript](https://gjs.guide/) for quick and easy scripting</li>
+      <li>JavaScript for quick and easy scripting</li>
       <li>Syntax highlighting, undo/redo, autosave</li>
       <li>code fomatter</li>
       <li>terminal</li>

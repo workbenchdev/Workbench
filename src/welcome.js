@@ -18,7 +18,7 @@ function greet() {
     text: "Hello World!",
     transient_for: workbench.window,
     modal: true,
-    // https://gjs-docs.gnome.org/gtk40~4.4.1/gtk.buttonstype
+    // https://gjs-docs.gnome.org/gtk40/gtk.buttonstype
     buttons: Gtk.ButtonsType.OK,
   });
 

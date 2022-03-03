@@ -8,12 +8,12 @@ A sandbox to learn and prototype with GNOME techologies
 
 <a href='https://flathub.org/apps/details/re.sonny.Workbench'><img width='180' height='60' alt='Download on Flathub' src='https://flathub.org/assets/badges/flathub-badge-en.svg'/></a>
 
-Workbench goal is to let you experiment with GNOME technologies, no matter if it's tinkering for the first time or building and testing a custom GTK widget.
+Workbench goal is to let you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a custom GTK widget.
 
 Among other things, Workbench comes with
 
 - realtime GTK/CSS preview
-- [JavaScript](https://gjs.guide/) for quick and easy scripting
+- JavaScript for quick and easy scripting
 - Syntax highlighting, undo/redo, autosave
 - code fomatter
 - terminal
