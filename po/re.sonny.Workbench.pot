@@ -24,7 +24,7 @@ msgstr ""
 
 #: data/re.sonny.Workbench.desktop:5 data/re.sonny.Workbench.metainfo.xml:10
 #: src/about.js:9
-msgid "Sandbox to learn and prototype with GNOME techologies"
+msgid "Sandbox to learn and prototype with GNOME technologies"
 msgstr ""
 
 #. TRANSLATORS: Don't translate
