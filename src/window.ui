@@ -156,17 +156,46 @@
               </object>
             </child>
             <child type="end">
-              <object class="GtkButton" id="button_style_mode">
-                <property
-                  name="tooltip-text"
-                  translatable="yes"
-                >Switch between light and dark mode</property>
-                <accessibility>
-                  <property
-                    name="label"
-                    translatable="yes"
-                  >Switch between light and dark mode</property>
-                </accessibility>
+              <object class="GtkBox">
+                <style>
+                  <class name="linked" />
+                </style>
+                <child>
+                  <object class="GtkToggleButton" id="button_light">
+                    <property
+                      name="icon-name"
+                      translatable="yes"
+                    >sun-symbolic</property>
+                    <property
+                      name="tooltip-text"
+                      translatable="yes"
+                    >Use Light mode</property>
+                    <accessibility>
+                      <property
+                        name="label"
+                        translatable="yes"
+                      >Use Light mode</property>
+                    </accessibility>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkToggleButton" id="button_dark">
+                    <property
+                      name="icon-name"
+                      translatable="yes"
+                    >moon-rounded-symbolic</property>
+                    <property
+                      name="tooltip-text"
+                      translatable="yes"
+                    >Use Dark mode</property>
+                    <accessibility>
+                      <property
+                        name="label"
+                        translatable="yes"
+                      >Use Dark mode</property>
+                    </accessibility>
+                  </object>
+                </child>
               </object>
             </child>
             <child type="end">

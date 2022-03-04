@@ -56,15 +56,11 @@ export default function Application({ version, datadir }) {
 
 function setColorScheme() {
   const toggle_color_scheme = settings.get_boolean("toggle-color-scheme");
-  if (toggle_color_scheme) {
-    style_manager.set_color_scheme(
-      style_manager.dark
-        ? Adw.ColorScheme.FORCE_LIGHT
-        : Adw.ColorScheme.FORCE_DARK
-    );
-  } else {
-    style_manager.set_color_scheme(Adw.ColorScheme.PREFER_DARK);
-  }
+  style_manager.set_color_scheme(
+    toggle_color_scheme
+      ? Adw.ColorScheme.FORCE_LIGHT
+      : Adw.ColorScheme.FORCE_DARK
+  );
 }
 setColorScheme();
 settings.connect("changed::toggle-color-scheme", setColorScheme);

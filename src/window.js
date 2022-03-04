@@ -94,35 +94,25 @@ export default function Window({ application }) {
   const button_preview = builder.get_object("button_preview");
   const button_devtools = builder.get_object("button_devtools");
   const button_inspector = builder.get_object("button_inspector");
-  const button_style_mode = builder.get_object("button_style_mode");
-
-  const source_views = [
-    source_view_javascript,
-    source_view_ui,
-    source_view_css,
-  ];
+  const button_light = builder.get_object("button_light");
+  const button_dark = builder.get_object("button_dark");
+  button_dark.set_group(button_light);
 
   function updateStyle() {
     const { dark } = style_manager;
     const scheme = scheme_manager.get_scheme(dark ? "Adwaita-dark" : "Adwaita");
-    source_views.forEach(({ buffer }) => {
-      buffer.set_style_scheme(scheme);
+    documents.forEach(({ source_view }) => {
+      source_view.buffer.set_style_scheme(scheme);
     });
 
-    if (dark) {
-      button_style_mode.icon_name = "weather-clear-symbolic";
-    } else {
-      button_style_mode.icon_name = "moon-rounded-symbolic";
-    }
+    button_dark.active = dark;
+    button_light.active = !dark;
   }
   updateStyle();
   style_manager.connect("notify::dark", updateStyle);
 
-  button_style_mode.connect("clicked", () => {
-    settings.set_boolean(
-      "toggle-color-scheme",
-      !settings.get_boolean("toggle-color-scheme")
-    );
+  button_light.connect("toggled", () => {
+    settings.set_boolean("toggle-color-scheme", button_light.active);
   });
 
   settings.bind("show-ui", button_ui, "active", Gio.SettingsBindFlags.DEFAULT);

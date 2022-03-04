@@ -72,5 +72,5 @@ export default function Document({
     buffer.set_text(text, -1);
   }
 
-  return { reset };
+  return { reset, source_view };
 }

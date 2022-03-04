@@ -11,13 +11,10 @@ export default function screenshot({ widget, window, data_dir }) {
   const width = widget.get_allocated_width();
   const height = widget.get_allocated_height();
 
-  const image = paintable.get_current_image();
-
   const snapshot = Gtk.Snapshot.new();
-  image.snapshot(snapshot, width, height);
+  paintable.snapshot(snapshot, width, height);
 
   const node = snapshot.to_node();
-
   const renderer = widget.get_native().get_renderer();
   const rect = new Graphene.Rect({
     origin: new Graphene.Point({ x: 0, y: 0 }),
