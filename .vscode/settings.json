@@ -6,6 +6,7 @@
         "**/node_modules/*/**": true,
         "**/.hg/store/**": true,
         "**/.flatpak": true,
-        "**/src/lib": true
+        "**/src/lib": true,
+        ".flatpak": true
     }
 }

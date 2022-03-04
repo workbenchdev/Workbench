@@ -4,21 +4,13 @@ import GLib from "gi://GLib";
 
 const language_manager = Source.LanguageManager.get_default();
 
-const data_dir = GLib.build_filenamev([
-  GLib.get_user_data_dir(),
-  "re.sonny.Workbench",
-]);
-
-const data_dir_file = Gio.File.new_for_path(data_dir);
-try {
-  data_dir_file.make_directory(null);
-} catch (err) {
-  if (err.code !== Gio.IOErrorEnum.EXISTS) {
-    logError(err);
-  }
-}
-
-export default function Document({ source_view, lang, placeholder, ext }) {
+export default function Document({
+  data_dir,
+  source_view,
+  lang,
+  placeholder,
+  ext,
+}) {
   const { buffer } = source_view;
 
   buffer.set_language(language_manager.get_language(lang));

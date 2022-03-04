@@ -5,8 +5,9 @@ import Source from "gi://GtkSource?version=5";
 import Adw from "gi://Adw?version=1";
 import Vte from "gi://Vte?version=4-2.91";
 import { gettext as _ } from "gettext";
+import screenshot from "./screenshot.js";
 
-import { confirm, settings } from "./util.js";
+import { confirm, settings, createDataDir } from "./util.js";
 import Terminal from "./terminal.js";
 import { targetBuildable, scopeStylesheet, replaceBufferText } from "./code.js";
 import Document from "./Document.js";
@@ -23,6 +24,8 @@ const style_manager = Adw.StyleManager.get_default();
 
 export default function Window({ application }) {
   Vte.Terminal.new();
+  const data_dir = createDataDir();
+
   const builder = Gtk.Builder.new_from_resource(
     "/re/sonny/Workbench/window.ui"
   );
@@ -38,6 +41,7 @@ export default function Window({ application }) {
   const panel_javascript = builder.get_object("panel_javascript");
   const panel_css = builder.get_object("panel_css");
   const panel_ui = builder.get_object("panel_ui");
+  const panel_preview = builder.get_object("panel_preview");
 
   const source_view_javascript = builder.get_object("source_view_javascript");
   const documents = [];
@@ -51,6 +55,7 @@ export default function Window({ application }) {
         Gio.ResourceLookupFlags.NONE
       ),
       ext: "js",
+      data_dir,
     })
   );
 
@@ -64,6 +69,7 @@ export default function Window({ application }) {
         Gio.ResourceLookupFlags.NONE
       ),
       ext: "ui",
+      data_dir,
     })
   );
 
@@ -77,6 +83,7 @@ export default function Window({ application }) {
         Gio.ResourceLookupFlags.NONE
       ),
       ext: "css",
+      data_dir,
     })
   );
 
@@ -84,7 +91,7 @@ export default function Window({ application }) {
   const button_javascript = builder.get_object("button_javascript");
   const button_ui = builder.get_object("button_ui");
   const button_css = builder.get_object("button_css");
-  const button_output = builder.get_object("button_output");
+  const button_preview = builder.get_object("button_preview");
   const button_devtools = builder.get_object("button_devtools");
   const button_inspector = builder.get_object("button_inspector");
   const button_style_mode = builder.get_object("button_style_mode");
@@ -154,13 +161,13 @@ export default function Window({ application }) {
 
   settings.bind(
     "show-preview",
-    button_output,
+    button_preview,
     "active",
     Gio.SettingsBindFlags.DEFAULT
   );
-  button_output.bind_property(
+  button_preview.bind_property(
     "active",
-    output,
+    panel_preview,
     "visible",
     GObject.BindingFlags.SYNC_CREATE
   );
@@ -373,6 +380,15 @@ export default function Window({ application }) {
   });
   action_reset.connect("activate", reset);
   window.add_action(action_reset);
+
+  const screenshot_action = new Gio.SimpleAction({
+    name: "screenshot",
+    parameter_type: null,
+  });
+  screenshot_action.connect("activate", () => {
+    screenshot({ window, widget: output, data_dir });
+  });
+  window.add_action(screenshot_action);
 
   function confirmDiscard() {
     return confirm({

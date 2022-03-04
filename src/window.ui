@@ -119,7 +119,7 @@
                   </object>
                 </child>
                 <child>
-                  <object class="GtkToggleButton" id="button_output">
+                  <object class="GtkToggleButton" id="button_preview">
                     <property name="child">
                       <object class="GtkBox">
                         <property name="halign">center</property>
@@ -340,8 +340,55 @@
               </object>
             </child>
             <child>
-              <object class="GtkScrolledWindow" id="output">
-                <property name="name">workbench_output</property>
+              <object class="GtkBox" id="panel_preview">
+                <property name="orientation">vertical</property>
+                <child>
+                  <object class="GtkCenterBox">
+                    <child type="start">
+                      <object class="GtkButton">
+                        <property
+                          name="label"
+                          translatable="yes"
+                        >Preview</property>
+                        <property name="sensitive">false</property>
+                        <style>
+                          <class name="flat" />
+                        </style>
+                      </object>
+                    </child>
+                    <child type="end">
+                      <object class="GtkButton">
+                        <property
+                          name="icon-name"
+                        >photo-camera-symbolic</property>
+                        <property name="action-name">win.screenshot</property>
+                        <property
+                          name="tooltip-text"
+                          translatable="yes"
+                        >Take a screenshot of the preview</property>
+                        <accessibility>
+                          <property
+                            name="label"
+                            translatable="yes"
+                          >Take a screenshot of the preview</property>
+                        </accessibility>
+                      </object>
+                    </child>
+                    <style>
+                      <class name="toolbar" />
+                    </style>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkScrolledWindow" id="output">
+                    <property name="name">workbench_output</property>
+                    <property name="vexpand">true</property>
+                    <style>
+                      <!-- Make sure the screeshot gets a background color -->
+                      <class name="background" />
+                    </style>
+                  </object>
+                </child>
               </object>
             </child>
           </object>
@@ -371,7 +418,10 @@
               <object class="GtkButton" id="button_clear">
                 <property name="label" translatable="yes">Clear</property>
                 <property name="action-name">win.clear</property>
-                <property name="tooltip-text">Clear console (Ctrl+K)</property>
+                <property
+                  name="tooltip-text"
+                  translatable="yes"
+                >Clear console (Ctrl+K)</property>
               </object>
             </child>
           </object>
