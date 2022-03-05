@@ -241,14 +241,6 @@ export default function Window({ application }) {
 
     css_provider = new Gtk.CssProvider();
     css_provider.load_from_data(style);
-    // Unfortunally this styles the widget to which the style_context belongs to only
-    // so the only option is to style the whole display (app)
-    // would be cool if the preview was its own display but I don't know if that's possible
-    // but actually as Tobias pointed out - we can prefix all selectors with an id or something
-    // workbench.get_style_context().add_provider(
-    //   css_provider,
-    //   Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
-    // );
     Gtk.StyleContext.add_provider_for_display(
       output.get_display(),
       css_provider,

@@ -15,6 +15,11 @@ export default function screenshot({ widget, window, data_dir }) {
   paintable.snapshot(snapshot, width, height);
 
   const node = snapshot.to_node();
+
+  if (!node) {
+    console.log("Could not get node snapshot", { width, height });
+  }
+
   const renderer = widget.get_native().get_renderer();
   const rect = new Graphene.Rect({
     origin: new Graphene.Point({ x: 0, y: 0 }),
