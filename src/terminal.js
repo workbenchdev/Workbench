@@ -41,13 +41,13 @@ export default function Terminal({ devtools, builder }) {
 
   const button_clear = builder.get_object("button_clear");
   devtools.bind_property(
-    "reveal-child",
+    "visible",
     button_clear,
     "visible",
     GObject.BindingFlags.SYNC_CREATE
   );
 
-  devtools.connect("notify::reveal-child", (self) => {
+  devtools.connect("notify::visible", (self) => {
     if (self.reveal_child) {
       scrollToEnd();
     }
@@ -56,5 +56,6 @@ export default function Terminal({ devtools, builder }) {
   return {
     clear,
     scrollToEnd,
+    terminal,
   };
 }

@@ -46,6 +46,20 @@ export default function Window({ application }) {
   const source_view_javascript = builder.get_object("source_view_javascript");
   const documents = [];
 
+  const terminal = Terminal({ application, window, devtools, builder });
+
+  // FIXME: when to save gtkpaned position?
+  const paned = builder.get_object("paned");
+
+  // For some reasons those don't work
+  // as builder properties
+  paned.set_shrink_start_child(false);
+  paned.set_shrink_end_child(false);
+  paned.set_resize_start_child(true);
+  paned.set_resize_end_child(true);
+  paned.get_start_child().set_size_request(-1, 200);
+  paned.get_end_child().set_size_request(-1, 200);
+
   documents.push(
     Document({
       source_view: source_view_javascript,
@@ -171,7 +185,7 @@ export default function Window({ application }) {
   button_devtools.bind_property(
     "active",
     devtools,
-    "reveal-child",
+    "visible",
     GObject.BindingFlags.SYNC_CREATE
   );
 
@@ -260,8 +274,6 @@ export default function Window({ application }) {
     return code;
   }
 
-  const terminal = Terminal({ application, window, devtools, builder });
-
   function run() {
     button_run.set_sensitive(false);
 
@@ -343,7 +355,10 @@ export default function Window({ application }) {
     parameter_type: null,
   });
   action_console.connect("activate", () => {
-    devtools.reveal_child = !devtools.reveal_child;
+    settings.set_boolean(
+      "show-devtools",
+      !settings.get_boolean("show-devtools")
+    );
   });
   window.add_action(action_console);
   application.set_accels_for_action("win.console", ["<Control><Shift>K"]);
@@ -389,6 +404,7 @@ export default function Window({ application }) {
     settings.reset("show-preview");
     settings.reset("toggle-color-scheme");
     settings.reset("show-devtools");
+    settings.reset("paned-position");
     documents.forEach((document) => document.reset());
   }
 
