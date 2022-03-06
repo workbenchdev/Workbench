@@ -22,6 +22,7 @@
     <file>code.js</file>
     <file>Document.js</file>
     <file>main.js</file>
+    <file>panel_ui.js</file>
     <file>screenshot.js</file>
     <file>shortcutsWindow.js</file>
     <file>terminal.js</file>

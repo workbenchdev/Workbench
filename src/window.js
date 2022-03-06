@@ -7,10 +7,11 @@ import Vte from "gi://Vte?version=4-2.91";
 import { gettext as _ } from "gettext";
 import screenshot from "./screenshot.js";
 
-import { confirm, settings, createDataDir } from "./util.js";
+import { confirm, settings, createUserDataDir } from "./util.js";
 import Terminal from "./terminal.js";
 import { targetBuildable, scopeStylesheet, replaceBufferText } from "./code.js";
 import Document from "./Document.js";
+import PanelUi from "./panel_ui.js";
 
 import prettier from "./lib/prettier.js";
 import prettier_babel from "./lib/prettier-babel.js";
@@ -22,9 +23,9 @@ Source.init();
 const scheme_manager = Source.StyleSchemeManager.get_default();
 const style_manager = Adw.StyleManager.get_default();
 
-export default function Window({ application }) {
+export default function Window({ application, datadir }) {
   Vte.Terminal.new();
-  const data_dir = createDataDir();
+  const user_datadir = createUserDataDir();
 
   const builder = Gtk.Builder.new_from_resource(
     "/re/sonny/Workbench/window.ui"
@@ -42,17 +43,6 @@ export default function Window({ application }) {
   const panel_css = builder.get_object("panel_css");
   const panel_ui = builder.get_object("panel_ui");
   const panel_preview = builder.get_object("panel_preview");
-  const dropdown_ui_lang = builder.get_object("dropdown_ui_lang");
-  // TODO: File a bug libadwaita
-  // flat does nothing on GtkDropdown or GtkComboBox or GtkComboBoxText
-  dropdown_ui_lang
-    .get_first_child()
-    .get_first_child()
-    .get_style_context()
-    .add_class("flat");
-  dropdown_ui_lang.connect("changed", () => {
-    log(dropdown_ui_lang.get_active_id());
-  });
 
   const source_view_javascript = builder.get_object("source_view_javascript");
   const documents = [];
@@ -80,23 +70,13 @@ export default function Window({ application }) {
         Gio.ResourceLookupFlags.NONE
       ),
       ext: "js",
-      data_dir,
+      user_datadir,
     })
   );
 
   const source_view_ui = builder.get_object("source_view_ui");
-  documents.push(
-    Document({
-      source_view: source_view_ui,
-      lang: "xml",
-      placeholder: Gio.resources_lookup_data(
-        "/re/sonny/Workbench/welcome.ui",
-        Gio.ResourceLookupFlags.NONE
-      ),
-      ext: "ui",
-      data_dir,
-    })
-  );
+  const document_ui = PanelUi({ builder, user_datadir, datadir });
+  documents.push(document_ui);
 
   const source_view_css = builder.get_object("source_view_css");
   documents.push(
@@ -108,7 +88,7 @@ export default function Window({ application }) {
         Gio.ResourceLookupFlags.NONE
       ),
       ext: "css",
-      data_dir,
+      user_datadir,
     })
   );
 
@@ -222,7 +202,7 @@ export default function Window({ application }) {
     const builder = new Gtk.Builder();
     workbench.builder = builder;
 
-    let text = source_view_ui.buffer.text.trim();
+    let text = document_ui.get_text();
     if (!text) return;
     let target_id;
 
@@ -394,7 +374,7 @@ export default function Window({ application }) {
     parameter_type: null,
   });
   screenshot_action.connect("activate", () => {
-    screenshot({ window, widget: output, data_dir });
+    screenshot({ window, widget: output, user_datadir });
   });
   window.add_action(screenshot_action);
 
@@ -415,8 +395,9 @@ export default function Window({ application }) {
     settings.reset("show-preview");
     settings.reset("toggle-color-scheme");
     settings.reset("show-devtools");
-    settings.reset("paned-position");
-    documents.forEach((document) => document.reset());
+    documents.forEach((document) => {
+      document.reset();
+    });
   }
 
   const text_decoder = new TextDecoder();

@@ -30,6 +30,7 @@ export default function Application({ version, datadir }) {
       window ||
       Window({
         application,
+        datadir,
       });
     window.window.present();
   });

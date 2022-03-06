@@ -6,7 +6,7 @@ import XdpGtk from "gi://XdpGtk4";
 
 const portal = new Xdp.Portal();
 
-export default function screenshot({ widget, window, data_dir }) {
+export default function screenshot({ widget, window, user_datadir }) {
   const paintable = new Gtk.WidgetPaintable({ widget });
   const width = widget.get_allocated_width();
   const height = widget.get_allocated_height();
@@ -27,7 +27,7 @@ export default function screenshot({ widget, window, data_dir }) {
   });
   const texture = renderer.render_texture(node, rect);
 
-  const path = GLib.build_filenamev([data_dir, `Workbench screenshot.png`]);
+  const path = GLib.build_filenamev([user_datadir, `Workbench screenshot.png`]);
   // log(path);
   texture.save_to_png(path);
 
