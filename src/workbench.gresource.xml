@@ -6,6 +6,7 @@
     <file>style.css</file>
     <file>welcome.js</file>
     <file>welcome.ui</file>
+    <file>welcome.blp</file>
     <file>welcome.css</file>
   </gresource>
   <gresource prefix="/re/sonny/Workbench/js">
