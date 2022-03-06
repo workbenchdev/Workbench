@@ -104,6 +104,17 @@
       ]
     },
     {
+      "name": "blueprint",
+      "buildsystem": "meson",
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://gitlab.gnome.org/jwestman/blueprint-compiler.git",
+          "commit": "e6ad51c68282bee30fe50998d48bf2baf85830ff"
+        }
+      ]
+    },
+    {
       "name": "Workbench",
       "buildsystem": "meson",
       "builddir": true,
