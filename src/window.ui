@@ -353,17 +353,30 @@
                         <child>
                           <object class="GtkBox">
                             <child>
-                              <object class="GtkButton">
+                              <object class="GtkLabel">
                                 <property
                                   name="label"
                                   translatable="yes"
-                                >UI - XML</property>
-                                <property name="sensitive">false</property>
+                                >UI -</property>
                                 <style>
-                                  <class name="flat" />
+                                  <class name="dim-label" />
                                 </style>
                               </object>
                             </child>
+
+                            <child>
+                              <object
+                                class="GtkComboBoxText"
+                                id="dropdown_ui_lang"
+                              >
+                                <property name="active_id">xml</property>
+                                <items>
+                                  <item id="xml">XML</item>
+                                  <item id="blueprint">Blueprint</item>
+                                </items>
+                              </object>
+                            </child>
+
                             <style>
                               <class name="toolbar" />
                             </style>

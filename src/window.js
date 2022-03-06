@@ -42,6 +42,17 @@ export default function Window({ application }) {
   const panel_css = builder.get_object("panel_css");
   const panel_ui = builder.get_object("panel_ui");
   const panel_preview = builder.get_object("panel_preview");
+  const dropdown_ui_lang = builder.get_object("dropdown_ui_lang");
+  // TODO: File a bug libadwaita
+  // flat does nothing on GtkDropdown or GtkComboBox or GtkComboBoxText
+  dropdown_ui_lang
+    .get_first_child()
+    .get_first_child()
+    .get_style_context()
+    .add_class("flat");
+  dropdown_ui_lang.connect("changed", () => {
+    log(dropdown_ui_lang.get_active_id());
+  });
 
   const source_view_javascript = builder.get_object("source_view_javascript");
   const documents = [];
