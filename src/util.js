@@ -1,6 +1,7 @@
 import GLib from "gi://GLib";
 import Gio from "gi://Gio";
 import Gtk from "gi://Gtk";
+import system from "system";
 
 export function logEnum(obj, value) {
   console.log(
@@ -59,4 +60,35 @@ export function createDataDir() {
   }
 
   return data_dir;
+}
+
+export function getGIRepositoryVersion(repo) {
+  const {
+    get_major_version = () => "?",
+    get_minor_version = () => "?",
+    get_micro_version = () => "?",
+  } = repo;
+  return `${get_major_version()}.${get_minor_version()}.${get_micro_version()}`;
+}
+
+export function getGLibVersion() {
+  return `${GLib.MAJOR_VERSION}.${GLib.MINOR_VERSION}.${GLib.MICRO_VERSION}`;
+}
+
+export function getGjsVersion() {
+  const v = system.version.toString();
+  return `${v[0]}.${+(v[1] + v[2])}.${+(v[3] + v[4])}`;
+}
+
+export function getFlatpakInfo() {
+  const keyFile = new GLib.KeyFile();
+  try {
+    keyFile.load_from_file("/.flatpak-info", GLib.KeyFileFlags.NONE);
+  } catch (err) {
+    if (err.code !== GLib.FileError.NOENT) {
+      logError(err);
+    }
+    return null;
+  }
+  return keyFile;
 }
