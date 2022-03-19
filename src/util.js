@@ -58,7 +58,5 @@ export function createDataDir() {
     }
   }
 
-  console.log("cooll", data_dir);
-
   return data_dir;
 }

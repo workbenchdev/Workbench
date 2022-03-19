@@ -226,6 +226,13 @@ export default function Window({ application }) {
     try {
       builder.add_from_string(text, -1);
     } catch (err) {
+      // The following while being obviously invalid
+      // does no produce an error - so we will need to strictly validate the XML
+      // before constructing the builder
+      // prettier-xml throws but doesn't give a stack trace
+      // <style>
+      //   <class name="title-1"
+      // </style>
       logError(err);
       return;
     }
@@ -274,72 +281,77 @@ export default function Window({ application }) {
     return code;
   }
 
-  function run() {
+  async function run() {
     button_run.set_sensitive(false);
 
     terminal.clear();
 
-    const javascript = format(source_view_javascript.buffer, (text) => {
-      return prettier.format(source_view_javascript.buffer.text, {
-        parser: "babel",
-        plugins: [prettier_babel],
-        trailingComma: "all",
+    try {
+      const javascript = format(source_view_javascript.buffer, (text) => {
+        return prettier.format(source_view_javascript.buffer.text, {
+          parser: "babel",
+          plugins: [prettier_babel],
+          trailingComma: "all",
+        });
       });
-    });
 
-    format(source_view_css.buffer, (text) => {
-      return prettier.format(text, {
-        parser: "css",
-        plugins: [prettier_postcss],
+      format(source_view_css.buffer, (text) => {
+        return prettier.format(text, {
+          parser: "css",
+          plugins: [prettier_postcss],
+        });
       });
-    });
 
-    format(source_view_ui.buffer, (text) => {
-      return prettier.format(text, {
-        parser: "xml",
-        plugins: [prettier_xml],
-        // xmlWhitespaceSensitivity: "ignore",
-        // breaks the following
-        // <child>
-        //   <object class="GtkLabel">
-        //     <property name="label">Edit Style and UI to reload the Preview</property>
-        //     <property name="justify">center</property>
-        //   </object>
-        // </child>
-        // by moving the value of the property label to a new line
-        // <child>
-        //   <object class="GtkLabel">
-        //     <property name="label">
-        //       Edit Style and UI to reload the Preview
-        //     </property>
-        //     <property name="justify">center</property>
-        //   </object>
-        // </child>
+      format(source_view_ui.buffer, (text) => {
+        return prettier.format(text, {
+          parser: "xml",
+          plugins: [prettier_xml],
+          // xmlWhitespaceSensitivity: "ignore",
+          // breaks the following
+          // <child>
+          //   <object class="GtkLabel">
+          //     <property name="label">Edit Style and UI to reload the Preview</property>
+          //     <property name="justify">center</property>
+          //   </object>
+          // </child>
+          // by moving the value of the property label to a new line
+          // <child>
+          //   <object class="GtkLabel">
+          //     <property name="label">
+          //       Edit Style and UI to reload the Preview
+          //     </property>
+          //     <property name="justify">center</property>
+          //   </object>
+          // </child>
+        });
       });
-    });
 
-    updatePreview();
+      updatePreview();
 
-    if (!javascript.trim()) return;
-
-    // We have to create a new file each time
-    // because gjs doesn't appear to use etag for module caching
-    // ?foo=Date.now() also does not work as expected
-    // TODO: File a bug
-    const [file_javascript] = Gio.File.new_tmp("workbench-XXXXXX.js");
-    file_javascript.replace_contents(
-      javascript,
-      null,
-      false,
-      Gio.FileCreateFlags.NONE,
-      null
-    );
-    import(`file://${file_javascript.get_path()}`)
-      .catch(logError)
-      .finally(() => {
-        button_run.set_sensitive(true);
-        terminal.scrollToEnd();
-      });
+      // We have to create a new file each time
+      // because gjs doesn't appear to use etag for module caching
+      // ?foo=Date.now() also does not work as expected
+      // TODO: File a bug
+      const [file_javascript] = Gio.File.new_tmp("workbench-XXXXXX.js");
+      file_javascript.replace_contents(
+        javascript,
+        null,
+        false,
+        Gio.FileCreateFlags.NONE,
+        null
+      );
+      await import(`file://${file_javascript.get_path()}`)
+    } catch (err) {
+      // prettier xml errors are not instances of Error
+      if (err instanceof Error) {
+        logError(err);
+      } else {
+        console.error(err)
+      }
+    } finally {
+      button_run.set_sensitive(true);
+      terminal.scrollToEnd();
+    }
   }
 
   const action_run = new Gio.SimpleAction({
@@ -398,13 +410,17 @@ export default function Window({ application }) {
     const agreed = await confirmDiscard();
     if (!agreed) return;
 
-    settings.reset("show-code");
-    settings.reset("show-style");
-    settings.reset("show-ui");
-    settings.reset("show-preview");
-    settings.reset("toggle-color-scheme");
-    settings.reset("show-devtools");
-    settings.reset("paned-position");
+    try {
+      settings.reset("show-code");
+      settings.reset("show-style");
+      settings.reset("show-ui");
+      settings.reset("show-preview");
+      settings.reset("toggle-color-scheme");
+      settings.reset("show-devtools");
+    } catch (err) {
+      logError(err);
+    }
+
     documents.forEach((document) => document.reset());
   }
 
