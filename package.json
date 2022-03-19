@@ -16,5 +16,8 @@
     "rollup-plugin-node-polyfills": "^0.2.1",
     "uvu": "^0.5.3"
   },
-  "type": "module"
+  "type": "module",
+  "scripts": {
+    "postinstall": "rollup -c rollup.config.js"
+  }
 }

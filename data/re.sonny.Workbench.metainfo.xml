@@ -36,8 +36,13 @@
   </screenshots>
   <content_rating type="oars-1.1" />
   <releases>
-    <release version="1.1.0" date="0000-00-00">
-      <ul>Add a feature to screenshot the preview</ul>
+    <release version="1.1.0" date="2022-xx-xx">
+      <description>
+        <ul>Screenshot the preview to an png file</ul>
+        <ul>The Console is now resizable</ul>
+        <ul>Redesign the dark/light mode switcher</ul>
+        <ul>Various fixes</ul>
+      </description>
     </release>
     <release version="1.0.0" date="2022-03-02">
       <description
@@ -49,6 +54,9 @@
     <kudo>HighContrast</kudo>
     <kudo>ModernToolkit</kudo>
   </kudos>
+  <branding>
+    <color type="primary">#33d17a</color>
+  </branding>
   <custom>
     <value key="GnomeSoftware::key-colors">[(51, 209, 122)]</value>
   </custom>
