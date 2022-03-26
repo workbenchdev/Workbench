@@ -340,13 +340,13 @@ export default function Window({ application }) {
         Gio.FileCreateFlags.NONE,
         null
       );
-      await import(`file://${file_javascript.get_path()}`)
+      await import(`file://${file_javascript.get_path()}`);
     } catch (err) {
       // prettier xml errors are not instances of Error
       if (err instanceof Error) {
         logError(err);
       } else {
-        console.error(err)
+        console.error(err);
       }
     } finally {
       button_run.set_sensitive(true);
