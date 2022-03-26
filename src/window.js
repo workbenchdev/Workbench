@@ -1,4 +1,5 @@
 import Gtk from "gi://Gtk";
+import GLib from "gi://GLib";
 import GObject from "gi://GObject";
 import Gio from "gi://Gio";
 import Source from "gi://GtkSource?version=5";
@@ -121,6 +122,9 @@ export default function Window({ application }) {
 
     button_dark.active = dark;
     button_light.active = !dark;
+
+    // For Platform Tools
+    setGtk4PreferDark(dark).catch(logError);
   }
   updateStyle();
   style_manager.connect("notify::dark", updateStyle);
@@ -471,4 +475,21 @@ export default function Window({ application }) {
   }
 
   return { window, openFile };
+}
+
+async function setGtk4PreferDark(dark) {
+  const settings_path = GLib.build_filenamev([
+    GLib.get_user_config_dir(),
+    "gtk-4.0/settings.ini",
+  ]);
+  GLib.mkdir_with_parents(GLib.path_get_dirname(settings_path), 0o777);
+  const settings = new GLib.KeyFile();
+  try {
+    settings.load_from_file(settings_path, GLib.KeyFileFlags.NONE);
+    // eslint-disable-next-line no-empty
+  } catch (err) {
+    if (err.code !== GLib.FileError.NOENT) throw err;
+  }
+  settings.set_boolean("Settings", "gtk-application-prefer-dark-theme", dark);
+  settings.save_to_file(settings_path);
 }

@@ -430,12 +430,12 @@
                                 <property
                                   name="tooltip-text"
                                   translatable="yes"
-                                >Take a screenshot of the preview</property>
+                                >Take Screenshot of Preview</property>
                                 <accessibility>
                                   <property
                                     name="label"
                                     translatable="yes"
-                                  >Take a screenshot of the preview</property>
+                                  >Take Screenshot of Preview</property>
                                 </accessibility>
                               </object>
                             </child>
@@ -523,9 +523,56 @@
       <attribute name="action">app.open</attribute>
     </item>
     <item>
-      <attribute name="label" translatable="yes">Reset to demo</attribute>
+      <attribute name="label" translatable="yes">Reset to Demo</attribute>
       <attribute name="action">win.reset</attribute>
     </item>
+    <submenu>
+      <attribute name="label" translatable="yes">Platform Tools</attribute>
+      <!--
+        TODO: Could not find a way to start it in dark mode
+        we could send a PR add an cli argument for it
+        -->
+      <item>
+        <attribute name="label" translatable="yes">Adwaita Demo</attribute>
+        <attribute name="action">app.demo</attribute>
+        <attribute name="target">org.gnome.Adwaita1.Demo</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">GTK Demo</attribute>
+        <attribute name="action">app.demo</attribute>
+        <attribute name="target">org.gtk.Demo4</attribute>
+      </item>
+      <item>
+        <attribute
+          name="label"
+          translatable="yes"
+        >GTK Widget Factory</attribute>
+        <attribute name="action">app.demo</attribute>
+        <attribute name="target">org.gtk.WidgetFactory4</attribute>
+      </item>
+      <!--
+        Requires socket=session-bus for some reason
+        also - appears to be hardcoding list of icons
+        let's consider making our own icon browser
+      <item>
+        <attribute name="label" translatable="yes">GTK Icon Browser</attribute>
+        <attribute name="action">app.demo</attribute>
+        <attribute name="target">org.gtk.IconBrowser4</attribute>
+      </item>
+      -->
+      <!--
+        Not part of the platform yet
+        https://gitlab.gnome.org/GNOME/gnome-build-meta/-/issues/496
+        will require "socket=session-bus" permission
+        will require "-Dportal-tests=true" build option
+        we may want to build our own demos instead
+      <item>
+        <attribute name="label" translatable="yes">Portal Test</attribute>
+        <attribute name="action">app.demo</attribute>
+        <attribute name="target">org.gnome.PortalTest.Gtk4</attribute>
+      </item>
+      -->
+    </submenu>
     <section>
       <item>
         <attribute

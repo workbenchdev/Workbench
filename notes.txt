@@ -1,5 +1,5 @@
 
 * mnemonic?
 
-later
-* linked toggled button for light/dark style
+can start the applcation demo if app has
+https://developer.gnome.org/documentation/tutorials/beginners/components/window.html

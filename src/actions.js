@@ -80,4 +80,17 @@ export default function Actions({ application, datadir, version }) {
     );
   });
   application.add_action(open_uri);
+
+  const action_demo = new Gio.SimpleAction({
+    name: "demo",
+    parameter_type: new GLib.VariantType("s"),
+  });
+  action_demo.connect("activate", (self, target) => {
+    try {
+      GLib.spawn_command_line_async(`gtk-launch ${target.unpack()}`);
+    } catch (err) {
+      logError(err);
+    }
+  });
+  application.add_action(action_demo);
 }
