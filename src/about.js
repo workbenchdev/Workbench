@@ -7,8 +7,8 @@ import {
   getGIRepositoryVersion,
   getGjsVersion,
   getGLibVersion,
-  getFlatpakInfo,
-} from "./util.js";
+} from "./troll/src/util.js";
+import { getFlatpakInfo } from "./util.js";
 
 export default function About({ application, datadir, version }) {
   const flatpak_info = getFlatpakInfo();

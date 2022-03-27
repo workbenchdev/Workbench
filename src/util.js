@@ -1,7 +1,8 @@
 import GLib from "gi://GLib";
 import Gio from "gi://Gio";
 import Gtk from "gi://Gtk";
-import system from "system";
+
+import { once } from "./troll/src/util.js";
 
 export function logEnum(obj, value) {
   console.log(
@@ -16,15 +17,6 @@ export const settings = new Gio.Settings({
   path: "/re/sonny/Workbench/",
 });
 
-export function promise(object, signal) {
-  return new Promise((resolve) => {
-    const handler_id = object.connect(signal, (self, ...args) => {
-      object.disconnect(handler_id);
-      resolve(args);
-    });
-  });
-}
-
 export async function confirm(params) {
   const dialog = new Gtk.MessageDialog({
     ...params,
@@ -32,7 +24,7 @@ export async function confirm(params) {
     buttons: Gtk.ButtonsType.YES_NO,
   });
   dialog.present();
-  const [response_id] = await promise(dialog, "response");
+  const [response_id] = await once(dialog, "response");
   dialog.close();
   return response_id === Gtk.ResponseType.YES;
 }
@@ -52,24 +44,6 @@ export function createDataDir() {
   }
 
   return data_dir;
-}
-
-export function getGIRepositoryVersion(repo) {
-  const {
-    get_major_version = () => "?",
-    get_minor_version = () => "?",
-    get_micro_version = () => "?",
-  } = repo;
-  return `${get_major_version()}.${get_minor_version()}.${get_micro_version()}`;
-}
-
-export function getGLibVersion() {
-  return `${GLib.MAJOR_VERSION}.${GLib.MINOR_VERSION}.${GLib.MICRO_VERSION}`;
-}
-
-export function getGjsVersion() {
-  const v = system.version.toString();
-  return `${v[0]}.${+(v[1] + v[2])}.${+(v[3] + v[4])}`;
 }
 
 export function getFlatpakInfo() {
