@@ -1,6 +1,10 @@
 {
   "private": true,
   "devDependencies": {
+    "@gi-types/base-types": "^1.0.0",
+    "@gi-types/gjs-environment": "^1.0.0",
+    "@gi-types/gtk4": "^4.2.0",
+    "@gi-types/gtk4-types": "^1.0.0",
     "@prettier/plugin-xml": "^2.0.1",
     "@rollup/plugin-commonjs": "^21.0.2",
     "@rollup/plugin-json": "^4.1.0",
