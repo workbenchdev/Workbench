@@ -610,7 +610,7 @@
           translatable="yes"
         >GNOME JavaScript (GJS)</attribute>
         <attribute name="action">app.open_uri</attribute>
-        <attribute name="target">https://gjs.guide/</attribute>
+        <attribute name="target">https://gjs.guide/guides/</attribute>
       </item>
       <item>
         <attribute
@@ -662,7 +662,7 @@
         <attribute name="action">app.open_uri</attribute>
         <attribute
           name="target"
-        >https://gnome.pages.gitlab.gnome.org/libadwaita/</attribute>
+        >https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.1/</attribute>
       </item>
     </section>
     <section>

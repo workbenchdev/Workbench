@@ -21,7 +21,9 @@
     <file>application.js</file>
     <file>code.js</file>
     <file>Document.js</file>
+    <file>logger.js</file>
     <file>main.js</file>
+    <file>overrides.js</file>
     <file>screenshot.js</file>
     <file>shortcutsWindow.js</file>
     <file>terminal.js</file>

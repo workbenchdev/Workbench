@@ -17,8 +17,7 @@
     "prettier": "^2.6.1",
     "rollup": "^2.70.1",
     "rollup-plugin-ignore": "^1.0.10",
-    "rollup-plugin-node-polyfills": "^0.2.1",
-    "uvu": "^0.5.3"
+    "rollup-plugin-node-polyfills": "^0.2.1"
   },
   "type": "module",
   "scripts": {

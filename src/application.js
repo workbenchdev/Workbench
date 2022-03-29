@@ -51,6 +51,8 @@ export default function Application({ version, datadir }) {
 
   Actions({ application, datadir, version });
 
+  import("./overrides.js").catch(logError);
+
   return application;
 }
 
