@@ -12,7 +12,8 @@
     "--share=ipc",
     "--socket=fallback-x11",
     "--socket=wayland",
-    "--device=dri"
+    "--device=dri",
+    "--socket=session-bus"
   ],
   "x-run-args": [],
   "modules": [

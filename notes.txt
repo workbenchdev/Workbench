@@ -1,5 +1,1 @@
 mnemonic?
-
-can start the applcation demo if app has permission "--socket=session-bus"
-(remove system.exit)
-https://developer.gnome.org/documentation/tutorials/beginners/components/window.html
