@@ -551,15 +551,14 @@
         <attribute name="target">org.gtk.WidgetFactory4</attribute>
       </item>
       <!--
-        Requires socket=session-bus for some reason
-        also - appears to be hardcoding list of icons
-        let's consider making our own icon browser
+        Appears to be hardcoding list of icons
+        TODO: let's consider making our own icon browser
+      -->
       <item>
         <attribute name="label" translatable="yes">GTK Icon Browser</attribute>
         <attribute name="action">app.demo</attribute>
         <attribute name="target">org.gtk.IconBrowser4</attribute>
       </item>
-      -->
       <!--
         Not part of the platform yet
         https://gitlab.gnome.org/GNOME/gnome-build-meta/-/issues/496
