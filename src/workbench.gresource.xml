@@ -4,9 +4,13 @@
     <file>window.ui</file>
     <file>shortcutsWindow.ui</file>
     <file>style.css</file>
-    <file>welcome.js</file>
-    <file>welcome.ui</file>
-    <file>welcome.css</file>
+    <file>demos/Toasts/main.js</file>
+    <file>demos/Toasts/main.json</file>
+    <file>demos/Toasts/main.ui</file>
+    <file>demos/Welcome/main.css</file>
+    <file>demos/Welcome/main.js</file>
+    <file>demos/Welcome/main.json</file>
+    <file>demos/Welcome/main.ui</file>
   </gresource>
   <gresource prefix="/re/sonny/Workbench/js">
     <file>lib/ltx.js</file>
@@ -21,6 +25,7 @@
     <file>application.js</file>
     <file>code.js</file>
     <file>Document.js</file>
+    <file>Library.js</file>
     <file>logger.js</file>
     <file>main.js</file>
     <file>overrides.js</file>

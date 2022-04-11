@@ -19,5 +19,8 @@
     <key name="show-devtools" type="b">
       <default>true</default>
     </key>
+    <key name="has-edits" type="b">
+      <default>false</default>
+    </key>
   </schema>
 </schemalist>

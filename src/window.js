@@ -17,6 +17,7 @@ import prettier from "./lib/prettier.js";
 import prettier_babel from "./lib/prettier-babel.js";
 import prettier_postcss from "./lib/prettier-postcss.js";
 import prettier_xml from "./lib/prettier-xml.js";
+import Library, { getDemoSources } from "./Library.js";
 
 Source.init();
 
@@ -44,7 +45,6 @@ export default function Window({ application }) {
   const panel_ui = builder.get_object("panel_ui");
   const panel_preview = builder.get_object("panel_preview");
 
-  const source_view_javascript = builder.get_object("source_view_javascript");
   const documents = [];
 
   const terminal = Terminal({ application, window, devtools, builder });
@@ -61,14 +61,14 @@ export default function Window({ application }) {
   paned.get_start_child().set_size_request(-1, 200);
   paned.get_end_child().set_size_request(-1, 200);
 
+  const { js, css, ui } = getDemoSources("Welcome");
+
+  const source_view_javascript = builder.get_object("source_view_javascript");
   documents.push(
     Document({
       source_view: source_view_javascript,
       lang: "js",
-      placeholder: Gio.resources_lookup_data(
-        "/re/sonny/Workbench/welcome.js",
-        Gio.ResourceLookupFlags.NONE
-      ),
+      placeholder: js,
       ext: "js",
       data_dir,
     })
@@ -79,10 +79,7 @@ export default function Window({ application }) {
     Document({
       source_view: source_view_ui,
       lang: "xml",
-      placeholder: Gio.resources_lookup_data(
-        "/re/sonny/Workbench/welcome.ui",
-        Gio.ResourceLookupFlags.NONE
-      ),
+      placeholder: ui,
       ext: "ui",
       data_dir,
     })
@@ -93,10 +90,7 @@ export default function Window({ application }) {
     Document({
       source_view: source_view_css,
       lang: "css",
-      placeholder: Gio.resources_lookup_data(
-        "/re/sonny/Workbench/welcome.css",
-        Gio.ResourceLookupFlags.NONE
-      ),
+      placeholder: css,
       ext: "css",
       data_dir,
     })
@@ -391,41 +385,58 @@ export default function Window({ application }) {
     name: "reset",
     parameter_type: null,
   });
-  action_reset.connect("activate", reset);
+  action_reset.connect("activate", () => loadDemo("Welcome").catch(logError));
   window.add_action(action_reset);
 
-  const screenshot_action = new Gio.SimpleAction({
+  const action_screenshot = new Gio.SimpleAction({
     name: "screenshot",
     parameter_type: null,
   });
-  screenshot_action.connect("activate", () => {
+  action_screenshot.connect("activate", () => {
     screenshot({ window, widget: output, data_dir });
   });
-  window.add_action(screenshot_action);
+  window.add_action(action_screenshot);
+
+  async function loadDemo(demo_name) {
+    const agreed = await confirmDiscard();
+    if (!agreed) return;
+
+    function load(buffer, str) {
+      replaceBufferText(buffer, str);
+      settings.set_boolean("has-edits", false);
+      buffer.place_cursor(buffer.get_start_iter());
+    }
+
+    const { js, css, ui } = getDemoSources(demo_name);
+
+    load(source_view_javascript.buffer, js);
+    settings.set_boolean("show-code", !!js);
+
+    load(source_view_css.buffer, css);
+    settings.set_boolean("show-style", !!css);
+
+    load(source_view_ui.buffer, ui);
+    settings.set_boolean("show-ui", !!ui);
+    settings.set_boolean("show-preview", !!ui);
+
+    run();
+  }
+
+  const action_library = new Gio.SimpleAction({
+    name: "library",
+    parameter_type: null,
+  });
+  action_library.connect("activate", () => {
+    Library({ window, builder, loadDemo });
+  });
+  window.add_action(action_library);
 
   function confirmDiscard() {
+    if (!settings.get_boolean("has-edits")) return true;
     return confirm({
       transient_for: window,
       text: _("Are you sure you want to discard your changes?"),
     });
-  }
-
-  async function reset() {
-    const agreed = await confirmDiscard();
-    if (!agreed) return;
-
-    try {
-      settings.reset("show-code");
-      settings.reset("show-style");
-      settings.reset("show-ui");
-      settings.reset("show-preview");
-      settings.reset("toggle-color-scheme");
-      settings.reset("show-devtools");
-    } catch (err) {
-      logError(err);
-    }
-
-    documents.forEach((document) => document.reset());
   }
 
   const text_decoder = new TextDecoder();
@@ -462,6 +473,7 @@ export default function Window({ application }) {
       if (!agreed) return;
 
       replaceBufferText(buffer, data);
+      settings.set_boolean("has-edits", false);
       buffer.place_cursor(buffer.get_start_iter());
     }
 

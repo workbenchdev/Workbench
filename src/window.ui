@@ -485,6 +485,19 @@
                         >Open GTK Inspector (Ctrl+Shift+I)</property>
                       </object>
                     </child>
+                    <child type="start">
+                      <object class="GtkButton" id="button_library">
+                        <property
+                          name="label"
+                          translatable="yes"
+                        >Library</property>
+                        <property name="action-name">win.library</property>
+                        <property
+                          name="tooltip-text"
+                          translatable="yes"
+                        >Open Library of Demos and Examples (Ctrl+Shift+O)</property>
+                      </object>
+                    </child>
                     <child type="end">
                       <object class="GtkButton" id="button_clear">
                         <property
@@ -516,6 +529,14 @@
         </child>
       </object>
     </property>
+  </object>
+  <object class="AdwPreferencesWindow" id="window_library">
+    <property name="hide-on-close">true</property>
+    <property name="search-enabled">true</property>
+    <property name="title" translatable="yes">Library</property>
+    <child>
+      <object class="AdwPreferencesPage" id="library" />
+    </child>
   </object>
   <menu id="menu_app">
     <item>
