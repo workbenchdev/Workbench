@@ -20,6 +20,10 @@ globals:
   console: readonly
   TextEncoder: readonly
   TextDecoder: readonly
+  setInterval: readonly
+  setTimeout: readonly
+  clearInterval: readonly
+  clearTimeout: readonly
 parserOptions:
   sourceType: module
 rules:
