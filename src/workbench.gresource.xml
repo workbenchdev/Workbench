@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <gresources>
   <gresource prefix="/re/sonny/Workbench">
-    <file>blueprint.lang</file>
     <file>window.ui</file>
     <file>shortcutsWindow.ui</file>
     <file>style.css</file>
@@ -16,6 +15,7 @@
     <file>demos/Welcome/main.json</file>
     <file>demos/Welcome/main.ui</file>
     <file>demos/Welcome/main.blp</file>
+    <file>language-specs/blueprint.lang</file>
   </gresource>
   <gresource prefix="/re/sonny/Workbench/js">
     <file>lib/ltx.js</file>

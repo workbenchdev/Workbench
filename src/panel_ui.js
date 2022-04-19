@@ -8,13 +8,12 @@ export default function panel_ui({
   lang,
   placeholder,
   ext,
-  datadir,
   user_datadir,
 }) {
   const language_manager = new Source.LanguageManager();
   language_manager.set_search_path([
     ...language_manager.get_search_path(),
-    GLib.build_filenamev([datadir, "re.sonny.Workbench"]),
+    "resource:///re/sonny/Workbench/language-specs",
   ]);
 
   const dropdown_ui_lang = builder.get_object("dropdown_ui_lang");

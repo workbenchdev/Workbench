@@ -82,7 +82,6 @@ export default function Window({ application, datadir }) {
     lang: "blueprint",
     placeholder: blp,
     ext: "blp",
-    datadir,
     user_datadir,
   });
   documents.push(document_ui);
