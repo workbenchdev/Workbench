@@ -22,4 +22,12 @@ configure_file(
   install_dir: get_option('bindir')
 )
 
+configure_file(
+  input: 'workbench',
+  output: 'workbench',
+  configuration: bin_conf,
+  install: true,
+  install_dir: get_option('bindir')
+)
+
 install_data('blueprint.lang')

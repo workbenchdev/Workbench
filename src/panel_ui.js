@@ -2,24 +2,15 @@ import Source from "gi://GtkSource?version=5";
 import Gio from "gi://Gio";
 import GLib from "gi://GLib";
 
-const params = {
-  xml: {
-    extension: "ui",
-    placeholder: Gio.resources_lookup_data(
-      "/re/sonny/Workbench/welcome.ui",
-      Gio.ResourceLookupFlags.NONE
-    ),
-  },
-  blueprint: {
-    extension: "blp",
-    placeholder: Gio.resources_lookup_data(
-      "/re/sonny/Workbench/welcome.blp",
-      Gio.ResourceLookupFlags.NONE
-    ),
-  },
-};
-
-export default function panel_ui({ builder, user_datadir, datadir }) {
+export default function panel_ui({
+  builder,
+  source_view,
+  lang,
+  placeholder,
+  ext,
+  datadir,
+  user_datadir,
+}) {
   const language_manager = new Source.LanguageManager();
   language_manager.set_search_path([
     ...language_manager.get_search_path(),
@@ -27,6 +18,7 @@ export default function panel_ui({ builder, user_datadir, datadir }) {
   ]);
 
   const dropdown_ui_lang = builder.get_object("dropdown_ui_lang");
+  dropdown_ui_lang.set_active_id(lang);
 
   let mode;
   let source_file;
@@ -41,16 +33,15 @@ export default function panel_ui({ builder, user_datadir, datadir }) {
 
   dropdown_ui_lang.connect("changed", setMode);
 
-  const source_view = builder.get_object("source_view_ui");
   const { buffer } = source_view;
 
   function setMode() {
     mode = dropdown_ui_lang.get_active_id();
-    log(mode);
-    buffer.set_language(language_manager.get_language(mode));
+    console.log(mode);
+    buffer.set_language(language_manager.get_language("blueprint"));
 
     const file = Gio.File.new_for_path(
-      GLib.build_filenamev([user_datadir, `state.${params[mode].extension}`])
+      GLib.build_filenamev([user_datadir, `state.${ext}`])
     );
 
     source_file = new Source.File({
@@ -104,8 +95,7 @@ export default function panel_ui({ builder, user_datadir, datadir }) {
   }
 
   function reset() {
-    const decoder = new TextDecoder("utf-8");
-    const text = decoder.decode(params[mode].placeholder.get_data());
+    const text = placeholder;
     buffer.set_text(text, -1);
   }
 

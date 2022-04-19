@@ -1,6 +1,7 @@
 import Source from "gi://GtkSource?version=5";
 import Gio from "gi://Gio";
 import GLib from "gi://GLib";
+import { settings } from "./util.js";
 
 const language_manager = Source.LanguageManager.get_default();
 
@@ -26,9 +27,9 @@ export default function Document({
   load();
 
   buffer.connect("modified-changed", () => {
-    const modified = buffer.get_modified();
-    if (!modified) return;
+    if (!buffer.get_modified()) return;
     save();
+    settings.set_boolean("has-edits", true);
   });
 
   function load() {
@@ -50,7 +51,8 @@ export default function Document({
           }
         }
         if (success) buffer.set_modified(false);
-        if (!success) reset();
+        if (!success) buffer.set_text(placeholder, -1);
+        settings.set_boolean("has-edits", false);
       }
     );
   }
@@ -66,11 +68,8 @@ export default function Document({
     });
   }
 
-  function reset() {
-    const decoder = new TextDecoder("utf-8");
-    const text = decoder.decode(placeholder.get_data());
-    buffer.set_text(text, -1);
-  }
-
-  return { reset, source_view };
+  return {
+    source_view,
+    buffer,
+  };
 }

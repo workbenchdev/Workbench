@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<interface>
+  <object class="AdwToastOverlay" id="overlay">
+    <child>
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
+        <property name="valign">center</property>
+        <property name="halign">center</property>
+        <child>
+          <object class="GtkLabel">
+            <property name="label">WebSocket client</property>
+            <property name="margin-bottom">24</property>
+            <style>
+              <class name="title-1" />
+            </style>
+          </object>
+        </child>
+
+        <child>
+          <object class="GtkEntry" id="entry_url">
+            <property name="placeholder_text">url</property>
+            <property name="text">wss://ws.postman-echo.com/raw</property>
+            <property name="margin-bottom">24</property>
+          </object>
+        </child>
+
+        <child>
+          <object class="GtkButton" id="button_connect">
+            <property name="label">Connect</property>
+            <property name="margin-bottom">24</property>
+          </object>
+        </child>
+
+        <child>
+          <object class="GtkButton" id="button_disconnect">
+            <property name="label">Disconnect</property>
+            <property name="sensitive">false</property>
+            <property name="margin-bottom">24</property>
+          </object>
+        </child>
+
+        <child>
+          <object class="GtkBox">
+            <child>
+              <object class="GtkEntry" id="entry_message">
+                <property name="margin-end">12</property>
+                <property name="hexpand">true</property>
+                <property name="placeholder_text">message</property>
+                <property name="text">Hello</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="button_send">
+                <property name="label">Send</property>
+                <property name="sensitive">false</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>

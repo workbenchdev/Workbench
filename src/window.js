@@ -1,4 +1,5 @@
 import Gtk from "gi://Gtk";
+import GLib from "gi://GLib";
 import GObject from "gi://GObject";
 import Gio from "gi://Gio";
 import Source from "gi://GtkSource?version=5";
@@ -17,6 +18,7 @@ import prettier from "./lib/prettier.js";
 import prettier_babel from "./lib/prettier-babel.js";
 import prettier_postcss from "./lib/prettier-postcss.js";
 import prettier_xml from "./lib/prettier-xml.js";
+import Library, { getDemoSources } from "./Library.js";
 
 Source.init();
 
@@ -44,7 +46,6 @@ export default function Window({ application, datadir }) {
   const panel_ui = builder.get_object("panel_ui");
   const panel_preview = builder.get_object("panel_preview");
 
-  const source_view_javascript = builder.get_object("source_view_javascript");
   const documents = [];
 
   const terminal = Terminal({ application, window, devtools, builder });
@@ -61,32 +62,46 @@ export default function Window({ application, datadir }) {
   paned.get_start_child().set_size_request(-1, 200);
   paned.get_end_child().set_size_request(-1, 200);
 
+  const { js, css, ui, blp } = getDemoSources("Welcome");
+
+  const source_view_javascript = builder.get_object("source_view_javascript");
   documents.push(
     Document({
       source_view: source_view_javascript,
       lang: "js",
-      placeholder: Gio.resources_lookup_data(
-        "/re/sonny/Workbench/welcome.js",
-        Gio.ResourceLookupFlags.NONE
-      ),
+      placeholder: js,
       ext: "js",
       user_datadir,
     })
   );
 
   const source_view_ui = builder.get_object("source_view_ui");
-  const document_ui = PanelUi({ builder, user_datadir, datadir });
+  const document_ui = PanelUi({
+    builder,
+    source_view: source_view_ui,
+    lang: "blueprint",
+    placeholder: blp,
+    ext: "blp",
+    datadir,
+    user_datadir,
+  });
   documents.push(document_ui);
+  // documents.push(
+  //   Document({
+  //     source_view: source_view_ui,
+  //     lang: "blueprint",
+  //     placeholder: blp,
+  //     ext: "blp",
+  //     user_datadir,
+  //   })
+  // );
 
   const source_view_css = builder.get_object("source_view_css");
   documents.push(
     Document({
       source_view: source_view_css,
       lang: "css",
-      placeholder: Gio.resources_lookup_data(
-        "/re/sonny/Workbench/welcome.css",
-        Gio.ResourceLookupFlags.NONE
-      ),
+      placeholder: css,
       ext: "css",
       user_datadir,
     })
@@ -112,6 +127,9 @@ export default function Window({ application, datadir }) {
 
     button_dark.active = dark;
     button_light.active = !dark;
+
+    // For Platform Tools
+    setGtk4PreferDark(dark).catch(logError);
   }
   updateStyle();
   style_manager.connect("notify::dark", updateStyle);
@@ -202,7 +220,8 @@ export default function Window({ application, datadir }) {
     const builder = new Gtk.Builder();
     workbench.builder = builder;
 
-    let text = document_ui.get_text();
+    // let text = source_view_ui.buffer.text.trim();
+    let text = documents[1].get_text();
     if (!text) return;
     let target_id;
 
@@ -217,6 +236,13 @@ export default function Window({ application, datadir }) {
     try {
       builder.add_from_string(text, -1);
     } catch (err) {
+      // The following while being obviously invalid
+      // does no produce an error - so we will need to strictly validate the XML
+      // before constructing the builder
+      // prettier-xml throws but doesn't give a stack trace
+      // <style>
+      //   <class name="title-1"
+      // </style>
       logError(err);
       return;
     }
@@ -265,72 +291,77 @@ export default function Window({ application, datadir }) {
     return code;
   }
 
-  function run() {
+  async function run() {
     button_run.set_sensitive(false);
 
     terminal.clear();
 
-    const javascript = format(source_view_javascript.buffer, (text) => {
-      return prettier.format(source_view_javascript.buffer.text, {
-        parser: "babel",
-        plugins: [prettier_babel],
-        trailingComma: "all",
+    try {
+      const javascript = format(source_view_javascript.buffer, (text) => {
+        return prettier.format(source_view_javascript.buffer.text, {
+          parser: "babel",
+          plugins: [prettier_babel],
+          trailingComma: "all",
+        });
       });
-    });
 
-    format(source_view_css.buffer, (text) => {
-      return prettier.format(text, {
-        parser: "css",
-        plugins: [prettier_postcss],
+      format(source_view_css.buffer, (text) => {
+        return prettier.format(text, {
+          parser: "css",
+          plugins: [prettier_postcss],
+        });
       });
-    });
 
-    format(source_view_ui.buffer, (text) => {
-      return prettier.format(text, {
-        parser: "xml",
-        plugins: [prettier_xml],
-        // xmlWhitespaceSensitivity: "ignore",
-        // breaks the following
-        // <child>
-        //   <object class="GtkLabel">
-        //     <property name="label">Edit Style and UI to reload the Preview</property>
-        //     <property name="justify">center</property>
-        //   </object>
-        // </child>
-        // by moving the value of the property label to a new line
-        // <child>
-        //   <object class="GtkLabel">
-        //     <property name="label">
-        //       Edit Style and UI to reload the Preview
-        //     </property>
-        //     <property name="justify">center</property>
-        //   </object>
-        // </child>
+      format(source_view_ui.buffer, (text) => {
+        return prettier.format(text, {
+          parser: "xml",
+          plugins: [prettier_xml],
+          // xmlWhitespaceSensitivity: "ignore",
+          // breaks the following
+          // <child>
+          //   <object class="GtkLabel">
+          //     <property name="label">Edit Style and UI to reload the Preview</property>
+          //     <property name="justify">center</property>
+          //   </object>
+          // </child>
+          // by moving the value of the property label to a new line
+          // <child>
+          //   <object class="GtkLabel">
+          //     <property name="label">
+          //       Edit Style and UI to reload the Preview
+          //     </property>
+          //     <property name="justify">center</property>
+          //   </object>
+          // </child>
+        });
       });
-    });
 
-    updatePreview();
+      updatePreview();
 
-    if (!javascript.trim()) return;
-
-    // We have to create a new file each time
-    // because gjs doesn't appear to use etag for module caching
-    // ?foo=Date.now() also does not work as expected
-    // TODO: File a bug
-    const [file_javascript] = Gio.File.new_tmp("workbench-XXXXXX.js");
-    file_javascript.replace_contents(
-      javascript,
-      null,
-      false,
-      Gio.FileCreateFlags.NONE,
-      null
-    );
-    import(`file://${file_javascript.get_path()}`)
-      .catch(logError)
-      .finally(() => {
-        button_run.set_sensitive(true);
-        terminal.scrollToEnd();
-      });
+      // We have to create a new file each time
+      // because gjs doesn't appear to use etag for module caching
+      // ?foo=Date.now() also does not work as expected
+      // TODO: File a bug
+      const [file_javascript] = Gio.File.new_tmp("workbench-XXXXXX.js");
+      file_javascript.replace_contents(
+        javascript,
+        null,
+        false,
+        Gio.FileCreateFlags.NONE,
+        null
+      );
+      await import(`file://${file_javascript.get_path()}`);
+    } catch (err) {
+      // prettier xml errors are not instances of Error
+      if (err instanceof Error) {
+        logError(err);
+      } else {
+        console.error(err);
+      }
+    } finally {
+      button_run.set_sensitive(true);
+      terminal.scrollToEnd();
+    }
   }
 
   const action_run = new Gio.SimpleAction({
@@ -366,37 +397,57 @@ export default function Window({ application, datadir }) {
     name: "reset",
     parameter_type: null,
   });
-  action_reset.connect("activate", reset);
+  action_reset.connect("activate", () => loadDemo("Welcome").catch(logError));
   window.add_action(action_reset);
 
-  const screenshot_action = new Gio.SimpleAction({
+  const action_screenshot = new Gio.SimpleAction({
     name: "screenshot",
     parameter_type: null,
   });
-  screenshot_action.connect("activate", () => {
+  action_screenshot.connect("activate", () => {
     screenshot({ window, widget: output, user_datadir });
   });
-  window.add_action(screenshot_action);
+  window.add_action(action_screenshot);
 
-  function confirmDiscard() {
-    return confirm({
-      transient_for: window,
-      text: _("Are you sure you want to discard your changes?"),
-    });
-  }
-
-  async function reset() {
+  async function loadDemo(demo_name) {
     const agreed = await confirmDiscard();
     if (!agreed) return;
 
-    settings.reset("show-code");
-    settings.reset("show-style");
-    settings.reset("show-ui");
-    settings.reset("show-preview");
-    settings.reset("toggle-color-scheme");
-    settings.reset("show-devtools");
-    documents.forEach((document) => {
-      document.reset();
+    function load(buffer, str) {
+      replaceBufferText(buffer, str);
+      settings.set_boolean("has-edits", false);
+      buffer.place_cursor(buffer.get_start_iter());
+    }
+
+    const { js, css, ui } = getDemoSources(demo_name);
+
+    load(source_view_javascript.buffer, js);
+    settings.set_boolean("show-code", !!js);
+
+    load(source_view_css.buffer, css);
+    settings.set_boolean("show-style", !!css);
+
+    load(source_view_ui.buffer, ui);
+    settings.set_boolean("show-ui", !!ui);
+    settings.set_boolean("show-preview", !!ui);
+
+    run();
+  }
+
+  const action_library = new Gio.SimpleAction({
+    name: "library",
+    parameter_type: null,
+  });
+  action_library.connect("activate", () => {
+    Library({ window, builder, loadDemo });
+  });
+  window.add_action(action_library);
+
+  function confirmDiscard() {
+    if (!settings.get_boolean("has-edits")) return true;
+    return confirm({
+      transient_for: window,
+      text: _("Are you sure you want to discard your changes?"),
     });
   }
 
@@ -434,6 +485,7 @@ export default function Window({ application, datadir }) {
       if (!agreed) return;
 
       replaceBufferText(buffer, data);
+      settings.set_boolean("has-edits", false);
       buffer.place_cursor(buffer.get_start_iter());
     }
 
@@ -447,4 +499,21 @@ export default function Window({ application, datadir }) {
   }
 
   return { window, openFile };
+}
+
+async function setGtk4PreferDark(dark) {
+  const settings_path = GLib.build_filenamev([
+    GLib.get_user_config_dir(),
+    "gtk-4.0/settings.ini",
+  ]);
+  GLib.mkdir_with_parents(GLib.path_get_dirname(settings_path), 0o777);
+  const settings = new GLib.KeyFile();
+  try {
+    settings.load_from_file(settings_path, GLib.KeyFileFlags.NONE);
+    // eslint-disable-next-line no-empty
+  } catch (err) {
+    if (err.code !== GLib.FileError.NOENT) throw err;
+  }
+  settings.set_boolean("Settings", "gtk-application-prefer-dark-theme", dark);
+  settings.save_to_file(settings_path);
 }

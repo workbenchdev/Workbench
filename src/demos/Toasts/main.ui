@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<interface>
+  <object class="AdwToastOverlay" id="overlay">
+    <child>
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
+        <property name="valign">center</property>
+        <property name="halign">center</property>
+        <child>
+          <object class="GtkLabel">
+            <property name="label">Toasts demo!</property>
+            <property name="margin-bottom">24</property>
+            <style>
+              <class name="title-1" />
+            </style>
+          </object>
+        </child>
+
+        <child>
+          <object class="GtkButton" id="button_simple">
+            <property name="label">Simple In-App notification</property>
+            <property name="margin-bottom">24</property>
+          </object>
+        </child>
+
+        <child>
+          <object class="GtkButton" id="button_advanced">
+            <property name="label">Advanced Usage</property>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>

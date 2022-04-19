@@ -36,8 +36,15 @@
   </screenshots>
   <content_rating type="oars-1.1" />
   <releases>
-    <release version="1.1.0" date="0000-00-00">
-      <ul>Add a feature to screenshot the preview</ul>
+    <release version="1.1.0" date="2022-03-24">
+      <description>
+        <ul>Take a png screenshot of the preview</ul>
+        <ul>The console is now resizable</ul>
+        <ul>Redesign the dark/light mode switcher</ul>
+        <ul>Show platform and dependencies in about dialog</ul>
+        <ul>Update to GNOME platform 42</ul>
+        <ul>Various fixes</ul>
+      </description>
     </release>
     <release version="1.0.0" date="2022-03-02">
       <description
@@ -49,6 +56,9 @@
     <kudo>HighContrast</kudo>
     <kudo>ModernToolkit</kudo>
   </kudos>
+  <branding>
+    <color type="primary">#33d17a</color>
+  </branding>
   <custom>
     <value key="GnomeSoftware::key-colors">[(51, 209, 122)]</value>
   </custom>

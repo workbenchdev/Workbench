@@ -1226,8 +1226,8 @@ Declaration$5.default = Declaration$5;
 
 let urlAlphabet =
   'useandom-26T198340PX75pxJACKVERYMINDBUSHWOLF_GQZbfghjklqvwyzrict';
-let customAlphabet = (alphabet, size) => {
-  return () => {
+let customAlphabet = (alphabet, defaultSize = 21) => {
+  return (size = defaultSize) => {
     let id = '';
     let i = size;
     while (i--) {
@@ -2699,6 +2699,19 @@ let AtRule$3 = atRule$1;
 let Root$5 = root$1;
 let Rule$3 = rule$1;
 
+const SAFE_COMMENT_NEIGHBOR = {
+  empty: true,
+  space: true
+};
+
+function findLastWithPosition(tokens) {
+  for (let i = tokens.length - 1; i >= 0; i--) {
+    let token = tokens[i];
+    let pos = token[3] || token[2];
+    if (pos) return pos
+  }
+}
+
 class Parser$1 {
   constructor(input) {
     this.input = input;
@@ -2864,7 +2877,10 @@ class Parser$1 {
       this.semicolon = true;
       tokens.pop();
     }
-    node.source.end = this.getPosition(last[3] || last[2]);
+
+    node.source.end = this.getPosition(
+      last[3] || last[2] || findLastWithPosition(tokens)
+    );
 
     while (tokens[0][0] !== 'word') {
       if (tokens.length === 1) this.unknownWord(tokens);
@@ -3110,10 +3126,14 @@ class Parser$1 {
       if (type === 'space' && i === length - 1 && !customProperty) {
         clean = false;
       } else if (type === 'comment') {
-        prev = tokens[i - 1];
-        next = tokens[i + 1];
-        if (prev && next && prev[0] !== 'space' && next[0] !== 'space') {
-          value += token[1];
+        prev = tokens[i - 1] ? tokens[i - 1][0] : 'empty';
+        next = tokens[i + 1] ? tokens[i + 1][0] : 'empty';
+        if (!SAFE_COMMENT_NEIGHBOR[prev] && !SAFE_COMMENT_NEIGHBOR[next]) {
+          if (value.slice(-1) === ',') {
+            clean = false;
+          } else {
+            value += token[1];
+          }
         } else {
           clean = false;
         }
@@ -4005,7 +4025,7 @@ let Root$3 = root$1;
 
 class Processor$2 {
   constructor(plugins = []) {
-    this.version = '8.4.6';
+    this.version = '8.4.12';
     this.plugins = this.normalize(plugins);
   }
 
