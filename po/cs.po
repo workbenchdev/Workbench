@@ -1,303 +1,313 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# Czech translations for re.sonny.Workbench package.
+# Copyright (C) 2022 THE re.sonny.Workbench'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the re.sonny.Workbench package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Automatically generated, 2022.
+# Vojtěch Perník <translations@pervoj.cz>, 2022.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: re.sonny.Workbench\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-04-23 20:38+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2022-04-23 21:06+0200\n"
+"Last-Translator: Vojtěch Perník <translations@pervoj.cz>\n"
+"Language-Team: Czech <gnome-cs-list@gnome.org>\n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2\n"
+"X-Generator: Gtranslator 42.0\n"
 
 #. TRANSLATORS: Don't translate
 #: data/re.sonny.Workbench.desktop:4
 msgid "Workbench"
-msgstr ""
+msgstr "Workbench"
 
 #: data/re.sonny.Workbench.desktop:5 data/re.sonny.Workbench.metainfo.xml:10
 msgid "Sandbox to learn and prototype with GNOME technologies"
-msgstr ""
+msgstr "Pískoviště pro učení a prototypování technologií GNOME"
 
 #. TRANSLATORS: Don't translate
 #: data/re.sonny.Workbench.desktop:12
 msgid "CSS;JavaScript;GJS;"
-msgstr ""
+msgstr "CSS;JavaScript;GJS;"
 
 #: data/re.sonny.Workbench.metainfo.xml:14
-msgid "Workbench goal is to let you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a custom GTK widget."
+msgid ""
+"Workbench goal is to let you experiment with GNOME technologies, no matter "
+"if tinkering for the first time or building and testing a custom GTK widget."
 msgstr ""
+"Cíl aplikace Workbench je pomoci vám experimentovat s technologiemi GNOME, "
+"aniž by záleželo na tom, zda se s nimi setkáváte poprvé, nebo zda vytváříte "
+"a testujete vlastní GTK widget."
 
 #: data/re.sonny.Workbench.metainfo.xml:15
 msgid "Among other things, Workbench comes with"
-msgstr ""
+msgstr "Mimo jiné Workbench nabízí"
 
 #: data/re.sonny.Workbench.metainfo.xml:17
 msgid "realtime GTK/CSS preview"
-msgstr ""
+msgstr "náhled GTK/CSS v reálném čase"
 
 #: data/re.sonny.Workbench.metainfo.xml:18
 msgid "JavaScript for quick and easy scripting"
-msgstr ""
+msgstr "JavaScript pro rychlé a jednoduché psaní scriptů"
 
 #: data/re.sonny.Workbench.metainfo.xml:19
 msgid "Syntax highlighting, undo/redo, autosave"
-msgstr ""
+msgstr "Zvýrazňování syntaxe, funkce zpět/znovu, automatické ukládání"
 
 #: data/re.sonny.Workbench.metainfo.xml:20
 msgid "code fomatter"
-msgstr ""
+msgstr "formátování kódu"
 
 #: data/re.sonny.Workbench.metainfo.xml:21
 msgid "terminal"
-msgstr ""
+msgstr "terminál"
 
 #: data/re.sonny.Workbench.metainfo.xml:34
-msgid "Side by side editors with live preview on the right and console in the bottom"
-msgstr ""
+msgid ""
+"Side by side editors with live preview on the right and console in the bottom"
+msgstr "Vedle sebe umístěné editory s živým náhledem vpravo a konzolí dole"
 
 #: data/re.sonny.Workbench.metainfo.xml:41
 msgid "Take a png screenshot of the preview"
-msgstr ""
+msgstr "Možnost pořídit png snímek náhledu"
 
 #: data/re.sonny.Workbench.metainfo.xml:42
 msgid "The console is now resizable"
-msgstr ""
+msgstr "Velikost konzole lze nyní upravit"
 
 #: data/re.sonny.Workbench.metainfo.xml:43
 msgid "Redesign the dark/light mode switcher"
-msgstr ""
+msgstr "Nový design přepínače tmavého/světlého režimu"
 
 #: data/re.sonny.Workbench.metainfo.xml:44
 msgid "Show platform and dependencies in about dialog"
-msgstr ""
+msgstr "Zobrazení platformy a závislostí v dialogu o aplikaci"
 
 #: data/re.sonny.Workbench.metainfo.xml:45
 msgid "Update to GNOME platform 42"
-msgstr ""
+msgstr "Aktualizováno na platformu GNOME 42"
 
 #: data/re.sonny.Workbench.metainfo.xml:46
 msgid "Various fixes"
-msgstr ""
+msgstr "Různé opravy"
 
 #: data/re.sonny.Workbench.metainfo.xml:51
 msgid "This is the first release of Workbench. We hope you like it."
-msgstr ""
+msgstr "Toto je první vydání aplikace Workbench. Doufáme, že se vám líbí."
 
 #: src/about.js:30
 msgid ""
 "Sandbox to learn and prototype with\n"
 "GNOME technologies"
 msgstr ""
+"Pískoviště pro učení a prototypování\n"
+"technologií GNOME"
 
 #. TRANSLATORS: eg. 'Translator Name <your.email@domain.com>' or 'Translator Name https://website.example'
 #: src/about.js:39
 msgid "translator-credits"
-msgstr ""
+msgstr "Vojtěch Perník <translations@pervoj.cz>"
 
 #: src/shortcutsWindow.ui:12 src/window.ui:19
 msgid "Run"
-msgstr ""
+msgstr "Spustit"
 
 #: src/shortcutsWindow.ui:20 src/window.ui:481
 msgid "Inspector"
-msgstr ""
+msgstr "Inspektor"
 
 #: src/shortcutsWindow.ui:31
 msgid "Open Console"
-msgstr ""
+msgstr "Otevřít konzoli"
 
 #: src/shortcutsWindow.ui:40
 msgid "Clear Console"
-msgstr ""
+msgstr "Vyčistit konzoli"
 
 #: src/shortcutsWindow.ui:49 src/window.ui:601
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Klávesové zkratky"
 
 #: src/shortcutsWindow.ui:55
 msgid "Quit"
-msgstr ""
+msgstr "Ukončit"
 
 #: src/window.js:438
 msgid "Are you sure you want to discard your changes?"
-msgstr ""
+msgstr "Vážně chcete zahodit změny?"
 
 #: src/window.ui:26 src/window.ui:31
 msgid "Run (Ctrl+⏎)"
-msgstr ""
+msgstr "Spustit (Ctrl+⏎)"
 
 #: src/window.ui:58
 msgid "Code"
-msgstr ""
+msgstr "Kód"
 
 #: src/window.ui:84
 msgid "Style"
-msgstr ""
+msgstr "Styl"
 
 #: src/window.ui:110
 msgid "UI"
-msgstr ""
+msgstr "UI"
 
 #: src/window.ui:138 src/window.ui:415
 msgid "Preview"
-msgstr ""
+msgstr "Náhled"
 
 #: src/window.ui:168
 msgid "sun-symbolic"
-msgstr ""
+msgstr "sun-symbolic"
 
 #: src/window.ui:172 src/window.ui:177
 msgid "Use Light mode"
-msgstr ""
+msgstr "Použít světlý režim"
 
 #: src/window.ui:186
 msgid "moon-rounded-symbolic"
-msgstr ""
+msgstr "moon-rounded-symbolic"
 
 #: src/window.ui:190 src/window.ui:195
 msgid "Use Dark mode"
-msgstr ""
+msgstr "Použít tmavý režim"
 
 #: src/window.ui:208 src/window.ui:210
 msgid "Bookmarks"
-msgstr ""
+msgstr "Záložky"
 
 #: src/window.ui:244
 msgid "Code - JavaScript"
-msgstr ""
+msgstr "Kód - JavaScript"
 
 #: src/window.ui:302
 msgid "Style - CSS"
-msgstr ""
+msgstr "Styl - CSS"
 
 #: src/window.ui:360
 msgid "UI - XML"
-msgstr ""
+msgstr "UI - XML"
 
 #: src/window.ui:433 src/window.ui:438
 msgid "Take Screenshot of Preview"
-msgstr ""
+msgstr "Pořídit snímek náhledu"
 
 #: src/window.ui:469
 msgid "Console"
-msgstr ""
+msgstr "Konzole"
 
 #: src/window.ui:473
 msgid "Show logs (Ctrl+Shift+K)"
-msgstr ""
+msgstr "Zobrazit logy (Ctrl+Shift+K)"
 
 #: src/window.ui:485
 msgid "Open GTK Inspector (Ctrl+Shift+I)"
-msgstr ""
+msgstr "Otevřít Inspektor GTK (Ctrl+Shift+I)"
 
 #: src/window.ui:493 src/window.ui:536
 msgid "Library"
-msgstr ""
+msgstr "Knihovna"
 
 #: src/window.ui:498
 msgid "Open Library of Demos and Examples (Ctrl+Shift+O)"
-msgstr ""
+msgstr "Otevřít knihovnu ukázek a příkladů (Ctrl+Shift+O)"
 
 #: src/window.ui:506
 msgid "Clear"
-msgstr ""
+msgstr "Vyčistit"
 
 #: src/window.ui:511
 msgid "Clear console (Ctrl+K)"
-msgstr ""
+msgstr "Vyčistit konzoli (Ctrl+K)"
 
 #: src/window.ui:543
 msgid "Open File…"
-msgstr ""
+msgstr "Otevřít soubor…"
 
 #: src/window.ui:547
 msgid "Reset to Demo"
-msgstr ""
+msgstr "Resetovat na původní ukázku"
 
 #: src/window.ui:551
 msgid "Platform Tools"
-msgstr ""
+msgstr "Nástroje platformy"
 
 #: src/window.ui:557
 msgid "Adwaita Demo"
-msgstr ""
+msgstr "Ukázka Adwaity"
 
 #: src/window.ui:562
 msgid "GTK Demo"
-msgstr ""
+msgstr "Ukázka GTK"
 
 #: src/window.ui:570
 msgid "GTK Widget Factory"
-msgstr ""
+msgstr "GTK Widget Factory"
 
 #: src/window.ui:579
 msgid "GTK Icon Browser"
-msgstr ""
+msgstr "Prohlížeč ikon GTK"
 
 #: src/window.ui:605
 msgid "About Workbench"
-msgstr ""
+msgstr "O aplikaci Workbench"
 
 #: src/window.ui:626
 msgid "Learn"
-msgstr ""
+msgstr "Učit se"
 
 #: src/window.ui:631
 msgid "GNOME JavaScript (GJS)"
-msgstr ""
+msgstr "GNOME JavaScript (GJS)"
 
 #: src/window.ui:639
 msgid "Human Interface Guidelines (HIG)"
-msgstr ""
+msgstr "Pokyny pro lidské rozhraní (HIG)"
 
 #: src/window.ui:644
 msgid "UI components"
-msgstr ""
+msgstr "Komponenty UI"
 
 #: src/window.ui:654
 msgid "Platform components"
-msgstr ""
+msgstr "Komponenty platformy"
 
 #: src/window.ui:662
 msgid "Reference"
-msgstr ""
+msgstr "Reference"
 
 #: src/window.ui:664
 msgid "JavaScript"
-msgstr ""
+msgstr "JavaScript"
 
 #: src/window.ui:671
 msgid "GJS"
-msgstr ""
+msgstr "GJS"
 
 #: src/window.ui:676
 msgid "Gtk"
-msgstr ""
+msgstr "GTK"
 
 #: src/window.ui:681
 msgid "Adwaita"
-msgstr ""
+msgstr "Adwaita"
 
 #: src/window.ui:689
 msgid "Get help"
-msgstr ""
+msgstr "Získat pomoc"
 
 #: src/window.ui:691
 msgid "Discourse"
-msgstr ""
+msgstr "Discourse"
 
 #: src/window.ui:698
 msgid "Stack Overflow"
-msgstr ""
+msgstr "Stack Overflow"
 
 #: src/window.ui:705
 msgid "Matrix"
-msgstr ""
+msgstr "Matrix"
