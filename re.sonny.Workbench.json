@@ -55,7 +55,8 @@
         {
           "type": "git",
           "url": "https://gitlab.gnome.org/jwestman/blueprint-compiler.git",
-          "commit": "e6ad51c68282bee30fe50998d48bf2baf85830ff"
+          "branch": "lsp-compile",
+          "commit": "0984e6ecbc5ac85382871d5f2f994bf49599f2d5"
         }
       ]
     },

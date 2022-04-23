@@ -109,27 +109,25 @@ export default function panel_ui({
 }
 
 function compileBlueprint(path) {
-  log("compile");
-
-  console.time();
-
   try {
+    console.time("blueprint-compiler compile");
     const result = GLib.spawn_command_line_sync(
       `blueprint-compiler compile ${path}`
     );
-    let [, stdout, stderr] = result;
-    const [, , , status] = result;
+    console.timeEnd("blueprint-compiler compile");
 
-    if (status !== 0) {
-      if (stderr instanceof Uint8Array)
-        stderr = new TextDecoder().decode(stderr);
-
-      throw new Error(stderr);
-    }
+    let [, stdout, stderr, status] = result;
 
     if (stdout instanceof Uint8Array) stdout = new TextDecoder().decode(stdout);
 
-    console.timeEnd();
+    if (status !== 0) {
+      if (stderr instanceof Uint8Array) {
+        console.error(new TextDecoder().decode(stderr));
+      }
+      console.log(status, stdout);
+
+      throw new Error("Could not compile blueprint");
+    }
 
     return stdout;
   } catch (e) {
@@ -137,3 +135,22 @@ function compileBlueprint(path) {
     return "";
   }
 }
+
+const lsp = {
+  init() {
+    // The process starts running immediately after this function is called. Any
+    // error thrown here will be a result of the process failing to start, not
+    // the success or failure of the process itself.
+    let proc = Gio.Subprocess.new(
+      // The program and command options are passed as a list of arguments
+      ["blueprint-compiler", , "lsp"],
+
+      // The flags control what I/O pipes are opened and how they are directed
+      Gio.SubprocessFlags.STDOUT_PIPE | Gio.SubprocessFlags.STDERR_PIPE
+    );
+    this.proc = proc;
+  },
+  stop() {
+    this.proc.force_exit();
+  },
+};
