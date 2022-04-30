@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8' ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <object class="AdwApplicationWindow" id="window">
     <property name="default-width">800</property>
@@ -13,25 +13,17 @@
               <object class="GtkButton" id="button_run">
                 <property name="child">
                   <object class="AdwButtonContent">
-                    <property
-                      name="icon-name"
-                    >media-playback-start-symbolic</property>
+                    <property name="icon-name">media-playback-start-symbolic</property>
                     <property name="label" translatable="yes">Run</property>
                   </object>
                 </property>
                 <property name="action-name">win.run</property>
-                <property
-                  name="tooltip-text"
-                  translatable="yes"
-                >Run (Ctrl+⏎)</property>
+                <property name="tooltip-text" translatable="yes">Run (Ctrl+⏎)</property>
                 <accessibility>
-                  <property
-                    name="label"
-                    translatable="yes"
-                  >Run (Ctrl+⏎)</property>
+                  <property name="label" translatable="yes">Run (Ctrl+⏎)</property>
                 </accessibility>
                 <style>
-                  <class name="suggested-action" />
+                  <class name="suggested-action"/>
                 </style>
               </object>
             </child>
@@ -52,17 +44,14 @@
                         </child>
                         <child>
                           <object class="GtkLabel">
-                            <property
-                              name="label"
-                              translatable="yes"
-                            >Code</property>
+                            <property name="label" translatable="yes">Code</property>
                           </object>
                         </child>
                       </object>
                     </property>
                     <style>
-                      <class name="flat" />
-                      <class name="view-toggler" />
+                      <class name="flat"/>
+                      <class name="view-toggler"/>
                     </style>
                   </object>
                 </child>
@@ -78,17 +67,14 @@
                         </child>
                         <child>
                           <object class="GtkLabel">
-                            <property
-                              name="label"
-                              translatable="yes"
-                            >Style</property>
+                            <property name="label" translatable="yes">Style</property>
                           </object>
                         </child>
                       </object>
                     </property>
                     <style>
-                      <class name="flat" />
-                      <class name="view-toggler" />
+                      <class name="flat"/>
+                      <class name="view-toggler"/>
                     </style>
                   </object>
                 </child>
@@ -104,17 +90,14 @@
                         </child>
                         <child>
                           <object class="GtkLabel">
-                            <property
-                              name="label"
-                              translatable="yes"
-                            >UI</property>
+                            <property name="label" translatable="yes">UI</property>
                           </object>
                         </child>
                       </object>
                     </property>
                     <style>
-                      <class name="flat" />
-                      <class name="view-toggler" />
+                      <class name="flat"/>
+                      <class name="view-toggler"/>
                     </style>
                   </object>
                 </child>
@@ -125,24 +108,19 @@
                         <property name="halign">center</property>
                         <child>
                           <object class="GtkImage">
-                            <property
-                              name="icon-name"
-                            >preview-symbolic</property>
+                            <property name="icon-name">preview-symbolic</property>
                           </object>
                         </child>
                         <child>
                           <object class="GtkLabel">
-                            <property
-                              name="label"
-                              translatable="yes"
-                            >Preview</property>
+                            <property name="label" translatable="yes">Preview</property>
                           </object>
                         </child>
                       </object>
                     </property>
                     <style>
-                      <class name="flat" />
-                      <class name="view-toggler" />
+                      <class name="flat"/>
+                      <class name="view-toggler"/>
                     </style>
                   </object>
                 </child>
@@ -158,41 +136,23 @@
             <child type="end">
               <object class="GtkBox">
                 <style>
-                  <class name="linked" />
+                  <class name="linked"/>
                 </style>
                 <child>
                   <object class="GtkToggleButton" id="button_light">
-                    <property
-                      name="icon-name"
-                      translatable="yes"
-                    >sun-symbolic</property>
-                    <property
-                      name="tooltip-text"
-                      translatable="yes"
-                    >Use Light mode</property>
+                    <property name="icon-name" translatable="yes">sun-symbolic</property>
+                    <property name="tooltip-text" translatable="yes">Use Light mode</property>
                     <accessibility>
-                      <property
-                        name="label"
-                        translatable="yes"
-                      >Use Light mode</property>
+                      <property name="label" translatable="yes">Use Light mode</property>
                     </accessibility>
                   </object>
                 </child>
                 <child>
                   <object class="GtkToggleButton" id="button_dark">
-                    <property
-                      name="icon-name"
-                      translatable="yes"
-                    >moon-rounded-symbolic</property>
-                    <property
-                      name="tooltip-text"
-                      translatable="yes"
-                    >Use Dark mode</property>
+                    <property name="icon-name" translatable="yes">moon-rounded-symbolic</property>
+                    <property name="tooltip-text" translatable="yes">Use Dark mode</property>
                     <accessibility>
-                      <property
-                        name="label"
-                        translatable="yes"
-                      >Use Dark mode</property>
+                      <property name="label" translatable="yes">Use Dark mode</property>
                     </accessibility>
                   </object>
                 </child>
@@ -202,15 +162,12 @@
               <object class="GtkMenuButton">
                 <property name="icon-name">user-bookmarks-symbolic</property>
                 <property name="menu_model">menu_bookmarks</property>
-                <property
-                  name="tooltip-text"
-                  translatable="yes"
-                >Bookmarks</property>
+                <property name="tooltip-text" translatable="yes">Bookmarks</property>
                 <accessibility>
                   <property name="label" translatable="yes">Bookmarks</property>
                 </accessibility>
                 <style>
-                  <class name="flat" />
+                  <class name="flat"/>
                 </style>
               </object>
             </child>
@@ -238,18 +195,15 @@
                           <object class="GtkBox">
                             <child>
                               <object class="GtkButton">
-                                <property
-                                  name="label"
-                                  translatable="yes"
-                                >Code - JavaScript</property>
+                                <property name="label" translatable="yes">Code - JavaScript</property>
                                 <property name="sensitive">false</property>
                                 <style>
-                                  <class name="flat" />
+                                  <class name="flat"/>
                                 </style>
                               </object>
                             </child>
                             <style>
-                              <class name="toolbar" />
+                              <class name="toolbar"/>
                             </style>
                           </object>
                         </child>
@@ -257,30 +211,19 @@
                           <object class="GtkScrolledWindow">
                             <property name="vexpand">true</property>
                             <child>
-                              <object
-                                class="GtkSourceView"
-                                id="source_view_javascript"
-                              >
+                              <object class="GtkSourceView" id="source_view_javascript">
                                 <property name="buffer">
-                                  <object class="GtkSourceBuffer" />
+                                  <object class="GtkSourceBuffer"/>
                                 </property>
                                 <property name="monospace">true</property>
                                 <property name="auto-indent">true</property>
-                                <property
-                                  name="background-pattern"
-                                >grid</property>
-                                <property
-                                  name="highlight-current-line"
-                                >true</property>
+                                <property name="background-pattern">grid</property>
+                                <property name="highlight-current-line">true</property>
                                 <property name="indent-on-tab">true</property>
                                 <property name="indent-width">2</property>
-                                <property
-                                  name="insert-spaces-instead-of-tabs"
-                                >true</property>
+                                <property name="insert-spaces-instead-of-tabs">true</property>
                                 <property name="show-line-marks">true</property>
-                                <property
-                                  name="show-line-numbers"
-                                >true</property>
+                                <property name="show-line-numbers">true</property>
                                 <property name="smart-backspace">true</property>
                                 <property name="tab-width">2</property>
                               </object>
@@ -296,18 +239,15 @@
                           <object class="GtkBox">
                             <child>
                               <object class="GtkButton">
-                                <property
-                                  name="label"
-                                  translatable="yes"
-                                >Style - CSS</property>
+                                <property name="label" translatable="yes">Style - CSS</property>
                                 <property name="sensitive">false</property>
                                 <style>
-                                  <class name="flat" />
+                                  <class name="flat"/>
                                 </style>
                               </object>
                             </child>
                             <style>
-                              <class name="toolbar" />
+                              <class name="toolbar"/>
                             </style>
                           </object>
                         </child>
@@ -315,30 +255,19 @@
                           <object class="GtkScrolledWindow">
                             <property name="vexpand">true</property>
                             <child>
-                              <object
-                                class="GtkSourceView"
-                                id="source_view_css"
-                              >
+                              <object class="GtkSourceView" id="source_view_css">
                                 <property name="buffer">
-                                  <object class="GtkSourceBuffer" />
+                                  <object class="GtkSourceBuffer"/>
                                 </property>
                                 <property name="monospace">true</property>
                                 <property name="auto-indent">true</property>
-                                <property
-                                  name="background-pattern"
-                                >grid</property>
-                                <property
-                                  name="highlight-current-line"
-                                >true</property>
+                                <property name="background-pattern">grid</property>
+                                <property name="highlight-current-line">true</property>
                                 <property name="indent-on-tab">true</property>
                                 <property name="indent-width">2</property>
-                                <property
-                                  name="insert-spaces-instead-of-tabs"
-                                >true</property>
+                                <property name="insert-spaces-instead-of-tabs">true</property>
                                 <property name="show-line-marks">true</property>
-                                <property
-                                  name="show-line-numbers"
-                                >true</property>
+                                <property name="show-line-numbers">true</property>
                                 <property name="smart-backspace">true</property>
                                 <property name="tab-width">2</property>
                               </object>
@@ -354,18 +283,15 @@
                           <object class="GtkBox">
                             <child>
                               <object class="GtkButton">
-                                <property
-                                  name="label"
-                                  translatable="yes"
-                                >UI - XML</property>
+                                <property name="label" translatable="yes">UI - XML</property>
                                 <property name="sensitive">false</property>
                                 <style>
-                                  <class name="flat" />
+                                  <class name="flat"/>
                                 </style>
                               </object>
                             </child>
                             <style>
-                              <class name="toolbar" />
+                              <class name="toolbar"/>
                             </style>
                           </object>
                         </child>
@@ -375,25 +301,17 @@
                             <child>
                               <object class="GtkSourceView" id="source_view_ui">
                                 <property name="buffer">
-                                  <object class="GtkSourceBuffer" />
+                                  <object class="GtkSourceBuffer"/>
                                 </property>
                                 <property name="monospace">true</property>
                                 <property name="auto-indent">true</property>
-                                <property
-                                  name="background-pattern"
-                                >grid</property>
-                                <property
-                                  name="highlight-current-line"
-                                >true</property>
+                                <property name="background-pattern">grid</property>
+                                <property name="highlight-current-line">true</property>
                                 <property name="indent-on-tab">true</property>
                                 <property name="indent-width">2</property>
-                                <property
-                                  name="insert-spaces-instead-of-tabs"
-                                >true</property>
+                                <property name="insert-spaces-instead-of-tabs">true</property>
                                 <property name="show-line-marks">true</property>
-                                <property
-                                  name="show-line-numbers"
-                                >true</property>
+                                <property name="show-line-numbers">true</property>
                                 <property name="smart-backspace">true</property>
                                 <property name="tab-width">2</property>
                               </object>
@@ -409,38 +327,25 @@
                           <object class="GtkCenterBox">
                             <child type="start">
                               <object class="GtkButton">
-                                <property
-                                  name="label"
-                                  translatable="yes"
-                                >Preview</property>
+                                <property name="label" translatable="yes">Preview</property>
                                 <property name="sensitive">false</property>
                                 <style>
-                                  <class name="flat" />
+                                  <class name="flat"/>
                                 </style>
                               </object>
                             </child>
                             <child type="end">
                               <object class="GtkButton">
-                                <property
-                                  name="icon-name"
-                                >photo-camera-symbolic</property>
-                                <property
-                                  name="action-name"
-                                >win.screenshot</property>
-                                <property
-                                  name="tooltip-text"
-                                  translatable="yes"
-                                >Take Screenshot of Preview</property>
+                                <property name="icon-name">photo-camera-symbolic</property>
+                                <property name="action-name">win.screenshot</property>
+                                <property name="tooltip-text" translatable="yes">Take Screenshot of Preview</property>
                                 <accessibility>
-                                  <property
-                                    name="label"
-                                    translatable="yes"
-                                  >Take Screenshot of Preview</property>
+                                  <property name="label" translatable="yes">Take Screenshot of Preview</property>
                                 </accessibility>
                               </object>
                             </child>
                             <style>
-                              <class name="toolbar" />
+                              <class name="toolbar"/>
                             </style>
                           </object>
                         </child>
@@ -450,7 +355,7 @@
                             <property name="vexpand">true</property>
                             <style>
                               <!-- Make sure the screeshot gets a background color -->
-                              <class name="background" />
+                              <class name="background"/>
                             </style>
                           </object>
                         </child>
@@ -458,69 +363,43 @@
                     </child>
                   </object>
                 </child>
+              </object>
+            </child>
+            <child type="end">
+              <object class="GtkBox">
+                <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkActionBar">
-                    <child type="start">
-                      <object class="GtkToggleButton" id="button_devtools">
-                        <property name="action-name">win.console</property>
-                        <property
-                          name="label"
-                          translatable="yes"
-                        >Console</property>
-                        <property
-                          name="tooltip-text"
-                          translatable="yes"
-                        >Show logs (Ctrl+Shift+K)</property>
-                      </object>
-                    </child>
-                    <child type="start">
-                      <object class="GtkButton" id="button_inspector">
-                        <property
-                          name="label"
-                          translatable="yes"
-                        >Inspector</property>
-                        <property
-                          name="tooltip-text"
-                          translatable="yes"
-                        >Open GTK Inspector (Ctrl+Shift+I)</property>
-                      </object>
-                    </child>
-                    <child type="start">
-                      <object class="GtkButton" id="button_library">
-                        <property
-                          name="label"
-                          translatable="yes"
-                        >Library</property>
-                        <property name="action-name">win.library</property>
-                        <property
-                          name="tooltip-text"
-                          translatable="yes"
-                        >Open Library of Demos and Examples (Ctrl+Shift+O)</property>
+                  <object class="GtkActionBar" id="action_bar_devtools">
+                    <child type="center">
+                      <object class="AdwViewSwitcher" id="inspector_switcher">
+                        <property name="stack">inspector_stack</property>
                       </object>
                     </child>
                     <child type="end">
                       <object class="GtkButton" id="button_clear">
-                        <property
-                          name="label"
-                          translatable="yes"
-                        >Clear</property>
+                        <property name="label" translatable="yes">Clear</property>
                         <property name="action-name">win.clear</property>
-                        <property
-                          name="tooltip-text"
-                          translatable="yes"
-                        >Clear console (Ctrl+K)</property>
+                        <property name="tooltip-text" translatable="yes">Clear console (Ctrl+K)</property>
                       </object>
                     </child>
                   </object>
                 </child>
-              </object>
-            </child>
-            <child type="end">
-              <object class="GtkBox" id="devtools">
-                <!-- <property name="vexpand">true</property> -->
                 <child>
-                  <object class="VteTerminal" id="terminal">
-                    <property name="hexpand">true</property>
+                  <object class="GtkSeparator" />
+                </child>
+                <child>
+                  <object class="AdwViewStack" id="inspector_stack">
+                    <child>
+                      <object class="AdwViewStackPage">
+                        <property name="name">console</property>
+                        <property name="title">Console</property>
+                        <property name="child">
+                          <object class="VteTerminal" id="console">
+                            <property name="hexpand">true</property>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
                   </object>
                 </child>
               </object>
@@ -535,7 +414,7 @@
     <property name="search-enabled">true</property>
     <property name="title" translatable="yes">Library</property>
     <child>
-      <object class="AdwPreferencesPage" id="library" />
+      <object class="AdwPreferencesPage" id="library"/>
     </child>
   </object>
   <menu id="menu_app">
@@ -564,10 +443,7 @@
         <attribute name="target">org.gtk.Demo4</attribute>
       </item>
       <item>
-        <attribute
-          name="label"
-          translatable="yes"
-        >GTK Widget Factory</attribute>
+        <attribute name="label" translatable="yes">GTK Widget Factory</attribute>
         <attribute name="action">app.demo</attribute>
         <attribute name="target">org.gtk.WidgetFactory4</attribute>
       </item>
@@ -595,10 +471,7 @@
     </submenu>
     <section>
       <item>
-        <attribute
-          name="label"
-          translatable="yes"
-        >Keyboard Shortcuts</attribute>
+        <attribute name="label" translatable="yes">Keyboard Shortcuts</attribute>
         <attribute name="action">app.shortcuts</attribute>
       </item>
       <item>
@@ -625,37 +498,24 @@
     <section>
       <attribute name="label" translatable="yes">Learn</attribute>
       <item>
-        <attribute
-          name="label"
-          translatable="yes"
-        >GNOME JavaScript (GJS)</attribute>
+        <attribute name="label" translatable="yes">GNOME JavaScript (GJS)</attribute>
         <attribute name="action">app.open_uri</attribute>
         <attribute name="target">https://gjs.guide/guides/</attribute>
       </item>
       <item>
-        <attribute
-          name="label"
-          translatable="yes"
-        >Human Interface Guidelines (HIG)</attribute>
+        <attribute name="label" translatable="yes">Human Interface Guidelines (HIG)</attribute>
         <attribute name="action">app.open_uri</attribute>
         <attribute name="target">https://developer.gnome.org/hig/</attribute>
       </item>
       <item>
         <attribute name="label" translatable="yes">UI components</attribute>
         <attribute name="action">app.open_uri</attribute>
-        <attribute
-          name="target"
-        >https://developer.gnome.org/documentation/tutorials/beginners/components.html</attribute>
+        <attribute name="target">https://developer.gnome.org/documentation/tutorials/beginners/components.html</attribute>
       </item>
       <item>
-        <attribute
-          name="label"
-          translatable="yes"
-        >Platform components</attribute>
+        <attribute name="label" translatable="yes">Platform components</attribute>
         <attribute name="action">app.open_uri</attribute>
-        <attribute
-          name="target"
-        >https://developer.gnome.org/documentation/introduction/components.html</attribute>
+        <attribute name="target">https://developer.gnome.org/documentation/introduction/components.html</attribute>
       </item>
     </section>
     <section>
@@ -663,9 +523,7 @@
       <item>
         <attribute name="label" translatable="yes">JavaScript</attribute>
         <attribute name="action">app.open_uri</attribute>
-        <attribute
-          name="target"
-        >https://developer.mozilla.org/docs/Web/JavaScript/Guide</attribute>
+        <attribute name="target">https://developer.mozilla.org/docs/Web/JavaScript/Guide</attribute>
       </item>
       <item>
         <attribute name="label" translatable="yes">GJS</attribute>
@@ -680,9 +538,7 @@
       <item>
         <attribute name="label" translatable="yes">Adwaita</attribute>
         <attribute name="action">app.open_uri</attribute>
-        <attribute
-          name="target"
-        >https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.1/</attribute>
+        <attribute name="target">https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.1/</attribute>
       </item>
     </section>
     <section>
@@ -690,25 +546,20 @@
       <item>
         <attribute name="label" translatable="yes">Discourse</attribute>
         <attribute name="action">app.open_uri</attribute>
-        <attribute
-          name="target"
-        >https://discourse.gnome.org/c/platform/5</attribute>
+        <attribute name="target">https://discourse.gnome.org/c/platform/5</attribute>
       </item>
       <item>
         <attribute name="label" translatable="yes">Stack Overflow</attribute>
         <attribute name="action">app.open_uri</attribute>
-        <attribute
-          name="target"
-        >https://stackoverflow.com/questions/tagged/gjs</attribute>
+        <attribute name="target">https://stackoverflow.com/questions/tagged/gjs</attribute>
       </item>
       <item>
         <attribute name="label" translatable="yes">Matrix</attribute>
         <attribute name="action">app.open_uri</attribute>
         <attribute name="icon-name">external-link-symbolic</attribute>
-        <attribute
-          name="target"
-        >hhttps://matrix.to/#/#javascript:gnome.org</attribute>
+        <attribute name="target">hhttps://matrix.to/#/#javascript:gnome.org</attribute>
       </item>
     </section>
   </menu>
 </interface>
+
