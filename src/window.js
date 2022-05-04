@@ -31,7 +31,7 @@ export default function Window({ application }) {
   const builder = Gtk.Builder.new_from_resource(
     "/re/sonny/Workbench/window.ui"
   );
-    // FIXME: when to save gtkpaned position?
+  // FIXME: when to save gtkpaned position?
   const paned = builder.get_object("paned");
 
   const action_bar_devtools = builder.get_object("action_bar_devtools");
@@ -52,7 +52,13 @@ export default function Window({ application }) {
 
   const documents = [];
 
-  const terminal = Terminal({ application, window, devtools, terminal: console, builder });
+  const terminal = Terminal({
+    application,
+    window,
+    devtools,
+    terminal: console,
+    builder,
+  });
 
   // For some reasons those don't work
   // as builder properties
@@ -173,7 +179,6 @@ export default function Window({ application }) {
     "visible",
     GObject.BindingFlags.SYNC_CREATE
   );
-
 
   source_view_ui.buffer.connect("changed", updatePreview);
   source_view_css.buffer.connect("changed", updatePreview);
@@ -423,52 +428,74 @@ export default function Window({ application }) {
   }
 
   function setup_inspector() {
-      let inspector = Gtk.Window.get_inspector();
-      let stack = inspector.get_child();
+    let inspector = Gtk.Window.get_inspector();
+    let stack = inspector.get_child();
 
-      let titlebar = inspector.get_titlebar();
-      inspector.set_titlebar(null);
-      let buttons = [...titlebar.get_first_child().get_first_child().get_first_child()][1].get_first_child();
-      const button_select_object = buttons.get_first_child();
+    let titlebar = inspector.get_titlebar();
+    inspector.set_titlebar(null);
+    let buttons = [
+      ...titlebar.get_first_child().get_first_child().get_first_child(),
+    ][1].get_first_child();
+    const button_select_object = buttons.get_first_child();
 
-      const button_clear = builder.get_object('button_clear');
+    const button_clear = builder.get_object("button_clear");
 
-      const switch_object_view = buttons.get_last_child();
-      button_select_object.get_parent().remove(button_select_object);
-      switch_object_view.get_parent().remove(switch_object_view);
+    const switch_object_view = buttons.get_last_child();
+    button_select_object.get_parent().remove(button_select_object);
+    switch_object_view.get_parent().remove(switch_object_view);
 
-      inspector.connect("object-selected", () => {
-        inspector_stack.set_visible_child_name("objects");
-      });
+    inspector.connect("object-selected", () => {
+      inspector_stack.set_visible_child_name("objects");
+    });
 
-      switch_object_view.visible = inspector_stack.get_visible_child_name() === 'objects';
-      button_clear.visible = inspector_stack.get_visible_child_name() === 'console';
-      inspector_stack.connect('notify::visible-child', () => {
-        switch_object_view.visible = inspector_stack.get_visible_child_name() === 'objects';
-        button_clear.visible = inspector_stack.get_visible_child_name() === 'console';
-      })
+    switch_object_view.visible =
+      inspector_stack.get_visible_child_name() === "objects";
+    button_clear.visible =
+      inspector_stack.get_visible_child_name() === "console";
+    inspector_stack.connect("notify::visible-child", () => {
+      switch_object_view.visible =
+        inspector_stack.get_visible_child_name() === "objects";
+      button_clear.visible =
+        inspector_stack.get_visible_child_name() === "console";
+    });
 
-      action_bar_devtools.pack_start(button_select_object);
-      action_bar_devtools.pack_start(switch_object_view);
-      inspector.set_child(null);
+    action_bar_devtools.pack_start(button_select_object);
+    action_bar_devtools.pack_start(switch_object_view);
+    inspector.set_child(null);
 
-      let child;
-      while (child = stack.get_first_child()) {
-        const page = stack.get_page(child);
-        stack.remove(child);
+    let child;
+    while ((child = stack.get_first_child())) {
+      const page = stack.get_page(child);
+      stack.remove(child);
 
-        const view_page = inspector_stack.add_titled(child, page.get_name(), page.get_title());
-        switch (page.get_name()) {
-          case "objects": view_page.icon_name = "shapes-symbolic"; break;
-          case "global":  view_page.icon_name = "global-symbolic"; break;
-          case "css":  view_page.icon_name = "css-symbolic"; break;
-          case "recorder":  view_page.icon_name = "record-screen-symbolic"; break;
-          case "libadwaita": view_page.icon_name = "adwaita-symbolic"; break;
-        }
+      if (page.get_name() === "css") continue;
+
+      const view_page = inspector_stack.add_titled(
+        child,
+        page.get_name(),
+        page.get_title()
+      );
+      switch (page.get_name()) {
+        case "objects":
+          view_page.icon_name = "shapes-symbolic";
+          break;
+        case "global":
+          view_page.icon_name = "globe-symbolic";
+          break;
+        case "css":
+          view_page.icon_name = "style-symbolic";
+          break;
+        case "recorder":
+          view_page.icon_name = "record-screen-symbolic";
+          break;
+        case "libadwaita":
+          view_page.icon_name = "adwaita-symbolic";
+          break;
       }
     }
+  }
 
-    setup_inspector();
+  setup_inspector();
 
   const text_decoder = new TextDecoder();
   function openFile(file) {
