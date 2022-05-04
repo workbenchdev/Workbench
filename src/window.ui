@@ -10,29 +10,13 @@
         <child>
           <object class="AdwHeaderBar">
             <child type="start">
-              <object class="GtkButton" id="button_run">
-                <property name="child">
-                  <object class="AdwButtonContent">
-                    <property
-                      name="icon-name"
-                    >media-playback-start-symbolic</property>
-                    <property name="label" translatable="yes">Run</property>
-                  </object>
-                </property>
-                <property name="action-name">win.run</property>
-                <property
+              <object class="GtkButton" id="button_library">
+                <property name="label" translatable="yes">Library</property>
+              <property name="action-name">win.library</property>
+              <property
                   name="tooltip-text"
                   translatable="yes"
-                >Run (Ctrl+⏎)</property>
-                <accessibility>
-                  <property
-                    name="label"
-                    translatable="yes"
-                  >Run (Ctrl+⏎)</property>
-                </accessibility>
-                <style>
-                  <class name="suggested-action" />
-                </style>
+                >Open Library of Demos and Examples (Ctrl+Shift+O)</property>
               </object>
             </child>
             <child type="title">
@@ -232,8 +216,8 @@
                   <object class="GtkBox" id="panel_javascript">
                     <property name="orientation">vertical</property>
                     <child>
-                      <object class="GtkBox">
-                        <child>
+                      <object class="GtkCenterBox">
+                        <child type="start">
                           <object class="GtkButton">
                             <property
                               name="label"
@@ -242,6 +226,36 @@
                             <property name="sensitive">false</property>
                             <style>
                               <class name="flat" />
+                            </style>
+                          </object>
+                        </child>
+                        <child type="end">
+                          <object class="GtkButton" id="button_run">
+                            <property name="child">
+                              <object class="AdwButtonContent">
+                                <property
+                                  name="icon-name"
+                                >media-playback-start-symbolic</property>
+                                <property
+                                  name="label"
+                                  translatable="yes"
+                                >Run</property>
+                              </object>
+                            </property>
+                            <property name="action-name">win.run</property>
+                            <property name="margin-end">6</property>
+                            <property
+                              name="tooltip-text"
+                              translatable="yes"
+                            >Run (Ctrl+⏎)</property>
+                            <accessibility>
+                              <property
+                                name="label"
+                                translatable="yes"
+                              >Run (Ctrl+⏎)</property>
+                            </accessibility>
+                            <style>
+                              <class name="suggested-action" />
                             </style>
                           </object>
                         </child>
@@ -465,19 +479,6 @@
                           name="tooltip-text"
                           translatable="yes"
                         >Open GTK Inspector (Ctrl+Shift+I)</property>
-                      </object>
-                    </child>
-                    <child type="start">
-                      <object class="GtkButton" id="button_library">
-                        <property
-                          name="label"
-                          translatable="yes"
-                        >Library</property>
-                        <property name="action-name">win.library</property>
-                        <property
-                          name="tooltip-text"
-                          translatable="yes"
-                        >Open Library of Demos and Examples (Ctrl+Shift+O)</property>
                       </object>
                     </child>
                     <child type="end">
