@@ -420,13 +420,10 @@
                               </object>
                             </child>
                             <child type="end">
-                              <object class="GtkButton">
+                              <object class="GtkButton" id="button_screenshot">
                                 <property
                                   name="icon-name"
                                 >photo-camera-symbolic</property>
-                                <property
-                                  name="action-name"
-                                >win.screenshot</property>
                                 <property
                                   name="tooltip-text"
                                   translatable="yes"
@@ -620,6 +617,28 @@
       <pattern>*.xml.ui</pattern>
       <pattern>*.css</pattern>
     </patterns>
+  </object>
+  <object class="AdwStatusPage" id="preview_window">
+    <child>
+      <object class="AdwStatusPage">
+        <property name="title" translatable="yes">Windowed Preview</property>
+        <property
+          name="description"
+          translatable="yes"
+        >This interface can only be previewed as a separate window.&#10;We recommend using "Always on Top"</property>
+        <property name="icon-name">multitasking-windows-symbolic</property>
+        <child>
+          <object class="GtkBox">
+            <property name="halign">center</property>
+            <child>
+              <object class="GtkButton" id="preview_window_button">
+                <property name="label">Show Preview Window</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
   </object>
   <menu id="menu_bookmarks">
     <section>

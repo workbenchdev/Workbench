@@ -72,6 +72,7 @@ export function getDemoSources(demo_name) {
   const js = getDemoFile(demo_name, "main.js");
   const css = getDemoFile(demo_name, "main.css");
   const ui = getDemoFile(demo_name, "main.ui");
+
   return { js, css, ui };
 }
 

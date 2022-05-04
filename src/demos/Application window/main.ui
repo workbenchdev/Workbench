@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<interface>
+  <object class="AdwApplicationWindow" id="window">
+    <property name="default-width">800</property>
+    <property name="default-height">600</property>
+    <property name="content">
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="AdwHeaderBar">
+            <child type="title">
+              <object class="GtkLabel">
+                <property name="label">My Awesome App</property>
+              </object>
+            </child>
+            <child type="end">
+              <object class="GtkMenuButton" id="button_menu">
+                <property name="menu-model">menu_app</property>
+                <property name="icon-name">open-menu-symbolic</property>
+                <property name="primary">true</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="AdwStatusPage">
+            <property name="title">My App</property>
+            <property name="description">My App is awesome</property>
+            <property name="vexpand">true</property>
+            <property name="icon-name">re.sonny.Workbench-symbolic</property>
+          </object>
+        </child>
+      </object>
+    </property>
+  </object>
+    <menu id="menu_app">
+    <section>
+      <item>
+        <attribute
+          name="label"
+          translatable="yes"
+        >Keyboard Shortcuts</attribute>
+        <attribute name="action">app.shortcuts</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">About My App</attribute>
+        <attribute name="action">app.about</attribute>
+      </item>
+    </section>
+  </menu>
+</interface>

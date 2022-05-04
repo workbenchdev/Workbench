@@ -14,6 +14,8 @@
     <file>demos/Welcome/main.js</file>
     <file>demos/Welcome/main.json</file>
     <file>demos/Welcome/main.ui</file>
+    <file>demos/Application window/main.json</file>
+    <file>demos/Application window/main.ui</file>
   </gresource>
   <gresource prefix="/re/sonny/Workbench/js">
     <file>lib/ltx.js</file>
@@ -26,13 +28,12 @@
     <file>about.js</file>
     <file>actions.js</file>
     <file>application.js</file>
-    <file>code.js</file>
     <file>Document.js</file>
     <file>Library.js</file>
     <file>logger.js</file>
     <file>main.js</file>
     <file>overrides.js</file>
-    <file>screenshot.js</file>
+    <file>Previewer.js</file>
     <file>shortcutsWindow.js</file>
     <file>terminal.js</file>
     <file>util.js</file>
@@ -75,5 +76,9 @@
       preprocess="xml-stripblanks"
       alias="update-symbolic.svg"
     >icons/update-symbolic.svg</file>
+    <file
+      preprocess="xml-stripblanks"
+      alias="multitasking-windows-symbolic.svg"
+    >icons/multitasking-windows-symbolic.svg</file>
   </gresource>
 </gresources>
