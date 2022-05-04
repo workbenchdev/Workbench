@@ -428,12 +428,12 @@ export default function Window({ application }) {
   }
 
   function setup_inspector() {
-    let inspector = Gtk.Window.get_inspector();
-    let stack = inspector.get_child();
+    const inspector = Gtk.Window.get_inspector();
+    const stack = inspector.get_child();
 
-    let titlebar = inspector.get_titlebar();
+    const titlebar = inspector.get_titlebar();
     inspector.set_titlebar(null);
-    let buttons = [
+    const buttons = [
       ...titlebar.get_first_child().get_first_child().get_first_child(),
     ][1].get_first_child();
     const button_select_object = buttons.get_first_child();
