@@ -712,7 +712,7 @@
         <attribute name="icon-name">external-link-symbolic</attribute>
         <attribute
           name="target"
-        >hhttps://matrix.to/#/#javascript:gnome.org</attribute>
+        >https://matrix.to/#/#javascript:gnome.org</attribute>
       </item>
     </section>
   </menu>

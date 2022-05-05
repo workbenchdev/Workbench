@@ -15,8 +15,8 @@ Among other things, Workbench comes with
 - realtime GTK/CSS preview
 - JavaScript for quick and easy scripting
 - Syntax highlighting, undo/redo, autosave
-- code fomatter
-- terminal
+- code formatter
+- console logs
 
 ## Tips and tricks
 
@@ -62,6 +62,8 @@ matrix(
   <summary>Turn a prototype made in Workbench into an application</summary>
 
 Use GNOME Builder to start a new project using the JavaScript GNOME Application template and copy paste your Workbench code.
+
+</details>
 
 ## Development
 

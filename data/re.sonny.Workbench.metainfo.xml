@@ -17,8 +17,8 @@
       <li>realtime GTK/CSS preview</li>
       <li>JavaScript for quick and easy scripting</li>
       <li>Syntax highlighting, undo/redo, autosave</li>
-      <li>code fomatter</li>
-      <li>terminal</li>
+      <li>code formatter</li>
+      <li>console logs</li>
     </ul>
   </description>
   <url type="homepage">https://workbench.sonny.re</url>
