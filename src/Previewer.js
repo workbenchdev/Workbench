@@ -43,14 +43,23 @@ export default function Preview({
     let text = source_view_ui.buffer.text.trim();
     if (!text) return;
     let target_id;
+    let tree;
 
     try {
-      [target_id, text] = targetBuildable(text);
+      tree = ltx.parse(text);
+      [target_id, text] = targetBuildable(tree);
     } catch (err) {
       logger.debug(err);
     }
 
     if (!target_id) return;
+
+    try {
+      assertBuildable(tree);
+    } catch (err) {
+      logger.critical(err.message);
+      return;
+    }
 
     try {
       builder.add_from_string(text, -1);
@@ -145,11 +154,7 @@ function findPreviewable(tree) {
     const class_name = child.attrs.class;
     if (!class_name) continue;
 
-    const split = class_name.split(/(?=[A-Z])/);
-    if (split.length < 2) continue;
-
-    const [ns, ...rest] = split;
-    const klass = imports.gi[ns]?.[rest.join("")];
+    const klass = getObjectClass(class_name);
     if (!klass) continue;
 
     const object = new klass();
@@ -157,6 +162,14 @@ function findPreviewable(tree) {
     // if (object instanceof Gtk.Widget && !(object instanceof Gtk.Root))
     //   return child;
   }
+}
+
+function getObjectClass(class_name) {
+  const split = class_name.split(/(?=[A-Z])/);
+  if (split.length < 2) return;
+
+  const [ns, ...rest] = split;
+  return imports.gi[ns]?.[rest.join("")];
 }
 
 export function adoptChild(old_parent, new_parent) {
@@ -181,9 +194,7 @@ function setChild(object, child) {
   }
 }
 
-export function targetBuildable(code) {
-  const tree = ltx.parse(code);
-
+export function targetBuildable(tree) {
   const child = findPreviewable(tree);
   if (!child) {
     return [null, ""];
@@ -234,4 +245,19 @@ function screenshot({ widget, window, data_dir }) {
       portal.open_uri_finish(result);
     }
   );
+}
+
+// TODO: GTK Builder shouldn't crash when encountering a non buildable
+// https://github.com/sonnyp/Workbench/issues/49
+function assertBuildable(tree) {
+  for (const child of tree.getChildren("object")) {
+    const klass = getObjectClass(child.attrs.class);
+    if (!klass) continue;
+    const object = new klass();
+    if (!(object instanceof Gtk.Buildable)) {
+      throw new Error(`${child.attrs.class} is not a GtkBuildable`);
+    }
+    const _child = child.getChild("child");
+    if (_child) assertBuildable(_child);
+  }
 }
