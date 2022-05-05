@@ -28,6 +28,7 @@
     <file>about.js</file>
     <file>actions.js</file>
     <file>application.js</file>
+    <file>Devtools.js</file>
     <file>Document.js</file>
     <file>Library.js</file>
     <file>logger.js</file>
@@ -35,7 +36,7 @@
     <file>overrides.js</file>
     <file>Previewer.js</file>
     <file>shortcutsWindow.js</file>
-    <file>terminal.js</file>
+    <file>Terminal.js</file>
     <file>util.js</file>
     <file>window.js</file>
   </gresource>

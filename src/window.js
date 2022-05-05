@@ -8,8 +8,8 @@ import Vte from "gi://Vte?version=3.91";
 import { gettext as _ } from "gettext";
 
 import { confirm, settings, createDataDir } from "./util.js";
-import Terminal from "./terminal.js";
 import Document from "./Document.js";
+import Devtools from "./Devtools.js";
 
 import prettier from "./lib/prettier.js";
 import prettier_babel from "./lib/prettier-babel.js";
@@ -31,8 +31,6 @@ export default function Window({ application }) {
     "/re/sonny/Workbench/window.ui"
   );
 
-  const devtools = builder.get_object("devtools");
-
   const window = builder.get_object("window");
   // window.add_css_class("devel");
   window.set_application(application);
@@ -46,19 +44,7 @@ export default function Window({ application }) {
 
   const documents = [];
 
-  const terminal = Terminal({ application, window, devtools, builder });
-
-  // FIXME: when to save gtkpaned position?
-  const paned = builder.get_object("paned");
-
-  // For some reasons those don't work
-  // as builder properties
-  paned.set_shrink_start_child(false);
-  paned.set_shrink_end_child(false);
-  paned.set_resize_start_child(true);
-  paned.set_resize_end_child(true);
-  paned.get_start_child().set_size_request(-1, 200);
-  paned.get_end_child().set_size_request(-1, 200);
+  const { terminal } = Devtools({ application, window, builder });
 
   const { js, css, ui } = getDemoSources("Welcome");
 
@@ -100,7 +86,6 @@ export default function Window({ application }) {
   const button_ui = builder.get_object("button_ui");
   const button_css = builder.get_object("button_css");
   const button_preview = builder.get_object("button_preview");
-  const button_devtools = builder.get_object("button_devtools");
   const button_inspector = builder.get_object("button_inspector");
   const button_light = builder.get_object("button_light");
   const button_dark = builder.get_object("button_dark");
@@ -169,19 +154,6 @@ export default function Window({ application }) {
   button_preview.bind_property(
     "active",
     panel_preview,
-    "visible",
-    GObject.BindingFlags.SYNC_CREATE
-  );
-
-  settings.bind(
-    "show-devtools",
-    button_devtools,
-    "active",
-    Gio.SettingsBindFlags.DEFAULT
-  );
-  button_devtools.bind_property(
-    "active",
-    devtools,
     "visible",
     GObject.BindingFlags.SYNC_CREATE
   );
@@ -297,19 +269,6 @@ export default function Window({ application }) {
   action_run.connect("activate", run);
   window.add_action(action_run);
   application.set_accels_for_action("win.run", ["<Control>Return"]);
-
-  const action_console = new Gio.SimpleAction({
-    name: "console",
-    parameter_type: null,
-  });
-  action_console.connect("activate", () => {
-    settings.set_boolean(
-      "show-devtools",
-      !settings.get_boolean("show-devtools")
-    );
-  });
-  window.add_action(action_console);
-  application.set_accels_for_action("win.console", ["<Control><Shift>K"]);
 
   const action_clear = new Gio.SimpleAction({
     name: "clear",

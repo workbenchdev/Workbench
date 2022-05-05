@@ -455,9 +455,9 @@
               <object class="GtkBox">
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkActionBar">
+                  <object class="GtkActionBar" id="toolbar_devtools">
                     <child type="start">
-                      <object class="GtkToggleButton" id="button_devtools">
+                      <object class="GtkToggleButton" id="button_console">
                         <property name="action-name">win.console</property>
                         <property
                           name="label"
@@ -498,10 +498,10 @@
                 </child>
                 <child>
                   <object class="GtkBox" id="devtools">
-                    <!-- <property name="vexpand">true</property> -->
                     <child>
                       <object class="VteTerminal" id="terminal">
                         <property name="hexpand">true</property>
+                        <property name="input_enabled">false</property>
                       </object>
                     </child>
                   </object>
