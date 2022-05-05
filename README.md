@@ -65,6 +65,16 @@ Use GNOME Builder to start a new project using the JavaScript GNOME Application 
 
 </details>
 
+## Translation
+
+If you'd like to help translating Workbench into your language, please head over to [Weblate](https://hosted.weblate.org/engage/workbench/).
+
+<a href="https://hosted.weblate.org/engage/workbench/">
+  <img src="https://hosted.weblate.org/widgets/workbench/-/workbench/multi-auto.svg" alt="Translation status" />
+</a>
+
+Thank you for your help!
+
 ## Development
 
 1. Install [GNOME Builder](https://apps.gnome.org/app/org.gnome.Builder/)
