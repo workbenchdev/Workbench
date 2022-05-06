@@ -18,8 +18,6 @@ function simple() {
 }
 button_simple.connect("clicked", simple);
 
-simple();
-
 function advanced() {
   const message_id = "42";
   const toast = new Adw.Toast({

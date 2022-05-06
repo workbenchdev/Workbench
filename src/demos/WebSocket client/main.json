@@ -1,5 +1,5 @@
 {
   "name": "WebSocket client",
-  "category": "Network",
+  "category": "network",
   "description": "Using libsoup to establish a WebSocket connection."
 }

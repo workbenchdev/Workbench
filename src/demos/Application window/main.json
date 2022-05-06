@@ -1,5 +1,5 @@
 {
   "name": "Application window",
-  "category": "User Interface",
+  "category": "user_interface",
   "description": "An application main window containing a status page and menu button"
 }

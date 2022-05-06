@@ -533,7 +533,21 @@
     <property name="search-enabled">true</property>
     <property name="title" translatable="yes">Library</property>
     <child>
-      <object class="AdwPreferencesPage" id="library" />
+      <object class="AdwPreferencesPage">
+        <child>
+          <object class="AdwPreferencesGroup" id="library_uncategorized" />
+        </child>
+        <child>
+          <object class="AdwPreferencesGroup" id="library_network">
+            <property name="title">Network</property>
+          </object>
+        </child>
+        <child>
+          <object class="AdwPreferencesGroup" id="library_user_interface">
+            <property name="title">User Interface</property>
+          </object>
+        </child>
+      </object>
     </child>
   </object>
   <menu id="menu_app">
