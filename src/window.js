@@ -278,13 +278,6 @@ export default function Window({ application }) {
   window.add_action(action_clear);
   application.set_accels_for_action("win.clear", ["<Control>K"]);
 
-  const action_reset = new Gio.SimpleAction({
-    name: "reset",
-    parameter_type: null,
-  });
-  action_reset.connect("activate", () => loadDemo("Welcome").catch(logError));
-  window.add_action(action_reset);
-
   async function loadDemo(demo_name) {
     const agreed = await confirmDiscard();
     if (!agreed) return;

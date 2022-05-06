@@ -555,10 +555,6 @@
       <attribute name="label" translatable="yes">Open File…</attribute>
       <attribute name="action">app.open</attribute>
     </item>
-    <item>
-      <attribute name="label" translatable="yes">Reset to Demo</attribute>
-      <attribute name="action">win.reset</attribute>
-    </item>
     <submenu>
       <attribute name="label" translatable="yes">Platform Tools</attribute>
       <!--
