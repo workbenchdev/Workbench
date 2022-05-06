@@ -28,6 +28,28 @@
             <property name="description">My App is awesome</property>
             <property name="vexpand">true</property>
             <property name="icon-name">re.sonny.Workbench-symbolic</property>
+
+            <child>
+              <object class="GtkBox">
+                <property name="orientation">vertical</property>
+                <child>
+                  <object class="GtkLinkButton">
+                    <property name="label">API Reference</property>
+                    <property
+                      name="uri"
+                    >https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.1/class.ApplicationWindow.html</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLinkButton">
+                    <property name="label">Human Interface Guidelines</property>
+                    <property
+                      name="uri"
+                    >https://developer.gnome.org/hig/patterns/containers/windows.html</property>
+                  </object>
+                </child>
+              </object>
+            </child>
           </object>
         </child>
       </object>

@@ -44,6 +44,7 @@
           <li>Add an example of WebSocket client</li>
           <li>Add an example of toasts</li>
           <li>Add an example of application window</li>
+          <li>Add an example of desktop notification</li>
           <li>Add GTK Demo, Adwaita Demo and GTK Widget Factory</li>
           <li>The Console can be collapsed by resizing it</li>
           <li>Prevent system.exit from quitting Workbench</li>

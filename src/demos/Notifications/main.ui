@@ -8,7 +8,7 @@
         <property name="halign">center</property>
         <child>
           <object class="GtkLabel">
-            <property name="label">Toasts demo!</property>
+            <property name="label">Notifications demo!</property>
             <property name="margin-bottom">24</property>
             <style>
               <class name="title-1" />
@@ -18,14 +18,7 @@
 
         <child>
           <object class="GtkButton" id="button_simple">
-            <property name="label">Simple In-App notification</property>
-            <property name="margin-bottom">24</property>
-          </object>
-        </child>
-
-        <child>
-          <object class="GtkButton" id="button_advanced">
-            <property name="label">Advanced Usage</property>
+            <property name="label">Trigger notification</property>
             <property name="margin-bottom">24</property>
           </object>
         </child>
@@ -38,7 +31,7 @@
                 <property name="label">Tutorial</property>
                 <property
                   name="uri"
-                >https://developer.gnome.org/documentation/tutorials/beginners/getting_started/adding_toasts.html</property>
+                >https://developer.gnome.org/documentation/tutorials/notifications.html</property>
               </object>
             </child>
             <child>
@@ -46,7 +39,7 @@
                 <property name="label">API Reference</property>
                 <property
                   name="uri"
-                >https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.1/class.Toast.html</property>
+                >https://docs.gtk.org/gio/class.Notification.html</property>
               </object>
             </child>
             <child>
@@ -54,7 +47,7 @@
                 <property name="label">Human Interface Guidelines</property>
                 <property
                   name="uri"
-                >https://developer.gnome.org/hig/patterns/feedback/toasts.html</property>
+                >https://developer.gnome.org/hig/patterns/feedback/notifications.html</property>
               </object>
             </child>
           </object>

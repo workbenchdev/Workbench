@@ -306,8 +306,6 @@ export default function Window({ application }) {
     load(source_view_ui.buffer, ui);
     settings.set_boolean("show-ui", !!ui);
     settings.set_boolean("show-preview", !!ui);
-
-    run();
   }
 
   const action_library = new Gio.SimpleAction({

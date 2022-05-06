@@ -4,6 +4,9 @@
     <file>window.ui</file>
     <file>shortcutsWindow.ui</file>
     <file>style.css</file>
+    <file>demos/Notifications/main.js</file>
+    <file>demos/Notifications/main.json</file>
+    <file>demos/Notifications/main.ui</file>
     <file>demos/Toasts/main.js</file>
     <file>demos/Toasts/main.json</file>
     <file>demos/Toasts/main.ui</file>
