@@ -318,6 +318,7 @@ export default function Window({ application }) {
     Library({ window, builder, loadDemo });
   });
   window.add_action(action_library);
+  application.set_accels_for_action("win.library", ["<Control><Shift>O"]);
 
   function confirmDiscard() {
     if (!settings.get_boolean("has-edits")) return true;

@@ -11,12 +11,27 @@
           <object class="AdwHeaderBar">
             <child type="start">
               <object class="GtkButton" id="button_library">
-                <property name="label" translatable="yes">Library</property>
-              <property name="action-name">win.library</property>
-              <property
+                <property name="child">
+                  <object class="AdwButtonContent">
+                    <property name="icon-name">open-book-symbolic</property>
+                    <property name="label" translatable="yes">Library</property>
+                  </object>
+                </property>
+                <property name="action-name">win.library</property>
+                <property name="margin-end">6</property>
+                <property
                   name="tooltip-text"
                   translatable="yes"
                 >Open Library of Demos and Examples (Ctrl+Shift+O)</property>
+                <accessibility>
+                  <property
+                    name="label"
+                    translatable="yes"
+                  >Run (Ctrl+⏎)</property>
+                </accessibility>
+                <style>
+                  <class name="raised" />
+                </style>
               </object>
             </child>
             <child type="title">
