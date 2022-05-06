@@ -607,21 +607,21 @@
         -->
       <item>
         <attribute name="label" translatable="yes">Adwaita Demo</attribute>
-        <attribute name="action">app.demo</attribute>
-        <attribute name="target">org.gnome.Adwaita1.Demo</attribute>
+        <attribute name="action">app.platform_tools</attribute>
+        <attribute name="target">adwaita-1-demo</attribute>
       </item>
       <item>
         <attribute name="label" translatable="yes">GTK Demo</attribute>
-        <attribute name="action">app.demo</attribute>
-        <attribute name="target">org.gtk.Demo4</attribute>
+        <attribute name="action">app.platform_tools</attribute>
+        <attribute name="target">gtk4-demo</attribute>
       </item>
       <item>
         <attribute
           name="label"
           translatable="yes"
         >GTK Widget Factory</attribute>
-        <attribute name="action">app.demo</attribute>
-        <attribute name="target">org.gtk.WidgetFactory4</attribute>
+        <attribute name="action">app.platform_tools</attribute>
+        <attribute name="target">gtk4-widget-factory</attribute>
       </item>
       <!--
         Appears to be hardcoding list of icons
@@ -629,8 +629,8 @@
       -->
       <item>
         <attribute name="label" translatable="yes">GTK Icon Browser</attribute>
-        <attribute name="action">app.demo</attribute>
-        <attribute name="target">org.gtk.IconBrowser4</attribute>
+        <attribute name="action">app.platform_tools</attribute>
+        <attribute name="target">gtk4-icon-browser</attribute>
       </item>
       <!--
         Not part of the platform yet
@@ -640,7 +640,7 @@
         we may want to build our own demos instead
       <item>
         <attribute name="label" translatable="yes">Portal Test</attribute>
-        <attribute name="action">app.demo</attribute>
+        <attribute name="action">app.platform_tools</attribute>
         <attribute name="target">org.gnome.PortalTest.Gtk4</attribute>
       </item>
       -->

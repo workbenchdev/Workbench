@@ -81,16 +81,29 @@ export default function Actions({ application, datadir, version }) {
   });
   application.add_action(open_uri);
 
-  const action_demo = new Gio.SimpleAction({
-    name: "demo",
+  const action_platform_tools = new Gio.SimpleAction({
+    name: "platform_tools",
     parameter_type: new GLib.VariantType("s"),
   });
-  action_demo.connect("activate", (self, target) => {
+  action_platform_tools.connect("activate", (self, target) => {
+    const name = target.unpack();
+
+    if (
+      ![
+        "adwaita-1-demo",
+        "gtk4-demo",
+        "gtk4-widget-factory",
+        "gtk4-icon-browser",
+      ].includes(name)
+    ) {
+      return;
+    }
+
     try {
-      GLib.spawn_command_line_async(`gtk-launch ${target.unpack()}`);
+      GLib.spawn_command_line_async(`/bin/${name}`);
     } catch (err) {
       logError(err);
     }
   });
-  application.add_action(action_demo);
+  application.add_action(action_platform_tools);
 }
