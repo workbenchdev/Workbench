@@ -7,7 +7,7 @@
   xmlns="http://usefulinc.com/ns/doap#"
 >
   <name>Workbench</name>
-  <shortdesc>Sandbox to learn and prototype with GNOME technologies</shortdesc>
+  <shortdesc>Learn and prototype with GNOME technologies</shortdesc>
   <description
   >Workbench goal is to let you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a custom GTK widget.</description>
 

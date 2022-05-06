@@ -31,8 +31,6 @@ export default function Library({ window, builder, loadDemo }) {
       loadDemo(demo.name).catch(logError);
     });
 
-    log(builder.get_object(`library_${demo.category}`));
-
     builder.get_object(`library_${demo.category}`).add(widget);
   });
 

@@ -316,7 +316,7 @@ export default function Window({ application }) {
   function confirmDiscard() {
     if (!settings.get_boolean("has-edits")) return true;
     return confirm({
-      transient_for: window,
+      transient_for: application.get_active_window(),
       text: _("Are you sure you want to discard your changes?"),
     });
   }

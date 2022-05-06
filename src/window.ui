@@ -280,6 +280,9 @@
                       </object>
                     </child>
                     <child>
+                      <object class="GtkSeparator" />
+                    </child>
+                    <child>
                       <object class="GtkScrolledWindow">
                         <property name="vexpand">true</property>
                         <child>
@@ -334,6 +337,9 @@
                       </object>
                     </child>
                     <child>
+                      <object class="GtkSeparator" />
+                    </child>
+                    <child>
                       <object class="GtkScrolledWindow">
                         <property name="vexpand">true</property>
                         <child>
@@ -385,6 +391,9 @@
                       </object>
                     </child>
                     <child>
+                      <object class="GtkSeparator" />
+                    </child>
+                    <child>
                       <object class="GtkScrolledWindow">
                         <property name="vexpand">true</property>
                         <child>
@@ -432,9 +441,14 @@
                         </child>
                         <child type="end">
                           <object class="GtkButton" id="button_screenshot">
-                            <property
-                              name="icon-name"
-                            >photo-camera-symbolic</property>
+                            <property name="child">
+                              <object class="AdwButtonContent">
+                                <property
+                                  name="icon-name"
+                                >photo-camera-symbolic</property>
+                              </object>
+                            </property>
+                            <property name="margin-end">6</property>
                             <property
                               name="tooltip-text"
                               translatable="yes"
@@ -451,6 +465,9 @@
                           <class name="toolbar" />
                         </style>
                       </object>
+                    </child>
+                    <child>
+                      <object class="GtkSeparator" />
                     </child>
                     <child>
                       <object class="GtkScrolledWindow" id="output">
@@ -470,43 +487,58 @@
               <object class="GtkBox">
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkActionBar" id="toolbar_devtools">
+                  <object class="GtkCenterBox" id="toolbar_devtools">
                     <child type="start">
-                      <object class="GtkToggleButton" id="button_console">
-                        <property name="action-name">win.console</property>
-                        <property
-                          name="label"
-                          translatable="yes"
-                        >Console</property>
-                        <property
-                          name="tooltip-text"
-                          translatable="yes"
-                        >Show logs (Ctrl+Shift+K)</property>
+                      <object class="GtkBox">
+                        <style>
+                          <class name="toolbar" />
+                        </style>
+                        <child>
+                          <object class="GtkToggleButton" id="button_console">
+                            <property name="action-name">win.console</property>
+                            <property
+                              name="label"
+                              translatable="yes"
+                            >Console</property>
+                            <property
+                              name="tooltip-text"
+                              translatable="yes"
+                            >Show logs (Ctrl+Shift+K)</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkButton" id="button_inspector">
+                            <property
+                              name="label"
+                              translatable="yes"
+                            >Inspector</property>
+                            <property
+                              name="tooltip-text"
+                              translatable="yes"
+                            >Open GTK Inspector (Ctrl+Shift+I)</property>
+                          </object>
+                        </child>
                       </object>
                     </child>
-                    <child type="start">
-                      <object class="GtkButton" id="button_inspector">
-                        <property
-                          name="label"
-                          translatable="yes"
-                        >Inspector</property>
-                        <property
-                          name="tooltip-text"
-                          translatable="yes"
-                        >Open GTK Inspector (Ctrl+Shift+I)</property>
-                      </object>
-                    </child>
+
                     <child type="end">
-                      <object class="GtkButton" id="button_clear">
-                        <property
-                          name="label"
-                          translatable="yes"
-                        >Clear</property>
-                        <property name="action-name">win.clear</property>
-                        <property
-                          name="tooltip-text"
-                          translatable="yes"
-                        >Clear console (Ctrl+K)</property>
+                      <object class="GtkBox">
+                        <style>
+                          <class name="toolbar" />
+                        </style>
+                        <child>
+                          <object class="GtkButton" id="button_clear">
+                            <property
+                              name="label"
+                              translatable="yes"
+                            >Clear</property>
+                            <property name="action-name">win.clear</property>
+                            <property
+                              name="tooltip-text"
+                              translatable="yes"
+                            >Clear console (Ctrl+K)</property>
+                          </object>
+                        </child>
                       </object>
                     </child>
                   </object>
@@ -534,6 +566,18 @@
     <property name="title" translatable="yes">Library</property>
     <child>
       <object class="AdwPreferencesPage">
+        <child>
+          <object class="AdwPreferencesGroup">
+            <child>
+              <object class="GtkLabel">
+                <property
+                  name="label"
+                  translatable="yes"
+                >Examples to start from or get inspired by</property>
+              </object>
+            </child>
+          </object>
+        </child>
         <child>
           <object class="AdwPreferencesGroup" id="library_uncategorized" />
         </child>

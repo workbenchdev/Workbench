@@ -7,7 +7,7 @@
   <update_contact>sonnyp@gnome.org</update_contact>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0</project_license>
-  <summary>Sandbox to learn and prototype with GNOME technologies</summary>
+  <summary>Learn and prototype with GNOME technologies</summary>
   <translation type="gettext">re.sonny.Workbench</translation>
   <description>
     <p
@@ -45,7 +45,8 @@
           <li>Add an example of toasts</li>
           <li>Add an example of application window</li>
           <li>Add an example of desktop notification</li>
-          <li>Add GTK Demo, Adwaita Demo and GTK Widget Factory</li>
+          <li
+          >Add Adwaita Demo, GTK Demo, GTK Widget Factory and GTK Icon Browser</li>
           <li>The Console can be collapsed by resizing it</li>
           <li>Prevent system.exit from quitting Workbench</li>
           <li>Allow calling GObject.registerClass multiple times</li>
