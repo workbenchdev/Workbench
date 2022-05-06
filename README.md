@@ -17,6 +17,7 @@ Among other things, Workbench comes with
 - Syntax highlighting, undo/redo, autosave
 - code formatter
 - console logs
+- library of examples
 
 ## Tips and tricks
 
