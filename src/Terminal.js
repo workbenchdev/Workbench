@@ -8,8 +8,9 @@ const ERASE_SAVED_LINES = "\u001b[3J";
 const MOVE_CURSOR_HOME = "\u001b[H"; // 0,0
 const MAKE_CURSOR_INVISIBLE = "\u001b[?25l";
 
-export default function Terminal({ devtools, builder }) {
+export default function Terminal({ builder }) {
   const terminal = builder.get_object("terminal");
+  const devtools = builder.get_object("devtools");
 
   terminal.feed(MAKE_CURSOR_INVISIBLE);
   // terminal.set_cursor_blink_mode(Vte.CursorBlinkMode.ON);

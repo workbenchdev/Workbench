@@ -55,6 +55,29 @@
                 <property name="sensitive">false</property>
               </object>
             </child>
+            <property name="margin-bottom">24</property>
+          </object>
+        </child>
+
+        <child>
+          <object class="GtkBox">
+            <property name="orientation">vertical</property>
+            <child>
+              <object class="GtkLinkButton">
+                <property name="label">GJS Asynchronous Operations</property>
+                <property
+                  name="uri"
+                >https://gjs.guide/guides/gjs/asynchronous-programming.html#asynchronous-operations</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLinkButton">
+                <property name="label">API Reference</property>
+                <property
+                  name="uri"
+                >https://libsoup.org/libsoup-3.0/SoupWebsocket.html</property>
+              </object>
+            </child>
           </object>
         </child>
       </object>

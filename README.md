@@ -2,7 +2,7 @@
 
 # Workbench
 
-A sandbox to learn and prototype with GNOME technologies
+Learn and prototype with GNOME technologies
 
 ![](data/screenshot.png)
 
@@ -15,8 +15,9 @@ Among other things, Workbench comes with
 - realtime GTK/CSS preview
 - JavaScript for quick and easy scripting
 - Syntax highlighting, undo/redo, autosave
-- code fomatter
-- terminal
+- code formatter
+- console logs
+- library of examples
 
 ## Tips and tricks
 
@@ -57,6 +58,23 @@ matrix(
 ```
 
 </details>
+
+<details>
+  <summary>Turn a prototype made in Workbench into an application</summary>
+
+Use GNOME Builder to start a new project using the JavaScript GNOME Application template and copy paste your Workbench code.
+
+</details>
+
+## Translation
+
+If you'd like to help translating Workbench into your language, please head over to [Weblate](https://hosted.weblate.org/engage/workbench/).
+
+<a href="https://hosted.weblate.org/engage/workbench/">
+  <img src="https://hosted.weblate.org/widgets/workbench/-/workbench/multi-auto.svg" alt="Translation status" />
+</a>
+
+Thank you for your help!
 
 ## Development
 

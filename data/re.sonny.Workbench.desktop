@@ -1,7 +1,7 @@
 [Desktop Entry]
 # TRANSLATORS: Don't translate
 Name=Workbench
-Comment=Sandbox to learn and prototype with GNOME technologies
+Comment=Learn and prototype with GNOME technologies
 Exec=workbench %U
 Terminal=false
 Type=Application

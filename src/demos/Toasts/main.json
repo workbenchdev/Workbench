@@ -1,10 +1,5 @@
 {
   "name": "Toasts",
-  "category": "User Interface",
-  "description": "Toasts, or “in-app notifications” or are popup banners that contain a label and sometimes a button.",
-  "links": [
-    "https://developer.gnome.org/hig/patterns/feedback/toasts.html",
-    "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.1/class.Toast.html",
-    "https://developer.gnome.org/documentation/tutorials/beginners/getting_started/adding_toasts.html"
-  ]
+  "category": "user_interface",
+  "description": "Toasts, or “in-app notifications” or are popup banners that contain a label and sometimes a button."
 }

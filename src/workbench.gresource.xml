@@ -4,6 +4,9 @@
     <file>window.ui</file>
     <file>shortcutsWindow.ui</file>
     <file>style.css</file>
+    <file>demos/Notifications/main.js</file>
+    <file>demos/Notifications/main.json</file>
+    <file>demos/Notifications/main.ui</file>
     <file>demos/Toasts/main.js</file>
     <file>demos/Toasts/main.json</file>
     <file>demos/Toasts/main.ui</file>
@@ -15,6 +18,8 @@
     <file>demos/Welcome/main.json</file>
     <file>demos/Welcome/main.ui</file>
     <file>demos/Welcome/main.blp</file>
+    <file>demos/Application window/main.json</file>
+    <file>demos/Application window/main.ui</file>
     <file>language-specs/blueprint.lang</file>
   </gresource>
   <gresource prefix="/re/sonny/Workbench/js">
@@ -29,16 +34,16 @@
     <file>about.js</file>
     <file>actions.js</file>
     <file>application.js</file>
-    <file>code.js</file>
+    <file>Devtools.js</file>
     <file>Document.js</file>
     <file>Library.js</file>
     <file>logger.js</file>
     <file>main.js</file>
     <file>overrides.js</file>
     <file>panel_ui.js</file>
-    <file>screenshot.js</file>
+    <file>Previewer.js</file>
     <file>shortcutsWindow.js</file>
-    <file>terminal.js</file>
+    <file>Terminal.js</file>
     <file>util.js</file>
     <file>window.js</file>
   </gresource>
@@ -55,6 +60,14 @@
       preprocess="xml-stripblanks"
       alias="moon-rounded-symbolic.svg"
     >icons/moon-rounded-symbolic.svg</file>
+    <file
+      preprocess="xml-stripblanks"
+      alias="multitasking-windows-symbolic.svg"
+    >icons/multitasking-windows-symbolic.svg</file>
+    <file
+      preprocess="xml-stripblanks"
+      alias="open-book-symbolic.svg"
+    >icons/open-book-symbolic.svg</file>
     <file
       preprocess="xml-stripblanks"
       alias="photo-camera-symbolic.svg"

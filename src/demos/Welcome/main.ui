@@ -28,7 +28,7 @@
       <object class="GtkLabel">
         <property
           name="label"
-        >A sandbox to learn and prototype with&#10;GNOME technologies</property>
+        >Learn and prototype with&#10;GNOME technologies</property>
         <property name="margin-bottom">24</property>
         <property name="justify">center</property>
       </object>
@@ -112,6 +112,25 @@
             <property
               name="label"
             >Changes are automatically saved and restored</property>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkBox">
+        <property name="margin-bottom">12</property>
+        <child>
+          <object class="GtkImage">
+            <property name="icon-name">open-book-symbolic</property>
+            <property name="margin-end">12</property>
+            <property name="icon-size">normal</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel">
+            <property
+              name="label"
+            >Browse the Library for demos and examples</property>
           </object>
         </child>
       </object>

@@ -56,6 +56,7 @@ button_connect.connect("clicked", () => {
     method: "GET",
     uri: GLib.Uri.parse(entry_url.get_text(), GLib.UriFlags.NONE),
   });
+  // https://libsoup.org/libsoup-3.0/SoupSession.html#soup-session-websocket-connect-async
   session.websocket_connect_async(
     message,
     null,
@@ -64,6 +65,7 @@ button_connect.connect("clicked", () => {
     null,
     (self, result) => {
       try {
+        // https://libsoup.org/libsoup-3.0/SoupSession.html#soup-session-websocket-connect-finish
         connection = session.websocket_connect_finish(result);
       } catch (err) {
         logError(err);

@@ -27,7 +27,7 @@ flatpak ${flatpak_info.get_string("Instance", "flatpak-version")}
     application,
     authors: ["Sonny Piers https://sonny.re"],
     artists: ["Tobias Bernard <tbernard@gnome.org>"],
-    comments: _("Sandbox to learn and prototype with\nGNOME technologies"),
+    comments: _("Learn and prototype with\nGNOME technologies"),
     copyright: "Copyright 2022 Sonny Piers",
     license_type: Gtk.License.GPL_3_0_ONLY,
     version,

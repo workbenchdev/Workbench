@@ -6,19 +6,18 @@ import Source from "gi://GtkSource?version=5";
 import Adw from "gi://Adw?version=1";
 import Vte from "gi://Vte?version=3.91";
 import { gettext as _ } from "gettext";
-import screenshot from "./screenshot.js";
 
 import { confirm, settings, createUserDataDir } from "./util.js";
-import Terminal from "./terminal.js";
-import { targetBuildable, scopeStylesheet, replaceBufferText } from "./code.js";
 import Document from "./Document.js";
 import PanelUi from "./panel_ui.js";
+import Devtools from "./Devtools.js";
 
 import prettier from "./lib/prettier.js";
 import prettier_babel from "./lib/prettier-babel.js";
 import prettier_postcss from "./lib/prettier-postcss.js";
 import prettier_xml from "./lib/prettier-xml.js";
 import Library, { getDemoSources } from "./Library.js";
+import Previewer from "./Previewer.js";
 
 Source.init();
 
@@ -33,8 +32,6 @@ export default function Window({ application, datadir }) {
     "/re/sonny/Workbench/window.ui"
   );
 
-  const devtools = builder.get_object("devtools");
-
   const window = builder.get_object("window");
   // window.add_css_class("devel");
   window.set_application(application);
@@ -48,19 +45,7 @@ export default function Window({ application, datadir }) {
 
   const documents = [];
 
-  const terminal = Terminal({ application, window, devtools, builder });
-
-  // FIXME: when to save gtkpaned position?
-  const paned = builder.get_object("paned");
-
-  // For some reasons those don't work
-  // as builder properties
-  paned.set_shrink_start_child(false);
-  paned.set_shrink_end_child(false);
-  paned.set_resize_start_child(true);
-  paned.set_resize_end_child(true);
-  paned.get_start_child().set_size_request(-1, 200);
-  paned.get_end_child().set_size_request(-1, 200);
+  const { terminal } = Devtools({ application, window, builder });
 
   const { js, css, ui, blp } = getDemoSources("Welcome");
 
@@ -111,7 +96,6 @@ export default function Window({ application, datadir }) {
   const button_ui = builder.get_object("button_ui");
   const button_css = builder.get_object("button_css");
   const button_preview = builder.get_object("button_preview");
-  const button_devtools = builder.get_object("button_devtools");
   const button_inspector = builder.get_object("button_inspector");
   const button_light = builder.get_object("button_light");
   const button_dark = builder.get_object("button_dark");
@@ -184,100 +168,25 @@ export default function Window({ application, datadir }) {
     GObject.BindingFlags.SYNC_CREATE
   );
 
-  settings.bind(
-    "show-devtools",
-    button_devtools,
-    "active",
-    Gio.SettingsBindFlags.DEFAULT
-  );
-  button_devtools.bind_property(
-    "active",
-    devtools,
-    "visible",
-    GObject.BindingFlags.SYNC_CREATE
-  );
-
   button_inspector.connect("clicked", () => {
     Gtk.Window.set_interactive_debugging(true);
   });
 
-  source_view_ui.buffer.connect("changed", updatePreview);
-  source_view_css.buffer.connect("changed", updatePreview);
-  // We do not support auto run of JavaScript ATM
-  // source_view_javascript.buffer.connect("changed", updatePreview);
-
-  const workbench = (globalThis.workbench = {
+  const previewer = Previewer({
+    output,
+    builder,
+    button_preview,
+    panel_preview,
+    source_view_ui,
+    source_view_css,
     window,
     application,
+    user_datadir,
   });
 
-  let css_provider = null;
-
-  function updatePreview() {
-    output.set_child(null);
-
-    const builder = new Gtk.Builder();
-    workbench.builder = builder;
-
-    // let text = source_view_ui.buffer.text.trim();
-    let text = documents[1].get_text();
-    if (!text) return;
-    let target_id;
-
-    try {
-      [target_id, text] = targetBuildable(text);
-    } catch (err) {
-      // logError(err);
-    }
-
-    if (!target_id) return;
-
-    try {
-      builder.add_from_string(text, -1);
-    } catch (err) {
-      // The following while being obviously invalid
-      // does no produce an error - so we will need to strictly validate the XML
-      // before constructing the builder
-      // prettier-xml throws but doesn't give a stack trace
-      // <style>
-      //   <class name="title-1"
-      // </style>
-      logError(err);
-      return;
-    }
-
-    // Update preview with UI
-    const object_preview = builder.get_object(target_id);
-    if (object_preview) {
-      output.set_child(object_preview);
-    }
-
-    // Update preview with CSS
-    if (css_provider) {
-      Gtk.StyleContext.remove_provider_for_display(
-        output.get_display(),
-        css_provider
-      );
-      css_provider = null;
-    }
-    let style = source_view_css.buffer.text;
-    if (!style) return;
-
-    try {
-      style = scopeStylesheet(style);
-    } catch (err) {
-      // logError(err);
-    }
-
-    css_provider = new Gtk.CssProvider();
-    css_provider.load_from_data(style);
-    Gtk.StyleContext.add_provider_for_display(
-      output.get_display(),
-      css_provider,
-      Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
-    );
-  }
-  updatePreview();
+  source_view_ui.buffer.connect("changed", previewer.update);
+  source_view_css.buffer.connect("changed", previewer.update);
+  previewer.update();
 
   function format(buffer, formatter) {
     const code = formatter(buffer.text.trim());
@@ -335,7 +244,7 @@ export default function Window({ application, datadir }) {
         });
       });
 
-      updatePreview();
+      previewer.update();
 
       // We have to create a new file each time
       // because gjs doesn't appear to use etag for module caching
@@ -343,7 +252,7 @@ export default function Window({ application, datadir }) {
       // TODO: File a bug
       const [file_javascript] = Gio.File.new_tmp("workbench-XXXXXX.js");
       file_javascript.replace_contents(
-        javascript,
+        javascript || "\n",
         null,
         false,
         Gio.FileCreateFlags.NONE,
@@ -371,19 +280,6 @@ export default function Window({ application, datadir }) {
   window.add_action(action_run);
   application.set_accels_for_action("win.run", ["<Control>Return"]);
 
-  const action_console = new Gio.SimpleAction({
-    name: "console",
-    parameter_type: null,
-  });
-  action_console.connect("activate", () => {
-    settings.set_boolean(
-      "show-devtools",
-      !settings.get_boolean("show-devtools")
-    );
-  });
-  window.add_action(action_console);
-  application.set_accels_for_action("win.console", ["<Control><Shift>K"]);
-
   const action_clear = new Gio.SimpleAction({
     name: "clear",
     parameter_type: null,
@@ -391,22 +287,6 @@ export default function Window({ application, datadir }) {
   action_clear.connect("activate", terminal.clear);
   window.add_action(action_clear);
   application.set_accels_for_action("win.clear", ["<Control>K"]);
-
-  const action_reset = new Gio.SimpleAction({
-    name: "reset",
-    parameter_type: null,
-  });
-  action_reset.connect("activate", () => loadDemo("Welcome").catch(logError));
-  window.add_action(action_reset);
-
-  const action_screenshot = new Gio.SimpleAction({
-    name: "screenshot",
-    parameter_type: null,
-  });
-  action_screenshot.connect("activate", () => {
-    screenshot({ window, widget: output, user_datadir });
-  });
-  window.add_action(action_screenshot);
 
   async function loadDemo(demo_name) {
     const agreed = await confirmDiscard();
@@ -441,11 +321,12 @@ export default function Window({ application, datadir }) {
     Library({ window, builder, loadDemo });
   });
   window.add_action(action_library);
+  application.set_accels_for_action("win.library", ["<Control><Shift>O"]);
 
   function confirmDiscard() {
     if (!settings.get_boolean("has-edits")) return true;
     return confirm({
-      transient_for: window,
+      transient_for: application.get_active_window(),
       text: _("Are you sure you want to discard your changes?"),
     });
   }
@@ -515,4 +396,11 @@ async function setGtk4PreferDark(dark) {
   }
   settings.set_boolean("Settings", "gtk-application-prefer-dark-theme", dark);
   settings.save_to_file(settings_path);
+}
+
+function replaceBufferText(buffer, text) {
+  buffer.begin_user_action();
+  buffer.delete(buffer.get_start_iter(), buffer.get_end_iter());
+  buffer.insert(buffer.get_start_iter(), text, -1);
+  buffer.end_user_action();
 }

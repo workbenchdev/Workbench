@@ -14,23 +14,7 @@ export default function Library({ window, builder, loadDemo }) {
   window_library = builder.get_object("window_library");
   window_library.set_transient_for(window);
 
-  const library = builder.get_object("library");
-
   const demos = getDemos();
-
-  const groups = {};
-
-  // Categories
-  demos.forEach((demo) => {
-    if (groups[demo.category]) return;
-    const widget = new Adw.PreferencesGroup({
-      title: demo.category,
-    });
-    library.add(widget);
-    groups[demo.category] = widget;
-  });
-
-  // Demos
   demos.forEach((demo) => {
     const widget = new Adw.ActionRow({
       title: demo.name,
@@ -47,7 +31,7 @@ export default function Library({ window, builder, loadDemo }) {
       loadDemo(demo.name).catch(logError);
     });
 
-    groups[demo.category].add(widget);
+    builder.get_object(`library_${demo.category}`).add(widget);
   });
 
   window_library.present();
