@@ -135,22 +135,3 @@ function compileBlueprint(path) {
     return "";
   }
 }
-
-const lsp = {
-  init() {
-    // The process starts running immediately after this function is called. Any
-    // error thrown here will be a result of the process failing to start, not
-    // the success or failure of the process itself.
-    let proc = Gio.Subprocess.new(
-      // The program and command options are passed as a list of arguments
-      ["blueprint-compiler", , "lsp"],
-
-      // The flags control what I/O pipes are opened and how they are directed
-      Gio.SubprocessFlags.STDOUT_PIPE | Gio.SubprocessFlags.STDERR_PIPE
-    );
-    this.proc = proc;
-  },
-  stop() {
-    this.proc.force_exit();
-  },
-};

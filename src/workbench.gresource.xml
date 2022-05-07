@@ -24,6 +24,7 @@
     <file>lib/prettier-postcss.js</file>
     <file>lib/prettier-xml.js</file>
     <file>lib/prettier.js</file>
+    <file>lsp/LSPClient.js</file>
     <file>troll/src/util.js</file>
     <file>about.js</file>
     <file>actions.js</file>

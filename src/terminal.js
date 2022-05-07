@@ -1,4 +1,4 @@
-import Vte from "gi://Vte?version=4-2.91";
+import Vte from "gi://Vte";
 import GLib from "gi://GLib";
 import GObject from "gi://GObject";
 

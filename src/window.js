@@ -4,7 +4,7 @@ import GObject from "gi://GObject";
 import Gio from "gi://Gio";
 import Source from "gi://GtkSource?version=5";
 import Adw from "gi://Adw?version=1";
-import Vte from "gi://Vte?version=4-2.91";
+import Vte from "gi://Vte?version=3.91";
 import { gettext as _ } from "gettext";
 import screenshot from "./screenshot.js";
 

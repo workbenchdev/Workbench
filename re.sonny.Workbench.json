@@ -14,7 +14,8 @@
     "--socket=wayland",
     "--device=dri",
     "--socket=session-bus",
-    "--share=network"
+    "--share=network",
+    "--filesystem=home:ro"
   ],
   "x-run-args": [],
   "modules": [
@@ -32,7 +33,7 @@
         {
           "type": "git",
           "url": "https://gitlab.gnome.org/GNOME/vte.git",
-          "commit": "f4b915aea367d407f8ac527e1aed9425b8cea9e2"
+          "commit": "4628822dbc45be6444fb11719bc955a630f5fbb1"
         }
       ]
     },
@@ -53,10 +54,8 @@
       "buildsystem": "meson",
       "sources": [
         {
-          "type": "git",
-          "url": "https://gitlab.gnome.org/jwestman/blueprint-compiler.git",
-          "branch": "lsp-compile",
-          "commit": "0984e6ecbc5ac85382871d5f2f994bf49599f2d5"
+          "type": "dir",
+          "path": "./src/blueprint-compiler"
         }
       ]
     },
