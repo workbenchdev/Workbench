@@ -19,6 +19,7 @@ export default function Preview({
   window,
   application,
   user_datadir,
+  documents,
 }) {
   const workbench = (globalThis.workbench = {
     window,
@@ -40,7 +41,8 @@ export default function Preview({
     const builder = new Gtk.Builder();
     workbench.builder = builder;
 
-    let text = source_view_ui.buffer.text.trim();
+    // let text = source_view_ui.buffer.text.trim();
+    let text = documents[1].get_text();
     if (!text) return;
     let target_id;
     let tree;

@@ -182,6 +182,7 @@ export default function Window({ application, datadir }) {
     window,
     application,
     user_datadir,
+    documents,
   });
 
   source_view_ui.buffer.connect("changed", previewer.update);
