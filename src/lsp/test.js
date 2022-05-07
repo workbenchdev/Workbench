@@ -38,90 +38,17 @@ Box welcome {
       "icon-dropshadow",
     ]
   }
-
-  Label {
-    label: "Welcome to Workbench";
-    margin-bottom: 24;
-
-    styles [
-      "title-1",
-    ]
-  }
-
-  Label {
-    label: "A sandbox to learn and prototype with\nGNOME technologies";
-    margin-bottom: 24;
-    justify: center;
-  }
-
-  Box {
-    margin-bottom: 12;
-
-    Image {
-      icon-name: "update-symbolic";
-      margin-end: 12;
-      icon-size: normal;
-    }
-
-    Label {
-      label: "Edit Style and UI to reload the Preview";
-    }
-  }
-
-  Box {
-    margin-bottom: 12;
-
-    Image {
-      icon-name: "media-playback-start-symbolic";
-      margin-end: 12;
-      icon-size: normal;
-    }
-
-    Label {
-      label: "Hit";
-    }
-
-    ShortcutsShortcut {
-      accelerator: "<Primary>Return";
-      margin-start: 12;
-    }
-
-    Label {
-      label: "to format and run Code";
-    }
-  }
-
-  Box {
-    margin-bottom: 12;
-
-    Image {
-      icon-name: "user-bookmarks-symbolic";
-      margin-end: 12;
-      icon-size: normal;
-    }
-
-    Label {
-      label: "Checkout the bookmarks to learn";
-    }
-  }
-
-  Box {
-    margin-bottom: 12;
-
-    Image {
-      icon-name: "media-floppy-symbolic";
-      margin-end: 12;
-      icon-size: normal;
-    }
-
-    Label {
-      label: "Changes are automatically saved and restored";
-    }
-  }
 }
 `.trim();
 
 (async () => {
+  await lsp_client.request("initialize");
+  // Make Blueprint language server cache Gtk 4
+  // to make subsequence call faster (~500ms -> ~3ms)
+  await lsp_client.request("x-blueprintcompiler/compile", {
+    text: "using Gtk 4.0;\nBox {}",
+  });
+
   console.time("compile");
   await lsp_client.request("x-blueprintcompiler/compile", {
     text: blueprint,

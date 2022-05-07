@@ -73,7 +73,7 @@ export default class LSPClient {
   send(json) {
     const message = { ...json, jsonrpc: "2.0" };
     const str = JSON.stringify(message);
-    const length = new TextEncoder().encode(str).length;
+    const length = [...str].length;
 
     console.debug("out\n", str);
     return promiseTask(
