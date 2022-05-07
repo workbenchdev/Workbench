@@ -242,7 +242,7 @@ export default function Window({ application }) {
       // TODO: File a bug
       const [file_javascript] = Gio.File.new_tmp("workbench-XXXXXX.js");
       file_javascript.replace_contents(
-        javascript,
+        javascript || "\n",
         null,
         false,
         Gio.FileCreateFlags.NONE,
