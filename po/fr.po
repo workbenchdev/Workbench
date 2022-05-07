@@ -8,305 +8,320 @@ msgstr ""
 "Project-Id-Version: re.sonny.Workbench\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-05 13:06+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2022-05-08 11:02+0000\n"
+"Last-Translator: rene-coty <irenee.thirion@e.email>\n"
+"Language-Team: French <https://hosted.weblate.org/projects/workbench/"
+"workbench/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.12.1\n"
 
 #. TRANSLATORS: Don't translate
 #: data/re.sonny.Workbench.desktop:4
 msgid "Workbench"
-msgstr ""
+msgstr "Workbench"
 
 #: data/re.sonny.Workbench.desktop:5 data/re.sonny.Workbench.metainfo.xml:10
 msgid "Sandbox to learn and prototype with GNOME technologies"
-msgstr ""
+msgstr "Bac à sable pour apprendre à utiliser et essayer les technologies GNOME"
 
 #. TRANSLATORS: Don't translate
 #: data/re.sonny.Workbench.desktop:12
 msgid "CSS;JavaScript;GJS;"
-msgstr ""
+msgstr "CSS;JavaScript;GJS;"
 
 #: data/re.sonny.Workbench.metainfo.xml:14
 msgid "Workbench goal is to let you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a custom GTK widget."
 msgstr ""
+"Le but de Workbench est de vous laisser expérimenter les technologies GNOME, "
+"que ce soit pour bidouiller pour la première fois ou pour construire et "
+"tester un widget GTK personnalisé."
 
 #: data/re.sonny.Workbench.metainfo.xml:15
 msgid "Among other things, Workbench comes with"
-msgstr ""
+msgstr "Workbench comporte entre autres"
 
 #: data/re.sonny.Workbench.metainfo.xml:17
 msgid "realtime GTK/CSS preview"
-msgstr ""
+msgstr "Prévisualisation GTK / CSS en temps réel"
 
 #: data/re.sonny.Workbench.metainfo.xml:18
 msgid "JavaScript for quick and easy scripting"
-msgstr ""
+msgstr "Javascript pour écrire des scripts facilement et rapidement"
 
 #: data/re.sonny.Workbench.metainfo.xml:19
 msgid "Syntax highlighting, undo/redo, autosave"
 msgstr ""
+"Surlignage syntaxique, fonctions annuler / refaire, sauvegarde automatique"
 
 #: data/re.sonny.Workbench.metainfo.xml:20
 msgid "code formatter"
-msgstr ""
+msgstr "Formateur de code"
 
 #: data/re.sonny.Workbench.metainfo.xml:21
 msgid "console logs"
-msgstr ""
+msgstr "Journaux de console"
 
 #: data/re.sonny.Workbench.metainfo.xml:34
 msgid "Side by side editors with live preview on the right and console in the bottom"
 msgstr ""
+"Éditeurs côte à côte avec prévisualisation en direct à droite et console en "
+"bas"
 
 #: data/re.sonny.Workbench.metainfo.xml:41
 msgid "Take a png screenshot of the preview"
-msgstr ""
+msgstr "Prendre une capture d'écran PNG de la prévisualisation"
 
 #: data/re.sonny.Workbench.metainfo.xml:42
 msgid "The console is now resizable"
-msgstr ""
+msgstr "La console est désormais redimensionnable"
 
 #: data/re.sonny.Workbench.metainfo.xml:43
 msgid "Redesign the dark/light mode switcher"
-msgstr ""
+msgstr "Refonte du bouton mode sombre / mode clair"
 
 #: data/re.sonny.Workbench.metainfo.xml:44
 msgid "Show platform and dependencies in about dialog"
-msgstr ""
+msgstr "Affiche la plateforme et les dépendances dans le dialogue \"À propos\""
 
 #: data/re.sonny.Workbench.metainfo.xml:45
 msgid "Update to GNOME platform 42"
-msgstr ""
+msgstr "Mise à jour vers la plateforme GNOME 42"
 
 #: data/re.sonny.Workbench.metainfo.xml:46
 msgid "Various fixes"
-msgstr ""
+msgstr "Diverses corrections"
 
 #: data/re.sonny.Workbench.metainfo.xml:51
 msgid "This is the first release of Workbench. We hope you like it."
 msgstr ""
+"Ceci est la première version de Workbench. Nous espérons que vous "
+"l'apprécierez."
 
 #: src/about.js:30
 msgid ""
 "Sandbox to learn and prototype with\n"
 "GNOME technologies"
 msgstr ""
+"Bac à sable pour apprendre et tester du code avec\n"
+"les technologies GNOME"
 
 #. TRANSLATORS: eg. 'Translator Name <your.email@domain.com>' or 'Translator Name https://website.example'
 #: src/about.js:39
 msgid "translator-credits"
-msgstr ""
+msgstr "Irénée THIRION"
 
 #: src/shortcutsWindow.ui:12 src/window.ui:242
 msgid "Run"
-msgstr ""
+msgstr "Exécuter"
 
 #: src/shortcutsWindow.ui:20 src/window.ui:477
 msgid "Inspector"
-msgstr ""
+msgstr "Inspecteur"
 
 #: src/shortcutsWindow.ui:31
 msgid "Open Console"
-msgstr ""
+msgstr "Ouvrir la Console"
 
 #: src/shortcutsWindow.ui:40
 msgid "Clear Console"
-msgstr ""
+msgstr "Effacer la Console"
 
 #: src/shortcutsWindow.ui:49 src/window.ui:584
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Raccourcis Clavier"
 
 #: src/shortcutsWindow.ui:55
 msgid "Quit"
-msgstr ""
+msgstr "Quitter"
 
 #: src/window.js:367
 msgid "Are you sure you want to discard your changes?"
-msgstr ""
+msgstr "Êtes-vous sûr de vouloir abandonner vos modifications ?"
 
 #: src/window.ui:14 src/window.ui:519
 msgid "Library"
-msgstr ""
+msgstr "Librairie"
 
 #: src/window.ui:19
 msgid "Open Library of Demos and Examples (Ctrl+Shift+O)"
-msgstr ""
+msgstr "Ouvrir la librairie des Démonstrations et Exemples (Ctrl+Maj+O)"
 
 #: src/window.ui:42
 msgid "Code"
-msgstr ""
+msgstr "Code"
 
 #: src/window.ui:68
 msgid "Style"
-msgstr ""
+msgstr "Style"
 
 #: src/window.ui:94
 msgid "UI"
-msgstr ""
+msgstr "UI"
 
 #: src/window.ui:122 src/window.ui:411
 msgid "Preview"
-msgstr ""
+msgstr "Prévisualisation"
 
 #: src/window.ui:152
 msgid "sun-symbolic"
-msgstr ""
+msgstr "sun-symbolic"
 
 #: src/window.ui:156 src/window.ui:161
 msgid "Use Light mode"
-msgstr ""
+msgstr "Utiliser le mode Clair"
 
 #: src/window.ui:170
 msgid "moon-rounded-symbolic"
-msgstr ""
+msgstr "moon-rounded-symbolic"
 
 #: src/window.ui:174 src/window.ui:179
 msgid "Use Dark mode"
-msgstr ""
+msgstr "Utiliser le mode Sombre"
 
 #: src/window.ui:192 src/window.ui:194
 msgid "Bookmarks"
-msgstr ""
+msgstr "Signets"
 
 #: src/window.ui:225
 msgid "Code - JavaScript"
-msgstr ""
+msgstr "Code - JavaScript"
 
 #: src/window.ui:250 src/window.ui:255
 msgid "Run (Ctrl+⏎)"
-msgstr ""
+msgstr "Exécuter (Ctrl+⏎)"
 
 #: src/window.ui:309
 msgid "Style - CSS"
-msgstr ""
+msgstr "Style - CSS"
 
 #: src/window.ui:360
 msgid "UI - XML"
-msgstr ""
+msgstr "UI - XML"
 
 #: src/window.ui:426 src/window.ui:431
 msgid "Take Screenshot of Preview"
-msgstr ""
+msgstr "Prendre une capture d'écran de la Prévisualisation"
 
 #: src/window.ui:465
 msgid "Console"
-msgstr ""
+msgstr "Console"
 
 #: src/window.ui:469
 msgid "Show logs (Ctrl+Shift+K)"
-msgstr ""
+msgstr "Afficher les journaux (Ctrl+Maj+K)"
 
 #: src/window.ui:481
 msgid "Open GTK Inspector (Ctrl+Shift+I)"
-msgstr ""
+msgstr "Ouvrir l'Inspecteur GTK (Ctrl+Maj+I)"
 
 #: src/window.ui:489
 msgid "Clear"
-msgstr ""
+msgstr "Effacer"
 
 #: src/window.ui:494
 msgid "Clear console (Ctrl+K)"
-msgstr ""
+msgstr "Effacer la console (Ctrl+K)"
 
 #: src/window.ui:526
 msgid "Open File…"
-msgstr ""
+msgstr "Ouvrir un fichier…"
 
 #: src/window.ui:530
 msgid "Reset to Demo"
-msgstr ""
+msgstr "Réinitialiser à la Démo"
 
 #: src/window.ui:534
 msgid "Platform Tools"
-msgstr ""
+msgstr "Outils de la plateforme"
 
 #: src/window.ui:540
 msgid "Adwaita Demo"
-msgstr ""
+msgstr "Démonstration Adwaita"
 
 #: src/window.ui:545
 msgid "GTK Demo"
-msgstr ""
+msgstr "Démonstration GTK"
 
 #: src/window.ui:553
 msgid "GTK Widget Factory"
-msgstr ""
+msgstr "Usine de widgets GTK"
 
 #: src/window.ui:562
 msgid "GTK Icon Browser"
-msgstr ""
+msgstr "Navigateur d'icônes GTK"
 
 #: src/window.ui:588
 msgid "About Workbench"
-msgstr ""
+msgstr "À propos de Workbench"
 
 #: src/window.ui:610
 msgid "Windowed Preview"
-msgstr ""
+msgstr "Prévisualisation de la fenêtre"
 
 #: src/window.ui:614
 msgid ""
 "This interface can only be previewed as a separate window.\n"
 "We recommend using \"Always on Top\""
 msgstr ""
+"Cette interface peut seulement être prévisualisée comme une fenêtre à part.\n"
+"Nous recommandons d'utiliser \"Toujours au-dessus\""
 
 #: src/window.ui:631
 msgid "Learn"
-msgstr ""
+msgstr "Apprendre"
 
 #: src/window.ui:636
 msgid "GNOME JavaScript (GJS)"
-msgstr ""
+msgstr "GNOME JavaScript (GJS)"
 
 #: src/window.ui:644
 msgid "Human Interface Guidelines (HIG)"
-msgstr ""
+msgstr "Directives d'Interface Humaine (abrégé H.I.G. en anglais)"
 
 #: src/window.ui:649
 msgid "UI components"
-msgstr ""
+msgstr "Composants d'interface"
 
 #: src/window.ui:659
 msgid "Platform components"
-msgstr ""
+msgstr "Composants de plateforme"
 
 #: src/window.ui:667
 msgid "Reference"
-msgstr ""
+msgstr "Référence"
 
 #: src/window.ui:669
 msgid "JavaScript"
-msgstr ""
+msgstr "JavaScript"
 
 #: src/window.ui:676
 msgid "GJS"
-msgstr ""
+msgstr "GJS"
 
 #: src/window.ui:681
 msgid "Gtk"
-msgstr ""
+msgstr "Gtk"
 
 #: src/window.ui:686
 msgid "Adwaita"
-msgstr ""
+msgstr "Adwaita"
 
 #: src/window.ui:694
 msgid "Get help"
-msgstr ""
+msgstr "Obtenir de l'aide"
 
 #: src/window.ui:696
 msgid "Discourse"
-msgstr ""
+msgstr "Conversation"
 
 #: src/window.ui:703
 msgid "Stack Overflow"
-msgstr ""
+msgstr "Stack Overflow"
 
 #: src/window.ui:710
 msgid "Matrix"
-msgstr ""
+msgstr "Matrix"
