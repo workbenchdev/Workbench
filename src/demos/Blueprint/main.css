@@ -1,0 +1,35 @@
+label {
+  /*
+    Replace "inherit" with your favorite color
+  */
+  color: inherit;
+}
+
+#logo {
+  animation-name: breathing;
+  animation-duration: 3s;
+  animation-timing-function: ease-out;
+  animation-iteration-count: infinite;
+  animation-direction: normal;
+  animation-delay: 0s;
+  animation-fill-mode: none;
+  animation-play-state: running;
+}
+
+@keyframes breathing {
+  0% {
+    -gtk-icon-transform: scale(0.9);
+  }
+
+  25% {
+    -gtk-icon-transform: scale(1);
+  }
+
+  60% {
+    -gtk-icon-transform: scale(0.9);
+  }
+
+  100% {
+    -gtk-icon-transform: scale(0.9);
+  }
+}

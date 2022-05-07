@@ -4,6 +4,10 @@
     <file>window.ui</file>
     <file>shortcutsWindow.ui</file>
     <file>style.css</file>
+    <file>demos/Blueprint/main.css</file>
+    <file>demos/Blueprint/main.js</file>
+    <file>demos/Blueprint/main.json</file>
+    <file>demos/Blueprint/main.blp</file>
     <file>demos/Notifications/main.js</file>
     <file>demos/Notifications/main.json</file>
     <file>demos/Notifications/main.ui</file>
@@ -17,7 +21,6 @@
     <file>demos/Welcome/main.js</file>
     <file>demos/Welcome/main.json</file>
     <file>demos/Welcome/main.ui</file>
-    <file>demos/Welcome/main.blp</file>
     <file>demos/Application window/main.json</file>
     <file>demos/Application window/main.ui</file>
     <file>language-specs/blueprint.lang</file>

@@ -47,7 +47,7 @@ export default function Window({ application, datadir }) {
 
   const { terminal } = Devtools({ application, window, builder });
 
-  const { js, css, ui, blp } = getDemoSources("Welcome");
+  const { js, css, ui } = getDemoSources("Welcome");
 
   const source_view_javascript = builder.get_object("source_view_javascript");
   documents.push(
@@ -64,9 +64,9 @@ export default function Window({ application, datadir }) {
   const document_ui = PanelUi({
     builder,
     source_view: source_view_ui,
-    lang: "blueprint",
-    placeholder: blp,
-    ext: "blp",
+    lang: ui.lang,
+    placeholder: ui.code,
+    ext: ui.ext,
     user_datadir,
   });
   documents.push(document_ui);
@@ -307,7 +307,7 @@ export default function Window({ application, datadir }) {
     load(source_view_css.buffer, css);
     settings.set_boolean("show-style", !!css);
 
-    load(source_view_ui.buffer, ui);
+    load(source_view_ui.buffer, ui.code);
     settings.set_boolean("show-ui", !!ui);
     settings.set_boolean("show-preview", !!ui);
 

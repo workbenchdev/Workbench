@@ -3,7 +3,6 @@ import Gio from "gi://Gio";
 import GLib from "gi://GLib";
 
 import LSPClient from "./lsp/LSPClient.js";
-import { resolve } from "./troll/src/util.js";
 
 export default function panel_ui({
   builder,
@@ -19,27 +18,27 @@ export default function panel_ui({
     "resource:///re/sonny/Workbench/language-specs",
   ]);
 
-  const dropdown_ui_lang = builder.get_object("dropdown_ui_lang");
-  dropdown_ui_lang.set_active_id(lang);
+  // const dropdown_ui_lang = builder.get_object("dropdown_ui_lang");
+  // dropdown_ui_lang.set_active_id(lang);
 
   let mode;
   let source_file;
 
   // TODO: File a bug libadwaita
   // flat does nothing on GtkDropdown or GtkComboBox or GtkComboBoxText
-  dropdown_ui_lang
-    .get_first_child()
-    .get_first_child()
-    .get_style_context()
-    .add_class("flat");
+  // dropdown_ui_lang
+  //   .get_first_child()
+  //   .get_first_child()
+  //   .get_style_context()
+  //   .add_class("flat");
 
-  dropdown_ui_lang.connect("changed", setMode);
+  // dropdown_ui_lang.connect("changed", setMode);
 
   const { buffer } = source_view;
 
   function setMode() {
-    mode = dropdown_ui_lang.get_active_id();
-    console.log(mode);
+    // mode = dropdown_ui_lang.get_active_id();
+    // console.log(mode);
     buffer.set_language(language_manager.get_language("blueprint"));
 
     const file = Gio.File.new_for_path(
@@ -113,13 +112,13 @@ export default function panel_ui({
 
 const lsp_client = new LSPClient(["blueprint-compiler", "lsp"]);
 
-lsp_client.connect("output", (self, message) => {
-  console.log("OUT:\n", message);
-});
+// lsp_client.connect("output", (self, message) => {
+//   console.log("OUT:\n", message);
+// });
 
-lsp_client.connect("input", (self, message) => {
-  console.log("IN:\n", message);
-});
+// lsp_client.connect("input", (self, message) => {
+//   console.log("IN:\n", message);
+// });
 
 setTimeout(async () => {
   await lsp_client.request("initialize");

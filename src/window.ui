@@ -374,18 +374,18 @@
                     <child>
                       <object class="GtkBox">
                         <child>
-                          <object class="GtkButton">
+                          <object class="GtkButton" id="panel_ui_title">
                             <property
                               name="label"
                               translatable="yes"
-                            >UI</property>
+                            >UI - XML</property>
                             <property name="sensitive">false</property>
                             <style>
                               <class name="flat" />
                             </style>
                           </object>
                         </child>
-                        <child>
+                        <!-- <child>
                           <object class="GtkComboBoxText" id="dropdown_ui_lang">
                             <property name="active_id">xml</property>
                             <items>
@@ -393,7 +393,7 @@
                               <item id="blueprint">Blueprint</item>
                             </items>
                           </object>
-                        </child>
+                        </child> -->
                         <style>
                           <class name="toolbar" />
                         </style>

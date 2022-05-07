@@ -55,9 +55,14 @@ function getDemos() {
 export function getDemoSources(demo_name) {
   const js = getDemoFile(demo_name, "main.js");
   const css = getDemoFile(demo_name, "main.css");
-  const ui = getDemoFile(demo_name, "main.ui");
+  const xml = getDemoFile(demo_name, "main.ui");
   const blp = getDemoFile(demo_name, "main.blp");
-  return { js, css, ui, blp };
+
+  const ui = xml
+    ? { code: xml, lang: "blueprint", ext: "blp" }
+    : { code: blp, lang: "xml", ext: "ui" };
+
+  return { js, css, ui };
 }
 
 export function getDemoFile(demo_name, file_name) {
