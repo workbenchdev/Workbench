@@ -95,7 +95,8 @@ export default class LSPClient {
       method,
       params,
     });
-    return once(this, `result::${id}`);
+    const [result] = await once(this, `result::${id}`);
+    return result;
   }
 
   async notify(method, params = {}) {

@@ -50,10 +50,11 @@ Box welcome {
   });
 
   console.time("compile");
-  await lsp_client.request("x-blueprintcompiler/compile", {
+  const result = await lsp_client.request("x-blueprintcompiler/compile", {
     text: blueprint,
   });
-  console.timeEnd("compile");
+
+  console.log("XML:\n", result.xml);
 })().catch(logError);
 
 loop.run();
