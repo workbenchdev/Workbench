@@ -2,6 +2,9 @@ import Source from "gi://GtkSource?version=5";
 import Gio from "gi://Gio";
 import GLib from "gi://GLib";
 
+import LSPClient from "./lsp/LSPClient.js";
+import { resolve } from "./troll/src/util.js";
+
 export default function panel_ui({
   builder,
   source_view,
@@ -102,36 +105,34 @@ export default function panel_ui({
     const text = source_view.buffer.text.trim();
     if (mode === "xml" || !text) return text;
 
-    return compileBlueprint(source_file.location.get_path());
+    return compileBlueprint(text);
   }
 
   return { reset, source_view, get_text };
 }
 
-function compileBlueprint(path) {
-  try {
-    console.time("blueprint-compiler compile");
-    const result = GLib.spawn_command_line_sync(
-      `blueprint-compiler compile ${path}`
-    );
-    console.timeEnd("blueprint-compiler compile");
+const lsp_client = new LSPClient(["blueprint-compiler", "lsp"]);
 
-    let [, stdout, stderr, status] = result;
+lsp_client.connect("output", (self, message) => {
+  console.log("OUT:\n", message);
+});
 
-    if (stdout instanceof Uint8Array) stdout = new TextDecoder().decode(stdout);
+lsp_client.connect("input", (self, message) => {
+  console.log("IN:\n", message);
+});
 
-    if (status !== 0) {
-      if (stderr instanceof Uint8Array) {
-        console.error(new TextDecoder().decode(stderr));
-      }
-      console.log(status, stdout);
+setTimeout(async () => {
+  await lsp_client.request("initialize");
+  // Make Blueprint language server cache Gtk 4
+  // to make subsequence call faster (~500ms -> ~3ms)
+  await lsp_client.request("x-blueprintcompiler/compile", {
+    text: "using Gtk 4.0;\nBox {}",
+  });
+});
 
-      throw new Error("Could not compile blueprint");
-    }
-
-    return stdout;
-  } catch (e) {
-    logError(e);
-    return "";
-  }
+async function compileBlueprint(text) {
+  const result = await lsp_client.request("x-blueprintcompiler/compile", {
+    text,
+  });
+  return result.xml;
 }

@@ -12,41 +12,35 @@ export default class LSPClient {
       Gio.SubprocessFlags.STDIN_PIPE | Gio.SubprocessFlags.STDOUT_PIPE
     );
 
-    const decoder = new TextDecoder();
     const stdin = proc.get_stdin_pipe();
     const stdout = new Gio.DataInputStream({
       base_stream: proc.get_stdout_pipe(),
       close_base_stream: true,
     });
 
-    // Here we create a GLib.Source using Gio.PollableInputStream.create_source(),
-    // set the priority and callback, then add it to main context
-    const stdin_source = stdin.create_source(null);
-    stdin_source.set_priority(GLib.PRIORITY_DEFAULT_IDLE);
-    stdin_source.set_callback(() => {
-      try {
-        const [data] = stdout.read_line(null);
-        if (!data) {
-          return GLib.SOURCE_CONTINUE;
+    const that = this;
+    function readOutput() {
+      stdout.read_line_async(0, null, (self, res) => {
+        try {
+          const [line] = stdout.read_line_finish_utf8(res);
+          if (line === null) return;
+
+          if (line.startsWith("{")) {
+            try {
+              that._onmessage(JSON.parse(line));
+              // eslint-disable-next-line no-empty
+            } catch (err) {
+              console.log(err);
+            }
+          }
+
+          readOutput();
+        } catch (e) {
+          logError(e);
         }
-        const line = decoder.decode(data).trim();
-        console.debug("in\n", line);
-
-        if (line.startsWith("{")) {
-          try {
-            this._onmessage(JSON.parse(line));
-            // eslint-disable-next-line no-empty
-          } catch {}
-        }
-
-        return GLib.SOURCE_CONTINUE;
-      } catch (err) {
-        logError(err);
-        return GLib.SOURCE_REMOVE;
-      }
-    });
-
-    const source_id = stdin_source.attach(null);
+      });
+    }
+    readOutput();
 
     proc.wait_async(null, (proc, res) => {
       try {
@@ -55,8 +49,6 @@ export default class LSPClient {
       } catch (e) {
         logError(e);
       }
-
-      GLib.Source.remove(source_id);
     });
 
     Object.assign(this, { proc, stdin, stdout });

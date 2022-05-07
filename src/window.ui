@@ -378,7 +378,7 @@
                             <property
                               name="label"
                               translatable="yes"
-                            >UI - XML</property>
+                            >UI</property>
                             <property name="sensitive">false</property>
                             <style>
                               <class name="flat" />

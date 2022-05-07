@@ -37,12 +37,15 @@ export default function Preview({
     object_root.present_with_time(Gdk.CURRENT_TIME);
   });
 
-  function update() {
+  async function update() {
     const builder = new Gtk.Builder();
     workbench.builder = builder;
 
     // let text = source_view_ui.buffer.text.trim();
-    let text = documents[1].get_text();
+    let text;
+    try {
+      text = await documents[1].get_text();
+    } catch (err) {}
     if (!text) return;
     let target_id;
     let tree;
