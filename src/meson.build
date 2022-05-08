@@ -7,8 +7,23 @@ bin_conf.set('libdir', join_paths(get_option('prefix'), get_option('libdir')))
 bin_conf.set('datadir', datadir)
 bin_conf.set('pkgdatadir', pkgdatadir)
 
+blueprints = custom_target('blueprints',
+  input: files(
+    'shortcutsWindow.blp',
+    'demos/Toasts/main.blp',
+    'demos/WebSocket client/main.blp',
+    'demos/Welcome/main.blp',
+    'demos/Application window/main.blp',
+    'demos/Notifications/main.blp',
+    'window.blp',
+  ),
+  output: '.',
+  command: [find_program('blueprint-compiler'), 'batch-compile', '@OUTPUT@', '@CURRENT_SOURCE_DIR@', '@INPUT@'],
+)
+
 data_res = gnome.compile_resources('workbench',
   'workbench.gresource.xml',
+  dependencies: blueprints,
   gresource_bundle: true,
   install: true,
   install_dir: pkgdatadir,
