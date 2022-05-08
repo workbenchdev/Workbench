@@ -1,0 +1,620 @@
+using Gtk 4.0;
+
+.AdwApplicationWindow window {
+  default-width: "800";
+  default-height: "600";
+  maximized: "true";
+  content: 
+  Box {
+    orientation: vertical;
+
+    .AdwHeaderBar {
+      [start]
+      Button button_library {
+        child:         .AdwButtonContent {
+          icon-name: "open-book-symbolic";
+          label: _("Library");
+        }
+
+        ;
+        action-name: "win.library";
+        margin-end: 6;
+        tooltip-text: _("Open Library of Demos and Examples (Ctrl+Shift+O)");
+
+        accessibility {
+          label: _("Run (Ctrl+⏎)");
+        }
+
+        styles [
+          "raised",
+        ]
+      }
+
+      [title]
+      Box {
+        spacing: 6;
+        orientation: horizontal;
+        homogeneous: true;
+
+        ToggleButton button_javascript {
+          child:           Box {
+            halign: center;
+
+            Image {
+              icon-name: "code-symbolic";
+            }
+
+            Label {
+              label: _("Code");
+            }
+          }
+
+          ;
+
+          styles [
+            "flat",
+            "view-toggler",
+          ]
+        }
+
+        ToggleButton button_css {
+          child:           Box {
+            halign: center;
+
+            Image {
+              icon-name: "style-symbolic";
+            }
+
+            Label {
+              label: _("Style");
+            }
+          }
+
+          ;
+
+          styles [
+            "flat",
+            "view-toggler",
+          ]
+        }
+
+        ToggleButton button_ui {
+          child:           Box {
+            halign: center;
+
+            Image {
+              icon-name: "ui-symbolic";
+            }
+
+            Label {
+              label: _("UI");
+            }
+          }
+
+          ;
+
+          styles [
+            "flat",
+            "view-toggler",
+          ]
+        }
+
+        ToggleButton button_preview {
+          child:           Box {
+            halign: center;
+
+            Image {
+              icon-name: "preview-symbolic";
+            }
+
+            Label {
+              label: _("Preview");
+            }
+          }
+
+          ;
+
+          styles [
+            "flat",
+            "view-toggler",
+          ]
+        }
+      }
+
+      [end]
+      MenuButton button_menu {
+        menu-model: menu_app;
+        icon-name: "open-menu-symbolic";
+        primary: true;
+      }
+
+      [end]
+      Box {
+        styles [
+          "linked",
+        ]
+
+        ToggleButton button_light {
+          icon-name: _("sun-symbolic");
+          tooltip-text: _("Use Light mode");
+
+          accessibility {
+            label: _("Use Light mode");
+          }
+        }
+
+        ToggleButton button_dark {
+          icon-name: _("moon-rounded-symbolic");
+          tooltip-text: _("Use Dark mode");
+
+          accessibility {
+            label: _("Use Dark mode");
+          }
+        }
+      }
+
+      [end]
+      MenuButton {
+        icon-name: "user-bookmarks-symbolic";
+        menu-model: menu_bookmarks;
+        tooltip-text: _("Bookmarks");
+
+        accessibility {
+          label: _("Bookmarks");
+        }
+
+        styles [
+          "flat",
+        ]
+      }
+    }
+
+    Paned paned {
+      orientation: vertical;
+      shrink-start-child: false;
+      shrink-end-child: false;
+      resize-start-child: true;
+      resize-end-child: true;
+
+      [start]
+      Box {
+        orientation: horizontal;
+        vexpand: true;
+        homogeneous: true;
+
+        Box panel_javascript {
+          orientation: vertical;
+
+          CenterBox {
+            [start]
+            Button {
+              label: _("Code - JavaScript");
+              sensitive: false;
+
+              styles [
+                "flat",
+              ]
+            }
+
+            [end]
+            Button button_run {
+              child:               .AdwButtonContent {
+                icon-name: "media-playback-start-symbolic";
+                label: _("Run");
+              }
+
+              ;
+              action-name: "win.run";
+              margin-end: 6;
+              tooltip-text: _("Run (Ctrl+⏎)");
+
+              accessibility {
+                label: _("Run (Ctrl+⏎)");
+              }
+
+              styles [
+                "suggested-action",
+              ]
+            }
+
+            styles [
+              "toolbar",
+            ]
+          }
+
+          Separator {
+          }
+
+          ScrolledWindow {
+            vexpand: true;
+
+            .GtkSourceView source_view_javascript {
+              buffer:               .GtkSourceBuffer {
+              }
+
+              ;
+              monospace: "true";
+              auto-indent: "true";
+              background-pattern: "grid";
+              highlight-current-line: "true";
+              indent-on-tab: "true";
+              indent-width: "2";
+              insert-spaces-instead-of-tabs: "true";
+              show-line-marks: "true";
+              show-line-numbers: "true";
+              smart-backspace: "true";
+              tab-width: "2";
+            }
+          }
+        }
+
+        Box panel_css {
+          orientation: vertical;
+
+          Box {
+            Button {
+              label: _("Style - CSS");
+              sensitive: false;
+
+              styles [
+                "flat",
+              ]
+            }
+
+            styles [
+              "toolbar",
+            ]
+          }
+
+          Separator {
+          }
+
+          ScrolledWindow {
+            vexpand: true;
+
+            .GtkSourceView source_view_css {
+              buffer:               .GtkSourceBuffer {
+              }
+
+              ;
+              monospace: "true";
+              auto-indent: "true";
+              background-pattern: "grid";
+              highlight-current-line: "true";
+              indent-on-tab: "true";
+              indent-width: "2";
+              insert-spaces-instead-of-tabs: "true";
+              show-line-marks: "true";
+              show-line-numbers: "true";
+              smart-backspace: "true";
+              tab-width: "2";
+            }
+          }
+        }
+
+        Box panel_ui {
+          orientation: vertical;
+
+          Box {
+            Button {
+              label: _("UI - XML");
+              sensitive: false;
+
+              styles [
+                "flat",
+              ]
+            }
+
+            styles [
+              "toolbar",
+            ]
+          }
+
+          Separator {
+          }
+
+          ScrolledWindow {
+            vexpand: true;
+
+            .GtkSourceView source_view_ui {
+              buffer:               .GtkSourceBuffer {
+              }
+
+              ;
+              monospace: "true";
+              auto-indent: "true";
+              background-pattern: "grid";
+              highlight-current-line: "true";
+              indent-on-tab: "true";
+              indent-width: "2";
+              insert-spaces-instead-of-tabs: "true";
+              show-line-marks: "true";
+              show-line-numbers: "true";
+              smart-backspace: "true";
+              tab-width: "2";
+            }
+          }
+        }
+
+        Box panel_preview {
+          orientation: vertical;
+
+          CenterBox {
+            [start]
+            Button {
+              label: _("Preview");
+              sensitive: false;
+
+              styles [
+                "flat",
+              ]
+            }
+
+            [end]
+            Button button_screenshot {
+              child:               .AdwButtonContent {
+                icon-name: "photo-camera-symbolic";
+              }
+
+              ;
+              margin-end: 6;
+              tooltip-text: _("Take Screenshot of Preview");
+
+              accessibility {
+                label: _("Take Screenshot of Preview");
+              }
+            }
+
+            styles [
+              "toolbar",
+            ]
+          }
+
+          Separator {
+          }
+
+          ScrolledWindow output {
+            name: "workbench_output";
+            vexpand: true;
+
+            styles [
+              "background",
+            ]
+          }
+        }
+      }
+
+      [end]
+      Box {
+        orientation: vertical;
+
+        CenterBox toolbar_devtools {
+          [start]
+          Box {
+            styles [
+              "toolbar",
+            ]
+
+            ToggleButton button_console {
+              action-name: "win.console";
+              label: _("Console");
+              tooltip-text: _("Show logs (Ctrl+Shift+K)");
+            }
+
+            Button button_inspector {
+              label: _("Inspector");
+              tooltip-text: _("Open GTK Inspector (Ctrl+Shift+I)");
+            }
+          }
+
+          [end]
+          Box {
+            styles [
+              "toolbar",
+            ]
+
+            Button button_clear {
+              label: _("Clear");
+              action-name: "win.clear";
+              tooltip-text: _("Clear console (Ctrl+K)");
+            }
+          }
+        }
+
+        Box devtools {
+          .VteTerminal terminal {
+            hexpand: "true";
+            input-enabled: "false";
+          }
+        }
+      }
+    }
+  }
+
+  ;
+}
+
+.AdwPreferencesWindow window_library {
+  hide-on-close: "true";
+  search-enabled: "true";
+  title: _("Library");
+
+  .AdwPreferencesPage {
+    .AdwPreferencesGroup {
+      Label {
+        label: _("Examples to start from or get inspired by");
+      }
+    }
+
+    .AdwPreferencesGroup library_uncategorized {
+    }
+
+    .AdwPreferencesGroup library_network {
+      title: "Network";
+    }
+
+    .AdwPreferencesGroup library_user_interface {
+      title: "User Interface";
+    }
+  }
+}
+
+FileFilter file_filter {
+  mime-types [
+    "text/css",
+    "text/javascript",
+    "application/javascript",
+    "application/x-gtk-builder",
+  ]
+
+  patterns [
+    "*.js",
+    "*.ui",
+    "*.xml.ui",
+    "*.css",
+  ]
+}
+
+.AdwStatusPage preview_window {
+  .AdwStatusPage {
+    title: _("Windowed Preview");
+    description: _("This interface can only be previewed as a separate window.\nWe recommend using \"Always on Top\"");
+    icon-name: "multitasking-windows-symbolic";
+
+    Box {
+      halign: center;
+
+      Button preview_window_button {
+        label: "Show Preview Window";
+      }
+    }
+  }
+}
+
+menu menu_app {
+  item {
+    label: _("Open File…");
+    action: "app.open";
+  }
+
+  submenu {
+    label: _("Platform Tools");
+
+    item {
+      label: _("Adwaita Demo");
+      action: "app.platform_tools";
+      target: "adwaita-1-demo";
+    }
+
+    item {
+      label: _("GTK Demo");
+      action: "app.platform_tools";
+      target: "gtk4-demo";
+    }
+
+    item {
+      label: _("GTK Widget Factory");
+      action: "app.platform_tools";
+      target: "gtk4-widget-factory";
+    }
+
+    item {
+      label: _("GTK Icon Browser");
+      action: "app.platform_tools";
+      target: "gtk4-icon-browser";
+    }
+  }
+
+  section {
+    item {
+      label: _("Keyboard Shortcuts");
+      action: "app.shortcuts";
+    }
+
+    item {
+      label: _("About Workbench");
+      action: "app.about";
+    }
+  }
+}
+
+menu menu_bookmarks {
+  section {
+    label: _("Learn");
+
+    item {
+      label: _("GNOME JavaScript (GJS)");
+      action: "app.open_uri";
+      target: "https://gjs.guide/guides/";
+    }
+
+    item {
+      label: _("Human Interface Guidelines (HIG)");
+      action: "app.open_uri";
+      target: "https://developer.gnome.org/hig/";
+    }
+
+    item {
+      label: _("UI components");
+      action: "app.open_uri";
+      target: "https://developer.gnome.org/documentation/tutorials/beginners/components.html";
+    }
+
+    item {
+      label: _("Platform components");
+      action: "app.open_uri";
+      target: "https://developer.gnome.org/documentation/introduction/components.html";
+    }
+  }
+
+  section {
+    label: _("Reference");
+
+    item {
+      label: _("JavaScript");
+      action: "app.open_uri";
+      target: "https://developer.mozilla.org/docs/Web/JavaScript/Guide";
+    }
+
+    item {
+      label: _("GJS");
+      action: "app.open_uri";
+      target: "https://gjs-docs.gnome.org/";
+    }
+
+    item {
+      label: _("Gtk");
+      action: "app.open_uri";
+      target: "https://docs.gtk.org/gtk4/";
+    }
+
+    item {
+      label: _("Adwaita");
+      action: "app.open_uri";
+      target: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.1/";
+    }
+  }
+
+  section {
+    label: _("Get help");
+
+    item {
+      label: _("Discourse");
+      action: "app.open_uri";
+      target: "https://discourse.gnome.org/c/platform/5";
+    }
+
+    item {
+      label: _("Stack Overflow");
+      action: "app.open_uri";
+      target: "https://stackoverflow.com/questions/tagged/gjs";
+    }
+
+    item {
+      label: _("Matrix");
+      action: "app.open_uri";
+      icon-name: "external-link-symbolic";
+      target: "https://matrix.to/#/#javascript:gnome.org";
+    }
+  }
+}

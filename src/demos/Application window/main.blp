@@ -1,0 +1,61 @@
+using Gtk 4.0;
+
+.AdwApplicationWindow window {
+  default-width: "800";
+  default-height: "600";
+  content: 
+  Box {
+    orientation: vertical;
+
+    .AdwHeaderBar {
+      [title]
+      Label {
+        label: "My Awesome App";
+      }
+
+      [end]
+      MenuButton button_menu {
+        menu-model: menu_app;
+        icon-name: "open-menu-symbolic";
+        primary: true;
+      }
+    }
+
+    .AdwStatusPage {
+      title: "My App";
+      description: "My App is awesome";
+      vexpand: "true";
+      icon-name: "re.sonny.Workbench-symbolic";
+
+      Box {
+        orientation: vertical;
+
+        LinkButton {
+          label: "API Reference";
+          uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.1/class.ApplicationWindow.html";
+        }
+
+        LinkButton {
+          label: "Human Interface Guidelines";
+          uri: "https://developer.gnome.org/hig/patterns/containers/windows.html";
+        }
+      }
+    }
+  }
+
+  ;
+}
+
+menu menu_app {
+  section {
+    item {
+      label: _("Keyboard Shortcuts");
+      action: "app.shortcuts";
+    }
+
+    item {
+      label: _("About My App");
+      action: "app.about";
+    }
+  }
+}
