@@ -7,7 +7,7 @@ import Adw from "gi://Adw?version=1";
 import Vte from "gi://Vte?version=3.91";
 import { gettext as _ } from "gettext";
 
-import { confirm, settings, createUserDataDir } from "./util.js";
+import { confirm, settings, createDataDir } from "./util.js";
 import Document from "./Document.js";
 import PanelUi from "./panel_ui.js";
 import Devtools from "./Devtools.js";
@@ -26,7 +26,7 @@ const style_manager = Adw.StyleManager.get_default();
 
 export default function Window({ application, datadir }) {
   Vte.Terminal.new();
-  const user_datadir = createUserDataDir();
+  const data_dir = createDataDir();
 
   const builder = Gtk.Builder.new_from_resource(
     "/re/sonny/Workbench/window.ui"
@@ -56,7 +56,7 @@ export default function Window({ application, datadir }) {
       lang: "js",
       placeholder: js,
       ext: "js",
-      user_datadir,
+      data_dir,
     })
   );
 
@@ -67,7 +67,7 @@ export default function Window({ application, datadir }) {
     lang: ui.lang,
     placeholder: ui.code,
     ext: ui.ext,
-    user_datadir,
+    data_dir,
   });
   documents.push(document_ui);
   // documents.push(
@@ -76,7 +76,7 @@ export default function Window({ application, datadir }) {
   //     lang: "blueprint",
   //     placeholder: blp,
   //     ext: "blp",
-  //     user_datadir,
+  //     data_dir,
   //   })
   // );
 
@@ -87,7 +87,7 @@ export default function Window({ application, datadir }) {
       lang: "css",
       placeholder: css,
       ext: "css",
-      user_datadir,
+      data_dir,
     })
   );
 
@@ -181,7 +181,7 @@ export default function Window({ application, datadir }) {
     source_view_css,
     window,
     application,
-    user_datadir,
+    data_dir,
     documents,
   });
 

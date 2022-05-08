@@ -18,7 +18,7 @@ export default function Preview({
   source_view_css,
   window,
   application,
-  user_datadir,
+  data_dir,
   documents,
 }) {
   const workbench = (globalThis.workbench = {
@@ -126,7 +126,7 @@ export default function Preview({
   }
 
   builder.get_object("button_screenshot").connect("clicked", () => {
-    screenshot({ widget: object_root || output, window, user_datadir });
+    screenshot({ widget: object_root || output, window, data_dir });
   });
 
   return { update };
@@ -215,7 +215,7 @@ export function targetBuildable(tree) {
 
 const portal = new Xdp.Portal();
 
-function screenshot({ widget, window, user_datadir }) {
+function screenshot({ widget, window, data_dir }) {
   const paintable = new Gtk.WidgetPaintable({ widget });
   const width = widget.get_allocated_width();
   const height = widget.get_allocated_height();
@@ -236,7 +236,7 @@ function screenshot({ widget, window, user_datadir }) {
   });
   const texture = renderer.render_texture(node, rect);
 
-  const path = GLib.build_filenamev([user_datadir, `Workbench screenshot.png`]);
+  const path = GLib.build_filenamev([data_dir, `Workbench screenshot.png`]);
   // log(path);
   texture.save_to_png(path);
 

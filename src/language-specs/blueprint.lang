@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- https://gitlab.gnome.org/GNOME/gnome-builder/-/blob/e5b999b983df0be4999e86a1be70cecbaca0bd86/src/plugins/blueprint/blueprint.lang -->
 <language id="blueprint" name="Blueprint" version="2.0" _section="Other">
   <metadata>
     <property name="globs">*.blp</property>
@@ -10,38 +11,34 @@
   <styles>
 
     <!-- global -->
-    <style id="comment" name="Comment" map-to="def:comment" />
-    <style id="translator" name="Translator Comment" map-to="def:emphasis" />
-    <style id="keyword" name="Keyword" map-to="def:keyword" />
-    <style id="external" name="External" map-to="def:inline-code" />
-    <style id="object_id" name="Object ID" map-to="def:inline-code" />
-    <style id="namespace" name="Namespace" map-to="def:type" />
-    <style id="class" name="Class" map-to="def:type" />
-    <style id="property" name="Property" map-to="def:identifier" />
-    <style id="signal" name="Signal" map-to="def:identifier" />
-    <style id="identifier" name="Identifier" map-to="def:identifier" />
-    <style id="child_type" name="Child Type" map-to="def:identifier" />
+    <style id="comment"                     name="Comment"                     map-to="def:comment"/>
+    <style id="translator"                  name="Translator Comment"          map-to="def:emphasis"/>
+    <style id="keyword"                     name="Keyword"                     map-to="def:keyword"/>
+    <style id="external"                    name="External"                    map-to="def:inline-code"/>
+    <style id="object_id"                   name="Object ID"                   map-to="def:inline-code"/>
+    <style id="namespace"                   name="Namespace"                   map-to="def:type"/>
+    <style id="class"                       name="Class"                       map-to="def:type"/>
+    <style id="property"                    name="Property"                    map-to="def:identifier"/>
+    <style id="signal"                      name="Signal"                      map-to="def:identifier"/>
+    <style id="identifier"                  name="Identifier"                  map-to="def:identifier"/>
+    <style id="child_type"                  name="Child Type"                  map-to="def:identifier"/>
 
     <!-- data types -->
-    <style id="escape" name="Escape Sequence" map-to="def:special-char" />
-    <style id="string" name="String" map-to="def:string" />
-    <style id="boolean" name="Boolean" map-to="def:boolean" />
-    <style id="number" name="Number" map-to="def:number" />
-    <style id="integer" name="Integer" map-to="def:decimal" />
+    <style id="escape"                      name="Escape Sequence"             map-to="def:special-char"/>
+    <style id="string"                      name="String"                      map-to="def:string"/>
+    <style id="boolean"                     name="Boolean"                     map-to="def:boolean"/>
+    <style id="number"                      name="Number"                      map-to="def:number"/>
+    <style id="integer"                     name="Integer"                     map-to="def:decimal"/>
   </styles>
 
   <definitions>
     <define-regex id="ident">[A-Za-z_][\d\w\-_]*</define-regex>
     <define-regex id="quoted">("(\\"|[^"\n])+"|'(\\'|[^'\n])+')</define-regex>
-    <define-regex
-      id="number"
-    >([-+]?\d[\d_]*(\.\d[\d_]*)?|0x[A-Fa-f0-9]+)</define-regex>
+    <define-regex id="number">([-+]?\d[\d_]*(\.\d[\d_]*)?|0x[A-Fa-f0-9]+)</define-regex>
     <define-regex id="comment">(/\*[\s\S]*\*/|\/\/[^\n]*)</define-regex>
     <define-regex id="op">[:=\.=\|&lt;&gt;\+\-/\*]+</define-regex>
     <define-regex id="escape">\\n|\\"|\\'</define-regex>
-    <define-regex
-      id="block_keyword"
-    >accessibility|layout|attributes|menu|submenu|item|section</define-regex>
+    <define-regex id="block_keyword">accessibility|layout|attributes|menu|submenu|item|section</define-regex>
 
     <context id="using">
       <match extended="true">
@@ -52,15 +49,15 @@
         (\%{number})
       </match>
       <include>
-        <context sub-pattern="1" style-ref="keyword" />
-        <context sub-pattern="2" style-ref="namespace" />
-        <context sub-pattern="3" style-ref="namespace" />
+        <context sub-pattern="1" style-ref="keyword"/>
+        <context sub-pattern="2" style-ref="namespace"/>
+        <context sub-pattern="3" style-ref="namespace"/>
       </include>
     </context>
 
     <context id="value">
       <include>
-        <context ref="child" />
+        <context ref="child"/>
         <context id="bool" style-ref="boolean">
           <match>true|false</match>
         </context>
@@ -93,29 +90,18 @@
 
     <context id="comment">
       <include>
-        <context
-          id="line-comment"
-          style-ref="comment"
-          end-at-line-end="true"
-          class="comment"
-          class-disabled="no-spell-check"
-        >
+        <context id="line-comment" style-ref="comment" end-at-line-end="true" class="comment" class-disabled="no-spell-check">
           <start>//</start>
           <include>
-            <context ref="def:in-line-comment" />
+            <context ref="def:in-line-comment"/>
           </include>
         </context>
 
-        <context
-          id="multiline-comment"
-          style-ref="comment"
-          class="comment"
-          class-disabled="no-spell-check"
-        >
+        <context id="multiline-comment" style-ref="comment" class="comment" class-disabled="no-spell-check">
           <start>/\*</start>
           <end>\*/</end>
           <include>
-            <context ref="def:in-comment" />
+            <context ref="def:in-comment"/>
             <context id="translator-comment" style-ref="translator">
               <match case-sensitive="false">translators:</match>
             </context>
@@ -132,9 +118,9 @@
       </start>
       <end>;</end>
       <include>
-        <context where="start" sub-pattern="1" style-ref="property" />
-        <context ref="keywords" />
-        <context ref="value" />
+        <context where="start" sub-pattern="1" style-ref="property"/>
+        <context ref="keywords"/>
+        <context ref="value"/>
       </include>
     </context>
 
@@ -146,9 +132,9 @@
       </start>
       <end>;</end>
       <include>
-        <context where="start" sub-pattern="1" style-ref="property" />
-        <context ref="value" />
-        <context ref="keywords" />
+        <context where="start" sub-pattern="1" style-ref="property"/>
+        <context ref="value"/>
+        <context ref="keywords"/>
       </include>
     </context>
 
@@ -167,19 +153,11 @@
       </start>
       <end>}</end>
       <include>
-        <context where="start" sub-pattern="1" style-ref="keyword" />
-        <context
-          where="start"
-          sub-pattern="template_id"
-          style-ref="object_id"
-        />
-        <context
-          where="start"
-          sub-pattern="template_ns"
-          style-ref="namespace"
-        />
-        <context where="start" sub-pattern="template_class" style-ref="class" />
-        <context ref="block-content" />
+        <context where="start" sub-pattern="1" style-ref="keyword"/>
+        <context where="start" sub-pattern="template_id" style-ref="object_id"/>
+        <context where="start" sub-pattern="template_ns" style-ref="namespace"/>
+        <context where="start" sub-pattern="template_class" style-ref="class"/>
+        <context ref="block-content"/>
       </include>
     </context>
 
@@ -194,25 +172,25 @@
       </start>
       <end>}</end>
       <include>
-        <context where="start" sub-pattern="child_kw" style-ref="keyword" />
-        <context where="start" sub-pattern="child_ns" style-ref="namespace" />
-        <context where="start" sub-pattern="child_class" style-ref="class" />
-        <context where="start" sub-pattern="child_id" style-ref="object_id" />
-        <context ref="block-content" />
+        <context where="start" sub-pattern="child_kw" style-ref="keyword"/>
+        <context where="start" sub-pattern="child_ns" style-ref="namespace"/>
+        <context where="start" sub-pattern="child_class" style-ref="class"/>
+        <context where="start" sub-pattern="child_id" style-ref="object_id"/>
+        <context ref="block-content"/>
       </include>
     </context>
 
     <context id="block-content">
       <include>
-        <context ref="comment" />
-        <context ref="attribute" />
-        <context ref="signal" />
-        <context ref="keywords" />
-        <context ref="block" />
-        <context ref="child-type" />
-        <context ref="list" />
-        <context ref="args" />
-        <context ref="child" />
+        <context ref="comment"/>
+        <context ref="attribute"/>
+        <context ref="signal"/>
+        <context ref="keywords"/>
+        <context ref="block"/>
+        <context ref="child-type"/>
+        <context ref="list"/>
+        <context ref="args"/>
+        <context ref="child"/>
       </include>
     </context>
 
@@ -220,7 +198,7 @@
       <start>{</start>
       <end>}</end>
       <include>
-        <context ref="block-content" />
+        <context ref="block-content"/>
       </include>
     </context>
 
@@ -228,9 +206,9 @@
       <start>\[</start>
       <end>\]</end>
       <include>
-        <context ref="comment" />
-        <context ref="value" />
-        <context ref="keywords" />
+        <context ref="comment"/>
+        <context ref="value"/>
+        <context ref="keywords"/>
       </include>
     </context>
 
@@ -238,9 +216,9 @@
       <start>\(</start>
       <end>\)</end>
       <include>
-        <context ref="comment" />
-        <context ref="value" />
-        <context ref="keywords" />
+        <context ref="comment"/>
+        <context ref="value"/>
+        <context ref="keywords"/>
       </include>
     </context>
 
@@ -267,12 +245,12 @@
 
     <context id="blueprint" class="no-spell-check">
       <include>
-        <context ref="comment" />
-        <context ref="using" />
-        <context ref="template" />
-        <context ref="keywords" />
-        <context ref="block" />
-        <context ref="child" />
+        <context ref="comment"/>
+        <context ref="using"/>
+        <context ref="template"/>
+        <context ref="keywords"/>
+        <context ref="block"/>
+        <context ref="child"/>
       </include>
     </context>
   </definitions>

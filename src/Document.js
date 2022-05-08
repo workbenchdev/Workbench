@@ -6,7 +6,7 @@ import { settings } from "./util.js";
 const language_manager = Source.LanguageManager.get_default();
 
 export default function Document({
-  user_datadir,
+  data_dir,
   source_view,
   lang,
   placeholder,
@@ -17,7 +17,7 @@ export default function Document({
   buffer.set_language(language_manager.get_language(lang));
 
   const file = Gio.File.new_for_path(
-    GLib.build_filenamev([user_datadir, `state.${ext}`])
+    GLib.build_filenamev([data_dir, `state.${ext}`])
   );
 
   const source_file = new Source.File({

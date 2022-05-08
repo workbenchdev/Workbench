@@ -14,8 +14,7 @@
     "--socket=wayland",
     "--device=dri",
     "--socket=session-bus",
-    "--share=network",
-    "--filesystem=home:ro"
+    "--share=network"
   ],
   "x-run-args": [],
   "modules": [

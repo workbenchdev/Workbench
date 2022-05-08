@@ -10,7 +10,7 @@ export default function panel_ui({
   lang,
   placeholder,
   ext,
-  user_datadir,
+  data_dir,
 }) {
   const language_manager = new Source.LanguageManager();
   language_manager.set_search_path([
@@ -42,7 +42,7 @@ export default function panel_ui({
     buffer.set_language(language_manager.get_language("blueprint"));
 
     const file = Gio.File.new_for_path(
-      GLib.build_filenamev([user_datadir, `state.${ext}`])
+      GLib.build_filenamev([data_dir, `state.${ext}`])
     );
 
     source_file = new Source.File({

@@ -29,21 +29,21 @@ export async function confirm(params) {
   return response_id === Gtk.ResponseType.YES;
 }
 
-export function createUserDataDir() {
-  const user_datadir = GLib.build_filenamev([
+export function createDataDir() {
+  const data_dir = GLib.build_filenamev([
     GLib.get_user_data_dir(),
     "re.sonny.Workbench",
   ]);
 
   try {
-    Gio.File.new_for_path(user_datadir).make_directory(null);
+    Gio.File.new_for_path(data_dir).make_directory(null);
   } catch (err) {
     if (err.code !== Gio.IOErrorEnum.EXISTS) {
       throw err;
     }
   }
 
-  return user_datadir;
+  return data_dir;
 }
 
 export function getFlatpakInfo() {
