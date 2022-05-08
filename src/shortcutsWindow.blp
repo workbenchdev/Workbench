@@ -1,0 +1,39 @@
+using Gtk 4.0;
+
+ShortcutsWindow shortcuts_window {
+  modal: true;
+
+  ShortcutsSection {
+    ShortcutsGroup {
+      ShortcutsShortcut {
+        accelerator: "<Control>Return";
+        title: _("Run");
+      }
+
+      ShortcutsShortcut {
+        accelerator: "<Control><Shift>I";
+        title: _("Inspector");
+      }
+
+      ShortcutsShortcut {
+        accelerator: "<Control><Shift>K";
+        title: _("Open Console");
+      }
+
+      ShortcutsShortcut {
+        accelerator: "<Control>K";
+        title: _("Clear Console");
+      }
+
+      ShortcutsShortcut {
+        accelerator: "<Control>question";
+        title: _("Keyboard Shortcuts");
+      }
+
+      ShortcutsShortcut {
+        accelerator: "<Control>Q";
+        title: _("Quit");
+      }
+    }
+  }
+}
