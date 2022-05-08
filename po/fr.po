@@ -26,7 +26,8 @@ msgstr "Workbench"
 
 #: data/re.sonny.Workbench.desktop:5 data/re.sonny.Workbench.metainfo.xml:10
 msgid "Sandbox to learn and prototype with GNOME technologies"
-msgstr "Bac à sable pour apprendre à utiliser et essayer les technologies GNOME"
+msgstr ""
+"Bac à sable pour apprendre à utiliser et essayer les technologies GNOME"
 
 #. TRANSLATORS: Don't translate
 #: data/re.sonny.Workbench.desktop:12
@@ -34,7 +35,9 @@ msgid "CSS;JavaScript;GJS;"
 msgstr "CSS;JavaScript;GJS;"
 
 #: data/re.sonny.Workbench.metainfo.xml:14
-msgid "Workbench goal is to let you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a custom GTK widget."
+msgid ""
+"Workbench goal is to let you experiment with GNOME technologies, no matter "
+"if tinkering for the first time or building and testing a custom GTK widget."
 msgstr ""
 "Le but de Workbench est de vous laisser expérimenter les technologies GNOME, "
 "que ce soit pour bidouiller pour la première fois ou pour construire et "
@@ -66,7 +69,8 @@ msgid "console logs"
 msgstr "Journaux de console"
 
 #: data/re.sonny.Workbench.metainfo.xml:34
-msgid "Side by side editors with live preview on the right and console in the bottom"
+msgid ""
+"Side by side editors with live preview on the right and console in the bottom"
 msgstr ""
 "Éditeurs côte à côte avec prévisualisation en direct à droite et console en "
 "bas"

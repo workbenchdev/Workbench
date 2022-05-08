@@ -35,7 +35,9 @@ msgid "CSS;JavaScript;GJS;"
 msgstr "CSS;JavaScript;GJS;"
 
 #: data/re.sonny.Workbench.metainfo.xml:14
-msgid "Workbench goal is to let you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a custom GTK widget."
+msgid ""
+"Workbench goal is to let you experiment with GNOME technologies, no matter "
+"if tinkering for the first time or building and testing a custom GTK widget."
 msgstr ""
 "Workbench'in amacı, ister ilk kez kurcalıyor, ister özel bir GTK widget'ı "
 "oluşturup test ediyor olun, GNOME teknolojilerini denemenize izin vermektir."
@@ -65,7 +67,8 @@ msgid "console logs"
 msgstr "konsol logları"
 
 #: data/re.sonny.Workbench.metainfo.xml:34
-msgid "Side by side editors with live preview on the right and console in the bottom"
+msgid ""
+"Side by side editors with live preview on the right and console in the bottom"
 msgstr "Sağda canlı önizleme ve altta konsol bulunan yan yana düzenleyiciler"
 
 #: data/re.sonny.Workbench.metainfo.xml:41
