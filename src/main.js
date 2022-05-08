@@ -13,7 +13,7 @@ export default function main(argv, { version, datadir }) {
   );
   textdomain("re.sonny.Workbench");
 
-  const application = Application({ version, datadir });
+  const application = Application({ version });
 
   return application.run(argv);
 }

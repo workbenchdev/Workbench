@@ -24,7 +24,7 @@ Source.init();
 const scheme_manager = Source.StyleSchemeManager.get_default();
 const style_manager = Adw.StyleManager.get_default();
 
-export default function Window({ application, datadir }) {
+export default function Window({ application }) {
   Vte.Terminal.new();
   const data_dir = createDataDir();
 
@@ -47,7 +47,7 @@ export default function Window({ application, datadir }) {
 
   const { terminal } = Devtools({ application, window, builder });
 
-  const { js, css, ui } = getDemoSources("Welcome");
+  const { js, css, xml, blp } = getDemoSources("Welcome");
 
   const source_view_javascript = builder.get_object("source_view_javascript");
   documents.push(
@@ -64,9 +64,9 @@ export default function Window({ application, datadir }) {
   const document_ui = PanelUi({
     builder,
     source_view: source_view_ui,
-    lang: ui.lang,
-    placeholder: ui.code,
-    ext: ui.ext,
+    lang: "blueprint",
+    placeholder: blp,
+    ext: "blp",
     data_dir,
   });
   documents.push(document_ui);
@@ -187,7 +187,7 @@ export default function Window({ application, datadir }) {
 
   source_view_ui.buffer.connect("changed", previewer.update);
   source_view_css.buffer.connect("changed", previewer.update);
-  previewer.update().catch(logError);
+  previewer.update();
 
   function format(buffer, formatter) {
     const code = formatter(buffer.text.trim());
