@@ -1,9 +1,7 @@
 import Source from "gi://GtkSource?version=5";
 import Gio from "gi://Gio";
 import GLib from "gi://GLib";
-import { settings } from "./util.js";
-
-const language_manager = Source.LanguageManager.get_default();
+import { settings, language_manager } from "./util.js";
 
 export default function Document({
   data_dir,

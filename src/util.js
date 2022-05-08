@@ -1,6 +1,7 @@
 import GLib from "gi://GLib";
 import Gio from "gi://Gio";
 import Gtk from "gi://Gtk";
+import Source from "gi://GtkSource?version=5";
 
 import { once } from "./troll/src/util.js";
 
@@ -58,3 +59,10 @@ export function getFlatpakInfo() {
   }
   return keyFile;
 }
+
+const language_manager = new Source.LanguageManager();
+language_manager.set_search_path([
+  ...language_manager.get_search_path(),
+  "resource:///re/sonny/Workbench/language-specs",
+]);
+export { language_manager };

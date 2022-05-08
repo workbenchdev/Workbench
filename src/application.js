@@ -9,7 +9,7 @@ import { settings } from "./util.js";
 
 const style_manager = Adw.StyleManager.get_default();
 
-export default function Application({ version, datadir }) {
+export default function Application({ version }) {
   const application = new Adw.Application({
     application_id: "re.sonny.Workbench",
     flags: Gio.ApplicationFlags.HANDLES_OPEN,
@@ -30,7 +30,6 @@ export default function Application({ version, datadir }) {
       window ||
       Window({
         application,
-        datadir,
       });
     window.window.present();
   });

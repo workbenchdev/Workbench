@@ -12,14 +12,11 @@ import logger from "./logger.js";
 export default function Preview({
   output,
   builder,
-  button_preview,
-  panel_preview,
-  source_view_ui,
   source_view_css,
   window,
   application,
   data_dir,
-  documents,
+  document_ui,
 }) {
   const workbench = (globalThis.workbench = {
     window,
@@ -44,9 +41,10 @@ export default function Preview({
     // let text = source_view_ui.buffer.text.trim();
     let text;
     try {
-      text = await documents[1].get_text();
-      // eslint-disable-next-line no-empty
-    } catch {}
+      text = await document_ui.getBuilderString();
+    } catch (err) {
+      logError(err);
+    }
     if (!text) return;
     let target_id;
     let tree;

@@ -40,11 +40,11 @@
     <file>application.js</file>
     <file>Devtools.js</file>
     <file>Document.js</file>
+    <file>DocumentUI.js</file>
     <file>Library.js</file>
     <file>logger.js</file>
     <file>main.js</file>
     <file>overrides.js</file>
-    <file>panel_ui.js</file>
     <file>Previewer.js</file>
     <file>shortcutsWindow.js</file>
     <file>Terminal.js</file>

@@ -9,7 +9,7 @@ import { gettext as _ } from "gettext";
 
 import { confirm, settings, createDataDir } from "./util.js";
 import Document from "./Document.js";
-import PanelUi from "./panel_ui.js";
+import DocumentUI from "./DocumentUI.js";
 import Devtools from "./Devtools.js";
 
 import prettier from "./lib/prettier.js";
@@ -47,7 +47,7 @@ export default function Window({ application }) {
 
   const { terminal } = Devtools({ application, window, builder });
 
-  const { js, css, xml, blp } = getDemoSources("Welcome");
+  const { js, css } = getDemoSources("Welcome");
 
   const source_view_javascript = builder.get_object("source_view_javascript");
   documents.push(
@@ -61,24 +61,12 @@ export default function Window({ application }) {
   );
 
   const source_view_ui = builder.get_object("source_view_ui");
-  const document_ui = PanelUi({
+  const document_ui = DocumentUI({
     builder,
     source_view: source_view_ui,
-    lang: "blueprint",
-    placeholder: blp,
-    ext: "blp",
     data_dir,
   });
   documents.push(document_ui);
-  // documents.push(
-  //   Document({
-  //     source_view: source_view_ui,
-  //     lang: "blueprint",
-  //     placeholder: blp,
-  //     ext: "blp",
-  //     data_dir,
-  //   })
-  // );
 
   const source_view_css = builder.get_object("source_view_css");
   documents.push(
@@ -175,14 +163,11 @@ export default function Window({ application }) {
   const previewer = Previewer({
     output,
     builder,
-    button_preview,
-    panel_preview,
-    source_view_ui,
     source_view_css,
     window,
     application,
     data_dir,
-    documents,
+    document_ui,
   });
 
   source_view_ui.buffer.connect("changed", previewer.update);
@@ -221,29 +206,31 @@ export default function Window({ application }) {
         });
       });
 
-      format(source_view_ui.buffer, (text) => {
-        return prettier.format(text, {
-          parser: "xml",
-          plugins: [prettier_xml],
-          // xmlWhitespaceSensitivity: "ignore",
-          // breaks the following
-          // <child>
-          //   <object class="GtkLabel">
-          //     <property name="label">Edit Style and UI to reload the Preview</property>
-          //     <property name="justify">center</property>
-          //   </object>
-          // </child>
-          // by moving the value of the property label to a new line
-          // <child>
-          //   <object class="GtkLabel">
-          //     <property name="label">
-          //       Edit Style and UI to reload the Preview
-          //     </property>
-          //     <property name="justify">center</property>
-          //   </object>
-          // </child>
+      if (settings.get_string("ui-lang") === "xml") {
+        format(source_view_ui.buffer, (text) => {
+          return prettier.format(text, {
+            parser: "xml",
+            plugins: [prettier_xml],
+            // xmlWhitespaceSensitivity: "ignore",
+            // breaks the following
+            // <child>
+            //   <object class="GtkLabel">
+            //     <property name="label">Edit Style and UI to reload the Preview</property>
+            //     <property name="justify">center</property>
+            //   </object>
+            // </child>
+            // by moving the value of the property label to a new line
+            // <child>
+            //   <object class="GtkLabel">
+            //     <property name="label">
+            //       Edit Style and UI to reload the Preview
+            //     </property>
+            //     <property name="justify">center</property>
+            //   </object>
+            // </child>
+          });
         });
-      });
+      }
 
       previewer.update();
 
@@ -299,7 +286,9 @@ export default function Window({ application }) {
       buffer.place_cursor(buffer.get_start_iter());
     }
 
-    const { js, css, ui } = getDemoSources(demo_name);
+    const { js, css, xml, blueprint } = getDemoSources(demo_name);
+
+    settings.set_string("selected-demo", demo_name);
 
     load(source_view_javascript.buffer, js);
     settings.set_boolean("show-code", !!js);
@@ -307,9 +296,12 @@ export default function Window({ application }) {
     load(source_view_css.buffer, css);
     settings.set_boolean("show-style", !!css);
 
-    load(source_view_ui.buffer, ui.code);
-    settings.set_boolean("show-ui", !!ui);
-    settings.set_boolean("show-preview", !!ui);
+    load(
+      source_view_ui.buffer,
+      settings.get_string("ui-lang") === "xml" ? xml : blueprint
+    );
+    settings.set_boolean("show-ui", !!xml);
+    settings.set_boolean("show-preview", !!xml);
 
     run();
   }

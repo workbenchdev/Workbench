@@ -56,9 +56,9 @@ export function getDemoSources(demo_name) {
   const js = getDemoFile(demo_name, "main.js");
   const css = getDemoFile(demo_name, "main.css");
   const xml = getDemoFile(demo_name, "main.ui");
-  const blp = getDemoFile(demo_name, "main.blp");
+  const blueprint = getDemoFile(demo_name, "main.blp");
 
-  return { js, css, xml, blp };
+  return { js, css, xml, blueprint };
 }
 
 export function getDemoFile(demo_name, file_name) {
