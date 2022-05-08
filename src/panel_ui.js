@@ -100,38 +100,39 @@ export default function panel_ui({
     buffer.set_text(text, -1);
   }
 
-  function get_text() {
+  const p_lsp_client = getLSPClient();
+
+  async function get_text() {
     const text = source_view.buffer.text.trim();
     if (mode === "xml" || !text) return text;
 
-    return compileBlueprint(text);
+    const lsp_client = await p_lsp_client;
+    const { xml } = await lsp_client.request("x-blueprintcompiler/compile", {
+      text,
+    });
+    return xml;
   }
 
   return { reset, source_view, get_text };
 }
 
-const lsp_client = new LSPClient(["blueprint-compiler", "lsp"]);
+async function getLSPClient() {
+  const lsp_client = new LSPClient(["blueprint-compiler", "lsp"]);
 
-// lsp_client.connect("output", (self, message) => {
-//   console.log("OUT:\n", message);
-// });
+  // lsp_client.connect("output", (self, message) => {
+  //   console.log("OUT:\n", message);
+  // });
 
-// lsp_client.connect("input", (self, message) => {
-//   console.log("IN:\n", message);
-// });
+  // lsp_client.connect("input", (self, message) => {
+  //   console.log("IN:\n", message);
+  // });
 
-setTimeout(async () => {
   await lsp_client.request("initialize");
   // Make Blueprint language server cache Gtk 4
   // to make subsequence call faster (~500ms -> ~3ms)
   await lsp_client.request("x-blueprintcompiler/compile", {
     text: "using Gtk 4.0;\nBox {}",
   });
-});
 
-async function compileBlueprint(text) {
-  const result = await lsp_client.request("x-blueprintcompiler/compile", {
-    text,
-  });
-  return result.xml;
+  return lsp_client;
 }

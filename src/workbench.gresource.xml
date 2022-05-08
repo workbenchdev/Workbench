@@ -4,24 +4,25 @@
     <file>window.ui</file>
     <file>shortcutsWindow.ui</file>
     <file>style.css</file>
-    <file>demos/Blueprint/main.css</file>
-    <file>demos/Blueprint/main.js</file>
-    <file>demos/Blueprint/main.json</file>
-    <file>demos/Blueprint/main.blp</file>
     <file>demos/Notifications/main.js</file>
     <file>demos/Notifications/main.json</file>
+    <file>demos/Notifications/main.blp</file>
     <file>demos/Notifications/main.ui</file>
     <file>demos/Toasts/main.js</file>
     <file>demos/Toasts/main.json</file>
+    <file>demos/Toasts/main.blp</file>
     <file>demos/Toasts/main.ui</file>
     <file>demos/WebSocket client/main.js</file>
     <file>demos/WebSocket client/main.json</file>
+    <file>demos/WebSocket client/main.blp</file>
     <file>demos/WebSocket client/main.ui</file>
     <file>demos/Welcome/main.css</file>
     <file>demos/Welcome/main.js</file>
     <file>demos/Welcome/main.json</file>
+    <file>demos/Welcome/main.blp</file>
     <file>demos/Welcome/main.ui</file>
     <file>demos/Application window/main.json</file>
+    <file>demos/Application window/main.blp</file>
     <file>demos/Application window/main.ui</file>
     <file>language-specs/blueprint.lang</file>
   </gresource>

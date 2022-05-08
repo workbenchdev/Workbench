@@ -187,7 +187,7 @@ export default function Window({ application, datadir }) {
 
   source_view_ui.buffer.connect("changed", previewer.update);
   source_view_css.buffer.connect("changed", previewer.update);
-  previewer.update();
+  previewer.update().catch(logError);
 
   function format(buffer, formatter) {
     const code = formatter(buffer.text.trim());

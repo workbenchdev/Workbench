@@ -62,22 +62,21 @@ export default class LSPClient {
     }
   }
 
-  send(json) {
+  async send(json) {
     const message = { ...json, jsonrpc: "2.0" };
     const str = JSON.stringify(message);
     const length = [...str].length;
 
-    console.debug("out\n", str);
-    return promiseTask(
+    await promiseTask(
       this.stdin,
       "write_bytes_async",
       "write_bytes_finish",
       new GLib.Bytes(`Content-Length: ${length}\r\n\r\n${str}`),
       GLib.PRIORITY_DEFAULT,
       null
-    ).then(() => {
-      this.emit("output", message);
-    });
+    );
+
+    this.emit("output", message);
   }
 
   async request(method, params = {}) {

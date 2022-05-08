@@ -45,7 +45,8 @@ export default function Preview({
     let text;
     try {
       text = await documents[1].get_text();
-    } catch (err) {}
+      // eslint-disable-next-line no-empty
+    } catch {}
     if (!text) return;
     let target_id;
     let tree;
