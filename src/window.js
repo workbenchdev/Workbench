@@ -361,7 +361,7 @@ export default function Window({ application }) {
 
     if (content_type.includes("/javascript")) {
       load(source_view_javascript.buffer, data);
-    } else if (content_type.include("text/css")) {
+    } else if (content_type.includes("text/css")) {
       load(source_view_css.buffer, data);
     } else if (content_type.includes("application/x-gtk-builder")) {
       load(source_view_ui.buffer, data);
