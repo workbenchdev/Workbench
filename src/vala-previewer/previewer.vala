@@ -7,10 +7,10 @@ namespace Workbench {
 
     [DBus (name="re.sonny.Workbench.vala_previewer")]
     public class Previewer : Object {
-        // filename to .ui file
-        public void update_ui (string filename, string target_id) {
+
+        public void update_ui (string content, string target_id) {
             print("hello\n");
-            var builder = new Gtk.Builder.from_file (filename);
+            var builder = new Gtk.Builder.from_string (content, content.length);
             var target = builder.get_object (target_id) as Gtk.Widget;
             if (target == null) {
                 stderr.printf (@"Widget with target_id='$target_id' could not be found.\n");
@@ -23,17 +23,16 @@ namespace Workbench {
             }
         }
 
-        // filename to .css file
-        public void update_css (string filename) {
+        public void update_css (string content) {
             Gtk.StyleContext.remove_provider_for_display (Gdk.Display.get_default (), this.css);
             this.css = new Gtk.CssProvider ();
-            this.css.load_from_file (File.new_for_path (filename));
+            this.css.load_from_data (content.data);
             Gtk.StyleContext.add_provider_for_display (Gdk.Display.get_default (), this.css , Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
         }
 
-        // filename to loadable module or null to just run it again
-        public void run (string? filename, string symbol) {
-            if (filename == null) {
+        // filename to loadable module or empty string ("") to just run it again
+        public void run (string filename, string symbol) {
+            if (filename == "") {
                 if (this.module == null) {
                     stderr.printf ("No Module specified yet.\n");
                     return;
