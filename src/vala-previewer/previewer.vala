@@ -1,10 +1,5 @@
 namespace Workbench {
 
-    [GtkTemplate (ui="/re/sonny/Workbench/previewer.ui")]
-    public class PreviewerWindow : Gtk.Widget {
-        //
-    }
-
     [DBus (name="re.sonny.Workbench.vala_previewer")]
     public class Previewer : Object {
 
