@@ -195,10 +195,11 @@ export default function Window({ application }) {
   async function run() {
     button_run.set_sensitive(false);
 
-    terminal.clear();
+    // TODO: re-enable
+    // terminal.clear();
 
     try {
-      const javascript = format(source_view_javascript.buffer, (text) => {
+      format(source_view_javascript.buffer, (text) => {
         return prettier.format(source_view_javascript.buffer.text, {
           parser: "babel",
           plugins: [prettier_babel],
@@ -245,7 +246,7 @@ export default function Window({ application }) {
       // TODO: File a bug
       const [file_javascript] = Gio.File.new_tmp("workbench-XXXXXX.js");
       file_javascript.replace_contents(
-        javascript || "\n",
+        source_view_javascript.buffer.text || "\n",
         null,
         false,
         Gio.FileCreateFlags.NONE,
@@ -307,11 +308,6 @@ export default function Window({ application }) {
     settings.set_boolean("show-preview", !!xml);
 
     run();
-    // once(document_ui, "changed")
-    //   .then(() => {
-    //     run();
-    //   })
-    //   .catch(logError);
   }
 
   const action_library = new Gio.SimpleAction({
@@ -375,11 +371,11 @@ export default function Window({ application }) {
     } else if (content_type.includes("text/css")) {
       load(source_view_css.buffer, data);
     } else if (content_type.includes("application/x-gtk-builder")) {
-      settings.set_string("ui-lang", "xml");
       load(source_view_xml.buffer, data);
+      settings.set_string("ui-lang", "xml");
     } else if (file.get_basename().endsWith(".blp")) {
-      settings.set_string("ui-lang", "blueprint");
       load(source_view_blueprint.buffer, data);
+      settings.set_string("ui-lang", "blueprint");
     }
   }
 

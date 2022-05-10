@@ -81,13 +81,13 @@ export default function PanelUI({
     const lang = settings.get_string("ui-lang");
 
     if (lang === "blueprint") {
-      handler_id_blueprint = buffer_blueprint.connect_after(
+      handler_id_blueprint = buffer_blueprint.connect(
         "changed",
         onChangeBlueprint
       );
       onChangeBlueprint();
     } else if (lang === "xml") {
-      handler_id_xml = buffer_xml.connect_after("changed", onChangeXML);
+      handler_id_xml = buffer_xml.connect("changed", onChangeXML);
       onChangeXML();
     }
   }
