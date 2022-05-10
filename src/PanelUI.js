@@ -1,6 +1,7 @@
 import Gio from "gi://Gio";
 import { settings } from "./util.js";
 import GObject from "gi://GObject";
+import GLib from "gi://GLib";
 
 import LSPClient from "./lsp/LSPClient.js";
 
@@ -10,6 +11,7 @@ export default function PanelUI({
   source_view_xml,
   source_view_blueprint,
   builder,
+  data_dir,
 }) {
   const button_ui = builder.get_object("button_ui");
   const panel_ui = builder.get_object("panel_ui");
@@ -97,34 +99,39 @@ export default function PanelUI({
   });
   setupLang();
 
-  return panel;
-}
+  const bls = new LSPClient([
+    "blueprint-compiler",
+    "lsp",
+    "--logfile",
+    GLib.build_filenamev([data_dir, `blueprint-logs`]),
+  ]);
+  // bls.connect("exit", (self, message) => {
+  //   console.log("ls exit", message);
+  // });
+  // bls.connect("output", (self, message) => {
+  //   console.log("ls OUT:\n", message);
+  // });
+  // bls.connect("input", (self, message) => {
+  //   console.log("ls IN:\n", message);
+  // });
 
-async function compileBlueprint(text) {
-  if (!bls.proc) {
-    bls.start();
+  async function compileBlueprint(text) {
+    if (!bls.proc) {
+      bls.start();
 
-    // await lsp_client.request("initialize");
-    // Make Blueprint language server cache Gtk 4
-    // to make subsequence call faster (~500ms -> ~3ms)
-    // await lsp_client.request("x-blueprintcompiler/compile", {
-    //   text: "using Gtk 4.0;\nBox {}",
-    // });
+      // await lsp_client.request("initialize");
+      // Make Blueprint language server cache Gtk 4
+      // to make subsequence call faster (~500ms -> ~3ms)
+      // await lsp_client.request("x-blueprintcompiler/compile", {
+      //   text: "using Gtk 4.0;\nBox {}",
+      // });
+    }
+
+    const { xml } = await bls.request("x-blueprintcompiler/compile", {
+      text,
+    });
+    return xml;
   }
 
-  const { xml } = await bls.request("x-blueprintcompiler/compile", {
-    text,
-  });
-  return xml;
+  return panel;
 }
-
-const bls = new LSPClient(["blueprint-compiler", "lsp"]);
-// bls.connect("exit", (self, message) => {
-//   console.log("ls exit", message);
-// });
-// bls.connect("output", (self, message) => {
-//   console.log("ls OUT:\n", message);
-// });
-// bls.connect("input", (self, message) => {
-//   console.log("ls IN:\n", message);
-// });

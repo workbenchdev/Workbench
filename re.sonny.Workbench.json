@@ -54,7 +54,7 @@
       "sources": [
         {
           "type": "dir",
-          "path": "./src/blueprint-compiler"
+          "path": "./blueprint-compiler"
         }
       ]
     },

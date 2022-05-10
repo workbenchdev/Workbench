@@ -86,6 +86,7 @@ export default function Window({ application }) {
     builder,
     source_view_blueprint,
     source_view_xml,
+    data_dir,
   });
 
   const source_views = [

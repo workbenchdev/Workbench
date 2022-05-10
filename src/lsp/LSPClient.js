@@ -39,23 +39,25 @@ export default class LSPClient {
     const that = this;
     function readOutput() {
       that.stdout.read_line_async(0, null, (self, res) => {
+        let line;
         try {
-          const [line] = that.stdout.read_line_finish_utf8(res);
-          if (line === null) return;
-
-          if (line.startsWith("{")) {
-            try {
-              that._onmessage(JSON.parse(line));
-              // eslint-disable-next-line no-empty
-            } catch (err) {
-              console.log(err);
-            }
-          }
-
-          readOutput();
-        } catch (e) {
-          logError(e);
+          [line] = that.stdout.read_line_finish_utf8(res);
+        } catch (err) {
+          logError(err);
+          return;
         }
+
+        if (line === null) return;
+        if (line.startsWith("{")) {
+          try {
+            that._onmessage(JSON.parse(line));
+            // eslint-disable-next-line no-empty
+          } catch (err) {
+            console.log(err);
+          }
+        }
+
+        readOutput();
       });
     }
     readOutput();
