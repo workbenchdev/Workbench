@@ -5,18 +5,22 @@ namespace Workbench {
         //
     }
 
-    [DBus (name="re.sonny.Workbench.vala-previewer")]
+    [DBus (name="re.sonny.Workbench.vala_previewer")]
     public class Previewer : Object {
         // filename to .ui file
         public void update_ui (string filename, string target_id) {
+            print("hello\n");
             var builder = new Gtk.Builder.from_file (filename);
             var target = builder.get_object (target_id) as Gtk.Widget;
             if (target == null) {
                 stderr.printf (@"Widget with target_id='$target_id' could not be found.\n");
                 return;
             }
-            this.window.child = target;
-            this.window.present ();
+            this.window.content = target;
+            if (!this.presented) {
+                this.window.present ();
+                this.presented = true;
+            }
         }
 
         // filename to .css file
@@ -64,6 +68,7 @@ namespace Workbench {
         private Adw.Window window = new Adw.Window ();
         private Gtk.CssProvider css;
         private Module module;
+        private bool presented = false;
     }
 
     async void main (string[] args) {
@@ -71,16 +76,18 @@ namespace Workbench {
         Adw.init ();
 
         Bus.own_name (BusType.SESSION,
-                      "re.sonny.Workbench.vala-previewer",
+                      "re.sonny.Workbench.vala_previewer",
                       BusNameOwnerFlags.NONE,
                       null,
                       (connection, name) => {
                           try {
-                              connection.register_object ("/re/sonny/workbench/vala-previewer", new Previewer ());
+                              connection.register_object ("/re/sonny/workbench/vala_previewer", new Previewer ());
                           } catch (IOError e) {
                               stderr.printf ("Could not register service\n");
                           }
                       },
                       (connection, name) => { stderr.printf ("Couldn't obtain the bus name.\n"); });
+
+        yield;
     }
 }
