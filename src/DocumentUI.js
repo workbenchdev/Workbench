@@ -5,9 +5,16 @@ import { settings, language_manager } from "./util.js";
 import { getDemoSources } from "./Library.js";
 
 import LSPClient from "./lsp/LSPClient.js";
+import { loadSourceBuffer, saveSourceBuffer } from "./Document.js";
+
+const { addSignalMethods } = imports.signals;
 
 export default function DocumentUI({ builder, data_dir, source_view }) {
+  const document = {};
+
   const dropdown_ui_lang = builder.get_object("dropdown_ui_lang");
+
+  let value = "";
 
   // TODO: File a bug libadwaita
   // flat does nothing on GtkDropdown or GtkComboBox or GtkComboBoxText
@@ -63,57 +70,49 @@ export default function DocumentUI({ builder, data_dir, source_view }) {
     save();
     settings.set_boolean("has-edits", true);
   });
+  buffer.connect("changed", async () => {
+    let str = buffer.text;
+
+    if (lang === "blueprint") {
+      try {
+        str = await compileBlueprint(str);
+      } catch (err) {
+        return logError;
+      }
+    }
+
+    str.trim();
+    value = str;
+
+    document.emit("changed");
+  });
 
   function load() {
-    const file_loader = new Source.FileLoader({
-      buffer,
-      file: source_file,
-    });
-    file_loader.load_async(
-      GLib.PRIORITY_DEFAULT,
-      null,
-      null,
-      (self, result) => {
-        let success;
-        try {
-          success = file_loader.load_finish(result);
-        } catch (err) {
-          if (err.code !== Gio.IOErrorEnum.NOT_FOUND) {
-            logError(err);
-          }
-        }
-        if (success) buffer.set_modified(false);
+    loadSourceBuffer({ file: source_file, buffer })
+      .then((success) => {
         if (!success) buffer.set_text(placeholder, -1);
         settings.set_boolean("has-edits", false);
-      }
-    );
+      })
+      .catch(logError);
   }
 
   function save() {
-    const file_saver = new Source.FileSaver({
-      buffer,
-      file: source_file,
-    });
-    file_saver.save_async(GLib.PRIORITY_DEFAULT, null, null, (self, result) => {
-      const success = file_saver.save_finish(result);
-      if (success) buffer.set_modified(false);
-    });
+    saveSourceBuffer({ file: source_file, buffer }).catch(logError);
   }
 
   async function getBuilderString() {
-    let str = source_view.buffer.text;
-    if (lang === "blueprint") {
-      str = await compileBlueprint(str);
-    }
+    // let str = source_view.buffer.text;
+    // if (lang === "blueprint") {
+    //   str = await compileBlueprint(str);
+    // }
 
-    return str.trim();
+    // return str.trim();
+    return value;
   }
 
-  return {
-    source_view,
-    buffer,
-    getBuilderString,
-  };
+  Object.assign(document, { source_view, buffer, getBuilderString });
+  addSignalMethods(document);
+  return document;
 }
 
 let lsp_client;
@@ -129,12 +128,12 @@ async function compileBlueprint(text) {
     //   console.log("IN:\n", message);
     // });
 
-    await lsp_client.request("initialize");
+    // await lsp_client.request("initialize");
     // Make Blueprint language server cache Gtk 4
     // to make subsequence call faster (~500ms -> ~3ms)
-    await lsp_client.request("x-blueprintcompiler/compile", {
-      text: "using Gtk 4.0;\nBox {}",
-    });
+    // await lsp_client.request("x-blueprintcompiler/compile", {
+    //   text: "using Gtk 4.0;\nBox {}",
+    // });
   }
 
   const { xml } = await lsp_client.request("x-blueprintcompiler/compile", {

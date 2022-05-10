@@ -18,6 +18,7 @@ import prettier_postcss from "./lib/prettier-postcss.js";
 import prettier_xml from "./lib/prettier-xml.js";
 import Library, { getDemoSources } from "./Library.js";
 import Previewer from "./Previewer.js";
+import { once } from "./troll/src/util.js";
 
 Source.init();
 
@@ -170,7 +171,8 @@ export default function Window({ application }) {
     document_ui,
   });
 
-  source_view_ui.buffer.connect("changed", previewer.update);
+  document_ui.connect("changed", previewer.update);
+  // source_view_ui.buffer.connect("changed", previewer.update);
   source_view_css.buffer.connect("changed", previewer.update);
   previewer.update();
 
@@ -303,7 +305,12 @@ export default function Window({ application }) {
     settings.set_boolean("show-ui", !!xml);
     settings.set_boolean("show-preview", !!xml);
 
-    run();
+    once(document_ui, "changed")
+      .then(() => {
+        console.log("changed", document_ui.buffer.text);
+        run();
+      })
+      .catch(logError);
   }
 
   const action_library = new Gio.SimpleAction({
