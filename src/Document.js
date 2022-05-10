@@ -1,7 +1,7 @@
 import Source from "gi://GtkSource?version=5";
 import Gio from "gi://Gio";
 import GLib from "gi://GLib";
-import { settings, language_manager } from "./util.js";
+import { settings } from "./util.js";
 import { promiseTask } from "./troll/src/util.js";
 
 export default function Document({
@@ -42,7 +42,7 @@ export default function Document({
   };
 }
 
-export async function saveSourceBuffer({ file, buffer }) {
+async function saveSourceBuffer({ file, buffer }) {
   const file_saver = new Source.FileSaver({
     buffer,
     file,
@@ -60,7 +60,7 @@ export async function saveSourceBuffer({ file, buffer }) {
   }
 }
 
-export async function loadSourceBuffer({ file, buffer }) {
+async function loadSourceBuffer({ file, buffer }) {
   const file_loader = new Source.FileLoader({
     buffer,
     file,
@@ -86,3 +86,9 @@ export async function loadSourceBuffer({ file, buffer }) {
   }
   return success;
 }
+
+const language_manager = new Source.LanguageManager();
+language_manager.set_search_path([
+  ...language_manager.get_search_path(),
+  "resource:///re/sonny/Workbench/language-specs",
+]);

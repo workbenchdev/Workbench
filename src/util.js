@@ -59,10 +59,3 @@ export function getFlatpakInfo() {
   }
   return keyFile;
 }
-
-const language_manager = new Source.LanguageManager();
-language_manager.set_search_path([
-  ...language_manager.get_search_path(),
-  "resource:///re/sonny/Workbench/language-specs",
-]);
-export { language_manager };

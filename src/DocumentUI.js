@@ -1,11 +1,7 @@
-import Source from "gi://GtkSource?version=5";
 import Gio from "gi://Gio";
-import GLib from "gi://GLib";
-import { settings, language_manager } from "./util.js";
-import { getDemoSources } from "./Library.js";
+import { settings } from "./util.js";
 
 import LSPClient from "./lsp/LSPClient.js";
-import { loadSourceBuffer, saveSourceBuffer } from "./Document.js";
 
 export default function DocumentUI({
   source_view_xml,
@@ -13,11 +9,6 @@ export default function DocumentUI({
   builder,
   data_dir,
 }) {
-  source_view_xml.buffer.set_language(language_manager.get_language("xml"));
-  source_view_blueprint.buffer.set_language(
-    language_manager.get_language("blueprint")
-  );
-
   const dropdown_ui_lang = builder.get_object("dropdown_ui_lang");
   // TODO: File a bug libadwaita
   // flat does nothing on GtkDropdown or GtkComboBox or GtkComboBoxText
@@ -39,58 +30,6 @@ export default function DocumentUI({
     "visible-child-name",
     Gio.SettingsBindFlags.DEFAULT
   );
-
-  const file_blueprint = Gio.File.new_for_path(
-    GLib.build_filenamev([data_dir, `state.blp`])
-  );
-  const source_file_blueprint = new Source.File({
-    location: file_blueprint,
-  });
-  const file_xml = Gio.File.new_for_path(
-    GLib.build_filenamev([data_dir, `state.xml`])
-  );
-  const source_file_xml = new Source.File({
-    location: file_xml,
-  });
-  const { blueprint: placeholder_blueprint, xml: placeholder_xml } =
-    getDemoSources("Welcome");
-
-  loadSourceBuffer({
-    file: source_file_blueprint,
-    buffer: source_view_blueprint.buffer,
-  })
-    .then((success) => {
-      if (!success)
-        source_view_blueprint.buffer.set_text(placeholder_blueprint, -1);
-      settings.set_boolean("has-edits", false);
-    })
-    .catch(logError);
-  source_view_blueprint.buffer.connect("modified-changed", () => {
-    if (!source_view_blueprint.buffer.get_modified()) return;
-    saveSourceBuffer({
-      file: source_file_blueprint,
-      buffer: source_view_blueprint.buffer,
-    }).catch(logError);
-    settings.set_boolean("has-edits", true);
-  });
-
-  loadSourceBuffer({
-    file: source_file_xml,
-    buffer: source_view_xml.buffer,
-  })
-    .then((success) => {
-      if (!success) source_view_xml.buffer.set_text(placeholder_xml, -1);
-      settings.set_boolean("has-edits", false);
-    })
-    .catch(logError);
-  source_view_xml.buffer.connect("modified-changed", () => {
-    if (!source_view_xml.buffer.get_modified()) return;
-    saveSourceBuffer({
-      file: source_file_xml,
-      buffer: source_view_xml.buffer,
-    }).catch(logError);
-    settings.set_boolean("has-edits", true);
-  });
 
   source_view_blueprint.buffer.connect("changed", () => {
     compileBlueprint(source_view_blueprint.buffer.text)

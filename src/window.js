@@ -18,7 +18,6 @@ import prettier_postcss from "./lib/prettier-postcss.js";
 import prettier_xml from "./lib/prettier-xml.js";
 import Library, { getDemoSources } from "./Library.js";
 import Previewer from "./Previewer.js";
-import { once } from "./troll/src/util.js";
 
 Source.init();
 
@@ -46,7 +45,7 @@ export default function Window({ application }) {
 
   const { terminal } = Devtools({ application, window, builder });
 
-  const { js, css } = getDemoSources("Welcome");
+  const { js, css, xml, blueprint } = getDemoSources("Welcome");
 
   const source_view_javascript = builder.get_object("source_view_javascript");
   Document({
@@ -58,12 +57,21 @@ export default function Window({ application }) {
   });
 
   const source_view_blueprint = builder.get_object("source_view_blueprint");
-  const source_view_xml = builder.get_object("source_view_xml");
-  const document_ui = DocumentUI({
-    builder,
+  Document({
+    source_view: source_view_blueprint,
+    lang: "blueprint",
+    placeholder: blueprint,
+    ext: "blp",
     data_dir,
-    source_view_blueprint,
-    source_view_xml,
+  });
+
+  const source_view_xml = builder.get_object("source_view_xml");
+  Document({
+    source_view: source_view_xml,
+    lang: "xml",
+    placeholder: xml,
+    ext: "ui",
+    data_dir,
   });
 
   const source_view_css = builder.get_object("source_view_css");
@@ -81,6 +89,13 @@ export default function Window({ application }) {
     source_view_blueprint,
     source_view_xml,
   ];
+
+  DocumentUI({
+    builder,
+    data_dir,
+    source_view_blueprint,
+    source_view_xml,
+  });
 
   const button_run = builder.get_object("button_run");
   const button_javascript = builder.get_object("button_javascript");
@@ -302,11 +317,12 @@ export default function Window({ application }) {
     settings.set_boolean("show-ui", !!xml);
     settings.set_boolean("show-preview", !!xml);
 
-    once(document_ui, "changed")
-      .then(() => {
-        run();
-      })
-      .catch(logError);
+    run();
+    // once(document_ui, "changed")
+    //   .then(() => {
+    //     run();
+    //   })
+    //   .catch(logError);
   }
 
   const action_library = new Gio.SimpleAction({
