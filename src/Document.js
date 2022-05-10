@@ -23,26 +23,18 @@ export default function Document({
     location: file,
   });
 
-  load();
+  loadSourceBuffer({ file: source_file, buffer })
+    .then((success) => {
+      if (!success) buffer.set_text(placeholder, -1);
+      settings.set_boolean("has-edits", false);
+    })
+    .catch(logError);
 
   buffer.connect("modified-changed", () => {
     if (!buffer.get_modified()) return;
-    save();
+    saveSourceBuffer({ file: source_file, buffer }).catch(logError);
     settings.set_boolean("has-edits", true);
   });
-
-  function load() {
-    loadSourceBuffer({ file: source_file, buffer })
-      .then((success) => {
-        if (!success) buffer.set_text(placeholder, -1);
-        settings.set_boolean("has-edits", false);
-      })
-      .catch(logError);
-  }
-
-  function save() {
-    saveSourceBuffer({ file: source_file, buffer }).catch(logError);
-  }
 
   return {
     source_view,

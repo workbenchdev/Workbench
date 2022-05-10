@@ -44,22 +44,18 @@ export default function Window({ application }) {
   const panel_ui = builder.get_object("panel_ui");
   const panel_preview = builder.get_object("panel_preview");
 
-  const documents = [];
-
   const { terminal } = Devtools({ application, window, builder });
 
   const { js, css } = getDemoSources("Welcome");
 
   const source_view_javascript = builder.get_object("source_view_javascript");
-  documents.push(
-    Document({
-      source_view: source_view_javascript,
-      lang: "js",
-      placeholder: js,
-      ext: "js",
-      data_dir,
-    })
-  );
+  Document({
+    source_view: source_view_javascript,
+    lang: "js",
+    placeholder: js,
+    ext: "js",
+    data_dir,
+  });
 
   const source_view_blueprint = builder.get_object("source_view_blueprint");
   const source_view_xml = builder.get_object("source_view_xml");
@@ -69,18 +65,22 @@ export default function Window({ application }) {
     source_view_blueprint,
     source_view_xml,
   });
-  documents.push(document_ui);
 
   const source_view_css = builder.get_object("source_view_css");
-  documents.push(
-    Document({
-      source_view: source_view_css,
-      lang: "css",
-      placeholder: css,
-      ext: "css",
-      data_dir,
-    })
-  );
+  Document({
+    source_view: source_view_css,
+    lang: "css",
+    placeholder: css,
+    ext: "css",
+    data_dir,
+  });
+
+  const source_views = [
+    source_view_javascript,
+    source_view_css,
+    source_view_blueprint,
+    source_view_xml,
+  ];
 
   const button_run = builder.get_object("button_run");
   const button_javascript = builder.get_object("button_javascript");
@@ -95,8 +95,8 @@ export default function Window({ application }) {
   function updateStyle() {
     const { dark } = style_manager;
     const scheme = scheme_manager.get_scheme(dark ? "Adwaita-dark" : "Adwaita");
-    documents.forEach(({ source_view }) => {
-      source_view.buffer.set_style_scheme(scheme);
+    source_views.forEach(({ buffer }) => {
+      buffer.set_style_scheme(scheme);
     });
 
     button_dark.active = dark;
@@ -170,11 +170,10 @@ export default function Window({ application }) {
     window,
     application,
     data_dir,
-    document_ui,
+    source_view_xml,
   });
 
-  document_ui.connect("changed", previewer.update);
-  // source_view_ui.buffer.connect("changed", previewer.update);
+  source_view_xml.buffer.connect("changed", previewer.update);
   source_view_css.buffer.connect("changed", previewer.update);
   previewer.update();
 
@@ -210,31 +209,29 @@ export default function Window({ application }) {
         });
       });
 
-      if (settings.get_string("ui-lang") === "xml") {
-        format(source_view_xml.buffer, (text) => {
-          return prettier.format(text, {
-            parser: "xml",
-            plugins: [prettier_xml],
-            // xmlWhitespaceSensitivity: "ignore",
-            // breaks the following
-            // <child>
-            //   <object class="GtkLabel">
-            //     <property name="label">Edit Style and UI to reload the Preview</property>
-            //     <property name="justify">center</property>
-            //   </object>
-            // </child>
-            // by moving the value of the property label to a new line
-            // <child>
-            //   <object class="GtkLabel">
-            //     <property name="label">
-            //       Edit Style and UI to reload the Preview
-            //     </property>
-            //     <property name="justify">center</property>
-            //   </object>
-            // </child>
-          });
+      format(source_view_xml.buffer, (text) => {
+        return prettier.format(text, {
+          parser: "xml",
+          plugins: [prettier_xml],
+          // xmlWhitespaceSensitivity: "ignore",
+          // breaks the following
+          // <child>
+          //   <object class="GtkLabel">
+          //     <property name="label">Edit Style and UI to reload the Preview</property>
+          //     <property name="justify">center</property>
+          //   </object>
+          // </child>
+          // by moving the value of the property label to a new line
+          // <child>
+          //   <object class="GtkLabel">
+          //     <property name="label">
+          //       Edit Style and UI to reload the Preview
+          //     </property>
+          //     <property name="justify">center</property>
+          //   </object>
+          // </child>
         });
-      }
+      });
 
       previewer.update();
 
@@ -300,8 +297,8 @@ export default function Window({ application }) {
     load(source_view_css.buffer, css);
     settings.set_boolean("show-style", !!css);
 
-    load(source_view_blueprint, blueprint);
-    load(source_view_xml, xml);
+    load(source_view_blueprint.buffer, blueprint);
+    load(source_view_xml.buffer, xml);
     settings.set_boolean("show-ui", !!xml);
     settings.set_boolean("show-preview", !!xml);
 
@@ -370,10 +367,14 @@ export default function Window({ application }) {
 
     if (content_type.includes("/javascript")) {
       load(source_view_javascript.buffer, data);
-    } else if (content_type.include("text/css")) {
+    } else if (content_type.includes("text/css")) {
       load(source_view_css.buffer, data);
     } else if (content_type.includes("application/x-gtk-builder")) {
+      settings.set_string("ui-lang", "xml");
       load(source_view_xml.buffer, data);
+    } else if (file.get_basename().endsWith(".blp")) {
+      settings.set_string("ui-lang", "blueprint");
+      load(source_view_blueprint.buffer, data);
     }
   }
 

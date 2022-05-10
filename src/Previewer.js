@@ -16,7 +16,7 @@ export default function Preview({
   window,
   application,
   data_dir,
-  document_ui,
+  source_view_xml,
 }) {
   const workbench = (globalThis.workbench = {
     window,
@@ -34,18 +34,11 @@ export default function Preview({
     object_root.present_with_time(Gdk.CURRENT_TIME);
   });
 
-  async function update() {
+  function update() {
     const builder = new Gtk.Builder();
     workbench.builder = builder;
 
-    // let text = source_view_ui.buffer.text.trim();
-    let text;
-    try {
-      text = await document_ui.getBuilderString();
-    } catch (err) {
-      logError(err);
-    }
-    if (!text) return;
+    let text = source_view_xml.buffer.text.trim();
     let target_id;
     let tree;
 

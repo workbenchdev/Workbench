@@ -7,20 +7,18 @@ import { getDemoSources } from "./Library.js";
 import LSPClient from "./lsp/LSPClient.js";
 import { loadSourceBuffer, saveSourceBuffer } from "./Document.js";
 
-const { addSignalMethods } = imports.signals;
-
 export default function DocumentUI({
   source_view_xml,
   source_view_blueprint,
   builder,
   data_dir,
 }) {
-  const document = {};
+  source_view_xml.buffer.set_language(language_manager.get_language("xml"));
+  source_view_blueprint.buffer.set_language(
+    language_manager.get_language("blueprint")
+  );
 
   const dropdown_ui_lang = builder.get_object("dropdown_ui_lang");
-
-  let value = "";
-
   // TODO: File a bug libadwaita
   // flat does nothing on GtkDropdown or GtkComboBox or GtkComboBoxText
   dropdown_ui_lang
@@ -35,89 +33,72 @@ export default function DocumentUI({
     "active_id",
     Gio.SettingsBindFlags.DEFAULT
   );
+  settings.bind(
+    "ui-lang",
+    builder.get_object("stack_ui"),
+    "visible-child-name",
+    Gio.SettingsBindFlags.DEFAULT
+  );
 
-  const source_view = source_view_blueprint;
+  const file_blueprint = Gio.File.new_for_path(
+    GLib.build_filenamev([data_dir, `state.blp`])
+  );
+  const source_file_blueprint = new Source.File({
+    location: file_blueprint,
+  });
+  const file_xml = Gio.File.new_for_path(
+    GLib.build_filenamev([data_dir, `state.xml`])
+  );
+  const source_file_xml = new Source.File({
+    location: file_xml,
+  });
+  const { blueprint: placeholder_blueprint, xml: placeholder_xml } =
+    getDemoSources("Welcome");
 
-  const { buffer } = source_view;
-  let lang;
-  let file;
-  let source_file;
-  let ext;
-  let placeholder;
-
-  settings.connect_after("changed::ui-lang", setMode);
-  async function setMode() {
-    if (source_file) {
-      try {
-        await save();
-      } catch (err) {
-        logError(err);
-      }
-    }
-
-    lang = settings.get_string("ui-lang");
-    // dropdown_ui_lang.set_active_id(lang);
-    ext = lang === "xml" ? "ui" : "blp";
-    file = Gio.File.new_for_path(
-      GLib.build_filenamev([data_dir, `state.${ext}`])
-    );
-    source_file = new Source.File({
-      location: file,
-    });
-    placeholder = getDemoSources("Welcome")[lang];
-    buffer.set_language(language_manager.get_language(lang));
-    load();
-  }
-  setMode();
-
-  buffer.connect("modified-changed", () => {
-    if (!buffer.get_modified()) return;
-    save();
+  loadSourceBuffer({
+    file: source_file_blueprint,
+    buffer: source_view_blueprint.buffer,
+  })
+    .then((success) => {
+      if (!success)
+        source_view_blueprint.buffer.set_text(placeholder_blueprint, -1);
+      settings.set_boolean("has-edits", false);
+    })
+    .catch(logError);
+  source_view_blueprint.buffer.connect("modified-changed", () => {
+    if (!source_view_blueprint.buffer.get_modified()) return;
+    saveSourceBuffer({
+      file: source_file_blueprint,
+      buffer: source_view_blueprint.buffer,
+    }).catch(logError);
     settings.set_boolean("has-edits", true);
   });
-  buffer.connect("changed", async () => {
-    let str = buffer.text;
 
-    if (lang === "blueprint") {
-      try {
-        str = await compileBlueprint(str);
-      } catch (err) {
-        return logError;
-      }
-    }
-
-    str.trim();
-    value = str;
-
-    document.emit("changed");
+  loadSourceBuffer({
+    file: source_file_xml,
+    buffer: source_view_xml.buffer,
+  })
+    .then((success) => {
+      if (!success) source_view_xml.buffer.set_text(placeholder_xml, -1);
+      settings.set_boolean("has-edits", false);
+    })
+    .catch(logError);
+  source_view_xml.buffer.connect("modified-changed", () => {
+    if (!source_view_xml.buffer.get_modified()) return;
+    saveSourceBuffer({
+      file: source_file_xml,
+      buffer: source_view_xml.buffer,
+    }).catch(logError);
+    settings.set_boolean("has-edits", true);
   });
 
-  function load() {
-    loadSourceBuffer({ file: source_file, buffer })
-      .then((success) => {
-        if (!success) buffer.set_text(placeholder, -1);
-        settings.set_boolean("has-edits", false);
+  source_view_blueprint.buffer.connect("changed", () => {
+    compileBlueprint(source_view_blueprint.buffer.text)
+      .then((xml) => {
+        source_view_xml.buffer.text = xml.trim();
       })
       .catch(logError);
-  }
-
-  function save() {
-    saveSourceBuffer({ file: source_file, buffer }).catch(logError);
-  }
-
-  async function getBuilderString() {
-    // let str = source_view.buffer.text;
-    // if (lang === "blueprint") {
-    //   str = await compileBlueprint(str);
-    // }
-
-    // return str.trim();
-    return value;
-  }
-
-  Object.assign(document, { source_view, buffer, getBuilderString });
-  addSignalMethods(document);
-  return document;
+  });
 }
 
 let lsp_client;
