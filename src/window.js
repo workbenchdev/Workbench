@@ -40,7 +40,6 @@ export default function Window({ application }) {
 
   const panel_javascript = builder.get_object("panel_javascript");
   const panel_css = builder.get_object("panel_css");
-  const panel_ui = builder.get_object("panel_ui");
   const panel_preview = builder.get_object("panel_preview");
 
   const { terminal } = Devtools({ application, window, builder });
@@ -83,6 +82,12 @@ export default function Window({ application }) {
     data_dir,
   });
 
+  const panel_ui = PanelUI({
+    builder,
+    source_view_blueprint,
+    source_view_xml,
+  });
+
   const source_views = [
     source_view_javascript,
     source_view_css,
@@ -90,15 +95,8 @@ export default function Window({ application }) {
     source_view_xml,
   ];
 
-  PanelUI({
-    builder,
-    source_view_blueprint,
-    source_view_xml,
-  });
-
   const button_run = builder.get_object("button_run");
   const button_javascript = builder.get_object("button_javascript");
-  const button_ui = builder.get_object("button_ui");
   const button_css = builder.get_object("button_css");
   const button_preview = builder.get_object("button_preview");
   const button_inspector = builder.get_object("button_inspector");
@@ -125,14 +123,6 @@ export default function Window({ application }) {
   button_light.connect("toggled", () => {
     settings.set_boolean("toggle-color-scheme", button_light.active);
   });
-
-  settings.bind("show-ui", button_ui, "active", Gio.SettingsBindFlags.DEFAULT);
-  button_ui.bind_property(
-    "active",
-    panel_ui,
-    "visible",
-    GObject.BindingFlags.SYNC_CREATE
-  );
 
   settings.bind(
     "show-style",
@@ -184,10 +174,10 @@ export default function Window({ application }) {
     window,
     application,
     data_dir,
-    source_view_xml,
+    panel_ui,
   });
 
-  source_view_xml.buffer.connect_after("changed", previewer.update);
+  panel_ui.connect("changed", previewer.update);
   source_view_css.buffer.connect_after("changed", previewer.update);
   previewer.update();
 

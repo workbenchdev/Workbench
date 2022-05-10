@@ -1,13 +1,31 @@
 import Gio from "gi://Gio";
 import { settings } from "./util.js";
+import GObject from "gi://GObject";
 
 import LSPClient from "./lsp/LSPClient.js";
+
+const { addSignalMethods } = imports.signals;
 
 export default function PanelUI({
   source_view_xml,
   source_view_blueprint,
   builder,
 }) {
+  const button_ui = builder.get_object("button_ui");
+  const panel_ui = builder.get_object("panel_ui");
+  settings.bind("show-ui", button_ui, "active", Gio.SettingsBindFlags.DEFAULT);
+  button_ui.bind_property(
+    "active",
+    panel_ui,
+    "visible",
+    GObject.BindingFlags.SYNC_CREATE
+  );
+
+  const panel = {
+    xml: "",
+  };
+  addSignalMethods(panel);
+
   const dropdown_ui_lang = builder.get_object("dropdown_ui_lang");
   // TODO: File a bug libadwaita
   // flat does nothing on GtkDropdown or GtkComboBox or GtkComboBoxText
@@ -30,13 +48,56 @@ export default function PanelUI({
     Gio.SettingsBindFlags.DEFAULT
   );
 
-  source_view_blueprint.buffer.connect_after("changed", () => {
-    compileBlueprint(source_view_blueprint.buffer.text)
+  const { buffer: buffer_blueprint } = source_view_blueprint;
+  const { buffer: buffer_xml } = source_view_xml;
+  let handler_id_blueprint = null;
+  let handler_id_xml = null;
+  function onChangeBlueprint() {
+    compileBlueprint(buffer_blueprint.text)
       .then((xml) => {
-        source_view_xml.buffer.text = xml.trim();
+        panel.xml = xml;
+        panel.emit("changed");
       })
       .catch(logError);
+  }
+  function onChangeXML() {
+    panel.xml = buffer_xml.text;
+    panel.emit("changed");
+  }
+  function disconnect() {
+    if (handler_id_blueprint) {
+      buffer_blueprint.disconnect(handler_id_blueprint);
+      handler_id_blueprint = null;
+    }
+    if (handler_id_xml) {
+      buffer_xml.disconnect(handler_id_xml);
+      handler_id_xml = null;
+    }
+  }
+
+  function setupLang() {
+    disconnect();
+
+    const lang = settings.get_string("ui-lang");
+
+    if (lang === "blueprint") {
+      handler_id_blueprint = buffer_blueprint.connect_after(
+        "changed",
+        onChangeBlueprint
+      );
+      onChangeBlueprint();
+    } else if (lang === "xml") {
+      handler_id_xml = buffer_xml.connect_after("changed", onChangeXML);
+      onChangeXML();
+    }
+  }
+
+  settings.connect_after("changed::ui-lang", () => {
+    setupLang();
   });
+  setupLang();
+
+  return panel;
 }
 
 async function compileBlueprint(text) {

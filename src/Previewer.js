@@ -16,7 +16,7 @@ export default function Preview({
   window,
   application,
   data_dir,
-  source_view_xml,
+  panel_ui,
 }) {
   const workbench = (globalThis.workbench = {
     window,
@@ -38,7 +38,7 @@ export default function Preview({
     const builder = new Gtk.Builder();
     workbench.builder = builder;
 
-    let text = source_view_xml.buffer.text.trim();
+    let text = panel_ui.xml.trim();
     let target_id;
     let tree;
 
