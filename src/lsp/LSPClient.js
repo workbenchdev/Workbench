@@ -7,8 +7,12 @@ const { addSignalMethods } = imports.signals;
 
 export default class LSPClient {
   constructor(argv) {
+    this.argv = argv;
+  }
+
+  start() {
     const proc = Gio.Subprocess.new(
-      argv,
+      this.argv,
       Gio.SubprocessFlags.STDIN_PIPE | Gio.SubprocessFlags.STDOUT_PIPE
     );
 
@@ -17,12 +21,26 @@ export default class LSPClient {
       base_stream: proc.get_stdout_pipe(),
       close_base_stream: true,
     });
+    Object.assign(this, { proc, stdin, stdout });
 
+    this._read();
+
+    proc.wait_async(null, (proc, res) => {
+      try {
+        proc.wait_finish(res);
+      } catch (e) {
+        logError(e);
+      }
+      this.emit("exit");
+    });
+  }
+
+  _read() {
     const that = this;
     function readOutput() {
-      stdout.read_line_async(0, null, (self, res) => {
+      that.stdout.read_line_async(0, null, (self, res) => {
         try {
-          const [line] = stdout.read_line_finish_utf8(res);
+          const [line] = that.stdout.read_line_finish_utf8(res);
           if (line === null) return;
 
           if (line.startsWith("{")) {
@@ -41,17 +59,6 @@ export default class LSPClient {
       });
     }
     readOutput();
-
-    proc.wait_async(null, (proc, res) => {
-      try {
-        proc.wait_finish(res);
-        console.debug("done", proc.get_exit_status());
-      } catch (e) {
-        logError(e);
-      }
-    });
-
-    Object.assign(this, { proc, stdin, stdout });
   }
 
   _onmessage(message) {
@@ -66,6 +73,8 @@ export default class LSPClient {
     const message = { ...json, jsonrpc: "2.0" };
     const str = JSON.stringify(message);
     const length = [...str].length;
+
+    console.log("pending", this.stdin.has_pending());
 
     await promiseTask(
       this.stdin,

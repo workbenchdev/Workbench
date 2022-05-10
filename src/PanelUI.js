@@ -3,11 +3,10 @@ import { settings } from "./util.js";
 
 import LSPClient from "./lsp/LSPClient.js";
 
-export default function DocumentUI({
+export default function PanelUI({
   source_view_xml,
   source_view_blueprint,
   builder,
-  data_dir,
 }) {
   const dropdown_ui_lang = builder.get_object("dropdown_ui_lang");
   // TODO: File a bug libadwaita
@@ -31,7 +30,7 @@ export default function DocumentUI({
     Gio.SettingsBindFlags.DEFAULT
   );
 
-  source_view_blueprint.buffer.connect("changed", () => {
+  source_view_blueprint.buffer.connect_after("changed", () => {
     compileBlueprint(source_view_blueprint.buffer.text)
       .then((xml) => {
         source_view_xml.buffer.text = xml.trim();
@@ -40,18 +39,9 @@ export default function DocumentUI({
   });
 }
 
-let lsp_client;
 async function compileBlueprint(text) {
-  if (!lsp_client) {
-    lsp_client = new LSPClient(["blueprint-compiler", "lsp"]);
-
-    // lsp_client.connect("output", (self, message) => {
-    //   console.log("OUT:\n", message);
-    // });
-
-    // lsp_client.connect("input", (self, message) => {
-    //   console.log("IN:\n", message);
-    // });
+  if (!bls.proc) {
+    bls.start();
 
     // await lsp_client.request("initialize");
     // Make Blueprint language server cache Gtk 4
@@ -61,9 +51,19 @@ async function compileBlueprint(text) {
     // });
   }
 
-  const { xml } = await lsp_client.request("x-blueprintcompiler/compile", {
+  const { xml } = await bls.request("x-blueprintcompiler/compile", {
     text,
   });
-
   return xml;
 }
+
+const bls = new LSPClient(["blueprint-compiler", "lsp"]);
+// bls.connect("exit", (self, message) => {
+//   console.log("ls exit", message);
+// });
+// bls.connect("output", (self, message) => {
+//   console.log("ls OUT:\n", message);
+// });
+// bls.connect("input", (self, message) => {
+//   console.log("ls IN:\n", message);
+// });

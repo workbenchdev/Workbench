@@ -9,7 +9,7 @@ import { gettext as _ } from "gettext";
 
 import { confirm, settings, createDataDir } from "./util.js";
 import Document from "./Document.js";
-import DocumentUI from "./DocumentUI.js";
+import PanelUI from "./PanelUI.js";
 import Devtools from "./Devtools.js";
 
 import prettier from "./lib/prettier.js";
@@ -45,13 +45,13 @@ export default function Window({ application }) {
 
   const { terminal } = Devtools({ application, window, builder });
 
-  const { js, css, xml, blueprint } = getDemoSources("Welcome");
+  const placeholders = getDemoSources("Welcome");
 
   const source_view_javascript = builder.get_object("source_view_javascript");
   Document({
     source_view: source_view_javascript,
     lang: "js",
-    placeholder: js,
+    placeholder: placeholders.js,
     ext: "js",
     data_dir,
   });
@@ -60,7 +60,7 @@ export default function Window({ application }) {
   Document({
     source_view: source_view_blueprint,
     lang: "blueprint",
-    placeholder: blueprint,
+    placeholder: placeholders.blueprint,
     ext: "blp",
     data_dir,
   });
@@ -69,7 +69,7 @@ export default function Window({ application }) {
   Document({
     source_view: source_view_xml,
     lang: "xml",
-    placeholder: xml,
+    placeholder: placeholders.xml,
     ext: "ui",
     data_dir,
   });
@@ -78,7 +78,7 @@ export default function Window({ application }) {
   Document({
     source_view: source_view_css,
     lang: "css",
-    placeholder: css,
+    placeholder: placeholders.css,
     ext: "css",
     data_dir,
   });
@@ -90,9 +90,8 @@ export default function Window({ application }) {
     source_view_xml,
   ];
 
-  DocumentUI({
+  PanelUI({
     builder,
-    data_dir,
     source_view_blueprint,
     source_view_xml,
   });
@@ -188,8 +187,8 @@ export default function Window({ application }) {
     source_view_xml,
   });
 
-  source_view_xml.buffer.connect("changed", previewer.update);
-  source_view_css.buffer.connect("changed", previewer.update);
+  source_view_xml.buffer.connect_after("changed", previewer.update);
+  source_view_css.buffer.connect_after("changed", previewer.update);
   previewer.update();
 
   function format(buffer, formatter) {

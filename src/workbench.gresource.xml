@@ -40,7 +40,7 @@
     <file>application.js</file>
     <file>Devtools.js</file>
     <file>Document.js</file>
-    <file>DocumentUI.js</file>
+    <file>PanelUI.js</file>
     <file>Library.js</file>
     <file>logger.js</file>
     <file>main.js</file>
