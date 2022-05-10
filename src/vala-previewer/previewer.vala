@@ -4,9 +4,8 @@ namespace Workbench {
     public class Previewer : Object {
 
         public void update_ui (string content, string target_id) {
-            print("hello\n");
-            var builder = new Gtk.Builder.from_string (content, content.length);
-            var target = builder.get_object (target_id) as Gtk.Widget;
+            this.builder = new Gtk.Builder.from_string (content, content.length);
+            var target = this.builder.get_object (target_id) as Gtk.Widget;
             if (target == null) {
                 stderr.printf (@"Widget with target_id='$target_id' could not be found.\n");
                 return;
@@ -26,7 +25,8 @@ namespace Workbench {
         }
 
         // filename to loadable module or empty string ("") to just run it again
-        public void run (string filename, string symbol) {
+        // also builder_symbol can be empty. Then the builder object is not handed over to the module
+        public void run (string filename, string run_symbol, string builder_symbol) {
             if (filename == "") {
                 if (this.module == null) {
                     stderr.printf ("No Module specified yet.\n");
@@ -45,10 +45,22 @@ namespace Workbench {
                 }
             }
 
+            if (builder_symbol != "") {
+                void* function;
+                this.module.symbol (builder_symbol, out function);
+                if (function == null) {
+                    stderr.printf (@"Module does not contain symbol '$builder_symbol'.\n");
+                    return;
+                }
+
+                var set_builder = (BuilderFunction) function;
+                set_builder (this.builder);
+            }
+
             void* function;
-            this.module.symbol (symbol, out function);
+            this.module.symbol (run_symbol, out function);
             if (function == null) {
-                stderr.printf (@"Module does not contain function '$symbol'.\n");
+                stderr.printf (@"Module does not contain symbol '$run_symbol'.\n");
                 return;
             }
 
@@ -59,10 +71,14 @@ namespace Workbench {
         [CCode (has_target=false)]
         private delegate void RunFunction ();
 
+        [CCode (has_target=false)]
+        private delegate void BuilderFunction (Gtk.Builder builder);
+
         private Adw.Window window = new Adw.Window ();
         private Gtk.CssProvider css;
         private Module module;
         private bool presented = false;
+        private Gtk.Builder builder;
     }
 
     async void main (string[] args) {
