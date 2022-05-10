@@ -318,23 +318,50 @@ using Gtk 4.0;
           Separator {
           }
 
-          ScrolledWindow {
-            vexpand: true;
+          Stack {
+            StackPage {
+              name: 'blueprint';
+              child: ScrolledWindow {
+                vexpand: true;
 
-            .GtkSourceView source_view_ui {
-              buffer: .GtkSourceBuffer {
+                .GtkSourceView source_view_blueprint {
+                  buffer: .GtkSourceBuffer {
+                  };
+                  monospace: "true";
+                  auto-indent: "true";
+                  background-pattern: "grid";
+                  highlight-current-line: "true";
+                  indent-on-tab: "true";
+                  indent-width: "2";
+                  insert-spaces-instead-of-tabs: "true";
+                  show-line-marks: "true";
+                  show-line-numbers: "true";
+                  smart-backspace: "true";
+                  tab-width: "2";
+                }
               };
-              monospace: "true";
-              auto-indent: "true";
-              background-pattern: "grid";
-              highlight-current-line: "true";
-              indent-on-tab: "true";
-              indent-width: "2";
-              insert-spaces-instead-of-tabs: "true";
-              show-line-marks: "true";
-              show-line-numbers: "true";
-              smart-backspace: "true";
-              tab-width: "2";
+            }
+            StackPage {
+              name: 'xml';
+              child: ScrolledWindow {
+                vexpand: true;
+
+                .GtkSourceView source_view_xml {
+                  buffer: .GtkSourceBuffer {
+                  };
+                  monospace: "true";
+                  auto-indent: "true";
+                  background-pattern: "grid";
+                  highlight-current-line: "true";
+                  indent-on-tab: "true";
+                  indent-width: "2";
+                  insert-spaces-instead-of-tabs: "true";
+                  show-line-marks: "true";
+                  show-line-numbers: "true";
+                  smart-backspace: "true";
+                  tab-width: "2";
+                }
+              };
             }
           }
         }

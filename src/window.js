@@ -61,11 +61,13 @@ export default function Window({ application }) {
     })
   );
 
-  const source_view_ui = builder.get_object("source_view_ui");
+  const source_view_blueprint = builder.get_object("source_view_blueprint");
+  const source_view_xml = builder.get_object("source_view_xml");
   const document_ui = DocumentUI({
     builder,
-    source_view: source_view_ui,
     data_dir,
+    source_view_blueprint,
+    source_view_xml,
   });
   documents.push(document_ui);
 
@@ -209,7 +211,7 @@ export default function Window({ application }) {
       });
 
       if (settings.get_string("ui-lang") === "xml") {
-        format(source_view_ui.buffer, (text) => {
+        format(source_view_xml.buffer, (text) => {
           return prettier.format(text, {
             parser: "xml",
             plugins: [prettier_xml],
@@ -298,16 +300,13 @@ export default function Window({ application }) {
     load(source_view_css.buffer, css);
     settings.set_boolean("show-style", !!css);
 
-    load(
-      source_view_ui.buffer,
-      settings.get_string("ui-lang") === "xml" ? xml : blueprint
-    );
+    load(source_view_blueprint, blueprint);
+    load(source_view_xml, xml);
     settings.set_boolean("show-ui", !!xml);
     settings.set_boolean("show-preview", !!xml);
 
     once(document_ui, "changed")
       .then(() => {
-        console.log("changed", document_ui.buffer.text);
         run();
       })
       .catch(logError);
@@ -374,7 +373,7 @@ export default function Window({ application }) {
     } else if (content_type.include("text/css")) {
       load(source_view_css.buffer, data);
     } else if (content_type.includes("application/x-gtk-builder")) {
-      load(source_view_ui.buffer, data);
+      load(source_view_xml.buffer, data);
     }
   }
 

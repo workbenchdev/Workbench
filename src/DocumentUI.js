@@ -9,7 +9,12 @@ import { loadSourceBuffer, saveSourceBuffer } from "./Document.js";
 
 const { addSignalMethods } = imports.signals;
 
-export default function DocumentUI({ builder, data_dir, source_view }) {
+export default function DocumentUI({
+  source_view_xml,
+  source_view_blueprint,
+  builder,
+  data_dir,
+}) {
   const document = {};
 
   const dropdown_ui_lang = builder.get_object("dropdown_ui_lang");
@@ -31,7 +36,7 @@ export default function DocumentUI({ builder, data_dir, source_view }) {
     Gio.SettingsBindFlags.DEFAULT
   );
 
-  // dropdown_ui_lang.connect("changed", setMode);
+  const source_view = source_view_blueprint;
 
   const { buffer } = source_view;
   let lang;
