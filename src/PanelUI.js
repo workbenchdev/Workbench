@@ -4,6 +4,7 @@ import GObject from "gi://GObject";
 import GLib from "gi://GLib";
 
 import LSPClient from "./lsp/LSPClient.js";
+import logger from "./logger.js";
 
 const { addSignalMethods } = imports.signals;
 
@@ -20,13 +21,13 @@ export default function PanelUI({
     GLib.build_filenamev([data_dir, `blueprint-logs`]),
   ]);
   bls.connect("exit", (self, message) => {
-    console.log("ls exit", message);
+    logger.debug("blueprint exit", message);
   });
   bls.connect("output", (self, message) => {
-    console.log("ls OUT:\n", message);
+    logger.debug("blueprint OUT:\n", message);
   });
   bls.connect("input", (self, message) => {
-    console.log("ls IN:\n", message);
+    logger.debug("blueprint IN:\n", message);
   });
 
   const button_ui = builder.get_object("button_ui");

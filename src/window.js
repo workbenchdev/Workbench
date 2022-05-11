@@ -308,6 +308,8 @@ export default function Window({ application }) {
     settings.set_boolean("show-ui", !!xml);
     settings.set_boolean("show-preview", !!xml);
 
+    settings.set_boolean("has-edits", false);
+
     if (xml || blueprint) {
       once(panel_ui, "changed").then(run);
     } else {

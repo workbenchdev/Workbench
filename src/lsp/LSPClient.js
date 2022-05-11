@@ -82,7 +82,6 @@ export default class LSPClient {
     const str = JSON.stringify(message);
     const length = [...str].length;
 
-    console.log("pending", this.stdin.has_pending());
     if (this.stdin.clear_pending()) {
       this.stdin.flush();
     }
