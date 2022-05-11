@@ -3,9 +3,11 @@ import Gdk from "gi://Gdk";
 import * as ltx from "./lib/ltx.js";
 import postcss from "./lib/postcss.js";
 import GLib from "gi://GLib";
+import Gio from "gi://Gio";
 import Graphene from "gi://Graphene";
 import Xdp from "gi://Xdp";
 import XdpGtk from "gi://XdpGtk4";
+import DBusPreviewer from "./DBusPreviewer.js";
 
 import logger from "./logger.js";
 
@@ -30,9 +32,12 @@ export default function Preview({
 
   let css_provider = null;
   let object_root = null;
+  let language = null;
+  let dbus_proxy = null;
+  let subprocess = null;
 
   preview_window_button.connect("clicked", () => {
-    if (!object_root) return;
+    if (!object_root || language != "JavaScript") return;
     object_root.present_with_time(Gdk.CURRENT_TIME);
   });
 
@@ -79,16 +84,25 @@ export default function Preview({
     const object_preview = builder.get_object(target_id);
     if (object_preview) {
       if (object_preview instanceof Gtk.Root) {
-        output.set_child(preview_window);
-        if (!object_root) {
-          object_root = object_preview;
-          object_root.set_hide_on_close(true);
+        if (language == "JavaScript") {
+          output.set_child(preview_window);
+          if (!object_root) {
+            object_root = object_preview;
+            object_root.set_hide_on_close(true);
+          }
+          adoptChild(object_preview, object_root);
+        } else if (language == "Vala") {
+          //
         }
-        adoptChild(object_preview, object_root);
       } else {
         output.set_child(object_preview);
         object_root?.destroy();
         object_root = null;
+        
+        //print(language);
+        if (language == "Vala") {
+          dbus_proxy.UpdateUiSync(text, target_id);
+        }
       }
     }
 
@@ -117,13 +131,30 @@ export default function Preview({
       css_provider,
       Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
     );
+    
+    if (language == "Vala") {
+      dbus_proxy.UpdateCssSync(source_view_css.buffer.text);
+    }
+  }
+  
+  function setLanguage(lang) {
+    language = lang;
+    
+    if (lang == "Vala" && (dbus_proxy == null || subprocess == null)) {
+      subprocess = Gio.Subprocess.new(["workbench-vala-previewer"], Gio.SubprocessFlags.NONE);
+      dbus_proxy = DBusPreviewer();
+    } else if (lang == "JavaScript" && subprocess != null) {
+      subprocess.force_exit();
+      subprocess = null;
+      dbus_proxy = null;
+    }
   }
 
   builder.get_object("button_screenshot").connect("clicked", () => {
     screenshot({ widget: object_root || output, window, data_dir });
   });
 
-  return { update };
+  return { update, setLanguage };
 }
 
 // We are using postcss because it's also a dependency of prettier

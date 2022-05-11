@@ -18,7 +18,8 @@ namespace Workbench {
         }
 
         public void update_css (string content) {
-            Gtk.StyleContext.remove_provider_for_display (Gdk.Display.get_default (), this.css);
+            if (this.css != null)
+                Gtk.StyleContext.remove_provider_for_display (Gdk.Display.get_default (), this.css);
             this.css = new Gtk.CssProvider ();
             this.css.load_from_data (content.data);
             Gtk.StyleContext.add_provider_for_display (Gdk.Display.get_default (), this.css , Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
@@ -75,7 +76,7 @@ namespace Workbench {
         private delegate void BuilderFunction (Gtk.Builder builder);
 
         private Adw.Window window = new Adw.Window ();
-        private Gtk.CssProvider css;
+        private Gtk.CssProvider? css = null;
         private Module module;
         private bool presented = false;
         private Gtk.Builder builder;

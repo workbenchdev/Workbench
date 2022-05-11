@@ -42,6 +42,7 @@
     <file>Terminal.js</file>
     <file>util.js</file>
     <file>window.js</file>
+    <file>DBusPreviewer.js</file>
   </gresource>
   <gresource prefix="/re/sonny/Workbench/icons/scalable/actions">
     <file

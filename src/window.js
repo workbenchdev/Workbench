@@ -165,6 +165,7 @@ export default function Window({ application }) {
     "selected",
     Gio.SettingsBindFlags.DEFAULT
   );
+  code_dropdown.connect("notify::selected-item", switchLanguage);
 
   button_inspector.connect("clicked", () => {
     Gtk.Window.set_interactive_debugging(true);
@@ -181,11 +182,18 @@ export default function Window({ application }) {
     application,
     data_dir,
   });
+  switchLanguage();
 
   source_view_ui.buffer.connect("changed", previewer.update);
   source_view_css.buffer.connect("changed", previewer.update);
   previewer.update();
 
+  function switchLanguage() {
+    const language = code_dropdown.selected_item.string;
+    
+    previewer.setLanguage(language);
+  }
+  
   function format(buffer, formatter) {
     const code = formatter(buffer.text.trim());
 
