@@ -41,6 +41,7 @@ export default function Window({ application }) {
   const panel_css = builder.get_object("panel_css");
   const panel_ui = builder.get_object("panel_ui");
   const panel_preview = builder.get_object("panel_preview");
+  const code_dropdown = builder.get_object("code_dropdown");
 
   const documents = [];
 
@@ -156,6 +157,13 @@ export default function Window({ application }) {
     panel_preview,
     "visible",
     GObject.BindingFlags.SYNC_CREATE
+  );
+  
+  settings.bind(
+    "code-language",
+    code_dropdown,
+    "selected",
+    Gio.SettingsBindFlags.DEFAULT
   );
 
   button_inspector.connect("clicked", () => {

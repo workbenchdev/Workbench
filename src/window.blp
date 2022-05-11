@@ -187,13 +187,26 @@ using Gtk 4.0;
 
           CenterBox {
             [start]
-            Button {
-              label: _("Code - JavaScript");
-              sensitive: false;
+            Box {
+              orientation: horizontal;
 
-              styles [
-                "flat",
-              ]
+              Button {
+                label: _("Code");
+                sensitive: false;
+
+                styles [
+                  "flat",
+                ]
+              }
+
+              DropDown code_dropdown {
+                model: StringList {
+                  strings [
+                    "JavaScript",
+                    "Vala",
+                  ]
+                };
+              }
             }
 
             [end]
