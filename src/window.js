@@ -197,8 +197,7 @@ export default function Window({ application }) {
   async function run() {
     button_run.set_sensitive(false);
 
-    // TODO: re-enable
-    // terminal.clear();
+    terminal.clear();
 
     try {
       format(source_view_javascript.buffer, (text) => {
