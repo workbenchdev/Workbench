@@ -69,6 +69,12 @@ export default class LSPClient {
     if (message.result) {
       this.emit(`result::${message.id}`, message.result);
     }
+    if (message.error) {
+      const err = new Error(message.error.message);
+      err.data = message.data;
+      err.code = message.code;
+      this.emit(`error::${message.id}`, err);
+    }
   }
 
   async send(json) {
@@ -77,6 +83,9 @@ export default class LSPClient {
     const length = [...str].length;
 
     console.log("pending", this.stdin.has_pending());
+    if (this.stdin.clear_pending()) {
+      this.stdin.flush();
+    }
 
     await promiseTask(
       this.stdin,
@@ -97,7 +106,10 @@ export default class LSPClient {
       method,
       params,
     });
-    const [result] = await once(this, `result::${id}`);
+    const [result] = await once(this, `result::${id}`, {
+      error: `error::${id}`,
+      timeout: 1000,
+    });
     return result;
   }
 

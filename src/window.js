@@ -18,6 +18,7 @@ import prettier_postcss from "./lib/prettier-postcss.js";
 import prettier_xml from "./lib/prettier-xml.js";
 import Library, { getDemoSources } from "./Library.js";
 import Previewer from "./Previewer.js";
+import { once } from "./troll/src/util.js";
 
 Source.init();
 
@@ -289,7 +290,6 @@ export default function Window({ application }) {
 
     function load(buffer, str) {
       replaceBufferText(buffer, str);
-      settings.set_boolean("has-edits", false);
       buffer.place_cursor(buffer.get_start_iter());
     }
 
@@ -308,7 +308,11 @@ export default function Window({ application }) {
     settings.set_boolean("show-ui", !!xml);
     settings.set_boolean("show-preview", !!xml);
 
-    run();
+    if (xml || blueprint) {
+      once(panel_ui, "changed").then(run);
+    } else {
+      run();
+    }
   }
 
   const action_library = new Gio.SimpleAction({
@@ -323,10 +327,14 @@ export default function Window({ application }) {
 
   function confirmDiscard() {
     if (!settings.get_boolean("has-edits")) return true;
-    return confirm({
+    const agreed = confirm({
       transient_for: application.get_active_window(),
       text: _("Are you sure you want to discard your changes?"),
     });
+    if (agreed) {
+      settings.set_boolean("has-edits", false);
+    }
+    return agreed;
   }
 
   const text_decoder = new TextDecoder();
@@ -361,9 +369,7 @@ export default function Window({ application }) {
     async function load(buffer, data) {
       const agreed = await confirmDiscard();
       if (!agreed) return;
-
       replaceBufferText(buffer, data);
-      settings.set_boolean("has-edits", false);
       buffer.place_cursor(buffer.get_start_iter());
     }
 

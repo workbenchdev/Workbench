@@ -13,6 +13,22 @@ export default function PanelUI({
   builder,
   data_dir,
 }) {
+  const bls = new LSPClient([
+    "blueprint-compiler",
+    "lsp",
+    "--logfile",
+    GLib.build_filenamev([data_dir, `blueprint-logs`]),
+  ]);
+  bls.connect("exit", (self, message) => {
+    console.log("ls exit", message);
+  });
+  bls.connect("output", (self, message) => {
+    console.log("ls OUT:\n", message);
+  });
+  bls.connect("input", (self, message) => {
+    console.log("ls IN:\n", message);
+  });
+
   const button_ui = builder.get_object("button_ui");
   const panel_ui = builder.get_object("panel_ui");
   settings.bind("show-ui", button_ui, "active", Gio.SettingsBindFlags.DEFAULT);
@@ -98,22 +114,6 @@ export default function PanelUI({
     setupLang();
   });
   setupLang();
-
-  const bls = new LSPClient([
-    "blueprint-compiler",
-    "lsp",
-    "--logfile",
-    GLib.build_filenamev([data_dir, `blueprint-logs`]),
-  ]);
-  // bls.connect("exit", (self, message) => {
-  //   console.log("ls exit", message);
-  // });
-  // bls.connect("output", (self, message) => {
-  //   console.log("ls OUT:\n", message);
-  // });
-  // bls.connect("input", (self, message) => {
-  //   console.log("ls IN:\n", message);
-  // });
 
   async function compileBlueprint(text) {
     if (!bls.proc) {
