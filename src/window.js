@@ -17,6 +17,7 @@ import prettier_postcss from "./lib/prettier-postcss.js";
 import prettier_xml from "./lib/prettier-xml.js";
 import Library, { getDemoSources } from "./Library.js";
 import Previewer from "./Previewer.js";
+import Compiler from "./Compiler.js";
 
 Source.init();
 
@@ -48,6 +49,8 @@ export default function Window({ application }) {
   const { terminal } = Devtools({ application, window, builder });
 
   const { js, css, ui } = getDemoSources("Welcome");
+  
+  let compiler = null;
 
   const source_view_javascript = builder.get_object("source_view_javascript");
   documents.push(
@@ -210,14 +213,18 @@ export default function Window({ application }) {
 
     terminal.clear();
 
+    const language = code_dropdown.selected_item.string;
     try {
-      const javascript = format(source_view_javascript.buffer, (text) => {
-        return prettier.format(source_view_javascript.buffer.text, {
-          parser: "babel",
-          plugins: [prettier_babel],
-          trailingComma: "all",
+      let javascript;
+      if (language == "JavaScript") {
+        javascript = format(source_view_javascript.buffer, (text) => {
+          return prettier.format(source_view_javascript.buffer.text, {
+            parser: "babel",
+            plugins: [prettier_babel],
+            trailingComma: "all",
+          });
         });
-      });
+      }
 
       format(source_view_css.buffer, (text) => {
         return prettier.format(text, {
@@ -252,19 +259,26 @@ export default function Window({ application }) {
 
       previewer.update();
 
-      // We have to create a new file each time
-      // because gjs doesn't appear to use etag for module caching
-      // ?foo=Date.now() also does not work as expected
-      // TODO: File a bug
-      const [file_javascript] = Gio.File.new_tmp("workbench-XXXXXX.js");
-      file_javascript.replace_contents(
-        javascript || "\n",
-        null,
-        false,
-        Gio.FileCreateFlags.NONE,
-        null
-      );
-      await import(`file://${file_javascript.get_path()}`);
+      if (language == "JavaScript") {
+        // We have to create a new file each time
+        // because gjs doesn't appear to use etag for module caching
+        // ?foo=Date.now() also does not work as expected
+        // TODO: File a bug
+        const [file_javascript] = Gio.File.new_tmp("workbench-XXXXXX.js");
+        file_javascript.replace_contents(
+          javascript || "\n",
+          null,
+          false,
+          Gio.FileCreateFlags.NONE,
+          null
+        );
+        await import(`file://${file_javascript.get_path()}`);
+      } else if (language == "Vala") {
+        if (compiler == null) {
+          compiler = Compiler(data_dir);
+        }
+        await compiler.compile(source_view_javascript.buffer.text);
+      }
     } catch (err) {
       // prettier xml errors are not instances of Error
       if (err instanceof Error) {

@@ -10,11 +10,7 @@ namespace Workbench {
                 stderr.printf (@"Widget with target_id='$target_id' could not be found.\n");
                 return;
             }
-            this.window.content = target;
-            if (!this.presented) {
-                this.window.present ();
-                this.presented = true;
-            }
+            this.window.child = target;
         }
 
         public void update_css (string content) {
@@ -47,6 +43,14 @@ namespace Workbench {
             }
 
             if (builder_symbol != "") {
+                if (this.builder == null) {
+                    stderr.printf ("No UI definition loaded yet.\n");
+                    return;
+                }
+
+                this.window.present ();
+                this.presented = true;
+
                 void* function;
                 this.module.symbol (builder_symbol, out function);
                 if (function == null) {
@@ -75,11 +79,13 @@ namespace Workbench {
         [CCode (has_target=false)]
         private delegate void BuilderFunction (Gtk.Builder builder);
 
-        private Adw.Window window = new Adw.Window ();
+        private Gtk.Window window = new Gtk.Window () {
+            hide_on_close = true
+        };
         private Gtk.CssProvider? css = null;
         private Module module;
         private bool presented = false;
-        private Gtk.Builder builder;
+        private Gtk.Builder? builder = null;
     }
 
     async void main (string[] args) {
