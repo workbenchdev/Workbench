@@ -35,6 +35,7 @@ namespace Workbench {
                     return;
                 }
 
+                this.module.close ();
                 this.module = Module.open (filename, ModuleFlags.LAZY);
                 if (this.module == null) {
                     stderr.printf ("Module loading failed.\n");

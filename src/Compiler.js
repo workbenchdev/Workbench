@@ -14,6 +14,10 @@ export default function Compiler(data_dir) {
   
   async function compile(code) {
     code_file.replace_contents(code, null, false, Gio.FileCreateFlags.NONE, null);
+    try {
+      module_file.delete(null);
+    } catch {
+    }
     const valac = Gio.Subprocess.new([
       "valac", code_file.get_path(), "--hide-internal", "-X", "-shared", "-X", "-fpic",
       "--library", "workbench", "-o", module_file.get_path(), "--pkg", "gtk4", "--pkg", "gio-2.0"],

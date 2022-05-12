@@ -48,20 +48,13 @@ export default function Window({ application }) {
 
   const { terminal } = Devtools({ application, window, builder });
 
-  const { js, css, ui } = getDemoSources("Welcome");
+  const { js, css, ui, vala } = getDemoSources("Welcome");
   
   let compiler = null;
 
   const source_view_javascript = builder.get_object("source_view_javascript");
-  documents.push(
-    Document({
-      source_view: source_view_javascript,
-      lang: "js",
-      placeholder: js,
-      ext: "js",
-      data_dir,
-    })
-  );
+  documents.push(null);
+  
 
   const source_view_ui = builder.get_object("source_view_ui");
   documents.push(
@@ -94,22 +87,6 @@ export default function Window({ application }) {
   const button_light = builder.get_object("button_light");
   const button_dark = builder.get_object("button_dark");
   button_dark.set_group(button_light);
-
-  function updateStyle() {
-    const { dark } = style_manager;
-    const scheme = scheme_manager.get_scheme(dark ? "Adwaita-dark" : "Adwaita");
-    documents.forEach(({ source_view }) => {
-      source_view.buffer.set_style_scheme(scheme);
-    });
-
-    button_dark.active = dark;
-    button_light.active = !dark;
-
-    // For Platform Tools
-    setGtk4PreferDark(dark).catch(logError);
-  }
-  updateStyle();
-  style_manager.connect("notify::dark", updateStyle);
 
   button_light.connect("toggled", () => {
     settings.set_boolean("toggle-color-scheme", button_light.active);
@@ -194,8 +171,47 @@ export default function Window({ application }) {
   function switchLanguage() {
     const language = code_dropdown.selected_item.string;
     
+    if (documents[0] != null) {
+      documents[0].stopSaving();
+    }
+    source_view_javascript.buffer.text = "";
+    if (language == "JavaScript") {
+      documents[0] = Document({
+        source_view: source_view_javascript,
+        lang: "js",
+        placeholder: js,
+        ext: "js",
+        data_dir,
+      });
+    } else if (language == "Vala") {
+      documents[0] = Document({
+        source_view: source_view_javascript,
+        lang: "vala",
+        placeholder: vala,
+        ext: "vala",
+        data_dir,
+      });
+      print(source_view_javascript.buffer.text);
+    }
+    
     previewer.setLanguage(language);
   }
+  
+  function updateStyle() {
+    const { dark } = style_manager;
+    const scheme = scheme_manager.get_scheme(dark ? "Adwaita-dark" : "Adwaita");
+    documents.forEach(({ source_view }) => {
+      source_view.buffer.set_style_scheme(scheme);
+    });
+
+    button_dark.active = dark;
+    button_light.active = !dark;
+
+    // For Platform Tools
+    setGtk4PreferDark(dark).catch(logError);
+  }
+  updateStyle();
+  style_manager.connect("notify::dark", updateStyle);
   
   function format(buffer, formatter) {
     const code = formatter(buffer.text.trim());
@@ -318,10 +334,15 @@ export default function Window({ application }) {
       buffer.place_cursor(buffer.get_start_iter());
     }
 
-    const { js, css, ui } = getDemoSources(demo_name);
+    const { js, css, ui, vala } = getDemoSources(demo_name);
 
-    load(source_view_javascript.buffer, js);
-    settings.set_boolean("show-code", !!js);
+    if (code_dropdown.selected_item.string == "JavaScript") {
+      load(source_view_javascript.buffer, js);
+      settings.set_boolean("show-code", !!js);
+    } else if (code_dropdown.selected_item.string == "Vala") {
+      load(source_view_javascript.buffer, vala);
+      settings.set_boolean("show-code", !!vala);
+    }
 
     load(source_view_css.buffer, css);
     settings.set_boolean("show-style", !!css);

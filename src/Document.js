@@ -13,6 +13,7 @@ export default function Document({
   ext,
 }) {
   const { buffer } = source_view;
+  let stop_saving = false;
 
   buffer.set_language(language_manager.get_language(lang));
 
@@ -27,7 +28,7 @@ export default function Document({
   load();
 
   buffer.connect("modified-changed", () => {
-    if (!buffer.get_modified()) return;
+    if (!buffer.get_modified() || stop_saving) return;
     save();
     settings.set_boolean("has-edits", true);
   });
@@ -67,9 +68,14 @@ export default function Document({
       if (success) buffer.set_modified(false);
     });
   }
+  
+  function stopSaving() {
+    stop_saving = true;
+  }
 
   return {
     source_view,
     buffer,
+    stopSaving
   };
 }

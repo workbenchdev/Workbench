@@ -17,6 +17,7 @@
     <file>demos/Welcome/main.js</file>
     <file>demos/Welcome/main.json</file>
     <file>demos/Welcome/main.ui</file>
+    <file>demos/Welcome/main.vala</file>
     <file>demos/Application window/main.json</file>
     <file>demos/Application window/main.ui</file>
   </gresource>
