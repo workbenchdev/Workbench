@@ -1,3 +1,6 @@
 [submodule "troll"]
 	path = src/troll
 	url = https://github.com/sonnyp/troll.git
+[submodule "src/blueprint-compiler"]
+	path = blueprint-compiler
+	url = https://gitlab.gnome.org/sonny/blueprint-compiler.git

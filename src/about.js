@@ -10,7 +10,7 @@ import {
 } from "./troll/src/util.js";
 import { getFlatpakInfo } from "./util.js";
 
-export default function About({ application, datadir, version }) {
+export default function About({ application, version }) {
   const flatpak_info = getFlatpakInfo();
 
   const system_information = `

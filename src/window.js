@@ -9,6 +9,7 @@ import { gettext as _ } from "gettext";
 
 import { confirm, settings, createDataDir } from "./util.js";
 import Document from "./Document.js";
+import PanelUI from "./PanelUI.js";
 import Devtools from "./Devtools.js";
 
 import prettier from "./lib/prettier.js";
@@ -17,6 +18,7 @@ import prettier_postcss from "./lib/prettier-postcss.js";
 import prettier_xml from "./lib/prettier-xml.js";
 import Library, { getDemoSources } from "./Library.js";
 import Previewer from "./Previewer.js";
+import { once } from "./troll/src/util.js";
 
 Source.init();
 
@@ -39,51 +41,64 @@ export default function Window({ application }) {
 
   const panel_javascript = builder.get_object("panel_javascript");
   const panel_css = builder.get_object("panel_css");
-  const panel_ui = builder.get_object("panel_ui");
   const panel_preview = builder.get_object("panel_preview");
-
-  const documents = [];
 
   const { terminal } = Devtools({ application, window, builder });
 
-  const { js, css, ui } = getDemoSources("Welcome");
+  const placeholders = getDemoSources("Welcome");
 
   const source_view_javascript = builder.get_object("source_view_javascript");
-  documents.push(
-    Document({
-      source_view: source_view_javascript,
-      lang: "js",
-      placeholder: js,
-      ext: "js",
-      data_dir,
-    })
-  );
+  Document({
+    source_view: source_view_javascript,
+    lang: "js",
+    placeholder: placeholders.js,
+    ext: "js",
+    data_dir,
+  });
 
-  const source_view_ui = builder.get_object("source_view_ui");
-  documents.push(
-    Document({
-      source_view: source_view_ui,
-      lang: "xml",
-      placeholder: ui,
-      ext: "ui",
-      data_dir,
-    })
-  );
+  const source_view_blueprint = builder.get_object("source_view_blueprint");
+  Document({
+    source_view: source_view_blueprint,
+    lang: "blueprint",
+    placeholder: placeholders.blueprint,
+    ext: "blp",
+    data_dir,
+  });
+
+  const source_view_xml = builder.get_object("source_view_xml");
+  Document({
+    source_view: source_view_xml,
+    lang: "xml",
+    placeholder: placeholders.xml,
+    ext: "ui",
+    data_dir,
+  });
 
   const source_view_css = builder.get_object("source_view_css");
-  documents.push(
-    Document({
-      source_view: source_view_css,
-      lang: "css",
-      placeholder: css,
-      ext: "css",
-      data_dir,
-    })
-  );
+  Document({
+    source_view: source_view_css,
+    lang: "css",
+    placeholder: placeholders.css,
+    ext: "css",
+    data_dir,
+  });
+
+  const panel_ui = PanelUI({
+    builder,
+    source_view_blueprint,
+    source_view_xml,
+    data_dir,
+  });
+
+  const source_views = [
+    source_view_javascript,
+    source_view_css,
+    source_view_blueprint,
+    source_view_xml,
+  ];
 
   const button_run = builder.get_object("button_run");
   const button_javascript = builder.get_object("button_javascript");
-  const button_ui = builder.get_object("button_ui");
   const button_css = builder.get_object("button_css");
   const button_preview = builder.get_object("button_preview");
   const button_inspector = builder.get_object("button_inspector");
@@ -94,8 +109,8 @@ export default function Window({ application }) {
   function updateStyle() {
     const { dark } = style_manager;
     const scheme = scheme_manager.get_scheme(dark ? "Adwaita-dark" : "Adwaita");
-    documents.forEach(({ source_view }) => {
-      source_view.buffer.set_style_scheme(scheme);
+    source_views.forEach(({ buffer }) => {
+      buffer.set_style_scheme(scheme);
     });
 
     button_dark.active = dark;
@@ -110,14 +125,6 @@ export default function Window({ application }) {
   button_light.connect("toggled", () => {
     settings.set_boolean("toggle-color-scheme", button_light.active);
   });
-
-  settings.bind("show-ui", button_ui, "active", Gio.SettingsBindFlags.DEFAULT);
-  button_ui.bind_property(
-    "active",
-    panel_ui,
-    "visible",
-    GObject.BindingFlags.SYNC_CREATE
-  );
 
   settings.bind(
     "show-style",
@@ -165,17 +172,15 @@ export default function Window({ application }) {
   const previewer = Previewer({
     output,
     builder,
-    button_preview,
-    panel_preview,
-    source_view_ui,
     source_view_css,
     window,
     application,
     data_dir,
+    panel_ui,
   });
 
-  source_view_ui.buffer.connect("changed", previewer.update);
-  source_view_css.buffer.connect("changed", previewer.update);
+  panel_ui.connect("changed", previewer.update);
+  source_view_css.buffer.connect_after("changed", previewer.update);
   previewer.update();
 
   function format(buffer, formatter) {
@@ -195,7 +200,7 @@ export default function Window({ application }) {
     terminal.clear();
 
     try {
-      const javascript = format(source_view_javascript.buffer, (text) => {
+      format(source_view_javascript.buffer, (text) => {
         return prettier.format(source_view_javascript.buffer.text, {
           parser: "babel",
           plugins: [prettier_babel],
@@ -210,7 +215,7 @@ export default function Window({ application }) {
         });
       });
 
-      format(source_view_ui.buffer, (text) => {
+      format(source_view_xml.buffer, (text) => {
         return prettier.format(text, {
           parser: "xml",
           plugins: [prettier_xml],
@@ -242,7 +247,7 @@ export default function Window({ application }) {
       // TODO: File a bug
       const [file_javascript] = Gio.File.new_tmp("workbench-XXXXXX.js");
       file_javascript.replace_contents(
-        javascript || "\n",
+        source_view_javascript.buffer.text || "\n",
         null,
         false,
         Gio.FileCreateFlags.NONE,
@@ -284,11 +289,12 @@ export default function Window({ application }) {
 
     function load(buffer, str) {
       replaceBufferText(buffer, str);
-      settings.set_boolean("has-edits", false);
       buffer.place_cursor(buffer.get_start_iter());
     }
 
-    const { js, css, ui } = getDemoSources(demo_name);
+    const { js, css, xml, blueprint } = getDemoSources(demo_name);
+
+    settings.set_string("selected-demo", demo_name);
 
     load(source_view_javascript.buffer, js);
     settings.set_boolean("show-code", !!js);
@@ -296,11 +302,18 @@ export default function Window({ application }) {
     load(source_view_css.buffer, css);
     settings.set_boolean("show-style", !!css);
 
-    load(source_view_ui.buffer, ui);
-    settings.set_boolean("show-ui", !!ui);
-    settings.set_boolean("show-preview", !!ui);
+    load(source_view_blueprint.buffer, blueprint);
+    load(source_view_xml.buffer, xml);
+    settings.set_boolean("show-ui", !!xml);
+    settings.set_boolean("show-preview", !!xml);
 
-    run();
+    settings.set_boolean("has-edits", false);
+
+    if (xml || blueprint) {
+      once(panel_ui, "changed").then(run);
+    } else {
+      run();
+    }
   }
 
   const action_library = new Gio.SimpleAction({
@@ -315,10 +328,14 @@ export default function Window({ application }) {
 
   function confirmDiscard() {
     if (!settings.get_boolean("has-edits")) return true;
-    return confirm({
+    const agreed = confirm({
       transient_for: application.get_active_window(),
       text: _("Are you sure you want to discard your changes?"),
     });
+    if (agreed) {
+      settings.set_boolean("has-edits", false);
+    }
+    return agreed;
   }
 
   const text_decoder = new TextDecoder();
@@ -353,9 +370,7 @@ export default function Window({ application }) {
     async function load(buffer, data) {
       const agreed = await confirmDiscard();
       if (!agreed) return;
-
       replaceBufferText(buffer, data);
-      settings.set_boolean("has-edits", false);
       buffer.place_cursor(buffer.get_start_iter());
     }
 
@@ -364,7 +379,11 @@ export default function Window({ application }) {
     } else if (content_type.includes("text/css")) {
       load(source_view_css.buffer, data);
     } else if (content_type.includes("application/x-gtk-builder")) {
-      load(source_view_ui.buffer, data);
+      load(source_view_xml.buffer, data);
+      settings.set_string("ui-lang", "xml");
+    } else if (file.get_basename().endsWith(".blp")) {
+      load(source_view_blueprint.buffer, data);
+      settings.set_string("ui-lang", "blueprint");
     }
   }
 

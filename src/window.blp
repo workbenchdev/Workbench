@@ -4,19 +4,17 @@ using Gtk 4.0;
   default-width: "800";
   default-height: "600";
   maximized: "true";
-  content: 
+  content:
   Box {
     orientation: vertical;
 
     .AdwHeaderBar {
       [start]
       Button button_library {
-        child:         .AdwButtonContent {
+        child: .AdwButtonContent {
           icon-name: "open-book-symbolic";
           label: _("Library");
-        }
-
-        ;
+        };
         action-name: "win.library";
         margin-end: 6;
         tooltip-text: _("Open Library of Demos and Examples (Ctrl+Shift+O)");
@@ -37,7 +35,7 @@ using Gtk 4.0;
         homogeneous: true;
 
         ToggleButton button_javascript {
-          child:           Box {
+          child: Box {
             halign: center;
 
             Image {
@@ -47,9 +45,7 @@ using Gtk 4.0;
             Label {
               label: _("Code");
             }
-          }
-
-          ;
+          };
 
           styles [
             "flat",
@@ -58,7 +54,7 @@ using Gtk 4.0;
         }
 
         ToggleButton button_css {
-          child:           Box {
+          child: Box {
             halign: center;
 
             Image {
@@ -68,9 +64,7 @@ using Gtk 4.0;
             Label {
               label: _("Style");
             }
-          }
-
-          ;
+          };
 
           styles [
             "flat",
@@ -79,7 +73,7 @@ using Gtk 4.0;
         }
 
         ToggleButton button_ui {
-          child:           Box {
+          child: Box {
             halign: center;
 
             Image {
@@ -89,9 +83,7 @@ using Gtk 4.0;
             Label {
               label: _("UI");
             }
-          }
-
-          ;
+          };
 
           styles [
             "flat",
@@ -100,7 +92,7 @@ using Gtk 4.0;
         }
 
         ToggleButton button_preview {
-          child:           Box {
+          child: Box {
             halign: center;
 
             Image {
@@ -110,9 +102,7 @@ using Gtk 4.0;
             Label {
               label: _("Preview");
             }
-          }
-
-          ;
+          };
 
           styles [
             "flat",
@@ -198,12 +188,10 @@ using Gtk 4.0;
 
             [end]
             Button button_run {
-              child:               .AdwButtonContent {
+              child: .AdwButtonContent {
                 icon-name: "media-playback-start-symbolic";
                 label: _("Run");
-              }
-
-              ;
+              };
               action-name: "win.run";
               margin-end: 6;
               tooltip-text: _("Run (Ctrl+⏎)");
@@ -229,10 +217,8 @@ using Gtk 4.0;
             vexpand: true;
 
             .GtkSourceView source_view_javascript {
-              buffer:               .GtkSourceBuffer {
-              }
-
-              ;
+              buffer: .GtkSourceBuffer {
+              };
               monospace: "true";
               auto-indent: "true";
               background-pattern: "grid";
@@ -273,10 +259,8 @@ using Gtk 4.0;
             vexpand: true;
 
             .GtkSourceView source_view_css {
-              buffer:               .GtkSourceBuffer {
-              }
-
-              ;
+              buffer: .GtkSourceBuffer {
+              };
               monospace: "true";
               auto-indent: "true";
               background-pattern: "grid";
@@ -297,11 +281,32 @@ using Gtk 4.0;
 
           Box {
             Button {
-              label: _("UI - XML");
+              label: _("UI -");
               sensitive: false;
 
               styles [
                 "flat",
+              ]
+            }
+
+            Gtk.ComboBoxText dropdown_ui_lang {
+              // FIXME: Does not work as intended
+              // active-id: "xml";
+              // the XML counterpart works fine
+              // fix or report issue to Blueprint
+              // <child>
+              //   <object class="GtkComboBoxText" id="dropdown_ui_lang">
+              //     <property name="active_id">xml</property>
+              //     <items>
+              //       <item id="xml">XML</item>
+              //       <item id="blueprint">Blueprint</item>
+              //     </items>
+              //   </object>
+              // </child>
+              name: "dropdown_ui_lang";
+              items [
+                blueprint: "Blueprint",
+                xml: "XML",
               ]
             }
 
@@ -313,25 +318,50 @@ using Gtk 4.0;
           Separator {
           }
 
-          ScrolledWindow {
-            vexpand: true;
+          Stack stack_ui {
+            StackPage {
+              name: 'blueprint';
+              child: ScrolledWindow {
+                vexpand: true;
 
-            .GtkSourceView source_view_ui {
-              buffer:               .GtkSourceBuffer {
-              }
+                .GtkSourceView source_view_blueprint {
+                  buffer: .GtkSourceBuffer {
+                  };
+                  monospace: "true";
+                  auto-indent: "true";
+                  background-pattern: "grid";
+                  highlight-current-line: "true";
+                  indent-on-tab: "true";
+                  indent-width: "2";
+                  insert-spaces-instead-of-tabs: "true";
+                  show-line-marks: "true";
+                  show-line-numbers: "true";
+                  smart-backspace: "true";
+                  tab-width: "2";
+                }
+              };
+            }
+            StackPage {
+              name: 'xml';
+              child: ScrolledWindow {
+                vexpand: true;
 
-              ;
-              monospace: "true";
-              auto-indent: "true";
-              background-pattern: "grid";
-              highlight-current-line: "true";
-              indent-on-tab: "true";
-              indent-width: "2";
-              insert-spaces-instead-of-tabs: "true";
-              show-line-marks: "true";
-              show-line-numbers: "true";
-              smart-backspace: "true";
-              tab-width: "2";
+                .GtkSourceView source_view_xml {
+                  buffer: .GtkSourceBuffer {
+                  };
+                  monospace: "true";
+                  auto-indent: "true";
+                  background-pattern: "grid";
+                  highlight-current-line: "true";
+                  indent-on-tab: "true";
+                  indent-width: "2";
+                  insert-spaces-instead-of-tabs: "true";
+                  show-line-marks: "true";
+                  show-line-numbers: "true";
+                  smart-backspace: "true";
+                  tab-width: "2";
+                }
+              };
             }
           }
         }
@@ -352,12 +382,11 @@ using Gtk 4.0;
 
             [end]
             Button button_screenshot {
-              child:               .AdwButtonContent {
+              child: .AdwButtonContent {
                 icon-name: "photo-camera-symbolic";
-              }
-
-              ;
+              };
               margin-end: 6;
+
               tooltip-text: _("Take Screenshot of Preview");
 
               accessibility {
@@ -429,9 +458,7 @@ using Gtk 4.0;
         }
       }
     }
-  }
-
-  ;
+  };
 }
 
 .AdwPreferencesWindow window_library {
@@ -472,6 +499,7 @@ FileFilter file_filter {
     "*.ui",
     "*.xml.ui",
     "*.css",
+    "*.blp",
   ]
 }
 

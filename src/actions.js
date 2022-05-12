@@ -6,7 +6,7 @@ import Gdk from "gi://Gdk";
 import About from "./about.js";
 import shortcutsWindow from "./shortcutsWindow.js";
 
-export default function Actions({ application, datadir, version }) {
+export default function Actions({ application, version }) {
   const quit = new Gio.SimpleAction({
     name: "quit",
     parameter_type: null,
@@ -22,7 +22,7 @@ export default function Actions({ application, datadir, version }) {
     parameter_type: null,
   });
   showAboutDialog.connect("activate", () => {
-    About({ application, datadir, version });
+    About({ application, version });
   });
   application.add_action(showAboutDialog);
 

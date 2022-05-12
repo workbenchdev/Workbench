@@ -12,13 +12,11 @@ import logger from "./logger.js";
 export default function Preview({
   output,
   builder,
-  button_preview,
-  panel_preview,
-  source_view_ui,
   source_view_css,
   window,
   application,
   data_dir,
+  panel_ui,
 }) {
   const workbench = (globalThis.workbench = {
     window,
@@ -40,8 +38,7 @@ export default function Preview({
     const builder = new Gtk.Builder();
     workbench.builder = builder;
 
-    let text = source_view_ui.buffer.text.trim();
-    if (!text) return;
+    let text = panel_ui.xml.trim();
     let target_id;
     let tree;
 

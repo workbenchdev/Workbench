@@ -22,5 +22,11 @@
     <key name="has-edits" type="b">
       <default>false</default>
     </key>
+    <key name="selected-demo" type="s">
+      <default>"Welcome"</default>
+    </key>
+    <key name="ui-lang" type="s">
+      <default>"xml"</default>
+    </key>
   </schema>
 </schemalist>
