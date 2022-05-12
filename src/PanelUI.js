@@ -4,7 +4,6 @@ import GObject from "gi://GObject";
 import GLib from "gi://GLib";
 
 import LSPClient from "./lsp/LSPClient.js";
-import logger from "./logger.js";
 
 const { addSignalMethods } = imports.signals;
 
@@ -14,20 +13,20 @@ export default function PanelUI({
   builder,
   data_dir,
 }) {
-  const bls = new LSPClient([
+  const blueprint = new LSPClient([
     "blueprint-compiler",
     "lsp",
     "--logfile",
     GLib.build_filenamev([data_dir, `blueprint-logs`]),
   ]);
-  bls.connect("exit", (self, message) => {
-    logger.debug("blueprint exit", message);
+  blueprint.connect("exit", () => {
+    console.debug("blueprint exit");
   });
-  bls.connect("output", (self, message) => {
-    logger.debug("blueprint OUT:\n", message);
+  blueprint.connect("output", (self, message) => {
+    console.debug("blueprint OUT:\n", message);
   });
-  bls.connect("input", (self, message) => {
-    logger.debug("blueprint IN:\n", message);
+  blueprint.connect("input", (self, message) => {
+    console.debug("blueprint IN:\n", message);
   });
 
   const button_ui = builder.get_object("button_ui");
@@ -117,8 +116,8 @@ export default function PanelUI({
   setupLang();
 
   async function compileBlueprint(text) {
-    if (!bls.proc) {
-      bls.start();
+    if (!blueprint.proc) {
+      blueprint.start();
 
       // await lsp_client.request("initialize");
       // Make Blueprint language server cache Gtk 4
@@ -128,7 +127,7 @@ export default function PanelUI({
       // });
     }
 
-    const { xml } = await bls.request("x-blueprintcompiler/compile", {
+    const { xml } = await blueprint.request("x-blueprintcompiler/compile", {
       text,
     });
     return xml;
