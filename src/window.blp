@@ -136,21 +136,6 @@ using Gtk 4.0;
           }
         }
       }
-
-      [end]
-      MenuButton {
-        icon-name: "user-bookmarks-symbolic";
-        menu-model: menu_bookmarks;
-        tooltip-text: _("Bookmarks");
-
-        accessibility {
-          label: _("Bookmarks");
-        }
-
-        styles [
-          "flat",
-        ]
-      }
     }
 
     Paned paned {
@@ -187,7 +172,6 @@ using Gtk 4.0;
                 label: _("Run");
               };
               action-name: "win.run";
-              margin-end: 6;
               tooltip-text: _("Run (Ctrl+⏎)");
               styles [
                 "suggested-action",
@@ -521,6 +505,88 @@ menu menu_app {
   }
 
   submenu {
+    label: _("Bookmarks");
+    section {
+      label: _("Learn");
+
+      item {
+        label: _("GNOME JavaScript (GJS)");
+        action: "app.open_uri";
+        target: "https://gjs.guide/guides/";
+      }
+
+      item {
+        label: _("Human Interface Guidelines (HIG)");
+        action: "app.open_uri";
+        target: "https://developer.gnome.org/hig/";
+      }
+
+      item {
+        label: _("UI components");
+        action: "app.open_uri";
+        target: "https://developer.gnome.org/documentation/tutorials/beginners/components.html";
+      }
+
+      item {
+        label: _("Platform components");
+        action: "app.open_uri";
+        target: "https://developer.gnome.org/documentation/introduction/components.html";
+      }
+    }
+
+    section {
+      label: _("Reference");
+
+      item {
+        label: _("JavaScript");
+        action: "app.open_uri";
+        target: "https://developer.mozilla.org/docs/Web/JavaScript/Guide";
+      }
+
+      item {
+        label: _("GJS");
+        action: "app.open_uri";
+        target: "https://gjs-docs.gnome.org/";
+      }
+
+      item {
+        label: _("Gtk");
+        action: "app.open_uri";
+        target: "https://docs.gtk.org/gtk4/";
+      }
+
+      item {
+        label: _("Adwaita");
+        action: "app.open_uri";
+        target: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.1/";
+      }
+    }
+
+    section {
+      label: _("Get help");
+
+      item {
+        label: _("Discourse");
+        action: "app.open_uri";
+        target: "https://discourse.gnome.org/c/platform/5";
+      }
+
+      item {
+        label: _("Stack Overflow");
+        action: "app.open_uri";
+        target: "https://stackoverflow.com/questions/tagged/gjs";
+      }
+
+      item {
+        label: _("Matrix");
+        action: "app.open_uri";
+        icon-name: "external-link-symbolic";
+        target: "https://matrix.to/#/#javascript:gnome.org";
+      }
+    }
+  }
+
+  submenu {
     label: _("Platform Tools");
 
     item {
@@ -557,87 +623,6 @@ menu menu_app {
     item {
       label: _("About Workbench");
       action: "app.about";
-    }
-  }
-}
-
-menu menu_bookmarks {
-  section {
-    label: _("Learn");
-
-    item {
-      label: _("GNOME JavaScript (GJS)");
-      action: "app.open_uri";
-      target: "https://gjs.guide/guides/";
-    }
-
-    item {
-      label: _("Human Interface Guidelines (HIG)");
-      action: "app.open_uri";
-      target: "https://developer.gnome.org/hig/";
-    }
-
-    item {
-      label: _("UI components");
-      action: "app.open_uri";
-      target: "https://developer.gnome.org/documentation/tutorials/beginners/components.html";
-    }
-
-    item {
-      label: _("Platform components");
-      action: "app.open_uri";
-      target: "https://developer.gnome.org/documentation/introduction/components.html";
-    }
-  }
-
-  section {
-    label: _("Reference");
-
-    item {
-      label: _("JavaScript");
-      action: "app.open_uri";
-      target: "https://developer.mozilla.org/docs/Web/JavaScript/Guide";
-    }
-
-    item {
-      label: _("GJS");
-      action: "app.open_uri";
-      target: "https://gjs-docs.gnome.org/";
-    }
-
-    item {
-      label: _("Gtk");
-      action: "app.open_uri";
-      target: "https://docs.gtk.org/gtk4/";
-    }
-
-    item {
-      label: _("Adwaita");
-      action: "app.open_uri";
-      target: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.1/";
-    }
-  }
-
-  section {
-    label: _("Get help");
-
-    item {
-      label: _("Discourse");
-      action: "app.open_uri";
-      target: "https://discourse.gnome.org/c/platform/5";
-    }
-
-    item {
-      label: _("Stack Overflow");
-      action: "app.open_uri";
-      target: "https://stackoverflow.com/questions/tagged/gjs";
-    }
-
-    item {
-      label: _("Matrix");
-      action: "app.open_uri";
-      icon-name: "external-link-symbolic";
-      target: "https://matrix.to/#/#javascript:gnome.org";
     }
   }
 }
