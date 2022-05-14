@@ -16,16 +16,10 @@ using Gtk 4.0;
           label: _("Library");
         };
         action-name: "win.library";
-        margin-end: 6;
         tooltip-text: _("Open Library of Demos and Examples (Ctrl+Shift+O)");
-
         accessibility {
           label: _("Run (Ctrl+⏎)");
         }
-
-        styles [
-          "raised",
-        ]
       }
 
       [title]
@@ -195,11 +189,6 @@ using Gtk 4.0;
               action-name: "win.run";
               margin-end: 6;
               tooltip-text: _("Run (Ctrl+⏎)");
-
-              accessibility {
-                label: _("Run (Ctrl+⏎)");
-              }
-
               styles [
                 "suggested-action",
               ]
@@ -385,10 +374,7 @@ using Gtk 4.0;
               child: .AdwButtonContent {
                 icon-name: "photo-camera-symbolic";
               };
-              margin-end: 6;
-
               tooltip-text: _("Take Screenshot of Preview");
-
               accessibility {
                 label: _("Take Screenshot of Preview");
               }
@@ -425,13 +411,19 @@ using Gtk 4.0;
             ]
 
             ToggleButton button_console {
+              child: .AdwButtonContent {
+                icon-name: "terminal-symbolic";
+                label: _("Console");
+              };
               action-name: "win.console";
-              label: _("Console");
               tooltip-text: _("Show logs (Ctrl+Shift+K)");
             }
 
             Button button_inspector {
-              label: _("Inspector");
+              child: .AdwButtonContent {
+                icon-name: "find-location-symbolic";
+                label: _("Inspector");
+              };
               tooltip-text: _("Open GTK Inspector (Ctrl+Shift+I)");
             }
           }
@@ -443,7 +435,10 @@ using Gtk 4.0;
             ]
 
             Button button_clear {
-              label: _("Clear");
+              child: .AdwButtonContent {
+                icon-name: "eraser-symbolic";
+                label: _("Clear");
+              };
               action-name: "win.clear";
               tooltip-text: _("Clear console (Ctrl+K)");
             }

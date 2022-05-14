@@ -58,8 +58,16 @@
     >icons/code-symbolic.svg</file>
     <file
       preprocess="xml-stripblanks"
+      alias="eraser-symbolic.svg"
+    >icons/eraser-symbolic.svg</file>
+    <file
+      preprocess="xml-stripblanks"
       alias="external-link-symbolic.svg"
     >icons/external-link-symbolic.svg</file>
+    <file
+      preprocess="xml-stripblanks"
+      alias="find-location-symbolic.svg"
+    >icons/find-location-symbolic.svg</file>
     <file
       preprocess="xml-stripblanks"
       alias="moon-rounded-symbolic.svg"
@@ -88,6 +96,10 @@
       preprocess="xml-stripblanks"
       alias="sun-symbolic.svg"
     >icons/sun-symbolic.svg</file>
+    <file
+      preprocess="xml-stripblanks"
+      alias="terminal-symbolic.svg"
+    >icons/terminal-symbolic.svg</file>
     <file
       preprocess="xml-stripblanks"
       alias="ui-symbolic.svg"
