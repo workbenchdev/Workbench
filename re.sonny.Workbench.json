@@ -49,6 +49,16 @@
       ]
     },
     {
+      "name": "blueprint",
+      "buildsystem": "meson",
+      "sources": [
+        {
+          "type": "dir",
+          "path": "./blueprint-compiler"
+        }
+      ]
+    },
+    {
       "name": "Workbench",
       "buildsystem": "meson",
       "builddir": true,

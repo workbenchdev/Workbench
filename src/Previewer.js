@@ -14,13 +14,11 @@ import logger from "./logger.js";
 export default function Preview({
   output,
   builder,
-  button_preview,
-  panel_preview,
-  source_view_ui,
   source_view_css,
   window,
   application,
   data_dir,
+  panel_ui,
 }) {
   const workbench = (globalThis.workbench = {
     window,
@@ -37,7 +35,7 @@ export default function Preview({
   let subprocess = null;
 
   preview_window_button.connect("clicked", () => {
-    if (!object_root || language != "JavaScript") return;
+    if (!object_root || language !== "JavaScript") return;
     object_root.present_with_time(Gdk.CURRENT_TIME);
   });
 
@@ -45,8 +43,7 @@ export default function Preview({
     const builder = new Gtk.Builder();
     workbench.builder = builder;
 
-    let text = source_view_ui.buffer.text.trim();
-    if (!text) return;
+    let text = panel_ui.xml.trim();
     let target_id;
     let tree;
 
@@ -84,23 +81,22 @@ export default function Preview({
     const object_preview = builder.get_object(target_id);
     if (object_preview) {
       if (object_preview instanceof Gtk.Root) {
-        if (language == "JavaScript") {
+        if (language === "JavaScript") {
           output.set_child(preview_window);
           if (!object_root) {
             object_root = object_preview;
             object_root.set_hide_on_close(true);
           }
           adoptChild(object_preview, object_root);
-        } else if (language == "Vala") {
+        } else if (language === "Vala") {
           //
         }
       } else {
         output.set_child(object_preview);
         object_root?.destroy();
         object_root = null;
-        
-        //print(language);
-        if (language == "Vala") {
+
+        if (language === "Vala") {
           dbus_proxy.UpdateUiSync(text, target_id);
         }
       }
@@ -131,19 +127,22 @@ export default function Preview({
       css_provider,
       Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
     );
-    
-    if (language == "Vala") {
+
+    if (language === "Vala") {
       dbus_proxy.UpdateCssSync(source_view_css.buffer.text);
     }
   }
-  
+
   function setLanguage(lang) {
     language = lang;
-    
-    if (lang == "Vala" && (dbus_proxy == null || subprocess == null)) {
-      subprocess = Gio.Subprocess.new(["workbench-vala-previewer"], Gio.SubprocessFlags.NONE);
+
+    if (lang === "Vala" && (dbus_proxy === null || subprocess === null)) {
+      subprocess = Gio.Subprocess.new(
+        ["workbench-vala-previewer"],
+        Gio.SubprocessFlags.NONE
+      );
       dbus_proxy = DBusPreviewer();
-    } else if (lang == "JavaScript" && subprocess != null) {
+    } else if (lang === "JavaScript" && subprocess !== null) {
       subprocess.force_exit();
       subprocess = null;
       dbus_proxy = null;

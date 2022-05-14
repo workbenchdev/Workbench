@@ -1,6 +1,5 @@
 import Gio from "gi://Gio";
 import Adw from "gi://Adw";
-import Gtk from "gi://Gtk";
 
 const byteArray = imports.byteArray;
 
@@ -21,11 +20,6 @@ export default function Library({ window, builder, loadDemo }) {
       subtitle: demo.description,
       activatable: true,
     });
-
-    const image = new Gtk.Image({
-      icon_name: "go-next-symbolic",
-    });
-    widget.add_suffix(image);
 
     widget.connect("activated", () => {
       loadDemo(demo.name).catch(logError);
@@ -55,15 +49,11 @@ function getDemos() {
 export function getDemoSources(demo_name) {
   const js = getDemoFile(demo_name, "main.js");
   const css = getDemoFile(demo_name, "main.css");
-  const ui = getDemoFile(demo_name, "main.ui");
-  let vala;
-  try {
-    vala = getDemoFile(demo_name, "main.vala");
-  } catch {
-    vala = "";
-  }
+  const xml = getDemoFile(demo_name, "main.ui");
+  const blueprint = getDemoFile(demo_name, "main.blp");
+  const vala = getDemoFile(demo_name, "main.vala");
 
-  return { js, css, ui, vala };
+  return { js, css, xml, blueprint, vala };
 }
 
 export function getDemoFile(demo_name, file_name) {

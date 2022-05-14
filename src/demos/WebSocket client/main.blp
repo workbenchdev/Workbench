@@ -1,19 +1,12 @@
 using Gtk 4.0;
+using Adw 1;
 
-.AdwToastOverlay overlay {
+Adw.StatusPage {
+  title: "WebSocket Client";
+
   Box {
     orientation: vertical;
-    valign: center;
     halign: center;
-
-    Label {
-      label: "WebSocket client";
-      margin-bottom: 24;
-
-      styles [
-        "title-1",
-      ]
-    }
 
     Entry entry_url {
       placeholder-text: "url";
@@ -48,18 +41,14 @@ using Gtk 4.0;
       margin-bottom: 24;
     }
 
-    Box {
-      orientation: vertical;
+    LinkButton {
+      label: "GJS Asynchronous Operations";
+      uri: "https://gjs.guide/guides/gjs/asynchronous-programming.html#asynchronous-operations";
+    }
 
-      LinkButton {
-        label: "GJS Asynchronous Operations";
-        uri: "https://gjs.guide/guides/gjs/asynchronous-programming.html#asynchronous-operations";
-      }
-
-      LinkButton {
-        label: "API Reference";
-        uri: "https://libsoup.org/libsoup-3.0/SoupWebsocket.html";
-      }
+    LinkButton {
+      label: "API Reference";
+      uri: "https://libsoup.org/libsoup-3.0/SoupWebsocket.html";
     }
   }
 }

@@ -6,20 +6,26 @@
     <file>style.css</file>
     <file>demos/Notifications/main.js</file>
     <file>demos/Notifications/main.json</file>
+    <file>demos/Notifications/main.blp</file>
     <file>demos/Notifications/main.ui</file>
     <file>demos/Toasts/main.js</file>
     <file>demos/Toasts/main.json</file>
+    <file>demos/Toasts/main.blp</file>
     <file>demos/Toasts/main.ui</file>
     <file>demos/WebSocket client/main.js</file>
     <file>demos/WebSocket client/main.json</file>
+    <file>demos/WebSocket client/main.blp</file>
     <file>demos/WebSocket client/main.ui</file>
     <file>demos/Welcome/main.css</file>
     <file>demos/Welcome/main.js</file>
     <file>demos/Welcome/main.json</file>
+    <file>demos/Welcome/main.blp</file>
     <file>demos/Welcome/main.ui</file>
     <file>demos/Welcome/main.vala</file>
     <file>demos/Application window/main.json</file>
+    <file>demos/Application window/main.blp</file>
     <file>demos/Application window/main.ui</file>
+    <file>language-specs/blueprint.lang</file>
   </gresource>
   <gresource prefix="/re/sonny/Workbench/js">
     <file>lib/ltx.js</file>
@@ -28,12 +34,14 @@
     <file>lib/prettier-postcss.js</file>
     <file>lib/prettier-xml.js</file>
     <file>lib/prettier.js</file>
+    <file>lsp/LSPClient.js</file>
     <file>troll/src/util.js</file>
     <file>about.js</file>
     <file>actions.js</file>
     <file>application.js</file>
     <file>Devtools.js</file>
     <file>Document.js</file>
+    <file>PanelUI.js</file>
     <file>Library.js</file>
     <file>logger.js</file>
     <file>main.js</file>
@@ -53,8 +61,16 @@
     >icons/code-symbolic.svg</file>
     <file
       preprocess="xml-stripblanks"
+      alias="eraser-symbolic.svg"
+    >icons/eraser-symbolic.svg</file>
+    <file
+      preprocess="xml-stripblanks"
       alias="external-link-symbolic.svg"
     >icons/external-link-symbolic.svg</file>
+    <file
+      preprocess="xml-stripblanks"
+      alias="find-location-symbolic.svg"
+    >icons/find-location-symbolic.svg</file>
     <file
       preprocess="xml-stripblanks"
       alias="moon-rounded-symbolic.svg"
@@ -83,6 +99,10 @@
       preprocess="xml-stripblanks"
       alias="sun-symbolic.svg"
     >icons/sun-symbolic.svg</file>
+    <file
+      preprocess="xml-stripblanks"
+      alias="terminal-symbolic.svg"
+    >icons/terminal-symbolic.svg</file>
     <file
       preprocess="xml-stripblanks"
       alias="ui-symbolic.svg"

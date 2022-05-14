@@ -9,7 +9,7 @@ import { settings } from "./util.js";
 
 const style_manager = Adw.StyleManager.get_default();
 
-export default function Application({ version, datadir }) {
+export default function Application({ version }) {
   const application = new Adw.Application({
     application_id: "re.sonny.Workbench",
     flags: Gio.ApplicationFlags.HANDLES_OPEN,
@@ -49,7 +49,7 @@ export default function Application({ version, datadir }) {
   // TODO: Add examples
   // application.set_option_context_summary("");
 
-  Actions({ application, datadir, version });
+  Actions({ application, version });
 
   import("./overrides.js").catch(logError);
 

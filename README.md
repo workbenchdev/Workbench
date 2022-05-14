@@ -89,6 +89,14 @@ Please do not attempt to package Workbench any other way than as a Flatpak appli
 
 It is unsupported and may put users at risk.
 
+## Credits
+
+Workbench would not be possible without
+
+GTK, GLib, Flatpak, GtkSourceView, libadwaita, VTE, GJS, Blueprint
+
+and the GNOME community 🖤
+
 ## Contributing
 
 If you can help, here is a list of issues that would make Workbench better

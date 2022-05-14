@@ -1,33 +1,27 @@
 using Gtk 4.0;
+using Adw 1;
+using Vte 3.91;
+using GtkSource 5;
 
-.AdwApplicationWindow window {
+Adw.ApplicationWindow window {
   default-width: "800";
   default-height: "600";
-  maximized: "true";
-  content: 
-  Box {
+  maximized: true;
+  content: Box {
     orientation: vertical;
 
-    .AdwHeaderBar {
+    Adw.HeaderBar {
       [start]
       Button button_library {
-        child:         .AdwButtonContent {
+        child: Adw.ButtonContent {
           icon-name: "open-book-symbolic";
           label: _("Library");
-        }
-
-        ;
+        };
         action-name: "win.library";
-        margin-end: 6;
         tooltip-text: _("Open Library of Demos and Examples (Ctrl+Shift+O)");
-
         accessibility {
           label: _("Run (Ctrl+⏎)");
         }
-
-        styles [
-          "raised",
-        ]
       }
 
       [title]
@@ -37,7 +31,7 @@ using Gtk 4.0;
         homogeneous: true;
 
         ToggleButton button_javascript {
-          child:           Box {
+          child: Box {
             halign: center;
 
             Image {
@@ -47,18 +41,13 @@ using Gtk 4.0;
             Label {
               label: _("Code");
             }
-          }
+          };
 
-          ;
-
-          styles [
-            "flat",
-            "view-toggler",
-          ]
+          styles ["flat", "view-toggler"]
         }
 
         ToggleButton button_css {
-          child:           Box {
+          child: Box {
             halign: center;
 
             Image {
@@ -68,18 +57,13 @@ using Gtk 4.0;
             Label {
               label: _("Style");
             }
-          }
+          };
 
-          ;
-
-          styles [
-            "flat",
-            "view-toggler",
-          ]
+          styles ["flat", "view-toggler"]
         }
 
         ToggleButton button_ui {
-          child:           Box {
+          child: Box {
             halign: center;
 
             Image {
@@ -89,18 +73,13 @@ using Gtk 4.0;
             Label {
               label: _("UI");
             }
-          }
+          };
 
-          ;
-
-          styles [
-            "flat",
-            "view-toggler",
-          ]
+          styles ["flat", "view-toggler"]
         }
 
         ToggleButton button_preview {
-          child:           Box {
+          child: Box {
             halign: center;
 
             Image {
@@ -110,14 +89,9 @@ using Gtk 4.0;
             Label {
               label: _("Preview");
             }
-          }
+          };
 
-          ;
-
-          styles [
-            "flat",
-            "view-toggler",
-          ]
+          styles ["flat", "view-toggler"]
         }
       }
 
@@ -130,9 +104,7 @@ using Gtk 4.0;
 
       [end]
       Box {
-        styles [
-          "linked",
-        ]
+        styles ["linked"]
 
         ToggleButton button_light {
           icon-name: _("sun-symbolic");
@@ -151,21 +123,6 @@ using Gtk 4.0;
             label: _("Use Dark mode");
           }
         }
-      }
-
-      [end]
-      MenuButton {
-        icon-name: "user-bookmarks-symbolic";
-        menu-model: menu_bookmarks;
-        tooltip-text: _("Bookmarks");
-
-        accessibility {
-          label: _("Bookmarks");
-        }
-
-        styles [
-          "flat",
-        ]
       }
     }
 
@@ -191,12 +148,9 @@ using Gtk 4.0;
               orientation: horizontal;
 
               Button {
-                label: _("Code");
+                label: _("Code -");
                 sensitive: false;
-
-                styles [
-                  "flat",
-                ]
+                styles ["flat"]
               }
 
               DropDown code_dropdown {
@@ -211,28 +165,16 @@ using Gtk 4.0;
 
             [end]
             Button button_run {
-              child:               .AdwButtonContent {
+              child: Adw.ButtonContent {
                 icon-name: "media-playback-start-symbolic";
                 label: _("Run");
-              }
-
-              ;
+              };
               action-name: "win.run";
-              margin-end: 6;
               tooltip-text: _("Run (Ctrl+⏎)");
-
-              accessibility {
-                label: _("Run (Ctrl+⏎)");
-              }
-
-              styles [
-                "suggested-action",
-              ]
+              styles ["suggested-action"]
             }
 
-            styles [
-              "toolbar",
-            ]
+            styles ["toolbar"]
           }
 
           Separator {
@@ -241,22 +183,20 @@ using Gtk 4.0;
           ScrolledWindow {
             vexpand: true;
 
-            .GtkSourceView source_view_javascript {
-              buffer:               .GtkSourceBuffer {
-              }
-
-              ;
-              monospace: "true";
-              auto-indent: "true";
-              background-pattern: "grid";
-              highlight-current-line: "true";
-              indent-on-tab: "true";
-              indent-width: "2";
-              insert-spaces-instead-of-tabs: "true";
-              show-line-marks: "true";
-              show-line-numbers: "true";
-              smart-backspace: "true";
-              tab-width: "2";
+            GtkSource.View source_view_javascript {
+              buffer: GtkSource.Buffer {
+              };
+              monospace: true;
+              auto-indent: true;
+              background-pattern: grid;
+              highlight-current-line: true;
+              indent-on-tab: true;
+              indent-width: 2;
+              insert-spaces-instead-of-tabs: true;
+              show-line-marks: true;
+              show-line-numbers: true;
+              smart-backspace: true;
+              tab-width: 2;
             }
           }
         }
@@ -269,14 +209,10 @@ using Gtk 4.0;
               label: _("Style - CSS");
               sensitive: false;
 
-              styles [
-                "flat",
-              ]
+              styles ["flat"]
             }
 
-            styles [
-              "toolbar",
-            ]
+            styles ["toolbar"]
           }
 
           Separator {
@@ -285,22 +221,20 @@ using Gtk 4.0;
           ScrolledWindow {
             vexpand: true;
 
-            .GtkSourceView source_view_css {
-              buffer:               .GtkSourceBuffer {
-              }
-
-              ;
-              monospace: "true";
-              auto-indent: "true";
-              background-pattern: "grid";
-              highlight-current-line: "true";
-              indent-on-tab: "true";
-              indent-width: "2";
-              insert-spaces-instead-of-tabs: "true";
-              show-line-marks: "true";
-              show-line-numbers: "true";
-              smart-backspace: "true";
-              tab-width: "2";
+            GtkSource.View source_view_css {
+              buffer: GtkSource.Buffer {
+              };
+              monospace: true;
+              auto-indent: true;
+              background-pattern: grid;
+              highlight-current-line: true;
+              indent-on-tab: true;
+              indent-width: 2;
+              insert-spaces-instead-of-tabs: true;
+              show-line-marks: true;
+              show-line-numbers: true;
+              smart-backspace: true;
+              tab-width: 2;
             }
           }
         }
@@ -310,41 +244,83 @@ using Gtk 4.0;
 
           Box {
             Button {
-              label: _("UI - XML");
+              label: _("UI -");
               sensitive: false;
 
-              styles [
-                "flat",
+              styles ["flat"]
+            }
+
+            Gtk.ComboBoxText dropdown_ui_lang {
+              // FIXME: Does not work as intended
+              // active-id: "xml";
+              // the XML counterpart works fine
+              // fix or report issue to Blueprint
+              // <child>
+              //   <object class="GtkComboBoxText" id="dropdown_ui_lang">
+              //     <property name="active_id">xml</property>
+              //     <items>
+              //       <item id="xml">XML</item>
+              //       <item id="blueprint">Blueprint</item>
+              //     </items>
+              //   </object>
+              // </child>
+              name: "dropdown_ui_lang";
+              items [
+                blueprint: "Blueprint",
+                xml: "XML",
               ]
             }
 
-            styles [
-              "toolbar",
-            ]
+            styles ["toolbar"]
           }
 
           Separator {
           }
 
-          ScrolledWindow {
-            vexpand: true;
+          Stack stack_ui {
+            StackPage {
+              name: 'blueprint';
+              child: ScrolledWindow {
+                vexpand: true;
 
-            .GtkSourceView source_view_ui {
-              buffer:               .GtkSourceBuffer {
-              }
+                GtkSource.View source_view_blueprint {
+                  buffer: GtkSource.Buffer {
+                  };
+                  monospace: true;
+                  auto-indent: true;
+                  background-pattern: grid;
+                  highlight-current-line: true;
+                  indent-on-tab: true;
+                  indent-width: 2;
+                  insert-spaces-instead-of-tabs: true;
+                  show-line-marks: true;
+                  show-line-numbers: true;
+                  smart-backspace: true;
+                  tab-width: 2;
+                }
+              };
+            }
+            StackPage {
+              name: 'xml';
+              child: ScrolledWindow {
+                vexpand: true;
 
-              ;
-              monospace: "true";
-              auto-indent: "true";
-              background-pattern: "grid";
-              highlight-current-line: "true";
-              indent-on-tab: "true";
-              indent-width: "2";
-              insert-spaces-instead-of-tabs: "true";
-              show-line-marks: "true";
-              show-line-numbers: "true";
-              smart-backspace: "true";
-              tab-width: "2";
+                GtkSource.View source_view_xml {
+                  buffer: GtkSource.Buffer {
+                  };
+                  monospace: true;
+                  auto-indent: true;
+                  background-pattern: grid;
+                  highlight-current-line: true;
+                  indent-on-tab: true;
+                  indent-width: 2;
+                  insert-spaces-instead-of-tabs: true;
+                  show-line-marks: true;
+                  show-line-numbers: true;
+                  smart-backspace: true;
+                  tab-width: 2;
+                }
+              };
             }
           }
         }
@@ -358,29 +334,21 @@ using Gtk 4.0;
               label: _("Preview");
               sensitive: false;
 
-              styles [
-                "flat",
-              ]
+              styles ["flat"]
             }
 
             [end]
             Button button_screenshot {
-              child:               .AdwButtonContent {
+              child: Adw.ButtonContent {
                 icon-name: "photo-camera-symbolic";
-              }
-
-              ;
-              margin-end: 6;
+              };
               tooltip-text: _("Take Screenshot of Preview");
-
               accessibility {
                 label: _("Take Screenshot of Preview");
               }
             }
 
-            styles [
-              "toolbar",
-            ]
+            styles ["toolbar"]
           }
 
           Separator {
@@ -390,9 +358,7 @@ using Gtk 4.0;
             name: "workbench_output";
             vexpand: true;
 
-            styles [
-              "background",
-            ]
+            styles ["background"]
           }
         }
       }
@@ -404,30 +370,35 @@ using Gtk 4.0;
         CenterBox toolbar_devtools {
           [start]
           Box {
-            styles [
-              "toolbar",
-            ]
+            styles ["toolbar"]
 
             ToggleButton button_console {
+              child: Adw.ButtonContent {
+                icon-name: "terminal-symbolic";
+                label: _("Console");
+              };
               action-name: "win.console";
-              label: _("Console");
               tooltip-text: _("Show logs (Ctrl+Shift+K)");
             }
 
             Button button_inspector {
-              label: _("Inspector");
+              child: Adw.ButtonContent {
+                icon-name: "find-location-symbolic";
+                label: _("Inspector");
+              };
               tooltip-text: _("Open GTK Inspector (Ctrl+Shift+I)");
             }
           }
 
           [end]
           Box {
-            styles [
-              "toolbar",
-            ]
+            styles ["toolbar"]
 
             Button button_clear {
-              label: _("Clear");
+              child: Adw.ButtonContent {
+                icon-name: "eraser-symbolic";
+                label: _("Clear");
+              };
               action-name: "win.clear";
               tooltip-text: _("Clear console (Ctrl+K)");
             }
@@ -435,38 +406,40 @@ using Gtk 4.0;
         }
 
         Box devtools {
-          .VteTerminal terminal {
-            hexpand: "true";
-            input-enabled: "false";
+          ScrolledWindow {
+            Vte.Terminal terminal {
+              scroll-unit-is-pixels: true;
+              enable-fallback-scrolling: false;
+              hexpand: true;
+              input-enabled: false;
+            }
           }
         }
       }
     }
-  }
-
-  ;
+  };
 }
 
-.AdwPreferencesWindow window_library {
-  hide-on-close: "true";
-  search-enabled: "true";
+Adw.PreferencesWindow window_library {
+  hide-on-close: true;
+  search-enabled: true;
   title: _("Library");
 
-  .AdwPreferencesPage {
-    .AdwPreferencesGroup {
+  Adw.PreferencesPage {
+    Adw.PreferencesGroup {
       Label {
         label: _("Examples to start from or get inspired by");
       }
     }
 
-    .AdwPreferencesGroup library_uncategorized {
+    Adw.PreferencesGroup library_uncategorized {
     }
 
-    .AdwPreferencesGroup library_network {
+    Adw.PreferencesGroup library_network {
       title: "Network";
     }
 
-    .AdwPreferencesGroup library_user_interface {
+    Adw.PreferencesGroup library_user_interface {
       title: "User Interface";
     }
   }
@@ -485,11 +458,12 @@ FileFilter file_filter {
     "*.ui",
     "*.xml.ui",
     "*.css",
+    "*.blp",
   ]
 }
 
-.AdwStatusPage preview_window {
-  .AdwStatusPage {
+Adw.StatusPage preview_window {
+  Adw.StatusPage {
     title: _("Windowed Preview");
     description: _("This interface can only be previewed as a separate window.\nWe recommend using \"Always on Top\"");
     icon-name: "multitasking-windows-symbolic";
@@ -499,6 +473,7 @@ FileFilter file_filter {
 
       Button preview_window_button {
         label: "Show Preview Window";
+        styles ["pill"]
       }
     }
   }
@@ -508,6 +483,88 @@ menu menu_app {
   item {
     label: _("Open File…");
     action: "app.open";
+  }
+
+  submenu {
+    label: _("Bookmarks");
+    section {
+      label: _("Learn");
+
+      item {
+        label: _("GNOME JavaScript (GJS)");
+        action: "app.open_uri";
+        target: "https://gjs.guide/guides/";
+      }
+
+      item {
+        label: _("Human Interface Guidelines (HIG)");
+        action: "app.open_uri";
+        target: "https://developer.gnome.org/hig/";
+      }
+
+      item {
+        label: _("UI components");
+        action: "app.open_uri";
+        target: "https://developer.gnome.org/documentation/tutorials/beginners/components.html";
+      }
+
+      item {
+        label: _("Platform components");
+        action: "app.open_uri";
+        target: "https://developer.gnome.org/documentation/introduction/components.html";
+      }
+    }
+
+    section {
+      label: _("Reference");
+
+      item {
+        label: _("JavaScript");
+        action: "app.open_uri";
+        target: "https://developer.mozilla.org/docs/Web/JavaScript/Guide";
+      }
+
+      item {
+        label: _("GJS");
+        action: "app.open_uri";
+        target: "https://gjs-docs.gnome.org/";
+      }
+
+      item {
+        label: _("Gtk");
+        action: "app.open_uri";
+        target: "https://docs.gtk.org/gtk4/";
+      }
+
+      item {
+        label: _("Adwaita");
+        action: "app.open_uri";
+        target: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.1/";
+      }
+    }
+
+    section {
+      label: _("Get help");
+
+      item {
+        label: _("Discourse");
+        action: "app.open_uri";
+        target: "https://discourse.gnome.org/c/platform/5";
+      }
+
+      item {
+        label: _("Stack Overflow");
+        action: "app.open_uri";
+        target: "https://stackoverflow.com/questions/tagged/gjs";
+      }
+
+      item {
+        label: _("Matrix");
+        action: "app.open_uri";
+        icon-name: "external-link-symbolic";
+        target: "https://matrix.to/#/#javascript:gnome.org";
+      }
+    }
   }
 
   submenu {
@@ -547,87 +604,6 @@ menu menu_app {
     item {
       label: _("About Workbench");
       action: "app.about";
-    }
-  }
-}
-
-menu menu_bookmarks {
-  section {
-    label: _("Learn");
-
-    item {
-      label: _("GNOME JavaScript (GJS)");
-      action: "app.open_uri";
-      target: "https://gjs.guide/guides/";
-    }
-
-    item {
-      label: _("Human Interface Guidelines (HIG)");
-      action: "app.open_uri";
-      target: "https://developer.gnome.org/hig/";
-    }
-
-    item {
-      label: _("UI components");
-      action: "app.open_uri";
-      target: "https://developer.gnome.org/documentation/tutorials/beginners/components.html";
-    }
-
-    item {
-      label: _("Platform components");
-      action: "app.open_uri";
-      target: "https://developer.gnome.org/documentation/introduction/components.html";
-    }
-  }
-
-  section {
-    label: _("Reference");
-
-    item {
-      label: _("JavaScript");
-      action: "app.open_uri";
-      target: "https://developer.mozilla.org/docs/Web/JavaScript/Guide";
-    }
-
-    item {
-      label: _("GJS");
-      action: "app.open_uri";
-      target: "https://gjs-docs.gnome.org/";
-    }
-
-    item {
-      label: _("Gtk");
-      action: "app.open_uri";
-      target: "https://docs.gtk.org/gtk4/";
-    }
-
-    item {
-      label: _("Adwaita");
-      action: "app.open_uri";
-      target: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.1/";
-    }
-  }
-
-  section {
-    label: _("Get help");
-
-    item {
-      label: _("Discourse");
-      action: "app.open_uri";
-      target: "https://discourse.gnome.org/c/platform/5";
-    }
-
-    item {
-      label: _("Stack Overflow");
-      action: "app.open_uri";
-      target: "https://stackoverflow.com/questions/tagged/gjs";
-    }
-
-    item {
-      label: _("Matrix");
-      action: "app.open_uri";
-      icon-name: "external-link-symbolic";
-      target: "https://matrix.to/#/#javascript:gnome.org";
     }
   }
 }
