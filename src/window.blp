@@ -180,23 +180,48 @@ Adw.ApplicationWindow window {
           Separator {
           }
 
-          ScrolledWindow {
-            vexpand: true;
-
-            GtkSource.View source_view_javascript {
-              buffer: GtkSource.Buffer {
+          Stack stack_code {
+            StackPage {
+              name: 'JavaScript';
+              child: ScrolledWindow {
+                vexpand: true;
+                GtkSource.View source_view_javascript {
+                  buffer: GtkSource.Buffer {
+                  };
+                  monospace: true;
+                  auto-indent: true;
+                  background-pattern: grid;
+                  highlight-current-line: true;
+                  indent-on-tab: true;
+                  indent-width: 2;
+                  insert-spaces-instead-of-tabs: true;
+                  show-line-marks: true;
+                  show-line-numbers: true;
+                  smart-backspace: true;
+                  tab-width: 2;
+                }
               };
-              monospace: true;
-              auto-indent: true;
-              background-pattern: grid;
-              highlight-current-line: true;
-              indent-on-tab: true;
-              indent-width: 2;
-              insert-spaces-instead-of-tabs: true;
-              show-line-marks: true;
-              show-line-numbers: true;
-              smart-backspace: true;
-              tab-width: 2;
+            }
+            StackPage {
+              name: 'Vala';
+              child: ScrolledWindow {
+                vexpand: true;
+                GtkSource.View source_view_vala {
+                  buffer: GtkSource.Buffer {
+                  };
+                  monospace: true;
+                  auto-indent: true;
+                  background-pattern: grid;
+                  highlight-current-line: true;
+                  indent-on-tab: true;
+                  indent-width: 2;
+                  insert-spaces-instead-of-tabs: true;
+                  show-line-marks: true;
+                  show-line-numbers: true;
+                  smart-backspace: true;
+                  tab-width: 2;
+                }
+              };
             }
           }
         }
@@ -220,7 +245,6 @@ Adw.ApplicationWindow window {
 
           ScrolledWindow {
             vexpand: true;
-
             GtkSource.View source_view_css {
               buffer: GtkSource.Buffer {
               };
@@ -282,7 +306,6 @@ Adw.ApplicationWindow window {
               name: 'blueprint';
               child: ScrolledWindow {
                 vexpand: true;
-
                 GtkSource.View source_view_blueprint {
                   buffer: GtkSource.Buffer {
                   };
@@ -304,7 +327,6 @@ Adw.ApplicationWindow window {
               name: 'xml';
               child: ScrolledWindow {
                 vexpand: true;
-
                 GtkSource.View source_view_xml {
                   buffer: GtkSource.Buffer {
                   };

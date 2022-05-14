@@ -8,9 +8,9 @@ import LSPClient from "./lsp/LSPClient.js";
 const { addSignalMethods } = imports.signals;
 
 export default function PanelUI({
+  builder,
   source_view_xml,
   source_view_blueprint,
-  builder,
   data_dir,
 }) {
   const blueprint = new LSPClient([

@@ -42,6 +42,7 @@
     <file>Devtools.js</file>
     <file>Document.js</file>
     <file>PanelUI.js</file>
+    <file>PanelCode.js</file>
     <file>Library.js</file>
     <file>logger.js</file>
     <file>main.js</file>

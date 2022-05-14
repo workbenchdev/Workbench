@@ -10,6 +10,7 @@ import { gettext as _ } from "gettext";
 import { confirm, settings, createDataDir } from "./util.js";
 import Document from "./Document.js";
 import PanelUI from "./PanelUI.js";
+import PanelCode from "./PanelCode.js";
 import Devtools from "./Devtools.js";
 
 import prettier from "./lib/prettier.js";
@@ -43,7 +44,6 @@ export default function Window({ application }) {
   const panel_javascript = builder.get_object("panel_javascript");
   const panel_css = builder.get_object("panel_css");
   const panel_preview = builder.get_object("panel_preview");
-  const code_dropdown = builder.get_object("code_dropdown");
 
   const { terminal } = Devtools({ application, window, builder });
 
@@ -52,16 +52,22 @@ export default function Window({ application }) {
   const placeholders = getDemoSources("Welcome");
 
   const source_view_javascript = builder.get_object("source_view_javascript");
-  // documents.push(null);
+  Document({
+    source_view: source_view_javascript,
+    lang: "js",
+    placeholder: placeholders.js,
+    ext: "js",
+    data_dir,
+  });
 
-  // const source_view_javascript = builder.get_object("source_view_javascript");
-  // Document({
-  //   source_view: source_view_javascript,
-  //   lang: "js",
-  //   placeholder: placeholders.js,
-  //   ext: "js",
-  //   data_dir,
-  // });
+  const source_view_vala = builder.get_object("source_view_vala");
+  Document({
+    source_view: source_view_vala,
+    lang: "vala",
+    placeholder: placeholders.vala,
+    ext: "vala",
+    data_dir,
+  });
 
   const source_view_blueprint = builder.get_object("source_view_blueprint");
   Document({
@@ -97,8 +103,26 @@ export default function Window({ application }) {
     data_dir,
   });
 
+  const previewer = Previewer({
+    output,
+    builder,
+    source_view_css,
+    window,
+    application,
+    data_dir,
+    panel_ui,
+  });
+
+  const panel_code = PanelCode({
+    builder,
+    source_view_javascript,
+    source_view_blueprint,
+    previewer,
+  });
+
   const source_views = [
-    null,
+    source_view_javascript,
+    source_view_vala,
     source_view_css,
     source_view_blueprint,
     source_view_xml,
@@ -116,8 +140,8 @@ export default function Window({ application }) {
   function updateStyle() {
     const { dark } = style_manager;
     const scheme = scheme_manager.get_scheme(dark ? "Adwaita-dark" : "Adwaita");
-    source_views.forEach((source_view) => {
-      source_view?.buffer.set_style_scheme(scheme);
+    source_views.forEach(({ buffer }) => {
+      buffer.set_style_scheme(scheme);
     });
 
     button_dark.active = dark;
@@ -172,63 +196,13 @@ export default function Window({ application }) {
     GObject.BindingFlags.SYNC_CREATE
   );
 
-  settings.bind(
-    "code-language",
-    code_dropdown,
-    "selected",
-    Gio.SettingsBindFlags.DEFAULT
-  );
-  code_dropdown.connect("notify::selected-item", switchLanguage);
-
   button_inspector.connect("clicked", () => {
     Gtk.Window.set_interactive_debugging(true);
   });
 
-  const previewer = Previewer({
-    output,
-    builder,
-    source_view_css,
-    window,
-    application,
-    data_dir,
-    panel_ui,
-  });
-  switchLanguage();
-
   panel_ui.connect("changed", previewer.update);
   source_view_css.buffer.connect_after("changed", previewer.update);
   previewer.update();
-
-  function switchLanguage() {
-    const language = code_dropdown.selected_item.string;
-
-    // FIXME
-    // if (source_views[0] !== null) {
-    //   source_views[0].stopSaving();
-    // }
-    source_view_javascript.buffer.text = "";
-    if (language === "JavaScript") {
-      Document({
-        source_view: source_view_javascript,
-        lang: "js",
-        placeholder: placeholders.js,
-        ext: "js",
-        data_dir,
-      });
-      source_views[0] = source_view_javascript;
-    } else if (language === "Vala") {
-      Document({
-        source_view: source_view_javascript,
-        lang: "vala",
-        placeholder: placeholders.vala,
-        ext: "vala",
-        data_dir,
-      });
-      source_views[0] = source_view_javascript;
-    }
-
-    previewer.setLanguage(language);
-  }
 
   function format(buffer, formatter) {
     const code = formatter(buffer.text.trim());
@@ -246,7 +220,7 @@ export default function Window({ application }) {
 
     terminal.clear();
 
-    const language = code_dropdown.selected_item.string;
+    const { language } = panel_code;
     try {
       if (language === "JavaScript") {
         format(source_view_javascript.buffer, (text) => {
@@ -306,10 +280,8 @@ export default function Window({ application }) {
         );
         await import(`file://${file_javascript.get_path()}`);
       } else if (language === "Vala") {
-        if (compiler === null) {
-          compiler = Compiler(data_dir);
-        }
-        await compiler.compile(source_view_javascript.buffer.text);
+        compiler = compiler || Compiler(data_dir);
+        await compiler.compile(source_view_vala.buffer.text);
       }
     } catch (err) {
       // prettier xml errors are not instances of Error
@@ -353,13 +325,11 @@ export default function Window({ application }) {
 
     settings.set_string("selected-demo", demo_name);
 
-    if (code_dropdown.selected_item.string === "JavaScript") {
-      load(source_view_javascript.buffer, js);
-      settings.set_boolean("show-code", !!js);
-    } else if (code_dropdown.selected_item.string === "Vala") {
-      load(source_view_javascript.buffer, vala);
-      settings.set_boolean("show-code", !!vala);
-    }
+    load(source_view_javascript.buffer, js);
+    settings.set_boolean("show-code", !!js);
+
+    load(source_view_vala.buffer, vala);
+    settings.set_boolean("show-code", !!vala);
 
     load(source_view_css.buffer, css);
     settings.set_boolean("show-style", !!css);
