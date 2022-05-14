@@ -1,6 +1,5 @@
 import Gio from "gi://Gio";
 import Adw from "gi://Adw";
-import Gtk from "gi://Gtk";
 
 const byteArray = imports.byteArray;
 
@@ -21,11 +20,6 @@ export default function Library({ window, builder, loadDemo }) {
       subtitle: demo.description,
       activatable: true,
     });
-
-    const image = new Gtk.Image({
-      icon_name: "go-next-symbolic",
-    });
-    widget.add_suffix(image);
 
     widget.connect("activated", () => {
       loadDemo(demo.name).catch(logError);
