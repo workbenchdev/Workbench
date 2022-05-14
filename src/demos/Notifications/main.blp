@@ -1,42 +1,40 @@
 using Gtk 4.0;
 
-.AdwToastOverlay overlay {
+Box {
+  orientation: vertical;
+  valign: center;
+  halign: center;
+
+  Label {
+    label: "Notifications demo!";
+    margin-bottom: 24;
+
+    styles [
+      "title-1",
+    ]
+  }
+
+  Button button_simple {
+    label: "Trigger notification";
+    margin-bottom: 24;
+  }
+
   Box {
     orientation: vertical;
-    valign: center;
-    halign: center;
 
-    Label {
-      label: "Notifications demo!";
-      margin-bottom: 24;
-
-      styles [
-        "title-1",
-      ]
+    LinkButton {
+      label: "Tutorial";
+      uri: "https://developer.gnome.org/documentation/tutorials/notifications.html";
     }
 
-    Button button_simple {
-      label: "Trigger notification";
-      margin-bottom: 24;
+    LinkButton {
+      label: "API Reference";
+      uri: "https://docs.gtk.org/gio/class.Notification.html";
     }
 
-    Box {
-      orientation: vertical;
-
-      LinkButton {
-        label: "Tutorial";
-        uri: "https://developer.gnome.org/documentation/tutorials/notifications.html";
-      }
-
-      LinkButton {
-        label: "API Reference";
-        uri: "https://docs.gtk.org/gio/class.Notification.html";
-      }
-
-      LinkButton {
-        label: "Human Interface Guidelines";
-        uri: "https://developer.gnome.org/hig/patterns/feedback/notifications.html";
-      }
+    LinkButton {
+      label: "Human Interface Guidelines";
+      uri: "https://developer.gnome.org/hig/patterns/feedback/notifications.html";
     }
   }
 }
