@@ -391,9 +391,13 @@ using Gtk 4.0;
         }
 
         Box devtools {
-          .VteTerminal terminal {
-            hexpand: "true";
-            input-enabled: "false";
+          ScrolledWindow {
+            .VteTerminal terminal {
+              scroll-unit-is-pixels: true;
+              enable-fallback-scrolling: false;
+              hexpand: "true";
+              input-enabled: "false";
+            }
           }
         }
       }
