@@ -10,7 +10,6 @@ Box welcome {
     icon-name: "re.sonny.Workbench";
     pixel-size: 196;
     margin-bottom: 24;
-
     styles [
       "icon-dropshadow",
     ]
@@ -19,7 +18,6 @@ Box welcome {
   Label {
     label: "Welcome to Workbench";
     margin-bottom: 24;
-
     styles [
       "title-1",
     ]
@@ -32,81 +30,73 @@ Box welcome {
   }
 
   Box {
-    margin-bottom: 12;
-
-    Image {
-      icon-name: "update-symbolic";
-      margin-end: 12;
-      icon-size: normal;
+    orientation: vertical;
+    homogeneous: true;
+    Box {
+      margin-bottom: 12;
+      Image {
+        icon-name: "update-symbolic";
+        margin-end: 12;
+        icon-size: normal;
+      }
+      Label {
+        label: "Edit Style and UI to reload the Preview";
+      }
     }
 
-    Label {
-      label: "Edit Style and UI to reload the Preview";
-    }
-  }
-
-  Box {
-    margin-bottom: 12;
-
-    Image {
-      icon-name: "media-playback-start-symbolic";
-      margin-end: 12;
-      icon-size: normal;
-    }
-
-    Label {
-      label: "Hit";
-    }
-
-    ShortcutsShortcut {
-      accelerator: "<Primary>Return";
-      margin-start: 12;
+    Box {
+      margin-bottom: 12;
+      Image {
+        icon-name: "media-playback-start-symbolic";
+        margin-end: 12;
+        icon-size: normal;
+      }
+      Label {
+        label: "Hit";
+      }
+      ShortcutsShortcut {
+        accelerator: "<Primary>Return";
+        margin-start: 12;
+      }
+      Label {
+        label: "to format and run Code";
+      }
     }
 
-    Label {
-      label: "to format and run Code";
-    }
-  }
-
-  Box {
-    margin-bottom: 12;
-
-    Image {
-      icon-name: "media-floppy-symbolic";
-      margin-end: 12;
-      icon-size: normal;
+    Box {
+      margin-bottom: 12;
+      Image {
+        icon-name: "media-floppy-symbolic";
+        margin-end: 12;
+        icon-size: normal;
+      }
+      Label {
+        label: "Changes are automatically saved and restored";
+      }
     }
 
-    Label {
-      label: "Changes are automatically saved and restored";
-    }
-  }
-
-  Box {
-    margin-bottom: 12;
-
-    Image {
-      icon-name: "user-bookmarks-symbolic";
-      margin-end: 12;
-      icon-size: normal;
+    Box {
+      margin-bottom: 12;
+      Image {
+        icon-name: "user-bookmarks-symbolic";
+        margin-end: 12;
+        icon-size: normal;
+      }
+      Label {
+        label: "Checkout the Bookmarks menu to learn and get help";
+      }
     }
 
-    Label {
-      label: "Checkout the Bookmarks menu to learn and get help";
-    }
-  }
-
-  Box {
-    margin-bottom: 12;
-
-    Image {
-      icon-name: "open-book-symbolic";
-      margin-end: 12;
-      icon-size: normal;
-    }
-
-    Label {
-      label: "Browse the Library for demos and examples";
+    Box {
+      margin-bottom: 12;
+      Image {
+        icon-name: "open-book-symbolic";
+        margin-end: 12;
+        icon-size: normal;
+      }
+      Label {
+        label: "Browse the Library for demos and examples";
+      }
     }
   }
 }
