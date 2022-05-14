@@ -1,12 +1,13 @@
 using Gtk 4.0;
+using Adw 1;
 
-.AdwApplicationWindow window {
+Adw.ApplicationWindow window {
   default-width: "800";
   default-height: "600";
   content: Box {
     orientation: vertical;
 
-    .AdwHeaderBar {
+    Adw.HeaderBar {
       [title]
       Label {
         label: "My Awesome App";
@@ -20,10 +21,10 @@ using Gtk 4.0;
       }
     }
 
-    .AdwStatusPage {
+    Adw.StatusPage {
       title: "My App";
       description: "My App is awesome";
-      vexpand: "true";
+      vexpand: true;
       icon-name: "re.sonny.Workbench-symbolic";
 
       Box {

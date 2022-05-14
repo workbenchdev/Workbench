@@ -1,16 +1,19 @@
 using Gtk 4.0;
+using Adw 1;
+using Vte 3.91;
+using GtkSource 5;
 
-.AdwApplicationWindow window {
+Adw.ApplicationWindow window {
   default-width: "800";
   default-height: "600";
-  maximized: "true";
+  maximized: true;
   content: Box {
     orientation: vertical;
 
-    .AdwHeaderBar {
+    Adw.HeaderBar {
       [start]
       Button button_library {
-        child: .AdwButtonContent {
+        child: Adw.ButtonContent {
           icon-name: "open-book-symbolic";
           label: _("Library");
         };
@@ -150,7 +153,7 @@ using Gtk 4.0;
 
             [end]
             Button button_run {
-              child: .AdwButtonContent {
+              child: Adw.ButtonContent {
                 icon-name: "media-playback-start-symbolic";
                 label: _("Run");
               };
@@ -168,20 +171,20 @@ using Gtk 4.0;
           ScrolledWindow {
             vexpand: true;
 
-            .GtkSourceView source_view_javascript {
-              buffer: .GtkSourceBuffer {
+            GtkSource.View source_view_javascript {
+              buffer: GtkSource.Buffer {
               };
-              monospace: "true";
-              auto-indent: "true";
-              background-pattern: "grid";
-              highlight-current-line: "true";
-              indent-on-tab: "true";
-              indent-width: "2";
-              insert-spaces-instead-of-tabs: "true";
-              show-line-marks: "true";
-              show-line-numbers: "true";
-              smart-backspace: "true";
-              tab-width: "2";
+              monospace: true;
+              auto-indent: true;
+              background-pattern: grid;
+              highlight-current-line: true;
+              indent-on-tab: true;
+              indent-width: 2;
+              insert-spaces-instead-of-tabs: true;
+              show-line-marks: true;
+              show-line-numbers: true;
+              smart-backspace: true;
+              tab-width: 2;
             }
           }
         }
@@ -206,20 +209,20 @@ using Gtk 4.0;
           ScrolledWindow {
             vexpand: true;
 
-            .GtkSourceView source_view_css {
-              buffer: .GtkSourceBuffer {
+            GtkSource.View source_view_css {
+              buffer: GtkSource.Buffer {
               };
-              monospace: "true";
-              auto-indent: "true";
-              background-pattern: "grid";
-              highlight-current-line: "true";
-              indent-on-tab: "true";
-              indent-width: "2";
-              insert-spaces-instead-of-tabs: "true";
-              show-line-marks: "true";
-              show-line-numbers: "true";
-              smart-backspace: "true";
-              tab-width: "2";
+              monospace: true;
+              auto-indent: true;
+              background-pattern: grid;
+              highlight-current-line: true;
+              indent-on-tab: true;
+              indent-width: 2;
+              insert-spaces-instead-of-tabs: true;
+              show-line-marks: true;
+              show-line-numbers: true;
+              smart-backspace: true;
+              tab-width: 2;
             }
           }
         }
@@ -268,20 +271,20 @@ using Gtk 4.0;
               child: ScrolledWindow {
                 vexpand: true;
 
-                .GtkSourceView source_view_blueprint {
-                  buffer: .GtkSourceBuffer {
+                GtkSource.View source_view_blueprint {
+                  buffer: GtkSource.Buffer {
                   };
-                  monospace: "true";
-                  auto-indent: "true";
-                  background-pattern: "grid";
-                  highlight-current-line: "true";
-                  indent-on-tab: "true";
-                  indent-width: "2";
-                  insert-spaces-instead-of-tabs: "true";
-                  show-line-marks: "true";
-                  show-line-numbers: "true";
-                  smart-backspace: "true";
-                  tab-width: "2";
+                  monospace: true;
+                  auto-indent: true;
+                  background-pattern: grid;
+                  highlight-current-line: true;
+                  indent-on-tab: true;
+                  indent-width: 2;
+                  insert-spaces-instead-of-tabs: true;
+                  show-line-marks: true;
+                  show-line-numbers: true;
+                  smart-backspace: true;
+                  tab-width: 2;
                 }
               };
             }
@@ -290,20 +293,20 @@ using Gtk 4.0;
               child: ScrolledWindow {
                 vexpand: true;
 
-                .GtkSourceView source_view_xml {
-                  buffer: .GtkSourceBuffer {
+                GtkSource.View source_view_xml {
+                  buffer: GtkSource.Buffer {
                   };
-                  monospace: "true";
-                  auto-indent: "true";
-                  background-pattern: "grid";
-                  highlight-current-line: "true";
-                  indent-on-tab: "true";
-                  indent-width: "2";
-                  insert-spaces-instead-of-tabs: "true";
-                  show-line-marks: "true";
-                  show-line-numbers: "true";
-                  smart-backspace: "true";
-                  tab-width: "2";
+                  monospace: true;
+                  auto-indent: true;
+                  background-pattern: grid;
+                  highlight-current-line: true;
+                  indent-on-tab: true;
+                  indent-width: 2;
+                  insert-spaces-instead-of-tabs: true;
+                  show-line-marks: true;
+                  show-line-numbers: true;
+                  smart-backspace: true;
+                  tab-width: 2;
                 }
               };
             }
@@ -324,7 +327,7 @@ using Gtk 4.0;
 
             [end]
             Button button_screenshot {
-              child: .AdwButtonContent {
+              child: Adw.ButtonContent {
                 icon-name: "photo-camera-symbolic";
               };
               tooltip-text: _("Take Screenshot of Preview");
@@ -358,7 +361,7 @@ using Gtk 4.0;
             styles ["toolbar"]
 
             ToggleButton button_console {
-              child: .AdwButtonContent {
+              child: Adw.ButtonContent {
                 icon-name: "terminal-symbolic";
                 label: _("Console");
               };
@@ -367,7 +370,7 @@ using Gtk 4.0;
             }
 
             Button button_inspector {
-              child: .AdwButtonContent {
+              child: Adw.ButtonContent {
                 icon-name: "find-location-symbolic";
                 label: _("Inspector");
               };
@@ -380,7 +383,7 @@ using Gtk 4.0;
             styles ["toolbar"]
 
             Button button_clear {
-              child: .AdwButtonContent {
+              child: Adw.ButtonContent {
                 icon-name: "eraser-symbolic";
                 label: _("Clear");
               };
@@ -392,11 +395,11 @@ using Gtk 4.0;
 
         Box devtools {
           ScrolledWindow {
-            .VteTerminal terminal {
+            Vte.Terminal terminal {
               scroll-unit-is-pixels: true;
               enable-fallback-scrolling: false;
-              hexpand: "true";
-              input-enabled: "false";
+              hexpand: true;
+              input-enabled: false;
             }
           }
         }
@@ -405,26 +408,26 @@ using Gtk 4.0;
   };
 }
 
-.AdwPreferencesWindow window_library {
-  hide-on-close: "true";
-  search-enabled: "true";
+Adw.PreferencesWindow window_library {
+  hide-on-close: true;
+  search-enabled: true;
   title: _("Library");
 
-  .AdwPreferencesPage {
-    .AdwPreferencesGroup {
+  Adw.PreferencesPage {
+    Adw.PreferencesGroup {
       Label {
         label: _("Examples to start from or get inspired by");
       }
     }
 
-    .AdwPreferencesGroup library_uncategorized {
+    Adw.PreferencesGroup library_uncategorized {
     }
 
-    .AdwPreferencesGroup library_network {
+    Adw.PreferencesGroup library_network {
       title: "Network";
     }
 
-    .AdwPreferencesGroup library_user_interface {
+    Adw.PreferencesGroup library_user_interface {
       title: "User Interface";
     }
   }
@@ -447,8 +450,8 @@ FileFilter file_filter {
   ]
 }
 
-.AdwStatusPage preview_window {
-  .AdwStatusPage {
+Adw.StatusPage preview_window {
+  Adw.StatusPage {
     title: _("Windowed Preview");
     description: _("This interface can only be previewed as a separate window.\nWe recommend using \"Always on Top\"");
     icon-name: "multitasking-windows-symbolic";
