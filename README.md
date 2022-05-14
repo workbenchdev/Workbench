@@ -93,7 +93,7 @@ It is unsupported and may put users at risk.
 
 Workbench would not be possible without
 
-GTK, GLib, Flatpak, GtkSourceView, libadwaita, Vte, gjs Blueprint
+GTK, GLib, Flatpak, GtkSourceView, libadwaita, VTE, GJS, Blueprint
 
 and the GNOME community 🖤
 

@@ -326,9 +326,9 @@ export default function Window({ application }) {
   window.add_action(action_library);
   application.set_accels_for_action("win.library", ["<Control><Shift>O"]);
 
-  function confirmDiscard() {
+  async function confirmDiscard() {
     if (!settings.get_boolean("has-edits")) return true;
-    const agreed = confirm({
+    const agreed = await confirm({
       transient_for: application.get_active_window(),
       text: _("Are you sure you want to discard your changes?"),
     });

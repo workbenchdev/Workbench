@@ -4,8 +4,7 @@ using Gtk 4.0;
   default-width: "800";
   default-height: "600";
   maximized: "true";
-  content:
-  Box {
+  content: Box {
     orientation: vertical;
 
     .AdwHeaderBar {
@@ -41,10 +40,7 @@ using Gtk 4.0;
             }
           };
 
-          styles [
-            "flat",
-            "view-toggler",
-          ]
+          styles ["flat", "view-toggler"]
         }
 
         ToggleButton button_css {
@@ -60,10 +56,7 @@ using Gtk 4.0;
             }
           };
 
-          styles [
-            "flat",
-            "view-toggler",
-          ]
+          styles ["flat", "view-toggler"]
         }
 
         ToggleButton button_ui {
@@ -79,10 +72,7 @@ using Gtk 4.0;
             }
           };
 
-          styles [
-            "flat",
-            "view-toggler",
-          ]
+          styles ["flat", "view-toggler"]
         }
 
         ToggleButton button_preview {
@@ -98,10 +88,7 @@ using Gtk 4.0;
             }
           };
 
-          styles [
-            "flat",
-            "view-toggler",
-          ]
+          styles ["flat", "view-toggler"]
         }
       }
 
@@ -114,9 +101,7 @@ using Gtk 4.0;
 
       [end]
       Box {
-        styles [
-          "linked",
-        ]
+        styles ["linked"]
 
         ToggleButton button_light {
           icon-name: _("sun-symbolic");
@@ -160,9 +145,7 @@ using Gtk 4.0;
               label: _("Code - JavaScript");
               sensitive: false;
 
-              styles [
-                "flat",
-              ]
+              styles ["flat"]
             }
 
             [end]
@@ -173,14 +156,10 @@ using Gtk 4.0;
               };
               action-name: "win.run";
               tooltip-text: _("Run (Ctrl+⏎)");
-              styles [
-                "suggested-action",
-              ]
+              styles ["suggested-action"]
             }
 
-            styles [
-              "toolbar",
-            ]
+            styles ["toolbar"]
           }
 
           Separator {
@@ -215,14 +194,10 @@ using Gtk 4.0;
               label: _("Style - CSS");
               sensitive: false;
 
-              styles [
-                "flat",
-              ]
+              styles ["flat"]
             }
 
-            styles [
-              "toolbar",
-            ]
+            styles ["toolbar"]
           }
 
           Separator {
@@ -257,9 +232,7 @@ using Gtk 4.0;
               label: _("UI -");
               sensitive: false;
 
-              styles [
-                "flat",
-              ]
+              styles ["flat"]
             }
 
             Gtk.ComboBoxText dropdown_ui_lang {
@@ -283,9 +256,7 @@ using Gtk 4.0;
               ]
             }
 
-            styles [
-              "toolbar",
-            ]
+            styles ["toolbar"]
           }
 
           Separator {
@@ -348,9 +319,7 @@ using Gtk 4.0;
               label: _("Preview");
               sensitive: false;
 
-              styles [
-                "flat",
-              ]
+              styles ["flat"]
             }
 
             [end]
@@ -364,9 +333,7 @@ using Gtk 4.0;
               }
             }
 
-            styles [
-              "toolbar",
-            ]
+            styles ["toolbar"]
           }
 
           Separator {
@@ -376,9 +343,7 @@ using Gtk 4.0;
             name: "workbench_output";
             vexpand: true;
 
-            styles [
-              "background",
-            ]
+            styles ["background"]
           }
         }
       }
@@ -390,9 +355,7 @@ using Gtk 4.0;
         CenterBox toolbar_devtools {
           [start]
           Box {
-            styles [
-              "toolbar",
-            ]
+            styles ["toolbar"]
 
             ToggleButton button_console {
               child: .AdwButtonContent {
@@ -414,9 +377,7 @@ using Gtk 4.0;
 
           [end]
           Box {
-            styles [
-              "toolbar",
-            ]
+            styles ["toolbar"]
 
             Button button_clear {
               child: .AdwButtonContent {
@@ -493,6 +454,7 @@ FileFilter file_filter {
 
       Button preview_window_button {
         label: "Show Preview Window";
+        styles ["pill"]
       }
     }
   }
