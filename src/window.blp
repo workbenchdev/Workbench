@@ -15,13 +15,11 @@ Adw.ApplicationWindow window {
       Button button_library {
         child: Adw.ButtonContent {
           icon-name: "open-book-symbolic";
-          label: _("Library");
+          label: _("_Library");
+          use-underline: true;
         };
         action-name: "win.library";
         tooltip-text: _("Open Library of Demos and Examples (Ctrl+Shift+O)");
-        accessibility {
-          label: _("Run (Ctrl+⏎)");
-        }
       }
 
       [title]
@@ -30,7 +28,7 @@ Adw.ApplicationWindow window {
         orientation: horizontal;
         homogeneous: true;
 
-        ToggleButton button_javascript {
+        ToggleButton button_code {
           child: Box {
             halign: center;
 
@@ -39,14 +37,15 @@ Adw.ApplicationWindow window {
             }
 
             Label {
-              label: _("Code");
+              label: _("_Code");
+              use-underline: true;
             }
           };
 
           styles ["flat", "view-toggler"]
         }
 
-        ToggleButton button_css {
+        ToggleButton button_style {
           child: Box {
             halign: center;
 
@@ -55,7 +54,8 @@ Adw.ApplicationWindow window {
             }
 
             Label {
-              label: _("Style");
+              label: _("_Style");
+              use-underline: true;
             }
           };
 
@@ -71,7 +71,8 @@ Adw.ApplicationWindow window {
             }
 
             Label {
-              label: _("UI");
+              label: _("_UI");
+              use-underline: true;
             }
           };
 
@@ -87,7 +88,8 @@ Adw.ApplicationWindow window {
             }
 
             Label {
-              label: _("Preview");
+              label: _("_Preview");
+              use-underline: true;
             }
           };
 
@@ -139,20 +141,17 @@ Adw.ApplicationWindow window {
         vexpand: true;
         homogeneous: true;
 
-        Box panel_javascript {
+        Box panel_code {
           orientation: vertical;
 
           CenterBox {
             [start]
             Box {
-              orientation: horizontal;
-
-              Button {
-                label: _("Code -");
-                sensitive: false;
-                styles ["flat"]
+              Label {
+                label: _("<b>Code -</b>");
+                use-markup: true;
+                styles ["dim-label"]
               }
-
               DropDown code_dropdown {
                 model: StringList {
                   strings [
@@ -167,7 +166,8 @@ Adw.ApplicationWindow window {
             Button button_run {
               child: Adw.ButtonContent {
                 icon-name: "media-playback-start-symbolic";
-                label: _("Run");
+                label: _("_Run");
+                use-underline: true;
               };
               action-name: "win.run";
               tooltip-text: _("Run (Ctrl+⏎)");
@@ -180,61 +180,70 @@ Adw.ApplicationWindow window {
           Separator {
           }
 
-          Stack stack_code {
-            StackPage {
-              name: 'JavaScript';
-              child: ScrolledWindow {
-                vexpand: true;
-                GtkSource.View source_view_javascript {
-                  buffer: GtkSource.Buffer {
-                  };
-                  monospace: true;
-                  auto-indent: true;
-                  background-pattern: grid;
-                  highlight-current-line: true;
-                  indent-on-tab: true;
-                  indent-width: 2;
-                  insert-spaces-instead-of-tabs: true;
-                  show-line-marks: true;
-                  show-line-numbers: true;
-                  smart-backspace: true;
-                  tab-width: 2;
-                }
-              };
+          Box {
+            hexpand: true;
+            Stack stack_code {
+              hexpand: true;
+              StackPage {
+                name: 'JavaScript';
+                child: ScrolledWindow {
+                  vexpand: true;
+                  GtkSource.View source_view_javascript {
+                    buffer: GtkSource.Buffer {
+                    };
+                    monospace: true;
+                    auto-indent: true;
+                    background-pattern: grid;
+                    highlight-current-line: true;
+                    indent-on-tab: true;
+                    indent-width: 2;
+                    insert-spaces-instead-of-tabs: true;
+                    show-line-marks: true;
+                    show-line-numbers: true;
+                    smart-backspace: true;
+                    tab-width: 2;
+                  }
+                };
+              }
+              StackPage {
+                name: 'Vala';
+                child: ScrolledWindow {
+                  vexpand: true;
+                  GtkSource.View source_view_vala {
+                    buffer: GtkSource.Buffer {
+                    };
+                    monospace: true;
+                    auto-indent: true;
+                    background-pattern: grid;
+                    highlight-current-line: true;
+                    indent-on-tab: true;
+                    indent-width: 2;
+                    insert-spaces-instead-of-tabs: true;
+                    show-line-marks: true;
+                    show-line-numbers: true;
+                    smart-backspace: true;
+                    tab-width: 2;
+                  }
+                };
+              }
             }
-            StackPage {
-              name: 'Vala';
-              child: ScrolledWindow {
-                vexpand: true;
-                GtkSource.View source_view_vala {
-                  buffer: GtkSource.Buffer {
-                  };
-                  monospace: true;
-                  auto-indent: true;
-                  background-pattern: grid;
-                  highlight-current-line: true;
-                  indent-on-tab: true;
-                  indent-width: 2;
-                  insert-spaces-instead-of-tabs: true;
-                  show-line-marks: true;
-                  show-line-numbers: true;
-                  smart-backspace: true;
-                  tab-width: 2;
-                }
-              };
+
+            Separator {
             }
           }
         }
 
-        Box panel_css {
+        Box panel_style {
           orientation: vertical;
 
-          Box {
-            Button {
-              label: _("Style - CSS");
-              sensitive: false;
+          CenterBox {
+            height-request: 46;
 
-              styles ["flat"]
+            [start]
+            Label {
+              label: _("<b>Style - CSS</b>");
+              use-markup: true;
+              styles ["dim-label"]
             }
 
             styles ["toolbar"]
@@ -243,22 +252,29 @@ Adw.ApplicationWindow window {
           Separator {
           }
 
-          ScrolledWindow {
-            vexpand: true;
-            GtkSource.View source_view_css {
-              buffer: GtkSource.Buffer {
-              };
-              monospace: true;
-              auto-indent: true;
-              background-pattern: grid;
-              highlight-current-line: true;
-              indent-on-tab: true;
-              indent-width: 2;
-              insert-spaces-instead-of-tabs: true;
-              show-line-marks: true;
-              show-line-numbers: true;
-              smart-backspace: true;
-              tab-width: 2;
+          Box {
+            ScrolledWindow {
+              vexpand: true;
+              hexpand: true;
+
+              GtkSource.View source_view_css {
+                buffer: GtkSource.Buffer {
+                };
+                monospace: true;
+                auto-indent: true;
+                background-pattern: grid;
+                highlight-current-line: true;
+                indent-on-tab: true;
+                indent-width: 2;
+                insert-spaces-instead-of-tabs: true;
+                show-line-marks: true;
+                show-line-numbers: true;
+                smart-backspace: true;
+                tab-width: 2;
+              }
+            }
+
+            Separator {
             }
           }
         }
@@ -266,33 +282,34 @@ Adw.ApplicationWindow window {
         Box panel_ui {
           orientation: vertical;
 
-          Box {
-            Button {
-              label: _("UI -");
-              sensitive: false;
-
-              styles ["flat"]
-            }
-
-            Gtk.ComboBoxText dropdown_ui_lang {
-              // FIXME: Does not work as intended
-              // active-id: "xml";
-              // the XML counterpart works fine
-              // fix or report issue to Blueprint
-              // <child>
-              //   <object class="GtkComboBoxText" id="dropdown_ui_lang">
-              //     <property name="active_id">xml</property>
-              //     <items>
-              //       <item id="xml">XML</item>
-              //       <item id="blueprint">Blueprint</item>
-              //     </items>
-              //   </object>
-              // </child>
-              name: "dropdown_ui_lang";
-              items [
-                blueprint: "Blueprint",
-                xml: "XML",
-              ]
+          CenterBox {
+            [start]
+            Box {
+              Label {
+                label: _("<b>UI -</b>");
+                use-markup: true;
+                styles ["dim-label"]
+              }
+              Gtk.ComboBoxText dropdown_ui_lang {
+                // FIXME: Does not work as intended
+                // active-id: "xml";
+                // the XML counterpart works fine
+                // fix or report issue to Blueprint
+                // <child>
+                //   <object class="GtkComboBoxText" id="dropdown_ui_lang">
+                //     <property name="active_id">xml</property>
+                //     <items>
+                //       <item id="xml">XML</item>
+                //       <item id="blueprint">Blueprint</item>
+                //     </items>
+                //   </object>
+                // </child>
+                name: "dropdown_ui_lang";
+                items [
+                  blueprint: "Blueprint",
+                  xml: "XML",
+                ]
+              }
             }
 
             styles ["toolbar"]
@@ -301,48 +318,57 @@ Adw.ApplicationWindow window {
           Separator {
           }
 
-          Stack stack_ui {
-            StackPage {
-              name: 'blueprint';
-              child: ScrolledWindow {
-                vexpand: true;
-                GtkSource.View source_view_blueprint {
-                  buffer: GtkSource.Buffer {
-                  };
-                  monospace: true;
-                  auto-indent: true;
-                  background-pattern: grid;
-                  highlight-current-line: true;
-                  indent-on-tab: true;
-                  indent-width: 2;
-                  insert-spaces-instead-of-tabs: true;
-                  show-line-marks: true;
-                  show-line-numbers: true;
-                  smart-backspace: true;
-                  tab-width: 2;
-                }
-              };
+          Box {
+            Stack stack_ui {
+              hexpand: true;
+
+              StackPage {
+                name: 'blueprint';
+                child: ScrolledWindow {
+                  vexpand: true;
+
+                  GtkSource.View source_view_blueprint {
+                    buffer: GtkSource.Buffer {
+                    };
+                    monospace: true;
+                    auto-indent: true;
+                    background-pattern: grid;
+                    highlight-current-line: true;
+                    indent-on-tab: true;
+                    indent-width: 2;
+                    insert-spaces-instead-of-tabs: true;
+                    show-line-marks: true;
+                    show-line-numbers: true;
+                    smart-backspace: true;
+                    tab-width: 2;
+                  }
+                };
+              }
+              StackPage {
+                name: 'xml';
+                child: ScrolledWindow {
+                  vexpand: true;
+
+                  GtkSource.View source_view_xml {
+                    buffer: GtkSource.Buffer {
+                    };
+                    monospace: true;
+                    auto-indent: true;
+                    background-pattern: grid;
+                    highlight-current-line: true;
+                    indent-on-tab: true;
+                    indent-width: 2;
+                    insert-spaces-instead-of-tabs: true;
+                    show-line-marks: true;
+                    show-line-numbers: true;
+                    smart-backspace: true;
+                    tab-width: 2;
+                  }
+                };
+              }
             }
-            StackPage {
-              name: 'xml';
-              child: ScrolledWindow {
-                vexpand: true;
-                GtkSource.View source_view_xml {
-                  buffer: GtkSource.Buffer {
-                  };
-                  monospace: true;
-                  auto-indent: true;
-                  background-pattern: grid;
-                  highlight-current-line: true;
-                  indent-on-tab: true;
-                  indent-width: 2;
-                  insert-spaces-instead-of-tabs: true;
-                  show-line-marks: true;
-                  show-line-numbers: true;
-                  smart-backspace: true;
-                  tab-width: 2;
-                }
-              };
+
+            Separator {
             }
           }
         }
@@ -352,15 +378,17 @@ Adw.ApplicationWindow window {
 
           CenterBox {
             [start]
-            Button {
-              label: _("Preview");
-              sensitive: false;
-
-              styles ["flat"]
+            Label {
+              label: _("<b>Preview</b>");
+              use-markup: true;
+              styles ["dim-label"]
             }
 
             [end]
             Button button_screenshot {
+              // TODO: File an issue - using this instead of Adw.ButtonContent
+              // makes the toolbar 1px taller than the other ones
+              // icon-name: "photo-camera-symbolic";
               child: Adw.ButtonContent {
                 icon-name: "photo-camera-symbolic";
               };
@@ -376,11 +404,29 @@ Adw.ApplicationWindow window {
           Separator {
           }
 
-          ScrolledWindow output {
-            name: "workbench_output";
-            vexpand: true;
+          Box {
+            ScrolledWindow output {
+              name: "workbench_output";
+              vexpand: true;
+              hexpand: true;
 
-            styles ["background"]
+              styles ["background"]
+            }
+
+            Separator {
+            }
+          }
+        }
+
+        Box panel_placeholder {
+          visible: false;
+          name: "placeholder";
+          halign: center;
+          valign: center;
+
+          Image {
+            icon-name: "workbench-symbolic";
+            pixel-size: 512;
           }
         }
       }
@@ -397,7 +443,8 @@ Adw.ApplicationWindow window {
             ToggleButton button_console {
               child: Adw.ButtonContent {
                 icon-name: "terminal-symbolic";
-                label: _("Console");
+                label: _("C_onsole");
+                use-underline: true;
               };
               action-name: "win.console";
               tooltip-text: _("Show logs (Ctrl+Shift+K)");
@@ -406,7 +453,8 @@ Adw.ApplicationWindow window {
             Button button_inspector {
               child: Adw.ButtonContent {
                 icon-name: "find-location-symbolic";
-                label: _("Inspector");
+                label: _("_Inspector");
+                use-underline: true;
               };
               tooltip-text: _("Open GTK Inspector (Ctrl+Shift+I)");
             }
@@ -419,7 +467,8 @@ Adw.ApplicationWindow window {
             Button button_clear {
               child: Adw.ButtonContent {
                 icon-name: "eraser-symbolic";
-                label: _("Clear");
+                label: _("Cl_ear");
+                use-underline: true;
               };
               action-name: "win.clear";
               tooltip-text: _("Clear console (Ctrl+K)");

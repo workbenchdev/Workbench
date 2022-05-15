@@ -41,9 +41,9 @@ export default function Window({ application }) {
 
   const output = builder.get_object("output");
 
-  const panel_javascript = builder.get_object("panel_javascript");
-  const panel_css = builder.get_object("panel_css");
+  const panel_style = builder.get_object("panel_style");
   const panel_preview = builder.get_object("panel_preview");
+  const panel_placeholder = builder.get_object("panel_placeholder");
 
   const { terminal } = Devtools({ application, window, builder });
 
@@ -129,8 +129,7 @@ export default function Window({ application }) {
   ];
 
   const button_run = builder.get_object("button_run");
-  const button_javascript = builder.get_object("button_javascript");
-  const button_css = builder.get_object("button_css");
+  const button_style = builder.get_object("button_style");
   const button_preview = builder.get_object("button_preview");
   const button_inspector = builder.get_object("button_inspector");
   const button_light = builder.get_object("button_light");
@@ -159,26 +158,13 @@ export default function Window({ application }) {
 
   settings.bind(
     "show-style",
-    button_css,
+    button_style,
     "active",
     Gio.SettingsBindFlags.DEFAULT
   );
-  button_css.bind_property(
+  button_style.bind_property(
     "active",
-    panel_css,
-    "visible",
-    GObject.BindingFlags.SYNC_CREATE
-  );
-
-  settings.bind(
-    "show-code",
-    button_javascript,
-    "active",
-    Gio.SettingsBindFlags.DEFAULT
-  );
-  button_javascript.bind_property(
-    "active",
-    panel_javascript,
+    panel_style,
     "visible",
     GObject.BindingFlags.SYNC_CREATE
   );
@@ -195,6 +181,17 @@ export default function Window({ application }) {
     "visible",
     GObject.BindingFlags.SYNC_CREATE
   );
+
+  function updatePanel() {
+    panel_placeholder.visible = ![
+      "show-preview",
+      "show-ui",
+      "show-style",
+      "show-code",
+    ].find((s) => settings.get_boolean(s));
+  }
+  updatePanel();
+  settings.connect("changed", updatePanel);
 
   button_inspector.connect("clicked", () => {
     Gtk.Window.set_interactive_debugging(true);

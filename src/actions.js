@@ -100,7 +100,7 @@ export default function Actions({ application, version }) {
     }
 
     try {
-      GLib.spawn_command_line_async(`/bin/${name}`);
+      GLib.spawn_command_line_async(`sh -c "/bin/${name} > /dev/null 2>&1"`);
     } catch (err) {
       logError(err);
     }

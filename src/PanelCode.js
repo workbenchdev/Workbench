@@ -4,20 +4,20 @@ import GObject from "gi://GObject";
 import { settings } from "./util.js";
 
 export default function PanelUI({ builder, previewer }) {
-  const panel_javascript = builder.get_object("panel_javascript");
-  const button_javascript = builder.get_object("button_javascript");
+  const panel_code = builder.get_object("panel_code");
+  const button_code = builder.get_object("button_code");
   const code_dropdown = builder.get_object("code_dropdown");
   const stack_code = builder.get_object("stack_code");
 
   settings.bind(
     "show-code",
-    button_javascript,
+    button_code,
     "active",
     Gio.SettingsBindFlags.DEFAULT
   );
-  button_javascript.bind_property(
+  button_code.bind_property(
     "active",
-    panel_javascript,
+    panel_code,
     "visible",
     GObject.BindingFlags.SYNC_CREATE
   );
