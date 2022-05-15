@@ -12,7 +12,6 @@ export default function Document({
   ext,
 }) {
   const { buffer } = source_view;
-  let stop_saving = false;
 
   buffer.set_language(language_manager.get_language(lang));
 
@@ -32,19 +31,14 @@ export default function Document({
     .catch(logError);
 
   buffer.connect("modified-changed", () => {
-    if (!buffer.get_modified() || stop_saving) return;
+    if (!buffer.get_modified()) return;
     saveSourceBuffer({ file: source_file, buffer }).catch(logError);
     settings.set_boolean("has-edits", true);
   });
 
-  function stopSaving() {
-    stop_saving = true;
-  }
-
   return {
     source_view,
     buffer,
-    stopSaving,
   };
 }
 
