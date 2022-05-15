@@ -11,7 +11,7 @@
   <translation type="gettext">re.sonny.Workbench</translation>
   <description>
     <p
-    >Workbench goal is to let you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a custom GTK widget.</p>
+    >Workbench goal is to let you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a GTK user interface.</p>
     <p>Among other things, Workbench comes with</p>
     <ul>
       <li>realtime GTK/CSS preview</li>

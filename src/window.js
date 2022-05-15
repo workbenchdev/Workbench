@@ -42,6 +42,7 @@ export default function Window({ application }) {
   const panel_javascript = builder.get_object("panel_javascript");
   const panel_css = builder.get_object("panel_css");
   const panel_preview = builder.get_object("panel_preview");
+  const panel_placeholder = builder.get_object("panel_placeholder");
 
   const { terminal } = Devtools({ application, window, builder });
 
@@ -164,6 +165,17 @@ export default function Window({ application }) {
     "visible",
     GObject.BindingFlags.SYNC_CREATE
   );
+
+  function updatePanel() {
+    panel_placeholder.visible = ![
+      "show-preview",
+      "show-ui",
+      "show-style",
+      "show-code",
+    ].find((s) => settings.get_boolean(s));
+  }
+  updatePanel();
+  settings.connect("changed", updatePanel);
 
   button_inspector.connect("clicked", () => {
     Gtk.Window.set_interactive_debugging(true);

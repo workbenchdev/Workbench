@@ -380,6 +380,18 @@ Adw.ApplicationWindow window {
             }
           }
         }
+
+        Box panel_placeholder {
+          visible: false;
+          name: "placeholder";
+          halign: center;
+          valign: center;
+
+          Image {
+            icon-name: "workbench-symbolic";
+            pixel-size: 512;
+          }
+        }
       }
 
       [end]
