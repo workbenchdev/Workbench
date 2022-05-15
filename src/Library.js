@@ -5,7 +5,7 @@ const byteArray = imports.byteArray;
 
 let window_library;
 
-export default function Library({ window, builder, loadDemo }) {
+export default function Library({ window, builder, openDemo }) {
   if (window_library) {
     return window_library.present();
   }
@@ -22,7 +22,7 @@ export default function Library({ window, builder, loadDemo }) {
     });
 
     widget.connect("activated", () => {
-      loadDemo(demo.name).catch(logError);
+      openDemo(demo.name).catch(logError);
     });
 
     builder.get_object(`library_${demo.category}`).add(widget);
@@ -46,14 +46,15 @@ function getDemos() {
   });
 }
 
-export function getDemoSources(demo_name) {
+export function loadDemo(demo_name) {
   const js = getDemoFile(demo_name, "main.js");
   const css = getDemoFile(demo_name, "main.css");
   const xml = getDemoFile(demo_name, "main.ui");
   const blueprint = getDemoFile(demo_name, "main.blp");
   const vala = getDemoFile(demo_name, "main.vala");
+  const json = JSON.parse(getDemoFile(demo_name, "main.json"));
 
-  return { js, css, xml, blueprint, vala };
+  return { ...json, js, css, xml, blueprint, vala };
 }
 
 export function getDemoFile(demo_name, file_name) {

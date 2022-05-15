@@ -1,5 +1,6 @@
 {
   "name": "Toasts",
   "category": "user_interface",
-  "description": "Toasts, or “in-app notifications” or are popup banners that contain a label and sometimes a button."
+  "description": "Toasts, or “in-app notifications” or are popup banners that contain a label and sometimes a button.",
+  "panels": ["code", "preview"]
 }
