@@ -103,7 +103,7 @@ export default function Preview({
     try {
       style = scopeStylesheet(style);
     } catch (err) {
-      logger.debg(err);
+      logger.debug(err);
       // logError(err);
     }
 

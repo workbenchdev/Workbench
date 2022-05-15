@@ -168,23 +168,29 @@ Adw.ApplicationWindow window {
           Separator {
           }
 
-          ScrolledWindow {
-            vexpand: true;
+          Box {
+            ScrolledWindow {
+              vexpand: true;
+              hexpand: true;
 
-            GtkSource.View source_view_javascript {
-              buffer: GtkSource.Buffer {
-              };
-              monospace: true;
-              auto-indent: true;
-              background-pattern: grid;
-              highlight-current-line: true;
-              indent-on-tab: true;
-              indent-width: 2;
-              insert-spaces-instead-of-tabs: true;
-              show-line-marks: true;
-              show-line-numbers: true;
-              smart-backspace: true;
-              tab-width: 2;
+              GtkSource.View source_view_javascript {
+                buffer: GtkSource.Buffer {
+                };
+                monospace: true;
+                auto-indent: true;
+                background-pattern: grid;
+                highlight-current-line: true;
+                indent-on-tab: true;
+                indent-width: 2;
+                insert-spaces-instead-of-tabs: true;
+                show-line-marks: true;
+                show-line-numbers: true;
+                smart-backspace: true;
+                tab-width: 2;
+              }
+            }
+
+            Separator {
             }
           }
         }
@@ -206,23 +212,29 @@ Adw.ApplicationWindow window {
           Separator {
           }
 
-          ScrolledWindow {
-            vexpand: true;
+          Box {
+            ScrolledWindow {
+              vexpand: true;
+              hexpand: true;
 
-            GtkSource.View source_view_css {
-              buffer: GtkSource.Buffer {
-              };
-              monospace: true;
-              auto-indent: true;
-              background-pattern: grid;
-              highlight-current-line: true;
-              indent-on-tab: true;
-              indent-width: 2;
-              insert-spaces-instead-of-tabs: true;
-              show-line-marks: true;
-              show-line-numbers: true;
-              smart-backspace: true;
-              tab-width: 2;
+              GtkSource.View source_view_css {
+                buffer: GtkSource.Buffer {
+                };
+                monospace: true;
+                auto-indent: true;
+                background-pattern: grid;
+                highlight-current-line: true;
+                indent-on-tab: true;
+                indent-width: 2;
+                insert-spaces-instead-of-tabs: true;
+                show-line-marks: true;
+                show-line-numbers: true;
+                smart-backspace: true;
+                tab-width: 2;
+              }
+            }
+
+            Separator {
             }
           }
         }
@@ -265,50 +277,57 @@ Adw.ApplicationWindow window {
           Separator {
           }
 
-          Stack stack_ui {
-            StackPage {
-              name: 'blueprint';
-              child: ScrolledWindow {
-                vexpand: true;
+          Box {
+            Stack stack_ui {
+              hexpand: true;
 
-                GtkSource.View source_view_blueprint {
-                  buffer: GtkSource.Buffer {
-                  };
-                  monospace: true;
-                  auto-indent: true;
-                  background-pattern: grid;
-                  highlight-current-line: true;
-                  indent-on-tab: true;
-                  indent-width: 2;
-                  insert-spaces-instead-of-tabs: true;
-                  show-line-marks: true;
-                  show-line-numbers: true;
-                  smart-backspace: true;
-                  tab-width: 2;
-                }
-              };
+              StackPage {
+                name: 'blueprint';
+                child: ScrolledWindow {
+                  vexpand: true;
+
+                  GtkSource.View source_view_blueprint {
+                    buffer: GtkSource.Buffer {
+                    };
+                    monospace: true;
+                    auto-indent: true;
+                    background-pattern: grid;
+                    highlight-current-line: true;
+                    indent-on-tab: true;
+                    indent-width: 2;
+                    insert-spaces-instead-of-tabs: true;
+                    show-line-marks: true;
+                    show-line-numbers: true;
+                    smart-backspace: true;
+                    tab-width: 2;
+                  }
+                };
+              }
+              StackPage {
+                name: 'xml';
+                child: ScrolledWindow {
+                  vexpand: true;
+
+                  GtkSource.View source_view_xml {
+                    buffer: GtkSource.Buffer {
+                    };
+                    monospace: true;
+                    auto-indent: true;
+                    background-pattern: grid;
+                    highlight-current-line: true;
+                    indent-on-tab: true;
+                    indent-width: 2;
+                    insert-spaces-instead-of-tabs: true;
+                    show-line-marks: true;
+                    show-line-numbers: true;
+                    smart-backspace: true;
+                    tab-width: 2;
+                  }
+                };
+              }
             }
-            StackPage {
-              name: 'xml';
-              child: ScrolledWindow {
-                vexpand: true;
 
-                GtkSource.View source_view_xml {
-                  buffer: GtkSource.Buffer {
-                  };
-                  monospace: true;
-                  auto-indent: true;
-                  background-pattern: grid;
-                  highlight-current-line: true;
-                  indent-on-tab: true;
-                  indent-width: 2;
-                  insert-spaces-instead-of-tabs: true;
-                  show-line-marks: true;
-                  show-line-numbers: true;
-                  smart-backspace: true;
-                  tab-width: 2;
-                }
-              };
+            Separator {
             }
           }
         }
