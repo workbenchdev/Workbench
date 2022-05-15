@@ -6,8 +6,12 @@ import { settings } from "./util.js";
 export default function PanelUI({ builder, previewer }) {
   const panel_code = builder.get_object("panel_code");
   const button_code = builder.get_object("button_code");
-  const code_dropdown = builder.get_object("code_dropdown");
   const stack_code = builder.get_object("stack_code");
+
+  const dropdown_code_lang = builder.get_object("dropdown_code_lang");
+  // TODO: File a bug libadwaita
+  // flat does nothing on GtkDropdown or GtkComboBox or GtkComboBoxText
+  dropdown_code_lang.get_first_child().get_style_context().add_class("flat");
 
   settings.bind(
     "show-code",
@@ -24,16 +28,16 @@ export default function PanelUI({ builder, previewer }) {
 
   settings.bind(
     "code-language",
-    code_dropdown,
+    dropdown_code_lang,
     "selected",
     Gio.SettingsBindFlags.DEFAULT
   );
-  code_dropdown.connect("notify::selected-item", switchLanguage);
+  dropdown_code_lang.connect("notify::selected-item", switchLanguage);
 
   const panel = {};
 
   function switchLanguage() {
-    panel.language = code_dropdown.selected_item.string;
+    panel.language = dropdown_code_lang.selected_item.string;
     stack_code.visible_child_name = panel.language;
     previewer.setLanguage(panel.language);
   }
