@@ -1,6 +1,5 @@
 import Vte from "gi://Vte";
 import GLib from "gi://GLib";
-import GObject from "gi://GObject";
 import Gio from "gi://Gio";
 
 import { settings } from "./util.js";
@@ -13,7 +12,6 @@ const MAKE_CURSOR_INVISIBLE = "\u001b[?25l";
 
 export default function Console({ builder, window, application }) {
   const terminal = builder.get_object("terminal");
-  const devtools = builder.get_object("devtools");
 
   terminal.feed(MAKE_CURSOR_INVISIBLE);
   // terminal.set_cursor_blink_mode(Vte.CursorBlinkMode.ON);

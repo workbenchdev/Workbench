@@ -350,12 +350,7 @@ Adw.ApplicationWindow window {
 
             [end]
             Button button_screenshot {
-              // TODO: File an issue - using this instead of Adw.ButtonContent
-              // makes the toolbar 1px taller than the other ones
-              // icon-name: "photo-camera-symbolic";
-              child: Adw.ButtonContent {
-                icon-name: "photo-camera-symbolic";
-              };
+              icon-name: "photo-camera-symbolic";
               tooltip-text: _("Take Screenshot of Preview");
               accessibility {
                 label: _("Take Screenshot of Preview");
