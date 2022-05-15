@@ -15,13 +15,11 @@ Adw.ApplicationWindow window {
       Button button_library {
         child: Adw.ButtonContent {
           icon-name: "open-book-symbolic";
-          label: _("Library");
+          label: _("_Library");
+          use-underline: true;
         };
         action-name: "win.library";
         tooltip-text: _("Open Library of Demos and Examples (Ctrl+Shift+O)");
-        accessibility {
-          label: _("Run (Ctrl+⏎)");
-        }
       }
 
       [title]
@@ -39,7 +37,8 @@ Adw.ApplicationWindow window {
             }
 
             Label {
-              label: _("Code");
+              label: _("_Code");
+              use-underline: true;
             }
           };
 
@@ -55,7 +54,8 @@ Adw.ApplicationWindow window {
             }
 
             Label {
-              label: _("Style");
+              label: _("_Style");
+              use-underline: true;
             }
           };
 
@@ -71,7 +71,8 @@ Adw.ApplicationWindow window {
             }
 
             Label {
-              label: _("UI");
+              label: _("_UI");
+              use-underline: true;
             }
           };
 
@@ -87,7 +88,8 @@ Adw.ApplicationWindow window {
             }
 
             Label {
-              label: _("Preview");
+              label: _("_Preview");
+              use-underline: true;
             }
           };
 
@@ -155,7 +157,8 @@ Adw.ApplicationWindow window {
             Button button_run {
               child: Adw.ButtonContent {
                 icon-name: "media-playback-start-symbolic";
-                label: _("Run");
+                label: _("_Run");
+                use-underline: true;
               };
               action-name: "win.run";
               tooltip-text: _("Run (Ctrl+⏎)");
@@ -346,6 +349,9 @@ Adw.ApplicationWindow window {
 
             [end]
             Button button_screenshot {
+              // TODO: File an issue - using this instead of Adw.ButtonContent
+              // makes the toolbar 1px taller than the other ones
+              // icon-name: "photo-camera-symbolic";
               child: Adw.ButtonContent {
                 icon-name: "photo-camera-symbolic";
               };
@@ -361,11 +367,17 @@ Adw.ApplicationWindow window {
           Separator {
           }
 
-          ScrolledWindow output {
-            name: "workbench_output";
-            vexpand: true;
+          Box {
+            ScrolledWindow output {
+              name: "workbench_output";
+              vexpand: true;
+              hexpand: true;
 
-            styles ["background"]
+              styles ["background"]
+            }
+
+            Separator {
+            }
           }
         }
       }
@@ -382,7 +394,8 @@ Adw.ApplicationWindow window {
             ToggleButton button_console {
               child: Adw.ButtonContent {
                 icon-name: "terminal-symbolic";
-                label: _("Console");
+                label: _("C_onsole");
+                use-underline: true;
               };
               action-name: "win.console";
               tooltip-text: _("Show logs (Ctrl+Shift+K)");
@@ -391,7 +404,8 @@ Adw.ApplicationWindow window {
             Button button_inspector {
               child: Adw.ButtonContent {
                 icon-name: "find-location-symbolic";
-                label: _("Inspector");
+                label: _("_Inspector");
+                use-underline: true;
               };
               tooltip-text: _("Open GTK Inspector (Ctrl+Shift+I)");
             }
@@ -404,7 +418,8 @@ Adw.ApplicationWindow window {
             Button button_clear {
               child: Adw.ButtonContent {
                 icon-name: "eraser-symbolic";
-                label: _("Clear");
+                label: _("Cl_ear");
+                use-underline: true;
               };
               action-name: "win.clear";
               tooltip-text: _("Clear console (Ctrl+K)");
