@@ -16,7 +16,7 @@ import prettier from "./lib/prettier.js";
 import prettier_babel from "./lib/prettier-babel.js";
 import prettier_postcss from "./lib/prettier-postcss.js";
 import prettier_xml from "./lib/prettier-xml.js";
-import Library, { getDemoSources } from "./Library.js";
+import Library, { loadDemo } from "./Library.js";
 import Previewer from "./Previewer.js";
 import { once } from "./troll/src/util.js";
 
@@ -46,7 +46,7 @@ export default function Window({ application }) {
 
   const { terminal } = Devtools({ application, window, builder });
 
-  const placeholders = getDemoSources("Welcome");
+  const placeholders = loadDemo("Welcome");
 
   const source_view_javascript = builder.get_object("source_view_javascript");
   Document({
@@ -295,7 +295,7 @@ export default function Window({ application }) {
   window.add_action(action_clear);
   application.set_accels_for_action("win.clear", ["<Control>K"]);
 
-  async function loadDemo(demo_name) {
+  async function openDemo(demo_name) {
     const agreed = await confirmDiscard();
     if (!agreed) return;
 
@@ -304,20 +304,20 @@ export default function Window({ application }) {
       buffer.place_cursor(buffer.get_start_iter());
     }
 
-    const { js, css, xml, blueprint } = getDemoSources(demo_name);
+    const { js, css, xml, blueprint, panels } = loadDemo(demo_name);
 
     settings.set_string("selected-demo", demo_name);
 
     load(source_view_javascript.buffer, js);
-    settings.set_boolean("show-code", !!js);
+    settings.set_boolean("show-code", panels.includes("code"));
 
     load(source_view_css.buffer, css);
-    settings.set_boolean("show-style", !!css);
+    settings.set_boolean("show-style", panels.includes("style"));
 
     load(source_view_blueprint.buffer, blueprint);
     load(source_view_xml.buffer, xml);
-    settings.set_boolean("show-ui", !!xml);
-    settings.set_boolean("show-preview", !!xml);
+    settings.set_boolean("show-ui", panels.includes("ui"));
+    settings.set_boolean("show-preview", panels.includes("preview"));
 
     settings.set_boolean("has-edits", false);
 
@@ -333,7 +333,7 @@ export default function Window({ application }) {
     parameter_type: null,
   });
   action_library.connect("activate", () => {
-    Library({ window, builder, loadDemo });
+    Library({ window, builder, openDemo });
   });
   window.add_action(action_library);
   application.set_accels_for_action("win.library", ["<Control><Shift>O"]);
