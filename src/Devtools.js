@@ -1,6 +1,6 @@
 import Gio from "gi://Gio";
 
-import Terminal from "./Terminal.js";
+import Console from "./Console.js";
 import { settings } from "./util.js";
 
 export default function Devtools({ application, window, builder }) {
@@ -19,7 +19,7 @@ export default function Devtools({ application, window, builder }) {
   paned.get_start_child().set_size_request(-1, 200);
 
   settings.bind(
-    "show-devtools",
+    "show-console",
     button_console,
     "active",
     Gio.SettingsBindFlags.DEFAULT
@@ -29,7 +29,7 @@ export default function Devtools({ application, window, builder }) {
 
   function uncollapse() {
     terminal.visible = true;
-    settings.set_boolean("show-devtools", true);
+    settings.set_boolean("show-console", true);
   }
 
   function collapse() {
@@ -37,7 +37,7 @@ export default function Devtools({ application, window, builder }) {
     const { height: paned_height } = paned.get_allocation();
 
     terminal.visible = false;
-    settings.set_boolean("show-devtools", false);
+    settings.set_boolean("show-console", false);
     paned.position = paned_height - toolbar_height;
   }
 
@@ -86,13 +86,10 @@ export default function Devtools({ application, window, builder }) {
     parameter_type: null,
   });
   action_console.connect("activate", () => {
-    settings.set_boolean(
-      "show-devtools",
-      !settings.get_boolean("show-devtools")
-    );
+    settings.set_boolean("show-console", !settings.get_boolean("show-console"));
   });
   window.add_action(action_console);
   application.set_accels_for_action("win.console", ["<Control><Shift>K"]);
 
-  return { terminal: Terminal({ builder }) };
+  return { console: Console({ builder, window, application }) };
 }

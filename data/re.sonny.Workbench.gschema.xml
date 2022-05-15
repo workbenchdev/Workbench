@@ -16,7 +16,7 @@
     <key name="show-preview" type="b">
       <default>true</default>
     </key>
-    <key name="show-devtools" type="b">
+    <key name="show-console" type="b">
       <default>true</default>
     </key>
     <key name="has-edits" type="b">

@@ -20,13 +20,12 @@ import Library, { loadDemo } from "./Library.js";
 import Previewer from "./Previewer.js";
 import { once } from "./troll/src/util.js";
 
-Source.init();
-
 const scheme_manager = Source.StyleSchemeManager.get_default();
 const style_manager = Adw.StyleManager.get_default();
 
 export default function Window({ application }) {
   Vte.Terminal.new();
+
   const data_dir = createDataDir();
 
   const builder = Gtk.Builder.new_from_resource(
@@ -44,7 +43,7 @@ export default function Window({ application }) {
   const panel_preview = builder.get_object("panel_preview");
   const panel_placeholder = builder.get_object("panel_placeholder");
 
-  const { terminal } = Devtools({ application, window, builder });
+  const { console } = Devtools({ application, window, builder });
 
   const placeholders = loadDemo("Welcome");
 
@@ -209,7 +208,7 @@ export default function Window({ application }) {
   async function run() {
     button_run.set_sensitive(false);
 
-    terminal.clear();
+    console.clear();
 
     try {
       format(source_view_javascript.buffer, (text) => {
@@ -275,7 +274,7 @@ export default function Window({ application }) {
       }
     } finally {
       button_run.set_sensitive(true);
-      terminal.scrollToEnd();
+      console.scrollToEnd();
     }
   }
 
@@ -286,14 +285,6 @@ export default function Window({ application }) {
   action_run.connect("activate", run);
   window.add_action(action_run);
   application.set_accels_for_action("win.run", ["<Control>Return"]);
-
-  const action_clear = new Gio.SimpleAction({
-    name: "clear",
-    parameter_type: null,
-  });
-  action_clear.connect("activate", terminal.clear);
-  window.add_action(action_clear);
-  application.set_accels_for_action("win.clear", ["<Control>K"]);
 
   async function openDemo(demo_name) {
     const agreed = await confirmDiscard();
@@ -318,6 +309,11 @@ export default function Window({ application }) {
     load(source_view_xml.buffer, xml);
     settings.set_boolean("show-ui", panels.includes("ui"));
     settings.set_boolean("show-preview", panels.includes("preview"));
+
+    // Until we have proper inline errors
+    // let's always show the console
+    // in the future we may let each demo decide
+    settings.set_boolean("show-console", true);
 
     settings.set_boolean("has-edits", false);
 
