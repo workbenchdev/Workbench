@@ -146,11 +146,10 @@ Adw.ApplicationWindow window {
 
           CenterBox {
             [start]
-            Button {
-              label: _("Code - JavaScript");
-              sensitive: false;
-
-              styles ["flat"]
+            Label {
+              label: _("<b>Code - JavaScript</b>");
+              use-markup: true;
+              styles ["dim-label"]
             }
 
             [end]
@@ -201,12 +200,14 @@ Adw.ApplicationWindow window {
         Box panel_css {
           orientation: vertical;
 
-          Box {
-            Button {
-              label: _("Style - CSS");
-              sensitive: false;
+          CenterBox {
+            height-request: 46;
 
-              styles ["flat"]
+            [start]
+            Label {
+              label: _("<b>Style - CSS</b>");
+              use-markup: true;
+              styles ["dim-label"]
             }
 
             styles ["toolbar"]
@@ -245,33 +246,34 @@ Adw.ApplicationWindow window {
         Box panel_ui {
           orientation: vertical;
 
-          Box {
-            Button {
-              label: _("UI -");
-              sensitive: false;
-
-              styles ["flat"]
-            }
-
-            Gtk.ComboBoxText dropdown_ui_lang {
-              // FIXME: Does not work as intended
-              // active-id: "xml";
-              // the XML counterpart works fine
-              // fix or report issue to Blueprint
-              // <child>
-              //   <object class="GtkComboBoxText" id="dropdown_ui_lang">
-              //     <property name="active_id">xml</property>
-              //     <items>
-              //       <item id="xml">XML</item>
-              //       <item id="blueprint">Blueprint</item>
-              //     </items>
-              //   </object>
-              // </child>
-              name: "dropdown_ui_lang";
-              items [
-                blueprint: "Blueprint",
-                xml: "XML",
-              ]
+          CenterBox {
+            [start]
+            Box {
+              Label {
+                label: _("<b>UI -</b>");
+                use-markup: true;
+                styles ["dim-label"]
+              }
+              Gtk.ComboBoxText dropdown_ui_lang {
+                // FIXME: Does not work as intended
+                // active-id: "xml";
+                // the XML counterpart works fine
+                // fix or report issue to Blueprint
+                // <child>
+                //   <object class="GtkComboBoxText" id="dropdown_ui_lang">
+                //     <property name="active_id">xml</property>
+                //     <items>
+                //       <item id="xml">XML</item>
+                //       <item id="blueprint">Blueprint</item>
+                //     </items>
+                //   </object>
+                // </child>
+                name: "dropdown_ui_lang";
+                items [
+                  blueprint: "Blueprint",
+                  xml: "XML",
+                ]
+              }
             }
 
             styles ["toolbar"]
@@ -340,11 +342,10 @@ Adw.ApplicationWindow window {
 
           CenterBox {
             [start]
-            Button {
-              label: _("Preview");
-              sensitive: false;
-
-              styles ["flat"]
+            Label {
+              label: _("<b>Preview</b>");
+              use-markup: true;
+              styles ["dim-label"]
             }
 
             [end]
