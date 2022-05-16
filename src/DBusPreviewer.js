@@ -14,6 +14,7 @@ const ifaceXml = `
       <arg type="s" name="filename" direction="in"/>
       <arg type="s" name="run_symbol" direction="in"/>
       <arg type="s" name="builder_symbol" direction="in"/>
+      <arg type="s" name="window_symbol" direction="in"/>
     </method>
   </interface>
 </node>`;

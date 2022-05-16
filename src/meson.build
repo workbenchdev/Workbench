@@ -45,4 +45,5 @@ configure_file(
   install_dir: get_option('bindir')
 )
 
+install_data('workbench-api.vala', install_dir: datadir)
 subdir('vala-previewer')

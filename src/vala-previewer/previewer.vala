@@ -23,7 +23,7 @@ namespace Workbench {
 
         // filename to loadable module or empty string ("") to just run it again
         // also builder_symbol can be empty. Then the builder object is not handed over to the module
-        public void run (string filename, string run_symbol, string builder_symbol) {
+        public void run (string filename, string run_symbol, string builder_symbol, string window_symbol) {
             if (filename == "") {
                 if (this.module == null) {
                     stderr.printf ("No Module specified yet.\n");
@@ -35,7 +35,8 @@ namespace Workbench {
                     return;
                 }
 
-                this.module.close ();
+                if (this.module != null)
+                    this.module.close ();
                 this.module = Module.open (filename, ModuleFlags.LAZY);
                 if (this.module == null) {
                     stderr.printf ("Module loading failed.\n");
@@ -61,12 +62,21 @@ namespace Workbench {
 
                 var set_builder = (BuilderFunction) function;
                 set_builder (this.builder);
+
+                this.module.symbol (window_symbol, out function);
+                if (function == null) {
+                    stderr.printf (@"Module does not contain symbol '$window_symbol'.\n");
+                    return;
+                }
+
+                var set_window = (WindowFunction) function;
+                set_window (this.window);
             }
 
             void* function;
             this.module.symbol (run_symbol, out function);
             if (function == null) {
-                stderr.printf (@"Module does not contain symbol '$run_symbol'.\n");
+                stderr.printf (@"Function '$run_symbol' not found.\n");
                 return;
             }
 
@@ -79,6 +89,9 @@ namespace Workbench {
 
         [CCode (has_target=false)]
         private delegate void BuilderFunction (Gtk.Builder builder);
+
+        [CCode (has_target=false)]
+        private delegate void WindowFunction (Gtk.Window window);
 
         private Gtk.Window window = new Gtk.Window () {
             hide_on_close = true

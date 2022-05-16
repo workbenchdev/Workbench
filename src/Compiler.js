@@ -10,6 +10,9 @@ export default function Compiler(data_dir) {
   const module_file = Gio.File.new_for_path(
     GLib.build_filenamev([data_dir, "libworkbenchcode.so"])
   );
+  const api_file = Gio.File.new_for_path(
+    GLib.build_filenamev(["/app/share", "workbench-api.vala"])
+  );
 
   async function compile(code) {
     code_file.replace_contents(
@@ -27,6 +30,7 @@ export default function Compiler(data_dir) {
       [
         "valac",
         code_file.get_path(),
+        api_file.get_path(),
         "--hide-internal",
         "-X",
         "-shared",
@@ -50,7 +54,7 @@ export default function Compiler(data_dir) {
 
     if (!valac.get_successful()) return;
 
-    proxy.RunSync(module_file.get_path(), "run", "set_builder");
+    proxy.RunSync(module_file.get_path(), "run", "set_builder", "set_window");
   }
 
   return { compile };
