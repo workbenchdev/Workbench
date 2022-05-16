@@ -1,4 +1,4 @@
-<img style="vertical-align: middle;" src="data/icons/re.sonny.Workbench.svg" width="120" height="120" align="left">
+<img style="vertical-align: middle;" src="data/icons/hicolor/scalable/apps/re.sonny.Workbench.svg" width="120" height="120" align="left">
 
 # Workbench
 
@@ -93,7 +93,7 @@ It is unsupported and may put users at risk.
 
 Workbench would not be possible without
 
-GTK, GLib, Flatpak, GtkSourceView, libadwaita, VTE, GJS, Blueprint
+GTK, GLib, Flatpak, GtkSourceView, libadwaita, VTE, GJS, Blueprint, icon-development-kit
 
 and the GNOME community 🖤
 
