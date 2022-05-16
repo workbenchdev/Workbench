@@ -10,7 +10,7 @@ namespace Workbench {
         stderr.printf (@"Widget with target_id='$target_id' could not be found.\n");
           return;
       }
-      this.window.child = target;
+      this.window.content = target;
     }
 
     public void update_css (string content) {
@@ -93,8 +93,10 @@ namespace Workbench {
     [CCode (has_target=false)]
     private delegate void WindowFunction (Gtk.Window window);
 
-    private Gtk.Window window = new Gtk.Window () {
-      hide_on_close = true
+    private Adw.Window window = new Adw.Window () {
+      hide_on_close = true,
+      default_width = 600,
+      default_height = 800
     };
     private Gtk.CssProvider? css = null;
     private Module module;
