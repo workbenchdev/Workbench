@@ -141,11 +141,20 @@ export default function Preview({
         ["workbench-vala-previewer"],
         Gio.SubprocessFlags.NONE
       );
+      print("uu");
       dbus_proxy = DBusPreviewer();
+      dbus_proxy.connectSignal("WindowOpen", (proxy, name_owner, args) => {
+        if (args[0]) {
+          output.set_child(preview_window);
+        } else {
+          update();
+        }
+      });
     } else if (lang === "JavaScript" && subprocess !== null) {
       subprocess.force_exit();
       subprocess = null;
       dbus_proxy = null;
+      update();
     }
   }
 

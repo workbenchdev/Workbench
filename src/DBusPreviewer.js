@@ -16,6 +16,9 @@ const ifaceXml = `
       <arg type="s" name="builder_symbol" direction="in"/>
       <arg type="s" name="window_symbol" direction="in"/>
     </method>
+    <signal name="WindowOpen">
+      <arg type="b" name="open"/>
+    </signal>
   </interface>
 </node>`;
 

@@ -3,6 +3,15 @@ namespace Workbench {
   [DBus (name="re.sonny.Workbench.vala_previewer")]
   public class Previewer : Object {
 
+    construct {
+        this.window = new Adw.Window () {
+          hide_on_close = true,
+          default_width = 600,
+          default_height = 800
+        };
+        this.window.close_request.connect (() => { this.window_open (false); });
+    }
+
     public void update_ui (string content, string target_id) {
       this.builder = new Gtk.Builder.from_string (content, content.length);
       var target = this.builder.get_object (target_id) as Gtk.Widget;
@@ -51,7 +60,7 @@ namespace Workbench {
         }
 
         this.window.present ();
-        this.presented = true;
+        this.window_open (true);
 
         void* function;
         this.module.symbol (builder_symbol, out function);
@@ -84,6 +93,8 @@ namespace Workbench {
       run ();
     }
 
+    public signal void window_open (bool open);
+
     [CCode (has_target=false)]
     private delegate void RunFunction ();
 
@@ -93,14 +104,9 @@ namespace Workbench {
     [CCode (has_target=false)]
     private delegate void WindowFunction (Gtk.Window window);
 
-    private Adw.Window window = new Adw.Window () {
-      hide_on_close = true,
-      default_width = 600,
-      default_height = 800
-    };
+    private Adw.Window window;
     private Gtk.CssProvider? css = null;
     private Module module;
-    private bool presented = false;
     private Gtk.Builder? builder = null;
   }
 
