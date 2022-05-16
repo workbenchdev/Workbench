@@ -114,9 +114,6 @@ namespace Workbench {
     Gtk.init ();
     Adw.init ();
 
-    Resource resource = resource_load ("/app/share/re.sonny.Workbench/workbench.gresource");
-    resources_register (resource);
-
     Bus.own_name (BusType.SESSION,
                   "re.sonny.Workbench.vala_previewer",
                   BusNameOwnerFlags.NONE,
