@@ -1,12 +1,12 @@
 public void run () {
-	  var main = Workbench.builder.get_object ("welcome") as Gtk.Box;
+	  var main = workbench.builder.get_object ("welcome") as Gtk.Box;
 
   	var button = new Gtk.Button.with_label ("Press me") {
 	      margin_top = 24
 	  };
 	  button.clicked.connect (() => {
 	      var dialog = new Gtk.MessageDialog (
-	          Workbench.window,
+	          workbench.window,
             Gtk.DialogFlags.MODAL,
             Gtk.MessageType.INFO,
             Gtk.ButtonsType.OK,

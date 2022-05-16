@@ -1,12 +1,12 @@
-namespace Workbench {
+namespace workbench {
     public static Gtk.Builder builder;
     public static Gtk.Window window;
 }
 
 public void set_builder (Gtk.Builder b) {
-	  Workbench.builder = b;
+	  workbench.builder = b;
 }
 
 public void set_window (Gtk.Window w) {
-    Workbench.window = w;
+    workbench.window = w;
 }
