@@ -20,7 +20,7 @@ import prettier_xml from "./lib/prettier-xml.js";
 import Library, { loadDemo } from "./Library.js";
 import Previewer from "./Previewer.js";
 import Compiler from "./Compiler.js";
-import { once } from "./troll/src/util.js";
+import logger from "./logger.js";
 
 const scheme_manager = Source.StyleSchemeManager.get_default();
 const style_manager = Adw.StyleManager.get_default();
@@ -50,45 +50,40 @@ export default function Window({ application }) {
 
   const placeholders = loadDemo("Welcome");
 
-  const source_view_javascript = builder.get_object("source_view_javascript");
-  Document({
-    source_view: source_view_javascript,
+  const document_javascript = Document({
+    source_view: builder.get_object("source_view_javascript"),
     lang: "js",
     placeholder: placeholders.js,
     ext: "js",
     data_dir,
   });
 
-  const source_view_vala = builder.get_object("source_view_vala");
-  Document({
-    source_view: source_view_vala,
+  const document_vala = Document({
+    source_view: builder.get_object("source_view_vala"),
     lang: "vala",
     placeholder: placeholders.vala,
     ext: "vala",
     data_dir,
   });
 
-  const source_view_blueprint = builder.get_object("source_view_blueprint");
-  Document({
-    source_view: source_view_blueprint,
+  const document_blueprint = Document({
+    source_view: builder.get_object("source_view_blueprint"),
     lang: "blueprint",
     placeholder: placeholders.blueprint,
     ext: "blp",
     data_dir,
   });
 
-  const source_view_xml = builder.get_object("source_view_xml");
-  Document({
-    source_view: source_view_xml,
+  const document_xml = Document({
+    source_view: builder.get_object("source_view_xml"),
     lang: "xml",
     placeholder: placeholders.xml,
     ext: "ui",
     data_dir,
   });
 
-  const source_view_css = builder.get_object("source_view_css");
-  Document({
-    source_view: source_view_css,
+  const document_css = Document({
+    source_view: builder.get_object("source_view_css"),
     lang: "css",
     placeholder: placeholders.css,
     ext: "css",
@@ -97,15 +92,15 @@ export default function Window({ application }) {
 
   const panel_ui = PanelUI({
     builder,
-    source_view_blueprint,
-    source_view_xml,
+    document_blueprint,
+    document_xml,
     data_dir,
   });
 
   const previewer = Previewer({
     output,
     builder,
-    source_view_css,
+    document_css,
     window,
     application,
     data_dir,
@@ -114,17 +109,17 @@ export default function Window({ application }) {
 
   const panel_code = PanelCode({
     builder,
-    source_view_javascript,
-    source_view_blueprint,
+    document_javascript,
+    document_blueprint,
     previewer,
   });
 
-  const source_views = [
-    source_view_javascript,
-    source_view_vala,
-    source_view_css,
-    source_view_blueprint,
-    source_view_xml,
+  const documents = [
+    document_javascript,
+    document_vala,
+    document_css,
+    document_blueprint,
+    document_xml,
   ];
 
   const button_run = builder.get_object("button_run");
@@ -138,7 +133,7 @@ export default function Window({ application }) {
   function updateStyle() {
     const { dark } = style_manager;
     const scheme = scheme_manager.get_scheme(dark ? "Adwaita-dark" : "Adwaita");
-    source_views.forEach(({ buffer }) => {
+    documents.forEach(({ buffer }) => {
       buffer.set_style_scheme(scheme);
     });
 
@@ -196,10 +191,6 @@ export default function Window({ application }) {
     Gtk.Window.set_interactive_debugging(true);
   });
 
-  panel_ui.connect("changed", previewer.update);
-  source_view_css.buffer.connect_after("changed", previewer.update);
-  previewer.update();
-
   function format(buffer, formatter) {
     const code = formatter(buffer.text.trim());
 
@@ -211,16 +202,20 @@ export default function Window({ application }) {
     return code;
   }
 
-  async function run() {
+  async function runCode() {
     button_run.set_sensitive(false);
 
     console.clear();
+    previewer.stop();
+    panel_ui.stop();
 
     const { language } = panel_code;
     try {
+      await panel_ui.update();
+
       if (language === "JavaScript") {
-        format(source_view_javascript.buffer, (text) => {
-          return prettier.format(source_view_javascript.buffer.text, {
+        format(document_javascript.buffer, (text) => {
+          return prettier.format(text, {
             parser: "babel",
             plugins: [prettier_babel],
             trailingComma: "all",
@@ -228,14 +223,14 @@ export default function Window({ application }) {
         });
       }
 
-      format(source_view_css.buffer, (text) => {
+      format(document_css.buffer, (text) => {
         return prettier.format(text, {
           parser: "css",
           plugins: [prettier_postcss],
         });
       });
 
-      format(source_view_xml.buffer, (text) => {
+      format(document_xml.buffer, (text) => {
         return prettier.format(text, {
           parser: "xml",
           plugins: [prettier_xml],
@@ -268,7 +263,7 @@ export default function Window({ application }) {
         // TODO: File a bug
         const [file_javascript] = Gio.File.new_tmp("workbench-XXXXXX.js");
         file_javascript.replace_contents(
-          source_view_javascript.buffer.text || "\n",
+          document_javascript.buffer.text || "\n",
           null,
           false,
           Gio.FileCreateFlags.NONE,
@@ -277,26 +272,33 @@ export default function Window({ application }) {
         await import(`file://${file_javascript.get_path()}`);
       } else if (language === "Vala") {
         compiler = compiler || Compiler(data_dir);
-        await compiler.compile(source_view_vala.buffer.text);
+        await compiler.compile(document_vala.buffer.text);
       }
     } catch (err) {
       // prettier xml errors are not instances of Error
       if (err instanceof Error) {
         logError(err);
       } else {
-        console.error(err);
+        logger.error(err);
       }
-    } finally {
-      button_run.set_sensitive(true);
-      console.scrollToEnd();
     }
+
+    // setTimeout(() => {
+    previewer.start();
+    panel_ui.start();
+    // });
+
+    button_run.set_sensitive(true);
+    console.scrollToEnd();
   }
 
   const action_run = new Gio.SimpleAction({
     name: "run",
     parameter_type: null,
   });
-  action_run.connect("activate", run);
+  action_run.connect("activate", () => {
+    runCode().catch(logError);
+  });
   window.add_action(action_run);
   application.set_accels_for_action("win.run", ["<Control>Return"]);
 
@@ -304,24 +306,27 @@ export default function Window({ application }) {
     const agreed = await confirmDiscard();
     if (!agreed) return;
 
-    function load(buffer, str) {
+    function load({ buffer }, str) {
       replaceBufferText(buffer, str);
       buffer.place_cursor(buffer.get_start_iter());
     }
 
     const { js, css, xml, blueprint, vala, panels } = loadDemo(demo_name);
 
+    panel_ui.stop();
+    previewer.stop();
+
     settings.set_string("selected-demo", demo_name);
 
-    load(source_view_javascript.buffer, js);
-    load(source_view_vala.buffer, vala);
+    load(document_javascript, js);
+    load(document_vala, vala);
     settings.set_boolean("show-code", panels.includes("code"));
 
-    load(source_view_css.buffer, css);
+    load(document_css, css);
     settings.set_boolean("show-style", panels.includes("style"));
 
-    load(source_view_blueprint.buffer, blueprint);
-    load(source_view_xml.buffer, xml);
+    load(document_blueprint, blueprint);
+    load(document_xml, xml);
     settings.set_boolean("show-ui", panels.includes("ui"));
     settings.set_boolean("show-preview", panels.includes("preview"));
 
@@ -330,13 +335,9 @@ export default function Window({ application }) {
     // in the future we may let each demo decide
     settings.set_boolean("show-console", true);
 
-    settings.set_boolean("has-edits", false);
+    await runCode();
 
-    if (xml || blueprint) {
-      once(panel_ui, "changed").then(run);
-    } else {
-      run();
-    }
+    settings.set_boolean("has-edits", false);
   }
 
   const action_library = new Gio.SimpleAction({
@@ -390,7 +391,7 @@ export default function Window({ application }) {
       return;
     }
 
-    async function load(buffer, data) {
+    async function load({ buffer }, data) {
       const agreed = await confirmDiscard();
       if (!agreed) return;
       replaceBufferText(buffer, data);
@@ -398,14 +399,14 @@ export default function Window({ application }) {
     }
 
     if (content_type.includes("/javascript")) {
-      load(source_view_javascript.buffer, data);
+      load(document_javascript, data);
     } else if (content_type.includes("text/css")) {
-      load(source_view_css.buffer, data);
+      load(document_css, data);
     } else if (content_type.includes("application/x-gtk-builder")) {
-      load(source_view_xml.buffer, data);
+      load(document_xml, data);
       settings.set_string("ui-lang", "xml");
     } else if (file.get_basename().endsWith(".blp")) {
-      load(source_view_blueprint.buffer, data);
+      load(document_blueprint, data);
       settings.set_string("ui-lang", "blueprint");
     }
   }

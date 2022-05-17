@@ -55,4 +55,30 @@
     <file>DBusPreviewer.js</file>
     <file>Compiler.js</file>
   </gresource>
+ <gresource prefix="/re/sonny/Workbench/icons/scalable/actions">
+    <file
+      preprocess="xml-stripblanks"
+      alias="workbench-code-symbolic.svg"
+    >icons/workbench-code-symbolic.svg</file>
+    <file
+      preprocess="xml-stripblanks"
+      alias="workbench-moon-rounded-symbolic.svg"
+    >icons/workbench-moon-rounded-symbolic.svg</file>
+    <file
+      preprocess="xml-stripblanks"
+      alias="workbench-placeholder-symbolic.svg"
+    >icons/workbench-placeholder-symbolic.svg</file>
+    <file
+      preprocess="xml-stripblanks"
+      alias="workbench-preview-symbolic.svg"
+    >icons/workbench-preview-symbolic.svg</file>
+    <file
+      preprocess="xml-stripblanks"
+      alias="workbench-style-symbolic.svg"
+    >icons/workbench-style-symbolic.svg</file>
+    <file
+      preprocess="xml-stripblanks"
+      alias="workbench-ui-symbolic.svg"
+    >icons/workbench-ui-symbolic.svg</file>
+  </gresource>
 </gresources>

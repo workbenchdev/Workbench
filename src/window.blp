@@ -33,7 +33,7 @@ Adw.ApplicationWindow window {
             halign: center;
 
             Image {
-              icon-name: "code-symbolic";
+              icon-name: "workbench-code-symbolic";
             }
 
             Label {
@@ -50,7 +50,7 @@ Adw.ApplicationWindow window {
             halign: center;
 
             Image {
-              icon-name: "style-symbolic";
+              icon-name: "workbench-style-symbolic";
             }
 
             Label {
@@ -67,7 +67,7 @@ Adw.ApplicationWindow window {
             halign: center;
 
             Image {
-              icon-name: "ui-symbolic";
+              icon-name: "workbench-ui-symbolic";
             }
 
             Label {
@@ -84,7 +84,7 @@ Adw.ApplicationWindow window {
             halign: center;
 
             Image {
-              icon-name: "preview-symbolic";
+              icon-name: "workbench-preview-symbolic";
             }
 
             Label {
@@ -118,7 +118,7 @@ Adw.ApplicationWindow window {
         }
 
         ToggleButton button_dark {
-          icon-name: _("moon-rounded-symbolic");
+          icon-name: _("workbench-moon-rounded-symbolic");
           tooltip-text: _("Use Dark mode");
 
           accessibility {
@@ -420,7 +420,7 @@ Adw.ApplicationWindow window {
           valign: center;
 
           Image {
-            icon-name: "workbench-symbolic";
+            icon-name: "workbench-placeholder-symbolic";
             pixel-size: 512;
           }
         }
@@ -632,16 +632,9 @@ menu menu_app {
       }
 
       item {
-        label: _("Stack Overflow");
-        action: "app.open_uri";
-        target: "https://stackoverflow.com/questions/tagged/gjs";
-      }
-
-      item {
         label: _("Matrix");
         action: "app.open_uri";
-        icon-name: "external-link-symbolic";
-        target: "https://matrix.to/#/#javascript:gnome.org";
+        target: "https://matrix.to/#/#workbench:matrix.org";
       }
     }
   }
@@ -665,12 +658,6 @@ menu menu_app {
       label: _("GTK Widget Factory");
       action: "app.platform_tools";
       target: "gtk4-widget-factory";
-    }
-
-    item {
-      label: _("GTK Icon Browser");
-      action: "app.platform_tools";
-      target: "gtk4-icon-browser";
     }
   }
 

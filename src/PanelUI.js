@@ -8,9 +8,9 @@ import LSPClient from "./lsp/LSPClient.js";
 const { addSignalMethods } = imports.signals;
 
 export default function PanelUI({
+  document_xml,
+  document_blueprint,
   builder,
-  source_view_xml,
-  source_view_blueprint,
   data_dir,
 }) {
   const blueprint = new LSPClient([
@@ -38,6 +38,7 @@ export default function PanelUI({
     "visible",
     GObject.BindingFlags.SYNC_CREATE
   );
+  let lang;
 
   const panel = {
     xml: "",
@@ -66,54 +67,53 @@ export default function PanelUI({
     Gio.SettingsBindFlags.DEFAULT
   );
 
-  const { buffer: buffer_blueprint } = source_view_blueprint;
-  const { buffer: buffer_xml } = source_view_xml;
   let handler_id_blueprint = null;
   let handler_id_xml = null;
-  function onChangeBlueprint() {
-    compileBlueprint(buffer_blueprint.text)
-      .then((xml) => {
-        panel.xml = xml;
-        panel.emit("changed");
-      })
-      .catch(logError);
+
+  async function update() {
+    let xml;
+    if (lang === "xml") {
+      xml = document_xml.buffer.text;
+    } else {
+      xml = await compileBlueprint(document_blueprint.buffer.text);
+    }
+    panel.xml = xml;
+    panel.emit("updated");
   }
-  function onChangeXML() {
-    panel.xml = buffer_xml.text;
-    panel.emit("changed");
+
+  function onUpdate() {
+    update().catch(logError);
   }
-  function disconnect() {
-    if (handler_id_blueprint) {
-      buffer_blueprint.disconnect(handler_id_blueprint);
+  function start() {
+    stop();
+    lang = settings.get_string("ui-lang");
+    if (lang === "blueprint") {
+      handler_id_blueprint = document_blueprint.buffer.connect(
+        "end-user-action",
+        onUpdate
+      );
+    } else if (lang === "xml") {
+      handler_id_xml = document_xml.buffer.connect("end-user-action", onUpdate);
+    }
+  }
+
+  function stop() {
+    if (handler_id_blueprint !== null) {
+      document_blueprint.buffer.disconnect(handler_id_blueprint);
       handler_id_blueprint = null;
     }
-    if (handler_id_xml) {
-      buffer_xml.disconnect(handler_id_xml);
+
+    if (handler_id_xml !== null) {
+      document_xml.buffer.disconnect(handler_id_xml);
       handler_id_xml = null;
     }
   }
 
-  function setupLang() {
-    disconnect();
-
-    const lang = settings.get_string("ui-lang");
-
-    if (lang === "blueprint") {
-      handler_id_blueprint = buffer_blueprint.connect(
-        "changed",
-        onChangeBlueprint
-      );
-      onChangeBlueprint();
-    } else if (lang === "xml") {
-      handler_id_xml = buffer_xml.connect("changed", onChangeXML);
-      onChangeXML();
-    }
-  }
-
   settings.connect_after("changed::ui-lang", () => {
-    setupLang();
+    start();
+    onUpdate();
   });
-  setupLang();
+  start();
 
   async function compileBlueprint(text) {
     if (!blueprint.proc) {
@@ -132,6 +132,10 @@ export default function PanelUI({
     });
     return xml;
   }
+
+  panel.start = start;
+  panel.stop = stop;
+  panel.update = update;
 
   return panel;
 }

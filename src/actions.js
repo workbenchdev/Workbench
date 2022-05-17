@@ -89,12 +89,7 @@ export default function Actions({ application, version }) {
     const name = target.unpack();
 
     if (
-      ![
-        "adwaita-1-demo",
-        "gtk4-demo",
-        "gtk4-widget-factory",
-        "gtk4-icon-browser",
-      ].includes(name)
+      !["adwaita-1-demo", "gtk4-demo", "gtk4-widget-factory"].includes(name)
     ) {
       return;
     }
