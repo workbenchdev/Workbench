@@ -34,6 +34,7 @@ export default function Console({ builder, window, application }) {
       `${ERASE_ENTIRE_SCREEN}${ERASE_SAVED_LINES}${MOVE_CURSOR_HOME}`
     );
     // terminal.reset(true, true);
+    // terminal.fork_command("clear");
   }
 
   function scrollToEnd() {

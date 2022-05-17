@@ -36,10 +36,7 @@ export default function Document({
     settings.set_boolean("has-edits", true);
   });
 
-  return {
-    source_view,
-    buffer,
-  };
+  return { source_view, buffer };
 }
 
 async function saveSourceBuffer({ file, buffer }) {

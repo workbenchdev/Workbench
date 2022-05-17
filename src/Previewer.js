@@ -9,15 +9,18 @@ import XdpGtk from "gi://XdpGtk4";
 
 import logger from "./logger.js";
 
-export default function Preview({
+export default function Previewer({
   output,
   builder,
-  source_view_css,
+  panel_ui,
+  document_css,
   window,
   application,
   data_dir,
-  panel_ui,
 }) {
+  let handler_id_ui = null;
+  let handler_id_css = null;
+
   const workbench = (globalThis.workbench = {
     window,
     application,
@@ -33,6 +36,28 @@ export default function Preview({
     if (!object_root) return;
     object_root.present_with_time(Gdk.CURRENT_TIME);
   });
+
+  function start() {
+    stop();
+    if (handler_id_ui === null) {
+      handler_id_ui = panel_ui.connect("updated", update);
+    }
+    if (handler_id_css === null) {
+      handler_id_css = document_css.buffer.connect("end-user-action", update);
+    }
+  }
+
+  function stop() {
+    if (handler_id_ui) {
+      panel_ui.disconnect(handler_id_ui);
+      handler_id_ui = null;
+    }
+
+    if (handler_id_css) {
+      document_css.buffer.disconnect(handler_id_css);
+      handler_id_css = null;
+    }
+  }
 
   function update() {
     const builder = new Gtk.Builder();
@@ -97,7 +122,7 @@ export default function Preview({
       );
       css_provider = null;
     }
-    let style = source_view_css.buffer.text;
+    let style = document_css.buffer.text;
     if (!style) return;
 
     try {
@@ -120,7 +145,13 @@ export default function Preview({
     screenshot({ widget: object_root || output, window, data_dir });
   });
 
-  return { update };
+  start();
+
+  return {
+    start,
+    stop,
+    update,
+  };
 }
 
 // We are using postcss because it's also a dependency of prettier
