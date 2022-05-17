@@ -21,6 +21,7 @@ const ifaceXml = `
     <signal name="WindowOpen">
       <arg type="b" name="open"/>
     </signal>
+    <property type="b" name="DarkMode" access="readwrite"/>
   </interface>
 </node>`;
 

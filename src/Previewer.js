@@ -1,5 +1,6 @@
 import Gtk from "gi://Gtk";
 import Gdk from "gi://Gdk";
+import Adw from "gi://Adw?version=1";
 import * as ltx from "./lib/ltx.js";
 import postcss from "./lib/postcss.js";
 import GLib from "gi://GLib";
@@ -39,6 +40,13 @@ export default function Previewer({
   let language = null;
   let dbus_proxy = null;
   let subprocess = null;
+  
+  const style_manager = Adw.StyleManager.get_default();
+  function updateStyle() {
+    if (dbus_proxy == null) return;
+    dbus_proxy.DarkMode = style_manager.dark;
+  }
+  style_manager.connect("notify::dark", updateStyle);
 
   preview_window_button.connect("clicked", () => {
     if (!object_root || language !== "JavaScript") return;
@@ -130,6 +138,7 @@ export default function Previewer({
         object_root = null;
 
         if (language === "Vala") {
+          dbus_proxy.DarkMode = style_manager.dark;
           dbus_proxy.UpdateUiSync(text, target_id);
         }
       }

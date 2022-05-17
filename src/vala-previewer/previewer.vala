@@ -4,12 +4,18 @@ namespace Workbench {
   public class Previewer : Object {
 
     construct {
-        this.window = new Adw.Window () {
-          hide_on_close = true,
-          default_width = 600,
-          default_height = 800
-        };
-        this.window.close_request.connect (() => { this.window_open (false); });
+      this.window = new Adw.Window () {
+        hide_on_close = true,
+        default_width = 600,
+        default_height = 800
+      };
+      this.window.close_request.connect (() => { this.window_open (false); });
+      this.notify["dark-mode"].connect (() => {
+        if (this.dark_mode)
+          this.color_scheme.color_scheme = Adw.ColorScheme.FORCE_DARK;
+        else
+          this.color_scheme.color_scheme = Adw.ColorScheme.FORCE_LIGHT;
+      });
     }
 
     public void update_ui (string content, string target_id) {
@@ -97,6 +103,8 @@ namespace Workbench {
       this.window.close ();
     }
 
+    public bool dark_mode { get; set; default = false; }
+
     public signal void window_open (bool open);
 
     [CCode (has_target=false)]
@@ -112,6 +120,7 @@ namespace Workbench {
     private Gtk.CssProvider? css = null;
     private Module module;
     private Gtk.Builder? builder = null;
+    private Adw.StyleManager color_scheme = Adw.StyleManager.get_default ();
   }
 
   async void main (string[] args) {
