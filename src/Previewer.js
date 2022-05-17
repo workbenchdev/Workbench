@@ -118,6 +118,8 @@ export default function Previewer({
       return;
     }
 
+    dbus_proxy.DarkMode = style_manager.dark;
+    
     // Update preview with UI
     const object_preview = builder.get_object(target_id);
     if (object_preview) {
@@ -130,7 +132,8 @@ export default function Previewer({
           }
           adoptChild(object_preview, object_root);
         } else if (language === "Vala") {
-          //
+          output.set_child(preview_window);
+          dbus_proxy.UpdateUiSync(text, target_id);
         }
       } else {
         output.set_child(object_preview);
@@ -138,7 +141,6 @@ export default function Previewer({
         object_root = null;
 
         if (language === "Vala") {
-          dbus_proxy.DarkMode = style_manager.dark;
           dbus_proxy.UpdateUiSync(text, target_id);
         }
       }

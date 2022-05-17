@@ -4,7 +4,7 @@ namespace Workbench {
   public class Previewer : Object {
 
     construct {
-      this.window = new Adw.Window () {
+      this.window = new Gtk.Window () {
         hide_on_close = true,
         default_width = 600,
         default_height = 800
@@ -25,7 +25,27 @@ namespace Workbench {
         stderr.printf (@"Widget with target_id='$target_id' could not be found.\n");
           return;
       }
-      this.window.content = target;
+      if (target is Gtk.Root) {
+        if (!(this.window.get_type () == target.get_type ())) {
+          this.window.destroy ();
+          this.window = target as Gtk.Window;
+          this.window.close_request.connect (() => { this.window_open (false); return false; });
+        } else if (target is Adw.Window) {
+          var child = ((Adw.Window) target).content;
+          ((Adw.Window) target).content = null;
+          ((Adw.Window) this.window).content = child;
+        } else if (target is Adw.ApplicationWindow) {
+          var child = ((Adw.ApplicationWindow) target).content;
+          ((Adw.ApplicationWindow) target).content = null;
+          ((Adw.ApplicationWindow) this.window).content = child;
+        } else if (target is Gtk.Window) {
+          var child = ((Gtk.Window) target).child;
+          ((Gtk.Window) target).child = null;
+          this.window.child = child;
+        }
+      } else {
+        this.window.child = target;
+      }
     }
 
     public void update_css (string content) {
@@ -116,7 +136,7 @@ namespace Workbench {
     [CCode (has_target=false)]
     private delegate void WindowFunction (Gtk.Window window);
 
-    private Adw.Window window;
+    private Gtk.Window window;
     private Gtk.CssProvider? css = null;
     private Module module;
     private Gtk.Builder? builder = null;
