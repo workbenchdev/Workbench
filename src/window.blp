@@ -529,18 +529,31 @@ FileFilter file_filter {
 }
 
 Adw.StatusPage preview_window {
-  Adw.StatusPage {
-    title: _("Windowed Preview");
-    description: _("This interface can only be previewed as a separate window.\nWe recommend using \"Always on Top\"");
-    icon-name: "multitasking-windows-symbolic";
+  title: _("Windowed Preview");
+  description: _("This interface can only be previewed as a separate window.\nWe recommend using \"Always on Top\"");
+  icon-name: "multitasking-windows-symbolic";
 
-    Box {
-      halign: center;
+  Box {
+    halign: center;
 
-      Button preview_window_button {
-        label: "Show Preview Window";
-        styles ["pill"]
-      }
+    Button preview_window_button {
+      label: "Show Preview Window";
+      styles ["pill"]
+    }
+  }
+}
+
+Adw.StatusPage external_preview {
+  title: _("Windowed Preview");
+  description: _("Running code in the current programming language supports only the preview in a separate window.\nWe recommend using \"Always on Top\"");
+  icon-name: "multitasking-windows-symbolic";
+
+  Box {
+    halign: center;
+
+    Button external_preview_button {
+      label: "Close External Preview Window";
+      styles ["pill"]
     }
   }
 }

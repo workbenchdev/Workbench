@@ -93,6 +93,10 @@ namespace Workbench {
       run ();
     }
 
+    public void close_window () {
+      this.window.close ();
+    }
+
     public signal void window_open (bool open);
 
     [CCode (has_target=false)]

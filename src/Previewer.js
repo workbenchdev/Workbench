@@ -27,6 +27,9 @@ export default function Preview({
 
   const preview_window = builder.get_object("preview_window");
   const preview_window_button = builder.get_object("preview_window_button");
+  
+  const external_preview = builder.get_object("external_preview");
+  const external_preview_button = builder.get_object("external_preview_button");
 
   let css_provider = null;
   let object_root = null;
@@ -37,6 +40,11 @@ export default function Preview({
   preview_window_button.connect("clicked", () => {
     if (!object_root || language !== "JavaScript") return;
     object_root.present_with_time(Gdk.CURRENT_TIME);
+  });
+  
+  external_preview_button.connect("clicked", () => {
+    if (dbus_proxy == null) return;
+    dbus_proxy.CloseWindowSync();
   });
 
   function update() {
@@ -141,11 +149,10 @@ export default function Preview({
         ["workbench-vala-previewer"],
         Gio.SubprocessFlags.NONE
       );
-      print("uu");
       dbus_proxy = DBusPreviewer();
       dbus_proxy.connectSignal("WindowOpen", (proxy, name_owner, args) => {
         if (args[0]) {
-          output.set_child(preview_window);
+          output.set_child(external_preview);
         } else {
           update();
         }
