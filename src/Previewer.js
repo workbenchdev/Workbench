@@ -66,15 +66,18 @@ export default function Previewer({
     let text = panel_ui.xml.trim();
     let target_id;
     let tree;
+    let template;
 
     try {
       tree = ltx.parse(text);
-      [target_id, text] = targetBuildable(tree);
+      [target_id, text, template] = targetBuildable(tree);
     } catch (err) {
+      logError(err);
       logger.debug(err);
     }
 
     if (!target_id) return;
+    workbench.template = template;
 
     try {
       assertBuildable(tree);
@@ -177,6 +180,39 @@ export function scopeStylesheet(style) {
   return str;
 }
 
+const text_encoder = new TextEncoder();
+
+function getTemplate(tree) {
+  const original = tree.toString();
+  // console.log(original);
+
+  const template = tree.getChild("template");
+  if (!template) return;
+
+  const { parent } = template.attrs;
+  if (!parent) return;
+
+  const klass = getObjectClass(parent);
+  if (!klass) return;
+
+  const object = new klass();
+  if (!(object instanceof Gtk.Widget)) return;
+
+  tree.remove(template);
+
+  const el = new ltx.Element("object", {
+    class: parent,
+    id: "workbench_target",
+  });
+  template.children.forEach((child) => {
+    el.cnode(child);
+  });
+
+  tree.cnode(el);
+
+  return [el.attrs.id, tree.toString(), text_encoder.encode(original)];
+}
+
 function findPreviewable(tree) {
   for (const child of tree.getChildren("object")) {
     const class_name = child.attrs.class;
@@ -223,6 +259,9 @@ function setChild(object, child) {
 }
 
 export function targetBuildable(tree) {
+  const template = getTemplate(tree);
+  if (template) return template;
+
   const child = findPreviewable(tree);
   if (!child) {
     return [null, ""];

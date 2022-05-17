@@ -17,8 +17,8 @@ system.exit = function exit(code) {
 // there is no unregister equivalent to registerClass and
 // this is what GNOME Shell does too according to Verde
 // https://github.com/sonnyp/Workbench/issues/50
-const _registerClass = GObject.registerClass;
-GObject.registerClass = function registerClass(klass, ...args) {
-  klass.GTypeName = klass.GTypeName + Math.random().toString().split("0.")[1];
-  return _registerClass(klass, ...args);
-};
+// const _registerClass = GObject.registerClass;
+// GObject.registerClass = function registerClass(klass, ...args) {
+//   klass.GTypeName = klass.GTypeName + Math.random().toString().split("0.")[1];
+//   return _registerClass(klass, ...args);
+// };
