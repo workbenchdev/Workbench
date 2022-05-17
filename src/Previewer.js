@@ -1,11 +1,14 @@
 import Gtk from "gi://Gtk";
 import Gdk from "gi://Gdk";
+import Adw from "gi://Adw?version=1";
 import * as ltx from "./lib/ltx.js";
 import postcss from "./lib/postcss.js";
 import GLib from "gi://GLib";
+import Gio from "gi://Gio";
 import Graphene from "gi://Graphene";
 import Xdp from "gi://Xdp";
 import XdpGtk from "gi://XdpGtk4";
+import DBusPreviewer from "./DBusPreviewer.js";
 
 import logger from "./logger.js";
 
@@ -29,12 +32,30 @@ export default function Previewer({
   const preview_window = builder.get_object("preview_window");
   const preview_window_button = builder.get_object("preview_window_button");
 
+  const external_preview = builder.get_object("external_preview");
+  const external_preview_button = builder.get_object("external_preview_button");
+
   let css_provider = null;
   let object_root = null;
+  let language = null;
+  let dbus_proxy = null;
+  let subprocess = null;
+
+  const style_manager = Adw.StyleManager.get_default();
+  function updateStyle() {
+    if (dbus_proxy === null) return;
+    dbus_proxy.ColorScheme = style_manager.color_scheme;
+  }
+  style_manager.connect("notify::color-scheme", updateStyle);
 
   preview_window_button.connect("clicked", () => {
-    if (!object_root) return;
+    if (!object_root || language !== "JavaScript") return;
     object_root.present_with_time(Gdk.CURRENT_TIME);
+  });
+
+  external_preview_button.connect("clicked", () => {
+    if (dbus_proxy === null) return;
+    dbus_proxy.CloseWindowSync();
   });
 
   function start() {
@@ -101,16 +122,25 @@ export default function Previewer({
     const object_preview = builder.get_object(target_id);
     if (object_preview) {
       if (object_preview instanceof Gtk.Root) {
-        output.set_child(preview_window);
-        if (!object_root) {
-          object_root = object_preview;
-          object_root.set_hide_on_close(true);
+        if (language === "JavaScript") {
+          output.set_child(preview_window);
+          if (!object_root) {
+            object_root = object_preview;
+            object_root.set_hide_on_close(true);
+          }
+          adoptChild(object_preview, object_root);
+        } else if (language === "Vala") {
+          output.set_child(preview_window);
+          dbus_proxy.UpdateUiSync(text, target_id);
         }
-        adoptChild(object_preview, object_root);
       } else {
         output.set_child(object_preview);
         object_root?.destroy();
         object_root = null;
+
+        if (language === "Vala") {
+          dbus_proxy.UpdateUiSync(text, target_id);
+        }
       }
     }
 
@@ -139,6 +169,34 @@ export default function Previewer({
       css_provider,
       Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
     );
+
+    if (language === "Vala") {
+      dbus_proxy.UpdateCssSync(document_css.buffer.text);
+    }
+  }
+
+  function setLanguage(lang) {
+    language = lang;
+
+    if (lang === "Vala" && (dbus_proxy === null || subprocess === null)) {
+      subprocess = Gio.Subprocess.new(
+        ["workbench-vala-previewer"],
+        Gio.SubprocessFlags.NONE
+      );
+      dbus_proxy = DBusPreviewer();
+      dbus_proxy.connectSignal("WindowOpen", (proxy, name_owner, args) => {
+        if (args[0]) {
+          output.set_child(external_preview);
+        } else {
+          update();
+        }
+      });
+    } else if (lang === "JavaScript" && subprocess !== null) {
+      subprocess.force_exit();
+      subprocess = null;
+      dbus_proxy = null;
+      update();
+    }
   }
 
   builder.get_object("button_screenshot").connect("clicked", () => {
@@ -151,6 +209,7 @@ export default function Previewer({
     start,
     stop,
     update,
+    setLanguage,
   };
 }
 

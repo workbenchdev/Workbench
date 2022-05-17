@@ -51,9 +51,10 @@ export function loadDemo(demo_name) {
   const css = getDemoFile(demo_name, "main.css");
   const xml = getDemoFile(demo_name, "main.ui");
   const blueprint = getDemoFile(demo_name, "main.blp");
+  const vala = getDemoFile(demo_name, "main.vala");
   const json = JSON.parse(getDemoFile(demo_name, "main.json"));
 
-  return { ...json, js, css, xml, blueprint };
+  return { ...json, js, css, xml, blueprint, vala };
 }
 
 export function getDemoFile(demo_name, file_name) {

@@ -10,6 +10,7 @@ import { gettext as _ } from "gettext";
 import { confirm, settings, createDataDir } from "./util.js";
 import Document from "./Document.js";
 import PanelUI from "./PanelUI.js";
+import PanelCode from "./PanelCode.js";
 import Devtools from "./Devtools.js";
 
 import prettier from "./lib/prettier.js";
@@ -18,6 +19,7 @@ import prettier_postcss from "./lib/prettier-postcss.js";
 import prettier_xml from "./lib/prettier-xml.js";
 import Library, { loadDemo } from "./Library.js";
 import Previewer from "./Previewer.js";
+import Compiler from "./Compiler.js";
 import logger from "./logger.js";
 
 const scheme_manager = Source.StyleSchemeManager.get_default();
@@ -38,12 +40,13 @@ export default function Window({ application }) {
 
   const output = builder.get_object("output");
 
-  const panel_code = builder.get_object("panel_code");
   const panel_style = builder.get_object("panel_style");
   const panel_preview = builder.get_object("panel_preview");
   const panel_placeholder = builder.get_object("panel_placeholder");
 
   const { console } = Devtools({ application, window, builder });
+
+  let compiler = null;
 
   const placeholders = loadDemo("Welcome");
 
@@ -52,6 +55,14 @@ export default function Window({ application }) {
     lang: "js",
     placeholder: placeholders.js,
     ext: "js",
+    data_dir,
+  });
+
+  const document_vala = Document({
+    source_view: builder.get_object("source_view_vala"),
+    lang: "vala",
+    placeholder: placeholders.vala,
+    ext: "vala",
     data_dir,
   });
 
@@ -86,15 +97,32 @@ export default function Window({ application }) {
     data_dir,
   });
 
+  const previewer = Previewer({
+    output,
+    builder,
+    document_css,
+    window,
+    application,
+    data_dir,
+    panel_ui,
+  });
+
+  const panel_code = PanelCode({
+    builder,
+    document_javascript,
+    document_blueprint,
+    previewer,
+  });
+
   const documents = [
     document_javascript,
+    document_vala,
     document_css,
     document_blueprint,
     document_xml,
   ];
 
   const button_run = builder.get_object("button_run");
-  const button_code = builder.get_object("button_code");
   const button_style = builder.get_object("button_style");
   const button_preview = builder.get_object("button_preview");
   const button_inspector = builder.get_object("button_inspector");
@@ -136,19 +164,6 @@ export default function Window({ application }) {
   );
 
   settings.bind(
-    "show-code",
-    button_code,
-    "active",
-    Gio.SettingsBindFlags.DEFAULT
-  );
-  button_code.bind_property(
-    "active",
-    panel_code,
-    "visible",
-    GObject.BindingFlags.SYNC_CREATE
-  );
-
-  settings.bind(
     "show-preview",
     button_preview,
     "active",
@@ -176,15 +191,6 @@ export default function Window({ application }) {
     Gtk.Window.set_interactive_debugging(true);
   });
 
-  const previewer = Previewer({
-    output,
-    builder,
-    document_css,
-    window,
-    application,
-    data_dir,
-    panel_ui,
-  });
   function format(buffer, formatter) {
     const code = formatter(buffer.text.trim());
 
@@ -203,16 +209,19 @@ export default function Window({ application }) {
     previewer.stop();
     panel_ui.stop();
 
+    const { language } = panel_code;
     try {
       await panel_ui.update();
 
-      format(document_javascript.buffer, (text) => {
-        return prettier.format(text, {
-          parser: "babel",
-          plugins: [prettier_babel],
-          trailingComma: "all",
+      if (language === "JavaScript") {
+        format(document_javascript.buffer, (text) => {
+          return prettier.format(text, {
+            parser: "babel",
+            plugins: [prettier_babel],
+            trailingComma: "all",
+          });
         });
-      });
+      }
 
       format(document_css.buffer, (text) => {
         return prettier.format(text, {
@@ -247,19 +256,24 @@ export default function Window({ application }) {
 
       previewer.update();
 
-      // We have to create a new file each time
-      // because gjs doesn't appear to use etag for module caching
-      // ?foo=Date.now() also does not work as expected
-      // TODO: File a bug
-      const [file_javascript] = Gio.File.new_tmp("workbench-XXXXXX.js");
-      file_javascript.replace_contents(
-        document_javascript.buffer.text || "\n",
-        null,
-        false,
-        Gio.FileCreateFlags.NONE,
-        null
-      );
-      await import(`file://${file_javascript.get_path()}`);
+      if (language === "JavaScript") {
+        // We have to create a new file each time
+        // because gjs doesn't appear to use etag for module caching
+        // ?foo=Date.now() also does not work as expected
+        // TODO: File a bug
+        const [file_javascript] = Gio.File.new_tmp("workbench-XXXXXX.js");
+        file_javascript.replace_contents(
+          document_javascript.buffer.text || "\n",
+          null,
+          false,
+          Gio.FileCreateFlags.NONE,
+          null
+        );
+        await import(`file://${file_javascript.get_path()}`);
+      } else if (language === "Vala") {
+        compiler = compiler || Compiler(data_dir);
+        await compiler.compile(document_vala.buffer.text);
+      }
     } catch (err) {
       // prettier xml errors are not instances of Error
       if (err instanceof Error) {
@@ -297,7 +311,7 @@ export default function Window({ application }) {
       buffer.place_cursor(buffer.get_start_iter());
     }
 
-    const { js, css, xml, blueprint, panels } = loadDemo(demo_name);
+    const { js, css, xml, blueprint, vala, panels } = loadDemo(demo_name);
 
     panel_ui.stop();
     previewer.stop();
@@ -305,6 +319,7 @@ export default function Window({ application }) {
     settings.set_string("selected-demo", demo_name);
 
     load(document_javascript, js);
+    load(document_vala, vala);
     settings.set_boolean("show-code", panels.includes("code"));
 
     load(document_css, css);

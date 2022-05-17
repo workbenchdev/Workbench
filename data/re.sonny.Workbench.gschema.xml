@@ -22,6 +22,9 @@
     <key name="has-edits" type="b">
       <default>false</default>
     </key>
+    <key name="code-language" type="i">
+      <default>0</default>
+    </key>
     <key name="selected-demo" type="s">
       <default>"Welcome"</default>
     </key>

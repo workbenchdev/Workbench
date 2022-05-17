@@ -146,10 +146,20 @@ Adw.ApplicationWindow window {
 
           CenterBox {
             [start]
-            Label {
-              label: _("<b>Code - JavaScript</b>");
-              use-markup: true;
-              styles ["dim-label"]
+            Box {
+              Label {
+                label: _("<b>Code -</b>");
+                use-markup: true;
+                styles ["dim-label"]
+              }
+              DropDown dropdown_code_lang {
+                model: StringList {
+                  strings [
+                    "JavaScript",
+                    "Vala",
+                  ]
+                };
+              }
             }
 
             [end]
@@ -171,24 +181,50 @@ Adw.ApplicationWindow window {
           }
 
           Box {
-            ScrolledWindow {
-              vexpand: true;
+            hexpand: true;
+            Stack stack_code {
               hexpand: true;
-
-              GtkSource.View source_view_javascript {
-                buffer: GtkSource.Buffer {
+              StackPage {
+                name: 'JavaScript';
+                child: ScrolledWindow {
+                  vexpand: true;
+                  GtkSource.View source_view_javascript {
+                    buffer: GtkSource.Buffer {
+                    };
+                    monospace: true;
+                    auto-indent: true;
+                    background-pattern: grid;
+                    highlight-current-line: true;
+                    indent-on-tab: true;
+                    indent-width: 2;
+                    insert-spaces-instead-of-tabs: true;
+                    show-line-marks: true;
+                    show-line-numbers: true;
+                    smart-backspace: true;
+                    tab-width: 2;
+                  }
                 };
-                monospace: true;
-                auto-indent: true;
-                background-pattern: grid;
-                highlight-current-line: true;
-                indent-on-tab: true;
-                indent-width: 2;
-                insert-spaces-instead-of-tabs: true;
-                show-line-marks: true;
-                show-line-numbers: true;
-                smart-backspace: true;
-                tab-width: 2;
+              }
+              StackPage {
+                name: 'Vala';
+                child: ScrolledWindow {
+                  vexpand: true;
+                  GtkSource.View source_view_vala {
+                    buffer: GtkSource.Buffer {
+                    };
+                    monospace: true;
+                    auto-indent: true;
+                    background-pattern: grid;
+                    highlight-current-line: true;
+                    indent-on-tab: true;
+                    indent-width: 2;
+                    insert-spaces-instead-of-tabs: true;
+                    show-line-marks: true;
+                    show-line-numbers: true;
+                    smart-backspace: true;
+                    tab-width: 2;
+                  }
+                };
               }
             }
 
@@ -493,18 +529,31 @@ FileFilter file_filter {
 }
 
 Adw.StatusPage preview_window {
-  Adw.StatusPage {
-    title: _("Windowed Preview");
-    description: _("This interface can only be previewed as a separate window.\nWe recommend using \"Always on Top\"");
-    icon-name: "multitasking-windows-symbolic";
+  title: _("Windowed Preview");
+  description: _("This interface can only be previewed as a separate window.\nWe recommend using \"Always on Top\"");
+  icon-name: "multitasking-windows-symbolic";
 
-    Box {
-      halign: center;
+  Box {
+    halign: center;
 
-      Button preview_window_button {
-        label: "Show Preview Window";
-        styles ["pill"]
-      }
+    Button preview_window_button {
+      label: "Show Preview Window";
+      styles ["pill"]
+    }
+  }
+}
+
+Adw.StatusPage external_preview {
+  title: _("Windowed Preview");
+  description: _("Running code in the current programming language supports only the preview in a separate window.\nWe recommend using \"Always on Top\"");
+  icon-name: "multitasking-windows-symbolic";
+
+  Box {
+    halign: center;
+
+    Button external_preview_button {
+      label: "Close External Preview Window";
+      styles ["pill"]
     }
   }
 }

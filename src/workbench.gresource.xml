@@ -21,6 +21,7 @@
     <file>demos/Welcome/main.json</file>
     <file>demos/Welcome/main.blp</file>
     <file>demos/Welcome/main.ui</file>
+    <file>demos/Welcome/main.vala</file>
     <file>demos/Application window/main.json</file>
     <file>demos/Application window/main.blp</file>
     <file>demos/Application window/main.ui</file>
@@ -42,6 +43,7 @@
     <file>Devtools.js</file>
     <file>Document.js</file>
     <file>PanelUI.js</file>
+    <file>PanelCode.js</file>
     <file>Library.js</file>
     <file>logger.js</file>
     <file>main.js</file>
@@ -50,6 +52,8 @@
     <file>shortcutsWindow.js</file>
     <file>util.js</file>
     <file>window.js</file>
+    <file>DBusPreviewer.js</file>
+    <file>Compiler.js</file>
   </gresource>
  <gresource prefix="/re/sonny/Workbench/icons/scalable/actions">
     <file
