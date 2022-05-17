@@ -40,13 +40,13 @@ export default function Previewer({
   let language = null;
   let dbus_proxy = null;
   let subprocess = null;
-  
+
   const style_manager = Adw.StyleManager.get_default();
   function updateStyle() {
-    if (dbus_proxy == null) return;
-    dbus_proxy.DarkMode = style_manager.dark;
+    if (dbus_proxy === null) return;
+    dbus_proxy.ColorScheme = style_manager.color_scheme;
   }
-  style_manager.connect("notify::dark", updateStyle);
+  style_manager.connect("notify::color-scheme", updateStyle);
 
   preview_window_button.connect("clicked", () => {
     if (!object_root || language !== "JavaScript") return;
@@ -118,8 +118,6 @@ export default function Previewer({
       return;
     }
 
-    dbus_proxy.DarkMode = style_manager.dark;
-    
     // Update preview with UI
     const object_preview = builder.get_object(target_id);
     if (object_preview) {

@@ -21,14 +21,18 @@ const ifaceXml = `
     <signal name="WindowOpen">
       <arg type="b" name="open"/>
     </signal>
-    <property type="b" name="DarkMode" access="readwrite"/>
+    <property type="i" name="ColorScheme" access="readwrite"/>
   </interface>
 </node>`;
 
-export default function DBusPreviewer () {
-  const WorkbenchProxy = Gio.DBusProxy.makeProxyWrapper(ifaceXml);
-  const proxy = WorkbenchProxy(Gio.DBus.session, 're.sonny.Workbench.vala_previewer', '/re/sonny/workbench/vala_previewer');
-  
+const WorkbenchProxy = Gio.DBusProxy.makeProxyWrapper(ifaceXml);
+
+export default function DBusPreviewer() {
+  const proxy = WorkbenchProxy(
+    Gio.DBus.session,
+    "re.sonny.Workbench.vala_previewer",
+    "/re/sonny/workbench/vala_previewer"
+  );
+
   return proxy;
 }
-

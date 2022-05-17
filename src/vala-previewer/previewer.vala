@@ -10,11 +10,8 @@ namespace Workbench {
         default_height = 800
       };
       this.window.close_request.connect (() => { this.window_open (false); });
-      this.notify["dark-mode"].connect (() => {
-        if (this.dark_mode)
-          this.color_scheme.color_scheme = Adw.ColorScheme.FORCE_DARK;
-        else
-          this.color_scheme.color_scheme = Adw.ColorScheme.FORCE_LIGHT;
+      this.notify["ColorScheme"].connect (() => {
+        this.style_manager.color_scheme = this.ColorScheme;
       });
     }
 
@@ -123,7 +120,7 @@ namespace Workbench {
       this.window.close ();
     }
 
-    public bool dark_mode { get; set; default = false; }
+    public Adw.ColorScheme ColorScheme { get; set; default = Adw.ColorScheme.DEFAULT; }
 
     public signal void window_open (bool open);
 
@@ -140,7 +137,7 @@ namespace Workbench {
     private Gtk.CssProvider? css = null;
     private Module module;
     private Gtk.Builder? builder = null;
-    private Adw.StyleManager color_scheme = Adw.StyleManager.get_default ();
+    private Adw.StyleManager style_manager = Adw.StyleManager.get_default ();
   }
 
   async void main (string[] args) {
