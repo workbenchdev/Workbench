@@ -17,7 +17,7 @@ import prettier from "./lib/prettier.js";
 import prettier_babel from "./lib/prettier-babel.js";
 import prettier_postcss from "./lib/prettier-postcss.js";
 import prettier_xml from "./lib/prettier-xml.js";
-import Library, { loadDemo } from "./Library.js";
+import Library, { readDemo } from "./Library/Library.js";
 import Previewer from "./Previewer.js";
 import Compiler from "./Compiler.js";
 import logger from "./logger.js";
@@ -48,7 +48,7 @@ export default function Window({ application }) {
 
   let compiler = null;
 
-  const placeholders = loadDemo("Welcome");
+  const placeholders = readDemo("Welcome");
 
   const document_javascript = Document({
     source_view: builder.get_object("source_view_javascript"),
@@ -311,10 +311,11 @@ export default function Window({ application }) {
       buffer.place_cursor(buffer.get_start_iter());
     }
 
-    const { js, css, xml, blueprint, vala, panels } = loadDemo(demo_name);
+    const { js, css, xml, blueprint, vala, panels } = readDemo(demo_name);
 
     panel_ui.stop();
     previewer.stop();
+    documents.forEach((doc) => doc.stop());
 
     settings.set_string("selected-demo", demo_name);
 
@@ -337,18 +338,14 @@ export default function Window({ application }) {
 
     await runCode();
 
+    documents.forEach((doc) => doc.save());
+
     settings.set_boolean("has-edits", false);
+
+    documents.forEach((doc) => doc.start());
   }
 
-  const action_library = new Gio.SimpleAction({
-    name: "library",
-    parameter_type: null,
-  });
-  action_library.connect("activate", () => {
-    Library({ window, builder, openDemo });
-  });
-  window.add_action(action_library);
-  application.set_accels_for_action("win.library", ["<Control><Shift>O"]);
+  Library({ flap: builder.get_object("flap"), openDemo, window, application });
 
   async function confirmDiscard() {
     if (!settings.get_boolean("has-edits")) return true;

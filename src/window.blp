@@ -3,131 +3,141 @@ using Adw 1;
 using Vte 3.91;
 using GtkSource 5;
 
-Adw.ApplicationWindow window {
+Gtk.ApplicationWindow window {
   default-width: "800";
   default-height: "600";
   maximized: true;
-  content: Box {
-    orientation: vertical;
+  titlebar: Gtk.HeaderBar {
+    [start]
+    ToggleButton button_library {
+      child: Adw.ButtonContent {
+        icon-name: "open-book-symbolic";
+        label: _("_Library");
+        use-underline: true;
+      };
+      //action-name: "win.library";
+      tooltip-text: _("Open Library of Demos and Examples (Ctrl+Shift+O)");
+    }
 
-    Adw.HeaderBar {
-      [start]
-      Button button_library {
-        child: Adw.ButtonContent {
-          icon-name: "open-book-symbolic";
-          label: _("_Library");
-          use-underline: true;
+    [title]
+    Box {
+      spacing: 6;
+      orientation: horizontal;
+      homogeneous: true;
+
+      ToggleButton button_code {
+        child: Box {
+          halign: center;
+
+          Image {
+            icon-name: "workbench-code-symbolic";
+          }
+
+          Label {
+            label: _("_Code");
+            use-underline: true;
+          }
         };
-        action-name: "win.library";
-        tooltip-text: _("Open Library of Demos and Examples (Ctrl+Shift+O)");
+
+        styles ["flat", "view-toggler"]
       }
 
-      [title]
-      Box {
-        spacing: 6;
-        orientation: horizontal;
-        homogeneous: true;
+      ToggleButton button_style {
+        child: Box {
+          halign: center;
 
-        ToggleButton button_code {
-          child: Box {
-            halign: center;
-
-            Image {
-              icon-name: "workbench-code-symbolic";
-            }
-
-            Label {
-              label: _("_Code");
-              use-underline: true;
-            }
-          };
-
-          styles ["flat", "view-toggler"]
-        }
-
-        ToggleButton button_style {
-          child: Box {
-            halign: center;
-
-            Image {
-              icon-name: "workbench-style-symbolic";
-            }
-
-            Label {
-              label: _("_Style");
-              use-underline: true;
-            }
-          };
-
-          styles ["flat", "view-toggler"]
-        }
-
-        ToggleButton button_ui {
-          child: Box {
-            halign: center;
-
-            Image {
-              icon-name: "workbench-ui-symbolic";
-            }
-
-            Label {
-              label: _("_UI");
-              use-underline: true;
-            }
-          };
-
-          styles ["flat", "view-toggler"]
-        }
-
-        ToggleButton button_preview {
-          child: Box {
-            halign: center;
-
-            Image {
-              icon-name: "workbench-preview-symbolic";
-            }
-
-            Label {
-              label: _("_Preview");
-              use-underline: true;
-            }
-          };
-
-          styles ["flat", "view-toggler"]
-        }
-      }
-
-      [end]
-      MenuButton button_menu {
-        menu-model: menu_app;
-        icon-name: "open-menu-symbolic";
-        primary: true;
-      }
-
-      [end]
-      Box {
-        styles ["linked"]
-
-        ToggleButton button_light {
-          icon-name: _("sun-symbolic");
-          tooltip-text: _("Use Light mode");
-
-          accessibility {
-            label: _("Use Light mode");
+          Image {
+            icon-name: "workbench-style-symbolic";
           }
-        }
 
-        ToggleButton button_dark {
-          icon-name: _("workbench-moon-rounded-symbolic");
-          tooltip-text: _("Use Dark mode");
-
-          accessibility {
-            label: _("Use Dark mode");
+          Label {
+            label: _("_Style");
+            use-underline: true;
           }
-        }
+        };
+
+        styles ["flat", "view-toggler"]
+      }
+
+      ToggleButton button_ui {
+        child: Box {
+          halign: center;
+
+          Image {
+            icon-name: "workbench-ui-symbolic";
+          }
+
+          Label {
+            label: _("_UI");
+            use-underline: true;
+          }
+        };
+
+        styles ["flat", "view-toggler"]
+      }
+
+      ToggleButton button_preview {
+        child: Box {
+          halign: center;
+
+          Image {
+            icon-name: "workbench-preview-symbolic";
+          }
+
+          Label {
+            label: _("_Preview");
+            use-underline: true;
+          }
+        };
+
+        styles ["flat", "view-toggler"]
       }
     }
 
+    [end]
+    MenuButton button_menu {
+      menu-model: menu_app;
+      icon-name: "open-menu-symbolic";
+      primary: true;
+    }
+
+    [end]
+    Box {
+      styles ["linked"]
+
+      ToggleButton button_light {
+        icon-name: _("sun-symbolic");
+        tooltip-text: _("Use Light mode");
+
+        accessibility {
+          label: _("Use Light mode");
+        }
+      }
+
+      ToggleButton button_dark {
+        icon-name: _("workbench-moon-rounded-symbolic");
+        tooltip-text: _("Use Dark mode");
+
+        accessibility {
+          label: _("Use Dark mode");
+        }
+      }
+    }
+  };
+
+  Adw.Flap flap {
+    reveal-flap: bind button_library.active bidirectional;
+    // TODO: auto when only one panel is open
+    fold-policy: always;
+    locked: true;
+
+    [flap]
+    Box {
+      width-request: 200;
+      styles ["background"]
+    }
+
+    [content]
     Paned paned {
       orientation: vertical;
       shrink-start-child: false;
@@ -483,31 +493,6 @@ Adw.ApplicationWindow window {
         }
       }
     }
-  };
-}
-
-Adw.PreferencesWindow window_library {
-  hide-on-close: true;
-  search-enabled: true;
-  title: _("Library");
-
-  Adw.PreferencesPage {
-    Adw.PreferencesGroup {
-      Label {
-        label: _("Examples to start from or get inspired by");
-      }
-    }
-
-    Adw.PreferencesGroup library_uncategorized {
-    }
-
-    Adw.PreferencesGroup library_network {
-      title: "Network";
-    }
-
-    Adw.PreferencesGroup library_user_interface {
-      title: "User Interface";
-    }
   }
 }
 
@@ -538,7 +523,7 @@ Adw.StatusPage preview_window {
 
     Button preview_window_button {
       label: "Show Preview Window";
-      styles ["pill"]
+      styles ["pill", "suggested-action"]
     }
   }
 }
@@ -553,7 +538,7 @@ Adw.StatusPage external_preview {
 
     Button external_preview_button {
       label: "Close External Preview Window";
-      styles ["pill"]
+      styles ["pill", "suggested-action"]
     }
   }
 }
