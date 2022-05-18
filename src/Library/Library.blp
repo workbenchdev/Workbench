@@ -3,13 +3,13 @@ using Adw 1;
 
 Box library {
   name: "library";
-  width-request: 400;
+  width-request: 512;
   hexpand: false;
 
-  styles ["background", "sidebar"]
+  styles ["background"]
 
   Adw.StatusPage {
-    title: _('Learn, reuse, extend');
+    title: _('Learn, test, remix');
 
     Box {
       orientation: vertical;
@@ -17,6 +17,7 @@ Box library {
       Box {
         orientation: vertical;
         margin-bottom: 24;
+        spacing: 12;
 
         Adw.PreferencesGroup library_uncategorized {
         }
@@ -27,7 +28,6 @@ Box library {
 
         Adw.PreferencesGroup library_user_interface {
           title: "User Interface";
-          margin-bottom: 12;
         }
       }
 

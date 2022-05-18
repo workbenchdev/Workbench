@@ -12,6 +12,7 @@ export default function Document({
   ext,
 }) {
   const { buffer } = source_view;
+  let handler_id = null;
 
   buffer.set_language(language_manager.get_language(lang));
 
@@ -29,14 +30,29 @@ export default function Document({
       settings.set_boolean("has-edits", false);
     })
     .catch(logError);
+  start();
 
-  buffer.connect("modified-changed", () => {
-    if (!buffer.get_modified()) return;
+  function save() {
     saveSourceBuffer({ file: source_file, buffer }).catch(logError);
-    settings.set_boolean("has-edits", true);
-  });
+  }
 
-  return { source_view, buffer };
+  function start() {
+    stop();
+    handler_id = buffer.connect("modified-changed", () => {
+      if (!buffer.get_modified()) return;
+      save();
+      settings.set_boolean("has-edits", true);
+    });
+  }
+
+  function stop() {
+    if (handler_id !== null) {
+      buffer.disconnect(handler_id);
+      handler_id = null;
+    }
+  }
+
+  return { start, stop, save, source_view, buffer };
 }
 
 async function saveSourceBuffer({ file, buffer }) {

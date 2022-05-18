@@ -4,26 +4,29 @@ import Gtk from "gi://Gtk";
 
 const byteArray = imports.byteArray;
 
-// let widget_library;
-
 const prefix = "/re/sonny/Workbench/Library";
 
-export default function Library({ window, openDemo }) {
-  // if (widget_library) {
-  //   return widget_library.present();
-  // }
-
+export default function Library({ flap, openDemo, window, application }) {
   const builder = Gtk.Builder.new_from_resource(`${prefix}/Library.ui`);
   const widget = builder.get_object("library");
 
-  widget.get_first_child().get_child().vexpand = true;
-  widget.get_first_child().get_child().valign = Gtk.Align.FILL;
+  flap.set_flap(widget);
 
-  widget.get_first_child().get_child().get_parent().vexpand = true;
-  widget.get_first_child().get_child().get_parent().valign = Gtk.Align.FILL;
+  function toggleFlap() {
+    flap.reveal_flap = !flap.reveal_flap;
+  }
 
-  // window_library = builder.get_object("library");
-  // window_library.set_transient_for(window);
+  const status_page = widget.get_first_child();
+  status_page.get_child().vexpand = true;
+  status_page.get_child().valign = Gtk.Align.FILL;
+  status_page.get_child().get_parent().vexpand = true;
+  status_page.get_child().get_parent().valign = Gtk.Align.FILL;
+
+  let last_selected;
+
+  flap.connect("notify::reveal-flap", () => {
+    last_selected?.grab_focus();
+  });
 
   const demos = getDemos();
   demos.forEach((demo) => {
@@ -32,20 +35,40 @@ export default function Library({ window, openDemo }) {
       subtitle: demo.description,
       activatable: true,
     });
-    const check = new Gtk.CheckButton({});
-    check.get_style_context().add_class("selection-mode");
-    widget.set_activatable_widget(check);
-    widget.add_suffix(check);
-
-    check.connect("toggled", () => {
-      if (!check.active) return;
-      openDemo(demo.name).catch(logError);
+    if (demo.name === "Welcome") last_selected = widget;
+    widget.add_suffix(
+      new Gtk.Image({
+        icon_name: "go-next-symbolic",
+      })
+    );
+    widget.connect("activated", () => {
+      last_selected = widget;
+      openDemo(demo.name).then(toggleFlap).catch(logError);
     });
 
     builder.get_object(`library_${demo.category}`).add(widget);
   });
 
+  const action_library = new Gio.SimpleAction({
+    name: "library",
+    parameter_type: null,
+  });
+  action_library.connect("activate", toggleFlap);
+  window.add_action(action_library);
+  application.set_accels_for_action("win.library", ["<Control><Shift>O"]);
+
   return widget;
+}
+
+export function readDemo(demo_name) {
+  const js = readDemoFile(demo_name, "main.js");
+  const css = readDemoFile(demo_name, "main.css");
+  const xml = readDemoFile(demo_name, "main.ui");
+  const blueprint = readDemoFile(demo_name, "main.blp");
+  const vala = readDemoFile(demo_name, "main.vala");
+  const json = JSON.parse(readDemoFile(demo_name, "main.json"));
+
+  return { ...json, js, css, xml, blueprint, vala };
 }
 
 function getDemos() {
@@ -63,18 +86,7 @@ function getDemos() {
   });
 }
 
-export function loadDemo(demo_name) {
-  const js = getDemoFile(demo_name, "main.js");
-  const css = getDemoFile(demo_name, "main.css");
-  const xml = getDemoFile(demo_name, "main.ui");
-  const blueprint = getDemoFile(demo_name, "main.blp");
-  const vala = getDemoFile(demo_name, "main.vala");
-  const json = JSON.parse(getDemoFile(demo_name, "main.json"));
-
-  return { ...json, js, css, xml, blueprint, vala };
-}
-
-export function getDemoFile(demo_name, file_name) {
+function readDemoFile(demo_name, file_name) {
   let str;
 
   try {
