@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <schemalist gettext-domain="re.sonny.Workbench">
   <schema id="re.sonny.Workbench" path="/re/sonny/Workbench/">
-    <key name="toggle-color-scheme" type="b">
-      <default>false</default>
+    <key name="color-scheme" type="i">
+      <default>0</default>
     </key>
     <key name="show-code" type="b">
       <default>true</default>
