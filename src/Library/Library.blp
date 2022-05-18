@@ -1,0 +1,43 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.PreferencesWindow window_library {
+  hide-on-close: true;
+  search-enabled: true;
+  title: _("Library");
+
+  Adw.PreferencesPage {
+    Adw.PreferencesGroup {
+      Label {
+        label: _('Learn, reuse, extend');
+        use-markup: true;
+        justify: center;
+        hexpand: true;
+        halign: center;
+        styles ["title-4"]
+      }
+    }
+
+    Adw.PreferencesGroup library_uncategorized {
+    }
+
+    Adw.PreferencesGroup library_network {
+      title: "Network";
+    }
+
+    Adw.PreferencesGroup library_user_interface {
+      title: "User Interface";
+    }
+
+    Adw.PreferencesGroup {
+      Label {
+        label: _('All examples are dedicated to the public domain\nand <b>can be used freely</b> under the terms of <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a>.');
+        use-markup: true;
+        justify: center;
+        hexpand: true;
+        halign: center;
+        styles ["caption"]
+      }
+    }
+  }
+}

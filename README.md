@@ -110,3 +110,5 @@ If you can help, here is a list of issues that would make Workbench better
 ## License
 
 GPLv3. Please see [COPYING](COPYING) file.
+
+Except for everything under src/Library/demos which is in the public domain under the terms of [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/).

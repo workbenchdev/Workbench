@@ -17,7 +17,7 @@ import prettier from "./lib/prettier.js";
 import prettier_babel from "./lib/prettier-babel.js";
 import prettier_postcss from "./lib/prettier-postcss.js";
 import prettier_xml from "./lib/prettier-xml.js";
-import Library, { loadDemo } from "./Library.js";
+import Library, { loadDemo } from "./Library/Library.js";
 import Previewer from "./Previewer.js";
 import Compiler from "./Compiler.js";
 import logger from "./logger.js";
@@ -345,7 +345,7 @@ export default function Window({ application }) {
     parameter_type: null,
   });
   action_library.connect("activate", () => {
-    Library({ window, builder, openDemo });
+    Library({ window, openDemo });
   });
   window.add_action(action_library);
   application.set_accels_for_action("win.library", ["<Control><Shift>O"]);

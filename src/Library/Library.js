@@ -1,14 +1,19 @@
 import Gio from "gi://Gio";
 import Adw from "gi://Adw";
+import Gtk from "gi://Gtk";
 
 const byteArray = imports.byteArray;
 
 let window_library;
 
-export default function Library({ window, builder, openDemo }) {
+const prefix = "/re/sonny/Workbench/Library";
+
+export default function Library({ window, openDemo }) {
   if (window_library) {
     return window_library.present();
   }
+
+  const builder = Gtk.Builder.new_from_resource(`${prefix}/Library.ui`);
 
   window_library = builder.get_object("window_library");
   window_library.set_transient_for(window);
@@ -20,6 +25,11 @@ export default function Library({ window, builder, openDemo }) {
       subtitle: demo.description,
       activatable: true,
     });
+    widget.add_suffix(
+      new Gtk.Image({
+        icon_name: "play-symbolic",
+      })
+    );
 
     widget.connect("activated", () => {
       openDemo(demo.name).catch(logError);
@@ -33,12 +43,12 @@ export default function Library({ window, builder, openDemo }) {
 
 function getDemos() {
   return Gio.resources_enumerate_children(
-    "/re/sonny/Workbench/demos",
+    `${prefix}/demos`,
     Gio.ResourceLookupFlags.NONE
   ).map((child) => {
     const bytes = byteArray.fromGBytes(
       Gio.resources_lookup_data(
-        "/re/sonny/Workbench/demos/" + child + "main.json",
+        `${prefix}/demos/${child}main.json`,
         Gio.ResourceLookupFlags.NONE
       )
     );
@@ -64,7 +74,7 @@ export function getDemoFile(demo_name, file_name) {
     str = new TextDecoder().decode(
       byteArray.fromGBytes(
         Gio.resources_lookup_data(
-          `/re/sonny/Workbench/demos/${demo_name}/${file_name}`,
+          `${prefix}/demos/${demo_name}/${file_name}`,
           Gio.ResourceLookupFlags.NONE
         )
       )
