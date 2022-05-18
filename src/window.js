@@ -340,15 +340,16 @@ export default function Window({ application }) {
     settings.set_boolean("has-edits", false);
   }
 
-  const action_library = new Gio.SimpleAction({
-    name: "library",
-    parameter_type: null,
-  });
-  action_library.connect("activate", () => {
-    Library({ window, openDemo });
-  });
-  window.add_action(action_library);
-  application.set_accels_for_action("win.library", ["<Control><Shift>O"]);
+  const library = Library({ window, openDemo });
+  builder.get_object("flap").set_flap(library);
+  // const action_library = new Gio.SimpleAction({
+  //   name: "library",
+  //   parameter_type: null,
+  // });
+  // action_library.connect("activate", () => {
+  // });
+  // window.add_action(action_library);
+  // application.set_accels_for_action("win.library", ["<Control><Shift>O"]);
 
   async function confirmDiscard() {
     if (!settings.get_boolean("has-edits")) return true;

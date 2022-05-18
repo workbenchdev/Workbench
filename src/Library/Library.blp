@@ -1,43 +1,47 @@
 using Gtk 4.0;
 using Adw 1;
 
-Adw.PreferencesWindow window_library {
-  hide-on-close: true;
-  search-enabled: true;
-  title: _("Library");
+Box library {
+  name: "library";
+  width-request: 400;
+  hexpand: false;
 
-  Adw.PreferencesPage {
-    Adw.PreferencesGroup {
-      Label {
-        label: _('Learn, reuse, extend');
-        use-markup: true;
-        justify: center;
-        hexpand: true;
-        halign: center;
-        styles ["title-4"]
+  styles ["background", "sidebar"]
+
+  Adw.StatusPage {
+    title: _('Learn, reuse, extend');
+
+    Box {
+      orientation: vertical;
+
+      Box {
+        orientation: vertical;
+        margin-bottom: 24;
+
+        Adw.PreferencesGroup library_uncategorized {
+        }
+
+        Adw.PreferencesGroup library_network {
+          title: "Network";
+        }
+
+        Adw.PreferencesGroup library_user_interface {
+          title: "User Interface";
+          margin-bottom: 12;
+        }
       }
-    }
 
-    Adw.PreferencesGroup library_uncategorized {
-    }
-
-    Adw.PreferencesGroup library_network {
-      title: "Network";
-    }
-
-    Adw.PreferencesGroup library_user_interface {
-      title: "User Interface";
-    }
-
-    Adw.PreferencesGroup {
       Label {
         label: _('All examples are dedicated to the public domain\nand <b>can be used freely</b> under the terms of <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a>.');
         use-markup: true;
         justify: center;
         hexpand: true;
         halign: center;
+        vexpand: true;
+        valign: end;
         styles ["caption"]
       }
     }
   }
 }
+

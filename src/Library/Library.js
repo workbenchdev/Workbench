@@ -4,19 +4,26 @@ import Gtk from "gi://Gtk";
 
 const byteArray = imports.byteArray;
 
-let window_library;
+// let widget_library;
 
 const prefix = "/re/sonny/Workbench/Library";
 
 export default function Library({ window, openDemo }) {
-  if (window_library) {
-    return window_library.present();
-  }
+  // if (widget_library) {
+  //   return widget_library.present();
+  // }
 
   const builder = Gtk.Builder.new_from_resource(`${prefix}/Library.ui`);
+  const widget = builder.get_object("library");
 
-  window_library = builder.get_object("window_library");
-  window_library.set_transient_for(window);
+  widget.get_first_child().get_child().vexpand = true;
+  widget.get_first_child().get_child().valign = Gtk.Align.FILL;
+
+  widget.get_first_child().get_child().get_parent().vexpand = true;
+  widget.get_first_child().get_child().get_parent().valign = Gtk.Align.FILL;
+
+  // window_library = builder.get_object("library");
+  // window_library.set_transient_for(window);
 
   const demos = getDemos();
   demos.forEach((demo) => {
@@ -25,20 +32,20 @@ export default function Library({ window, openDemo }) {
       subtitle: demo.description,
       activatable: true,
     });
-    widget.add_suffix(
-      new Gtk.Image({
-        icon_name: "play-symbolic",
-      })
-    );
+    const check = new Gtk.CheckButton({});
+    check.get_style_context().add_class("selection-mode");
+    widget.set_activatable_widget(check);
+    widget.add_suffix(check);
 
-    widget.connect("activated", () => {
+    check.connect("toggled", () => {
+      if (!check.active) return;
       openDemo(demo.name).catch(logError);
     });
 
     builder.get_object(`library_${demo.category}`).add(widget);
   });
 
-  window_library.present();
+  return widget;
 }
 
 function getDemos() {

@@ -9,3 +9,8 @@ combobox#dropdown_ui_lang button {
   padding-bottom: 2px;
   min-height: 30px;
 }
+
+/* Mimic the status page. */
+#library > box {
+  margin: 36px 12px;
+}
