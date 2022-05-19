@@ -409,6 +409,9 @@ export default function Window({ application }) {
     } else if (file.get_basename().endsWith(".blp")) {
       load(document_blueprint, data);
       settings.set_string("ui-lang", "blueprint");
+    } else if (content_type.includes("/x-vala")) {
+      load(document_vala, data);
+      settings.set_int("code-language", 1);
     }
   }
 
