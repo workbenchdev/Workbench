@@ -40,6 +40,7 @@ export default function Previewer({
   let language = null;
   let dbus_proxy = null;
   let subprocess = null;
+  let external_window_preview = false;
 
   const style_manager = Adw.StyleManager.get_default();
   function updateStyle() {
@@ -130,11 +131,16 @@ export default function Previewer({
           }
           adoptChild(object_preview, object_root);
         } else if (language === "Vala") {
-          output.set_child(preview_window);
-          dbus_proxy.UpdateUiSync(text, target_id);
+          if (external_window_preview) {
+            output.set_child(preview_window);
+          } else {
+            dbus_proxy.UpdateUiSync(text, target_id);
+          }
         }
       } else {
-        output.set_child(object_preview);
+        if (!(external_window_preview && language === "Vala")) {
+          output.set_child(object_preview);
+        }
         object_root?.destroy();
         object_root = null;
 
@@ -185,6 +191,7 @@ export default function Previewer({
       );
       dbus_proxy = DBusPreviewer();
       dbus_proxy.connectSignal("WindowOpen", (proxy, name_owner, args) => {
+        external_window_preview = args[0];
         if (args[0]) {
           output.set_child(external_preview);
         } else {
