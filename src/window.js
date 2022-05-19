@@ -7,7 +7,13 @@ import Adw from "gi://Adw?version=1";
 import Vte from "gi://Vte?version=3.91";
 import { gettext as _ } from "gettext";
 
-import { confirm, settings, createDataDir } from "./util.js";
+import {
+  confirm,
+  settings,
+  createDataDir,
+  getLanguageForFile,
+  languages,
+} from "./util.js";
 import Document from "./Document.js";
 import PanelUI from "./PanelUI.js";
 import PanelCode from "./PanelCode.js";
@@ -24,6 +30,8 @@ import logger from "./logger.js";
 
 const scheme_manager = Source.StyleSchemeManager.get_default();
 const style_manager = Adw.StyleManager.get_default();
+
+const langs = Object.fromEntries(languages.map((lang) => [lang.id, lang]));
 
 export default function Window({ application }) {
   Vte.Terminal.new();
@@ -50,15 +58,15 @@ export default function Window({ application }) {
 
   const placeholders = readDemo("Welcome");
 
-  const document_javascript = Document({
+  langs.javascript.document = Document({
     source_view: builder.get_object("source_view_javascript"),
     lang: "js",
-    placeholder: placeholders.js,
+    placeholder: placeholders.javascript,
     ext: "js",
     data_dir,
   });
 
-  const document_vala = Document({
+  langs.vala.document = Document({
     source_view: builder.get_object("source_view_vala"),
     lang: "vala",
     placeholder: placeholders.vala,
@@ -66,7 +74,7 @@ export default function Window({ application }) {
     data_dir,
   });
 
-  const document_blueprint = Document({
+  langs.blueprint.document = Document({
     source_view: builder.get_object("source_view_blueprint"),
     lang: "blueprint",
     placeholder: placeholders.blueprint,
@@ -74,7 +82,7 @@ export default function Window({ application }) {
     data_dir,
   });
 
-  const document_xml = Document({
+  langs.xml.document = Document({
     source_view: builder.get_object("source_view_xml"),
     lang: "xml",
     placeholder: placeholders.xml,
@@ -82,7 +90,7 @@ export default function Window({ application }) {
     data_dir,
   });
 
-  const document_css = Document({
+  langs.css.document = Document({
     source_view: builder.get_object("source_view_css"),
     lang: "css",
     placeholder: placeholders.css,
@@ -92,15 +100,13 @@ export default function Window({ application }) {
 
   const panel_ui = PanelUI({
     builder,
-    document_blueprint,
-    document_xml,
+    langs,
     data_dir,
   });
 
   const previewer = Previewer({
     output,
     builder,
-    document_css,
     window,
     application,
     data_dir,
@@ -109,18 +115,8 @@ export default function Window({ application }) {
 
   const panel_code = PanelCode({
     builder,
-    document_javascript,
-    document_blueprint,
     previewer,
   });
-
-  const documents = [
-    document_javascript,
-    document_vala,
-    document_css,
-    document_blueprint,
-    document_xml,
-  ];
 
   const button_run = builder.get_object("button_run");
   const button_style = builder.get_object("button_style");
@@ -133,7 +129,7 @@ export default function Window({ application }) {
   function updateStyle() {
     const { dark } = style_manager;
     const scheme = scheme_manager.get_scheme(dark ? "Adwaita-dark" : "Adwaita");
-    documents.forEach(({ buffer }) => {
+    languages.forEach(({ document: { buffer } }) => {
       buffer.set_style_scheme(scheme);
     });
 
@@ -222,7 +218,7 @@ export default function Window({ application }) {
       await panel_ui.update();
 
       if (language === "JavaScript") {
-        format(document_javascript.buffer, (text) => {
+        format(langs.javascript.document.buffer, (text) => {
           return prettier.format(text, {
             parser: "babel",
             plugins: [prettier_babel],
@@ -231,14 +227,14 @@ export default function Window({ application }) {
         });
       }
 
-      format(document_css.buffer, (text) => {
+      format(langs.css.document.buffer, (text) => {
         return prettier.format(text, {
           parser: "css",
           plugins: [prettier_postcss],
         });
       });
 
-      format(document_xml.buffer, (text) => {
+      format(langs.xml.document.buffer, (text) => {
         return prettier.format(text, {
           parser: "xml",
           plugins: [prettier_xml],
@@ -271,7 +267,7 @@ export default function Window({ application }) {
         // TODO: File a bug
         const [file_javascript] = Gio.File.new_tmp("workbench-XXXXXX.js");
         file_javascript.replace_contents(
-          document_javascript.buffer.text || "\n",
+          langs.javascript.document.buffer.text || "\n",
           null,
           false,
           Gio.FileCreateFlags.NONE,
@@ -280,7 +276,7 @@ export default function Window({ application }) {
         await import(`file://${file_javascript.get_path()}`);
       } else if (language === "Vala") {
         compiler = compiler || Compiler(data_dir);
-        await compiler.compile(document_vala.buffer.text);
+        await compiler.compile(language.vala.document.buffer.text);
       }
     } catch (err) {
       // prettier xml errors are not instances of Error
@@ -314,28 +310,29 @@ export default function Window({ application }) {
     const agreed = await confirmDiscard();
     if (!agreed) return;
 
-    function load({ buffer }, str) {
+    function load({ document: { buffer } }, str) {
       replaceBufferText(buffer, str);
       buffer.place_cursor(buffer.get_start_iter());
     }
 
-    const { js, css, xml, blueprint, vala, panels } = readDemo(demo_name);
+    const { javascript, css, xml, blueprint, vala, panels } =
+      readDemo(demo_name);
 
     panel_ui.stop();
     previewer.stop();
-    documents.forEach((doc) => doc.stop());
+    languages.forEach(({ document }) => document.stop());
 
     settings.set_string("selected-demo", demo_name);
 
-    load(document_javascript, js);
-    load(document_vala, vala);
+    load(langs.javascript, javascript);
+    load(langs.vala, vala);
     settings.set_boolean("show-code", panels.includes("code"));
 
-    load(document_css, css);
+    load(langs.css, css);
     settings.set_boolean("show-style", panels.includes("style"));
 
-    load(document_blueprint, blueprint);
-    load(document_xml, xml);
+    load(langs.blueprint, blueprint);
+    load(langs.xml, xml);
     settings.set_boolean("show-ui", panels.includes("ui"));
     settings.set_boolean("show-preview", panels.includes("preview"));
 
@@ -346,11 +343,11 @@ export default function Window({ application }) {
 
     await runCode();
 
-    documents.forEach((doc) => doc.save());
+    languages.forEach(({ document }) => document.save());
 
     settings.set_boolean("has-edits", false);
 
-    documents.forEach((doc) => doc.start());
+    languages.forEach(({ document }) => document.start());
   }
 
   Library({ flap: builder.get_object("flap"), openDemo, window, application });
@@ -368,23 +365,12 @@ export default function Window({ application }) {
   }
 
   const text_decoder = new TextDecoder();
-  function openFile(file) {
-    let content_type;
+  async function openFile(file) {
+    const language = getLanguageForFile(file);
+    if (!language) return;
 
-    try {
-      const info = file.query_info(
-        "standard::content-type",
-        Gio.FileQueryInfoFlags.NONE,
-        null
-      );
-      content_type = info.get_content_type();
-    } catch (err) {
-      logError(err);
-    }
-
-    if (!content_type) {
-      return;
-    }
+    const agreed = await confirmDiscard();
+    if (!agreed) return;
 
     let data;
 
@@ -396,26 +382,30 @@ export default function Window({ application }) {
       return;
     }
 
-    async function load({ buffer }, data) {
-      const agreed = await confirmDiscard();
-      if (!agreed) return;
-      replaceBufferText(buffer, data);
-      buffer.place_cursor(buffer.get_start_iter());
-    }
+    const {
+      document: { buffer },
+    } = language;
+    replaceBufferText(buffer, data);
+    buffer.place_cursor(buffer.get_start_iter());
 
-    if (content_type.includes("/javascript")) {
-      load(document_javascript, data);
-    } else if (content_type.includes("text/css")) {
-      load(document_css, data);
-    } else if (content_type.includes("application/x-gtk-builder")) {
-      load(document_xml, data);
-      settings.set_string("ui-lang", "xml");
-    } else if (file.get_basename().endsWith(".blp")) {
-      load(document_blueprint, data);
+    settings.set_boolean(`show-${language.panel}`, true);
+
+    if (language.id === "blueprint") {
       settings.set_string("ui-lang", "blueprint");
+    } else if (language.id === "xml") {
+      settings.set_string("ui-lang", "xml");
+    } else if (language.id === "javascript") {
+      settings.set_int("code-language", 0);
+    } else if (language.id === "vala") {
+      settings.set_int("code-language", 1);
     }
-  }
 
+    if (language.panel === "ui") {
+      settings.set_boolean(`show-preview`, true);
+    }
+
+    settings.set_boolean("has-edits", false);
+  }
   return { window, openFile };
 }
 

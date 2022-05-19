@@ -21,7 +21,7 @@ export default function Application({ version }) {
     if (!window) return;
 
     for (const file of files) {
-      window.openFile(file);
+      window.openFile(file).catch(logError);
     }
   });
 
