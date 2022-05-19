@@ -1,6 +1,3 @@
-Gtk.init ();
-Adw.init ();
-
 public void run () {
 	  var main = workbench.builder.get_object ("welcome") as Gtk.Box;
 
