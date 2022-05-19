@@ -63,7 +63,12 @@ matrix(
 <details>
   <summary>Turn a prototype made in Workbench into an application</summary>
 
+<<<<<<< HEAD
+Use GNOME Builder to start a new project using the JavaScript or Vala GNOME Application template and copy paste your Workbench code.
+=======
 Use GNOME Builder to start a new project using the appropriate GNOME Application template and copy paste your Workbench code.
+
+> > > > > > > main
 
 </details>
 
@@ -94,7 +99,7 @@ It is unsupported and may put users at risk.
 
 Workbench would not be possible without
 
-GTK, GLib, Flatpak, GtkSourceView, libadwaita, VTE, GJS, Blueprint, icon-development-kit
+GTK, GLib, Flatpak, GtkSourceView, libadwaita, VTE, GJS, Blueprint, icon-development-kit, Vala
 
 and the GNOME community 🖤
 

@@ -11,4 +11,4 @@ Icon=re.sonny.Workbench
 Keywords=CSS;JavaScript;GJS;Blueprint;builder;Vala;
 DBusActivatable=true
 StartupNotify=true
-MimeType=text/javascript;application/javascript;application/x-gtk-builder;text/css;
+MimeType=text/javascript;application/javascript;application/x-gtk-builder;text/css;text/x-vala;

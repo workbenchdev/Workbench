@@ -276,7 +276,8 @@ export default function Window({ application }) {
         await import(`file://${file_javascript.get_path()}`);
       } else if (language === "Vala") {
         compiler = compiler || Compiler(data_dir);
-        await compiler.compile(language.vala.document.buffer.text);
+        previewer.updateStyle();
+        await compiler.compile(langs.vala.document.buffer.text);
       }
     } catch (err) {
       // prettier xml errors are not instances of Error
@@ -341,7 +342,9 @@ export default function Window({ application }) {
     // in the future we may let each demo decide
     settings.set_boolean("show-console", true);
 
-    await runCode();
+    if (panel_code.language === "JavaScript") {
+      await runCode();
+    }
 
     languages.forEach(({ document }) => document.save());
 
