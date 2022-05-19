@@ -506,23 +506,6 @@ Gtk.ApplicationWindow window {
   }
 }
 
-FileFilter file_filter {
-  mime-types [
-    "text/css",
-    "text/javascript",
-    "application/javascript",
-    "application/x-gtk-builder",
-  ]
-
-  patterns [
-    "*.js",
-    "*.ui",
-    "*.xml.ui",
-    "*.css",
-    "*.blp",
-  ]
-}
-
 Adw.StatusPage preview_window {
   title: _("Windowed Preview");
   description: _("This interface can only be previewed as a separate window.\nWe recommend using \"Always on Top\"");

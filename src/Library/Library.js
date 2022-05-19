@@ -61,14 +61,14 @@ export default function Library({ flap, openDemo, window, application }) {
 }
 
 export function readDemo(demo_name) {
-  const js = readDemoFile(demo_name, "main.js");
+  const javascript = readDemoFile(demo_name, "main.js");
   const css = readDemoFile(demo_name, "main.css");
   const xml = readDemoFile(demo_name, "main.ui");
   const blueprint = readDemoFile(demo_name, "main.blp");
   const vala = readDemoFile(demo_name, "main.vala");
   const json = JSON.parse(readDemoFile(demo_name, "main.json"));
 
-  return { ...json, js, css, xml, blueprint, vala };
+  return { ...json, javascript, css, xml, blueprint, vala };
 }
 
 function getDemos() {

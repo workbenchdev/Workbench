@@ -7,12 +7,7 @@ import LSPClient from "./lsp/LSPClient.js";
 
 const { addSignalMethods } = imports.signals;
 
-export default function PanelUI({
-  document_xml,
-  document_blueprint,
-  builder,
-  data_dir,
-}) {
+export default function PanelUI({ langs, builder, data_dir }) {
   const blueprint = new LSPClient([
     "blueprint-compiler",
     "lsp",
@@ -67,15 +62,14 @@ export default function PanelUI({
     Gio.SettingsBindFlags.DEFAULT
   );
 
-  let handler_id_blueprint = null;
-  let handler_id_xml = null;
+  let handler_id = null;
 
   async function update() {
     let xml;
     if (lang === "xml") {
-      xml = document_xml.buffer.text;
+      xml = langs.xml.document.buffer.text;
     } else {
-      xml = await compileBlueprint(document_blueprint.buffer.text);
+      xml = await compileBlueprint(langs.blueprint.document.buffer.text);
     }
     panel.xml = xml;
     panel.emit("updated");
@@ -86,26 +80,14 @@ export default function PanelUI({
   }
   function start() {
     stop();
-    lang = settings.get_string("ui-lang");
-    if (lang === "blueprint") {
-      handler_id_blueprint = document_blueprint.buffer.connect(
-        "end-user-action",
-        onUpdate
-      );
-    } else if (lang === "xml") {
-      handler_id_xml = document_xml.buffer.connect("end-user-action", onUpdate);
-    }
+    lang = langs[settings.get_string("ui-lang")];
+    handler_id = lang.document.buffer.connect("end-user-action", onUpdate);
   }
 
   function stop() {
-    if (handler_id_blueprint !== null) {
-      document_blueprint.buffer.disconnect(handler_id_blueprint);
-      handler_id_blueprint = null;
-    }
-
-    if (handler_id_xml !== null) {
-      document_xml.buffer.disconnect(handler_id_xml);
-      handler_id_xml = null;
+    if (handler_id !== null) {
+      lang.document.buffer.disconnect(handler_id);
+      handler_id = null;
     }
   }
 

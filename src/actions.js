@@ -2,9 +2,13 @@ import Gtk from "gi://Gtk";
 import Gio from "gi://Gio";
 import GLib from "gi://GLib";
 import Gdk from "gi://Gdk";
+import Xdp from "gi://Xdp";
+import XdpGtk from "gi://XdpGtk4";
+import { gettext as _ } from "gettext";
 
 import About from "./about.js";
 import shortcutsWindow from "./shortcutsWindow.js";
+import { portal, languages } from "./util.js";
 
 export default function Actions({ application, version }) {
   const quit = new Gio.SimpleAction({
@@ -41,29 +45,27 @@ export default function Actions({ application, version }) {
     parameter_type: null,
   });
   action_open_file.connect("activate", () => {
-    const builder = Gtk.Builder.new_from_resource(
-      "/re/sonny/Workbench/window.ui"
-    );
-    const file_filter = builder.get_object("file_filter");
+    const parent = XdpGtk.parent_new_gtk(application.get_active_window());
+    portal.open_file(
+      parent,
+      _("Open File"),
+      filters,
+      null, // current_filter
+      null, // choices
+      Xdp.OpenFileFlags.NONE,
+      null, // cancellable,
+      (self, res) => {
+        let uri;
+        try {
+          const results = portal.open_file_finish(res);
+          [uri] = results.recursiveUnpack().uris;
+        } catch {
+          return;
+        }
 
-    const file_chooser = new Gtk.FileChooserNative({
-      title: "Open File",
-      action: Gtk.FileChooserAction.OPEN,
-      modal: true,
-      transient_for: application.get_active_window(),
-    });
-    file_chooser.set_filter(file_filter);
-
-    file_chooser.connect("response", (self, response) => {
-      if (response === Gtk.ResponseType.ACCEPT) {
-        const file = file_chooser.get_file();
-        application.open([file], "open");
+        application.open([Gio.File.new_for_uri(uri)], "open");
       }
-
-      file_chooser.destroy();
-    });
-
-    file_chooser.show();
+    );
   });
   application.add_action(action_open_file);
   application.set_accels_for_action("app.open", ["<Control>O"]);
@@ -102,3 +104,14 @@ export default function Actions({ application, version }) {
   });
   application.add_action(action_platform_tools);
 }
+
+const lang_filters = languages.map((language) => {
+  const globs = language.extensions.map((extension) => [0, `*${extension}`]);
+  const mimetypes = language.types.map((type) => [1, type]);
+  return [language.name, [...globs, ...mimetypes]];
+});
+
+const filters = new GLib.Variant("a(sa(us))", [
+  [_("Filter"), lang_filters.flatMap(([, types]) => types)],
+  ...lang_filters,
+]);

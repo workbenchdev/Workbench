@@ -11,12 +11,13 @@ import XdpGtk from "gi://XdpGtk4";
 import DBusPreviewer from "./DBusPreviewer.js";
 
 import logger from "./logger.js";
+import { portal } from "./util.js";
 
 export default function Previewer({
   output,
   builder,
   panel_ui,
-  document_css,
+  langs,
   window,
   application,
   data_dir,
@@ -64,7 +65,10 @@ export default function Previewer({
       handler_id_ui = panel_ui.connect("updated", update);
     }
     if (handler_id_css === null) {
-      handler_id_css = document_css.buffer.connect("end-user-action", update);
+      handler_id_css = langs.css.document.buffer.connect(
+        "end-user-action",
+        update
+      );
     }
   }
 
@@ -75,7 +79,7 @@ export default function Previewer({
     }
 
     if (handler_id_css) {
-      document_css.buffer.disconnect(handler_id_css);
+      langs.css.document.buffer.disconnect(handler_id_css);
       handler_id_css = null;
     }
   }
@@ -152,7 +156,7 @@ export default function Previewer({
       );
       css_provider = null;
     }
-    let style = document_css.buffer.text;
+    let style = langs.css.document.buffer.text;
     if (!style) return;
 
     try {
@@ -171,7 +175,7 @@ export default function Previewer({
     );
 
     if (language === "Vala") {
-      dbus_proxy.UpdateCssSync(document_css.buffer.text);
+      dbus_proxy.UpdateCssSync(langs.css.document.buffer.text);
     }
   }
 
@@ -293,8 +297,6 @@ export function targetBuildable(tree) {
 
   return [child.attrs.id, tree.toString()];
 }
-
-const portal = new Xdp.Portal();
 
 function screenshot({ widget, window, data_dir }) {
   const paintable = new Gtk.WidgetPaintable({ widget });
