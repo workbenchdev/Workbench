@@ -340,7 +340,9 @@ export default function Window({ application }) {
     // in the future we may let each demo decide
     settings.set_boolean("show-console", true);
 
-    await runCode();
+    if (panel_code.language == "JavaScript") {
+      await runCode();
+    }
 
     documents.forEach((doc) => doc.save());
 
