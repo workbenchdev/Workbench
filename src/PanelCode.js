@@ -3,7 +3,7 @@ import GObject from "gi://GObject";
 
 import { settings } from "./util.js";
 
-export default function PanelUI({ builder, previewer }) {
+export default function PanelCode({ builder, previewer }) {
   const panel_code = builder.get_object("panel_code");
   const button_code = builder.get_object("button_code");
   const stack_code = builder.get_object("stack_code");
@@ -34,7 +34,9 @@ export default function PanelUI({ builder, previewer }) {
   );
   dropdown_code_lang.connect("notify::selected-item", switchLanguage);
 
-  const panel = {};
+  const panel = {
+    panel: panel_code,
+  };
 
   function switchLanguage() {
     panel.language = dropdown_code_lang.selected_item.string;

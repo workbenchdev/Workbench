@@ -206,6 +206,11 @@ export default function Window({ application }) {
   }
 
   async function runCode() {
+    // Ensure code does not run if panel is not visible
+    if (!panel_code.panel.visible) {
+      return;
+    }
+
     button_run.set_sensitive(false);
 
     console.clear();

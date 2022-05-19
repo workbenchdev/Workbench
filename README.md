@@ -13,11 +13,12 @@ Workbench goal is to let you experiment with GNOME technologies, no matter if ti
 Among other things, Workbench comes with
 
 - realtime GTK/CSS preview
-- JavaScript for quick and easy scripting
-- Syntax highlighting, undo/redo, autosave
+- library of examples
+- JavaScript and Vala runs without any setup
+- XML and Blueprint for describing user interface
+- syntax highlighting, undo/redo, autosave, session restore
 - code formatter
 - console logs
-- library of examples
 
 ## Tips and tricks
 
@@ -62,7 +63,7 @@ matrix(
 <details>
   <summary>Turn a prototype made in Workbench into an application</summary>
 
-Use GNOME Builder to start a new project using the JavaScript GNOME Application template and copy paste your Workbench code.
+Use GNOME Builder to start a new project using the appropriate GNOME Application template and copy paste your Workbench code.
 
 </details>
 
@@ -105,7 +106,7 @@ If you can help, here is a list of issues that would make Workbench better
 
 ## Copyright
 
-© 2022 [Sonny Piers](https://github.com/sonnyp)
+© 2022 [Sonny Piers](https://github.com/sonnyp) and contributors
 
 ## License
 

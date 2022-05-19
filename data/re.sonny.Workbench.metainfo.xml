@@ -15,11 +15,12 @@
     <p>Among other things, Workbench comes with</p>
     <ul>
       <li>realtime GTK/CSS preview</li>
-      <li>JavaScript for quick and easy scripting</li>
-      <li>Syntax highlighting, undo/redo, autosave</li>
+      <li>library of examples</li>
+      <li>JavaScript and Vala runs without any setup</li>
+      <li>XML and Blueprint for describing user interface</li>
+      <li>syntax highlighting, undo/redo, autosave, session restore</li>
       <li>code formatter</li>
       <li>console logs</li>
-      <li>library of examples</li>
     </ul>
   </description>
   <url type="homepage">https://workbench.sonny.re</url>

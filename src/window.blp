@@ -162,6 +162,11 @@ Gtk.ApplicationWindow window {
                 use-markup: true;
                 styles ["dim-label"]
               }
+
+              Separator {
+                styles ["spacer"]
+              }
+
               DropDown dropdown_code_lang {
                 model: StringList {
                   strings [
@@ -300,6 +305,11 @@ Gtk.ApplicationWindow window {
                 use-markup: true;
                 styles ["dim-label"]
               }
+
+              Separator {
+                styles ["spacer"]
+              }
+
               Gtk.ComboBoxText dropdown_ui_lang {
                 // FIXME: Does not work as intended
                 // active-id: "xml";
