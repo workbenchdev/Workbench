@@ -1,5 +1,5 @@
 import Gio from "gi://Gio";
-import { settings } from "./util.js";
+import { getLanguage, settings } from "./util.js";
 import GObject from "gi://GObject";
 import GLib from "gi://GLib";
 
@@ -7,7 +7,7 @@ import LSPClient from "./lsp/LSPClient.js";
 
 const { addSignalMethods } = imports.signals;
 
-export default function PanelUI({ langs, builder, data_dir }) {
+export default function PanelUI({ builder, data_dir }) {
   const blueprint = new LSPClient([
     "blueprint-compiler",
     "lsp",
@@ -66,10 +66,10 @@ export default function PanelUI({ langs, builder, data_dir }) {
 
   async function update() {
     let xml;
-    if (lang === "xml") {
-      xml = langs.xml.document.buffer.text;
+    if (lang.id === "xml") {
+      xml = lang.document.buffer.text;
     } else {
-      xml = await compileBlueprint(langs.blueprint.document.buffer.text);
+      xml = await compileBlueprint(lang.document.buffer.text);
     }
     panel.xml = xml;
     panel.emit("updated");
@@ -80,7 +80,7 @@ export default function PanelUI({ langs, builder, data_dir }) {
   }
   function start() {
     stop();
-    lang = langs[settings.get_string("ui-lang")];
+    lang = getLanguage(settings.get_string("ui-lang"));
     handler_id = lang.document.buffer.connect("end-user-action", onUpdate);
   }
 

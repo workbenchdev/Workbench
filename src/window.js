@@ -107,7 +107,6 @@ export default function Window({ application }) {
   const previewer = Previewer({
     output,
     builder,
-    langs,
     window,
     application,
     data_dir,
