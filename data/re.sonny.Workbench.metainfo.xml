@@ -15,7 +15,7 @@
     <p>Among other things, Workbench comes with</p>
     <ul>
       <li>realtime GTK/CSS preview</li>
-      <li>JavaScript for quick and easy scripting</li>
+      <li>JavaScript and Vala support for quick and easy scripting</li>
       <li>Syntax highlighting, undo/redo, autosave</li>
       <li>code formatter</li>
       <li>console logs</li>
