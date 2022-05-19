@@ -38,6 +38,15 @@
   </screenshots>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="42.0" date="">
+      <description>
+        <ul>
+          <li>Support Blueprint UI syntax</li>
+          <li>Support Vala</li>
+          <li>Include icons from icon-development-kit</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.2.0" date="2022-05-06">
       <description>
         <ul>

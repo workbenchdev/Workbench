@@ -1,7 +1,6 @@
 import GLib from "gi://GLib";
 import Gio from "gi://Gio";
 import Gtk from "gi://Gtk";
-import Source from "gi://GtkSource?version=5";
 
 import { once } from "./troll/src/util.js";
 

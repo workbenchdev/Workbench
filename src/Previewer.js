@@ -2,7 +2,7 @@ import Gtk from "gi://Gtk";
 import Gdk from "gi://Gdk";
 import Adw from "gi://Adw?version=1";
 import * as ltx from "./lib/ltx.js";
-import postcss from "./lib/postcss.js";
+import * as postcss from "./lib/postcss.js";
 import GLib from "gi://GLib";
 import Gio from "gi://Gio";
 import Graphene from "gi://Graphene";
