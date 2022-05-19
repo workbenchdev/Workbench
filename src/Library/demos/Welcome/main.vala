@@ -1,6 +1,6 @@
-Gtk.init ();
+public void main () {
+	  Gtk.init ();
 
-public void run () {
 	  var main = workbench.builder.get_object ("welcome") as Gtk.Box;
 
   	var button = new Gtk.Button.with_label ("Press me") {
