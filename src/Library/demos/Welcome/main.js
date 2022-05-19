@@ -1,6 +1,7 @@
 import Gtk from "gi://Gtk?version=4.0";
 
 Gtk.init();
+Adw.init();
 
 const main = workbench.builder.get_object("welcome");
 
