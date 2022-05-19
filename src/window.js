@@ -275,6 +275,7 @@ export default function Window({ application }) {
         await import(`file://${file_javascript.get_path()}`);
       } else if (language === "Vala") {
         compiler = compiler || Compiler(data_dir);
+        previewer.updateStyle();
         await compiler.compile(document_vala.buffer.text);
       }
     } catch (err) {

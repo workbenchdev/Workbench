@@ -210,6 +210,7 @@ export default function Previewer({
     stop,
     update,
     setLanguage,
+    updateStyle
   };
 }
 
