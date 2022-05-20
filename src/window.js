@@ -342,6 +342,8 @@ export default function Window({ application }) {
 
     previewer.useInternal();
 
+    // We only automatically run code upon opening a demo
+    // if language is JavaScript and the Code panel is visible
     if (panel_code.language === "JavaScript" && panel_code.panel.visible) {
       await runCode();
     } else {

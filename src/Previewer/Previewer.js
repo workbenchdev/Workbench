@@ -8,6 +8,13 @@ import { getLanguage } from "../util.js";
 import Internal from "./Internal.js";
 import External from "./External.js";
 
+// Workbench always defaults to in-process preview now even if Vala is selected.
+// Workbench will switch to out-of-process preview when Vala is run
+// Workbench will switch back to inline preview if any of the following happens
+//  • When a demo is selected
+//  • When the out-of-process preview Window closed
+//  • When switching language
+
 export default function Previewer({
   output,
   builder,
