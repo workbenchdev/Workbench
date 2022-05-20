@@ -18,6 +18,8 @@ const ifaceXml = `
     </method>
     <method name="CloseWindow">
     </method>
+    <method name="OpenWindow">
+    </method>
     <signal name="WindowOpen">
       <arg type="b" name="open"/>
     </signal>

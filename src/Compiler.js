@@ -1,6 +1,6 @@
 import Gio from "gi://Gio";
 import GLib from "gi://GLib";
-import DBusPreviewer from "./DBusPreviewer.js";
+import DBusPreviewer from "./Previewer/DBusPreviewer.js";
 
 export default function Compiler(data_dir) {
   const proxy = DBusPreviewer();

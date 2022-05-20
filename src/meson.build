@@ -47,4 +47,4 @@ configure_file(
 )
 
 install_data('workbench-api.vala', install_dir: datadir)
-subdir('vala-previewer')
+subdir('Previewer/vala-previewer')
