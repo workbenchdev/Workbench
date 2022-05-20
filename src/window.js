@@ -275,7 +275,10 @@ export default function Window({ application }) {
         if (success) {
           previewer.useExternal();
           previewer.update();
-          compiler.run();
+          if (!compiler.run()) {
+            previewer.useInternal();
+            return;
+          }
           previewer.open();
         }
       }

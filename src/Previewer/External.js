@@ -5,7 +5,16 @@ import DBusPreviewer from "./DBusPreviewer.js";
 export default function Previewer({ builder, onWindowChange }) {
   const stack = builder.get_object("stack_preview");
 
-  Gio.Subprocess.new(["workbench-vala-previewer"], Gio.SubprocessFlags.NONE);
+  let subprocess;
+  function restarter() {
+    subprocess = Gio.Subprocess.new(
+      ["workbench-vala-previewer"],
+      Gio.SubprocessFlags.NONE
+    );
+    subprocess.wait_async(null, restarter);
+  }
+  restarter();
+  
   const dbus_proxy = DBusPreviewer();
   dbus_proxy.connectSignal("Ready", () => {
     updateColorScheme();
