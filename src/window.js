@@ -270,11 +270,14 @@ export default function Window({ application }) {
         );
         await import(`file://${file_javascript.get_path()}`);
       } else if (language === "Vala") {
-        previewer.useExternal();
-        previewer.open();
-        previewer.update();
         compiler = compiler || Compiler(data_dir);
-        await compiler.compile(langs.vala.document.buffer.text);
+        const success = await compiler.compile(langs.vala.document.buffer.text);
+        if (success) {
+          previewer.useExternal();
+          previewer.update();
+          compiler.run();
+          previewer.open();
+        }
       }
     } catch (err) {
       // prettier xml errors are not instances of Error

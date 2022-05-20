@@ -62,10 +62,12 @@ export default function Compiler(data_dir) {
     );
 
     await promiseTask(valac, "wait_async", "wait_finish", null);
-    if (!valac.get_successful()) return;
+    return valac.get_successful();
+  }
 
+  function run() {
     proxy.RunSync(module_file.get_path(), "main", "set_builder", "set_window");
   }
 
-  return { compile };
+  return { compile, run };
 }
