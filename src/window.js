@@ -24,7 +24,7 @@ import prettier_babel from "./lib/prettier-babel.js";
 import prettier_postcss from "./lib/prettier-postcss.js";
 import prettier_xml from "./lib/prettier-xml.js";
 import Library, { readDemo } from "./Library/Library.js";
-import Previewer from "./Previewer.js";
+import Previewer from "./Previewer/Previewer.js";
 import Compiler from "./Compiler.js";
 import logger from "./logger.js";
 
@@ -202,11 +202,6 @@ export default function Window({ application }) {
   }
 
   async function runCode() {
-    // Ensure code does not run if panel is not visible
-    if (!panel_code.panel.visible) {
-      return;
-    }
-
     button_run.set_sensitive(false);
 
     console.clear();
@@ -258,9 +253,9 @@ export default function Window({ application }) {
         });
       });
 
-      previewer.update();
-
       if (language === "JavaScript") {
+        previewer.update();
+
         // We have to create a new file each time
         // because gjs doesn't appear to use etag for module caching
         // ?foo=Date.now() also does not work as expected
@@ -276,8 +271,13 @@ export default function Window({ application }) {
         await import(`file://${file_javascript.get_path()}`);
       } else if (language === "Vala") {
         compiler = compiler || Compiler(data_dir);
-        previewer.updateStyle();
-        await compiler.compile(langs.vala.document.buffer.text);
+        const success = await compiler.compile(langs.vala.document.buffer.text);
+        if (success) {
+          previewer.useExternal();
+          previewer.update();
+          compiler.run();
+          previewer.open();
+        }
       }
     } catch (err) {
       // prettier xml errors are not instances of Error
@@ -288,10 +288,8 @@ export default function Window({ application }) {
       }
     }
 
-    // setTimeout(() => {
     previewer.start();
     panel_ui.start();
-    // });
 
     button_run.set_sensitive(true);
     console.scrollToEnd();
@@ -302,7 +300,10 @@ export default function Window({ application }) {
     parameter_type: null,
   });
   action_run.connect("activate", () => {
-    runCode().catch(logError);
+    // Ensure code does not run if panel is not visible
+    if (panel_code.panel.visible) {
+      runCode().catch(logError);
+    }
   });
   window.add_action(action_run);
   application.set_accels_for_action("win.run", ["<Control>Return"]);
@@ -342,8 +343,17 @@ export default function Window({ application }) {
     // in the future we may let each demo decide
     settings.set_boolean("show-console", true);
 
-    if (panel_code.language === "JavaScript") {
+    previewer.useInternal();
+
+    // We only automatically run code upon opening a demo
+    // if language is JavaScript and the Code panel is visible
+    if (panel_code.language === "JavaScript" && panel_code.panel.visible) {
       await runCode();
+    } else {
+      panel_ui.start();
+      panel_ui.update();
+      previewer.start();
+      previewer.update();
     }
 
     languages.forEach(({ document }) => document.save());

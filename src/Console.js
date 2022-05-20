@@ -39,6 +39,7 @@ export default function Console({ builder, window, application }) {
     );
     // terminal.reset(true, true);
     // terminal.fork_command("clear");
+    scrollToEnd();
   }
 
   function scrollToEnd() {

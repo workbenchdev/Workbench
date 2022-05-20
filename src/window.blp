@@ -397,6 +397,7 @@ Gtk.ApplicationWindow window {
           orientation: vertical;
 
           CenterBox {
+            height-request: 46;
             [start]
             Label {
               label: _("<b>Preview</b>");
@@ -419,16 +420,57 @@ Gtk.ApplicationWindow window {
           Separator {
           }
 
-          Box {
-            ScrolledWindow output {
-              name: "workbench_output";
-              vexpand: true;
-              hexpand: true;
+          Stack stack_preview {
+            StackPage {
+              name: "inline";
+              child: Box {
+                ScrolledWindow output {
+                  name: "workbench_output";
+                  vexpand: true;
+                  hexpand: true;
 
-              styles ["background"]
+                  styles ["background"]
+                }
+
+                Separator {
+                }
+              };
             }
 
-            Separator {
+            StackPage {
+              name: "open_window";
+              child: Adw.StatusPage {
+                title: _("Windowed Preview");
+                description: _("This interface can only be previewed as a separate window.\nWe recommend using “Always on Top”");
+                icon-name: "multitasking-windows-symbolic";
+
+                Box {
+                  halign: center;
+
+                  Button button_open_preview_window {
+                    label: _("Show Preview Window");
+                    styles ["pill", "suggested-action"]
+                  }
+                }
+              };
+            }
+
+            StackPage {
+              name: "close_window";
+              child: Adw.StatusPage {
+                title: _("Windowed Preview");
+                description: _("This interface can only be previewed as a separate window.\nWe recommend using “Always on Top”");
+                icon-name: "multitasking-windows-symbolic";
+
+                Box {
+                  halign: center;
+
+                  Button button_close_preview_window {
+                    label: _("Close Preview Window");
+                    styles ["pill"]
+                  }
+                }
+              };
             }
           }
         }
@@ -502,36 +544,6 @@ Gtk.ApplicationWindow window {
           }
         }
       }
-    }
-  }
-}
-
-Adw.StatusPage preview_window {
-  title: _("Windowed Preview");
-  description: _("This interface can only be previewed as a separate window.\nWe recommend using \"Always on Top\"");
-  icon-name: "multitasking-windows-symbolic";
-
-  Box {
-    halign: center;
-
-    Button preview_window_button {
-      label: "Show Preview Window";
-      styles ["pill", "suggested-action"]
-    }
-  }
-}
-
-Adw.StatusPage external_preview {
-  title: _("Windowed Preview");
-  description: _("Running code in the current programming language supports only the preview in a separate window.\nWe recommend using \"Always on Top\"");
-  icon-name: "multitasking-windows-symbolic";
-
-  Box {
-    halign: center;
-
-    Button external_preview_button {
-      label: "Close External Preview Window";
-      styles ["pill", "suggested-action"]
     }
   }
 }

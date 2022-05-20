@@ -2,14 +2,16 @@ namespace Workbench {
 
   [DBus (name="re.sonny.Workbench.vala_previewer")]
   public class Previewer : Object {
-
     construct {
       this.window = new Gtk.Window () {
         hide_on_close = true,
         default_width = 600,
         default_height = 800
       };
-      this.window.close_request.connect (() => { this.window_open (false); });
+      this.window.close_request.connect (() => {
+        this.window_open (false);
+        return false;
+      });
       this.notify["ColorScheme"].connect (() => {
         this.style_manager.color_scheme = this.ColorScheme;
       });
@@ -120,6 +122,10 @@ namespace Workbench {
       this.window.close ();
     }
 
+    public void open_window () {
+      this.window.present ();
+    }
+
     public Adw.ColorScheme ColorScheme { get; set; default = Adw.ColorScheme.DEFAULT; }
 
     public signal void window_open (bool open);
@@ -141,7 +147,6 @@ namespace Workbench {
   }
 
   async void main (string[] args) {
-    Gtk.init ();
     Adw.init ();
 
     Bus.own_name (BusType.SESSION,

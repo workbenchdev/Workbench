@@ -46,14 +46,16 @@
     <file>PanelUI.js</file>
     <file>PanelCode.js</file>
     <file>Library/Library.js</file>
+    <file>Previewer/Previewer.js</file>
+    <file>Previewer/Internal.js</file>
+    <file>Previewer/External.js</file>
+    <file>Previewer/DBusPreviewer.js</file>
     <file>logger.js</file>
     <file>main.js</file>
     <file>overrides.js</file>
-    <file>Previewer.js</file>
     <file>shortcutsWindow.js</file>
     <file>util.js</file>
     <file>window.js</file>
-    <file>DBusPreviewer.js</file>
     <file>Compiler.js</file>
   </gresource>
  <gresource prefix="/re/sonny/Workbench/icons/scalable/actions">
