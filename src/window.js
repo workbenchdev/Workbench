@@ -345,9 +345,9 @@ export default function Window({ application }) {
     if (panel_code.language === "JavaScript" && panel_code.panel.visible) {
       await runCode();
     } else {
-      previewer.start();
       panel_ui.start();
       panel_ui.update();
+      previewer.start();
       previewer.update();
     }
 

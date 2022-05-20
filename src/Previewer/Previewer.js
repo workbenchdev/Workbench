@@ -17,14 +17,26 @@ export default function Previewer({
   data_dir,
 }) {
   const internal = Internal({
-    onWindowChange,
+    onWindowChange(open) {
+      if (open) {
+        stack.set_visible_child_name("close_window");
+      } else {
+        stack.set_visible_child_name("open_window");
+      }
+    },
     output,
     builder,
     window,
     application,
   });
   const external = External({
-    onWindowChange,
+    onWindowChange(open) {
+      if (open) {
+        stack.set_visible_child_name("close_window");
+      } else {
+        useInternal();
+      }
+    },
     builder,
   });
   let current;
@@ -39,14 +51,6 @@ export default function Previewer({
   const stack = builder.get_object("stack_preview");
   const button_open = builder.get_object("button_open_preview_window");
   const button_close = builder.get_object("button_close_preview_window");
-
-  function onWindowChange(open) {
-    if (open) {
-      stack.set_visible_child_name("close_window");
-    } else {
-      useInternal();
-    }
-  }
 
   function start() {
     stop();

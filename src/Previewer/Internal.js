@@ -68,7 +68,6 @@ export default function Internal({
       object_root = object_preview;
       object_root.set_hide_on_close(true);
       object_root.connect("close-request", () => {
-        stack.set_visible_child_name("open_window");
         onWindowChange(false);
       });
     }
