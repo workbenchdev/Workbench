@@ -8,6 +8,10 @@ Triggering signal handlers should log a helpful message.
 
 Missing objects should present a helpful message.
 
+# Resilience
+
+Workbench itself should not crash under any circumstances.
+
 # Clarity
 
 When changing the parameters - Workbench should reset to a clean slate
