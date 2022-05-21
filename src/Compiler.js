@@ -1,5 +1,6 @@
 import Gio from "gi://Gio";
 import GLib from "gi://GLib";
+import logger from "./logger.js";
 import DBusPreviewer from "./Previewer/DBusPreviewer.js";
 import { promiseTask } from "./troll/src/util.js";
 
@@ -66,7 +67,18 @@ export default function Compiler(data_dir) {
   }
 
   function run() {
-    proxy.RunSync(module_file.get_path(), "main", "set_builder", "set_window");
+    try {
+      proxy.RunSync(
+        module_file.get_path(),
+        "main",
+        "set_builder",
+        "set_window"
+      );
+    } catch (error) {
+      logger.debug(error);
+      return false;
+    }
+    return true;
   }
 
   return { compile, run };
