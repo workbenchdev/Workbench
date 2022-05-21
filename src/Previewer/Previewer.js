@@ -1,4 +1,6 @@
 import Gtk from "gi://Gtk";
+import GObject from "gi://GObject";
+
 import * as ltx from "../lib/ltx.js";
 import * as postcss from "../lib/postcss.js";
 
@@ -23,6 +25,8 @@ export default function Previewer({
   application,
   data_dir,
 }) {
+  let panel_code;
+
   let current;
 
   const internal = Internal({
@@ -84,8 +88,32 @@ export default function Previewer({
     }
   }
 
+  // Using this custom scope we make sure that previewing UI definitions
+  // with signals doesn't fail - in addition, checkout registerSignals
+  const BuilderScope = GObject.registerClass(
+    {
+      Implements: [Gtk.BuilderScope],
+    },
+    class BuilderScope extends GObject.Object {
+      noop() {}
+      // https://docs.gtk.org/gtk4/vfunc.BuilderScope.create_closure.html
+      vfunc_create_closure(builder, function_name, flags, object) {
+        if (
+          panel_code.panel.visible &&
+          panel_code.language === "JavaScript" &&
+          flags & Gtk.BuilderClosureFlags.SWAPPED
+        ) {
+          logger.warning('Signal flag "swapped" is unsupported in JavaScript.');
+        }
+        return this[function_name] || this.noop;
+      }
+    }
+  );
+
   function update() {
     const builder = new Gtk.Builder();
+    const scope = new BuilderScope();
+    builder.set_scope(scope);
 
     let text = panel_ui.xml.trim();
     let target_id;
@@ -106,6 +134,8 @@ export default function Previewer({
       logger.critical(err.message);
       return;
     }
+
+    registerSignals(tree, scope);
 
     try {
       builder.add_from_string(text, -1);
@@ -183,6 +213,9 @@ export default function Previewer({
     },
     useExternal,
     useInternal,
+    setPanelCode(v) {
+      panel_code = v;
+    },
   };
 }
 
@@ -258,4 +291,45 @@ function assertBuildable(tree) {
     const _child = child.getChild("child");
     if (_child) assertBuildable(_child);
   }
+}
+
+function makeSignalHandler({ name, handler, after, id, type }) {
+  return function (object) {
+    const object_name = `${type}${id ? "$" + id : ""}`;
+    // const object_name = object.toString()
+    logger.log(
+      `Handler "${handler}" triggered ${
+        after ? "after" : "for"
+      } signal "${name}" on ${object_name}`
+    );
+  };
+}
+
+function registerSignals(tree, scope) {
+  try {
+    const signals = findSignals(tree);
+    for (const signal of signals) {
+      scope[signal.handler] = makeSignalHandler(signal);
+    }
+  } catch (err) {
+    logError(err);
+  }
+}
+
+function findSignals(tree, signals = []) {
+  for (const child of tree.getChildren("object")) {
+    const signal_elements = child.getChildren("signal");
+    signals.push(
+      ...signal_elements.map((el) => {
+        return {
+          id: child.attrs.id,
+          type: child.attrs.class,
+          ...el.attrs,
+        };
+      })
+    );
+    const _child = child.getChild("child");
+    if (_child) findSignals(_child, signals);
+  }
+  return signals;
 }
