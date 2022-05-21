@@ -41,9 +41,10 @@
     <release version="42.0" date="">
       <description>
         <ul>
-          <li>Support Blueprint UI syntax</li>
-          <li>Support Vala</li>
-          <li>Include icons from icon-development-kit</li>
+          <li>Support Blueprint markup syntax for UI</li>
+          <li>Support Vala programming language for Code</li>
+          <li>Include all icons from icon-development-kit</li>
+          <li>Enable preview of UI with signal handlers</li>
         </ul>
       </description>
     </release>
