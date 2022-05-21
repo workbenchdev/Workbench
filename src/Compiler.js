@@ -67,7 +67,12 @@ export default function Compiler(data_dir) {
 
   function run() {
     try {
-      proxy.RunSync(module_file.get_path(), "main", "set_builder", "set_window");
+      proxy.RunSync(
+        module_file.get_path(),
+        "main",
+        "set_builder",
+        "set_window"
+      );
     } catch (error) {
       return false;
     }

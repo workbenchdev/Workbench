@@ -14,7 +14,7 @@ export default function Previewer({ builder, onWindowChange }) {
     subprocess.wait_async(null, restarter);
   }
   restarter();
-  
+
   const dbus_proxy = DBusPreviewer();
   dbus_proxy.connectSignal("Ready", () => {
     updateColorScheme();
