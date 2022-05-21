@@ -23,8 +23,11 @@ export default function Previewer({
   application,
   data_dir,
 }) {
+  let current;
+
   const internal = Internal({
     onWindowChange(open) {
+      if (current !== internal) return;
       if (open) {
         stack.set_visible_child_name("close_window");
       } else {
@@ -38,6 +41,7 @@ export default function Previewer({
   });
   const external = External({
     onWindowChange(open) {
+      if (current !== external) return;
       if (open) {
         stack.set_visible_child_name("close_window");
       } else {
@@ -46,7 +50,6 @@ export default function Previewer({
     },
     builder,
   });
-  let current;
 
   const buffer_css = getLanguage("css").document.buffer;
 
