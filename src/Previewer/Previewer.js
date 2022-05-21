@@ -1,41 +1,66 @@
 import Gtk from "gi://Gtk";
-import Gdk from "gi://Gdk";
-import * as ltx from "./lib/ltx.js";
-import postcss from "./lib/postcss.js";
-import GLib from "gi://GLib";
-import Graphene from "gi://Graphene";
-import Xdp from "gi://Xdp";
-import XdpGtk from "gi://XdpGtk4";
+import * as ltx from "../lib/ltx.js";
+import * as postcss from "../lib/postcss.js";
 
-import logger from "./logger.js";
+import logger from "../logger.js";
+import { getLanguage } from "../util.js";
+
+import Internal from "./Internal.js";
+import External from "./External.js";
+
+// Workbench always defaults to in-process preview now even if Vala is selected.
+// Workbench will switch to out-of-process preview when Vala is run
+// Workbench will switch back to inline preview if any of the following happens
+//  • When a demo is selected
+//  • When the out-of-process preview Window closed
+//  • When switching language
 
 export default function Previewer({
   output,
   builder,
   panel_ui,
-  document_css,
   window,
   application,
   data_dir,
 }) {
-  let handler_id_ui = null;
-  let handler_id_css = null;
+  let current;
 
-  const workbench = (globalThis.workbench = {
+  const internal = Internal({
+    onWindowChange(open) {
+      if (current !== internal) return;
+      if (open) {
+        stack.set_visible_child_name("close_window");
+      } else {
+        stack.set_visible_child_name("open_window");
+      }
+    },
+    output,
+    builder,
     window,
     application,
   });
-
-  const preview_window = builder.get_object("preview_window");
-  const preview_window_button = builder.get_object("preview_window_button");
-
-  let css_provider = null;
-  let object_root = null;
-
-  preview_window_button.connect("clicked", () => {
-    if (!object_root) return;
-    object_root.present_with_time(Gdk.CURRENT_TIME);
+  const external = External({
+    onWindowChange(open) {
+      if (current !== external) return;
+      if (open) {
+        stack.set_visible_child_name("close_window");
+      } else {
+        useInternal();
+      }
+    },
+    builder,
   });
+
+  const buffer_css = getLanguage("css").document.buffer;
+
+  let handler_id_ui = null;
+  let handler_id_css = null;
+  let handler_id_button_open;
+  let handler_id_button_close;
+
+  const stack = builder.get_object("stack_preview");
+  const button_open = builder.get_object("button_open_preview_window");
+  const button_close = builder.get_object("button_close_preview_window");
 
   function start() {
     stop();
@@ -43,7 +68,7 @@ export default function Previewer({
       handler_id_ui = panel_ui.connect("updated", update);
     }
     if (handler_id_css === null) {
-      handler_id_css = document_css.buffer.connect("end-user-action", update);
+      handler_id_css = buffer_css.connect("end-user-action", update);
     }
   }
 
@@ -54,30 +79,28 @@ export default function Previewer({
     }
 
     if (handler_id_css) {
-      document_css.buffer.disconnect(handler_id_css);
+      buffer_css.disconnect(handler_id_css);
       handler_id_css = null;
     }
   }
 
   function update() {
     const builder = new Gtk.Builder();
-    workbench.builder = builder;
 
     let text = panel_ui.xml.trim();
     let target_id;
     let tree;
-    let template;
+    // let template;
 
     try {
       tree = ltx.parse(text);
-      [target_id, text, template] = targetBuildable(tree);
+      [target_id, text /* template */] = targetBuildable(tree);
     } catch (err) {
       logError(err);
       logger.debug(err);
     }
 
     if (!target_id) return;
-    workbench.template = template;
 
     try {
       assertBuildable(tree);
@@ -100,60 +123,68 @@ export default function Previewer({
       return;
     }
 
-    // Update preview with UI
     const object_preview = builder.get_object(target_id);
-    if (object_preview) {
-      if (object_preview instanceof Gtk.Root) {
-        output.set_child(preview_window);
-        if (!object_root) {
-          object_root = object_preview;
-          object_root.set_hide_on_close(true);
-        }
-        adoptChild(object_preview, object_root);
-      } else {
-        output.set_child(object_preview);
-        object_root?.destroy();
-        object_root = null;
-      }
+    if (!object_preview) return;
+
+    current.updateXML({ xml: text, builder, object_preview, target_id });
+    current.updateCSS(buffer_css.text);
+  }
+
+  function useExternal() {
+    if (current === external) return;
+    stack.set_visible_child_name("open_window");
+    setPreviewer(external);
+  }
+
+  function useInternal() {
+    if (current === internal) return;
+    setPreviewer(internal);
+    update();
+  }
+
+  function setPreviewer(previewer) {
+    if (handler_id_button_open) {
+      button_open.disconnect(handler_id_button_open);
+    }
+    if (handler_id_button_close) {
+      button_close.disconnect(handler_id_button_close);
     }
 
-    // Update preview with CSS
-    if (css_provider) {
-      Gtk.StyleContext.remove_provider_for_display(
-        output.get_display(),
-        css_provider
-      );
-      css_provider = null;
-    }
-    let style = document_css.buffer.text;
-    if (!style) return;
+    current?.stop();
+    current = previewer;
 
-    try {
-      style = scopeStylesheet(style);
-    } catch (err) {
-      logger.debug(err);
-      // logError(err);
-    }
+    handler_id_button_open = button_open.connect("clicked", () => {
+      current.open();
+      stack.set_visible_child_name("close_window");
+    });
 
-    css_provider = new Gtk.CssProvider();
-    css_provider.load_from_data(style);
-    Gtk.StyleContext.add_provider_for_display(
-      output.get_display(),
-      css_provider,
-      Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
-    );
+    handler_id_button_close = button_close.connect("clicked", () => {
+      current.close();
+      stack.set_visible_child_name("open_window");
+    });
+
+    current.start();
   }
 
   builder.get_object("button_screenshot").connect("clicked", () => {
-    screenshot({ widget: object_root || output, window, data_dir });
+    current.screenshot({ window, data_dir });
   });
 
+  setPreviewer(internal);
   start();
 
   return {
     start,
     stop,
     update,
+    open() {
+      current.open();
+    },
+    close() {
+      current.close();
+    },
+    useExternal,
+    useInternal,
   };
 }
 
@@ -236,29 +267,7 @@ function getObjectClass(class_name) {
   return imports.gi[ns]?.[rest.join("")];
 }
 
-export function adoptChild(old_parent, new_parent) {
-  const child = getChild(old_parent);
-  setChild(old_parent, null);
-  setChild(new_parent, child);
-}
-
-function getChild(object) {
-  if (typeof object.get_content === "function") {
-    return object.get_content();
-  } else {
-    return object.get_child();
-  }
-}
-
-function setChild(object, child) {
-  if (typeof object.set_content === "function") {
-    object.set_content(child);
-  } else {
-    object.set_child(child);
-  }
-}
-
-export function targetBuildable(tree) {
+function targetBuildable(tree) {
   const template = getTemplate(tree);
   if (template) return template;
 
@@ -272,46 +281,6 @@ export function targetBuildable(tree) {
   }
 
   return [child.attrs.id, tree.toString()];
-}
-
-const portal = new Xdp.Portal();
-
-function screenshot({ widget, window, data_dir }) {
-  const paintable = new Gtk.WidgetPaintable({ widget });
-  const width = widget.get_allocated_width();
-  const height = widget.get_allocated_height();
-
-  const snapshot = Gtk.Snapshot.new();
-  paintable.snapshot(snapshot, width, height);
-
-  const node = snapshot.to_node();
-
-  if (!node) {
-    console.log("Could not get node snapshot", { width, height });
-  }
-
-  const renderer = widget.get_native().get_renderer();
-  const rect = new Graphene.Rect({
-    origin: new Graphene.Point({ x: 0, y: 0 }),
-    size: new Graphene.Size({ width, height }),
-  });
-  const texture = renderer.render_texture(node, rect);
-
-  const path = GLib.build_filenamev([data_dir, `Workbench screenshot.png`]);
-  // log(path);
-  texture.save_to_png(path);
-
-  const parent = XdpGtk.parent_new_gtk(window);
-
-  portal.open_uri(
-    parent,
-    `file://${path}`,
-    Xdp.OpenUriFlags.NONE, // flags
-    null, // cancellable
-    (self, result) => {
-      portal.open_uri_finish(result);
-    }
-  );
 }
 
 // TODO: GTK Builder shouldn't crash when encountering a non buildable

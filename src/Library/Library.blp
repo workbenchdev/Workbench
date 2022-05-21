@@ -1,0 +1,47 @@
+using Gtk 4.0;
+using Adw 1;
+
+Box library {
+  name: "library";
+  width-request: 512;
+  hexpand: false;
+
+  styles ["background"]
+
+  Adw.StatusPage {
+    title: _('Learn, test, remix');
+
+    Box {
+      orientation: vertical;
+
+      Box {
+        orientation: vertical;
+        margin-bottom: 24;
+        spacing: 12;
+
+        Adw.PreferencesGroup library_uncategorized {
+        }
+
+        Adw.PreferencesGroup library_network {
+          title: "Network";
+        }
+
+        Adw.PreferencesGroup library_user_interface {
+          title: "User Interface";
+        }
+      }
+
+      Label {
+        label: _('All examples are dedicated to the public domain\nand <b>can be used freely</b> under the terms of <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a>.');
+        use-markup: true;
+        justify: center;
+        hexpand: true;
+        halign: center;
+        vexpand: true;
+        valign: end;
+        styles ["caption"]
+      }
+    }
+  }
+}
+

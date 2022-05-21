@@ -10,11 +10,12 @@ bin_conf.set('pkgdatadir', pkgdatadir)
 blueprints = custom_target('blueprints',
   input: files(
     'shortcutsWindow.blp',
-    'demos/Toasts/main.blp',
-    'demos/WebSocket client/main.blp',
-    'demos/Welcome/main.blp',
-    'demos/Application window/main.blp',
-    'demos/Notifications/main.blp',
+    'Library/Library.blp',
+    'Library/demos/Toasts/main.blp',
+    'Library/demos/WebSocket client/main.blp',
+    'Library/demos/Welcome/main.blp',
+    'Library/demos/Application window/main.blp',
+    'Library/demos/Notifications/main.blp',
     'window.blp',
   ),
   output: '.',
@@ -44,3 +45,6 @@ configure_file(
   install: true,
   install_dir: get_option('bindir')
 )
+
+install_data('workbench-api.vala', install_dir: datadir)
+subdir('Previewer/vala-previewer')

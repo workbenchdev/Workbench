@@ -1,9 +1,11 @@
 import GLib from "gi://GLib";
 import Gio from "gi://Gio";
 import Gtk from "gi://Gtk";
-import Source from "gi://GtkSource?version=5";
+import Xdp from "gi://Xdp";
 
 import { once } from "./troll/src/util.js";
+
+export const portal = new Xdp.Portal();
 
 export function logEnum(obj, value) {
   console.log(
@@ -58,4 +60,79 @@ export function getFlatpakInfo() {
     return null;
   }
   return keyFile;
+}
+
+export const languages = [
+  {
+    id: "blueprint",
+    name: "Blueprint",
+    panel: "ui",
+    extensions: [".blp"],
+    types: [],
+    document: null,
+  },
+  {
+    id: "xml",
+    name: "GTK Builder",
+    panel: "ui",
+    extensions: [".ui"],
+    types: ["application/x-gtk-builder"],
+    document: null,
+  },
+  {
+    id: "javascript",
+    name: "JavaScript",
+    panel: "code",
+    extensions: [".js", ".mjs"],
+    types: ["text/javascript", "application/javascript"],
+    document: null,
+  },
+  {
+    id: "css",
+    name: "CSS",
+    panel: "style",
+    extensions: [".css"],
+    types: ["text/css"],
+    document: null,
+  },
+  {
+    id: "vala",
+    name: "Vala",
+    panel: "code",
+    extensions: [".vala"],
+    types: ["text/x-vala"],
+    document: null,
+  },
+];
+
+export function getLanguage(id) {
+  return languages.find((language) => language.id === id);
+}
+
+export function getLanguageForFile(file) {
+  let content_type;
+
+  try {
+    const info = file.query_info(
+      "standard::content-type",
+      Gio.FileQueryInfoFlags.NONE,
+      null
+    );
+    content_type = info.get_content_type();
+  } catch (err) {
+    logError(err);
+  }
+
+  if (!content_type) {
+    return;
+  }
+
+  const name = file.get_basename();
+
+  return languages.find(({ extensions, types }) => {
+    return (
+      types.includes(content_type) ||
+      extensions.some((ext) => name.endsWith(ext))
+    );
+  });
 }

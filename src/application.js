@@ -21,7 +21,7 @@ export default function Application({ version }) {
     if (!window) return;
 
     for (const file of files) {
-      window.openFile(file);
+      window.openFile(file).catch(logError);
     }
   });
 
@@ -57,12 +57,8 @@ export default function Application({ version }) {
 }
 
 function setColorScheme() {
-  const toggle_color_scheme = settings.get_boolean("toggle-color-scheme");
-  style_manager.set_color_scheme(
-    toggle_color_scheme
-      ? Adw.ColorScheme.FORCE_LIGHT
-      : Adw.ColorScheme.FORCE_DARK
-  );
+  const color_scheme = settings.get_int("color-scheme");
+  style_manager.set_color_scheme(color_scheme);
 }
 setColorScheme();
-settings.connect("changed::toggle-color-scheme", setColorScheme);
+settings.connect("changed::color-scheme", setColorScheme);

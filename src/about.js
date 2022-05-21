@@ -26,7 +26,6 @@ flatpak ${flatpak_info.get_string("Instance", "flatpak-version")}
   const dialog = new Gtk.AboutDialog({
     application,
     authors: ["Sonny Piers https://sonny.re"],
-    artists: ["Tobias Bernard <tbernard@gnome.org>"],
     comments: _("Learn and prototype with\nGNOME technologies"),
     copyright: "Copyright 2022 Sonny Piers",
     license_type: Gtk.License.GPL_3_0_ONLY,
@@ -39,14 +38,16 @@ flatpak ${flatpak_info.get_string("Instance", "flatpak-version")}
     translator_credits: _("translator-credits"),
     system_information,
   });
-  // dialog.add_credit_section("Contributors", [
-  //   // Add yourself as
-  //   // "John Doe",
-  //   // or
-  //   // "John Doe <john@example.com>",
-  //   // or
-  //   // "John Doe https://john.com",
-  // ]);
+  dialog.add_credit_section("Contributors", [
+    "Lorenz Wildberg https://gitlab.gnome.org/lwildberg",
+    "Tobias Bernard <tbernard@gnome.org>",
+    // Add yourself as
+    // "John Doe",
+    // or
+    // "John Doe <john@example.com>",
+    // or
+    // "John Doe https://john.com",
+  ]);
   dialog.present();
 
   return { dialog };

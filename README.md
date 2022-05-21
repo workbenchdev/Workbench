@@ -13,11 +13,12 @@ Workbench goal is to let you experiment with GNOME technologies, no matter if ti
 Among other things, Workbench comes with
 
 - realtime GTK/CSS preview
-- JavaScript for quick and easy scripting
-- Syntax highlighting, undo/redo, autosave
+- library of examples
+- JavaScript and Vala runs without any setup
+- XML and Blueprint for describing user interface
+- syntax highlighting, undo/redo, autosave, session restore
 - code formatter
 - console logs
-- library of examples
 
 ## Tips and tricks
 
@@ -62,7 +63,7 @@ matrix(
 <details>
   <summary>Turn a prototype made in Workbench into an application</summary>
 
-Use GNOME Builder to start a new project using the JavaScript GNOME Application template and copy paste your Workbench code.
+Use GNOME Builder to start a new project using the appropriate GNOME Application template and copy paste your Workbench code.
 
 </details>
 
@@ -93,7 +94,7 @@ It is unsupported and may put users at risk.
 
 Workbench would not be possible without
 
-GTK, GLib, Flatpak, GtkSourceView, libadwaita, VTE, GJS, Blueprint, icon-development-kit
+GTK, GLib, Flatpak, GtkSourceView, libadwaita, VTE, GJS, Blueprint, icon-development-kit, Vala
 
 and the GNOME community 🖤
 
@@ -105,8 +106,10 @@ If you can help, here is a list of issues that would make Workbench better
 
 ## Copyright
 
-© 2022 [Sonny Piers](https://github.com/sonnyp)
+© 2022 [Sonny Piers](https://github.com/sonnyp) and contributors
 
 ## License
 
 GPLv3. Please see [COPYING](COPYING) file.
+
+Except for everything under src/Library/demos which is in the public domain under the terms of [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/).

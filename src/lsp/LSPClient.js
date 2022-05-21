@@ -11,56 +11,57 @@ export default class LSPClient {
   }
 
   start() {
-    const proc = Gio.Subprocess.new(
+    this._start_process();
+    // For testing blueprint language server restart
+    // setTimeout(() => {
+    //   this.proc.force_exit();
+    // }, 5000);
+  }
+
+  _start_process() {
+    this.proc = Gio.Subprocess.new(
       this.argv,
       Gio.SubprocessFlags.STDIN_PIPE | Gio.SubprocessFlags.STDOUT_PIPE
     );
-
-    const stdin = proc.get_stdin_pipe();
-    const stdout = new Gio.DataInputStream({
-      base_stream: proc.get_stdout_pipe(),
-      close_base_stream: true,
-    });
-    Object.assign(this, { proc, stdin, stdout });
-
-    this._read();
-
-    proc.wait_async(null, (proc, res) => {
+    this.proc.wait_async(null, (self, res) => {
       try {
-        proc.wait_finish(res);
-      } catch (e) {
-        logError(e);
+        this.proc.wait_finish(res);
+      } catch (err) {
+        logError(err);
       }
       this.emit("exit");
+      this._start_process();
     });
+    this.stdin = this.proc.get_stdin_pipe();
+    this.stdout = new Gio.DataInputStream({
+      base_stream: this.proc.get_stdout_pipe(),
+      close_base_stream: true,
+    });
+    this._read();
   }
 
   _read() {
-    const that = this;
-    function readOutput() {
-      that.stdout.read_line_async(0, null, (self, res) => {
-        let line;
+    this.stdout.read_line_async(0, null, (self, res) => {
+      let line;
+      try {
+        [line] = this.stdout.read_line_finish_utf8(res);
+      } catch (err) {
+        logError(err);
+        return;
+      }
+
+      if (line === null) return;
+      if (line.startsWith("{")) {
         try {
-          [line] = that.stdout.read_line_finish_utf8(res);
+          this._onmessage(JSON.parse(line));
+          // eslint-disable-next-line no-empty
         } catch (err) {
           logError(err);
-          return;
         }
+      }
 
-        if (line === null) return;
-        if (line.startsWith("{")) {
-          try {
-            that._onmessage(JSON.parse(line));
-            // eslint-disable-next-line no-empty
-          } catch (err) {
-            console.log(err);
-          }
-        }
-
-        readOutput();
-      });
-    }
-    readOutput();
+      this._read();
+    });
   }
 
   _onmessage(message) {

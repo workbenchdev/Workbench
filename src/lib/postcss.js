@@ -1,6 +1,12 @@
 function getAugmentedNamespace(n) {
-	if (n.__esModule) return n;
-	var a = Object.defineProperty({}, '__esModule', {value: true});
+  var f = n.default;
+	if (typeof f == "function") {
+		var a = function () {
+			return f.apply(this, arguments);
+		};
+		a.prototype = f.prototype;
+  } else a = {};
+  Object.defineProperty(a, '__esModule', {value: true});
 	Object.keys(n).forEach(function (k) {
 		var d = Object.getOwnPropertyDescriptor(n, k);
 		Object.defineProperty(a, k, d.get ? d : {
@@ -2302,7 +2308,7 @@ class Container$8 extends Node$2 {
           i.raws.before = sample.raws.before.replace(/\S/g, '');
         }
       }
-      i.parent = this;
+      i.parent = this.proxyOf;
       return i
     });
 
@@ -4025,7 +4031,7 @@ let Root$3 = root$1;
 
 class Processor$2 {
   constructor(plugins = []) {
-    this.version = '8.4.12';
+    this.version = '8.4.14';
     this.plugins = this.normalize(plugins);
   }
 
@@ -4164,25 +4170,27 @@ function postcss(...plugins) {
 }
 
 postcss.plugin = function plugin(name, initializer) {
-  // eslint-disable-next-line no-console
-  if (console && console.warn) {
+  let warningPrinted = false;
+  function creator(...args) {
     // eslint-disable-next-line no-console
-    console.warn(
-      name +
-        ': postcss.plugin was deprecated. Migration guide:\n' +
-        'https://evilmartians.com/chronicles/postcss-8-plugin-migration'
-    );
-    if (process.env.LANG && process.env.LANG.startsWith('cn')) {
-      /* c8 ignore next 7 */
+    if (console && console.warn && !warningPrinted) {
+      warningPrinted = true;
       // eslint-disable-next-line no-console
       console.warn(
         name +
-          ': 里面 postcss.plugin 被弃用. 迁移指南:\n' +
-          'https://www.w3ctech.com/topic/2226'
+          ': postcss.plugin was deprecated. Migration guide:\n' +
+          'https://evilmartians.com/chronicles/postcss-8-plugin-migration'
       );
+      if (process.env.LANG && process.env.LANG.startsWith('cn')) {
+        /* c8 ignore next 7 */
+        // eslint-disable-next-line no-console
+        console.warn(
+          name +
+            ': 里面 postcss.plugin 被弃用. 迁移指南:\n' +
+            'https://www.w3ctech.com/topic/2226'
+        );
+      }
     }
-  }
-  function creator(...args) {
     let transformer = initializer(...args);
     transformer.postcssPlugin = name;
     transformer.postcssVersion = new Processor$1().version;

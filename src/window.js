@@ -7,21 +7,31 @@ import Adw from "gi://Adw?version=1";
 import Vte from "gi://Vte?version=3.91";
 import { gettext as _ } from "gettext";
 
-import { confirm, settings, createDataDir } from "./util.js";
+import {
+  confirm,
+  settings,
+  createDataDir,
+  getLanguageForFile,
+  languages,
+} from "./util.js";
 import Document from "./Document.js";
 import PanelUI from "./PanelUI.js";
+import PanelCode from "./PanelCode.js";
 import Devtools from "./Devtools.js";
 
 import prettier from "./lib/prettier.js";
 import prettier_babel from "./lib/prettier-babel.js";
 import prettier_postcss from "./lib/prettier-postcss.js";
 import prettier_xml from "./lib/prettier-xml.js";
-import Library, { loadDemo } from "./Library.js";
-import Previewer from "./Previewer.js";
+import Library, { readDemo } from "./Library/Library.js";
+import Previewer from "./Previewer/Previewer.js";
+import Compiler from "./Compiler.js";
 import logger from "./logger.js";
 
 const scheme_manager = Source.StyleSchemeManager.get_default();
 const style_manager = Adw.StyleManager.get_default();
+
+const langs = Object.fromEntries(languages.map((lang) => [lang.id, lang]));
 
 export default function Window({ application }) {
   Vte.Terminal.new();
@@ -38,24 +48,33 @@ export default function Window({ application }) {
 
   const output = builder.get_object("output");
 
-  const panel_code = builder.get_object("panel_code");
   const panel_style = builder.get_object("panel_style");
   const panel_preview = builder.get_object("panel_preview");
   const panel_placeholder = builder.get_object("panel_placeholder");
 
   const { console } = Devtools({ application, window, builder });
 
-  const placeholders = loadDemo("Welcome");
+  let compiler = null;
 
-  const document_javascript = Document({
+  const placeholders = readDemo("Welcome");
+
+  langs.javascript.document = Document({
     source_view: builder.get_object("source_view_javascript"),
     lang: "js",
-    placeholder: placeholders.js,
+    placeholder: placeholders.javascript,
     ext: "js",
     data_dir,
   });
 
-  const document_blueprint = Document({
+  langs.vala.document = Document({
+    source_view: builder.get_object("source_view_vala"),
+    lang: "vala",
+    placeholder: placeholders.vala,
+    ext: "vala",
+    data_dir,
+  });
+
+  langs.blueprint.document = Document({
     source_view: builder.get_object("source_view_blueprint"),
     lang: "blueprint",
     placeholder: placeholders.blueprint,
@@ -63,7 +82,7 @@ export default function Window({ application }) {
     data_dir,
   });
 
-  const document_xml = Document({
+  langs.xml.document = Document({
     source_view: builder.get_object("source_view_xml"),
     lang: "xml",
     placeholder: placeholders.xml,
@@ -71,7 +90,7 @@ export default function Window({ application }) {
     data_dir,
   });
 
-  const document_css = Document({
+  langs.css.document = Document({
     source_view: builder.get_object("source_view_css"),
     lang: "css",
     placeholder: placeholders.css,
@@ -81,20 +100,25 @@ export default function Window({ application }) {
 
   const panel_ui = PanelUI({
     builder,
-    document_blueprint,
-    document_xml,
+    langs,
     data_dir,
   });
 
-  const documents = [
-    document_javascript,
-    document_css,
-    document_blueprint,
-    document_xml,
-  ];
+  const previewer = Previewer({
+    output,
+    builder,
+    window,
+    application,
+    data_dir,
+    panel_ui,
+  });
+
+  const panel_code = PanelCode({
+    builder,
+    previewer,
+  });
 
   const button_run = builder.get_object("button_run");
-  const button_code = builder.get_object("button_code");
   const button_style = builder.get_object("button_style");
   const button_preview = builder.get_object("button_preview");
   const button_inspector = builder.get_object("button_inspector");
@@ -105,7 +129,7 @@ export default function Window({ application }) {
   function updateStyle() {
     const { dark } = style_manager;
     const scheme = scheme_manager.get_scheme(dark ? "Adwaita-dark" : "Adwaita");
-    documents.forEach(({ buffer }) => {
+    languages.forEach(({ document: { buffer } }) => {
       buffer.set_style_scheme(scheme);
     });
 
@@ -119,7 +143,10 @@ export default function Window({ application }) {
   style_manager.connect("notify::dark", updateStyle);
 
   button_light.connect("toggled", () => {
-    settings.set_boolean("toggle-color-scheme", button_light.active);
+    settings.set_int("color-scheme", Adw.ColorScheme.PREFER_LIGHT);
+  });
+  button_dark.connect("toggled", () => {
+    settings.set_int("color-scheme", Adw.ColorScheme.PREFER_DARK);
   });
 
   settings.bind(
@@ -131,19 +158,6 @@ export default function Window({ application }) {
   button_style.bind_property(
     "active",
     panel_style,
-    "visible",
-    GObject.BindingFlags.SYNC_CREATE
-  );
-
-  settings.bind(
-    "show-code",
-    button_code,
-    "active",
-    Gio.SettingsBindFlags.DEFAULT
-  );
-  button_code.bind_property(
-    "active",
-    panel_code,
     "visible",
     GObject.BindingFlags.SYNC_CREATE
   );
@@ -176,15 +190,6 @@ export default function Window({ application }) {
     Gtk.Window.set_interactive_debugging(true);
   });
 
-  const previewer = Previewer({
-    output,
-    builder,
-    document_css,
-    window,
-    application,
-    data_dir,
-    panel_ui,
-  });
   function format(buffer, formatter) {
     const code = formatter(buffer.text.trim());
 
@@ -203,25 +208,28 @@ export default function Window({ application }) {
     previewer.stop();
     panel_ui.stop();
 
+    const { language } = panel_code;
     try {
       await panel_ui.update();
 
-      format(document_javascript.buffer, (text) => {
-        return prettier.format(text, {
-          parser: "babel",
-          plugins: [prettier_babel],
-          trailingComma: "all",
+      if (language === "JavaScript") {
+        format(langs.javascript.document.buffer, (text) => {
+          return prettier.format(text, {
+            parser: "babel",
+            plugins: [prettier_babel],
+            trailingComma: "all",
+          });
         });
-      });
+      }
 
-      format(document_css.buffer, (text) => {
+      format(langs.css.document.buffer, (text) => {
         return prettier.format(text, {
           parser: "css",
           plugins: [prettier_postcss],
         });
       });
 
-      format(document_xml.buffer, (text) => {
+      format(langs.xml.document.buffer, (text) => {
         return prettier.format(text, {
           parser: "xml",
           plugins: [prettier_xml],
@@ -245,21 +253,36 @@ export default function Window({ application }) {
         });
       });
 
-      previewer.update();
+      if (language === "JavaScript") {
+        previewer.update();
 
-      // We have to create a new file each time
-      // because gjs doesn't appear to use etag for module caching
-      // ?foo=Date.now() also does not work as expected
-      // TODO: File a bug
-      const [file_javascript] = Gio.File.new_tmp("workbench-XXXXXX.js");
-      file_javascript.replace_contents(
-        document_javascript.buffer.text || "\n",
-        null,
-        false,
-        Gio.FileCreateFlags.NONE,
-        null
-      );
-      await import(`file://${file_javascript.get_path()}`);
+        // We have to create a new file each time
+        // because gjs doesn't appear to use etag for module caching
+        // ?foo=Date.now() also does not work as expected
+        // TODO: File a bug
+        const [file_javascript] = Gio.File.new_tmp("workbench-XXXXXX.js");
+        file_javascript.replace_contents(
+          langs.javascript.document.buffer.text || "\n",
+          null,
+          false,
+          Gio.FileCreateFlags.NONE,
+          null
+        );
+        await import(`file://${file_javascript.get_path()}`);
+      } else if (language === "Vala") {
+        compiler = compiler || Compiler(data_dir);
+        const success = await compiler.compile(langs.vala.document.buffer.text);
+        if (success) {
+          previewer.useExternal();
+          previewer.update();
+          if (compiler.run()) {
+            previewer.open();
+          } else {
+            previewer.useInternal();
+            previewer.update();
+          }
+        }
+      }
     } catch (err) {
       // prettier xml errors are not instances of Error
       if (err instanceof Error) {
@@ -269,10 +292,8 @@ export default function Window({ application }) {
       }
     }
 
-    // setTimeout(() => {
     previewer.start();
     panel_ui.start();
-    // });
 
     button_run.set_sensitive(true);
     console.scrollToEnd();
@@ -283,7 +304,10 @@ export default function Window({ application }) {
     parameter_type: null,
   });
   action_run.connect("activate", () => {
-    runCode().catch(logError);
+    // Ensure code does not run if panel is not visible
+    if (panel_code.panel.visible) {
+      runCode().catch(logError);
+    }
   });
   window.add_action(action_run);
   application.set_accels_for_action("win.run", ["<Control>Return"]);
@@ -292,26 +316,29 @@ export default function Window({ application }) {
     const agreed = await confirmDiscard();
     if (!agreed) return;
 
-    function load({ buffer }, str) {
+    function load({ document: { buffer } }, str) {
       replaceBufferText(buffer, str);
       buffer.place_cursor(buffer.get_start_iter());
     }
 
-    const { js, css, xml, blueprint, panels } = loadDemo(demo_name);
+    const { javascript, css, xml, blueprint, vala, panels } =
+      readDemo(demo_name);
 
     panel_ui.stop();
     previewer.stop();
+    languages.forEach(({ document }) => document.stop());
 
     settings.set_string("selected-demo", demo_name);
 
-    load(document_javascript, js);
+    load(langs.javascript, javascript);
+    load(langs.vala, vala);
     settings.set_boolean("show-code", panels.includes("code"));
 
-    load(document_css, css);
+    load(langs.css, css);
     settings.set_boolean("show-style", panels.includes("style"));
 
-    load(document_blueprint, blueprint);
-    load(document_xml, xml);
+    load(langs.blueprint, blueprint);
+    load(langs.xml, xml);
     settings.set_boolean("show-ui", panels.includes("ui"));
     settings.set_boolean("show-preview", panels.includes("preview"));
 
@@ -320,20 +347,27 @@ export default function Window({ application }) {
     // in the future we may let each demo decide
     settings.set_boolean("show-console", true);
 
-    await runCode();
+    previewer.useInternal();
+
+    // We only automatically run code upon opening a demo
+    // if language is JavaScript and the Code panel is visible
+    if (panel_code.language === "JavaScript" && panel_code.panel.visible) {
+      await runCode();
+    } else {
+      panel_ui.start();
+      panel_ui.update();
+      previewer.start();
+      previewer.update();
+    }
+
+    languages.forEach(({ document }) => document.save());
 
     settings.set_boolean("has-edits", false);
+
+    languages.forEach(({ document }) => document.start());
   }
 
-  const action_library = new Gio.SimpleAction({
-    name: "library",
-    parameter_type: null,
-  });
-  action_library.connect("activate", () => {
-    Library({ window, builder, openDemo });
-  });
-  window.add_action(action_library);
-  application.set_accels_for_action("win.library", ["<Control><Shift>O"]);
+  Library({ flap: builder.get_object("flap"), openDemo, window, application });
 
   async function confirmDiscard() {
     if (!settings.get_boolean("has-edits")) return true;
@@ -348,23 +382,12 @@ export default function Window({ application }) {
   }
 
   const text_decoder = new TextDecoder();
-  function openFile(file) {
-    let content_type;
+  async function openFile(file) {
+    const language = getLanguageForFile(file);
+    if (!language) return;
 
-    try {
-      const info = file.query_info(
-        "standard::content-type",
-        Gio.FileQueryInfoFlags.NONE,
-        null
-      );
-      content_type = info.get_content_type();
-    } catch (err) {
-      logError(err);
-    }
-
-    if (!content_type) {
-      return;
-    }
+    const agreed = await confirmDiscard();
+    if (!agreed) return;
 
     let data;
 
@@ -376,26 +399,30 @@ export default function Window({ application }) {
       return;
     }
 
-    async function load({ buffer }, data) {
-      const agreed = await confirmDiscard();
-      if (!agreed) return;
-      replaceBufferText(buffer, data);
-      buffer.place_cursor(buffer.get_start_iter());
-    }
+    const {
+      document: { buffer },
+    } = language;
+    replaceBufferText(buffer, data);
+    buffer.place_cursor(buffer.get_start_iter());
 
-    if (content_type.includes("/javascript")) {
-      load(document_javascript, data);
-    } else if (content_type.includes("text/css")) {
-      load(document_css, data);
-    } else if (content_type.includes("application/x-gtk-builder")) {
-      load(document_xml, data);
-      settings.set_string("ui-lang", "xml");
-    } else if (file.get_basename().endsWith(".blp")) {
-      load(document_blueprint, data);
+    settings.set_boolean(`show-${language.panel}`, true);
+
+    if (language.id === "blueprint") {
       settings.set_string("ui-lang", "blueprint");
+    } else if (language.id === "xml") {
+      settings.set_string("ui-lang", "xml");
+    } else if (language.id === "javascript") {
+      settings.set_int("code-language", 0);
+    } else if (language.id === "vala") {
+      settings.set_int("code-language", 1);
     }
-  }
 
+    if (language.panel === "ui") {
+      settings.set_boolean(`show-preview`, true);
+    }
+
+    settings.set_boolean("has-edits", false);
+  }
   return { window, openFile };
 }
 
