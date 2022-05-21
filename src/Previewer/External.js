@@ -21,10 +21,6 @@ export default function Previewer({ builder, onWindowChange }) {
   })();
 
   const dbus_proxy = DBusPreviewer();
-  dbus_proxy.connectSignal("Ready", () => {
-    updateColorScheme();
-  });
-
   dbus_proxy.connectSignal("WindowOpen", (proxy, name_owner, [open]) => {
     onWindowChange(open);
   });

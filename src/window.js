@@ -365,6 +365,8 @@ export default function Window({ application }) {
     settings.set_boolean("has-edits", false);
 
     languages.forEach(({ document }) => document.start());
+
+    console.scrollToEnd();
   }
 
   Library({ flap: builder.get_object("flap"), openDemo, window, application });
