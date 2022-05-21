@@ -175,6 +175,9 @@ export default function Previewer({
     open() {
       current.open();
     },
+    close() {
+      current.close();
+    },
     useExternal,
     useInternal,
   };

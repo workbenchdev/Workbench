@@ -1,5 +1,6 @@
 import Adw from "gi://Adw?version=1";
 import Gio from "gi://Gio";
+import logger from "../logger.js";
 import DBusPreviewer from "./DBusPreviewer.js";
 
 export default function Previewer({ builder, onWindowChange }) {
@@ -35,7 +36,12 @@ export default function Previewer({ builder, onWindowChange }) {
   }
 
   function close() {
-    dbus_proxy.CloseWindowSync();
+    try {
+      dbus_proxy.CloseWindowSync();
+      // eslint-disable-next-line no-empty
+    } catch (err) {
+      logger.debug(err);
+    }
     stack.set_visible_child_name("open_window");
   }
 

@@ -275,11 +275,12 @@ export default function Window({ application }) {
         if (success) {
           previewer.useExternal();
           previewer.update();
-          if (!compiler.run()) {
+          if (compiler.run()) {
+            previewer.open();
+          } else {
             previewer.useInternal();
-            return;
+            previewer.update();
           }
-          previewer.open();
         }
       }
     } catch (err) {
