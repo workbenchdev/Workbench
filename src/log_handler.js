@@ -30,6 +30,7 @@ const all_log_levels =
 // GLib.log_set_handler("Gjs-Console", all_log_levels, log_handler);
 GLib.log_set_handler("Gdk", all_log_levels, log_handler);
 GLib.log_set_handler("Adwaita", all_log_levels, log_handler);
+GLib.log_set_handler("GVFS", all_log_levels, log_handler);
 // Not working - Gtk is proably using structured logging
 // GLib.log_set_handler("Gtk", all_log_levels, log_handler);
 
@@ -84,6 +85,15 @@ function log_handler(domain, level, message) {
     level === GLib.LogLevelFlags.LEVEL_WARNING &&
     message ===
       "Using GtkSettings:gtk-application-prefer-dark-theme with libadwaita is unsupported. Please use AdwStyleManager:color-scheme instead."
+  ) {
+    return GLib.LogWriterOutput.HANDLED;
+  }
+
+  if (
+    domain === "GVFS" &&
+    level === GLib.LogLevelFlags.LEVEL_WARNING &&
+    message ===
+      "The peer-to-peer connection failed: Error when getting information for file “/run/user/1000/gvfsd”: No such file or directory. Falling back to the session bus. Your application is probably missing --filesystem=xdg-run/gvfsd privileges."
   ) {
     return GLib.LogWriterOutput.HANDLED;
   }
