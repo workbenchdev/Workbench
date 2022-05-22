@@ -37,9 +37,7 @@ export default function Console({ builder, window, application }) {
     terminal.feed(
       `${ERASE_ENTIRE_SCREEN}${ERASE_SAVED_LINES}${MOVE_CURSOR_HOME}`
     );
-    // terminal.reset(true, true);
-    // terminal.fork_command("clear");
-    scrollToEnd();
+    terminal.reset(true, true);
   }
 
   function scrollToEnd() {
@@ -65,7 +63,7 @@ export default function Console({ builder, window, application }) {
     name: "clear",
     parameter_type: null,
   });
-  action_clear.connect("activate", console.clear);
+  action_clear.connect("activate", clear);
   window.add_action(action_clear);
   application.set_accels_for_action("win.clear", ["<Control>K"]);
 
