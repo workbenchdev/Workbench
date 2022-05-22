@@ -94,7 +94,7 @@ export default function Previewer({
 
     try {
       tree = ltx.parse(text);
-      [target_id, text /* template */] = targetBuildable(tree);
+      [target_id, text] = targetBuildable(tree);
     } catch (err) {
       logError(err);
       logger.debug(err);
@@ -211,12 +211,7 @@ export function scopeStylesheet(style) {
   return str;
 }
 
-const text_encoder = new TextEncoder();
-
 function getTemplate(tree) {
-  const original = tree.toString();
-  // console.log(original);
-
   const template = tree.getChild("template");
   if (!template) return;
 
@@ -241,7 +236,7 @@ function getTemplate(tree) {
 
   tree.cnode(el);
 
-  return [el.attrs.id, tree.toString(), text_encoder.encode(original)];
+  return [el.attrs.id, tree.toString()];
 }
 
 function findPreviewable(tree) {
