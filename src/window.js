@@ -376,7 +376,11 @@ export default function Window({ application }) {
     console.scrollToEnd();
   }
 
-  Library({ flap: builder.get_object("flap"), openDemo, window, application });
+  Library({
+    openDemo,
+    window,
+    application,
+  });
 
   async function confirmDiscard() {
     if (!settings.get_boolean("has-edits")) return true;
