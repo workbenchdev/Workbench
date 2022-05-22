@@ -1,5 +1,10 @@
 import Gio from "gi://Gio";
-import { getLanguage, settings } from "./util.js";
+import {
+  getLanguage,
+  settings,
+  connect_signals,
+  disconnect_signals,
+} from "./util.js";
 import GObject from "gi://GObject";
 import GLib from "gi://GLib";
 
@@ -62,7 +67,7 @@ export default function PanelUI({ builder, data_dir }) {
     Gio.SettingsBindFlags.DEFAULT
   );
 
-  let handler_id = null;
+  let handler_ids = null;
 
   async function update() {
     let xml;
@@ -78,16 +83,22 @@ export default function PanelUI({ builder, data_dir }) {
   function onUpdate() {
     update().catch(logError);
   }
+
   function start() {
     stop();
     lang = getLanguage(settings.get_string("ui-lang"));
-    handler_id = lang.document.buffer.connect("end-user-action", onUpdate);
+    // cannot use "changed" signal as it triggers many time for pasting
+    handler_ids = connect_signals(lang.document.buffer, {
+      "end-user-action": onUpdate,
+      undo: onUpdate,
+      redo: onUpdate,
+    });
   }
 
   function stop() {
-    if (handler_id !== null) {
-      lang.document.buffer.disconnect(handler_id);
-      handler_id = null;
+    if (handler_ids !== null) {
+      disconnect_signals(lang.document.buffer, handler_ids);
+      handler_ids = null;
     }
   }
 

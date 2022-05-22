@@ -5,7 +5,7 @@ import * as ltx from "../lib/ltx.js";
 import * as postcss from "../lib/postcss.js";
 
 import logger from "../logger.js";
-import { getLanguage } from "../util.js";
+import { getLanguage, connect_signals, disconnect_signals } from "../util.js";
 
 import Internal from "./Internal.js";
 import External from "./External.js";
@@ -58,7 +58,7 @@ export default function Previewer({
   const buffer_css = getLanguage("css").document.buffer;
 
   let handler_id_ui = null;
-  let handler_id_css = null;
+  let handler_ids_css = null;
   let handler_id_button_open;
   let handler_id_button_close;
 
@@ -71,8 +71,13 @@ export default function Previewer({
     if (handler_id_ui === null) {
       handler_id_ui = panel_ui.connect("updated", update);
     }
-    if (handler_id_css === null) {
-      handler_id_css = buffer_css.connect("end-user-action", update);
+    if (handler_ids_css === null) {
+      // cannot use "changed" signal as it triggers many time for pasting
+      handler_ids_css = connect_signals(buffer_css, {
+        "end-user-action": update,
+        undo: update,
+        redo: update,
+      });
     }
   }
 
@@ -82,9 +87,9 @@ export default function Previewer({
       handler_id_ui = null;
     }
 
-    if (handler_id_css) {
-      buffer_css.disconnect(handler_id_css);
-      handler_id_css = null;
+    if (handler_ids_css) {
+      disconnect_signals(buffer_css, handler_ids_css);
+      handler_ids_css = null;
     }
   }
 

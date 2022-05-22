@@ -136,3 +136,13 @@ export function getLanguageForFile(file) {
     );
   });
 }
+
+export function connect_signals(target, signals) {
+  return Object.entries(signals).map(([signal, handler]) => {
+    return target.connect(signal, handler);
+  });
+}
+
+export function disconnect_signals(target, handler_ids) {
+  handler_ids.forEach((handler_id) => target.disconnect(handler_id));
+}
