@@ -23,8 +23,9 @@ function _makeLogFunction(level) {
 }
 
 // Log all messages when connected to the journal
-if (GLib.log_writer_is_journald(2))
+if (GLib.log_writer_is_journald(2)) {
   GLib.setenv("G_MESSAGES_DEBUG", LOG_DOMAIN, false);
+}
 
 export default {
   log: _makeLogFunction(GLib.LogLevelFlags.LEVEL_MESSAGE),

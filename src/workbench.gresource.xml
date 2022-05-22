@@ -43,6 +43,7 @@
     <file>Console.js</file>
     <file>Devtools.js</file>
     <file>Document.js</file>
+    <file>log_handler.js</file>
     <file>PanelUI.js</file>
     <file>PanelCode.js</file>
     <file>Library/Library.js</file>
