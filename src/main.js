@@ -1,6 +1,7 @@
 import GLib from "gi://GLib";
 import { bindtextdomain, textdomain } from "gettext";
 
+import "./log_handler.js";
 import Application from "./application.js";
 
 GLib.set_prgname("re.sonny.Workbench");

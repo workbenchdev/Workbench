@@ -9,13 +9,13 @@ Gtk.ApplicationWindow window {
   maximized: true;
   titlebar: Gtk.HeaderBar {
     [start]
-    ToggleButton button_library {
+    Button button_library {
       child: Adw.ButtonContent {
         icon-name: "open-book-symbolic";
         label: _("_Library");
         use-underline: true;
       };
-      //action-name: "win.library";
+      action-name: "win.library";
       tooltip-text: _("Open Library of Demos and Examples (Ctrl+Shift+O)");
     }
 
@@ -125,422 +125,410 @@ Gtk.ApplicationWindow window {
     }
   };
 
-  Adw.Flap flap {
-    reveal-flap: bind button_library.active bidirectional;
-    // TODO: auto when only one panel is open
-    fold-policy: always;
-    locked: true;
+  [content]
+  Paned paned {
+    orientation: vertical;
+    shrink-start-child: false;
+    shrink-end-child: false;
+    resize-start-child: true;
+    resize-end-child: true;
 
-    [flap]
+    [start]
     Box {
-      width-request: 200;
-      styles ["background"]
-    }
+      orientation: horizontal;
+      vexpand: true;
+      homogeneous: true;
 
-    [content]
-    Paned paned {
-      orientation: vertical;
-      shrink-start-child: false;
-      shrink-end-child: false;
-      resize-start-child: true;
-      resize-end-child: true;
-
-      [start]
-      Box {
-        orientation: horizontal;
-        vexpand: true;
-        homogeneous: true;
-
-        Box panel_code {
-          orientation: vertical;
-
-          CenterBox {
-            [start]
-            Box {
-              Label {
-                label: _("<b>Code</b>");
-                use-markup: true;
-                styles ["dim-label"]
-              }
-
-              Separator {
-                styles ["spacer"]
-              }
-
-              DropDown dropdown_code_lang {
-                model: StringList {
-                  strings [
-                    "JavaScript",
-                    "Vala",
-                  ]
-                };
-              }
-            }
-
-            [end]
-            Button button_run {
-              child: Adw.ButtonContent {
-                icon-name: "media-playback-start-symbolic";
-                label: _("_Run");
-                use-underline: true;
-              };
-              action-name: "win.run";
-              tooltip-text: _("Run (Ctrl+⏎)");
-              styles ["suggested-action"]
-            }
-
-            styles ["toolbar"]
-          }
-
-          Separator {
-          }
-
-          Box {
-            hexpand: true;
-            Stack stack_code {
-              hexpand: true;
-              StackPage {
-                name: 'JavaScript';
-                child: ScrolledWindow {
-                  vexpand: true;
-                  GtkSource.View source_view_javascript {
-                    buffer: GtkSource.Buffer {
-                    };
-                    monospace: true;
-                    auto-indent: true;
-                    background-pattern: grid;
-                    highlight-current-line: true;
-                    indent-on-tab: true;
-                    indent-width: 2;
-                    insert-spaces-instead-of-tabs: true;
-                    show-line-marks: true;
-                    show-line-numbers: true;
-                    smart-backspace: true;
-                    tab-width: 2;
-                  }
-                };
-              }
-              StackPage {
-                name: 'Vala';
-                child: ScrolledWindow {
-                  vexpand: true;
-                  GtkSource.View source_view_vala {
-                    buffer: GtkSource.Buffer {
-                    };
-                    monospace: true;
-                    auto-indent: true;
-                    background-pattern: grid;
-                    highlight-current-line: true;
-                    indent-on-tab: true;
-                    indent-width: 2;
-                    insert-spaces-instead-of-tabs: true;
-                    show-line-marks: true;
-                    show-line-numbers: true;
-                    smart-backspace: true;
-                    tab-width: 2;
-                  }
-                };
-              }
-            }
-
-            Separator {
-            }
-          }
-        }
-
-        Box panel_style {
-          orientation: vertical;
-
-          CenterBox {
-            height-request: 46;
-
-            [start]
-            Label {
-              label: _("<b>Style CSS</b>");
-              use-markup: true;
-              styles ["dim-label"]
-            }
-
-            styles ["toolbar"]
-          }
-
-          Separator {
-          }
-
-          Box {
-            ScrolledWindow {
-              vexpand: true;
-              hexpand: true;
-
-              GtkSource.View source_view_css {
-                buffer: GtkSource.Buffer {
-                };
-                monospace: true;
-                auto-indent: true;
-                background-pattern: grid;
-                highlight-current-line: true;
-                indent-on-tab: true;
-                indent-width: 2;
-                insert-spaces-instead-of-tabs: true;
-                show-line-marks: true;
-                show-line-numbers: true;
-                smart-backspace: true;
-                tab-width: 2;
-              }
-            }
-
-            Separator {
-            }
-          }
-        }
-
-        Box panel_ui {
-          orientation: vertical;
-
-          CenterBox {
-            [start]
-            Box {
-              Label {
-                label: _("<b>UI</b>");
-                use-markup: true;
-                styles ["dim-label"]
-              }
-
-              Separator {
-                styles ["spacer"]
-              }
-
-              Gtk.ComboBoxText dropdown_ui_lang {
-                // FIXME: Does not work as intended
-                // active-id: "xml";
-                // the XML counterpart works fine
-                // fix or report issue to Blueprint
-                // <child>
-                //   <object class="GtkComboBoxText" id="dropdown_ui_lang">
-                //     <property name="active_id">xml</property>
-                //     <items>
-                //       <item id="xml">XML</item>
-                //       <item id="blueprint">Blueprint</item>
-                //     </items>
-                //   </object>
-                // </child>
-                name: "dropdown_ui_lang";
-                items [
-                  blueprint: "Blueprint",
-                  xml: "XML",
-                ]
-              }
-            }
-
-            styles ["toolbar"]
-          }
-
-          Separator {
-          }
-
-          Box {
-            Stack stack_ui {
-              hexpand: true;
-
-              StackPage {
-                name: 'blueprint';
-                child: ScrolledWindow {
-                  vexpand: true;
-
-                  GtkSource.View source_view_blueprint {
-                    buffer: GtkSource.Buffer {
-                    };
-                    monospace: true;
-                    auto-indent: true;
-                    background-pattern: grid;
-                    highlight-current-line: true;
-                    indent-on-tab: true;
-                    indent-width: 2;
-                    insert-spaces-instead-of-tabs: true;
-                    show-line-marks: true;
-                    show-line-numbers: true;
-                    smart-backspace: true;
-                    tab-width: 2;
-                  }
-                };
-              }
-              StackPage {
-                name: 'xml';
-                child: ScrolledWindow {
-                  vexpand: true;
-
-                  GtkSource.View source_view_xml {
-                    buffer: GtkSource.Buffer {
-                    };
-                    monospace: true;
-                    auto-indent: true;
-                    background-pattern: grid;
-                    highlight-current-line: true;
-                    indent-on-tab: true;
-                    indent-width: 2;
-                    insert-spaces-instead-of-tabs: true;
-                    show-line-marks: true;
-                    show-line-numbers: true;
-                    smart-backspace: true;
-                    tab-width: 2;
-                  }
-                };
-              }
-            }
-
-            Separator {
-            }
-          }
-        }
-
-        Box panel_preview {
-          orientation: vertical;
-
-          CenterBox {
-            height-request: 46;
-            [start]
-            Label {
-              label: _("<b>Preview</b>");
-              use-markup: true;
-              styles ["dim-label"]
-            }
-
-            [end]
-            Button button_screenshot {
-              icon-name: "photo-camera-symbolic";
-              tooltip-text: _("Take Screenshot of Preview");
-              accessibility {
-                label: _("Take Screenshot of Preview");
-              }
-            }
-
-            styles ["toolbar"]
-          }
-
-          Separator {
-          }
-
-          Stack stack_preview {
-            StackPage {
-              name: "inline";
-              child: Box {
-                ScrolledWindow output {
-                  name: "workbench_output";
-                  vexpand: true;
-                  hexpand: true;
-
-                  styles ["background"]
-                }
-
-                Separator {
-                }
-              };
-            }
-
-            StackPage {
-              name: "open_window";
-              child: Adw.StatusPage {
-                title: _("Windowed Preview");
-                description: _("This interface can only be previewed as a separate window.\nWe recommend using “Always on Top”");
-                icon-name: "multitasking-windows-symbolic";
-
-                Box {
-                  halign: center;
-
-                  Button button_open_preview_window {
-                    label: _("Show Preview Window");
-                    styles ["pill", "suggested-action"]
-                  }
-                }
-              };
-            }
-
-            StackPage {
-              name: "close_window";
-              child: Adw.StatusPage {
-                title: _("Windowed Preview");
-                description: _("This interface can only be previewed as a separate window.\nWe recommend using “Always on Top”");
-                icon-name: "multitasking-windows-symbolic";
-
-                Box {
-                  halign: center;
-
-                  Button button_close_preview_window {
-                    label: _("Close Preview Window");
-                    styles ["pill"]
-                  }
-                }
-              };
-            }
-          }
-        }
-
-        Box panel_placeholder {
-          visible: false;
-          name: "placeholder";
-          halign: center;
-          valign: center;
-
-          Image {
-            icon-name: "workbench-placeholder-symbolic";
-            pixel-size: 512;
-          }
-        }
-      }
-
-      [end]
-      Box {
+      Box panel_code {
         orientation: vertical;
 
-        CenterBox toolbar_devtools {
+        CenterBox {
           [start]
           Box {
-            styles ["toolbar"]
-
-            ToggleButton button_console {
-              child: Adw.ButtonContent {
-                icon-name: "terminal-symbolic";
-                label: _("C_onsole");
-                use-underline: true;
-              };
-              action-name: "win.console";
-              tooltip-text: _("Show logs (Ctrl+Shift+K)");
+            Label {
+              label: _("<b>Code</b>");
+              use-markup: true;
+              styles ["dim-label"]
             }
 
-            Button button_inspector {
-              child: Adw.ButtonContent {
-                icon-name: "find-location-symbolic";
-                label: _("_Inspector");
-                use-underline: true;
+            Separator {
+              styles ["spacer"]
+            }
+
+            DropDown dropdown_code_lang {
+              model: StringList {
+                strings [
+                  "JavaScript",
+                  "Vala",
+                ]
               };
-              tooltip-text: _("Open GTK Inspector (Ctrl+Shift+I)");
             }
           }
 
           [end]
-          Box {
-            styles ["toolbar"]
+          Button button_run {
+            child: Adw.ButtonContent {
+              icon-name: "media-playback-start-symbolic";
+              label: _("_Run");
+              use-underline: true;
+            };
+            action-name: "win.run";
+            tooltip-text: _("Run (Ctrl+⏎)");
+            styles ["suggested-action"]
+          }
 
-            Button button_clear {
-              child: Adw.ButtonContent {
-                icon-name: "eraser-symbolic";
-                label: _("Cl_ear");
-                use-underline: true;
+          styles ["toolbar"]
+        }
+
+        Separator {
+        }
+
+        Box {
+          hexpand: true;
+          Stack stack_code {
+            hexpand: true;
+            StackPage {
+              name: 'JavaScript';
+              child: ScrolledWindow {
+                vexpand: true;
+                GtkSource.View source_view_javascript {
+                  buffer: GtkSource.Buffer {
+                  };
+                  monospace: true;
+                  auto-indent: true;
+                  background-pattern: grid;
+                  highlight-current-line: true;
+                  indent-on-tab: true;
+                  indent-width: 2;
+                  insert-spaces-instead-of-tabs: true;
+                  show-line-marks: true;
+                  show-line-numbers: true;
+                  smart-backspace: true;
+                  tab-width: 2;
+                }
               };
-              action-name: "win.clear";
-              tooltip-text: _("Clear console (Ctrl+K)");
             }
+            StackPage {
+              name: 'Vala';
+              child: ScrolledWindow {
+                vexpand: true;
+                GtkSource.View source_view_vala {
+                  buffer: GtkSource.Buffer {
+                  };
+                  monospace: true;
+                  auto-indent: true;
+                  background-pattern: grid;
+                  highlight-current-line: true;
+                  indent-on-tab: true;
+                  indent-width: 2;
+                  insert-spaces-instead-of-tabs: true;
+                  show-line-marks: true;
+                  show-line-numbers: true;
+                  smart-backspace: true;
+                  tab-width: 2;
+                }
+              };
+            }
+          }
+
+          Separator {
+          }
+        }
+      }
+
+      Box panel_style {
+        orientation: vertical;
+
+        CenterBox {
+          height-request: 46;
+
+          [start]
+          Label {
+            label: _("<b>Style CSS</b>");
+            use-markup: true;
+            styles ["dim-label"]
+          }
+
+          styles ["toolbar"]
+        }
+
+        Separator {
+        }
+
+        Box {
+          ScrolledWindow {
+            vexpand: true;
+            hexpand: true;
+
+            GtkSource.View source_view_css {
+              buffer: GtkSource.Buffer {
+              };
+              monospace: true;
+              auto-indent: true;
+              background-pattern: grid;
+              highlight-current-line: true;
+              indent-on-tab: true;
+              indent-width: 2;
+              insert-spaces-instead-of-tabs: true;
+              show-line-marks: true;
+              show-line-numbers: true;
+              smart-backspace: true;
+              tab-width: 2;
+            }
+          }
+
+          Separator {
+          }
+        }
+      }
+
+      Box panel_ui {
+        orientation: vertical;
+
+        CenterBox {
+          [start]
+          Box {
+            Label {
+              label: _("<b>UI</b>");
+              use-markup: true;
+              styles ["dim-label"]
+            }
+
+            Separator {
+              styles ["spacer"]
+            }
+
+            Gtk.ComboBoxText dropdown_ui_lang {
+              // FIXME: Does not work as intended
+              // active-id: "xml";
+              // the XML counterpart works fine
+              // fix or report issue to Blueprint
+              // <child>
+              //   <object class="GtkComboBoxText" id="dropdown_ui_lang">
+              //     <property name="active_id">xml</property>
+              //     <items>
+              //       <item id="xml">XML</item>
+              //       <item id="blueprint">Blueprint</item>
+              //     </items>
+              //   </object>
+              // </child>
+              name: "dropdown_ui_lang";
+              items [
+                blueprint: "Blueprint",
+                xml: "XML",
+              ]
+            }
+          }
+
+          styles ["toolbar"]
+        }
+
+        Separator {
+        }
+
+        Box {
+          Stack stack_ui {
+            hexpand: true;
+
+            StackPage {
+              name: 'blueprint';
+              child: ScrolledWindow {
+                vexpand: true;
+
+                GtkSource.View source_view_blueprint {
+                  buffer: GtkSource.Buffer {
+                  };
+                  monospace: true;
+                  auto-indent: true;
+                  background-pattern: grid;
+                  highlight-current-line: true;
+                  indent-on-tab: true;
+                  indent-width: 2;
+                  insert-spaces-instead-of-tabs: true;
+                  show-line-marks: true;
+                  show-line-numbers: true;
+                  smart-backspace: true;
+                  tab-width: 2;
+                }
+              };
+            }
+            StackPage {
+              name: 'xml';
+              child: ScrolledWindow {
+                vexpand: true;
+
+                GtkSource.View source_view_xml {
+                  buffer: GtkSource.Buffer {
+                  };
+                  monospace: true;
+                  auto-indent: true;
+                  background-pattern: grid;
+                  highlight-current-line: true;
+                  indent-on-tab: true;
+                  indent-width: 2;
+                  insert-spaces-instead-of-tabs: true;
+                  show-line-marks: true;
+                  show-line-numbers: true;
+                  smart-backspace: true;
+                  tab-width: 2;
+                }
+              };
+            }
+          }
+
+          Separator {
+          }
+        }
+      }
+
+      Box panel_preview {
+        orientation: vertical;
+
+        CenterBox {
+          height-request: 46;
+          [start]
+          Label {
+            label: _("<b>Preview</b>");
+            use-markup: true;
+            styles ["dim-label"]
+          }
+
+          [end]
+          Button button_screenshot {
+            icon-name: "photo-camera-symbolic";
+            tooltip-text: _("Take Screenshot of Preview");
+            accessibility {
+              label: _("Take Screenshot of Preview");
+            }
+          }
+
+          styles ["toolbar"]
+        }
+
+        Separator {
+        }
+
+        Stack stack_preview {
+          StackPage {
+            name: "inline";
+            child: Box {
+              ScrolledWindow output {
+                name: "workbench_output";
+                vexpand: true;
+                hexpand: true;
+
+                styles ["background"]
+              }
+
+              Separator {
+              }
+            };
+          }
+
+          StackPage {
+            name: "open_window";
+            child: Adw.StatusPage {
+              title: _("Windowed Preview");
+              description: _("This interface can only be previewed as a separate window.\nWe recommend using “Always on Top”");
+              icon-name: "multitasking-windows-symbolic";
+
+              Box {
+                halign: center;
+
+                Button button_open_preview_window {
+                  label: _("Show Preview Window");
+                  styles ["pill", "suggested-action"]
+                }
+              }
+            };
+          }
+
+          StackPage {
+            name: "close_window";
+            child: Adw.StatusPage {
+              title: _("Windowed Preview");
+              description: _("This interface can only be previewed as a separate window.\nWe recommend using “Always on Top”");
+              icon-name: "multitasking-windows-symbolic";
+
+              Box {
+                halign: center;
+
+                Button button_close_preview_window {
+                  label: _("Close Preview Window");
+                  styles ["pill"]
+                }
+              }
+            };
+          }
+        }
+      }
+
+      Box panel_placeholder {
+        visible: false;
+        name: "placeholder";
+        halign: center;
+        valign: center;
+
+        Image {
+          icon-name: "workbench-placeholder-symbolic";
+          pixel-size: 512;
+        }
+      }
+    }
+
+    [end]
+    Box {
+      orientation: vertical;
+
+      CenterBox toolbar_devtools {
+        [start]
+        Box {
+          styles ["toolbar"]
+
+          ToggleButton button_console {
+            child: Adw.ButtonContent {
+              icon-name: "terminal-symbolic";
+              label: _("C_onsole");
+              use-underline: true;
+            };
+            action-name: "win.console";
+            tooltip-text: _("Show logs (Ctrl+Shift+K)");
+          }
+
+          Button button_inspector {
+            child: Adw.ButtonContent {
+              icon-name: "find-location-symbolic";
+              label: _("_Inspector");
+              use-underline: true;
+            };
+            tooltip-text: _("Open GTK Inspector (Ctrl+Shift+I)");
           }
         }
 
-        Box devtools {
-          ScrolledWindow {
-            Vte.Terminal terminal {
-              scroll-unit-is-pixels: true;
-              enable-fallback-scrolling: false;
-              hexpand: true;
-              input-enabled: false;
-            }
+        [end]
+        Box {
+          styles ["toolbar"]
+
+          Button button_clear {
+            child: Adw.ButtonContent {
+              icon-name: "eraser-symbolic";
+              label: _("Cl_ear");
+              use-underline: true;
+            };
+            action-name: "win.clear";
+            tooltip-text: _("Clear console (Ctrl+K)");
+          }
+        }
+      }
+
+      Box devtools {
+        ScrolledWindow {
+          Vte.Terminal terminal {
+            scroll-unit-is-pixels: true;
+            enable-fallback-scrolling: false;
+            hexpand: true;
+            input-enabled: false;
+            scrollback-lines: 512;
           }
         }
       }
@@ -560,43 +548,22 @@ menu menu_app {
       label: _("Learn");
 
       item {
-        label: _("GNOME JavaScript (GJS)");
+        label: _("Developer Documentation");
         action: "app.open_uri";
-        target: "https://gjs.guide/guides/";
+        target: "https://developer.gnome.org/documentation/index.html";
       }
 
+
       item {
-        label: _("Human Interface Guidelines (HIG)");
+        label: _("Human Interface Guidelines");
         action: "app.open_uri";
         target: "https://developer.gnome.org/hig/";
       }
 
       item {
-        label: _("UI components");
-        action: "app.open_uri";
-        target: "https://developer.gnome.org/documentation/tutorials/beginners/components.html";
-      }
-
-      item {
-        label: _("Platform components");
-        action: "app.open_uri";
-        target: "https://developer.gnome.org/documentation/introduction/components.html";
-      }
-    }
-
-    section {
-      label: _("Reference");
-
-      item {
         label: _("JavaScript");
         action: "app.open_uri";
-        target: "https://developer.mozilla.org/docs/Web/JavaScript/Guide";
-      }
-
-      item {
-        label: _("GJS");
-        action: "app.open_uri";
-        target: "https://gjs-docs.gnome.org/";
+        target: "https://gjs.guide";
       }
 
       item {
@@ -606,15 +573,9 @@ menu menu_app {
       }
 
       item {
-        label: _("Gtk");
+        label: _("Blueprint");
         action: "app.open_uri";
-        target: "https://docs.gtk.org/gtk4/";
-      }
-
-      item {
-        label: _("Adwaita");
-        action: "app.open_uri";
-        target: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.1/";
+        target: "https://gitlab.gnome.org/jwestman/blueprint-compiler";
       }
     }
 

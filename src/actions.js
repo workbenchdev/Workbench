@@ -75,11 +75,29 @@ export default function Actions({ application, version }) {
     parameter_type: new GLib.VariantType("s"),
   });
   open_uri.connect("activate", (self, target) => {
+    // This is not using the portal but we silence the GVFS warnings
+    // in `log_handler.js`
     Gtk.show_uri(
       application.get_active_window(),
       target.unpack(),
       Gdk.CURRENT_TIME
     );
+    // an other option is to use libportal:
+    // const parent = XdpGtk.parent_new_gtk(application.get_active_window());
+    // portal.open_uri(
+    //   parent,
+    //   target.unpack(),
+    //   Xdp.OpenUriFlags.NONE,
+    //   null, // cancellable
+    //   (self, res) => {
+    //     try {
+    //       portal.open_uri_finish(res);
+    //     } catch (err) {
+    //       logError(err);
+    //       return;
+    //     }
+    //   }
+    // );
   });
   application.add_action(open_uri);
 

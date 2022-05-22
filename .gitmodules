@@ -6,4 +6,4 @@
 	url = https://gitlab.gnome.org/sonny/blueprint-compiler.git
 [submodule "icon-development-kit-www"]
 	path = icon-development-kit-www
-	url = git@gitlab.gnome.org:Teams/Design/icon-development-kit-www.git
+	url = https://gitlab.gnome.org/Teams/Design/icon-development-kit-www.git

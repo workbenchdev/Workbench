@@ -6,27 +6,16 @@ const byteArray = imports.byteArray;
 
 const prefix = "/re/sonny/Workbench/Library";
 
-export default function Library({ flap, openDemo, window, application }) {
+export default function Library({
+  openDemo,
+  window: appliation_window,
+  application,
+}) {
   const builder = Gtk.Builder.new_from_resource(`${prefix}/Library.ui`);
-  const widget = builder.get_object("library");
-
-  flap.set_flap(widget);
-
-  function toggleFlap() {
-    flap.reveal_flap = !flap.reveal_flap;
-  }
-
-  const status_page = widget.get_first_child();
-  status_page.get_child().vexpand = true;
-  status_page.get_child().valign = Gtk.Align.FILL;
-  status_page.get_child().get_parent().vexpand = true;
-  status_page.get_child().get_parent().valign = Gtk.Align.FILL;
+  const window = builder.get_object("library");
+  window.set_transient_for(appliation_window);
 
   let last_selected;
-
-  flap.connect("notify::reveal-flap", () => {
-    last_selected?.grab_focus();
-  });
 
   const demos = getDemos();
   demos.forEach((demo) => {
@@ -43,7 +32,9 @@ export default function Library({ flap, openDemo, window, application }) {
     );
     widget.connect("activated", () => {
       last_selected = widget;
-      openDemo(demo.name).then(toggleFlap).catch(logError);
+      openDemo(demo.name)
+        .then(() => window.close())
+        .catch(logError);
     });
 
     builder.get_object(`library_${demo.category}`).add(widget);
@@ -53,11 +44,12 @@ export default function Library({ flap, openDemo, window, application }) {
     name: "library",
     parameter_type: null,
   });
-  action_library.connect("activate", toggleFlap);
-  window.add_action(action_library);
+  action_library.connect("activate", () => {
+    window.present();
+    last_selected?.grab_focus();
+  });
+  appliation_window.add_action(action_library);
   application.set_accels_for_action("win.library", ["<Control><Shift>O"]);
-
-  return widget;
 }
 
 export function readDemo(demo_name) {

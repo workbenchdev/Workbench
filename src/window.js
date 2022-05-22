@@ -118,6 +118,8 @@ export default function Window({ application }) {
     previewer,
   });
 
+  previewer.setPanelCode(panel_code);
+
   const button_run = builder.get_object("button_run");
   const button_style = builder.get_object("button_style");
   const button_preview = builder.get_object("button_preview");
@@ -268,7 +270,12 @@ export default function Window({ application }) {
           Gio.FileCreateFlags.NONE,
           null
         );
-        await import(`file://${file_javascript.get_path()}`);
+        try {
+          await import(`file://${file_javascript.get_path()}`);
+        } catch (err) {
+          previewer.update();
+          throw err;
+        }
       } else if (language === "Vala") {
         compiler = compiler || Compiler(data_dir);
         const success = await compiler.compile(langs.vala.document.buffer.text);
@@ -369,7 +376,11 @@ export default function Window({ application }) {
     console.scrollToEnd();
   }
 
-  Library({ flap: builder.get_object("flap"), openDemo, window, application });
+  Library({
+    openDemo,
+    window,
+    application,
+  });
 
   async function confirmDiscard() {
     if (!settings.get_boolean("has-edits")) return true;
