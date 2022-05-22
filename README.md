@@ -81,8 +81,17 @@ Thank you for your help!
 
 1. Install [GNOME Builder](https://apps.gnome.org/app/org.gnome.Builder/)
 2. Open Builder and select "Clone Repository..."
-3. Clone `https://github.com/sonnyp/Workbench.git`
+3. Clone `https://github.com/sonnyp/Workbench.git` (or your fork)
 4. Press the Run ▶ button
+
+If you used an other method, don't forget to fetch the submodules.
+
+```sh
+cd Workbench
+git submodule update
+```
+
+Feel free to come by [#workbench:matrix.org](https://matrix.to/#/#workbench:matrix.org).
 
 ## Packaging
 
@@ -97,12 +106,6 @@ Workbench would not be possible without
 GTK, GLib, Flatpak, GtkSourceView, libadwaita, VTE, GJS, Blueprint, icon-development-kit, Vala
 
 and the GNOME community 🖤
-
-## Contributing
-
-If you can help, here is a list of issues that would make Workbench better
-
-- [GtkSourceView - Make URIs clickable](https://gitlab.gnome.org/GNOME/gtksourceview/-/issues/125)
 
 ## Copyright
 
