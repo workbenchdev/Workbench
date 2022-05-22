@@ -1,14 +1,15 @@
 import Gio from "gi://Gio";
+import GObject from "gi://GObject";
+import GLib from "gi://GLib";
+
+import LSPClient from "./lsp/LSPClient.js";
 import {
   getLanguage,
   settings,
   connect_signals,
   disconnect_signals,
+  replaceBufferText,
 } from "./util.js";
-import GObject from "gi://GObject";
-import GLib from "gi://GLib";
-
-import LSPClient from "./lsp/LSPClient.js";
 
 const { addSignalMethods } = imports.signals;
 
@@ -27,6 +28,12 @@ export default function PanelUI({ builder, data_dir }) {
   });
   blueprint.connect("input", (self, message) => {
     console.debug("blueprint IN:\n", message);
+  });
+
+  const button_ui_export = builder.get_object("button_ui_export");
+  button_ui_export.connect("clicked", () => {
+    replaceBufferText(getLanguage("xml").document.buffer, panel.xml);
+    settings.set_string("ui-lang", "xml");
   });
 
   const button_ui = builder.get_object("button_ui");
@@ -87,6 +94,7 @@ export default function PanelUI({ builder, data_dir }) {
   function start() {
     stop();
     lang = getLanguage(settings.get_string("ui-lang"));
+    button_ui_export.visible = lang.id === "blueprint";
     // cannot use "changed" signal as it triggers many time for pasting
     handler_ids = connect_signals(lang.document.buffer, {
       "end-user-action": onUpdate,
@@ -112,11 +120,11 @@ export default function PanelUI({ builder, data_dir }) {
     if (!blueprint.proc) {
       blueprint.start();
 
-      // await lsp_client.request("initialize");
+      // await blueprint.request("initialize");
       // Make Blueprint language server cache Gtk 4
       // to make subsequence call faster (~500ms -> ~3ms)
-      // await lsp_client.request("x-blueprintcompiler/compile", {
-      //   text: "using Gtk 4.0;\nBox {}",
+      // await blueprint.request("x-blueprintcompiler/compile", {
+      //   text: "using Gtk 4.0;\nusing Adw 1;\nAdwBin {}",
       // });
     }
 

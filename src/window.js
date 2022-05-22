@@ -13,6 +13,7 @@ import {
   createDataDir,
   getLanguageForFile,
   languages,
+  replaceBufferText,
 } from "./util.js";
 import Document from "./Document.js";
 import PanelUI from "./PanelUI.js";
@@ -197,7 +198,7 @@ export default function Window({ application }) {
 
     const { cursor_position } = buffer;
 
-    replaceBufferText(buffer, code);
+    replaceBufferText(buffer, code, false);
     buffer.place_cursor(buffer.get_iter_at_offset(cursor_position));
 
     return code;
@@ -325,7 +326,6 @@ export default function Window({ application }) {
 
     function load({ document: { buffer } }, str) {
       replaceBufferText(buffer, str);
-      buffer.place_cursor(buffer.get_start_iter());
     }
 
     const { javascript, css, xml, blueprint, vala, panels } =
@@ -416,7 +416,6 @@ export default function Window({ application }) {
       document: { buffer },
     } = language;
     replaceBufferText(buffer, data);
-    buffer.place_cursor(buffer.get_start_iter());
 
     settings.set_boolean(`show-${language.panel}`, true);
 
@@ -454,11 +453,4 @@ async function setGtk4PreferDark(dark) {
   }
   settings.set_boolean("Settings", "gtk-application-prefer-dark-theme", dark);
   settings.save_to_file(settings_path);
-}
-
-function replaceBufferText(buffer, text) {
-  buffer.begin_user_action();
-  buffer.delete(buffer.get_start_iter(), buffer.get_end_iter());
-  buffer.insert(buffer.get_start_iter(), text, -1);
-  buffer.end_user_action();
 }
