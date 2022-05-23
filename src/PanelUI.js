@@ -9,12 +9,14 @@ import GObject from "gi://GObject";
 import GLib from "gi://GLib";
 
 import LSPClient from "./lsp/LSPClient.js";
+import { getPid } from "./troll/src/util.js";
+import logger from "./logger.js";
 
 const { addSignalMethods } = imports.signals;
 
-export default function PanelUI({ builder, data_dir }) {
+export default function PanelUI({ builder, data_dir, version }) {
   const blueprint = new LSPClient([
-    "blueprint-compiler",
+    "/home/sonny/Projects/Workbench/blueprint-compiler/blueprint-compiler.py",
     "lsp",
     "--logfile",
     GLib.build_filenamev([data_dir, `blueprint-logs`]),
@@ -74,7 +76,8 @@ export default function PanelUI({ builder, data_dir }) {
     if (lang.id === "xml") {
       xml = lang.document.buffer.text;
     } else {
-      xml = await compileBlueprint(lang.document.buffer.text);
+      xml = "";
+      // await compileBlueprint(lang.document.buffer.text);
     }
     panel.xml = xml;
     panel.emit("updated");
@@ -108,23 +111,117 @@ export default function PanelUI({ builder, data_dir }) {
   });
   start();
 
-  async function compileBlueprint(text) {
-    if (!blueprint.proc) {
-      blueprint.start();
+  // async function compileBlueprint(text) {
+  //   if (!blueprint.proc) {
+  //     blueprint.start();
 
-      // await lsp_client.request("initialize");
-      // Make Blueprint language server cache Gtk 4
-      // to make subsequence call faster (~500ms -> ~3ms)
-      // await lsp_client.request("x-blueprintcompiler/compile", {
-      //   text: "using Gtk 4.0;\nBox {}",
-      // });
+  //     await blueprint.request("initialize");
+  //     await blueprint.notify("textDocument/didOpen", {
+  //       textDocument: {
+  //         uri: "re.sonny.Workbench/state.blp",
+  //         languageId: "blueprint",
+  //         version: Date.now(),
+  //         text,
+  //       },
+  //     });
+  //     // Make Blueprint language server cache Gtk 4
+  //     // to make subsequence call faster (~500ms -> ~3ms)
+  //     // await lsp_client.request("x-blueprintcompiler/compile", {
+  //     //   text: "using Gtk 4.0;\nBox {}",
+  //     // });
+  //   }
+
+  //   // const { xml } = await blueprint.request("x-blueprintcompiler/compile", {
+  //   //   text,
+  //   // });
+  //   // console.clear();
+
+  //   return "";
+  // }
+
+  (async () => {
+    // if (!blueprint.proc) {
+    //   blueprint.start();
+    // }
+
+    let i = 0;
+
+    const buffer = getLanguage("blueprint").document.buffer;
+
+    let pid = getPid();
+
+    async function youpi() {
+      if (!blueprint.proc) {
+        blueprint.start();
+
+        // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#initialize
+        const res = await blueprint.request("initialize", {
+          processId: pid,
+          clientInfo: {
+            name: "Workbench",
+            version,
+          },
+          locale: "en",
+        });
+        console.log(res);
+        await blueprint.notify("textDocument/didOpen", {
+          textDocument: {
+            uri: "workbench://state.blp",
+            languageId: "blueprint",
+            version: ++i,
+            text: buffer.text,
+          },
+        });
+        // Make Blueprint language server cache Gtk 4
+        // to make subsequence call faster (~500ms -> ~3ms)
+        // await lsp_client.request("x-blueprintcompiler/compile", {
+        //   text: "using Gtk 4.0;\nBox {}",
+        // });
+      }
+
+      await blueprint.notify("textDocument/didChange", {
+        textDocument: {
+          uri: "workbench://state.blp",
+          version: ++i,
+        },
+        contentChanges: [buffer.text],
+      });
     }
 
-    const { xml } = await blueprint.request("x-blueprintcompiler/compile", {
-      text,
+    buffer.connect("end-user-action", () => {
+      youpi().catch(logError);
     });
-    return xml;
-  }
+
+    // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#diagnosticSeverity
+    const severities = {
+      1: "Error",
+      2: "Warning",
+      3: "Information",
+      4: "Hint",
+    };
+
+    blueprint.connect(
+      "notification::textDocument/publishDiagnostics",
+      (self, params) => {
+        console.clear();
+        params.diagnostics.forEach(({ range, message, severity }) => {
+          logger.log(
+            `Blueprint-${severities[severity]} ${range.start.line + 1}:${
+              range.start.character
+            } to ${range.end.line + 1}:${range.end.character} ${message}`
+          );
+        });
+      }
+    );
+
+    blueprint.connect(
+      "notification::textDocument/x-blueprintcompiler/publishCompiled",
+      (self, params) => {
+        panel.xml = params.xml;
+        panel.emit("updated");
+      }
+    );
+  })().catch(logError);
 
   panel.start = start;
   panel.stop = stop;

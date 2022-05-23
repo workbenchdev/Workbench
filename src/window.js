@@ -34,7 +34,7 @@ const style_manager = Adw.StyleManager.get_default();
 
 const langs = Object.fromEntries(languages.map((lang) => [lang.id, lang]));
 
-export default function Window({ application }) {
+export default function Window({ application, version }) {
   Vte.Terminal.new();
 
   const data_dir = createDataDir();
@@ -103,6 +103,7 @@ export default function Window({ application }) {
     builder,
     langs,
     data_dir,
+    version,
   });
 
   const previewer = Previewer({

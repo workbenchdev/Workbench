@@ -69,12 +69,13 @@ export default class LSPClient {
 
     if (message.result) {
       this.emit(`result::${message.id}`, message.result);
-    }
-    if (message.error) {
+    } else if (message.error) {
       const err = new Error(message.error.message);
       err.data = message.data;
       err.code = message.code;
       this.emit(`error::${message.id}`, err);
+    } else if (message.params) {
+      this.emit(`notification::${message.method}`, message.params);
     }
   }
 
