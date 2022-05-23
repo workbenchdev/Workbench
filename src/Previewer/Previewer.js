@@ -9,6 +9,7 @@ import { getLanguage, connect_signals, disconnect_signals } from "../util.js";
 
 import Internal from "./Internal.js";
 import External from "./External.js";
+import Console from "../Console.js";
 
 // Workbench always defaults to in-process preview now even if Vala is selected.
 // Workbench will switch to out-of-process preview when Vala is run
@@ -128,6 +129,7 @@ export default function Previewer({
       tree = ltx.parse(text);
       [target_id, text] = targetBuildable(tree);
     } catch (err) {
+      // logError(err);
       logger.debug(err);
     }
 
@@ -247,6 +249,34 @@ export function scopeStylesheet(style) {
   return str;
 }
 
+function getTemplate(tree) {
+  const template = tree.getChild("template");
+  if (!template) return;
+
+  const { parent } = template.attrs;
+  if (!parent) return;
+
+  const klass = getObjectClass(parent);
+  if (!klass) return;
+
+  const object = new klass();
+  if (!(object instanceof Gtk.Widget)) return;
+
+  tree.remove(template);
+
+  const el = new ltx.Element("object", {
+    class: parent,
+    id: "workbench_target",
+  });
+  template.children.forEach((child) => {
+    el.cnode(child);
+  });
+
+  tree.cnode(el);
+
+  return [el.attrs.id, tree.toString()];
+}
+
 function findPreviewable(tree) {
   for (const child of tree.getChildren("object")) {
     const class_name = child.attrs.class;
@@ -271,6 +301,9 @@ function getObjectClass(class_name) {
 }
 
 function targetBuildable(tree) {
+  const template = getTemplate(tree);
+  if (template) return template;
+
   const child = findPreviewable(tree);
   if (!child) {
     return [null, ""];
@@ -301,7 +334,7 @@ function assertBuildable(tree) {
 function makeSignalHandler({ name, handler, after, id, type }) {
   return function (object) {
     const object_name = `${type}${id ? "$" + id : ""}`;
-    // const object_name = object.toString()
+    // const object_name = object.toString(); // [object instance wrapper GIName:Gtk.Button jsobj@0x2937abc5c4c0 native@0x55fbfe53f620]
     logger.log(
       `Handler "${handler}" triggered ${
         after ? "after" : "for"
@@ -322,19 +355,21 @@ function registerSignals(tree, scope) {
 }
 
 function findSignals(tree, signals = []) {
-  for (const child of tree.getChildren("object")) {
-    const signal_elements = child.getChildren("signal");
+  for (const object of tree.getChildren("object")) {
+    const signal_elements = object.getChildren("signal");
     signals.push(
       ...signal_elements.map((el) => {
         return {
-          id: child.attrs.id,
-          type: child.attrs.class,
+          id: object.attrs.id,
+          type: object.attrs.class,
           ...el.attrs,
         };
       })
     );
-    const _child = child.getChild("child");
-    if (_child) findSignals(_child, signals);
+
+    for (const child of object.getChildren("child")) {
+      findSignals(child, signals);
+    }
   }
   return signals;
 }
