@@ -23,7 +23,7 @@ export default function Compiler(data_dir) {
         code_file,
         "replace_contents_async",
         "replace_contents_finish",
-        new GLib.Bytes(code),
+        new GLib.Bytes(code || " "),
         null,
         false,
         Gio.FileCreateFlags.NONE,

@@ -27,6 +27,7 @@ import Library, { readDemo } from "./Library/Library.js";
 import Previewer from "./Previewer/Previewer.js";
 import Compiler from "./Compiler.js";
 import logger from "./logger.js";
+import { promiseTask } from "./troll/src/util.js";
 
 const scheme_manager = Source.StyleSchemeManager.get_default();
 const style_manager = Adw.StyleManager.get_default();
@@ -263,8 +264,11 @@ export default function Window({ application }) {
         // ?foo=Date.now() also does not work as expected
         // TODO: File a bug
         const [file_javascript] = Gio.File.new_tmp("workbench-XXXXXX.js");
-        file_javascript.replace_contents(
-          langs.javascript.document.buffer.text || "\n",
+        await promiseTask(
+          file_javascript,
+          "replace_contents_async",
+          "replace_contents_finish",
+          new GLib.Bytes(langs.javascript.document.buffer.text || " "),
           null,
           false,
           Gio.FileCreateFlags.NONE,
@@ -361,6 +365,7 @@ export default function Window({ application }) {
     if (panel_code.language === "JavaScript" && panel_code.panel.visible) {
       await runCode();
     } else {
+      console.clear();
       panel_ui.start();
       panel_ui.update();
       previewer.start();
