@@ -8,15 +8,15 @@ public void main () {
     };
 
     toast.dismissed.connect (() => {
-      button_simple.set_sensitive (true);
+      button_simple.sensitive = true;
     });
     overlay.add_toast (toast);
-    button_simple.set_sensitive (false);
+    button_simple.sensitive = false;
   });
 
   var button_advanced = workbench.builder.get_object("button_advanced") as Gtk.Button;
   button_advanced.clicked.connect(() => {
-    var message_id = "42";
+    string message_id = "42";
     var advanced_toast = new Adw.Toast ("Message sent") {
       button_label = "Undo",
       action_name = "win.undo",
@@ -28,8 +28,8 @@ public void main () {
 
   var action_console = new SimpleAction ("undo", new GLib.VariantType ("s"));
   action_console.activate.connect ((self, target) => {
-      var val = target.get_string ();
-      stdout.printf ("undo" + val);
+      string val = target.get_string ();
+      stdout.printf ("undo %s", val);
   });
   // TODO - Need access to the application for this to work.
   //workbench.application.add_action (action_console);
