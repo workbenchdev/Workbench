@@ -31,18 +31,23 @@ const all_log_levels =
 GLib.log_set_handler("Gdk", all_log_levels, log_handler);
 GLib.log_set_handler("Adwaita", all_log_levels, log_handler);
 GLib.log_set_handler("GVFS", all_log_levels, log_handler);
+GLib.log_set_handler("Workbench", all_log_levels, log_handler);
 // Not working - Gtk is proably using structured logging
 // GLib.log_set_handler("Gtk", all_log_levels, log_handler);
 
 // https://docs.gtk.org/glib/flags.LogLevelFlags.html
-function get_log_level_name(log_level) {
+// https://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797
+function get_log_level_name(log_level, domain) {
   switch (log_level) {
     case GLib.LogLevelFlags.FLAG_RECURSION:
       return "\x1b[1;31mRecursion\x1b[0m";
     case GLib.LogLevelFlags.FLAG_FATAL:
       return "\x1b[1;31mFatal\x1b[0m";
-    // This is what console.error use
     case GLib.LogLevelFlags.LEVEL_CRITICAL:
+      // This is what console.error use
+      return domain === "Gjs-Console"
+        ? "\x1b[1;31mError\x1b[0m"
+        : "\x1b[1;35mCritical\x1b[0m";
     case GLib.LogLevelFlags.LEVEL_ERROR:
       return "\x1b[1;31mError\x1b[0m";
     case GLib.LogLevelFlags.LEVEL_WARNING:
@@ -104,7 +109,7 @@ function log_handler(domain, level, message) {
     str += `${domain}-`;
   }
 
-  const level_name = get_log_level_name(level);
+  const level_name = get_log_level_name(level, domain);
   str += level_name ? level_name + ": " : "";
   str += message;
   str += "\n";

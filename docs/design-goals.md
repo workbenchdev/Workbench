@@ -8,6 +8,8 @@ Triggering signal handlers should log a helpful message.
 
 Missing objects should present a helpful message.
 
+Out of process preview/code can crash but not take Workbench down with it.
+
 # Resilience
 
 Workbench itself should not crash under any circumstances.
