@@ -9,7 +9,6 @@ import { getLanguage, connect_signals, disconnect_signals } from "../util.js";
 
 import Internal from "./Internal.js";
 import External from "./External.js";
-import Console from "../Console.js";
 
 // Workbench always defaults to in-process preview now even if Vala is selected.
 // Workbench will switch to out-of-process preview when Vala is run
