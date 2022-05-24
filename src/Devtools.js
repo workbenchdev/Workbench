@@ -1,6 +1,6 @@
 import Gio from "gi://Gio";
 
-import Console from "./Console.js";
+import TermConsole from "./TermConsole.js";
 import { settings } from "./util.js";
 
 export default function Devtools({ application, window, builder }) {
@@ -91,5 +91,5 @@ export default function Devtools({ application, window, builder }) {
   window.add_action(action_console);
   application.set_accels_for_action("win.console", ["<Control><Shift>K"]);
 
-  return { console: Console({ builder, window, application }) };
+  return { term_console: TermConsole({ builder, window, application }) };
 }
