@@ -57,7 +57,7 @@ namespace Workbench {
 
     // filename to loadable module or empty string ("") to just run it again
     // also builder_symbol can be empty. Then the builder object is not handed over to the module
-    public void run (string filename, string run_symbol, string builder_symbol, string window_symbol) {
+    public void run (string filename, string run_symbol, string builder_symbol, string window_symbol, string app_symbol) {
       if (filename == "") {
         if (this.module == null) {
           stderr.printf ("No Module specified yet.\n");
@@ -105,6 +105,15 @@ namespace Workbench {
 
         var set_window = (WindowFunction) function;
         set_window (this.window);
+
+        this.module.symbol (app_symbol, out function);
+        if (function == null) {
+          stderr.printf (@"Module does not contain symbol '$app_symbol'.\n");
+          return;
+        }
+
+        var set_app = (AppFunction) function;
+        set_app (Workbench.app);
       }
 
       void* function;
@@ -139,6 +148,9 @@ namespace Workbench {
     [CCode (has_target=false)]
     private delegate void WindowFunction (Gtk.Window window);
 
+    [CCode (has_target=false)]
+    private delegate void AppFunction (Adw.Application window);
+
     private Gtk.Window window;
     private Gtk.CssProvider? css = null;
     private Module module;
@@ -146,21 +158,25 @@ namespace Workbench {
     private Adw.StyleManager style_manager = Adw.StyleManager.get_default ();
   }
 
-  async void main (string[] args) {
-    Adw.init ();
+  private Adw.Application app;
 
-    Bus.own_name (BusType.SESSION,
-                  "re.sonny.Workbench.vala_previewer",
-                  BusNameOwnerFlags.NONE,
-                  null,
-                  (connection, name) => {
-                    try {
-                      connection.register_object ("/re/sonny/workbench/vala_previewer", new Previewer ());
-                    } catch (IOError e) {
-                      stderr.printf ("Could not register service\n");
-                    }
-                  },
-                  (connection, name) => { stderr.printf ("Couldn't obtain the bus name.\n"); });
+  async void main (string[] args) {
+    Workbench.app = new Adw.Application ("re.sonny.Workbench.vala_previewer", ApplicationFlags.FLAGS_NONE);
+    app.startup.connect(() => {
+      Bus.own_name (BusType.SESSION,
+                    "re.sonny.Workbench.vala_previewer",
+                    BusNameOwnerFlags.NONE,
+                    null,
+                    (connection, name) => {
+                      try {
+                        connection.register_object ("/re/sonny/workbench/vala_previewer", new Previewer ());
+                      } catch (IOError e) {
+                        stderr.printf ("Could not register service\n");
+                      }
+                    },
+                    (connection, name) => { stderr.printf ("Couldn't obtain the bus name.\n"); });
+    });
+    app.run (args);
 
     yield;
   }
