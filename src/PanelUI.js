@@ -15,7 +15,8 @@ const { addSignalMethods } = imports.signals;
 
 export default function PanelUI({ builder, data_dir }) {
   const blueprint = new LSPClient([
-    "blueprint-compiler",
+    "/home/sonny/Projects/Workbench/blueprint-compiler/blueprint-compiler.py",
+    // "blueprint-compiler",
     "lsp",
     "--logfile",
     GLib.build_filenamev([data_dir, `blueprint-logs`]),
@@ -30,11 +31,28 @@ export default function PanelUI({ builder, data_dir }) {
     console.debug("blueprint IN:\n", message);
   });
 
+  let lang;
+
   const button_ui_export = builder.get_object("button_ui_export");
   button_ui_export.connect("clicked", () => {
-    replaceBufferText(getLanguage("xml").document.buffer, panel.xml);
-    settings.set_string("ui-lang", "xml");
+    export_ui().catch(logError);
   });
+
+  async function export_ui() {
+    if (lang.id === "blueprint") {
+      replaceBufferText(
+        getLanguage("xml").document.buffer,
+        await compileBlueprint(getLanguage("blueprint").document.buffer.text)
+      );
+      settings.set_string("ui-lang", "xml");
+    } else if (lang.id === "xml") {
+      replaceBufferText(
+        getLanguage("blueprint").document.buffer,
+        await decompileXML(getLanguage("xml").document.buffer.text)
+      );
+      settings.set_string("ui-lang", "blueprint");
+    }
+  }
 
   const button_ui = builder.get_object("button_ui");
   const panel_ui = builder.get_object("panel_ui");
@@ -45,7 +63,6 @@ export default function PanelUI({ builder, data_dir }) {
     "visible",
     GObject.BindingFlags.SYNC_CREATE
   );
-  let lang;
 
   const panel = {
     xml: "",
@@ -94,7 +111,7 @@ export default function PanelUI({ builder, data_dir }) {
   function start() {
     stop();
     lang = getLanguage(settings.get_string("ui-lang"));
-    button_ui_export.visible = lang.id === "blueprint";
+    // button_ui_export.visible = lang.id === "blueprint";
     // cannot use "changed" signal as it triggers many time for pasting
     handler_ids = connect_signals(lang.document.buffer, {
       "end-user-action": onUpdate,
@@ -132,6 +149,24 @@ export default function PanelUI({ builder, data_dir }) {
       text,
     });
     return xml;
+  }
+
+  async function decompileXML(text) {
+    if (!blueprint.proc) {
+      blueprint.start();
+
+      // await blueprint.request("initialize");
+      // Make Blueprint language server cache Gtk 4
+      // to make subsequence call faster (~500ms -> ~3ms)
+      // await blueprint.request("x-blueprintcompiler/compile", {
+      //   text: "using Gtk 4.0;\nusing Adw 1;\nAdwBin {}",
+      // });
+    }
+
+    const { blp } = await blueprint.request("x-blueprintcompiler/decompile", {
+      text,
+    });
+    return blp;
   }
 
   panel.start = start;
