@@ -104,6 +104,7 @@ export default function Window({ application }) {
     builder,
     langs,
     data_dir,
+    term_console,
   });
 
   const previewer = Previewer({
@@ -113,6 +114,7 @@ export default function Window({ application }) {
     application,
     data_dir,
     panel_ui,
+    term_console,
   });
 
   const panel_code = PanelCode({
