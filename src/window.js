@@ -54,7 +54,7 @@ export default function Window({ application }) {
   const panel_preview = builder.get_object("panel_preview");
   const panel_placeholder = builder.get_object("panel_placeholder");
 
-  const { console } = Devtools({ application, window, builder });
+  const { term_console } = Devtools({ application, window, builder });
 
   let compiler = null;
 
@@ -208,7 +208,7 @@ export default function Window({ application }) {
   async function runCode() {
     button_run.set_sensitive(false);
 
-    console.clear();
+    term_console.clear();
     previewer.stop();
     panel_ui.stop();
 
@@ -308,7 +308,7 @@ export default function Window({ application }) {
     panel_ui.start();
 
     button_run.set_sensitive(true);
-    console.scrollToEnd();
+    term_console.scrollToEnd();
   }
 
   const action_run = new Gio.SimpleAction({
@@ -365,7 +365,7 @@ export default function Window({ application }) {
     if (panel_code.language === "JavaScript" && panel_code.panel.visible) {
       await runCode();
     } else {
-      console.clear();
+      term_console.clear();
       panel_ui.start();
       panel_ui.update();
       previewer.start();
@@ -378,7 +378,7 @@ export default function Window({ application }) {
 
     languages.forEach(({ document }) => document.start());
 
-    console.scrollToEnd();
+    term_console.scrollToEnd();
   }
 
   Library({

@@ -14,7 +14,7 @@ const MAKE_CURSOR_INVISIBLE = "\u001b[?25l";
 
 const style_manager = Adw.StyleManager.get_default();
 
-export default function Console({ builder, window, application }) {
+export default function TermConsole({ builder, window, application }) {
   const terminal = builder.get_object("terminal");
 
   terminal.feed(MAKE_CURSOR_INVISIBLE);
