@@ -5,6 +5,17 @@ import { promiseTask, once } from "../troll/src/util.js";
 
 const { addSignalMethods } = imports.signals;
 
+const text_encoder = new TextEncoder();
+
+export class LSPError extends Error {
+  constructor({ message, code, data }) {
+    super(message);
+    this.name = "LSPError";
+    this.code = code;
+    this.data = data;
+  }
+}
+
 export default class LSPClient {
   constructor(argv) {
     this.argv = argv;
@@ -71,17 +82,17 @@ export default class LSPClient {
       this.emit(`result::${message.id}`, message.result);
     }
     if (message.error) {
-      const err = new Error(message.error.message);
-      err.data = message.data;
-      err.code = message.code;
+      const err = new LSPError(message.error);
       this.emit(`error::${message.id}`, err);
     }
   }
 
   async send(json) {
     const message = { ...json, jsonrpc: "2.0" };
+
     const str = JSON.stringify(message);
-    const length = [...str].length;
+    const length = text_encoder.encode(str).byteLength;
+    const bytes = new GLib.Bytes(`Content-Length: ${length}\r\n\r\n${str}`);
 
     if (this.stdin.clear_pending()) {
       this.stdin.flush();
@@ -91,7 +102,7 @@ export default class LSPClient {
       this.stdin,
       "write_bytes_async",
       "write_bytes_finish",
-      new GLib.Bytes(`Content-Length: ${length}\r\n\r\n${str}`),
+      bytes,
       GLib.PRIORITY_DEFAULT,
       null
     );

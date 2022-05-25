@@ -2,7 +2,7 @@ import Gio from "gi://Gio";
 import GObject from "gi://GObject";
 import GLib from "gi://GLib";
 
-import LSPClient from "./lsp/LSPClient.js";
+import LSPClient, { LSPError } from "./lsp/LSPClient.js";
 import {
   getLanguage,
   settings,
@@ -12,6 +12,20 @@ import {
 } from "./util.js";
 
 const { addSignalMethods } = imports.signals;
+
+function logBluePrintError(err) {
+  GLib.log_structured("Blueprint", GLib.LogLevelFlags.LEVEL_CRITICAL, {
+    MESSAGE: `${err.message}`,
+    SYSLOG_IDENTIFIER: "re.sonny.Workbench",
+  });
+}
+
+function logBluePrintInfo(info) {
+  GLib.log_structured("Blueprint", GLib.LogLevelFlags.LEVEL_WARNING, {
+    MESSAGE: `${info.line + 1}:${info.col} ${info.message}`,
+    SYSLOG_IDENTIFIER: "re.sonny.Workbench",
+  });
+}
 
 export default function PanelUI({ builder, data_dir }) {
   const blueprint = new LSPClient([
@@ -33,26 +47,49 @@ export default function PanelUI({ builder, data_dir }) {
 
   let lang;
 
-  const button_ui_export = builder.get_object("button_ui_export");
-  button_ui_export.connect("clicked", () => {
-    export_ui().catch(logError);
+  async function convertToXML() {
+    let xml;
+
+    try {
+      xml = await compileBlueprint(
+        getLanguage("blueprint").document.buffer.text
+      );
+    } catch (err) {
+      if (err instanceof LSPError) {
+        logBluePrintError(err);
+        return;
+      }
+      throw err;
+    }
+    replaceBufferText(getLanguage("xml").document.buffer, xml);
+    settings.set_string("ui-lang", "xml");
+  }
+  const button_ui_export_xml = builder.get_object("button_ui_export_xml");
+  button_ui_export_xml.connect("clicked", () => {
+    convertToXML().catch(logError);
   });
 
-  async function export_ui() {
-    if (lang.id === "blueprint") {
-      replaceBufferText(
-        getLanguage("xml").document.buffer,
-        await compileBlueprint(getLanguage("blueprint").document.buffer.text)
-      );
-      settings.set_string("ui-lang", "xml");
-    } else if (lang.id === "xml") {
-      replaceBufferText(
-        getLanguage("blueprint").document.buffer,
-        await decompileXML(getLanguage("xml").document.buffer.text)
-      );
-      settings.set_string("ui-lang", "blueprint");
+  async function convertToBlueprint() {
+    let blp;
+
+    try {
+      blp = await decompileXML(getLanguage("xml").document.buffer.text);
+    } catch (err) {
+      if (err instanceof LSPError) {
+        logBluePrintError(err);
+        return;
+      }
+      throw err;
     }
+    replaceBufferText(getLanguage("blueprint").document.buffer, blp);
+    settings.set_string("ui-lang", "blueprint");
   }
+  const button_ui_export_blueprint = builder.get_object(
+    "button_ui_export_blueprint"
+  );
+  button_ui_export_blueprint.connect("clicked", () => {
+    convertToBlueprint().catch(logError);
+  });
 
   const button_ui = builder.get_object("button_ui");
   const panel_ui = builder.get_object("panel_ui");
@@ -100,18 +137,17 @@ export default function PanelUI({ builder, data_dir }) {
     } else {
       xml = await compileBlueprint(lang.document.buffer.text);
     }
-    panel.xml = xml;
+    panel.xml = xml || "";
     panel.emit("updated");
   }
 
   function onUpdate() {
-    update().catch(logError);
+    update().catch(logBluePrintError);
   }
 
   function start() {
     stop();
     lang = getLanguage(settings.get_string("ui-lang"));
-    // button_ui_export.visible = lang.id === "blueprint";
     // cannot use "changed" signal as it triggers many time for pasting
     handler_ids = connect_signals(lang.document.buffer, {
       "end-user-action": onUpdate,
@@ -145,9 +181,15 @@ export default function PanelUI({ builder, data_dir }) {
       // });
     }
 
-    const { xml } = await blueprint.request("x-blueprintcompiler/compile", {
-      text,
-    });
+    const { xml, info } = await blueprint.request(
+      "x-blueprintcompiler/compile",
+      {
+        text,
+      }
+    );
+
+    info.forEach(logBluePrintInfo);
+
     return xml;
   }
 

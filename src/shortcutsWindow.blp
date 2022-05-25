@@ -4,32 +4,50 @@ ShortcutsWindow shortcuts_window {
   modal: true;
 
   ShortcutsSection {
+    title: "Workbench";
     ShortcutsGroup {
       ShortcutsShortcut {
         accelerator: "<Control>Return";
-        title: _("Run");
+        title: _("Run Code");
       }
 
       ShortcutsShortcut {
-        accelerator: "<Control><Shift>I";
-        title: _("Inspector");
+        accelerator: "<Control>O";
+        title: _("Import File");
+      }
+
+      ShortcutsShortcut {
+        accelerator: "<Control><Shift>O";
+        title: _("Open Library");
       }
 
       ShortcutsShortcut {
         accelerator: "<Control><Shift>K";
-        title: _("Open Console");
+        title: _("Toggle Console");
       }
 
       ShortcutsShortcut {
         accelerator: "<Control>K";
         title: _("Clear Console");
       }
-
+    }
+    ShortcutsGroup {
+      ShortcutsShortcut {
+        accelerator: "<Control><Shift>I";
+        title: _("Inspector");
+      }
+      ShortcutsShortcut {
+        accelerator: "<Control>Z";
+        title: _("Undo");
+      }
+      ShortcutsShortcut {
+        accelerator: "<Control><Shift>Z";
+        title: _("Redo");
+      }
       ShortcutsShortcut {
         accelerator: "<Control>question";
         title: _("Keyboard Shortcuts");
       }
-
       ShortcutsShortcut {
         accelerator: "<Control>Q";
         title: _("Quit");

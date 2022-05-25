@@ -139,7 +139,7 @@ export function getLanguageForFile(file) {
 
 export function connect_signals(target, signals) {
   return Object.entries(signals).map(([signal, handler]) => {
-    return target.connect(signal, handler);
+    return target.connect_after(signal, handler);
   });
 }
 

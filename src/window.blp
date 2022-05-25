@@ -162,6 +162,7 @@ Gtk.ApplicationWindow window {
                   "Vala",
                 ]
               };
+              tooltip-text: _("Switch document");
             }
           }
 
@@ -317,15 +318,34 @@ Gtk.ApplicationWindow window {
                 blueprint: "Blueprint",
                 xml: "XML",
               ]
+              tooltip-text: _("Switch document");
             }
           }
 
           [end]
-          Button button_ui_export {
-            icon-name: "horizontal-arrows-right-symbolic";
-            tooltip-text: _("Convert Blueprint to XML");
-            accessibility {
-              label: _("Convert Blueprint to XML");
+          Stack stack_ui_export {
+            visible-child-name: bind stack_ui.visible-child-name;
+
+            StackPage {
+              name: 'blueprint';
+              child: Button button_ui_export_xml {
+                icon-name: "horizontal-arrows-right-symbolic";
+                tooltip-text: _("Convert to XML");
+                accessibility {
+                  label: _("Convert to XML");
+                }
+              };
+            }
+
+            StackPage {
+              name: 'xml';
+              child: Button button_ui_export_blueprint {
+                icon-name: "horizontal-arrows-left-symbolic";
+                tooltip-text: _("Convert to Blueprint");
+                accessibility {
+                  label: _("Convert to Blueprint");
+                }
+              };
             }
           }
 
@@ -547,7 +567,7 @@ Gtk.ApplicationWindow window {
 
 menu menu_app {
   item {
-    label: _("Open File…");
+    label: _("Import File…");
     action: "app.open";
   }
 
