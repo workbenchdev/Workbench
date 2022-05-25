@@ -139,10 +139,18 @@ export function getLanguageForFile(file) {
 
 export function connect_signals(target, signals) {
   return Object.entries(signals).map(([signal, handler]) => {
-    return target.connect(signal, handler);
+    return target.connect_after(signal, handler);
   });
 }
 
 export function disconnect_signals(target, handler_ids) {
   handler_ids.forEach((handler_id) => target.disconnect(handler_id));
+}
+
+export function replaceBufferText(buffer, text, scroll_start = true) {
+  buffer.begin_user_action();
+  buffer.delete(buffer.get_start_iter(), buffer.get_end_iter());
+  buffer.insert(buffer.get_start_iter(), text, -1);
+  buffer.end_user_action();
+  scroll_start && buffer.place_cursor(buffer.get_start_iter());
 }

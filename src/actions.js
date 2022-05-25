@@ -48,7 +48,7 @@ export default function Actions({ application, version }) {
     const parent = XdpGtk.parent_new_gtk(application.get_active_window());
     portal.open_file(
       parent,
-      _("Open File"),
+      _("Import File"),
       filters,
       null, // current_filter
       null, // choices
@@ -130,6 +130,6 @@ const lang_filters = languages.map((language) => {
 });
 
 const filters = new GLib.Variant("a(sa(us))", [
-  [_("Filter"), lang_filters.flatMap(([, types]) => types)],
+  [_("All supported"), lang_filters.flatMap(([, types]) => types)],
   ...lang_filters,
 ]);

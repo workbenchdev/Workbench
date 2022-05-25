@@ -24,6 +24,7 @@ export default function Previewer({
   window,
   application,
   data_dir,
+  term_console,
 }) {
   let panel_code;
 
@@ -144,6 +145,7 @@ export default function Previewer({
     registerSignals(tree, scope);
 
     try {
+      // For some reason this log warnings twice
       builder.add_from_string(text, -1);
     } catch (err) {
       // The following while being obviously invalid
@@ -156,6 +158,8 @@ export default function Previewer({
       logError(err);
       return;
     }
+
+    term_console.clear();
 
     const object_preview = builder.get_object(target_id);
     if (!object_preview) return;

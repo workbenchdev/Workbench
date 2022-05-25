@@ -1,19 +1,21 @@
 import Gio from "gi://Gio";
+import GObject from "gi://GObject";
+import GLib from "gi://GLib";
+
+import LSPClient, { LSPError } from "./lsp/LSPClient.js";
 import {
   getLanguage,
   settings,
   connect_signals,
   disconnect_signals,
+  replaceBufferText,
 } from "./util.js";
-import GObject from "gi://GObject";
-import GLib from "gi://GLib";
-
-import LSPClient from "./lsp/LSPClient.js";
 
 const { addSignalMethods } = imports.signals;
 
-export default function PanelUI({ builder, data_dir }) {
+export default function PanelUI({ builder, data_dir, term_console }) {
   const blueprint = new LSPClient([
+    // "/home/sonny/Projects/Workbench/blueprint-compiler/blueprint-compiler.py",
     "blueprint-compiler",
     "lsp",
     "--logfile",
@@ -29,6 +31,58 @@ export default function PanelUI({ builder, data_dir }) {
     console.debug("blueprint IN:\n", message);
   });
 
+  let lang;
+
+  async function convertToXML() {
+    term_console.clear();
+    settings.set_boolean("show-console", true);
+
+    let xml;
+
+    try {
+      xml = await compileBlueprint(
+        getLanguage("blueprint").document.buffer.text
+      );
+    } catch (err) {
+      if (err instanceof LSPError) {
+        logBluePrintError(err);
+        return;
+      }
+      throw err;
+    }
+    replaceBufferText(getLanguage("xml").document.buffer, xml);
+    settings.set_string("ui-lang", "xml");
+  }
+  const button_ui_export_xml = builder.get_object("button_ui_export_xml");
+  button_ui_export_xml.connect("clicked", () => {
+    convertToXML().catch(logError);
+  });
+
+  async function convertToBlueprint() {
+    term_console.clear();
+    settings.set_boolean("show-console", true);
+
+    let blp;
+
+    try {
+      blp = await decompileXML(getLanguage("xml").document.buffer.text);
+    } catch (err) {
+      if (err instanceof LSPError) {
+        logBluePrintError(err);
+        return;
+      }
+      throw err;
+    }
+    replaceBufferText(getLanguage("blueprint").document.buffer, blp);
+    settings.set_string("ui-lang", "blueprint");
+  }
+  const button_ui_export_blueprint = builder.get_object(
+    "button_ui_export_blueprint"
+  );
+  button_ui_export_blueprint.connect("clicked", () => {
+    convertToBlueprint().catch(logError);
+  });
+
   const button_ui = builder.get_object("button_ui");
   const panel_ui = builder.get_object("panel_ui");
   settings.bind("show-ui", button_ui, "active", Gio.SettingsBindFlags.DEFAULT);
@@ -38,7 +92,6 @@ export default function PanelUI({ builder, data_dir }) {
     "visible",
     GObject.BindingFlags.SYNC_CREATE
   );
-  let lang;
 
   const panel = {
     xml: "",
@@ -76,12 +129,12 @@ export default function PanelUI({ builder, data_dir }) {
     } else {
       xml = await compileBlueprint(lang.document.buffer.text);
     }
-    panel.xml = xml;
+    panel.xml = xml || "";
     panel.emit("updated");
   }
 
   function onUpdate() {
-    update().catch(logError);
+    update().catch(logBluePrintError);
   }
 
   function start() {
@@ -112,18 +165,46 @@ export default function PanelUI({ builder, data_dir }) {
     if (!blueprint.proc) {
       blueprint.start();
 
-      // await lsp_client.request("initialize");
+      // await blueprint.request("initialize");
       // Make Blueprint language server cache Gtk 4
       // to make subsequence call faster (~500ms -> ~3ms)
-      // await lsp_client.request("x-blueprintcompiler/compile", {
-      //   text: "using Gtk 4.0;\nBox {}",
+      // await blueprint.request("x-blueprintcompiler/compile", {
+      //   text: "using Gtk 4.0;\nusing Adw 1;\nAdwBin {}",
       // });
     }
 
-    const { xml } = await blueprint.request("x-blueprintcompiler/compile", {
+    const { xml, info } = await blueprint.request(
+      "x-blueprintcompiler/compile",
+      {
+        text,
+      }
+    );
+
+    if (info.length) {
+      info.forEach(logBluePrintInfo);
+    } else {
+      term_console.clear();
+    }
+
+    return xml;
+  }
+
+  async function decompileXML(text) {
+    if (!blueprint.proc) {
+      blueprint.start();
+
+      // await blueprint.request("initialize");
+      // Make Blueprint language server cache Gtk 4
+      // to make subsequence call faster (~500ms -> ~3ms)
+      // await blueprint.request("x-blueprintcompiler/compile", {
+      //   text: "using Gtk 4.0;\nusing Adw 1;\nAdwBin {}",
+      // });
+    }
+
+    const { blp } = await blueprint.request("x-blueprintcompiler/decompile", {
       text,
     });
-    return xml;
+    return blp;
   }
 
   panel.start = start;
@@ -131,4 +212,18 @@ export default function PanelUI({ builder, data_dir }) {
   panel.update = update;
 
   return panel;
+}
+
+function logBluePrintError(err) {
+  GLib.log_structured("Blueprint", GLib.LogLevelFlags.LEVEL_CRITICAL, {
+    MESSAGE: `${err.message}`,
+    SYSLOG_IDENTIFIER: "re.sonny.Workbench",
+  });
+}
+
+function logBluePrintInfo(info) {
+  GLib.log_structured("Blueprint", GLib.LogLevelFlags.LEVEL_WARNING, {
+    MESSAGE: `${info.line + 1}:${info.col} ${info.message}`,
+    SYSLOG_IDENTIFIER: "re.sonny.Workbench",
+  });
 }
