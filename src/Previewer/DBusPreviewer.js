@@ -15,6 +15,7 @@ const ifaceXml = `
       <arg type="s" name="run_symbol" direction="in"/>
       <arg type="s" name="builder_symbol" direction="in"/>
       <arg type="s" name="window_symbol" direction="in"/>
+      <arg type="s" name="app_symbol" direction="in"/>
     </method>
     <method name="CloseWindow">
     </method>

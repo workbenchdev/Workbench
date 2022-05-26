@@ -76,7 +76,8 @@ export default function Compiler(data_dir) {
         module_file.get_path(),
         "main",
         "set_builder",
-        "set_window"
+        "set_window",
+        "set_app"
       );
     } catch (error) {
       logger.debug(error);

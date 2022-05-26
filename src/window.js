@@ -13,6 +13,7 @@ import {
   createDataDir,
   getLanguageForFile,
   languages,
+  replaceBufferText,
 } from "./util.js";
 import Document from "./Document.js";
 import PanelUI from "./PanelUI.js";
@@ -53,7 +54,7 @@ export default function Window({ application }) {
   const panel_preview = builder.get_object("panel_preview");
   const panel_placeholder = builder.get_object("panel_placeholder");
 
-  const { console } = Devtools({ application, window, builder });
+  const { term_console } = Devtools({ application, window, builder });
 
   let compiler = null;
 
@@ -103,6 +104,7 @@ export default function Window({ application }) {
     builder,
     langs,
     data_dir,
+    term_console,
   });
 
   const previewer = Previewer({
@@ -112,6 +114,7 @@ export default function Window({ application }) {
     application,
     data_dir,
     panel_ui,
+    term_console,
   });
 
   const panel_code = PanelCode({
@@ -198,7 +201,7 @@ export default function Window({ application }) {
 
     const { cursor_position } = buffer;
 
-    replaceBufferText(buffer, code);
+    replaceBufferText(buffer, code, false);
     buffer.place_cursor(buffer.get_iter_at_offset(cursor_position));
 
     return code;
@@ -207,7 +210,7 @@ export default function Window({ application }) {
   async function runCode() {
     button_run.set_sensitive(false);
 
-    console.clear();
+    term_console.clear();
     previewer.stop();
     panel_ui.stop();
 
@@ -307,7 +310,7 @@ export default function Window({ application }) {
     panel_ui.start();
 
     button_run.set_sensitive(true);
-    console.scrollToEnd();
+    term_console.scrollToEnd();
   }
 
   const action_run = new Gio.SimpleAction({
@@ -329,7 +332,6 @@ export default function Window({ application }) {
 
     function load({ document: { buffer } }, str) {
       replaceBufferText(buffer, str);
-      buffer.place_cursor(buffer.get_start_iter());
     }
 
     const { javascript, css, xml, blueprint, vala, panels } =
@@ -365,7 +367,7 @@ export default function Window({ application }) {
     if (panel_code.language === "JavaScript" && panel_code.panel.visible) {
       await runCode();
     } else {
-      console.clear();
+      term_console.clear();
       panel_ui.start();
       panel_ui.update();
       previewer.start();
@@ -378,7 +380,7 @@ export default function Window({ application }) {
 
     languages.forEach(({ document }) => document.start());
 
-    console.scrollToEnd();
+    term_console.scrollToEnd();
   }
 
   Library({
@@ -421,7 +423,6 @@ export default function Window({ application }) {
       document: { buffer },
     } = language;
     replaceBufferText(buffer, data);
-    buffer.place_cursor(buffer.get_start_iter());
 
     settings.set_boolean(`show-${language.panel}`, true);
 
@@ -459,11 +460,4 @@ async function setGtk4PreferDark(dark) {
   }
   settings.set_boolean("Settings", "gtk-application-prefer-dark-theme", dark);
   settings.save_to_file(settings_path);
-}
-
-function replaceBufferText(buffer, text) {
-  buffer.begin_user_action();
-  buffer.delete(buffer.get_start_iter(), buffer.get_end_iter());
-  buffer.insert(buffer.get_start_iter(), text, -1);
-  buffer.end_user_action();
 }

@@ -1,6 +1,6 @@
 {
   "app-id": "re.sonny.Workbench",
-  "runtime": "org.gnome.Platform",
+  "runtime": "org.gnome.Sdk",
   "runtime-version": "42",
   "sdk": "org.gnome.Sdk",
   "sdk-extensions": ["org.freedesktop.Sdk.Extension.node16"],

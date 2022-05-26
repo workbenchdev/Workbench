@@ -40,18 +40,25 @@
   <releases>
     <release version="42.0" date="">
       <description>
+        <p>Highlights</p>
         <ul>
-          <li>Support Blueprint markup syntax for UI</li>
-          <li>Support Vala programming language for Code</li>
+          <li>Add Blueprint markup syntax for UI</li>
+          <li>Add Vala programming language for Code</li>
+          <li>Add support for previewing templates</li>
+          <li>Add support for previewing signal handlers</li>
           <li>Include all icons from icon-development-kit</li>
-          <li>Enable preview of UI with signal handlers</li>
           <li>Improve application design</li>
+          <li>Distribute Library examples under CC0-1.0</li>
+          <li>Respect system preference for color scheme</li>
+          <li>Add proper light/dark color schemes for Console</li>
+          <li>Fix error when opening file</li>
+        </ul>
+        <p>Other changes</p>
+        <ul>
           <li>Silence platform tools</li>
           <li>Make Library examples only open relevant panels</li>
           <li>Always open the Console when opening a Library example</li>
           <li>Distribute Library examples under CC0-1.0</li>
-          <li>Respect system preference for color scheme</li>
-          <li>Add proper light/dark color schemes for Console</li>
           <li>Prevent running Code if the panel is not visible</li>
           <li>Add icons and mnemonics for all buttons</li>
           <li>Move Bookmarks to the main menu</li>
@@ -59,7 +66,9 @@
           <li>Fix error when opening file</li>
           <li>Improve Library examples</li>
           <li>Performance optimizations</li>
+          <li>Show a placeholder when all panels are invisible</li>
           <li>Crash fixes</li>
+          <li>Use org.gnome.Sdk runtime</li>
         </ul>
       </description>
     </release>
