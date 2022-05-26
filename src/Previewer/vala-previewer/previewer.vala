@@ -162,7 +162,7 @@ namespace Workbench {
 
   async void main (string[] args) {
     Workbench.app = new Adw.Application ("re.sonny.Workbench.vala_previewer", ApplicationFlags.FLAGS_NONE);
-    app.startup.connect(() => {
+    app.activate.connect(() => {
       Bus.own_name (BusType.SESSION,
                     "re.sonny.Workbench.vala_previewer",
                     BusNameOwnerFlags.NONE,
