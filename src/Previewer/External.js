@@ -32,7 +32,11 @@ export default function Previewer({ builder, onWindowChange }) {
   function open() {
     updateColorScheme();
     stack.set_visible_child_name("close_window");
-    dbus_proxy.OpenWindowSync();
+    try {
+      dbus_proxy.OpenWindowSync();
+    } catch (err) {
+      logger.debug(err);
+    }
   }
 
   function close() {
@@ -50,13 +54,20 @@ export default function Previewer({ builder, onWindowChange }) {
   }
 
   function updateXML({ xml, target_id }) {
-    dbus_proxy.UpdateUiSync(xml, target_id);
+    try {
+      dbus_proxy.UpdateUiSync(xml, target_id);
+    } catch (err) {
+      logger.debug(err);
+    }
   }
 
   const style_manager = Adw.StyleManager.get_default();
   function updateColorScheme() {
-    if (dbus_proxy === null) return;
-    dbus_proxy.ColorScheme = style_manager.color_scheme;
+    try {
+      dbus_proxy.ColorScheme = style_manager.color_scheme;
+    } catch (err) {
+      logger.debug(err);
+    }
   }
   style_manager.connect("notify::color-scheme", updateColorScheme);
 
@@ -67,7 +78,11 @@ export default function Previewer({ builder, onWindowChange }) {
     close,
     updateXML,
     updateCSS(css) {
-      dbus_proxy.UpdateCssSync(css);
+      try {
+        dbus_proxy.UpdateCssSync(css);
+      } catch (err) {
+        logger.debug(err);
+      }
     },
     screenshot() {},
   };

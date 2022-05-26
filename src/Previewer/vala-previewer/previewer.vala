@@ -4,6 +4,9 @@ namespace Workbench {
   public class Previewer : Object {
     construct {
       this.window = new Gtk.Window () {
+        // Ensure the header bar has the same height as Workbench
+        titlebar = new Gtk.HeaderBar (),
+        title = "Preview",
         hide_on_close = true,
         default_width = 600,
         default_height = 800

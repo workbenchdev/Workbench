@@ -60,6 +60,7 @@
           <li>Improve Library examples</li>
           <li>Performance optimizations</li>
           <li>Crash fixes</li>
+          <li>Use org.gnome.Sdk runtime</li>
         </ul>
       </description>
     </release>
