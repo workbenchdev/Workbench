@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: re.sonny.Workbench\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-08 17:31+0200\n"
-"PO-Revision-Date: 2022-05-08 15:35+0000\n"
-"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"PO-Revision-Date: 2022-05-26 15:58+0000\n"
+"Last-Translator: Sonny Piers <sonny@sonny.re>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/workbench/workbench/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.12.1\n"
+"X-Generator: Weblate 4.13-dev\n"
 
 #. TRANSLATORS: Don't translate
 #: data/re.sonny.Workbench.desktop:4
@@ -24,10 +24,8 @@ msgid "Workbench"
 msgstr "Workbench"
 
 #: data/re.sonny.Workbench.desktop:5 data/re.sonny.Workbench.metainfo.xml:10
-#, fuzzy
-#| msgid "Sandbox to learn and prototype with GNOME technologies"
 msgid "Learn and prototype with GNOME technologies"
-msgstr "Bac à sable pour apprendre à utiliser et essayer les technologies GNOME"
+msgstr "Apprendre et construire avec les technologies GNOME"
 
 #. TRANSLATORS: Don't translate
 #: data/re.sonny.Workbench.desktop:12
