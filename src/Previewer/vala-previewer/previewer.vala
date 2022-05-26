@@ -4,9 +4,13 @@ namespace Workbench {
   public class Previewer : Object {
     construct {
       this.window = new Gtk.Window () {
+        title = "Preview",
         hide_on_close = true,
         default_width = 600,
         default_height = 800
+      };
+      // Ensure the header bar has the same height as Workbench
+      this.window.titlebar = new Gtk.HeaderBar() {
       };
       this.window.close_request.connect (() => {
         this.window_open (false);
