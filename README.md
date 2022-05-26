@@ -4,7 +4,7 @@
 
 Learn and prototype with GNOME technologies
 
-![](data/screenshot.png)
+![](data/workbench.gif)
 
 <a href='https://beta.flathub.org/apps/details/re.sonny.Workbench'><img width='180' height='60' alt='Download on Flathub' src='https://flathub.org/assets/badges/flathub-badge-en.svg'/></a>
 

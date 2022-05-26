@@ -10,28 +10,13 @@ import {
   disconnect_signals,
   replaceBufferText,
 } from "./util.js";
+import logger from "./logger.js";
 
 const { addSignalMethods } = imports.signals;
 
 export default function PanelUI({ builder, data_dir, term_console }) {
-  const blueprint = new LSPClient([
-    // "/home/sonny/Projects/Workbench/blueprint-compiler/blueprint-compiler.py",
-    "blueprint-compiler",
-    "lsp",
-    "--logfile",
-    GLib.build_filenamev([data_dir, `blueprint-logs`]),
-  ]);
-  blueprint.connect("exit", () => {
-    console.debug("blueprint exit");
-  });
-  blueprint.connect("output", (self, message) => {
-    console.debug("blueprint OUT:\n", message);
-  });
-  blueprint.connect("input", (self, message) => {
-    console.debug("blueprint IN:\n", message);
-  });
-
   let lang;
+  const blueprint = createBlueprintClient({ data_dir });
 
   async function convertToXML() {
     term_console.clear();
@@ -226,4 +211,34 @@ function logBluePrintInfo(info) {
     MESSAGE: `${info.line + 1}:${info.col} ${info.message}`,
     SYSLOG_IDENTIFIER: "re.sonny.Workbench",
   });
+}
+
+function createBlueprintClient({ data_dir }) {
+  const file_blueprint_logs = Gio.File.new_for_path(
+    GLib.build_filenamev([data_dir, `blueprint-logs`])
+  );
+  file_blueprint_logs.replace_contents(
+    " ",
+    null,
+    false,
+    Gio.FileCreateFlags.REPLACE_DESTINATION,
+    null
+  );
+  const blueprint = new LSPClient([
+    // "/home/sonny/Projects/Workbench/blueprint-compiler/blueprint-compiler.py",
+    "blueprint-compiler",
+    "lsp",
+    "--logfile",
+    file_blueprint_logs.get_path(),
+  ]);
+  blueprint.connect("exit", () => {
+    logger.debug("blueprint exit");
+  });
+  blueprint.connect("output", (self, message) => {
+    logger.debug(`blueprint OUT:\n${message}`);
+  });
+  blueprint.connect("input", (self, message) => {
+    logger.debug(`blueprint IN:\n${message}`);
+  });
+  return blueprint;
 }
