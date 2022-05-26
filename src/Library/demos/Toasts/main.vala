@@ -31,7 +31,7 @@ public void main () {
       string val = target.get_string ();
       stdout.printf ("undo %s", val);
   });
-  // TODO - Need access to the application for this to work.
-  //workbench.application.add_action (action_console);
+
+  workbench.application.add_action (action_console);
 }
 

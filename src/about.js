@@ -43,6 +43,7 @@ ${getBlueprintVersion()}
   dialog.add_credit_section("Contributors", [
     "Lorenz Wildberg https://gitlab.gnome.org/lwildberg",
     "Tobias Bernard <tbernard@gnome.org>",
+    "Ben Foote http://www.bengineeri.ng",
     // Add yourself as
     // "John Doe",
     // or
