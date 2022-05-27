@@ -137,6 +137,10 @@ namespace Workbench {
     public void open_window () {
       this.window.present ();
     }
+    
+    public void enable_inspector (bool enabled) {
+      Gtk.Window.set_interactive_debugging (enabled);
+    }
 
     public Adw.ColorScheme ColorScheme { get; set; default = Adw.ColorScheme.DEFAULT; }
 
