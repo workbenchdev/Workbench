@@ -3,7 +3,7 @@ namespace Workbench {
   [DBus (name="re.sonny.Workbench.vala_previewer")]
   public class Previewer : Object {
     construct {
-      this.window = new Gtk.Window () {
+      this.window = new Gtk.ApplicationWindow (Workbench.app) {
         // Ensure the header bar has the same height as Workbench
         titlebar = new Gtk.HeaderBar (),
         title = "Preview",
