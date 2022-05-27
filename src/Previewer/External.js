@@ -60,6 +60,22 @@ export default function Previewer({ builder, onWindowChange }) {
       logger.debug(err);
     }
   }
+  
+  function openInspector() {
+    try {
+      dbus_proxy.EnableInspector(true);
+    } catch (err) {
+      logger.debug(err);
+    }
+  }
+  
+  function closeInspector() {
+    try {
+      dbus_proxy.EnableInspector(false);
+    } catch (err) {
+      logger.debug(err);
+    }
+  }
 
   const style_manager = Adw.StyleManager.get_default();
   function updateColorScheme() {
@@ -76,6 +92,8 @@ export default function Previewer({ builder, onWindowChange }) {
     stop,
     open,
     close,
+    openInspector,
+    closeInspector.
     updateXML,
     updateCSS(css) {
       try {
