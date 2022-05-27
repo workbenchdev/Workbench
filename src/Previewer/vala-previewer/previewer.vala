@@ -163,24 +163,26 @@ namespace Workbench {
 
   private Adw.Application app;
 
-  async void main (string[] args) {
+  void main (string[] args) {
     Workbench.app = new Adw.Application ("re.sonny.Workbench.vala_previewer", ApplicationFlags.FLAGS_NONE);
     app.activate.connect(() => {
-      Bus.own_name (BusType.SESSION,
-                    "re.sonny.Workbench.vala_previewer",
-                    BusNameOwnerFlags.NONE,
-                    null,
-                    (connection, name) => {
-                      try {
-                        connection.register_object ("/re/sonny/workbench/vala_previewer", new Previewer ());
-                      } catch (IOError e) {
-                        stderr.printf ("Could not register service\n");
-                      }
-                    },
-                    (connection, name) => { stderr.printf ("Couldn't obtain the bus name.\n"); });
+      var mainloop = new MainLoop ();
+      DBusConnection connection = app.get_dbus_connection ();
+
+
+
+
+
+      try {
+        connection.register_object ("/re/sonny/workbench/vala_previewer", new Previewer ());
+      } catch (IOError e) {
+        stderr.printf ("Could not register service.\n");
+      }
+
+      mainloop.run ();
     });
     app.run (args);
 
-    yield;
+
   }
 }
