@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-26 15:37+0200\n"
 "PO-Revision-Date: 2022-05-28 03:10+0000\n"
-"Last-Translator: KJ <jjk192@gmail.com>\n"
+"Last-Translator: Mateo Estrada Ramirez <mateoestradaramirez2001@gmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/workbench/workbench/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -192,7 +192,7 @@ msgstr "Agregar un ejemplo de notificación de escritorio"
 
 #: data/re.sonny.Workbench.metainfo.xml:84
 msgid "Add Adwaita Demo, GTK Demo, GTK Widget Factory and GTK Icon Browser"
-msgstr ""
+msgstr "Agregar una Demo de Adwaita, demo de GTK, GTK Widget Factory y GTK Icon Browser"
 
 #: data/re.sonny.Workbench.metainfo.xml:85
 msgid "The Console can be collapsed by resizing it"
@@ -200,7 +200,7 @@ msgstr "La consola puede ser colapsada redimensionándola"
 
 #: data/re.sonny.Workbench.metainfo.xml:86
 msgid "Prevent system.exit from quitting Workbench"
-msgstr ""
+msgstr "Prevenir system.exit cuando salgas de Workbench"
 
 #: data/re.sonny.Workbench.metainfo.xml:87
 msgid "Allow calling GObject.registerClass multiple times"
@@ -208,7 +208,7 @@ msgstr "Permitir llamados a GObject.registerClass múltiples veces"
 
 #: data/re.sonny.Workbench.metainfo.xml:88
 msgid "Prevent crash caused by using non GtkBuildable objects"
-msgstr ""
+msgstr "Prevenir cierres causados al utilizar objetos no GTKBuildable"
 
 #: data/re.sonny.Workbench.metainfo.xml:89
 msgid "Allow using DBus and Gio.Application"
@@ -224,7 +224,7 @@ msgstr "Permitir la previsualización de objetos GtkWindow"
 
 #: data/re.sonny.Workbench.metainfo.xml:98
 msgid "Take a png screenshot of the preview"
-msgstr ""
+msgstr "Tomar una captura png de la previsualización"
 
 #: data/re.sonny.Workbench.metainfo.xml:99
 msgid "The console is now resizable"
@@ -236,15 +236,15 @@ msgstr "Rediseñar el conmutador de modo oscuro/claro"
 
 #: data/re.sonny.Workbench.metainfo.xml:101
 msgid "Show platform and dependencies in about dialog"
-msgstr ""
+msgstr "Mostrar la plataforma y dependencias en el diálogo acerca de"
 
 #: data/re.sonny.Workbench.metainfo.xml:102
 msgid "Update to GNOME platform 42"
-msgstr ""
+msgstr "Actualizar a la plataforma GNOME 42"
 
 #: data/re.sonny.Workbench.metainfo.xml:103
 msgid "Various fixes"
-msgstr ""
+msgstr "Arreglos varios"
 
 #: data/re.sonny.Workbench.metainfo.xml:109
 msgid "This is the first release of Workbench. We hope you like it."
@@ -274,7 +274,7 @@ msgstr ""
 #. TRANSLATORS: eg. 'Translator Name <your.email@domain.com>' or 'Translator Name https://website.example'
 #: src/about.js:40
 msgid "translator-credits"
-msgstr ""
+msgstr "Mateo Estrada Ramirez mateoestradaramirez@outlook.com"
 
 #: src/actions.js:51 src/shortcutsWindow.blp:16
 msgid "Import File"
@@ -398,7 +398,7 @@ msgstr "Tomar una Captura de la Previsualización"
 
 #: src/window.blp:460 src/window.blp:478
 msgid "Windowed Preview"
-msgstr ""
+msgstr "Previsualización en Ventana"
 
 #: src/window.blp:461 src/window.blp:479
 msgid ""
@@ -432,7 +432,7 @@ msgstr "_Inspector"
 
 #: src/window.blp:533
 msgid "Open GTK Inspector (Ctrl+Shift+I)"
-msgstr ""
+msgstr "Abrir inspector GTK (Ctrl+Shift+I)"
 
 #: src/window.blp:544
 #, fuzzy
@@ -491,15 +491,15 @@ msgstr "Matrix"
 
 #: src/window.blp:629
 msgid "Platform Tools"
-msgstr ""
+msgstr "Herramientas de Plataforma"
 
 #: src/window.blp:632
 msgid "Adwaita Demo"
-msgstr ""
+msgstr "Demo Adwaita"
 
 #: src/window.blp:638
 msgid "GTK Demo"
-msgstr ""
+msgstr "Demo GTK"
 
 #: src/window.blp:644
 msgid "GTK Widget Factory"
