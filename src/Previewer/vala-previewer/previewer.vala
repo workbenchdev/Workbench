@@ -169,14 +169,12 @@ namespace Workbench {
       var mainloop = new MainLoop ();
       DBusConnection connection = app.get_dbus_connection ();
       try {
-        connection.register_object ("/re/sonny/workbench/vala_previewer", new Previewer ());
+        connection.register_object ("/re/sonny/workbench/vala_previewer/interface", new Previewer ());
       } catch (IOError e) {
         stderr.printf ("Could not register service.\n");
       }
       mainloop.run ();
     });
     app.run (args);
-
-
   }
 }
