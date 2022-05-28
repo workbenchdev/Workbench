@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: re.sonny.Workbench\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-26 15:37+0200\n"
-"PO-Revision-Date: 2022-05-15 18:18+0000\n"
-"Last-Translator: Mateo Estrada Ramirez <mateoestradaramirez2001@gmail.com>\n"
+"PO-Revision-Date: 2022-05-28 03:10+0000\n"
+"Last-Translator: KJ <jjk192@gmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/workbench/workbench/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -30,13 +30,11 @@ msgstr "Aprende y crea proptipos con las tecnologías de GNOME"
 #. TRANSLATORS: Don't translate
 #: data/re.sonny.Workbench.desktop:12
 msgid "CSS;JavaScript;GJS;Blueprint;builder;Vala;"
-msgstr ""
+msgstr "CSS;JavaScript;GJS;Blueprint;builder;Vala;"
 
 #: data/re.sonny.Workbench.metainfo.xml:14
-#, fuzzy
-#| msgid "Workbench goal is to let you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a custom GTK widget."
 msgid "Workbench goal is to let you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a GTK user interface."
-msgstr "El objetivo de WorkBench es que puedas experimentar con las tecnologías de GNOME, no importa si es tu primera vez haciendo retoques, o construyendo y probando un widget GTK personalizado."
+msgstr "El objetivo de WorkBench es que puedas experimentar con las tecnologías de GNOME, no importa si es tu primera vez haciendo retoques, o construyendo y probando una interfaz de usuario GTK."
 
 #: data/re.sonny.Workbench.metainfo.xml:15
 msgid "Among other things, Workbench comes with"
@@ -52,17 +50,15 @@ msgstr "librería de ejemplos"
 
 #: data/re.sonny.Workbench.metainfo.xml:19
 msgid "JavaScript and Vala runs without any setup"
-msgstr ""
+msgstr "JavaScript y Vala funcionan sin necesidad de configurar nada"
 
 #: data/re.sonny.Workbench.metainfo.xml:20
 msgid "XML and Blueprint for describing user interface"
-msgstr ""
+msgstr "XML y Blueprint para describir la interfaz de usuario"
 
 #: data/re.sonny.Workbench.metainfo.xml:21
-#, fuzzy
-#| msgid "Syntax highlighting, undo/redo, autosave"
 msgid "syntax highlighting, undo/redo, autosave, session restore"
-msgstr "resaltado de sintaxsis, deshacer/rehacer, guardado automático"
+msgstr "Resaltado de sintaxis, deshacer/rehacer, guardado automático, restauración de la sesión"
 
 #: data/re.sonny.Workbench.metainfo.xml:22
 msgid "code formatter"
@@ -78,103 +74,101 @@ msgstr "Editores lado a lado con previsualización en tiempo real a la derecha y
 
 #: data/re.sonny.Workbench.metainfo.xml:43
 msgid "Highlights"
-msgstr ""
+msgstr "Resaltados"
 
 #: data/re.sonny.Workbench.metainfo.xml:45
 msgid "Add Blueprint markup syntax for UI"
-msgstr ""
+msgstr "Añadir la sintaxis de marcado de Blueprint para la IU"
 
 #: data/re.sonny.Workbench.metainfo.xml:46
 msgid "Add Vala programming language for Code"
-msgstr ""
+msgstr "Añadir lenguaje de programación Vala"
 
 #: data/re.sonny.Workbench.metainfo.xml:47
 msgid "Add support for previewing templates"
-msgstr ""
+msgstr "Añadir soporte para previsualización de plantilas"
 
 #: data/re.sonny.Workbench.metainfo.xml:48
 msgid "Add support for previewing signal handlers"
-msgstr ""
+msgstr "Añadir soporte para previsualización de manejadores de señales"
 
 #: data/re.sonny.Workbench.metainfo.xml:49
 msgid "Include all icons from icon-development-kit"
-msgstr ""
+msgstr "Incluir todos los íconos de icon-development-kit"
 
 #: data/re.sonny.Workbench.metainfo.xml:50
 msgid "Improve application design"
-msgstr ""
+msgstr "Mejorar el diseño de la aplicación"
 
 #: data/re.sonny.Workbench.metainfo.xml:51
 #: data/re.sonny.Workbench.metainfo.xml:61
 msgid "Distribute Library examples under CC0-1.0"
-msgstr ""
+msgstr "Distribuir Librerías de ejemplo bajo CC0-1.0"
 
 #: data/re.sonny.Workbench.metainfo.xml:52
 msgid "Respect system preference for color scheme"
-msgstr ""
+msgstr "Respetar la preferencia del esquema de color del sistema"
 
 #: data/re.sonny.Workbench.metainfo.xml:53
 msgid "Add proper light/dark color schemes for Console"
-msgstr ""
+msgstr "Añadir esquemas de color claro/oscuro apropiados para Console"
 
 #: data/re.sonny.Workbench.metainfo.xml:54
 #: data/re.sonny.Workbench.metainfo.xml:66
 msgid "Fix error when opening file"
-msgstr ""
+msgstr "Arreglar error cuando se abre un archivo"
 
 #: data/re.sonny.Workbench.metainfo.xml:56
 msgid "Other changes"
-msgstr ""
+msgstr "Otros cambios"
 
 #: data/re.sonny.Workbench.metainfo.xml:58
 msgid "Silence platform tools"
-msgstr ""
+msgstr "Herramientas de plataforma de silencio"
 
 #: data/re.sonny.Workbench.metainfo.xml:59
 msgid "Make Library examples only open relevant panels"
-msgstr ""
+msgstr "Hacer que las Librerías de ejemplo solo abran paneles relevantes"
 
 #: data/re.sonny.Workbench.metainfo.xml:60
 msgid "Always open the Console when opening a Library example"
-msgstr ""
+msgstr "Siempre abrir la Consola cuando se abra una Librería de ejemplo"
 
 #: data/re.sonny.Workbench.metainfo.xml:62
 msgid "Prevent running Code if the panel is not visible"
-msgstr ""
+msgstr "Prevenir correr el Código si el panel no está visible"
 
 #: data/re.sonny.Workbench.metainfo.xml:63
 msgid "Add icons and mnemonics for all buttons"
-msgstr ""
+msgstr "Añadir íconos y mnemotecnias para todos los botones"
 
 #: data/re.sonny.Workbench.metainfo.xml:64
 msgid "Move Bookmarks to the main menu"
-msgstr ""
+msgstr "Mover Marcadores al menú principal"
 
 #: data/re.sonny.Workbench.metainfo.xml:65
 msgid "Enable scrollbar and kinetic scrolling on Console"
-msgstr ""
+msgstr "Habilitar barra de desplazamiento en la Consola"
 
 #: data/re.sonny.Workbench.metainfo.xml:67
-#, fuzzy
-#| msgid "library of examples"
 msgid "Improve Library examples"
-msgstr "librería de ejemplos"
+msgstr "Mejorar Librería de ejemplos"
 
 #: data/re.sonny.Workbench.metainfo.xml:68
 msgid "Performance optimizations"
-msgstr ""
+msgstr "Optimizaciones de rendimiento"
 
 #: data/re.sonny.Workbench.metainfo.xml:69
 msgid "Show a placeholder when all panels are invisible"
-msgstr ""
+msgstr "Mostrar un placeholder cuando todo los paneles son invisibles"
 
 #: data/re.sonny.Workbench.metainfo.xml:70
 msgid "Crash fixes"
-msgstr ""
+msgstr "Corrección de fallas"
 
 #: data/re.sonny.Workbench.metainfo.xml:71
 msgid "Use org.gnome.Sdk runtime"
-msgstr ""
+msgstr "Usar org.gnome.Sdk"
 
 #: data/re.sonny.Workbench.metainfo.xml:78
 msgid "Add a Library of examples"
@@ -267,7 +261,7 @@ msgstr "Atajos de Teclado"
 
 #: src/Library/demos/Application window/main.blp:55
 msgid "About My App"
-msgstr ""
+msgstr "Acerca de My App"
 
 #: src/about.js:31
 msgid ""
@@ -284,29 +278,23 @@ msgstr ""
 
 #: src/actions.js:51 src/shortcutsWindow.blp:16
 msgid "Import File"
-msgstr ""
+msgstr "Importar Archivo"
 
 #: src/actions.js:133
 msgid "All supported"
-msgstr ""
+msgstr "Todos los soportados"
 
 #: src/shortcutsWindow.blp:11
-#, fuzzy
-#| msgid "Code"
 msgid "Run Code"
-msgstr "Código"
+msgstr "Correr Código"
 
 #: src/shortcutsWindow.blp:21
-#, fuzzy
-#| msgid "Library"
 msgid "Open Library"
-msgstr "Librería"
+msgstr "Abrir Librería"
 
 #: src/shortcutsWindow.blp:26
-#, fuzzy
-#| msgid "Clear Console"
 msgid "Toggle Console"
-msgstr "Limpiar Consola"
+msgstr "Alternar Consola"
 
 #: src/shortcutsWindow.blp:31
 msgid "Clear Console"
@@ -318,51 +306,43 @@ msgstr "Inspector"
 
 #: src/shortcutsWindow.blp:41
 msgid "Undo"
-msgstr ""
+msgstr "Deshacer"
 
 #: src/shortcutsWindow.blp:45
 msgid "Redo"
-msgstr ""
+msgstr "Rehacer"
 
 #: src/shortcutsWindow.blp:53
 msgid "Quit"
 msgstr "Salir"
 
 #: src/window.blp:15
-#, fuzzy
-#| msgid "Library"
 msgid "_Library"
-msgstr "Librería"
+msgstr "_Librería"
 
 #: src/window.blp:19
 msgid "Open Library of Demos and Examples (Ctrl+Shift+O)"
 msgstr "Abrir Librería de Demos y Ejemplos (Ctrl+Shift+O)"
 
 #: src/window.blp:37
-#, fuzzy
-#| msgid "Code"
 msgid "_Code"
-msgstr "Código"
+msgstr "_Código"
 
 #: src/window.blp:54
-#, fuzzy
-#| msgid "Style"
 msgid "_Style"
-msgstr "Estilo"
+msgstr "_Estilo"
 
 #: src/window.blp:71
 msgid "_UI"
-msgstr ""
+msgstr "_IU"
 
 #: src/window.blp:88
-#, fuzzy
-#| msgid "Preview"
 msgid "_Preview"
-msgstr "Previsualizar"
+msgstr "_Previsualizar"
 
 #: src/window.blp:109
 msgid "sun-symbolic"
-msgstr ""
+msgstr "sun-symbolic"
 
 #: src/window.blp:110 src/window.blp:113
 msgid "Use Light mode"
@@ -370,7 +350,7 @@ msgstr "Usar modo claro"
 
 #: src/window.blp:118
 msgid "workbench-moon-rounded-symbolic"
-msgstr ""
+msgstr "workbench-moon-rounded-symbolic"
 
 #: src/window.blp:119 src/window.blp:122
 msgid "Use Dark mode"
@@ -378,43 +358,39 @@ msgstr "Usar modo oscuro"
 
 #: src/window.blp:149
 msgid "<b>Code</b>"
-msgstr ""
+msgstr "<b>Código</b>"
 
 #: src/window.blp:165 src/window.blp:321
 msgid "Switch document"
-msgstr ""
+msgstr "Cambiar documento"
 
 #: src/window.blp:173
 msgid "_Run"
-msgstr ""
+msgstr "_Correr"
 
 #: src/window.blp:177
 msgid "Run (Ctrl+⏎)"
 msgstr "Ejecutar (Ctrl+⏎)"
 
 #: src/window.blp:248
-#, fuzzy
-#| msgid "Style - CSS"
 msgid "<b>Style CSS</b>"
-msgstr "Estilo - CSS"
+msgstr "<b>Estilo - CSS</b>"
 
 #: src/window.blp:293
 msgid "<b>UI</b>"
-msgstr ""
+msgstr "<b>IU</b>"
 
 #: src/window.blp:333 src/window.blp:335
 msgid "Convert to XML"
-msgstr ""
+msgstr "Convertir a XML"
 
 #: src/window.blp:344 src/window.blp:346
 msgid "Convert to Blueprint"
-msgstr ""
+msgstr "Convertir a Blueprint"
 
 #: src/window.blp:420
-#, fuzzy
-#| msgid "Preview"
 msgid "<b>Preview</b>"
-msgstr "Previsualizar"
+msgstr "<b>Previsualizar</b>"
 
 #: src/window.blp:428 src/window.blp:430
 msgid "Take Screenshot of Preview"
@@ -425,58 +401,51 @@ msgid "Windowed Preview"
 msgstr ""
 
 #: src/window.blp:461 src/window.blp:479
-#, fuzzy
-#| msgid ""
-#| "This interface can only be previewed as a separate window.\n"
-#| "We recommend using \"Always on Top\""
 msgid ""
 "This interface can only be previewed as a separate window.\n"
 "We recommend using “Always on Top”"
 msgstr ""
 "La interfaz sólo puede ser previsualizada como una ventana separada.\n"
-"Recomentamos utilizar \"Siempre Encima\""
+"Recomendamos utilizar \"Siempre Encima\""
 
 #: src/window.blp:468
 msgid "Show Preview Window"
-msgstr ""
+msgstr "Mostrar Ventana de Previsualización"
 
 #: src/window.blp:486
 msgid "Close Preview Window"
-msgstr ""
+msgstr "Cerrar Ventana de Previsualización"
 
 #: src/window.blp:520
 #, fuzzy
 #| msgid "Console"
 msgid "C_onsole"
-msgstr "Consola"
+msgstr "C_onsola"
 
 #: src/window.blp:524
 msgid "Show logs (Ctrl+Shift+K)"
 msgstr "Mostrar logs (Ctrl+Shift+K)"
 
 #: src/window.blp:530
-#, fuzzy
-#| msgid "Inspector"
 msgid "_Inspector"
-msgstr "Inspector"
+msgstr "_Inspector"
 
 #: src/window.blp:533
 msgid "Open GTK Inspector (Ctrl+Shift+I)"
 msgstr ""
 
 #: src/window.blp:544
+#, fuzzy
 msgid "Cl_ear"
-msgstr ""
+msgstr "L_impiar"
 
 #: src/window.blp:548
 msgid "Clear console (Ctrl+K)"
 msgstr "Limpiar consola (Ctrl+K)"
 
 #: src/window.blp:570
-#, fuzzy
-#| msgid "Open File…"
 msgid "Import File…"
-msgstr "Abrir Archivo…"
+msgstr "Importar Archivo…"
 
 #: src/window.blp:575
 msgid "Bookmarks"
@@ -488,25 +457,25 @@ msgstr "Aprende"
 
 #: src/window.blp:580
 msgid "Developer Documentation"
-msgstr ""
+msgstr "Documentación de desarrorollador"
 
 #: src/window.blp:587
-#, fuzzy
-#| msgid "Human Interface Guidelines (HIG)"
 msgid "Human Interface Guidelines"
-msgstr "Pautas de Interfaz Humana (HIG)"
+msgstr "Pautas de Interfaz Humana"
 
 #: src/window.blp:593
 msgid "JavaScript"
-msgstr ""
+msgstr "JavaScript"
 
 #: src/window.blp:599
+#, fuzzy
 msgid "Vala"
-msgstr ""
+msgstr "Vala"
 
 #: src/window.blp:605
+#, fuzzy
 msgid "Blueprint"
-msgstr ""
+msgstr "Blueprint"
 
 #: src/window.blp:612
 msgid "Get help"
@@ -514,11 +483,11 @@ msgstr "Obtener ayuda"
 
 #: src/window.blp:615
 msgid "Discourse"
-msgstr ""
+msgstr "Discourse"
 
 #: src/window.blp:621
 msgid "Matrix"
-msgstr ""
+msgstr "Matrix"
 
 #: src/window.blp:629
 msgid "Platform Tools"
