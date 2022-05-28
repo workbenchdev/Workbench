@@ -93,7 +93,7 @@ export default function Previewer({ builder, onWindowChange }) {
     open,
     close,
     openInspector,
-    closeInspector.
+    closeInspector,
     updateXML,
     updateCSS(css) {
       try {
