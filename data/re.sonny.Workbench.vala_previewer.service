@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=re.sonny.Workbench.vala_previewer
+Exec=@bindir@/workbench-vala-previewer

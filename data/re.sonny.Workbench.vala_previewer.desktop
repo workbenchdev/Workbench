@@ -1,0 +1,14 @@
+[Desktop Entry]
+# TRANSLATORS: Don't translate
+Name=Workbench
+Comment=Learn and prototype with GNOME technologies
+Exec=workbench-vala-previewer
+Terminal=false
+Type=Application
+Categories=WebDevelopment;Development;IDE;GNOME;GTK;
+Icon=re.sonny.Workbench
+# TRANSLATORS: Don't translate
+Keywords=CSS;JavaScript;GJS;Blueprint;builder;Vala;
+DBusActivatable=true
+StartupNotify=true
+MimeType=text/javascript;application/javascript;application/x-gtk-builder;text/css;text/x-vala;
