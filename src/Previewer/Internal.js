@@ -118,6 +118,12 @@ export default function Internal({
     stop,
     updateXML,
     updateCSS,
+    openInspector() {
+      Gtk.Window.set_interactive_debugging(true);
+    },
+    closeInspector() {
+      Gtk.Window.set_interactive_debugging(false);
+    },
     screenshot({ window, data_dir }) {
       screenshot({ widget: object_root || output, window, data_dir });
     },

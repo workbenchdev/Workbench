@@ -21,6 +21,9 @@ const ifaceXml = `
     </method>
     <method name="OpenWindow">
     </method>
+    <method name="EnableInspector">
+      <arg type="b" name="enabled" direction="in"/>
+    </method>
     <signal name="WindowOpen">
       <arg type="b" name="open"/>
     </signal>
