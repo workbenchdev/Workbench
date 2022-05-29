@@ -63,7 +63,7 @@ export default function Previewer({ builder, onWindowChange }) {
   
   function openInspector() {
     try {
-      dbus_proxy.EnableInspector(true);
+      dbus_proxy.EnableInspectorSync(true);
     } catch (err) {
       logger.debug(err);
     }
@@ -71,7 +71,7 @@ export default function Previewer({ builder, onWindowChange }) {
   
   function closeInspector() {
     try {
-      dbus_proxy.EnableInspector(false);
+      dbus_proxy.EnableInspectorSync(false);
     } catch (err) {
       logger.debug(err);
     }
