@@ -334,7 +334,7 @@ export default function Window({ application }) {
       replaceBufferText(buffer, str);
     }
 
-    const { javascript, css, xml, blueprint, vala, panels } =
+    const { javascript, css, xml, blueprint, vala, panels, autorun } =
       readDemo(demo_name);
 
     panel_ui.stop();
@@ -363,8 +363,8 @@ export default function Window({ application }) {
     previewer.useInternal();
 
     // We only automatically run code upon opening a demo
-    // if language is JavaScript and the Code panel is visible
-    if (panel_code.language === "JavaScript" && panel_code.panel.visible) {
+    // if language is JavaScript
+    if (panel_code.language === "JavaScript" && autorun) {
       await runCode();
     } else {
       term_console.clear();

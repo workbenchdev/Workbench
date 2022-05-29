@@ -2,5 +2,6 @@
   "name": "Notifications",
   "category": "user_interface",
   "description": "Desktop notifications are a useful way of communicating with users while they are using other applications.",
-  "panels": ["code", "preview"]
+  "panels": ["code", "preview"],
+  "autorun": true
 }
