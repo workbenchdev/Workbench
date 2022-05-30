@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: re.sonny.Workbench\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-26 23:31+0200\n"
-"PO-Revision-Date: 2022-05-10 03:17+0000\n"
+"PO-Revision-Date: 2022-06-01 08:17+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/workbench/workbench/nb_NO/>\n"
 "Language: nb_NO\n"
@@ -16,239 +16,244 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.12.1\n"
+"X-Generator: Weblate 4.13-dev\n"
 
 #. TRANSLATORS: Don't translate
 #: data/re.sonny.Workbench.desktop:4
 msgid "Workbench"
-msgstr ""
+msgstr "Workbench"
 
 #: data/re.sonny.Workbench.desktop:5 data/re.sonny.Workbench.metainfo.xml:10
 msgid "Learn and prototype with GNOME technologies"
-msgstr ""
+msgstr "Lær deg og lag prototyper med GNOME-teknologi"
 
 #. TRANSLATORS: Don't translate
 #: data/re.sonny.Workbench.desktop:12
 msgid "CSS;JavaScript;GJS;Blueprint;builder;Vala;"
-msgstr ""
+msgstr "CSS;JavaS"
 
 #: data/re.sonny.Workbench.metainfo.xml:14
 msgid "Workbench goal is to let you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a GTK user interface."
-msgstr ""
+msgstr "Målet med Workbench er å la deg eksperimentere med GNOME-teknologi, om så det er første gang du bygger noe eller tester et GTK-brukergrensesnitt."
 
 #: data/re.sonny.Workbench.metainfo.xml:15
 msgid "Among other things, Workbench comes with"
-msgstr ""
+msgstr "Blandt annet kommer Workbench med"
 
 #: data/re.sonny.Workbench.metainfo.xml:17
 msgid "realtime GTK/CSS preview"
-msgstr ""
+msgstr "GTK/CSS-forhåndsvisning i sanntid"
 
 #: data/re.sonny.Workbench.metainfo.xml:18
 msgid "library of examples"
-msgstr ""
+msgstr "et eksempelbibliotek"
 
 #: data/re.sonny.Workbench.metainfo.xml:19
 msgid "JavaScript and Vala runs without any setup"
-msgstr ""
+msgstr "JavaScript og Vala kjører uten oppsett"
 
 #: data/re.sonny.Workbench.metainfo.xml:20
 msgid "XML and Blueprint for describing user interface"
-msgstr ""
+msgstr "CML og Blueprint for beskrivelse av brukergrensesnitt"
 
 #: data/re.sonny.Workbench.metainfo.xml:21
 msgid "syntax highlighting, undo/redo, autosave, session restore"
-msgstr ""
+msgstr "syntaksframheving, angre/gjenta, automatisk lagring, øktgjenopprettelse"
 
 #: data/re.sonny.Workbench.metainfo.xml:22
 msgid "code formatter"
-msgstr ""
+msgstr "kode-formaterer"
 
 #: data/re.sonny.Workbench.metainfo.xml:23
 msgid "console logs"
-msgstr ""
+msgstr "konsoll-logger"
 
 #: data/re.sonny.Workbench.metainfo.xml:36
 msgid "Side by side editors with live preview on the right and console in the bottom"
-msgstr ""
+msgstr "Redigering side-ved-side, med sanntidsforhåndsvising på høyresiden og konsoll på bunnen"
 
 #: data/re.sonny.Workbench.metainfo.xml:43
 msgid "Highlights"
-msgstr ""
+msgstr "Framheving"
 
 #: data/re.sonny.Workbench.metainfo.xml:45
 msgid "Add Blueprint markup syntax for UI"
-msgstr ""
+msgstr "Blueprint-oppmerkningssyntaks lagt til for grensesnittet"
 
 #: data/re.sonny.Workbench.metainfo.xml:46
 msgid "Add Vala programming language for Code"
-msgstr ""
+msgstr "Vala-protrammeringsspråk lagt til for Kode"
 
 #: data/re.sonny.Workbench.metainfo.xml:47
 msgid "Add support for previewing templates"
-msgstr ""
+msgstr "Støtte for forhåndsvisning av maler"
 
 #: data/re.sonny.Workbench.metainfo.xml:48
 msgid "Add support for previewing signal handlers"
-msgstr ""
+msgstr "Tillagt støtte for forhåndsvisning av signalhåndterere"
 
 #: data/re.sonny.Workbench.metainfo.xml:49
 msgid "Include all icons from icon-development-kit"
-msgstr ""
+msgstr "Alle ikoner fra icon-development-kit inkludert"
 
 #: data/re.sonny.Workbench.metainfo.xml:50
 msgid "Improve application design"
-msgstr ""
+msgstr "Forbedret programdesign"
 
 #: data/re.sonny.Workbench.metainfo.xml:51
 #: data/re.sonny.Workbench.metainfo.xml:61
 msgid "Distribute Library examples under CC0-1.0"
-msgstr ""
+msgstr "Bibliotekseksempler distribuert som CC0-1.0"
 
 #: data/re.sonny.Workbench.metainfo.xml:52
 msgid "Respect system preference for color scheme"
-msgstr ""
+msgstr "Systeminnstilling for fargedrakt respektert"
 
 #: data/re.sonny.Workbench.metainfo.xml:53
+#, fuzzy
 msgid "Add proper light/dark color schemes for Console"
-msgstr ""
+msgstr "Lys/mørke fargedrakter lagt til for Konsoll"
 
 #: data/re.sonny.Workbench.metainfo.xml:54
 #: data/re.sonny.Workbench.metainfo.xml:66
 msgid "Fix error when opening file"
-msgstr ""
+msgstr "Fikset feil ved åpning av fil"
 
 #: data/re.sonny.Workbench.metainfo.xml:56
 msgid "Other changes"
-msgstr ""
+msgstr "Andre endringer"
 
 #: data/re.sonny.Workbench.metainfo.xml:58
 msgid "Silence platform tools"
-msgstr ""
+msgstr "Forstumming av plattformsverktøy"
 
 #: data/re.sonny.Workbench.metainfo.xml:59
 msgid "Make Library examples only open relevant panels"
-msgstr ""
+msgstr "Bibliotekseksmpler åpner nå kun relevante paneler"
 
 #: data/re.sonny.Workbench.metainfo.xml:60
+#, fuzzy
 msgid "Always open the Console when opening a Library example"
-msgstr ""
+msgstr "Konsoll alltid åpnet ved åpning av bibliotekseksempel"
 
 #: data/re.sonny.Workbench.metainfo.xml:62
 msgid "Prevent running Code if the panel is not visible"
-msgstr ""
+msgstr "Kode forhindres fra å kjøre hvis panelet ikke er synlig"
 
 #: data/re.sonny.Workbench.metainfo.xml:63
+#, fuzzy
 msgid "Add icons and mnemonics for all buttons"
-msgstr ""
+msgstr "Ikoner og huskebokstaver for alle knapper"
 
 #: data/re.sonny.Workbench.metainfo.xml:64
 msgid "Move Bookmarks to the main menu"
-msgstr ""
+msgstr "Bokmerker flyttet til hovedmenyen"
 
 #: data/re.sonny.Workbench.metainfo.xml:65
+#, fuzzy
 msgid "Enable scrollbar and kinetic scrolling on Console"
-msgstr ""
+msgstr "Konsoll fikk rullefelt og kinetisk rulling"
 
 #: data/re.sonny.Workbench.metainfo.xml:67
 msgid "Improve Library examples"
-msgstr ""
+msgstr "Bibliotekseksempeler forbedret"
 
 #: data/re.sonny.Workbench.metainfo.xml:68
 msgid "Performance optimizations"
-msgstr ""
+msgstr "Ytelsesoptimaliseringer"
 
 #: data/re.sonny.Workbench.metainfo.xml:69
 msgid "Show a placeholder when all panels are invisible"
-msgstr ""
+msgstr "Plassholder vist når alle panelene er synlige"
 
 #: data/re.sonny.Workbench.metainfo.xml:70
 msgid "Crash fixes"
-msgstr ""
+msgstr "Krasjfikser"
 
 #: data/re.sonny.Workbench.metainfo.xml:71
 msgid "Use org.gnome.Sdk runtime"
-msgstr ""
+msgstr "Bruk av org.gnome.Sdk-kjøretidsrutine"
 
 #: data/re.sonny.Workbench.metainfo.xml:78
 msgid "Add a Library of examples"
-msgstr ""
+msgstr "Eksempelbibliotek tillagt"
 
 #: data/re.sonny.Workbench.metainfo.xml:79
 msgid "Add an example of WebSocket client"
-msgstr ""
+msgstr "Eksempel på WebSocket-klient lagt til"
 
 #: data/re.sonny.Workbench.metainfo.xml:80
 msgid "Add an example of toasts"
-msgstr ""
+msgstr "Eksempel på oppsprettsmerknad lagt til"
 
 #: data/re.sonny.Workbench.metainfo.xml:81
 msgid "Add an example of application window"
-msgstr ""
+msgstr "Eksempel på programvindu lagt til"
 
 #: data/re.sonny.Workbench.metainfo.xml:82
 msgid "Add an example of desktop notification"
-msgstr ""
+msgstr "Eksempel på skrivebordsmerknad lagt til"
 
 #: data/re.sonny.Workbench.metainfo.xml:84
 msgid "Add Adwaita Demo, GTK Demo, GTK Widget Factory and GTK Icon Browser"
-msgstr ""
+msgstr "Adwaita-demo, GTK-demo, GTK-miniprogramsfabrikk, og GTK-ikonutforsker lagt til"
 
 #: data/re.sonny.Workbench.metainfo.xml:85
 msgid "The Console can be collapsed by resizing it"
-msgstr ""
+msgstr "Konsollen kan nå sammenfoldes ved å endre dens størrelse"
 
 #: data/re.sonny.Workbench.metainfo.xml:86
 msgid "Prevent system.exit from quitting Workbench"
-msgstr ""
+msgstr "Forhindring av at system.exit avslutter Workbench"
 
 #: data/re.sonny.Workbench.metainfo.xml:87
 msgid "Allow calling GObject.registerClass multiple times"
-msgstr ""
+msgstr "Påkalling av GObject.registerClass flere ganger tillatt"
 
 #: data/re.sonny.Workbench.metainfo.xml:88
 msgid "Prevent crash caused by using non GtkBuildable objects"
-msgstr ""
+msgstr "Forhindring av krasj forårsaket av objekter som ikke er «GtkBuildable»"
 
 #: data/re.sonny.Workbench.metainfo.xml:89
 msgid "Allow using DBus and Gio.Application"
-msgstr ""
+msgstr "Bruk av DBus og Gio.Application tillatt"
 
 #: data/re.sonny.Workbench.metainfo.xml:90
 msgid "Allow using network"
-msgstr ""
+msgstr "Bruk av nettverk tillatt"
 
 #: data/re.sonny.Workbench.metainfo.xml:91
 msgid "Enable GtkWindow objects preview"
-msgstr ""
+msgstr "Forhåndsvising av GtkWindow-objekter"
 
 #: data/re.sonny.Workbench.metainfo.xml:98
+#, fuzzy
 msgid "Take a png screenshot of the preview"
-msgstr ""
+msgstr "Mulighet til å lage PNG-skjermavbildning av forhåndsvisningen"
 
 #: data/re.sonny.Workbench.metainfo.xml:99
 msgid "The console is now resizable"
-msgstr ""
+msgstr "Det er nå mulig å endre størrelsen på konsollen"
 
 #: data/re.sonny.Workbench.metainfo.xml:100
 msgid "Redesign the dark/light mode switcher"
-msgstr ""
+msgstr "Bytting til lys/mørk drakt redesignet"
 
 #: data/re.sonny.Workbench.metainfo.xml:101
 msgid "Show platform and dependencies in about dialog"
-msgstr ""
+msgstr "Plattform og avhengigheter vis i «Om»"
 
 #: data/re.sonny.Workbench.metainfo.xml:102
 msgid "Update to GNOME platform 42"
-msgstr ""
+msgstr "Oppgradering til GNOME-plattform 42"
 
 #: data/re.sonny.Workbench.metainfo.xml:103
 msgid "Various fixes"
-msgstr ""
+msgstr "Forskjellige feilfikser"
 
 #: data/re.sonny.Workbench.metainfo.xml:109
 msgid "This is the first release of Workbench. We hope you like it."
-msgstr ""
+msgstr "Første utgave av Workbench. Håper du liker det."
 
 #: src/Library/Library.blp:7
 msgid "Library"
@@ -261,26 +266,29 @@ msgstr "Tastatursnarveier"
 
 #: src/Library/demos/Application window/main.blp:55
 msgid "About My App"
-msgstr ""
+msgstr "Om programmet"
 
 #: src/about.js:31
 msgid ""
 "Learn and prototype with\n"
 "GNOME technologies"
 msgstr ""
+"Lær om og lag prototyper av\n"
+"GNOME-teknologi"
 
 #. TRANSLATORS: eg. 'Translator Name <your.email@domain.com>' or 'Translator Name https://website.example'
 #: src/about.js:40
 msgid "translator-credits"
-msgstr ""
+msgstr "Allan Nordhøy <epost@anotheragency.no>"
 
 #: src/actions.js:51 src/shortcutsWindow.blp:16
 msgid "Import File"
-msgstr ""
+msgstr "Importer fil"
 
 #: src/actions.js:133
+#, fuzzy
 msgid "All supported"
-msgstr ""
+msgstr "Alle støttes"
 
 #: src/shortcutsWindow.blp:11
 #, fuzzy
@@ -302,19 +310,19 @@ msgstr "Konsoll"
 
 #: src/shortcutsWindow.blp:31
 msgid "Clear Console"
-msgstr ""
+msgstr "Tøm konsoll"
 
 #: src/shortcutsWindow.blp:37
 msgid "Inspector"
-msgstr ""
+msgstr "Inspektør"
 
 #: src/shortcutsWindow.blp:41
 msgid "Undo"
-msgstr ""
+msgstr "Angre"
 
 #: src/shortcutsWindow.blp:45
 msgid "Redo"
-msgstr ""
+msgstr "Gjenta"
 
 #: src/shortcutsWindow.blp:53
 msgid "Quit"
@@ -327,8 +335,9 @@ msgid "_Library"
 msgstr "Bibliotek"
 
 #: src/window.blp:19
+#, fuzzy
 msgid "Open Library of Demos and Examples (Ctrl+Shift+O)"
-msgstr ""
+msgstr "Åpne bibliotek med demoer og eksempler (Ctrl+Shift+O)"
 
 #: src/window.blp:37
 #, fuzzy
@@ -356,31 +365,31 @@ msgstr "Forhåndsvis"
 
 #: src/window.blp:109
 msgid "sun-symbolic"
-msgstr ""
+msgstr "sun-symbolic"
 
 #: src/window.blp:110 src/window.blp:113
 msgid "Use Light mode"
-msgstr ""
+msgstr "Ifør lys drakt"
 
 #: src/window.blp:118
 msgid "workbench-moon-rounded-symbolic"
-msgstr ""
+msgstr "workbench-moon-rounded-symbolic"
 
 #: src/window.blp:119 src/window.blp:122
 msgid "Use Dark mode"
-msgstr ""
+msgstr "Ifør mørk drakt"
 
 #: src/window.blp:149
 msgid "<b>Code</b>"
-msgstr ""
+msgstr "<b>Kode</b>"
 
 #: src/window.blp:165 src/window.blp:321
 msgid "Switch document"
-msgstr ""
+msgstr "Bytt dokument"
 
 #: src/window.blp:173
 msgid "_Run"
-msgstr ""
+msgstr "_Kjør"
 
 #: src/window.blp:177
 msgid "Run (Ctrl+⏎)"
@@ -388,47 +397,48 @@ msgstr "Kjør (Ctrl+⏎)"
 
 #: src/window.blp:248
 msgid "<b>Style CSS</b>"
-msgstr ""
+msgstr "<b>CSS-stil</b>"
 
 #: src/window.blp:293
 msgid "<b>UI</b>"
-msgstr ""
+msgstr "<b>Grensesnitt</b>"
 
 #: src/window.blp:333 src/window.blp:335
 msgid "Convert to XML"
-msgstr ""
+msgstr "Konverter til XML"
 
 #: src/window.blp:344 src/window.blp:346
 msgid "Convert to Blueprint"
-msgstr ""
+msgstr "Konverter til Blueprint"
 
 #: src/window.blp:420
-#, fuzzy
-#| msgid "Preview"
 msgid "<b>Preview</b>"
-msgstr "Forhåndsvis"
+msgstr "<b>Forhåndsvis</b>"
 
 #: src/window.blp:428 src/window.blp:430
 msgid "Take Screenshot of Preview"
-msgstr ""
+msgstr "Utfør skjermavbildning av forhåndsvisning"
 
 #: src/window.blp:460 src/window.blp:478
 msgid "Windowed Preview"
-msgstr ""
+msgstr "Vindusbasert forhåndsvisning"
 
 #: src/window.blp:461 src/window.blp:479
+#, fuzzy
 msgid ""
 "This interface can only be previewed as a separate window.\n"
 "We recommend using “Always on Top”"
 msgstr ""
+"Dette grensesnittet kan kun forhåndsvises som eget vindu.\n"
+"«Alltid øverst» anbefales."
 
 #: src/window.blp:468
 msgid "Show Preview Window"
-msgstr ""
+msgstr "Vis forhåndsvisningsvindu"
 
 #: src/window.blp:486
 msgid "Close Preview Window"
-msgstr ""
+msgstr "Lukk forhåndsvisningsvindu"
 
 #: src/window.blp:520
 #, fuzzy
@@ -442,15 +452,15 @@ msgstr "Vis loggføring (Ctrl+Shift+K)"
 
 #: src/window.blp:530
 msgid "_Inspector"
-msgstr ""
+msgstr "_Inspektør"
 
 #: src/window.blp:533
 msgid "Open GTK Inspector (Ctrl+Shift+I)"
-msgstr ""
+msgstr "Åpne GTK-inspektør (Ctrl+Shift+I)"
 
 #: src/window.blp:544
 msgid "Cl_ear"
-msgstr ""
+msgstr "T_øm"
 
 #: src/window.blp:548
 msgid "Clear console (Ctrl+K)"
@@ -458,11 +468,11 @@ msgstr "Tøm konsoll (Ctrl+K)"
 
 #: src/window.blp:570
 msgid "Import File…"
-msgstr ""
+msgstr "Importer fil …"
 
 #: src/window.blp:575
 msgid "Bookmarks"
-msgstr ""
+msgstr "Bokmerker"
 
 #: src/window.blp:577
 msgid "Learn"
@@ -470,23 +480,23 @@ msgstr "Lær mer"
 
 #: src/window.blp:580
 msgid "Developer Documentation"
-msgstr ""
+msgstr "Utviklerdokumentasjon"
 
 #: src/window.blp:587
 msgid "Human Interface Guidelines"
-msgstr ""
+msgstr "Retningslinjer for menneskelige grensesnitt"
 
 #: src/window.blp:593
 msgid "JavaScript"
-msgstr ""
+msgstr "JavaScript"
 
 #: src/window.blp:599
 msgid "Vala"
-msgstr ""
+msgstr "Vala"
 
 #: src/window.blp:605
 msgid "Blueprint"
-msgstr ""
+msgstr "Blueprint"
 
 #: src/window.blp:612
 msgid "Get help"
@@ -502,27 +512,28 @@ msgstr "Matrix"
 
 #: src/window.blp:629
 msgid "Platform Tools"
-msgstr ""
+msgstr "Plattformsverktøy"
 
 #: src/window.blp:632
 msgid "Adwaita Demo"
-msgstr ""
+msgstr "Adwaita-demo"
 
 #: src/window.blp:638
 msgid "GTK Demo"
-msgstr ""
+msgstr "GTK-demo"
 
 #: src/window.blp:644
 msgid "GTK Widget Factory"
-msgstr ""
+msgstr "GTK-miniprogramsfabrikk"
 
 #: src/window.blp:657
 msgid "About Workbench"
-msgstr ""
+msgstr "Om Workbench"
 
 #: src/window.js:396
+#, fuzzy
 msgid "Are you sure you want to discard your changes?"
-msgstr ""
+msgstr "Forkast endringene dine?"
 
 #~ msgid "Clear"
 #~ msgstr "Tøm"
