@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: re.sonny.Workbench\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-26 23:31+0200\n"
-"PO-Revision-Date: 2022-05-20 13:05+0000\n"
-"Last-Translator: Christoph Hess <christoph3000@gmail.com>\n"
+"PO-Revision-Date: 2022-05-31 07:48+0000\n"
+"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/workbench/workbench/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -286,7 +286,7 @@ msgstr ""
 #. TRANSLATORS: eg. 'Translator Name <your.email@domain.com>' or 'Translator Name https://website.example'
 #: src/about.js:40
 msgid "translator-credits"
-msgstr "Übersetzer-Credits"
+msgstr "jonasloos123"
 
 #: src/actions.js:51 src/shortcutsWindow.blp:16
 msgid "Import File"
@@ -406,7 +406,7 @@ msgstr "Ausführen (Strg+⏎)"
 #, fuzzy
 #| msgid "Style - CSS"
 msgid "<b>Style CSS</b>"
-msgstr "Stil - CSS"
+msgstr "<b>CSS-Stil</b>"
 
 #: src/window.blp:293
 msgid "<b>UI</b>"
@@ -421,10 +421,8 @@ msgid "Convert to Blueprint"
 msgstr ""
 
 #: src/window.blp:420
-#, fuzzy
-#| msgid "Preview"
 msgid "<b>Preview</b>"
-msgstr "Vorschau"
+msgstr "<b>Vorschau</b>"
 
 #: src/window.blp:428 src/window.blp:430
 msgid "Take Screenshot of Preview"
