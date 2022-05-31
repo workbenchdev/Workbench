@@ -5,7 +5,7 @@ import DBusPreviewer from "./DBusPreviewer.js";
 
 export default function Previewer({ builder, onWindowChange }) {
   const stack = builder.get_object("stack_preview");
-
+/*
   (function start_process() {
     Gio.Subprocess.new(
       ["workbench-vala-previewer"],
@@ -19,7 +19,7 @@ export default function Previewer({ builder, onWindowChange }) {
       start_process();
     });
   })();
-
+*/
   const dbus_proxy = DBusPreviewer();
   dbus_proxy.connectSignal("WindowOpen", (proxy, name_owner, [open]) => {
     onWindowChange(open);
