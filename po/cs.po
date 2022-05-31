@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: re.sonny.Workbench\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-26 23:31+0200\n"
-"PO-Revision-Date: 2022-05-20 13:05+0000\n"
-"Last-Translator: Vojtěch Perník <translations@pervoj.cz>\n"
+"PO-Revision-Date: 2022-06-01 08:17+0000\n"
+"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/workbench/workbench/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
@@ -406,7 +406,7 @@ msgstr "Spustit (Ctrl+⏎)"
 #, fuzzy
 #| msgid "Style - CSS"
 msgid "<b>Style CSS</b>"
-msgstr "Styl - CSS"
+msgstr "<b>Styl CSS</b>"
 
 #: src/window.blp:293
 msgid "<b>UI</b>"
@@ -421,10 +421,8 @@ msgid "Convert to Blueprint"
 msgstr ""
 
 #: src/window.blp:420
-#, fuzzy
-#| msgid "Preview"
 msgid "<b>Preview</b>"
-msgstr "Náhled"
+msgstr "<b>Náhled</b>"
 
 #: src/window.blp:428 src/window.blp:430
 msgid "Take Screenshot of Preview"
