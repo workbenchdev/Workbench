@@ -2,7 +2,7 @@ import Gio from "gi://Gio";
 
 const ifaceXml = `
 <node>
-  <interface name="re.sonny.Workbench.vala_previewer">
+  <interface name="re.sonny.WorkbenchPreviewer">
     <method name="UpdateUi">
       <arg type="s" name="content" direction="in"/>
       <arg type="s" name="target_id" direction="in"/>
@@ -33,8 +33,8 @@ const WorkbenchProxy = Gio.DBusProxy.makeProxyWrapper(ifaceXml);
 export default function DBusPreviewer() {
   const proxy = WorkbenchProxy(
     Gio.DBus.session,
-    "re.sonny.Workbench.vala_previewer",
-    "/re/sonny/workbench/vala_previewer/interface"
+    "re.sonny.WorkbenchPreviewer",
+    "/re/sonny/workbenchpreviewer/interface"
   );
 
   return proxy;

@@ -16,7 +16,7 @@
     "--socket=session-bus",
     "--share=network",
     "--own-name=re.sonny.Workbench",
-    "--own-name=re.sonny.Workbench.vala_previewer"
+    "--own-name=re.sonny.WorkbenchPreviewer"
   ],
   "x-run-args": [],
   "modules": [

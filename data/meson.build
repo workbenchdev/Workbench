@@ -8,8 +8,8 @@ desktop_file = i18n.merge_file(
 )
 
 previewer_desktop_file = i18n.merge_file(
-  input: 're.sonny.Workbench.vala_previewer.desktop',
-  output: 're.sonny.Workbench.vala_previewer.desktop',
+  input: 're.sonny.WorkbenchPreviewer.desktop',
+  output: 're.sonny.WorkbenchPreviewer.desktop',
   type: 'desktop',
   po_dir: '../po',
   install: true,
@@ -51,8 +51,8 @@ configure_file(
 )
 
 configure_file(
-  input: 're.sonny.Workbench.vala_previewer.service',
-  output: 're.sonny.Workbench.vala_previewer.service',
+  input: 're.sonny.WorkbenchPreviewer.service',
+  output: 're.sonny.WorkbenchPreviewer.service',
   configuration: service_conf,
   install_dir: dbus_service_dir
 )

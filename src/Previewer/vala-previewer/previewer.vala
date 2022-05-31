@@ -1,6 +1,6 @@
 namespace Workbench {
 
-  [DBus (name="re.sonny.Workbench.vala_previewer")]
+  [DBus (name="re.sonny.WorkbenchPreviewer")]
   public class Previewer : Object {
     construct {
       this.window = new Gtk.ApplicationWindow (Workbench.app) {
@@ -164,12 +164,12 @@ namespace Workbench {
   private Adw.Application app;
 
   void main (string[] args) {
-    Workbench.app = new Adw.Application ("re.sonny.Workbench.vala_previewer", ApplicationFlags.FLAGS_NONE);
+    Workbench.app = new Adw.Application ("re.sonny.WorkbenchPreviewer", ApplicationFlags.FLAGS_NONE);
     app.activate.connect(() => {
       var mainloop = new MainLoop ();
       DBusConnection connection = app.get_dbus_connection ();
       try {
-        connection.register_object ("/re/sonny/workbench/vala_previewer/interface", new Previewer ());
+        connection.register_object ("/re/sonny/workbenchpreviewer/interface", new Previewer ());
       } catch (IOError e) {
         stderr.printf ("Could not register service.\n");
       }
