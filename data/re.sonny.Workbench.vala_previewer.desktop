@@ -1,6 +1,6 @@
 [Desktop Entry]
 # TRANSLATORS: Don't translate
-Name=Workbench
+Name=Workbench Previewer
 Comment=Learn and prototype with GNOME technologies
 Exec=workbench-vala-previewer
 Terminal=false
