@@ -56,6 +56,16 @@ export default function Window({ application }) {
 
   const { term_console } = Devtools({ application, window, builder });
 
+  const toast_overlay = builder.get_object("toast_overlay");
+  const undo_action = new Gio.SimpleAction({
+    name: "undo",
+    parameter_type: new GLib.VariantType("s"),
+  });
+  undo_action.connect("activate", (self, target) => {
+    print("undo");
+  });
+  window.add_action(undo_action);
+
   let compiler = null;
 
   const placeholders = readDemo("Welcome");
@@ -391,14 +401,19 @@ export default function Window({ application }) {
 
   async function confirmDiscard() {
     if (!settings.get_boolean("has-edits")) return true;
-    const agreed = await confirm({
+    /*const agreed = await confirm({
       transient_for: application.get_active_window(),
       text: _("Are you sure you want to discard your changes?"),
+    });*/
+    const toast = new Adw.Toast({
+      title: "Message sent",
+      button_label: "Undo",
+      action_name: "win.undo",
+      action_target: GLib.Variant.new_string(""),
     });
-    if (agreed) {
-      settings.set_boolean("has-edits", false);
-    }
-    return agreed;
+    toast_overlay.add_toast(toast);
+    settings.set_boolean("has-edits", false);
+    return true;
   }
 
   const text_decoder = new TextDecoder();
