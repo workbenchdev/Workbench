@@ -15,23 +15,6 @@ public void main () {
   });
 
   var button_advanced = workbench.builder.get_object("button_advanced") as Gtk.Button;
-  button_advanced.clicked.connect(() => {
-    string message_id = "42";
-    var advanced_toast = new Adw.Toast ("Message sent") {
-      button_label = "Undo",
-      action_name = "win.undo",
-      action_target = new GLib.Variant.string (message_id),
-      priority = Adw.ToastPriority.HIGH,
-    };
-    overlay.add_toast (advanced_toast);
-  });
-
-  var action_console = new SimpleAction ("undo", new GLib.VariantType ("s"));
-  action_console.activate.connect ((self, target) => {
-      string val = target.get_string ();
-      stdout.printf ("undo %s", val);
-  });
-
-  workbench.application.add_action (action_console);
+  button_advanced.sensitive = false;
 }
 
