@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: re.sonny.Workbench\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-26 23:31+0200\n"
-"PO-Revision-Date: 2022-06-01 08:17+0000\n"
-"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
+"PO-Revision-Date: 2022-06-03 18:18+0000\n"
+"Last-Translator: Vojtěch Perník <translations@pervoj.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/workbench/workbench/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
@@ -29,16 +29,12 @@ msgstr "Učte se a prototypujte s technologiemi GNOME"
 
 #. TRANSLATORS: Don't translate
 #: data/re.sonny.Workbench.desktop:12
-#, fuzzy
-#| msgid "CSS;JavaScript;GJS;"
 msgid "CSS;JavaScript;GJS;Blueprint;builder;Vala;"
-msgstr "CSS;JavaScript;GJS;"
+msgstr "CSS;JavaScript;GJS;Blueprint;builder;Vala;"
 
 #: data/re.sonny.Workbench.metainfo.xml:14
-#, fuzzy
-#| msgid "Workbench goal is to let you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a custom GTK widget."
 msgid "Workbench goal is to let you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a GTK user interface."
-msgstr "Cíl aplikace Workbench je pomoci vám experimentovat s technologiemi GNOME, aniž by záleželo na tom, zda se s nimi setkáváte poprvé, nebo zda vytváříte a testujete vlastní GTK widget."
+msgstr "Cíl aplikace Workbench je pomoci vám experimentovat s technologiemi GNOME, aniž by záleželo na tom, zda se s nimi setkáváte poprvé, nebo zda vytváříte a testujete uživatelské rozhraní GTK."
 
 #: data/re.sonny.Workbench.metainfo.xml:15
 msgid "Among other things, Workbench comes with"
@@ -54,17 +50,15 @@ msgstr "knihovna příkladů"
 
 #: data/re.sonny.Workbench.metainfo.xml:19
 msgid "JavaScript and Vala runs without any setup"
-msgstr ""
+msgstr "JavaScript a Vala fungují bez jakéhokoli nastavení"
 
 #: data/re.sonny.Workbench.metainfo.xml:20
 msgid "XML and Blueprint for describing user interface"
-msgstr ""
+msgstr "XML a Blueprint pro popis uživatelského rozhraní"
 
 #: data/re.sonny.Workbench.metainfo.xml:21
-#, fuzzy
-#| msgid "Syntax highlighting, undo/redo, autosave"
 msgid "syntax highlighting, undo/redo, autosave, session restore"
-msgstr "Zvýrazňování syntaxe, funkce zpět/znovu, automatické ukládání"
+msgstr "Zvýrazňování syntaxe, funkce zpět/znovu, automatické ukládání, obnovení předchozího stavu"
 
 #: data/re.sonny.Workbench.metainfo.xml:22
 msgid "code formatter"
@@ -80,53 +74,53 @@ msgstr "Vedle sebe umístěné editory s živým náhledem vpravo a konzolí dol
 
 #: data/re.sonny.Workbench.metainfo.xml:43
 msgid "Highlights"
-msgstr ""
+msgstr "Zvýrazňování"
 
 #: data/re.sonny.Workbench.metainfo.xml:45
 msgid "Add Blueprint markup syntax for UI"
-msgstr ""
+msgstr "Přidána podpora syntaxe Blueprintu pro UI"
 
 #: data/re.sonny.Workbench.metainfo.xml:46
 msgid "Add Vala programming language for Code"
-msgstr ""
+msgstr "Přidána podpora pro jazyk Vala"
 
 #: data/re.sonny.Workbench.metainfo.xml:47
 msgid "Add support for previewing templates"
-msgstr ""
+msgstr "Přidána podpora pro náhledy šablon"
 
 #: data/re.sonny.Workbench.metainfo.xml:48
 msgid "Add support for previewing signal handlers"
-msgstr ""
+msgstr "Přidána podpora pro obsluhy signálů"
 
 #: data/re.sonny.Workbench.metainfo.xml:49
 msgid "Include all icons from icon-development-kit"
-msgstr ""
+msgstr "Zahrnuty všechny ikony z icon-development-kit"
 
 #: data/re.sonny.Workbench.metainfo.xml:50
 msgid "Improve application design"
-msgstr ""
+msgstr "Vylepšen design aplikace"
 
 #: data/re.sonny.Workbench.metainfo.xml:51
 #: data/re.sonny.Workbench.metainfo.xml:61
 msgid "Distribute Library examples under CC0-1.0"
-msgstr ""
+msgstr "Knihovna příkladů je nyní pod licencí CC0-1.0"
 
 #: data/re.sonny.Workbench.metainfo.xml:52
 msgid "Respect system preference for color scheme"
-msgstr ""
+msgstr "Barevné schéma podle systému"
 
 #: data/re.sonny.Workbench.metainfo.xml:53
 msgid "Add proper light/dark color schemes for Console"
-msgstr ""
+msgstr "Přidána světlá a tmavá barevná schémata pro konzoli"
 
 #: data/re.sonny.Workbench.metainfo.xml:54
 #: data/re.sonny.Workbench.metainfo.xml:66
 msgid "Fix error when opening file"
-msgstr ""
+msgstr "Opravena chyba při otevírání souboru"
 
 #: data/re.sonny.Workbench.metainfo.xml:56
 msgid "Other changes"
-msgstr ""
+msgstr "Další změny"
 
 #: data/re.sonny.Workbench.metainfo.xml:58
 #, fuzzy
