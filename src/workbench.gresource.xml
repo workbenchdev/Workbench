@@ -13,10 +13,12 @@
     <file>Library/demos/Toasts/main.json</file>
     <file>Library/demos/Toasts/main.blp</file>
     <file>Library/demos/Toasts/main.ui</file>
+    <file>Library/demos/Toasts/main.vala</file>
     <file>Library/demos/WebSocket client/main.js</file>
     <file>Library/demos/WebSocket client/main.json</file>
     <file>Library/demos/WebSocket client/main.blp</file>
     <file>Library/demos/WebSocket client/main.ui</file>
+    <file>Library/demos/WebSocket client/main.vala</file>
     <file>Library/demos/Welcome/main.css</file>
     <file>Library/demos/Welcome/main.js</file>
     <file>Library/demos/Welcome/main.json</file>
