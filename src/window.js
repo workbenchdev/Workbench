@@ -193,7 +193,7 @@ export default function Window({ application }) {
   settings.connect("changed", updatePanel);
 
   button_inspector.connect("clicked", () => {
-    Gtk.Window.set_interactive_debugging(true);
+    previewer.openInspector();
   });
 
   function format(buffer, formatter) {

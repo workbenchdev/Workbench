@@ -189,6 +189,7 @@ export default function Previewer({
     }
 
     current?.stop();
+    current?.closeInspector();
     current = previewer;
 
     handler_id_button_open = button_open.connect("clicked", () => {
@@ -220,6 +221,9 @@ export default function Previewer({
     },
     close() {
       current.close();
+    },
+    openInspector() {
+      current.openInspector();
     },
     useExternal,
     useInternal,

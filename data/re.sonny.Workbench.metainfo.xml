@@ -32,8 +32,16 @@
       <image>
         https://raw.githubusercontent.com/sonnyp/Workbench/main/data/screenshot.png
       </image>
-      <caption
-      >Side by side editors with live preview on the right and console in the bottom</caption>
+    </screenshot>
+    <screenshot>
+      <image>
+        https://raw.githubusercontent.com/sonnyp/Workbench/main/data/screenshot-code.png
+      </image>
+    </screenshot>
+    <screenshot>
+      <image>
+        https://raw.githubusercontent.com/sonnyp/Workbench/main/data/screenshot-library.png
+      </image>
     </screenshot>
   </screenshots>
   <content_rating type="oars-1.1" />
