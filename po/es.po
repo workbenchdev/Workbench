@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-26 23:31+0200\n"
 "PO-Revision-Date: 2022-06-05 09:01+0000\n"
-"Last-Translator: KJ <jjk192@gmail.com>\n"
+"Last-Translator: Óscar Fernández Díaz <oscfdezdz@tuta.io>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/workbench/workbench/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -192,7 +192,7 @@ msgstr "Agregar un ejemplo de notificación de escritorio"
 
 #: data/re.sonny.Workbench.metainfo.xml:84
 msgid "Add Adwaita Demo, GTK Demo, GTK Widget Factory and GTK Icon Browser"
-msgstr "Agregar una Demo de Adwaita, demo de GTK, GTK Widget Factory y GTK Icon Browser"
+msgstr "Agregar Adwaita Demo, GTK Demo, GTK Widget Factory y GTK Icon Browser"
 
 #: data/re.sonny.Workbench.metainfo.xml:85
 msgid "The Console can be collapsed by resizing it"
