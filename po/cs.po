@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: re.sonny.Workbench\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-08 17:31+0200\n"
-"PO-Revision-Date: 2022-05-20 13:05+0000\n"
+"POT-Creation-Date: 2022-05-26 23:31+0200\n"
+"PO-Revision-Date: 2022-06-03 18:18+0000\n"
 "Last-Translator: Vojtěch Perník <translations@pervoj.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/workbench/workbench/cs/>\n"
 "Language: cs\n"
@@ -29,12 +29,12 @@ msgstr "Učte se a prototypujte s technologiemi GNOME"
 
 #. TRANSLATORS: Don't translate
 #: data/re.sonny.Workbench.desktop:12
-msgid "CSS;JavaScript;GJS;"
-msgstr "CSS;JavaScript;GJS;"
+msgid "CSS;JavaScript;GJS;Blueprint;builder;Vala;"
+msgstr "CSS;JavaScript;GJS;Blueprint;builder;Vala;"
 
 #: data/re.sonny.Workbench.metainfo.xml:14
-msgid "Workbench goal is to let you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a custom GTK widget."
-msgstr "Cíl aplikace Workbench je pomoci vám experimentovat s technologiemi GNOME, aniž by záleželo na tom, zda se s nimi setkáváte poprvé, nebo zda vytváříte a testujete vlastní GTK widget."
+msgid "Workbench goal is to let you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a GTK user interface."
+msgstr "Cíl aplikace Workbench je pomoci vám experimentovat s technologiemi GNOME, aniž by záleželo na tom, zda se s nimi setkáváte poprvé, nebo zda vytváříte a testujete uživatelské rozhraní GTK."
 
 #: data/re.sonny.Workbench.metainfo.xml:15
 msgid "Among other things, Workbench comes with"
@@ -45,110 +45,231 @@ msgid "realtime GTK/CSS preview"
 msgstr "náhled GTK/CSS v reálném čase"
 
 #: data/re.sonny.Workbench.metainfo.xml:18
-msgid "JavaScript for quick and easy scripting"
-msgstr "JavaScript pro rychlé a jednoduché psaní scriptů"
-
-#: data/re.sonny.Workbench.metainfo.xml:19
-msgid "Syntax highlighting, undo/redo, autosave"
-msgstr "Zvýrazňování syntaxe, funkce zpět/znovu, automatické ukládání"
-
-#: data/re.sonny.Workbench.metainfo.xml:20
-msgid "code formatter"
-msgstr "formátování kódu"
-
-#: data/re.sonny.Workbench.metainfo.xml:21
-msgid "console logs"
-msgstr "vypisování do konzole"
-
-#: data/re.sonny.Workbench.metainfo.xml:22
 msgid "library of examples"
 msgstr "knihovna příkladů"
 
-#: data/re.sonny.Workbench.metainfo.xml:35
+#: data/re.sonny.Workbench.metainfo.xml:19
+msgid "JavaScript and Vala runs without any setup"
+msgstr "JavaScript a Vala fungují bez jakéhokoli nastavení"
+
+#: data/re.sonny.Workbench.metainfo.xml:20
+msgid "XML and Blueprint for describing user interface"
+msgstr "XML a Blueprint pro popis uživatelského rozhraní"
+
+#: data/re.sonny.Workbench.metainfo.xml:21
+msgid "syntax highlighting, undo/redo, autosave, session restore"
+msgstr "Zvýrazňování syntaxe, funkce zpět/znovu, automatické ukládání, obnovení předchozího stavu"
+
+#: data/re.sonny.Workbench.metainfo.xml:22
+msgid "code formatter"
+msgstr "formátování kódu"
+
+#: data/re.sonny.Workbench.metainfo.xml:23
+msgid "console logs"
+msgstr "vypisování do konzole"
+
+#: data/re.sonny.Workbench.metainfo.xml:36
 msgid "Side by side editors with live preview on the right and console in the bottom"
 msgstr "Vedle sebe umístěné editory s živým náhledem vpravo a konzolí dole"
 
 #: data/re.sonny.Workbench.metainfo.xml:43
+msgid "Highlights"
+msgstr "Zvýrazňování"
+
+#: data/re.sonny.Workbench.metainfo.xml:45
+msgid "Add Blueprint markup syntax for UI"
+msgstr "Přidána podpora syntaxe Blueprintu pro UI"
+
+#: data/re.sonny.Workbench.metainfo.xml:46
+msgid "Add Vala programming language for Code"
+msgstr "Přidána podpora pro jazyk Vala"
+
+#: data/re.sonny.Workbench.metainfo.xml:47
+msgid "Add support for previewing templates"
+msgstr "Přidána podpora pro náhledy šablon"
+
+#: data/re.sonny.Workbench.metainfo.xml:48
+msgid "Add support for previewing signal handlers"
+msgstr "Přidána podpora pro obsluhy signálů"
+
+#: data/re.sonny.Workbench.metainfo.xml:49
+msgid "Include all icons from icon-development-kit"
+msgstr "Zahrnuty všechny ikony z icon-development-kit"
+
+#: data/re.sonny.Workbench.metainfo.xml:50
+msgid "Improve application design"
+msgstr "Vylepšen design aplikace"
+
+#: data/re.sonny.Workbench.metainfo.xml:51
+#: data/re.sonny.Workbench.metainfo.xml:61
+msgid "Distribute Library examples under CC0-1.0"
+msgstr "Knihovna příkladů je nyní pod licencí CC0-1.0"
+
+#: data/re.sonny.Workbench.metainfo.xml:52
+msgid "Respect system preference for color scheme"
+msgstr "Barevné schéma podle systému"
+
+#: data/re.sonny.Workbench.metainfo.xml:53
+msgid "Add proper light/dark color schemes for Console"
+msgstr "Přidána světlá a tmavá barevná schémata pro konzoli"
+
+#: data/re.sonny.Workbench.metainfo.xml:54
+#: data/re.sonny.Workbench.metainfo.xml:66
+msgid "Fix error when opening file"
+msgstr "Opravena chyba při otevírání souboru"
+
+#: data/re.sonny.Workbench.metainfo.xml:56
+msgid "Other changes"
+msgstr "Další změny"
+
+#: data/re.sonny.Workbench.metainfo.xml:58
+#, fuzzy
+#| msgid "Platform Tools"
+msgid "Silence platform tools"
+msgstr "Nástroje platformy"
+
+#: data/re.sonny.Workbench.metainfo.xml:59
+msgid "Make Library examples only open relevant panels"
+msgstr ""
+
+#: data/re.sonny.Workbench.metainfo.xml:60
+msgid "Always open the Console when opening a Library example"
+msgstr ""
+
+#: data/re.sonny.Workbench.metainfo.xml:62
+msgid "Prevent running Code if the panel is not visible"
+msgstr ""
+
+#: data/re.sonny.Workbench.metainfo.xml:63
+msgid "Add icons and mnemonics for all buttons"
+msgstr ""
+
+#: data/re.sonny.Workbench.metainfo.xml:64
+msgid "Move Bookmarks to the main menu"
+msgstr ""
+
+#: data/re.sonny.Workbench.metainfo.xml:65
+msgid "Enable scrollbar and kinetic scrolling on Console"
+msgstr ""
+
+#: data/re.sonny.Workbench.metainfo.xml:67
+#, fuzzy
+#| msgid "library of examples"
+msgid "Improve Library examples"
+msgstr "knihovna příkladů"
+
+#: data/re.sonny.Workbench.metainfo.xml:68
+msgid "Performance optimizations"
+msgstr ""
+
+#: data/re.sonny.Workbench.metainfo.xml:69
+msgid "Show a placeholder when all panels are invisible"
+msgstr ""
+
+#: data/re.sonny.Workbench.metainfo.xml:70
+#, fuzzy
+#| msgid "Various fixes"
+msgid "Crash fixes"
+msgstr "Různé opravy"
+
+#: data/re.sonny.Workbench.metainfo.xml:71
+msgid "Use org.gnome.Sdk runtime"
+msgstr ""
+
+#: data/re.sonny.Workbench.metainfo.xml:78
 msgid "Add a Library of examples"
 msgstr "Přidána knihovna příkladů"
 
-#: data/re.sonny.Workbench.metainfo.xml:44
+#: data/re.sonny.Workbench.metainfo.xml:79
 msgid "Add an example of WebSocket client"
 msgstr "Přidán příklad WebSocketového klienta"
 
-#: data/re.sonny.Workbench.metainfo.xml:45
+#: data/re.sonny.Workbench.metainfo.xml:80
 msgid "Add an example of toasts"
 msgstr "Přidán příklad toast zpráv"
 
-#: data/re.sonny.Workbench.metainfo.xml:46
+#: data/re.sonny.Workbench.metainfo.xml:81
 msgid "Add an example of application window"
 msgstr "Přidán příklad okna aplikace"
 
-#: data/re.sonny.Workbench.metainfo.xml:47
+#: data/re.sonny.Workbench.metainfo.xml:82
 msgid "Add an example of desktop notification"
 msgstr "Přidán příklad oznámení na ploše"
 
-#: data/re.sonny.Workbench.metainfo.xml:49
+#: data/re.sonny.Workbench.metainfo.xml:84
 msgid "Add Adwaita Demo, GTK Demo, GTK Widget Factory and GTK Icon Browser"
 msgstr "Přidáno demo Adwaity a GTK, GTK Widget Factory a prohlížeč ikon GTK"
 
-#: data/re.sonny.Workbench.metainfo.xml:50
+#: data/re.sonny.Workbench.metainfo.xml:85
 msgid "The Console can be collapsed by resizing it"
 msgstr "Konzoli lze zavřít změnou její velikosti"
 
-#: data/re.sonny.Workbench.metainfo.xml:51
+#: data/re.sonny.Workbench.metainfo.xml:86
 msgid "Prevent system.exit from quitting Workbench"
 msgstr "Zabráněno system.exit při ukončování Workbench"
 
-#: data/re.sonny.Workbench.metainfo.xml:52
+#: data/re.sonny.Workbench.metainfo.xml:87
 msgid "Allow calling GObject.registerClass multiple times"
 msgstr "Povoleno volání GObject.registerClass vícekrát"
 
-#: data/re.sonny.Workbench.metainfo.xml:53
+#: data/re.sonny.Workbench.metainfo.xml:88
 msgid "Prevent crash caused by using non GtkBuildable objects"
 msgstr "Zabráněno pádům kvůli objektům, které nejsou GtkBuildable"
 
-#: data/re.sonny.Workbench.metainfo.xml:54
+#: data/re.sonny.Workbench.metainfo.xml:89
 msgid "Allow using DBus and Gio.Application"
 msgstr "Povoleno použití DBus a Gio.Application"
 
-#: data/re.sonny.Workbench.metainfo.xml:55
+#: data/re.sonny.Workbench.metainfo.xml:90
 msgid "Allow using network"
 msgstr "Povoleno použití sítě"
 
-#: data/re.sonny.Workbench.metainfo.xml:56
+#: data/re.sonny.Workbench.metainfo.xml:91
 msgid "Enable GtkWindow objects preview"
 msgstr "Povolen náhled pro objekty GtkWindow"
 
-#: data/re.sonny.Workbench.metainfo.xml:63
+#: data/re.sonny.Workbench.metainfo.xml:98
 msgid "Take a png screenshot of the preview"
 msgstr "Možnost pořídit png snímek náhledu"
 
-#: data/re.sonny.Workbench.metainfo.xml:64
+#: data/re.sonny.Workbench.metainfo.xml:99
 msgid "The console is now resizable"
 msgstr "Velikost konzole lze nyní upravit"
 
-#: data/re.sonny.Workbench.metainfo.xml:65
+#: data/re.sonny.Workbench.metainfo.xml:100
 msgid "Redesign the dark/light mode switcher"
 msgstr "Nový design přepínače tmavého/světlého režimu"
 
-#: data/re.sonny.Workbench.metainfo.xml:66
+#: data/re.sonny.Workbench.metainfo.xml:101
 msgid "Show platform and dependencies in about dialog"
 msgstr "Zobrazení platformy a závislostí v dialogu o aplikaci"
 
-#: data/re.sonny.Workbench.metainfo.xml:67
+#: data/re.sonny.Workbench.metainfo.xml:102
 msgid "Update to GNOME platform 42"
 msgstr "Aktualizováno na platformu GNOME 42"
 
-#: data/re.sonny.Workbench.metainfo.xml:68
+#: data/re.sonny.Workbench.metainfo.xml:103
 msgid "Various fixes"
 msgstr "Různé opravy"
 
-#: data/re.sonny.Workbench.metainfo.xml:74
+#: data/re.sonny.Workbench.metainfo.xml:109
 msgid "This is the first release of Workbench. We hope you like it."
 msgstr "Toto je první vydání aplikace Workbench. Doufáme, že se vám líbí."
 
-#: src/about.js:30
+#: src/Library/Library.blp:7
+msgid "Library"
+msgstr "Knihovna"
+
+#: src/Library/demos/Application window/main.blp:50 src/shortcutsWindow.blp:49
+#: src/window.blp:652
+msgid "Keyboard Shortcuts"
+msgstr "Klávesové zkratky"
+
+#: src/Library/demos/Application window/main.blp:55
+msgid "About My App"
+msgstr ""
+
+#: src/about.js:31
 msgid ""
 "Learn and prototype with\n"
 "GNOME technologies"
@@ -157,218 +278,318 @@ msgstr ""
 "s technologiemi GNOME"
 
 #. TRANSLATORS: eg. 'Translator Name <your.email@domain.com>' or 'Translator Name https://website.example'
-#: src/about.js:39
+#: src/about.js:40
 msgid "translator-credits"
 msgstr "Vojtěch Perník <translations@pervoj.cz>"
 
-#: src/shortcutsWindow.blp:10 src/window.blp:203
-msgid "Run"
-msgstr "Spustit"
+#: src/actions.js:51 src/shortcutsWindow.blp:16
+msgid "Import File"
+msgstr ""
 
-#: src/shortcutsWindow.blp:15 src/window.blp:405
-msgid "Inspector"
-msgstr "Inspektor"
+#: src/actions.js:133
+msgid "All supported"
+msgstr ""
 
-#: src/shortcutsWindow.blp:20
-msgid "Open Console"
-msgstr "Otevřít konzoli"
+#: src/shortcutsWindow.blp:11
+#, fuzzy
+#| msgid "Code"
+msgid "Run Code"
+msgstr "Kód"
 
-#: src/shortcutsWindow.blp:25
+#: src/shortcutsWindow.blp:21
+#, fuzzy
+#| msgid "Library"
+msgid "Open Library"
+msgstr "Knihovna"
+
+#: src/shortcutsWindow.blp:26
+#, fuzzy
+#| msgid "Clear Console"
+msgid "Toggle Console"
+msgstr "Vyčistit konzoli"
+
+#: src/shortcutsWindow.blp:31
 msgid "Clear Console"
 msgstr "Vyčistit konzoli"
 
-#: src/shortcutsWindow.blp:30 src/window.blp:530
-msgid "Keyboard Shortcuts"
-msgstr "Klávesové zkratky"
+#: src/shortcutsWindow.blp:37
+msgid "Inspector"
+msgstr "Inspektor"
 
-#: src/shortcutsWindow.blp:35
+#: src/shortcutsWindow.blp:41
+msgid "Undo"
+msgstr ""
+
+#: src/shortcutsWindow.blp:45
+msgid "Redo"
+msgstr ""
+
+#: src/shortcutsWindow.blp:53
 msgid "Quit"
 msgstr "Ukončit"
 
-#: src/window.js:320
-msgid "Are you sure you want to discard your changes?"
-msgstr "Vážně chcete zahodit změny?"
-
-#: src/window.blp:16 src/window.blp:440
-msgid "Library"
+#: src/window.blp:15
+#, fuzzy
+#| msgid "Library"
+msgid "_Library"
 msgstr "Knihovna"
 
-#: src/window.blp:22
+#: src/window.blp:19
 msgid "Open Library of Demos and Examples (Ctrl+Shift+O)"
 msgstr "Otevřít knihovnu ukázek a příkladů (Ctrl+Shift+O)"
 
-#: src/window.blp:25 src/window.blp:209 src/window.blp:212
-msgid "Run (Ctrl+⏎)"
-msgstr "Spustit (Ctrl+⏎)"
-
-#: src/window.blp:48
-msgid "Code"
+#: src/window.blp:37
+#, fuzzy
+#| msgid "Code"
+msgid "_Code"
 msgstr "Kód"
 
-#: src/window.blp:69
-msgid "Style"
+#: src/window.blp:54
+#, fuzzy
+#| msgid "Style"
+msgid "_Style"
 msgstr "Styl"
 
-#: src/window.blp:90
-msgid "UI"
+#: src/window.blp:71
+#, fuzzy
+#| msgid "UI"
+msgid "_UI"
 msgstr "UI"
 
-#: src/window.blp:111 src/window.blp:345
-msgid "Preview"
+#: src/window.blp:88
+#, fuzzy
+#| msgid "Preview"
+msgid "_Preview"
 msgstr "Náhled"
 
-#: src/window.blp:138
+#: src/window.blp:109
 msgid "sun-symbolic"
 msgstr "sun-symbolic"
 
-#: src/window.blp:139 src/window.blp:142
+#: src/window.blp:110 src/window.blp:113
 msgid "Use Light mode"
 msgstr "Použít světlý režim"
 
-#: src/window.blp:147
-msgid "moon-rounded-symbolic"
+#: src/window.blp:118
+#, fuzzy
+#| msgid "moon-rounded-symbolic"
+msgid "workbench-moon-rounded-symbolic"
 msgstr "moon-rounded-symbolic"
 
-#: src/window.blp:148 src/window.blp:151
+#: src/window.blp:119 src/window.blp:122
 msgid "Use Dark mode"
 msgstr "Použít tmavý režim"
 
-#: src/window.blp:160 src/window.blp:163
-msgid "Bookmarks"
-msgstr "Záložky"
+#: src/window.blp:149
+msgid "<b>Code</b>"
+msgstr ""
 
-#: src/window.blp:191
-msgid "Code - JavaScript"
-msgstr "Kód - JavaScript"
+#: src/window.blp:165 src/window.blp:321
+msgid "Switch document"
+msgstr ""
 
-#: src/window.blp:256
-msgid "Style - CSS"
-msgstr "Styl - CSS"
+#: src/window.blp:173
+msgid "_Run"
+msgstr ""
 
-#: src/window.blp:300
-msgid "UI - XML"
-msgstr "UI - XML"
+#: src/window.blp:177
+msgid "Run (Ctrl+⏎)"
+msgstr "Spustit (Ctrl+⏎)"
 
-#: src/window.blp:361 src/window.blp:364
+#: src/window.blp:248
+#, fuzzy
+#| msgid "Style - CSS"
+msgid "<b>Style CSS</b>"
+msgstr "<b>Styl CSS</b>"
+
+#: src/window.blp:293
+msgid "<b>UI</b>"
+msgstr ""
+
+#: src/window.blp:333 src/window.blp:335
+msgid "Convert to XML"
+msgstr ""
+
+#: src/window.blp:344 src/window.blp:346
+msgid "Convert to Blueprint"
+msgstr ""
+
+#: src/window.blp:420
+msgid "<b>Preview</b>"
+msgstr "<b>Náhled</b>"
+
+#: src/window.blp:428 src/window.blp:430
 msgid "Take Screenshot of Preview"
 msgstr "Pořídit snímek náhledu"
 
-#: src/window.blp:400
-msgid "Console"
-msgstr "Konzole"
-
-#: src/window.blp:401
-msgid "Show logs (Ctrl+Shift+K)"
-msgstr "Zobrazit logy (Ctrl+Shift+K)"
-
-#: src/window.blp:406
-msgid "Open GTK Inspector (Ctrl+Shift+I)"
-msgstr "Otevřít Inspektor GTK (Ctrl+Shift+I)"
-
-#: src/window.blp:417
-msgid "Clear"
-msgstr "Vyčistit"
-
-#: src/window.blp:419
-msgid "Clear console (Ctrl+K)"
-msgstr "Vyčistit konzoli (Ctrl+K)"
-
-#: src/window.blp:445
-msgid "Examples to start from or get inspired by"
-msgstr "Příklady, se kterými můžete začít, nebo se jen nechat inspirovat"
-
-#: src/window.blp:480
+#: src/window.blp:460 src/window.blp:478
 msgid "Windowed Preview"
 msgstr "Náhled v okně"
 
-#: src/window.blp:481
+#: src/window.blp:461 src/window.blp:479
+#, fuzzy
+#| msgid ""
+#| "This interface can only be previewed as a separate window.\n"
+#| "We recommend using \"Always on Top\""
 msgid ""
 "This interface can only be previewed as a separate window.\n"
-"We recommend using \"Always on Top\""
+"We recommend using “Always on Top”"
 msgstr ""
 "Tomuto rozhraní může být vytvořen náhled pouze v samostatném okně.\n"
 "Doporučujeme použít „Vždy nahoře“"
 
-#: src/window.blp:496
-msgid "Open File…"
+#: src/window.blp:468
+msgid "Show Preview Window"
+msgstr ""
+
+#: src/window.blp:486
+msgid "Close Preview Window"
+msgstr ""
+
+#: src/window.blp:520
+#, fuzzy
+#| msgid "Console"
+msgid "C_onsole"
+msgstr "Konzole"
+
+#: src/window.blp:524
+msgid "Show logs (Ctrl+Shift+K)"
+msgstr "Zobrazit logy (Ctrl+Shift+K)"
+
+#: src/window.blp:530
+#, fuzzy
+#| msgid "Inspector"
+msgid "_Inspector"
+msgstr "Inspektor"
+
+#: src/window.blp:533
+msgid "Open GTK Inspector (Ctrl+Shift+I)"
+msgstr "Otevřít Inspektor GTK (Ctrl+Shift+I)"
+
+#: src/window.blp:544
+msgid "Cl_ear"
+msgstr ""
+
+#: src/window.blp:548
+msgid "Clear console (Ctrl+K)"
+msgstr "Vyčistit konzoli (Ctrl+K)"
+
+#: src/window.blp:570
+#, fuzzy
+#| msgid "Open File…"
+msgid "Import File…"
 msgstr "Otevřít soubor…"
 
-#: src/window.blp:501
-msgid "Platform Tools"
-msgstr "Nástroje platformy"
+#: src/window.blp:575
+msgid "Bookmarks"
+msgstr "Záložky"
 
-#: src/window.blp:504
-msgid "Adwaita Demo"
-msgstr "Ukázka Adwaity"
-
-#: src/window.blp:510
-msgid "GTK Demo"
-msgstr "Ukázka GTK"
-
-#: src/window.blp:516
-msgid "GTK Widget Factory"
-msgstr "GTK Widget Factory"
-
-#: src/window.blp:522
-msgid "GTK Icon Browser"
-msgstr "Prohlížeč ikon GTK"
-
-#: src/window.blp:535
-msgid "About Workbench"
-msgstr "O aplikaci Workbench"
-
-#: src/window.blp:543
+#: src/window.blp:577
 msgid "Learn"
 msgstr "Učit se"
 
-#: src/window.blp:546
-msgid "GNOME JavaScript (GJS)"
-msgstr "GNOME JavaScript (GJS)"
+#: src/window.blp:580
+msgid "Developer Documentation"
+msgstr ""
 
-#: src/window.blp:552
-msgid "Human Interface Guidelines (HIG)"
+#: src/window.blp:587
+#, fuzzy
+#| msgid "Human Interface Guidelines (HIG)"
+msgid "Human Interface Guidelines"
 msgstr "Pokyny pro lidské rozhraní (HIG)"
 
-#: src/window.blp:558
-msgid "UI components"
-msgstr "Komponenty UI"
-
-#: src/window.blp:564
-msgid "Platform components"
-msgstr "Komponenty platformy"
-
-#: src/window.blp:571
-msgid "Reference"
-msgstr "Reference"
-
-#: src/window.blp:574
+#: src/window.blp:593
 msgid "JavaScript"
 msgstr "JavaScript"
 
-#: src/window.blp:580
-msgid "GJS"
-msgstr "GJS"
-
-#: src/window.blp:586
-msgid "Gtk"
-msgstr "GTK"
-
-#: src/window.blp:592
-msgid "Adwaita"
-msgstr "Adwaita"
-
 #: src/window.blp:599
+msgid "Vala"
+msgstr ""
+
+#: src/window.blp:605
+msgid "Blueprint"
+msgstr ""
+
+#: src/window.blp:612
 msgid "Get help"
 msgstr "Získat pomoc"
 
-#: src/window.blp:602
+#: src/window.blp:615
 msgid "Discourse"
 msgstr "Discourse"
 
-#: src/window.blp:608
-msgid "Stack Overflow"
-msgstr "Stack Overflow"
-
-#: src/window.blp:614
+#: src/window.blp:621
 msgid "Matrix"
 msgstr "Matrix"
+
+#: src/window.blp:629
+msgid "Platform Tools"
+msgstr "Nástroje platformy"
+
+#: src/window.blp:632
+msgid "Adwaita Demo"
+msgstr "Ukázka Adwaity"
+
+#: src/window.blp:638
+msgid "GTK Demo"
+msgstr "Ukázka GTK"
+
+#: src/window.blp:644
+msgid "GTK Widget Factory"
+msgstr "GTK Widget Factory"
+
+#: src/window.blp:657
+msgid "About Workbench"
+msgstr "O aplikaci Workbench"
+
+#: src/window.js:396
+msgid "Are you sure you want to discard your changes?"
+msgstr "Vážně chcete zahodit změny?"
+
+#~ msgid "JavaScript for quick and easy scripting"
+#~ msgstr "JavaScript pro rychlé a jednoduché psaní scriptů"
+
+#~ msgid "Run"
+#~ msgstr "Spustit"
+
+#~ msgid "Open Console"
+#~ msgstr "Otevřít konzoli"
+
+#~ msgid "Code - JavaScript"
+#~ msgstr "Kód - JavaScript"
+
+#~ msgid "UI - XML"
+#~ msgstr "UI - XML"
+
+#~ msgid "Clear"
+#~ msgstr "Vyčistit"
+
+#~ msgid "Examples to start from or get inspired by"
+#~ msgstr "Příklady, se kterými můžete začít, nebo se jen nechat inspirovat"
+
+#~ msgid "GTK Icon Browser"
+#~ msgstr "Prohlížeč ikon GTK"
+
+#~ msgid "GNOME JavaScript (GJS)"
+#~ msgstr "GNOME JavaScript (GJS)"
+
+#~ msgid "UI components"
+#~ msgstr "Komponenty UI"
+
+#~ msgid "Platform components"
+#~ msgstr "Komponenty platformy"
+
+#~ msgid "Reference"
+#~ msgstr "Reference"
+
+#~ msgid "GJS"
+#~ msgstr "GJS"
+
+#~ msgid "Gtk"
+#~ msgstr "GTK"
+
+#~ msgid "Adwaita"
+#~ msgstr "Adwaita"
+
+#~ msgid "Stack Overflow"
+#~ msgstr "Stack Overflow"
