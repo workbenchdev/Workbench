@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: re.sonny.Workbench\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-04 15:25+0200\n"
-"PO-Revision-Date: 2022-06-01 08:17+0000\n"
-"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
+"PO-Revision-Date: 2022-06-07 11:17+0000\n"
+"Last-Translator: Onuralp SEZER <thunderbirdtr@gmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/workbench/workbench/tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
@@ -24,17 +24,13 @@ msgid "Workbench"
 msgstr "Workbench"
 
 #: data/re.sonny.Workbench.desktop:5 data/re.sonny.Workbench.metainfo.xml:10
-#, fuzzy
-#| msgid "Sandbox to learn and prototype with GNOME technologies"
 msgid "Learn and prototype with GNOME technologies"
-msgstr "GNOME teknolojileriyle öğrenmek ve prototip oluşturmak için korumalı alan"
+msgstr "GNOME teknolojileriyle hem öğrenin hem de prototip oluşturun"
 
 #. TRANSLATORS: Don't translate
 #: data/re.sonny.Workbench.desktop:12
-#, fuzzy
-#| msgid "CSS;JavaScript;GJS;"
 msgid "CSS;JavaScript;GJS;Blueprint;builder;Vala;"
-msgstr "CSS;JavaScript;GJS;"
+msgstr "CSS;JavaScript;GJS;Blueprint;builder;Vala;"
 
 #: data/re.sonny.Workbench.metainfo.xml:14
 #, fuzzy
@@ -52,21 +48,19 @@ msgstr "gerçek zamanlı GTK/CSS önizlemesi"
 
 #: data/re.sonny.Workbench.metainfo.xml:18
 msgid "library of examples"
-msgstr ""
+msgstr "kütüphane örnekleri"
 
 #: data/re.sonny.Workbench.metainfo.xml:19
 msgid "JavaScript and Vala runs without any setup"
-msgstr ""
+msgstr "Herhangi bir kurulum yapmadan JavaScript ve Vala çalıştırın"
 
 #: data/re.sonny.Workbench.metainfo.xml:20
 msgid "XML and Blueprint for describing user interface"
-msgstr ""
+msgstr "XML ve Blueprint kullanıcı arayüzünü açıklamak için"
 
 #: data/re.sonny.Workbench.metainfo.xml:21
-#, fuzzy
-#| msgid "Syntax highlighting, undo/redo, autosave"
 msgid "syntax highlighting, undo/redo, autosave, session restore"
-msgstr "Syntax highlighting, geri al/yeniden yap, otomatik kayıt"
+msgstr "Sözdizimi vurgulama, geri al/yeniden yap, otomatik kaydet, oturum geri yüklemek"
 
 #: data/re.sonny.Workbench.metainfo.xml:22
 msgid "code formatter"
@@ -78,7 +72,7 @@ msgstr "konsol logları"
 
 #: data/re.sonny.Workbench.metainfo.xml:51
 msgid "Highlights"
-msgstr ""
+msgstr "Vurgulamalar"
 
 #: data/re.sonny.Workbench.metainfo.xml:53
 msgid "Add Blueprint markup syntax for UI"
@@ -220,15 +214,15 @@ msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:97
 msgid "Allow using DBus and Gio.Application"
-msgstr ""
+msgstr "DBus ve Gio.Application kullanımına izin ver"
 
 #: data/re.sonny.Workbench.metainfo.xml:98
 msgid "Allow using network"
-msgstr ""
+msgstr "Ağ kullanımına izin ver"
 
 #: data/re.sonny.Workbench.metainfo.xml:99
 msgid "Enable GtkWindow objects preview"
-msgstr ""
+msgstr "GtkWindow nesneleri için önizlemeyi etkinleştir"
 
 #: data/re.sonny.Workbench.metainfo.xml:106
 msgid "Take a png screenshot of the preview"
@@ -269,7 +263,7 @@ msgstr "Klavye Kısayolları"
 
 #: src/Library/demos/Application window/main.blp:55
 msgid "About My App"
-msgstr ""
+msgstr "Uygulamam hakkında"
 
 #: src/about.js:31
 #, fuzzy
@@ -290,29 +284,23 @@ msgstr "Emin Fedar<eminfedar@gmail.com>"
 
 #: src/actions.js:51 src/shortcutsWindow.blp:16
 msgid "Import File"
-msgstr ""
+msgstr "Dosya içe aktar"
 
 #: src/actions.js:133
 msgid "All supported"
-msgstr ""
+msgstr "Hepsi destekleniyor"
 
 #: src/shortcutsWindow.blp:11
-#, fuzzy
-#| msgid "Code"
 msgid "Run Code"
-msgstr "Kod"
+msgstr "Kodu çalıştır"
 
 #: src/shortcutsWindow.blp:21
-#, fuzzy
-#| msgid "Library"
 msgid "Open Library"
-msgstr "Kütüphane"
+msgstr "Kütüphaneyi Aç"
 
 #: src/shortcutsWindow.blp:26
-#, fuzzy
-#| msgid "Clear Console"
 msgid "Toggle Console"
-msgstr "Konsolu Temizle"
+msgstr "Konsolu Aç/Kapat"
 
 #: src/shortcutsWindow.blp:31
 msgid "Clear Console"
@@ -324,19 +312,17 @@ msgstr "Denetçi"
 
 #: src/shortcutsWindow.blp:41
 msgid "Undo"
-msgstr ""
+msgstr "Geri al"
 
 #: src/shortcutsWindow.blp:45
 msgid "Redo"
-msgstr ""
+msgstr "Yinele"
 
 #: src/shortcutsWindow.blp:53
 msgid "Quit"
 msgstr "Çıkış"
 
 #: src/window.blp:15
-#, fuzzy
-#| msgid "Library"
 msgid "_Library"
 msgstr "Kütüphane"
 
@@ -345,28 +331,20 @@ msgid "Open Library of Demos and Examples (Ctrl+Shift+O)"
 msgstr "Demolar ve Örnekler Kitaplığını Açın (Ctrl+Shift+O)"
 
 #: src/window.blp:37
-#, fuzzy
-#| msgid "Code"
 msgid "_Code"
-msgstr "Kod"
+msgstr "_Kod"
 
 #: src/window.blp:54
-#, fuzzy
-#| msgid "Style"
 msgid "_Style"
-msgstr "Stil"
+msgstr "_Stil"
 
 #: src/window.blp:71
-#, fuzzy
-#| msgid "UI"
 msgid "_UI"
-msgstr "UI"
+msgstr "_UI"
 
 #: src/window.blp:88
-#, fuzzy
-#| msgid "Preview"
 msgid "_Preview"
-msgstr "Önizleme"
+msgstr "_Önizleme"
 
 #: src/window.blp:109
 msgid "sun-symbolic"
@@ -377,10 +355,8 @@ msgid "Use Light mode"
 msgstr "Aydınlık Modu Kullan"
 
 #: src/window.blp:118
-#, fuzzy
-#| msgid "moon-rounded-symbolic"
 msgid "workbench-moon-rounded-symbolic"
-msgstr "moon-rounded-symbolic"
+msgstr "workbench-moon-rounded-symbolic"
 
 #: src/window.blp:119 src/window.blp:122
 msgid "Use Dark mode"
@@ -388,37 +364,35 @@ msgstr "Karanlık Modu Kullan"
 
 #: src/window.blp:149
 msgid "<b>Code</b>"
-msgstr ""
+msgstr "<b>Kod</b>"
 
 #: src/window.blp:165 src/window.blp:321
 msgid "Switch document"
-msgstr ""
+msgstr "Döküman değiştir"
 
 #: src/window.blp:173
 msgid "_Run"
-msgstr ""
+msgstr "_Çalıştır"
 
 #: src/window.blp:177
 msgid "Run (Ctrl+⏎)"
 msgstr "Çalıştır (Ctrl+⏎)"
 
 #: src/window.blp:248
-#, fuzzy
-#| msgid "Style - CSS"
 msgid "<b>Style CSS</b>"
 msgstr "<b>Stil CSS</b>"
 
 #: src/window.blp:293
 msgid "<b>UI</b>"
-msgstr ""
+msgstr "<b>UI</b>"
 
 #: src/window.blp:333 src/window.blp:335
 msgid "Convert to XML"
-msgstr ""
+msgstr "XML'e çevir"
 
 #: src/window.blp:344 src/window.blp:346
 msgid "Convert to Blueprint"
-msgstr ""
+msgstr "Blueprint'e çevir"
 
 #: src/window.blp:420
 msgid "<b>Preview</b>"
@@ -446,27 +420,23 @@ msgstr ""
 
 #: src/window.blp:468
 msgid "Show Preview Window"
-msgstr ""
+msgstr "Önizleme Penceresini Görüntüle"
 
 #: src/window.blp:486
 msgid "Close Preview Window"
-msgstr ""
+msgstr "Önizleme Penceresini Kapat"
 
 #: src/window.blp:520
-#, fuzzy
-#| msgid "Console"
 msgid "C_onsole"
-msgstr "Konsol"
+msgstr "K_onsol"
 
 #: src/window.blp:524
 msgid "Show logs (Ctrl+Shift+K)"
 msgstr "Logları göster (Ctrl+Shift+K)"
 
 #: src/window.blp:530
-#, fuzzy
-#| msgid "Inspector"
 msgid "_Inspector"
-msgstr "Denetçi"
+msgstr "_Denetçi"
 
 #: src/window.blp:533
 msgid "Open GTK Inspector (Ctrl+Shift+I)"
@@ -474,7 +444,7 @@ msgstr "GTK Inspector'ü aç (Ctrl+Shift+I)"
 
 #: src/window.blp:544
 msgid "Cl_ear"
-msgstr ""
+msgstr "Te_mizle"
 
 #: src/window.blp:548
 msgid "Clear console (Ctrl+K)"
@@ -496,7 +466,7 @@ msgstr "Öğren"
 
 #: src/window.blp:580
 msgid "Developer Documentation"
-msgstr ""
+msgstr "Geliştirici Dökümanı"
 
 #: src/window.blp:587
 #, fuzzy
@@ -510,11 +480,11 @@ msgstr "JavaScript"
 
 #: src/window.blp:599
 msgid "Vala"
-msgstr ""
+msgstr "Vala"
 
 #: src/window.blp:605
 msgid "Blueprint"
-msgstr ""
+msgstr "Blueprint"
 
 #: src/window.blp:612
 msgid "Get help"
