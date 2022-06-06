@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: re.sonny.Workbench\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-26 23:31+0200\n"
-"PO-Revision-Date: 2022-05-28 03:10+0000\n"
-"Last-Translator: Mateo Estrada Ramirez <mateoestradaramirez2001@gmail.com>\n"
+"PO-Revision-Date: 2022-06-05 09:01+0000\n"
+"Last-Translator: Óscar Fernández Díaz <oscfdezdz@tuta.io>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/workbench/workbench/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -192,7 +192,7 @@ msgstr "Agregar un ejemplo de notificación de escritorio"
 
 #: data/re.sonny.Workbench.metainfo.xml:84
 msgid "Add Adwaita Demo, GTK Demo, GTK Widget Factory and GTK Icon Browser"
-msgstr "Agregar una Demo de Adwaita, demo de GTK, GTK Widget Factory y GTK Icon Browser"
+msgstr "Agregar Adwaita Demo, GTK Demo, GTK Widget Factory y GTK Icon Browser"
 
 #: data/re.sonny.Workbench.metainfo.xml:85
 msgid "The Console can be collapsed by resizing it"
@@ -417,8 +417,6 @@ msgid "Close Preview Window"
 msgstr "Cerrar Ventana de Previsualización"
 
 #: src/window.blp:520
-#, fuzzy
-#| msgid "Console"
 msgid "C_onsole"
 msgstr "C_onsola"
 
@@ -435,7 +433,6 @@ msgid "Open GTK Inspector (Ctrl+Shift+I)"
 msgstr "Abrir inspector GTK (Ctrl+Shift+I)"
 
 #: src/window.blp:544
-#, fuzzy
 msgid "Cl_ear"
 msgstr "L_impiar"
 
@@ -468,12 +465,10 @@ msgid "JavaScript"
 msgstr "JavaScript"
 
 #: src/window.blp:599
-#, fuzzy
 msgid "Vala"
 msgstr "Vala"
 
 #: src/window.blp:605
-#, fuzzy
 msgid "Blueprint"
 msgstr "Blueprint"
 
