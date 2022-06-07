@@ -63,7 +63,7 @@ export default function Document({
   }
   
   function restore() {
-    loadSourceBuffer({ file: backuo_file, buffer }).catch(logError);
+    loadSourceBuffer({ file: backup_file, buffer });
   }
 
   return { start, stop, save, source_view, buffer, backup, restore };

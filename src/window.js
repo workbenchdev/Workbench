@@ -330,11 +330,12 @@ export default function Window({ application }) {
 
   const undo_action = new Gio.SimpleAction({
     name: "workbench_undo",
-    parameter_type: new GLib.VariantType("s"),
+    parameter_type: null,
   });
-  undo_action.connect("activate", (self, target) => {
+  undo_action.connect("activate", () => {
     languages.forEach(({ document }) => document.restore());
   });
+  window.add_action(undo_action);
   
   async function openDemo(demo_name) {
     languages.forEach(({ document }) => document.backup());
@@ -343,8 +344,6 @@ export default function Window({ application }) {
       title: "Loaded Demo",
       button_label: "Undo",
       action_name: "win.workbench_undo",
-      action_target: GLib.Variant.new_string(""),
-      timeout: 20,
     });
     toast_overlay.add_toast(toast);
     settings.set_boolean("has-edits", false);
@@ -419,12 +418,12 @@ export default function Window({ application }) {
       return;
     }
 
+    languages.forEach(({ document }) => document.backup());
+    
     const toast = new Adw.Toast({
       title: "Opened File",
       button_label: "Undo",
       action_name: "win.workbench_undo",
-      action_target: GLib.Variant.new_string(""),
-      timeout: 20,
     });
     toast_overlay.add_toast(toast);
     settings.set_boolean("has-edits", false);
