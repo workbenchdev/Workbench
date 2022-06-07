@@ -16,11 +16,17 @@ export default function Document({
 
   buffer.set_language(language_manager.get_language(lang));
 
-  const file = Gio.File.new_for_path(
+  let file = Gio.File.new_for_path(
     GLib.build_filenamev([data_dir, `state.${ext}`])
   );
-
   const source_file = new Source.File({
+    location: file,
+  });
+  
+  file = Gio.File.new_for_path(
+    GLib.build_filenamev([data_dir, `backup.${ext}`])
+  );
+  const backup_file = new Source.File({
     location: file,
   });
 
@@ -51,8 +57,16 @@ export default function Document({
       handler_id = null;
     }
   }
+  
+  function backup() {
+    saveSourceBuffer({ file: backup_file, buffer }).catch(logError);
+  }
+  
+  function restore() {
+    loadSourceBuffer({ file: backuo_file, buffer }).catch(logError);
+  }
 
-  return { start, stop, save, source_view, buffer };
+  return { start, stop, save, source_view, buffer, backup, restore };
 }
 
 async function saveSourceBuffer({ file, buffer }) {

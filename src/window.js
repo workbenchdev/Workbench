@@ -57,14 +57,6 @@ export default function Window({ application }) {
   const { term_console } = Devtools({ application, window, builder });
 
   const toast_overlay = builder.get_object("toast_overlay");
-  const undo_action = new Gio.SimpleAction({
-    name: "undo",
-    parameter_type: new GLib.VariantType("s"),
-  });
-  undo_action.connect("activate", (self, target) => {
-    print("undo");
-  });
-  window.add_action(undo_action);
 
   let compiler = null;
 
@@ -336,9 +328,26 @@ export default function Window({ application }) {
   window.add_action(action_run);
   application.set_accels_for_action("win.run", ["<Control>Return"]);
 
+  const undo_action = new Gio.SimpleAction({
+    name: "workbench_undo",
+    parameter_type: new GLib.VariantType("s"),
+  });
+  undo_action.connect("activate", (self, target) => {
+    languages.forEach(({ document }) => document.restore());
+  });
+  
   async function openDemo(demo_name) {
-    const agreed = await confirmDiscard();
-    if (!agreed) return;
+    languages.forEach(({ document }) => document.backup());
+    
+    const toast = new Adw.Toast({
+      title: "Loaded Demo",
+      button_label: "Undo",
+      action_name: "win.workbench_undo",
+      action_target: GLib.Variant.new_string(""),
+      timeout: 20,
+    });
+    toast_overlay.add_toast(toast);
+    settings.set_boolean("has-edits", false);
 
     function load({ document: { buffer } }, str) {
       replaceBufferText(buffer, str);
@@ -399,30 +408,26 @@ export default function Window({ application }) {
     application,
   });
 
-  async function confirmDiscard() {
-    if (!settings.get_boolean("has-edits")) return true;
-    /*const agreed = await confirm({
-      transient_for: application.get_active_window(),
-      text: _("Are you sure you want to discard your changes?"),
-    });*/
-    const toast = new Adw.Toast({
-      title: "Message sent",
-      button_label: "Undo",
-      action_name: "win.undo",
-      action_target: GLib.Variant.new_string(""),
-    });
-    toast_overlay.add_toast(toast);
-    settings.set_boolean("has-edits", false);
-    return true;
-  }
-
   const text_decoder = new TextDecoder();
   async function openFile(file) {
     const language = getLanguageForFile(file);
-    if (!language) return;
+    if (!language) {
+      const toast = new Adw.Toast({
+        title: "File is not loadable",
+      });
+      toast_overlay.add_toast(toast);
+      return;
+    }
 
-    const agreed = await confirmDiscard();
-    if (!agreed) return;
+    const toast = new Adw.Toast({
+      title: "Opened File",
+      button_label: "Undo",
+      action_name: "win.workbench_undo",
+      action_target: GLib.Variant.new_string(""),
+      timeout: 20,
+    });
+    toast_overlay.add_toast(toast);
+    settings.set_boolean("has-edits", false);
 
     let data;
 
