@@ -331,29 +331,36 @@ export default function Window({ application }) {
   const undo_action = new Gio.SimpleAction({
     name: "workbench_undo",
     parameter_type: null,
+    parameter_type: new GLib.VariantType("s"),
   });
-  undo_action.connect("activate", () => {
-    languages.forEach(({ document }) => document.restore());
+  undo_action.connect("activate", (self, target) => {
+    const langs = JSON.parse(target.unpack());
+    languages.forEach(({ id, document }) => {
+      print(id);
+      if (langs.includes(id))
+        document.buffer.undo();
+    });
   });
   window.add_action(undo_action);
   
   async function openDemo(demo_name) {
-    languages.forEach(({ document }) => document.backup());
+    function load({ document: { buffer } }, str) {
+      replaceBufferText(buffer, str);
+    }
+
+    const { javascript, css, xml, blueprint, vala, panels }
+       = readDemo(demo_name);
     
     const toast = new Adw.Toast({
       title: "Loaded Demo",
       button_label: "Undo",
       action_name: "win.workbench_undo",
+      action_target: GLib.Variant.new_string(JSON.stringify(
+        ["javascript", "css", "xml", "blueprint", "vala"]
+      )),
     });
     toast_overlay.add_toast(toast);
     settings.set_boolean("has-edits", false);
-
-    function load({ document: { buffer } }, str) {
-      replaceBufferText(buffer, str);
-    }
-
-    const { javascript, css, xml, blueprint, vala, panels } =
-      readDemo(demo_name);
 
     panel_ui.stop();
     previewer.stop();
@@ -417,13 +424,14 @@ export default function Window({ application }) {
       toast_overlay.add_toast(toast);
       return;
     }
-
-    languages.forEach(({ document }) => document.backup());
     
     const toast = new Adw.Toast({
       title: "Opened File",
       button_label: "Undo",
       action_name: "win.workbench_undo",
+      action_target: GLib.Variant.new_string(JSON.stringify(
+        [language.id],
+      )),
     });
     toast_overlay.add_toast(toast);
     settings.set_boolean("has-edits", false);

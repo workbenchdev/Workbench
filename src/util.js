@@ -148,6 +148,9 @@ export function disconnect_signals(target, handler_ids) {
 }
 
 export function replaceBufferText(buffer, text, scroll_start = true) {
+  if (text == "") {
+    text = " ";
+  }
   buffer.begin_user_action();
   buffer.delete(buffer.get_start_iter(), buffer.get_end_iter());
   buffer.insert(buffer.get_start_iter(), text, -1);
