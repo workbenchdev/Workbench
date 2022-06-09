@@ -8,197 +8,199 @@ msgstr ""
 "Project-Id-Version: re.sonny.Workbench\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-04 15:25+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2022-06-10 11:14+0000\n"
+"Last-Translator: Daudix UFO <ddaudix@gmail.com>\n"
+"Language-Team: Russian <https://hosted.weblate.org/projects/workbench/workbench/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.13-dev\n"
 
 #. TRANSLATORS: Don't translate
 #: data/re.sonny.Workbench.desktop:4
 msgid "Workbench"
-msgstr ""
+msgstr "Workbench"
 
 #: data/re.sonny.Workbench.desktop:5 data/re.sonny.Workbench.metainfo.xml:10
 msgid "Learn and prototype with GNOME technologies"
-msgstr ""
+msgstr "Изучайте и делайте прототипы с технологиями GNOME"
 
 #. TRANSLATORS: Don't translate
 #: data/re.sonny.Workbench.desktop:12
 msgid "CSS;JavaScript;GJS;Blueprint;builder;Vala;"
-msgstr ""
+msgstr "CSS;JavaScript;GJS;Blueprint;builder;Vala;"
 
 #: data/re.sonny.Workbench.metainfo.xml:14
 msgid "Workbench goal is to let you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a GTK user interface."
-msgstr ""
+msgstr "Цель Workbench — позволить вам экспериментировать с технологиями GNOME, независимо от того, возитесь ли вы впервые или создаете и тестируете пользовательский интерфейс GTK."
 
 #: data/re.sonny.Workbench.metainfo.xml:15
 msgid "Among other things, Workbench comes with"
-msgstr ""
+msgstr "Среди прочего, Workbench поставляется с"
 
 #: data/re.sonny.Workbench.metainfo.xml:17
 msgid "realtime GTK/CSS preview"
-msgstr ""
+msgstr "предпросмотром GTK/CSS в реальном времени"
 
 #: data/re.sonny.Workbench.metainfo.xml:18
 msgid "library of examples"
-msgstr ""
+msgstr "библиотекой примеров"
 
 #: data/re.sonny.Workbench.metainfo.xml:19
 msgid "JavaScript and Vala runs without any setup"
-msgstr ""
+msgstr "JavaScript и Vala работают без какой-либо настройки"
 
 #: data/re.sonny.Workbench.metainfo.xml:20
 msgid "XML and Blueprint for describing user interface"
-msgstr ""
+msgstr "XML и Blueprint для описания пользовательского интерфейса"
 
 #: data/re.sonny.Workbench.metainfo.xml:21
 msgid "syntax highlighting, undo/redo, autosave, session restore"
-msgstr ""
+msgstr "подсветкой синтаксиса, отмена/повтор, автосохранение, восстановление сеанса"
 
 #: data/re.sonny.Workbench.metainfo.xml:22
 msgid "code formatter"
-msgstr ""
+msgstr "средством форматирования кода"
 
 #: data/re.sonny.Workbench.metainfo.xml:23
 msgid "console logs"
-msgstr ""
+msgstr "журналоми консоли"
 
 #: data/re.sonny.Workbench.metainfo.xml:51
 msgid "Highlights"
-msgstr ""
+msgstr "Особенности"
 
 #: data/re.sonny.Workbench.metainfo.xml:53
 msgid "Add Blueprint markup syntax for UI"
-msgstr ""
+msgstr "Добавлена поддержка синтаксиса разметки Blueprint для UI"
 
 #: data/re.sonny.Workbench.metainfo.xml:54
 msgid "Add Vala programming language for Code"
-msgstr ""
+msgstr "Добавлен язык программирования Vala для кода"
 
 #: data/re.sonny.Workbench.metainfo.xml:55
 msgid "Add support for previewing templates"
-msgstr ""
+msgstr "Добавлена поддержка предпросмотра шаблонов"
 
 #: data/re.sonny.Workbench.metainfo.xml:56
 msgid "Add support for previewing signal handlers"
-msgstr ""
+msgstr "Добавлена поддержка предпросмотра обработчиков сигналов"
 
 #: data/re.sonny.Workbench.metainfo.xml:57
 msgid "Include all icons from icon-development-kit"
-msgstr ""
+msgstr "Включены все значки из комплекта разработки значков"
 
 #: data/re.sonny.Workbench.metainfo.xml:58
 msgid "Improve application design"
-msgstr ""
+msgstr "Улучшен дизайн приложения"
 
 #: data/re.sonny.Workbench.metainfo.xml:59
 #: data/re.sonny.Workbench.metainfo.xml:69
 msgid "Distribute Library examples under CC0-1.0"
-msgstr ""
+msgstr "Распространение примеров библиотеки под CC0-1.0"
 
 #: data/re.sonny.Workbench.metainfo.xml:60
 msgid "Respect system preference for color scheme"
-msgstr ""
+msgstr "Следует предпочтению системы для цветовой схемы"
 
 #: data/re.sonny.Workbench.metainfo.xml:61
 msgid "Add proper light/dark color schemes for Console"
-msgstr ""
+msgstr "Добавьлена правильная светлая/темная цветовая схема для консоли"
 
 #: data/re.sonny.Workbench.metainfo.xml:62
 #: data/re.sonny.Workbench.metainfo.xml:74
 msgid "Fix error when opening file"
-msgstr ""
+msgstr "Исправлена ошибка при открытии файла"
 
 #: data/re.sonny.Workbench.metainfo.xml:64
 msgid "Other changes"
-msgstr ""
+msgstr "Другие изменения"
 
 #: data/re.sonny.Workbench.metainfo.xml:66
 msgid "Silence platform tools"
-msgstr ""
+msgstr "Заглушены инструменты платформы"
 
 #: data/re.sonny.Workbench.metainfo.xml:67
 msgid "Make Library examples only open relevant panels"
-msgstr ""
+msgstr "Сделано так, чтобы примеры библиотеки открывали только соответствующие панели"
 
 #: data/re.sonny.Workbench.metainfo.xml:68
 msgid "Always open the Console when opening a Library example"
-msgstr ""
+msgstr "Теперь всегда открывается консоль при открытии примера библиотеки"
 
 #: data/re.sonny.Workbench.metainfo.xml:70
 msgid "Prevent running Code if the panel is not visible"
-msgstr ""
+msgstr "Добавлена предотвращение запуска кода, если панель не видна"
 
 #: data/re.sonny.Workbench.metainfo.xml:71
 msgid "Add icons and mnemonics for all buttons"
-msgstr ""
+msgstr "Добавлены значки и мнемоники для всех кнопок"
 
 #: data/re.sonny.Workbench.metainfo.xml:72
 msgid "Move Bookmarks to the main menu"
-msgstr ""
+msgstr "Закладки перемещены в главное меню"
 
 #: data/re.sonny.Workbench.metainfo.xml:73
 msgid "Enable scrollbar and kinetic scrolling on Console"
-msgstr ""
+msgstr "Включены полосы прокрутки и кинетическая прокрутка в консоле"
 
 #: data/re.sonny.Workbench.metainfo.xml:75
 msgid "Improve Library examples"
-msgstr ""
+msgstr "Улудшены примеры библеотек"
 
 #: data/re.sonny.Workbench.metainfo.xml:76
 msgid "Performance optimizations"
-msgstr ""
+msgstr "Оптимизации производительности"
 
 #: data/re.sonny.Workbench.metainfo.xml:77
 msgid "Show a placeholder when all panels are invisible"
-msgstr ""
+msgstr "Теперь будет отображатся заглушка когда все панели невидемые"
 
 #: data/re.sonny.Workbench.metainfo.xml:78
 msgid "Crash fixes"
-msgstr ""
+msgstr "Исправлены сбои"
 
 #: data/re.sonny.Workbench.metainfo.xml:79
 msgid "Use org.gnome.Sdk runtime"
-msgstr ""
+msgstr "Теперь используется org.gnome.Sdk runtime"
 
 #: data/re.sonny.Workbench.metainfo.xml:86
 msgid "Add a Library of examples"
-msgstr ""
+msgstr "Добавлена библеотека примеров"
 
 #: data/re.sonny.Workbench.metainfo.xml:87
 msgid "Add an example of WebSocket client"
-msgstr ""
+msgstr "Добавлен пример клиента WebSocket"
 
 #: data/re.sonny.Workbench.metainfo.xml:88
 msgid "Add an example of toasts"
-msgstr ""
+msgstr "Добавлен пример тостов"
 
 #: data/re.sonny.Workbench.metainfo.xml:89
 msgid "Add an example of application window"
-msgstr ""
+msgstr "Добавлен пример окна приложения"
 
 #: data/re.sonny.Workbench.metainfo.xml:90
 msgid "Add an example of desktop notification"
-msgstr ""
+msgstr "Добавлен пример уведомления"
 
 #: data/re.sonny.Workbench.metainfo.xml:92
 msgid "Add Adwaita Demo, GTK Demo, GTK Widget Factory and GTK Icon Browser"
-msgstr ""
+msgstr "Добавлены Adwaita Demo, GTK Demo, GTK Widget Factory и GTK Icon Browser"
 
 #: data/re.sonny.Workbench.metainfo.xml:93
 msgid "The Console can be collapsed by resizing it"
-msgstr ""
+msgstr "Консоль теперь может быть скрыта путём изменения размера"
 
 #: data/re.sonny.Workbench.metainfo.xml:94
 msgid "Prevent system.exit from quitting Workbench"
-msgstr ""
+msgstr "Предотвращен выход system.exit из Workbench"
 
 #: data/re.sonny.Workbench.metainfo.xml:95
 msgid "Allow calling GObject.registerClass multiple times"
-msgstr ""
+msgstr "Разрешен вызов GObject.registerClass несколько раз"
 
 #: data/re.sonny.Workbench.metainfo.xml:96
 msgid "Prevent crash caused by using non GtkBuildable objects"
