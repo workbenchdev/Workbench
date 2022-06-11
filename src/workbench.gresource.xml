@@ -68,6 +68,10 @@
     >icons/workbench-code-symbolic.svg</file>
     <file
       preprocess="xml-stripblanks"
+      alias="workbench-library-symbolic.svg"
+    >icons/workbench-library-symbolic.svg</file>
+    <file
+      preprocess="xml-stripblanks"
       alias="workbench-moon-rounded-symbolic.svg"
     >icons/workbench-moon-rounded-symbolic.svg</file>
     <file
