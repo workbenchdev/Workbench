@@ -63,5 +63,5 @@ function getValaVersion() {
 
 function getBlueprintVersion() {
   // https://gitlab.gnome.org/jwestman/blueprint-compiler/-/issues/61
-  return "Blueprint dev";
+  return "Blueprint 0.2.0-Workbench";
 }
