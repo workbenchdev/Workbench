@@ -1,7 +1,7 @@
 import Source from "gi://GtkSource?version=5";
 import Gio from "gi://Gio";
 import GLib from "gi://GLib";
-import { settings } from "./util.js";
+import { settings, replaceBufferText } from "./util.js";
 import { promiseTask } from "./troll/src/util.js";
 
 export default function Document({
@@ -26,7 +26,7 @@ export default function Document({
 
   loadSourceBuffer({ file: source_file, buffer })
     .then((success) => {
-      if (!success) buffer.set_text(placeholder, -1);
+      if (!success) replaceBufferText(buffer, placeholder, true);
       settings.set_boolean("has-edits", false);
     })
     .catch(logError);
