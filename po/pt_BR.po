@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: re.sonny.Workbench\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-04 15:25+0200\n"
-"PO-Revision-Date: 2022-06-01 08:17+0000\n"
-"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
+"PO-Revision-Date: 2022-06-12 23:39+0000\n"
+"Last-Translator: Jocadbz <madureirajoaquim95@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/workbench/workbench/pt_BR/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -76,7 +76,7 @@ msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:51
 msgid "Highlights"
-msgstr ""
+msgstr "Destaques"
 
 #: data/re.sonny.Workbench.metainfo.xml:53
 msgid "Add Blueprint markup syntax for UI"
@@ -88,7 +88,7 @@ msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:55
 msgid "Add support for previewing templates"
-msgstr ""
+msgstr "Adicionar suporte para templates de pré-visualização"
 
 #: data/re.sonny.Workbench.metainfo.xml:56
 msgid "Add support for previewing signal handlers"
@@ -100,29 +100,33 @@ msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:58
 msgid "Improve application design"
-msgstr ""
+msgstr "Melhorar o design do aplicativo"
 
 #: data/re.sonny.Workbench.metainfo.xml:59
 #: data/re.sonny.Workbench.metainfo.xml:69
+#, fuzzy
 msgid "Distribute Library examples under CC0-1.0"
-msgstr ""
+msgstr "Distribuir exemplos de bibliotecas sobre a licença CC0-1.0"
 
 #: data/re.sonny.Workbench.metainfo.xml:60
+#, fuzzy
 msgid "Respect system preference for color scheme"
-msgstr ""
+msgstr "Respeitar a preferência do sistema para o esquema de cores"
 
 #: data/re.sonny.Workbench.metainfo.xml:61
+#, fuzzy
 msgid "Add proper light/dark color schemes for Console"
-msgstr ""
+msgstr "Adicionar esquemas de cores claro/escuro adequados para o Console"
 
 #: data/re.sonny.Workbench.metainfo.xml:62
 #: data/re.sonny.Workbench.metainfo.xml:74
+#, fuzzy
 msgid "Fix error when opening file"
-msgstr ""
+msgstr "Corrigir erro ao abrir arquivos"
 
 #: data/re.sonny.Workbench.metainfo.xml:64
 msgid "Other changes"
-msgstr ""
+msgstr "Outras mudanças"
 
 #: data/re.sonny.Workbench.metainfo.xml:66
 #, fuzzy
@@ -131,8 +135,9 @@ msgid "Silence platform tools"
 msgstr "Ferramentas da plataforma"
 
 #: data/re.sonny.Workbench.metainfo.xml:67
+#, fuzzy
 msgid "Make Library examples only open relevant panels"
-msgstr ""
+msgstr "Faça com que os exemplos de biblioteca apenas abram painéis relevantes"
 
 #: data/re.sonny.Workbench.metainfo.xml:68
 msgid "Always open the Console when opening a Library example"
