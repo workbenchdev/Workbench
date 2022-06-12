@@ -209,7 +209,7 @@ export default function Window({ application }) {
     return code;
   }
 
-  async function runCode() {
+  async function runCode(prettify=true) {
     button_run.set_sensitive(false);
 
     term_console.clear();
@@ -220,46 +220,48 @@ export default function Window({ application }) {
     try {
       await panel_ui.update();
 
-      if (language === "JavaScript") {
-        format(langs.javascript.document.buffer, (text) => {
+      if (prettify) {
+        if (language === "JavaScript") {
+          format(langs.javascript.document.buffer, (text) => {
+            return prettier.format(text, {
+              parser: "babel",
+              plugins: [prettier_babel],
+              trailingComma: "all",
+            });
+          });
+        }
+
+        format(langs.css.document.buffer, (text) => {
           return prettier.format(text, {
-            parser: "babel",
-            plugins: [prettier_babel],
-            trailingComma: "all",
+            parser: "css",
+            plugins: [prettier_postcss],
           });
         });
-      }
 
-      format(langs.css.document.buffer, (text) => {
-        return prettier.format(text, {
-          parser: "css",
-          plugins: [prettier_postcss],
+        format(langs.xml.document.buffer, (text) => {
+          return prettier.format(text, {
+            parser: "xml",
+            plugins: [prettier_xml],
+            // xmlWhitespaceSensitivity: "ignore",
+            // breaks the following
+            // <child>
+            //   <object class="GtkLabel">
+            //     <property name="label">Edit Style and UI to reload the Preview</property>
+            //     <property name="justify">center</property>
+            //   </object>
+            // </child>
+            // by moving the value of the property label to a new line
+            // <child>
+            //   <object class="GtkLabel">
+            //     <property name="label">
+            //       Edit Style and UI to reload the Preview
+            //     </property>
+            //     <property name="justify">center</property>
+            //   </object>
+            // </child>
+          });
         });
-      });
-
-      format(langs.xml.document.buffer, (text) => {
-        return prettier.format(text, {
-          parser: "xml",
-          plugins: [prettier_xml],
-          // xmlWhitespaceSensitivity: "ignore",
-          // breaks the following
-          // <child>
-          //   <object class="GtkLabel">
-          //     <property name="label">Edit Style and UI to reload the Preview</property>
-          //     <property name="justify">center</property>
-          //   </object>
-          // </child>
-          // by moving the value of the property label to a new line
-          // <child>
-          //   <object class="GtkLabel">
-          //     <property name="label">
-          //       Edit Style and UI to reload the Preview
-          //     </property>
-          //     <property name="justify">center</property>
-          //   </object>
-          // </child>
-        });
-      });
+      } 
 
       if (language === "JavaScript") {
         previewer.update();
@@ -336,7 +338,6 @@ export default function Window({ application }) {
   undo_action.connect("activate", (self, target) => {
     const langs = JSON.parse(target.unpack());
     languages.forEach(({ id, document }) => {
-      print(id);
       if (langs.includes(id))
         document.buffer.undo();
     });
@@ -387,11 +388,17 @@ export default function Window({ application }) {
 
     previewer.useInternal();
 
-    term_console.clear();
-    panel_ui.start();
-    panel_ui.update();
-    previewer.start();
-    previewer.update();
+    // We only automatically run code upon opening a demo
+    // if language is JavaScript and the Code panel is visible
+    if (panel_code.language === "JavaScript" && panel_code.panel.visible) {
+      await runCode(false);
+    } else {
+      term_console.clear();
+      panel_ui.start();
+      panel_ui.update();
+      previewer.start();
+      previewer.update();
+    }
 
     languages.forEach(({ document }) => document.save());
 
