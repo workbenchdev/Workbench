@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: re.sonny.Workbench\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-26 23:31+0200\n"
+"POT-Creation-Date: 2022-06-04 15:25+0200\n"
 "PO-Revision-Date: 2022-05-08 15:35+0000\n"
 "Last-Translator: Anonymous <noreply@weblate.org>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/workbench/workbench/it/>\n"
@@ -68,185 +68,181 @@ msgstr ""
 msgid "console logs"
 msgstr ""
 
-#: data/re.sonny.Workbench.metainfo.xml:36
-msgid "Side by side editors with live preview on the right and console in the bottom"
-msgstr ""
-
-#: data/re.sonny.Workbench.metainfo.xml:43
+#: data/re.sonny.Workbench.metainfo.xml:51
 msgid "Highlights"
 msgstr ""
 
-#: data/re.sonny.Workbench.metainfo.xml:45
+#: data/re.sonny.Workbench.metainfo.xml:53
 msgid "Add Blueprint markup syntax for UI"
 msgstr ""
 
-#: data/re.sonny.Workbench.metainfo.xml:46
+#: data/re.sonny.Workbench.metainfo.xml:54
 msgid "Add Vala programming language for Code"
 msgstr ""
 
-#: data/re.sonny.Workbench.metainfo.xml:47
+#: data/re.sonny.Workbench.metainfo.xml:55
 msgid "Add support for previewing templates"
 msgstr ""
 
-#: data/re.sonny.Workbench.metainfo.xml:48
+#: data/re.sonny.Workbench.metainfo.xml:56
 msgid "Add support for previewing signal handlers"
 msgstr ""
 
-#: data/re.sonny.Workbench.metainfo.xml:49
+#: data/re.sonny.Workbench.metainfo.xml:57
 msgid "Include all icons from icon-development-kit"
 msgstr ""
 
-#: data/re.sonny.Workbench.metainfo.xml:50
+#: data/re.sonny.Workbench.metainfo.xml:58
 msgid "Improve application design"
 msgstr ""
 
-#: data/re.sonny.Workbench.metainfo.xml:51
-#: data/re.sonny.Workbench.metainfo.xml:61
+#: data/re.sonny.Workbench.metainfo.xml:59
+#: data/re.sonny.Workbench.metainfo.xml:69
 msgid "Distribute Library examples under CC0-1.0"
 msgstr ""
 
-#: data/re.sonny.Workbench.metainfo.xml:52
+#: data/re.sonny.Workbench.metainfo.xml:60
 msgid "Respect system preference for color scheme"
 msgstr ""
 
-#: data/re.sonny.Workbench.metainfo.xml:53
+#: data/re.sonny.Workbench.metainfo.xml:61
 msgid "Add proper light/dark color schemes for Console"
 msgstr ""
 
-#: data/re.sonny.Workbench.metainfo.xml:54
-#: data/re.sonny.Workbench.metainfo.xml:66
+#: data/re.sonny.Workbench.metainfo.xml:62
+#: data/re.sonny.Workbench.metainfo.xml:74
 msgid "Fix error when opening file"
 msgstr ""
 
-#: data/re.sonny.Workbench.metainfo.xml:56
+#: data/re.sonny.Workbench.metainfo.xml:64
 msgid "Other changes"
 msgstr ""
 
-#: data/re.sonny.Workbench.metainfo.xml:58
+#: data/re.sonny.Workbench.metainfo.xml:66
 msgid "Silence platform tools"
 msgstr ""
 
-#: data/re.sonny.Workbench.metainfo.xml:59
+#: data/re.sonny.Workbench.metainfo.xml:67
 msgid "Make Library examples only open relevant panels"
 msgstr ""
 
-#: data/re.sonny.Workbench.metainfo.xml:60
+#: data/re.sonny.Workbench.metainfo.xml:68
 msgid "Always open the Console when opening a Library example"
 msgstr ""
 
-#: data/re.sonny.Workbench.metainfo.xml:62
+#: data/re.sonny.Workbench.metainfo.xml:70
 msgid "Prevent running Code if the panel is not visible"
 msgstr ""
 
-#: data/re.sonny.Workbench.metainfo.xml:63
+#: data/re.sonny.Workbench.metainfo.xml:71
 msgid "Add icons and mnemonics for all buttons"
 msgstr ""
 
-#: data/re.sonny.Workbench.metainfo.xml:64
+#: data/re.sonny.Workbench.metainfo.xml:72
 msgid "Move Bookmarks to the main menu"
 msgstr ""
 
-#: data/re.sonny.Workbench.metainfo.xml:65
+#: data/re.sonny.Workbench.metainfo.xml:73
 msgid "Enable scrollbar and kinetic scrolling on Console"
 msgstr ""
 
-#: data/re.sonny.Workbench.metainfo.xml:67
+#: data/re.sonny.Workbench.metainfo.xml:75
 msgid "Improve Library examples"
 msgstr ""
 
-#: data/re.sonny.Workbench.metainfo.xml:68
+#: data/re.sonny.Workbench.metainfo.xml:76
 msgid "Performance optimizations"
 msgstr ""
 
-#: data/re.sonny.Workbench.metainfo.xml:69
+#: data/re.sonny.Workbench.metainfo.xml:77
 msgid "Show a placeholder when all panels are invisible"
 msgstr ""
 
-#: data/re.sonny.Workbench.metainfo.xml:70
+#: data/re.sonny.Workbench.metainfo.xml:78
 msgid "Crash fixes"
 msgstr ""
 
-#: data/re.sonny.Workbench.metainfo.xml:71
+#: data/re.sonny.Workbench.metainfo.xml:79
 msgid "Use org.gnome.Sdk runtime"
 msgstr ""
 
-#: data/re.sonny.Workbench.metainfo.xml:78
+#: data/re.sonny.Workbench.metainfo.xml:86
 msgid "Add a Library of examples"
 msgstr ""
 
-#: data/re.sonny.Workbench.metainfo.xml:79
+#: data/re.sonny.Workbench.metainfo.xml:87
 msgid "Add an example of WebSocket client"
 msgstr ""
 
-#: data/re.sonny.Workbench.metainfo.xml:80
+#: data/re.sonny.Workbench.metainfo.xml:88
 msgid "Add an example of toasts"
 msgstr ""
 
-#: data/re.sonny.Workbench.metainfo.xml:81
+#: data/re.sonny.Workbench.metainfo.xml:89
 msgid "Add an example of application window"
 msgstr ""
 
-#: data/re.sonny.Workbench.metainfo.xml:82
+#: data/re.sonny.Workbench.metainfo.xml:90
 msgid "Add an example of desktop notification"
 msgstr ""
 
-#: data/re.sonny.Workbench.metainfo.xml:84
+#: data/re.sonny.Workbench.metainfo.xml:92
 msgid "Add Adwaita Demo, GTK Demo, GTK Widget Factory and GTK Icon Browser"
 msgstr ""
 
-#: data/re.sonny.Workbench.metainfo.xml:85
+#: data/re.sonny.Workbench.metainfo.xml:93
 msgid "The Console can be collapsed by resizing it"
 msgstr ""
 
-#: data/re.sonny.Workbench.metainfo.xml:86
+#: data/re.sonny.Workbench.metainfo.xml:94
 msgid "Prevent system.exit from quitting Workbench"
 msgstr ""
 
-#: data/re.sonny.Workbench.metainfo.xml:87
+#: data/re.sonny.Workbench.metainfo.xml:95
 msgid "Allow calling GObject.registerClass multiple times"
 msgstr ""
 
-#: data/re.sonny.Workbench.metainfo.xml:88
+#: data/re.sonny.Workbench.metainfo.xml:96
 msgid "Prevent crash caused by using non GtkBuildable objects"
 msgstr ""
 
-#: data/re.sonny.Workbench.metainfo.xml:89
+#: data/re.sonny.Workbench.metainfo.xml:97
 msgid "Allow using DBus and Gio.Application"
 msgstr ""
 
-#: data/re.sonny.Workbench.metainfo.xml:90
+#: data/re.sonny.Workbench.metainfo.xml:98
 msgid "Allow using network"
 msgstr ""
 
-#: data/re.sonny.Workbench.metainfo.xml:91
+#: data/re.sonny.Workbench.metainfo.xml:99
 msgid "Enable GtkWindow objects preview"
 msgstr ""
 
-#: data/re.sonny.Workbench.metainfo.xml:98
+#: data/re.sonny.Workbench.metainfo.xml:106
 msgid "Take a png screenshot of the preview"
 msgstr ""
 
-#: data/re.sonny.Workbench.metainfo.xml:99
+#: data/re.sonny.Workbench.metainfo.xml:107
 msgid "The console is now resizable"
 msgstr ""
 
-#: data/re.sonny.Workbench.metainfo.xml:100
+#: data/re.sonny.Workbench.metainfo.xml:108
 msgid "Redesign the dark/light mode switcher"
 msgstr ""
 
-#: data/re.sonny.Workbench.metainfo.xml:101
+#: data/re.sonny.Workbench.metainfo.xml:109
 msgid "Show platform and dependencies in about dialog"
 msgstr ""
 
-#: data/re.sonny.Workbench.metainfo.xml:102
+#: data/re.sonny.Workbench.metainfo.xml:110
 msgid "Update to GNOME platform 42"
 msgstr ""
 
-#: data/re.sonny.Workbench.metainfo.xml:103
+#: data/re.sonny.Workbench.metainfo.xml:111
 msgid "Various fixes"
 msgstr ""
 
-#: data/re.sonny.Workbench.metainfo.xml:109
+#: data/re.sonny.Workbench.metainfo.xml:117
 msgid "This is the first release of Workbench. We hope you like it."
 msgstr ""
 
