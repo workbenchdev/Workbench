@@ -151,10 +151,10 @@ export default function Window({ application }) {
   style_manager.connect("notify::dark", updateStyle);
 
   button_light.connect("toggled", () => {
-    settings.set_int("color-scheme", Adw.ColorScheme.PREFER_LIGHT);
+    settings.set_int("color-scheme", Adw.ColorScheme.FORCE_LIGHT);
   });
   button_dark.connect("toggled", () => {
-    settings.set_int("color-scheme", Adw.ColorScheme.PREFER_DARK);
+    settings.set_int("color-scheme", Adw.ColorScheme.FORCE_DARK);
   });
 
   settings.bind(
@@ -361,7 +361,7 @@ export default function Window({ application }) {
        = readDemo(demo_name);
     
     const toast = new Adw.Toast({
-      title: _("The demo has been loaded")
+      title: _("The demo has been loaded"),
       button_label: _("Undo"),
       action_name: "win.workbench_undo",
       action_target: GLib.Variant.new_string(JSON.stringify({
