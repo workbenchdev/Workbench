@@ -148,6 +148,7 @@ export function disconnect_signals(target, handler_ids) {
 }
 
 export function replaceBufferText(buffer, text, scroll_start = true) {
+  // this is against GtkSourceView not accounting an empty-string to empty-string change as user-edit
   if (text === "") {
     text = " ";
   }

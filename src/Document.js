@@ -26,7 +26,7 @@ export default function Document({
 
   loadSourceBuffer({ file: source_file, buffer })
     .then((success) => {
-      if (!success) buffer.set_text(placeholder, -1);
+      if (!success) replaceBufferText(buffer, placeholder, true);
     })
     .catch(logError);
   start();
