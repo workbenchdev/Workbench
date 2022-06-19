@@ -87,9 +87,6 @@ namespace Workbench {
           return;
         }
 
-        this.window.present ();
-        this.window_open (true);
-
         void* function;
         this.module.symbol (builder_symbol, out function);
         if (function == null) {
@@ -134,7 +131,9 @@ namespace Workbench {
       this.window.close ();
     }
 
-    public void open_window () {
+    public async void open_window (int width, int height) {
+      this.window.default_width = width;
+      this.window.default_height = height;
       this.window.present ();
     }
     
