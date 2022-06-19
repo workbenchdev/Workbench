@@ -19,11 +19,6 @@ export default function Internal({
 }) {
   const stack = builder.get_object("stack_preview");
 
-  const workbench = (globalThis.workbench = {
-    window,
-    application,
-  });
-
   let css_provider = null;
   let object_root = null;
 
@@ -54,16 +49,23 @@ export default function Internal({
     object_root = null;
   }
 
-  function updateXML({ builder, object_preview }) {
-    workbench.builder = builder;
+  function updateXML({ builder, object_preview, target_id, original_id }) {
+    globalThis.workbench = {
+      window,
+      application,
+      builder,
+    };
+
+    let obj;
     if (object_preview instanceof Gtk.Root) {
-      updateBuilderRoot(object_preview);
+      obj = updateBuilderRoot(object_preview, builder, original_id);
     } else {
-      updateBuilderNonRoot(object_preview);
+      obj = updateBuilderNonRoot(object_preview);
     }
+    builder.expose_object(original_id, obj);
   }
 
-  function updateBuilderRoot(object_preview) {
+  function updateBuilderRoot(object_preview, builder, original_id) {
     stack.set_visible_child_name("open_window");
 
     if (!object_root) {
@@ -107,6 +109,8 @@ export default function Internal({
         }
       }
     }
+
+    return object_root;
   }
 
   function updateBuilderNonRoot(object_preview) {
@@ -115,6 +119,7 @@ export default function Internal({
 
     stack.set_visible_child_name("inline");
     output.set_child(object_preview);
+    return object_preview;
   }
 
   function updateCSS(css) {

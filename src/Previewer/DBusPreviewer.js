@@ -6,6 +6,7 @@ const ifaceXml = `
     <method name="UpdateUi">
       <arg type="s" name="content" direction="in"/>
       <arg type="s" name="target_id" direction="in"/>
+      <arg type="s" name="original_id" direction="in"/>
     </method>
     <method name="UpdateCss">
       <arg type="s" name="content" direction="in"/>

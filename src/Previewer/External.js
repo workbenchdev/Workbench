@@ -53,14 +53,14 @@ export default function Previewer({ builder, onWindowChange }) {
     close();
   }
 
-  function updateXML({ xml, target_id }) {
+  function updateXML({ xml, target_id, original_id }) {
     try {
-      dbus_proxy.UpdateUiSync(xml, target_id);
+      dbus_proxy.UpdateUiSync(xml, target_id, original_id);
     } catch (err) {
       logger.debug(err);
     }
   }
-  
+
   function openInspector() {
     try {
       dbus_proxy.EnableInspectorSync(true);
@@ -68,7 +68,7 @@ export default function Previewer({ builder, onWindowChange }) {
       logger.debug(err);
     }
   }
-  
+
   function closeInspector() {
     try {
       dbus_proxy.EnableInspectorSync(false);
