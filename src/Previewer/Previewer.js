@@ -53,6 +53,7 @@ export default function Previewer({
         useInternal();
       }
     },
+    output,
     builder,
   });
 
