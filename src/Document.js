@@ -27,7 +27,6 @@ export default function Document({
   loadSourceBuffer({ file: source_file, buffer })
     .then((success) => {
       if (!success) replaceBufferText(buffer, placeholder, true);
-      settings.set_boolean("has-edits", false);
     })
     .catch(logError);
   start();
@@ -41,7 +40,6 @@ export default function Document({
     handler_id = buffer.connect("modified-changed", () => {
       if (!buffer.get_modified()) return;
       save();
-      settings.set_boolean("has-edits", true);
     });
   }
 
