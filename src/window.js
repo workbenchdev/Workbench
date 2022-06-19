@@ -361,8 +361,8 @@ export default function Window({ application }) {
        = readDemo(demo_name);
     
     const toast = new Adw.Toast({
-      title: "Loaded Demo",
-      button_label: "Undo",
+      title: _("The demo has been loaded")
+      button_label: _("Undo"),
       action_name: "win.workbench_undo",
       action_target: GLib.Variant.new_string(JSON.stringify({
         updated: ["javascript", "css", "xml", "blueprint", "vala"],
@@ -435,7 +435,7 @@ export default function Window({ application }) {
     const language = getLanguageForFile(file);
     if (!language) {
       const toast = new Adw.Toast({
-        title: _("This file can not be loaded"),
+        title: _("This file cannot be loaded"),
       });
       toast_overlay.add_toast(toast);
       return;
