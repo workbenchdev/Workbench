@@ -19,15 +19,14 @@ export default function Document({
   const file = Gio.File.new_for_path(
     GLib.build_filenamev([data_dir, `state.${ext}`])
   );
-  
+
   const source_file = new Source.File({
     location: file,
   });
 
   loadSourceBuffer({ file: source_file, buffer })
     .then((success) => {
-      if (!success) replaceBufferText(buffer, placeholder, true);
-      settings.set_boolean("has-edits", false);
+      if (!success) buffer.set_text(placeholder, -1);
     })
     .catch(logError);
   start();
@@ -41,7 +40,6 @@ export default function Document({
     handler_id = buffer.connect("modified-changed", () => {
       if (!buffer.get_modified()) return;
       save();
-      settings.set_boolean("has-edits", true);
     });
   }
 

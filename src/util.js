@@ -148,7 +148,7 @@ export function disconnect_signals(target, handler_ids) {
 }
 
 export function replaceBufferText(buffer, text, scroll_start = true) {
-  if (text == "") {
+  if (text === "") {
     text = " ";
   }
   buffer.begin_user_action();

@@ -261,7 +261,7 @@ export default function Window({ application }) {
             // </child>
           });
         });
-      } 
+      }
 
       if (language === "JavaScript") {
         previewer.update();
@@ -319,7 +319,6 @@ export default function Window({ application }) {
 
   const action_run = new Gio.SimpleAction({
     name: "run",
-    parameter_type: null,
   });
   action_run.connect("activate", () => {
     // Ensure code does not run if panel is not visible
@@ -332,7 +331,6 @@ export default function Window({ application }) {
 
   const undo_action = new Gio.SimpleAction({
     name: "workbench_undo",
-    parameter_type: null,
     parameter_type: new GLib.VariantType("s"),
   });
   undo_action.connect("activate", (self, target) => {
@@ -361,7 +359,6 @@ export default function Window({ application }) {
       )),
     });
     toast_overlay.add_toast(toast);
-    settings.set_boolean("has-edits", false);
 
     panel_ui.stop();
     previewer.stop();
@@ -402,8 +399,6 @@ export default function Window({ application }) {
 
     languages.forEach(({ document }) => document.save());
 
-    settings.set_boolean("has-edits", false);
-
     languages.forEach(({ document }) => document.start());
 
     term_console.scrollToEnd();
@@ -420,22 +415,21 @@ export default function Window({ application }) {
     const language = getLanguageForFile(file);
     if (!language) {
       const toast = new Adw.Toast({
-        title: "File is not loadable",
+        title: _("This file can not be loaded"),
       });
       toast_overlay.add_toast(toast);
       return;
     }
     
     const toast = new Adw.Toast({
-      title: "Opened File",
-      button_label: "Undo",
+      title: _("The file has been loaded"),
+      button_label: _("Undo"),
       action_name: "win.workbench_undo",
       action_target: GLib.Variant.new_string(JSON.stringify(
         [language.id],
       )),
     });
     toast_overlay.add_toast(toast);
-    settings.set_boolean("has-edits", false);
 
     let data;
 
@@ -467,8 +461,6 @@ export default function Window({ application }) {
     if (language.panel === "ui") {
       settings.set_boolean(`show-preview`, true);
     }
-
-    settings.set_boolean("has-edits", false);
   }
   return { window, openFile };
 }
