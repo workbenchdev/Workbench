@@ -334,11 +334,21 @@ export default function Window({ application }) {
     parameter_type: new GLib.VariantType("s"),
   });
   undo_action.connect("activate", (self, target) => {
-    const langs = JSON.parse(target.unpack());
+    const updated = JSON.parse(target.unpack()).updated;
     languages.forEach(({ id, document }) => {
-      if (langs.includes(id))
+      if (updated.includes(id))
         document.buffer.undo();
     });
+
+    const panels = JSON.parse(target.unpack()).panels;
+    settings.set_boolean("show-code", panels[0]);
+    settings.set_boolean("show-style", panels[1]);
+    settings.set_boolean("show-ui", panels[2]);
+    settings.set_boolean("show-preview", panels[3]);
+
+    const langs = JSON.parse(target.unpack()).langs;
+    settings.set_int("code-language", langs[0]);
+    settings.set_string("ui-lang", langs[1]);
   });
   window.add_action(undo_action);
   
@@ -354,9 +364,19 @@ export default function Window({ application }) {
       title: "Loaded Demo",
       button_label: "Undo",
       action_name: "win.workbench_undo",
-      action_target: GLib.Variant.new_string(JSON.stringify(
-        ["javascript", "css", "xml", "blueprint", "vala"]
-      )),
+      action_target: GLib.Variant.new_string(JSON.stringify({
+        updated: ["javascript", "css", "xml", "blueprint", "vala"],
+        panels: [
+          settings.get_boolean("show-code"),
+          settings.get_boolean("show-style"),
+          settings.get_boolean("show-ui"),
+          settings.get_boolean("show-preview")
+        ],
+        langs: [
+          settings.get_int("code-language"),
+          settings.get_string("ui-lang")
+        ]
+      })),
     });
     toast_overlay.add_toast(toast);
 
@@ -425,9 +445,19 @@ export default function Window({ application }) {
       title: _("The file has been loaded"),
       button_label: _("Undo"),
       action_name: "win.workbench_undo",
-      action_target: GLib.Variant.new_string(JSON.stringify(
-        [language.id],
-      )),
+      action_target: GLib.Variant.new_string(JSON.stringify({
+        updated: [language.id],
+        panels: [
+          settings.get_boolean("show-code"),
+          settings.get_boolean("show-style"),
+          settings.get_boolean("show-ui"),
+          settings.get_boolean("show-preview")
+        ],
+        langs: [
+          settings.get_int("code-language"),
+          settings.get_string("ui-lang")
+        ]
+      })),
     });
     toast_overlay.add_toast(toast);
 
