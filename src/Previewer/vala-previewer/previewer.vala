@@ -135,6 +135,7 @@ namespace Workbench {
       this.window.default_width = width;
       this.window.default_height = height;
       this.window.present ();
+      this.window_open (true);
     }
     
     public void enable_inspector (bool enabled) {
