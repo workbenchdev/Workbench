@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: re.sonny.Workbench\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-04 15:25+0200\n"
-"PO-Revision-Date: 2022-06-10 11:14+0000\n"
+"PO-Revision-Date: 2022-06-22 22:18+0000\n"
 "Last-Translator: Daudix UFO <ddaudix@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/workbench/workbench/ru/>\n"
 "Language: ru\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.13-dev\n"
+"X-Generator: Weblate 4.13.1-dev\n"
 
 #. TRANSLATORS: Don't translate
 #: data/re.sonny.Workbench.desktop:4
@@ -204,298 +204,302 @@ msgstr "Разрешен вызов GObject.registerClass несколько р�
 
 #: data/re.sonny.Workbench.metainfo.xml:96
 msgid "Prevent crash caused by using non GtkBuildable objects"
-msgstr ""
+msgstr "Предотвращение сбоя, вызванного использованием объектов, отличных от GtkBuildable"
 
 #: data/re.sonny.Workbench.metainfo.xml:97
 msgid "Allow using DBus and Gio.Application"
-msgstr ""
+msgstr "Разрешено использование DBus и Gio.Application"
 
 #: data/re.sonny.Workbench.metainfo.xml:98
 msgid "Allow using network"
-msgstr ""
+msgstr "Разрешено использование интернета"
 
 #: data/re.sonny.Workbench.metainfo.xml:99
 msgid "Enable GtkWindow objects preview"
-msgstr ""
+msgstr "Включен предварительный просмотр объектов GtkWindow"
 
 #: data/re.sonny.Workbench.metainfo.xml:106
 msgid "Take a png screenshot of the preview"
-msgstr ""
+msgstr "Теперь можно делать скриншот предварительного просмотра в формате png"
 
 #: data/re.sonny.Workbench.metainfo.xml:107
 msgid "The console is now resizable"
-msgstr ""
+msgstr "Размер консоли теперь можно изменять"
 
 #: data/re.sonny.Workbench.metainfo.xml:108
 msgid "Redesign the dark/light mode switcher"
-msgstr ""
+msgstr "Переработан переключатель темного/светлого режима"
 
 #: data/re.sonny.Workbench.metainfo.xml:109
 msgid "Show platform and dependencies in about dialog"
-msgstr ""
+msgstr "Теперь показана платформа и зависимости в диалоговом окне «О программе»"
 
 #: data/re.sonny.Workbench.metainfo.xml:110
 msgid "Update to GNOME platform 42"
-msgstr ""
+msgstr "Обновление до платформы GNOME 42"
 
 #: data/re.sonny.Workbench.metainfo.xml:111
 msgid "Various fixes"
-msgstr ""
+msgstr "Различные исправления"
 
 #: data/re.sonny.Workbench.metainfo.xml:117
 msgid "This is the first release of Workbench. We hope you like it."
-msgstr ""
+msgstr "Это первый выпуск Workbench. Мы надеемся, что Вам понравится."
 
 #: src/Library/Library.blp:7
 msgid "Library"
-msgstr ""
+msgstr "Библиотека"
 
 #: src/Library/demos/Application window/main.blp:50 src/shortcutsWindow.blp:49
 #: src/window.blp:652
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Комбинации клавиш"
 
 #: src/Library/demos/Application window/main.blp:55
 msgid "About My App"
-msgstr ""
+msgstr "О моем приложении"
 
 #: src/about.js:31
 msgid ""
 "Learn and prototype with\n"
 "GNOME technologies"
 msgstr ""
+"Учитесь и прототипируйте с\n"
+"технологиями GNOME"
 
 #. TRANSLATORS: eg. 'Translator Name <your.email@domain.com>' or 'Translator Name https://website.example'
 #: src/about.js:40
 msgid "translator-credits"
-msgstr ""
+msgstr "Давид Лапшин <ddaudix@gmail.com>"
 
 #: src/actions.js:51 src/shortcutsWindow.blp:16
 msgid "Import File"
-msgstr ""
+msgstr "Импортировать файл"
 
 #: src/actions.js:133
 msgid "All supported"
-msgstr ""
+msgstr "Все поддерживается"
 
 #: src/shortcutsWindow.blp:11
 msgid "Run Code"
-msgstr ""
+msgstr "Запустить код"
 
 #: src/shortcutsWindow.blp:21
 msgid "Open Library"
-msgstr ""
+msgstr "Открыть библиотеку"
 
 #: src/shortcutsWindow.blp:26
 msgid "Toggle Console"
-msgstr ""
+msgstr "Переключить консоль"
 
 #: src/shortcutsWindow.blp:31
 msgid "Clear Console"
-msgstr ""
+msgstr "Очистить консоль"
 
 #: src/shortcutsWindow.blp:37
 msgid "Inspector"
-msgstr ""
+msgstr "Инспектор"
 
 #: src/shortcutsWindow.blp:41
 msgid "Undo"
-msgstr ""
+msgstr "Назад"
 
 #: src/shortcutsWindow.blp:45
 msgid "Redo"
-msgstr ""
+msgstr "Вперед"
 
 #: src/shortcutsWindow.blp:53
 msgid "Quit"
-msgstr ""
+msgstr "Выйти"
 
 #: src/window.blp:15
 msgid "_Library"
-msgstr ""
+msgstr "_Библиотека"
 
 #: src/window.blp:19
 msgid "Open Library of Demos and Examples (Ctrl+Shift+O)"
-msgstr ""
+msgstr "Открыть библиотеку демонстраций и примеров (Ctrl+Shift+O)"
 
 #: src/window.blp:37
 msgid "_Code"
-msgstr ""
+msgstr "_Код"
 
 #: src/window.blp:54
 msgid "_Style"
-msgstr ""
+msgstr "_Стиль"
 
 #: src/window.blp:71
 msgid "_UI"
-msgstr ""
+msgstr "_UI"
 
 #: src/window.blp:88
 msgid "_Preview"
-msgstr ""
+msgstr "_Предпросмотр"
 
 #: src/window.blp:109
 msgid "sun-symbolic"
-msgstr ""
+msgstr "sun-symbolic"
 
 #: src/window.blp:110 src/window.blp:113
 msgid "Use Light mode"
-msgstr ""
+msgstr "Использовать светлый режим"
 
 #: src/window.blp:118
 msgid "workbench-moon-rounded-symbolic"
-msgstr ""
+msgstr "workbench-moon-rounded-symbolic"
 
 #: src/window.blp:119 src/window.blp:122
 msgid "Use Dark mode"
-msgstr ""
+msgstr "Использовать темный режим"
 
 #: src/window.blp:149
 msgid "<b>Code</b>"
-msgstr ""
+msgstr "<b>Код</b>"
 
 #: src/window.blp:165 src/window.blp:321
 msgid "Switch document"
-msgstr ""
+msgstr "Переключить документ"
 
 #: src/window.blp:173
 msgid "_Run"
-msgstr ""
+msgstr "_Запустить"
 
 #: src/window.blp:177
 msgid "Run (Ctrl+⏎)"
-msgstr ""
+msgstr "Запустить (Ctrl+⏎)"
 
 #: src/window.blp:248
 msgid "<b>Style CSS</b>"
-msgstr ""
+msgstr "<b>Стиль CSS</b>"
 
 #: src/window.blp:293
 msgid "<b>UI</b>"
-msgstr ""
+msgstr "<b>UI</b>"
 
 #: src/window.blp:333 src/window.blp:335
 msgid "Convert to XML"
-msgstr ""
+msgstr "Конвертировать в XML"
 
 #: src/window.blp:344 src/window.blp:346
 msgid "Convert to Blueprint"
-msgstr ""
+msgstr "Конвертировать в Blueprint"
 
 #: src/window.blp:420
 msgid "<b>Preview</b>"
-msgstr ""
+msgstr "<b>Предпросмотр</b>"
 
 #: src/window.blp:428 src/window.blp:430
 msgid "Take Screenshot of Preview"
-msgstr ""
+msgstr "Сделать скриншот предпросмотра"
 
 #: src/window.blp:460 src/window.blp:478
 msgid "Windowed Preview"
-msgstr ""
+msgstr "Предпросмотр в окне"
 
 #: src/window.blp:461 src/window.blp:479
 msgid ""
 "This interface can only be previewed as a separate window.\n"
 "We recommend using “Always on Top”"
 msgstr ""
+"Этот интерфейс можно просмотреть только как отдельное окно.\n"
+"Мы рекомендуем использовать «Всегда сверху»"
 
 #: src/window.blp:468
 msgid "Show Preview Window"
-msgstr ""
+msgstr "Показать окно предпросмотра"
 
 #: src/window.blp:486
 msgid "Close Preview Window"
-msgstr ""
+msgstr "Закрыть окно предпросмотра"
 
 #: src/window.blp:520
 msgid "C_onsole"
-msgstr ""
+msgstr "К_онсоль"
 
 #: src/window.blp:524
 msgid "Show logs (Ctrl+Shift+K)"
-msgstr ""
+msgstr "Показать логи (Ctrl+Shift+K)"
 
 #: src/window.blp:530
 msgid "_Inspector"
-msgstr ""
+msgstr "_Инспектор"
 
 #: src/window.blp:533
 msgid "Open GTK Inspector (Ctrl+Shift+I)"
-msgstr ""
+msgstr "Открыть GTK Inspector (Ctrl+Shift+I)"
 
 #: src/window.blp:544
 msgid "Cl_ear"
-msgstr ""
+msgstr "Оч_истить"
 
 #: src/window.blp:548
 msgid "Clear console (Ctrl+K)"
-msgstr ""
+msgstr "Очистить консоль (Ctrl+K)"
 
 #: src/window.blp:570
 msgid "Import File…"
-msgstr ""
+msgstr "Импортировать файл…"
 
 #: src/window.blp:575
 msgid "Bookmarks"
-msgstr ""
+msgstr "Закладки"
 
 #: src/window.blp:577
 msgid "Learn"
-msgstr ""
+msgstr "Учитесь"
 
 #: src/window.blp:580
 msgid "Developer Documentation"
-msgstr ""
+msgstr "Документация для разработчиков"
 
 #: src/window.blp:587
 msgid "Human Interface Guidelines"
-msgstr ""
+msgstr "Рекомендации по человеческому интерфейсу"
 
 #: src/window.blp:593
 msgid "JavaScript"
-msgstr ""
+msgstr "JavaScript"
 
 #: src/window.blp:599
 msgid "Vala"
-msgstr ""
+msgstr "Vala"
 
 #: src/window.blp:605
 msgid "Blueprint"
-msgstr ""
+msgstr "Blueprint"
 
 #: src/window.blp:612
 msgid "Get help"
-msgstr ""
+msgstr "Получить помощь"
 
 #: src/window.blp:615
 msgid "Discourse"
-msgstr ""
+msgstr "Обсудить"
 
 #: src/window.blp:621
 msgid "Matrix"
-msgstr ""
+msgstr "Matrix"
 
 #: src/window.blp:629
 msgid "Platform Tools"
-msgstr ""
+msgstr "Инструменты платформы"
 
 #: src/window.blp:632
 msgid "Adwaita Demo"
-msgstr ""
+msgstr "Adwaita Demo"
 
 #: src/window.blp:638
 msgid "GTK Demo"
-msgstr ""
+msgstr "GTK Demo"
 
 #: src/window.blp:644
 msgid "GTK Widget Factory"
-msgstr ""
+msgstr "GTK Widget Factory"
 
 #: src/window.blp:657
 msgid "About Workbench"
-msgstr ""
+msgstr "О Workbench"
 
 #: src/window.js:396
 msgid "Are you sure you want to discard your changes?"
-msgstr ""
+msgstr "Вы уверены, что хотите отменить изменения?"
