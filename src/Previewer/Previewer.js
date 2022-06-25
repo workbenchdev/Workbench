@@ -125,10 +125,11 @@ export default function Previewer({
     let text = panel_ui.xml.trim();
     let target_id;
     let tree;
+    let original_id;
 
     try {
       tree = ltx.parse(text);
-      [target_id, text] = targetBuildable(tree);
+      [target_id, text, original_id] = targetBuildable(tree);
     } catch (err) {
       // logError(err);
       logger.debug(err);
@@ -165,7 +166,13 @@ export default function Previewer({
     const object_preview = builder.get_object(target_id);
     if (!object_preview) return;
 
-    current.updateXML({ xml: text, builder, object_preview, target_id });
+    current.updateXML({
+      xml: text,
+      builder,
+      object_preview,
+      target_id,
+      original_id,
+    });
     current.updateCSS(buffer_css.text);
   }
 
@@ -317,11 +324,11 @@ function targetBuildable(tree) {
     return [null, ""];
   }
 
-  if (!child.attrs.id) {
-    child.attrs.id = "workbench_target";
-  }
+  const original_id = child.attrs.id;
+  const target_id = "workbench_" + Math.random().toString().substring(2);
+  child.attrs.id = target_id;
 
-  return [child.attrs.id, tree.toString()];
+  return [target_id, tree.toString(), original_id];
 }
 
 // TODO: GTK Builder shouldn't crash when encountering a non buildable

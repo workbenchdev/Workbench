@@ -20,13 +20,14 @@ namespace Workbench {
       });
     }
 
-    public void update_ui (string content, string target_id) {
+    public void update_ui (string content, string target_id, string original_id) {
       this.builder = new Gtk.Builder.from_string (content, content.length);
       var target = this.builder.get_object (target_id) as Gtk.Widget;
       if (target == null) {
         stderr.printf (@"Widget with target_id='$target_id' could not be found.\n");
           return;
       }
+      this.builder.expose_object(original_id, target);
       if (target is Gtk.Root) {
         if (!(this.window.get_type () == target.get_type ())) {
           this.window.destroy ();
@@ -137,7 +138,7 @@ namespace Workbench {
       this.window.present ();
       this.window_open (true);
     }
-    
+
     public void enable_inspector (bool enabled) {
       Gtk.Window.set_interactive_debugging (enabled);
     }
