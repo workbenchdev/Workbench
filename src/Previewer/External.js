@@ -3,7 +3,7 @@ import Gio from "gi://Gio";
 import logger from "../logger.js";
 import DBusPreviewer from "./DBusPreviewer.js";
 
-export default function Previewer({ builder, onWindowChange }) {
+export default function Previewer({ output, builder, onWindowChange }) {
   const stack = builder.get_object("stack_preview");
 
   (function start_process() {
@@ -33,7 +33,7 @@ export default function Previewer({ builder, onWindowChange }) {
     updateColorScheme();
     stack.set_visible_child_name("close_window");
     try {
-      dbus_proxy.OpenWindowSync();
+      dbus_proxy.OpenWindowSync(output.get_allocated_width(), output.get_allocated_height());
     } catch (err) {
       logger.debug(err);
     }

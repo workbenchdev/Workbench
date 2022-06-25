@@ -21,6 +21,8 @@ const ifaceXml = `
     <method name="CloseWindow">
     </method>
     <method name="OpenWindow">
+      <arg type="i" name="width" direction="in"/>
+      <arg type="i" name="height" direction="in"/>
     </method>
     <method name="EnableInspector">
       <arg type="b" name="enabled" direction="in"/>
