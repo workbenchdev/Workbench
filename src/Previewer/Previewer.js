@@ -118,11 +118,10 @@ export default function Previewer({
     }
   );
 
-  let scope;
   let symbols = null;
   function update() {
     const builder = new Gtk.Builder();
-    scope = new BuilderScope();
+    const scope = new BuilderScope();
     builder.set_scope(scope);
 
     let text = panel_ui.xml.trim();
@@ -353,7 +352,11 @@ function assertBuildable(tree) {
   }
 }
 
-function makeSignalHandler({ name, handler, after, id, type }, symbols) {
+function makeSignalHandler(
+  { name, handler, after, id, type },
+  symbols,
+  original_id
+) {
   return function (object, ...args) {
     const symbol = symbols?.[handler];
     const registered_handler = typeof symbol === "function";
@@ -361,6 +364,7 @@ function makeSignalHandler({ name, handler, after, id, type }, symbols) {
       symbol(object, ...args);
     }
 
+    if (id?.startsWith("workbench_")) id = "";
     const object_name = `${type}${id ? "$" + id : ""}`;
     // const object_name = object.toString(); // [object instance wrapper GIName:Gtk.Button jsobj@0x2937abc5c4c0 native@0x55fbfe53f620]
     logger.log(
