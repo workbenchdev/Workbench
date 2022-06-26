@@ -9,13 +9,13 @@ Gtk.ApplicationWindow window {
   maximized: true;
   titlebar: Gtk.HeaderBar {
     [start]
-    ToggleButton button_library {
+    Button button_library {
       child: Adw.ButtonContent {
-        icon-name: "open-book-symbolic";
+        icon-name: "workbench-library-symbolic";
         label: _("_Library");
         use-underline: true;
       };
-      //action-name: "win.library";
+      action-name: "win.library";
       tooltip-text: _("Open Library of Demos and Examples (Ctrl+Shift+O)");
     }
 
@@ -106,7 +106,7 @@ Gtk.ApplicationWindow window {
       styles ["linked"]
 
       ToggleButton button_light {
-        icon-name: _("sun-symbolic");
+        icon-name: "sun-symbolic";
         tooltip-text: _("Use Light mode");
 
         accessibility {
@@ -115,7 +115,7 @@ Gtk.ApplicationWindow window {
       }
 
       ToggleButton button_dark {
-        icon-name: _("workbench-moon-rounded-symbolic");
+        icon-name: "workbench-moon-rounded-symbolic";
         tooltip-text: _("Use Dark mode");
 
         accessibility {
@@ -125,19 +125,8 @@ Gtk.ApplicationWindow window {
     }
   };
 
-  Adw.Flap flap {
-    reveal-flap: bind button_library.active bidirectional;
-    // TODO: auto when only one panel is open
-    fold-policy: always;
-    locked: true;
-
-    [flap]
-    Box {
-      width-request: 200;
-      styles ["background"]
-    }
-
-    [content]
+  [content]
+  Adw.ToastOverlay toast_overlay {
     Paned paned {
       orientation: vertical;
       shrink-start-child: false;
@@ -174,6 +163,7 @@ Gtk.ApplicationWindow window {
                     "Vala",
                   ]
                 };
+                tooltip-text: _("Switch document");
               }
             }
 
@@ -208,7 +198,6 @@ Gtk.ApplicationWindow window {
                     };
                     monospace: true;
                     auto-indent: true;
-                    background-pattern: grid;
                     highlight-current-line: true;
                     indent-on-tab: true;
                     indent-width: 2;
@@ -229,7 +218,6 @@ Gtk.ApplicationWindow window {
                     };
                     monospace: true;
                     auto-indent: true;
-                    background-pattern: grid;
                     highlight-current-line: true;
                     indent-on-tab: true;
                     indent-width: 2;
@@ -277,7 +265,6 @@ Gtk.ApplicationWindow window {
                 };
                 monospace: true;
                 auto-indent: true;
-                background-pattern: grid;
                 highlight-current-line: true;
                 indent-on-tab: true;
                 indent-width: 2;
@@ -329,6 +316,34 @@ Gtk.ApplicationWindow window {
                   blueprint: "Blueprint",
                   xml: "XML",
                 ]
+                tooltip-text: _("Switch document");
+              }
+            }
+
+            [end]
+            Stack stack_ui_export {
+              visible-child-name: bind stack_ui.visible-child-name;
+
+              StackPage {
+                name: 'blueprint';
+                child: Button button_ui_export_xml {
+                  icon-name: "horizontal-arrows-right-symbolic";
+                  tooltip-text: _("Convert to XML");
+                  accessibility {
+                    label: _("Convert to XML");
+                  }
+                };
+              }
+
+              StackPage {
+                name: 'xml';
+                child: Button button_ui_export_blueprint {
+                  icon-name: "horizontal-arrows-left-symbolic";
+                  tooltip-text: _("Convert to Blueprint");
+                  accessibility {
+                    label: _("Convert to Blueprint");
+                  }
+                };
               }
             }
 
@@ -352,7 +367,6 @@ Gtk.ApplicationWindow window {
                     };
                     monospace: true;
                     auto-indent: true;
-                    background-pattern: grid;
                     highlight-current-line: true;
                     indent-on-tab: true;
                     indent-width: 2;
@@ -374,7 +388,6 @@ Gtk.ApplicationWindow window {
                     };
                     monospace: true;
                     auto-indent: true;
-                    background-pattern: grid;
                     highlight-current-line: true;
                     indent-on-tab: true;
                     indent-width: 2;
@@ -441,7 +454,7 @@ Gtk.ApplicationWindow window {
               name: "open_window";
               child: Adw.StatusPage {
                 title: _("Windowed Preview");
-                description: _("This interface can only be previewed as a separate window.\nWe recommend using “Always on Top”");
+                description: _("This interface can only be previewed as a separate window.\nWe recommend using “Always on Top”.");
                 icon-name: "multitasking-windows-symbolic";
 
                 Box {
@@ -459,7 +472,7 @@ Gtk.ApplicationWindow window {
               name: "close_window";
               child: Adw.StatusPage {
                 title: _("Windowed Preview");
-                description: _("This interface can only be previewed as a separate window.\nWe recommend using “Always on Top”");
+                description: _("This interface can only be previewed as a separate window.\nWe recommend using “Always on Top”.");
                 icon-name: "multitasking-windows-symbolic";
 
                 Box {
@@ -540,6 +553,7 @@ Gtk.ApplicationWindow window {
               enable-fallback-scrolling: false;
               hexpand: true;
               input-enabled: false;
+              scrollback-lines: 512;
             }
           }
         }
@@ -550,7 +564,7 @@ Gtk.ApplicationWindow window {
 
 menu menu_app {
   item {
-    label: _("Open File…");
+    label: _("Import File…");
     action: "app.open";
   }
 
@@ -560,43 +574,22 @@ menu menu_app {
       label: _("Learn");
 
       item {
-        label: _("GNOME JavaScript (GJS)");
+        label: _("Developer Documentation");
         action: "app.open_uri";
-        target: "https://gjs.guide/guides/";
+        target: "https://developer.gnome.org/documentation/index.html";
       }
 
+
       item {
-        label: _("Human Interface Guidelines (HIG)");
+        label: _("Human Interface Guidelines");
         action: "app.open_uri";
         target: "https://developer.gnome.org/hig/";
       }
 
       item {
-        label: _("UI components");
-        action: "app.open_uri";
-        target: "https://developer.gnome.org/documentation/tutorials/beginners/components.html";
-      }
-
-      item {
-        label: _("Platform components");
-        action: "app.open_uri";
-        target: "https://developer.gnome.org/documentation/introduction/components.html";
-      }
-    }
-
-    section {
-      label: _("Reference");
-
-      item {
         label: _("JavaScript");
         action: "app.open_uri";
-        target: "https://developer.mozilla.org/docs/Web/JavaScript/Guide";
-      }
-
-      item {
-        label: _("GJS");
-        action: "app.open_uri";
-        target: "https://gjs-docs.gnome.org/";
+        target: "https://gjs.guide";
       }
 
       item {
@@ -606,15 +599,9 @@ menu menu_app {
       }
 
       item {
-        label: _("Gtk");
+        label: _("Blueprint");
         action: "app.open_uri";
-        target: "https://docs.gtk.org/gtk4/";
-      }
-
-      item {
-        label: _("Adwaita");
-        action: "app.open_uri";
-        target: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.1/";
+        target: "https://gitlab.gnome.org/jwestman/blueprint-compiler";
       }
     }
 

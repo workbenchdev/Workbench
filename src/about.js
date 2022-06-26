@@ -20,7 +20,9 @@ GJS ${getGjsVersion()}
 Adw ${getGIRepositoryVersion(Adw)}
 GTK ${getGIRepositoryVersion(Gtk)}
 GLib ${getGLibVersion()}
-flatpak ${flatpak_info.get_string("Instance", "flatpak-version")}
+Flatpak ${flatpak_info.get_string("Instance", "flatpak-version")}
+${getValaVersion()}
+${getBlueprintVersion()}
 `.trim();
 
   const dialog = new Gtk.AboutDialog({
@@ -41,6 +43,7 @@ flatpak ${flatpak_info.get_string("Instance", "flatpak-version")}
   dialog.add_credit_section("Contributors", [
     "Lorenz Wildberg https://gitlab.gnome.org/lwildberg",
     "Tobias Bernard <tbernard@gnome.org>",
+    "Ben Foote http://www.bengineeri.ng",
     // Add yourself as
     // "John Doe",
     // or
@@ -51,4 +54,14 @@ flatpak ${flatpak_info.get_string("Instance", "flatpak-version")}
   dialog.present();
 
   return { dialog };
+}
+
+function getValaVersion() {
+  const [, data] = GLib.spawn_command_line_sync("valac --version");
+  return new TextDecoder().decode(data).trim();
+}
+
+function getBlueprintVersion() {
+  // https://gitlab.gnome.org/jwestman/blueprint-compiler/-/issues/61
+  return "Blueprint 0.2.0-Workbench";
 }

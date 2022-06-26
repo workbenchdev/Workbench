@@ -32,18 +32,50 @@
       <image>
         https://raw.githubusercontent.com/sonnyp/Workbench/main/data/screenshot.png
       </image>
-      <caption
-      >Side by side editors with live preview on the right and console in the bottom</caption>
+    </screenshot>
+    <screenshot>
+      <image>
+        https://raw.githubusercontent.com/sonnyp/Workbench/main/data/screenshot-code.png
+      </image>
+    </screenshot>
+    <screenshot>
+      <image>
+        https://raw.githubusercontent.com/sonnyp/Workbench/main/data/screenshot-library.png
+      </image>
     </screenshot>
   </screenshots>
   <content_rating type="oars-1.1" />
   <releases>
-    <release version="42.0" date="">
+    <release version="42.0" date="2022-06-04">
       <description>
+        <p>Highlights</p>
         <ul>
-          <li>Support Blueprint UI syntax</li>
-          <li>Support Vala</li>
-          <li>Include icons from icon-development-kit</li>
+          <li>Add Blueprint markup syntax for UI</li>
+          <li>Add Vala programming language for Code</li>
+          <li>Add support for previewing templates</li>
+          <li>Add support for previewing signal handlers</li>
+          <li>Include all icons from icon-development-kit</li>
+          <li>Improve application design</li>
+          <li>Distribute Library examples under CC0-1.0</li>
+          <li>Respect system preference for color scheme</li>
+          <li>Add proper light/dark color schemes for Console</li>
+          <li>Fix error when importing files</li>
+        </ul>
+        <p>Other changes</p>
+        <ul>
+          <li>Silence platform tools</li>
+          <li>Remove GTK Icon browser platform tool</li>
+          <li>Make Library examples only open relevant panels</li>
+          <li>Always open the Console when opening a Library example</li>
+          <li>Prevent running Code if the panel is not visible</li>
+          <li>Add icons and mnemonics for all buttons</li>
+          <li>Move Bookmarks to the main menu</li>
+          <li>Enable scrollbar and kinetic scrolling on Console</li>
+          <li>Improve Library examples</li>
+          <li>Performance optimizations</li>
+          <li>Show a placeholder when all panels are invisible</li>
+          <li>Crash fixes</li>
+          <li>Use org.gnome.Sdk runtime</li>
         </ul>
       </description>
     </release>

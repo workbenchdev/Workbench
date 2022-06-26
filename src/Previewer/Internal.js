@@ -5,6 +5,7 @@ import GLib from "gi://GLib";
 import Graphene from "gi://Graphene";
 import Xdp from "gi://Xdp";
 import XdpGtk from "gi://XdpGtk4";
+import GObject from "gi://GObject";
 
 import logger from "../logger.js";
 import { portal } from "../util.js";
@@ -17,11 +18,6 @@ export default function Internal({
   application,
 }) {
   const stack = builder.get_object("stack_preview");
-
-  const workbench = (globalThis.workbench = {
-    window,
-    application,
-  });
 
   let css_provider = null;
   let object_root = null;
@@ -53,25 +49,80 @@ export default function Internal({
     object_root = null;
   }
 
-  function updateXML({ builder, object_preview }) {
-    workbench.builder = builder;
+  function updateXML({ builder, object_preview, target_id, original_id }) {
+    globalThis.workbench = {
+      window,
+      application,
+      builder,
+    };
+
+    let obj;
     if (object_preview instanceof Gtk.Root) {
-      updateBuilderRoot(object_preview);
+      obj = updateBuilderRoot(object_preview, builder, original_id);
     } else {
-      updateBuilderNonRoot(object_preview);
+      obj = updateBuilderNonRoot(object_preview);
+    }
+
+    if (original_id) {
+      builder.expose_object(original_id, obj);
     }
   }
 
-  function updateBuilderRoot(object_preview) {
+  function setObjectRoot(object) {
+    object_root = object;
+    object_root.set_hide_on_close(true);
+    object_root.connect("close-request", () => {
+      onWindowChange(false);
+    });
+  }
+
+  function updateBuilderRoot(object_preview, builder, original_id) {
     stack.set_visible_child_name("open_window");
+
     if (!object_root) {
-      object_root = object_preview;
-      object_root.set_hide_on_close(true);
-      object_root.connect("close-request", () => {
-        onWindowChange(false);
-      });
+      setObjectRoot(object_preview);
+    } else if (
+      object_root.constructor.$gtype !== object_preview.constructor.$gtype
+    ) {
+      object_root.destroy();
+      setObjectRoot(object_preview);
+    } else {
+      for (const prop of object_root.constructor.list_properties()) {
+        if (!(prop.flags & GObject.ParamFlags.WRITABLE)) continue;
+        if (!(prop.flags & GObject.ParamFlags.READABLE)) continue;
+        if (prop.flags & GObject.ParamFlags.CONSTRUCT_ONLY) continue;
+
+        const prop_name = prop.get_name();
+        if (
+          [
+            // The new window does not have "csd" at this time
+            "css-classes",
+            // Triggers
+            // Gtk-CRITICAL Widget of type “GtkApplicationWindow” already has an accessible role of type “GTK_ACCESSIBLE_ROLE_WIDGET”
+            "accessible-role",
+            // These properties override current window size
+            "default-width",
+            "default-height",
+          ].includes(prop_name)
+        ) {
+          continue;
+        }
+
+        const new_value = object_preview[prop_name];
+        if (new_value instanceof Gtk.Widget) {
+          // Remove parent widget to prevent
+          // Can't set new parent  0x5649879daa40 on widget GtkHeaderBar 0x564987790d90, which already has parent GtkApplicationWindow 0x564988f31a40
+          object_preview[prop_name] = null;
+        }
+
+        const old_value = object_root[prop_name];
+        if (!old_value !== new_value) {
+          object_root[prop_name] = new_value;
+        }
+      }
     }
-    adoptChild(object_preview, object_root);
+
+    return object_root;
   }
 
   function updateBuilderNonRoot(object_preview) {
@@ -80,6 +131,7 @@ export default function Internal({
 
     stack.set_visible_child_name("inline");
     output.set_child(object_preview);
+    return object_preview;
   }
 
   function updateCSS(css) {
@@ -118,6 +170,12 @@ export default function Internal({
     stop,
     updateXML,
     updateCSS,
+    openInspector() {
+      Gtk.Window.set_interactive_debugging(true);
+    },
+    closeInspector() {
+      Gtk.Window.set_interactive_debugging(false);
+    },
     screenshot({ window, data_dir }) {
       screenshot({ widget: object_root || output, window, data_dir });
     },
@@ -145,28 +203,6 @@ export function scopeStylesheet(style) {
   });
 
   return str;
-}
-
-export function adoptChild(old_parent, new_parent) {
-  const child = getChild(old_parent);
-  setChild(old_parent, null);
-  setChild(new_parent, child);
-}
-
-function getChild(object) {
-  if (typeof object.get_content === "function") {
-    return object.get_content();
-  } else {
-    return object.get_child();
-  }
-}
-
-function setChild(object, child) {
-  if (typeof object.set_content === "function") {
-    object.set_content(child);
-  } else {
-    object.set_child(child);
-  }
 }
 
 function screenshot({ widget, window, data_dir }) {

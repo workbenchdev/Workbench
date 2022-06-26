@@ -6,6 +6,7 @@ const ifaceXml = `
     <method name="UpdateUi">
       <arg type="s" name="content" direction="in"/>
       <arg type="s" name="target_id" direction="in"/>
+      <arg type="s" name="original_id" direction="in"/>
     </method>
     <method name="UpdateCss">
       <arg type="s" name="content" direction="in"/>
@@ -15,10 +16,16 @@ const ifaceXml = `
       <arg type="s" name="run_symbol" direction="in"/>
       <arg type="s" name="builder_symbol" direction="in"/>
       <arg type="s" name="window_symbol" direction="in"/>
+      <arg type="s" name="app_symbol" direction="in"/>
     </method>
     <method name="CloseWindow">
     </method>
     <method name="OpenWindow">
+      <arg type="i" name="width" direction="in"/>
+      <arg type="i" name="height" direction="in"/>
+    </method>
+    <method name="EnableInspector">
+      <arg type="b" name="enabled" direction="in"/>
     </method>
     <signal name="WindowOpen">
       <arg type="b" name="open"/>

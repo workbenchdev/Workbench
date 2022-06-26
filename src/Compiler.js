@@ -23,7 +23,7 @@ export default function Compiler(data_dir) {
         code_file,
         "replace_contents_async",
         "replace_contents_finish",
-        new GLib.Bytes(code),
+        new GLib.Bytes(code || " "),
         null,
         false,
         Gio.FileCreateFlags.NONE,
@@ -56,6 +56,10 @@ export default function Compiler(data_dir) {
         "gtk4",
         "--pkg",
         "gio-2.0",
+        "--pkg",
+        "libadwaita-1",
+        "--pkg",
+        "libsoup-3.0",
         "--vapi",
         "/dev/null",
       ],
@@ -72,7 +76,8 @@ export default function Compiler(data_dir) {
         module_file.get_path(),
         "main",
         "set_builder",
-        "set_window"
+        "set_window",
+        "set_app"
       );
     } catch (error) {
       logger.debug(error);

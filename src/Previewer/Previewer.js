@@ -1,9 +1,12 @@
 import Gtk from "gi://Gtk";
+import GObject from "gi://GObject";
+import GLib from "gi://GLib";
+
 import * as ltx from "../lib/ltx.js";
 import * as postcss from "../lib/postcss.js";
 
 import logger from "../logger.js";
-import { getLanguage } from "../util.js";
+import { getLanguage, connect_signals, disconnect_signals } from "../util.js";
 
 import Internal from "./Internal.js";
 import External from "./External.js";
@@ -22,7 +25,10 @@ export default function Previewer({
   window,
   application,
   data_dir,
+  term_console,
 }) {
+  let panel_code;
+
   let current;
 
   const internal = Internal({
@@ -48,13 +54,14 @@ export default function Previewer({
         useInternal();
       }
     },
+    output,
     builder,
   });
 
   const buffer_css = getLanguage("css").document.buffer;
 
   let handler_id_ui = null;
-  let handler_id_css = null;
+  let handler_ids_css = null;
   let handler_id_button_open;
   let handler_id_button_close;
 
@@ -67,8 +74,13 @@ export default function Previewer({
     if (handler_id_ui === null) {
       handler_id_ui = panel_ui.connect("updated", update);
     }
-    if (handler_id_css === null) {
-      handler_id_css = buffer_css.connect("end-user-action", update);
+    if (handler_ids_css === null) {
+      // cannot use "changed" signal as it triggers many time for pasting
+      handler_ids_css = connect_signals(buffer_css, {
+        "end-user-action": update,
+        undo: update,
+        redo: update,
+      });
     }
   }
 
@@ -78,25 +90,50 @@ export default function Previewer({
       handler_id_ui = null;
     }
 
-    if (handler_id_css) {
-      buffer_css.disconnect(handler_id_css);
-      handler_id_css = null;
+    if (handler_ids_css) {
+      disconnect_signals(buffer_css, handler_ids_css);
+      handler_ids_css = null;
     }
   }
 
+  // Using this custom scope we make sure that previewing UI definitions
+  // with signals doesn't fail - in addition, checkout registerSignals
+  const BuilderScope = GObject.registerClass(
+    {
+      Implements: [Gtk.BuilderScope],
+    },
+    class BuilderScope extends GObject.Object {
+      noop() {}
+      // https://docs.gtk.org/gtk4/vfunc.BuilderScope.create_closure.html
+      vfunc_create_closure(builder, function_name, flags, object) {
+        if (
+          panel_code.panel.visible &&
+          panel_code.language === "JavaScript" &&
+          flags & Gtk.BuilderClosureFlags.SWAPPED
+        ) {
+          logger.warning('Signal flag "swapped" is unsupported in JavaScript.');
+        }
+        return this[function_name] || this.noop;
+      }
+    }
+  );
+
+  let symbols = null;
   function update() {
     const builder = new Gtk.Builder();
+    const scope = new BuilderScope();
+    builder.set_scope(scope);
 
     let text = panel_ui.xml.trim();
     let target_id;
     let tree;
-    // let template;
+    let original_id;
 
     try {
       tree = ltx.parse(text);
-      [target_id, text /* template */] = targetBuildable(tree);
+      [target_id, text, original_id /* template */] = targetBuildable(tree);
     } catch (err) {
-      logError(err);
+      // logError(err);
       logger.debug(err);
     }
 
@@ -109,7 +146,10 @@ export default function Previewer({
       return;
     }
 
+    registerSignals(tree, scope, symbols);
+
     try {
+      // For some reason this log warnings twice
       builder.add_from_string(text, -1);
     } catch (err) {
       // The following while being obviously invalid
@@ -123,11 +163,20 @@ export default function Previewer({
       return;
     }
 
+    term_console.clear();
+
     const object_preview = builder.get_object(target_id);
     if (!object_preview) return;
 
-    current.updateXML({ xml: text, builder, object_preview, target_id });
+    current.updateXML({
+      xml: text,
+      builder,
+      object_preview,
+      target_id,
+      original_id,
+    });
     current.updateCSS(buffer_css.text);
+    symbols = null;
   }
 
   function useExternal() {
@@ -151,6 +200,7 @@ export default function Previewer({
     }
 
     current?.stop();
+    current?.closeInspector();
     current = previewer;
 
     handler_id_button_open = button_open.connect("clicked", () => {
@@ -183,8 +233,17 @@ export default function Previewer({
     close() {
       current.close();
     },
+    openInspector() {
+      current.openInspector();
+    },
     useExternal,
     useInternal,
+    setPanelCode(v) {
+      panel_code = v;
+    },
+    setSymbols(_symbols) {
+      symbols = _symbols;
+    },
   };
 }
 
@@ -241,7 +300,12 @@ function getTemplate(tree) {
 
   tree.cnode(el);
 
-  return [el.attrs.id, tree.toString(), text_encoder.encode(original)];
+  return [
+    el.attrs.id,
+    tree.toString(),
+    undefined,
+    text_encoder.encode(original),
+  ];
 }
 
 function findPreviewable(tree) {
@@ -276,11 +340,11 @@ function targetBuildable(tree) {
     return [null, ""];
   }
 
-  if (!child.attrs.id) {
-    child.attrs.id = "workbench_target";
-  }
+  const original_id = child.attrs.id;
+  const target_id = "workbench_" + GLib.uuid_string_random();
+  child.attrs.id = target_id;
 
-  return [child.attrs.id, tree.toString()];
+  return [target_id, tree.toString(), original_id];
 }
 
 // TODO: GTK Builder shouldn't crash when encountering a non buildable
@@ -296,4 +360,57 @@ function assertBuildable(tree) {
     const _child = child.getChild("child");
     if (_child) assertBuildable(_child);
   }
+}
+
+function makeSignalHandler({ name, handler, after, id, type }, symbols) {
+  return function (object, ...args) {
+    const symbol = symbols?.[handler];
+    const registered_handler = typeof symbol === "function";
+    if (registered_handler) {
+      symbol(object, ...args);
+    }
+
+    const object_name = `${type}${id ? "$" + id : ""}`;
+    // const object_name = object.toString(); // [object instance wrapper GIName:Gtk.Button jsobj@0x2937abc5c4c0 native@0x55fbfe53f620]
+    logger.log(
+      `${
+        registered_handler ? "Registered" : "Unregistered"
+      } handler "${handler}" triggered ${
+        after ? "after" : "for"
+      } signal "${name}" on ${object_name}`
+    );
+  };
+}
+
+function registerSignals(tree, scope, symbols) {
+  try {
+    const signals = findSignals(tree);
+    for (const signal of signals) {
+      scope[signal.handler] = makeSignalHandler(signal, symbols);
+    }
+  } catch (err) {
+    logError(err);
+  }
+}
+
+function findSignals(tree, signals = []) {
+  for (const object of tree.getChildren("object")) {
+    const signal_elements = object.getChildren("signal");
+    signals.push(
+      ...signal_elements.map((el) => {
+        let id = object.attrs.id;
+        if (id?.startsWith("workbench_")) id = "";
+        return {
+          id,
+          type: object.attrs.class,
+          ...el.attrs,
+        };
+      })
+    );
+
+    for (const child of object.getChildren("child")) {
+      findSignals(child, signals);
+    }
+  }
+  return signals;
 }

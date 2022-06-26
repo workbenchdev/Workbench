@@ -3,7 +3,7 @@ import Gio from "gi://Gio";
 import logger from "../logger.js";
 import DBusPreviewer from "./DBusPreviewer.js";
 
-export default function Previewer({ builder, onWindowChange }) {
+export default function Previewer({ output, builder, onWindowChange }) {
   const stack = builder.get_object("stack_preview");
 
   (function start_process() {
@@ -32,7 +32,11 @@ export default function Previewer({ builder, onWindowChange }) {
   function open() {
     updateColorScheme();
     stack.set_visible_child_name("close_window");
-    dbus_proxy.OpenWindowSync();
+    try {
+      dbus_proxy.OpenWindowSync(output.get_allocated_width(), output.get_allocated_height());
+    } catch (err) {
+      logger.debug(err);
+    }
   }
 
   function close() {
@@ -49,14 +53,37 @@ export default function Previewer({ builder, onWindowChange }) {
     close();
   }
 
-  function updateXML({ xml, target_id }) {
-    dbus_proxy.UpdateUiSync(xml, target_id);
+  function updateXML({ xml, target_id, original_id }) {
+    try {
+      dbus_proxy.UpdateUiSync(xml, target_id, original_id);
+    } catch (err) {
+      logger.debug(err);
+    }
+  }
+
+  function openInspector() {
+    try {
+      dbus_proxy.EnableInspectorSync(true);
+    } catch (err) {
+      logger.debug(err);
+    }
+  }
+
+  function closeInspector() {
+    try {
+      dbus_proxy.EnableInspectorSync(false);
+    } catch (err) {
+      logger.debug(err);
+    }
   }
 
   const style_manager = Adw.StyleManager.get_default();
   function updateColorScheme() {
-    if (dbus_proxy === null) return;
-    dbus_proxy.ColorScheme = style_manager.color_scheme;
+    try {
+      dbus_proxy.ColorScheme = style_manager.color_scheme;
+    } catch (err) {
+      logger.debug(err);
+    }
   }
   style_manager.connect("notify::color-scheme", updateColorScheme);
 
@@ -65,9 +92,15 @@ export default function Previewer({ builder, onWindowChange }) {
     stop,
     open,
     close,
+    openInspector,
+    closeInspector,
     updateXML,
     updateCSS(css) {
-      dbus_proxy.UpdateCssSync(css);
+      try {
+        dbus_proxy.UpdateCssSync(css);
+      } catch (err) {
+        logger.debug(err);
+      }
     },
     screenshot() {},
   };

@@ -1,27 +1,71 @@
 import Gio from "gi://Gio";
-import { getLanguage, settings } from "./util.js";
 import GObject from "gi://GObject";
 import GLib from "gi://GLib";
 
-import LSPClient from "./lsp/LSPClient.js";
+import LSPClient, { LSPError } from "./lsp/LSPClient.js";
+import {
+  getLanguage,
+  settings,
+  connect_signals,
+  disconnect_signals,
+  replaceBufferText,
+} from "./util.js";
+import logger from "./logger.js";
 
 const { addSignalMethods } = imports.signals;
 
-export default function PanelUI({ builder, data_dir }) {
-  const blueprint = new LSPClient([
-    "blueprint-compiler",
-    "lsp",
-    "--logfile",
-    GLib.build_filenamev([data_dir, `blueprint-logs`]),
-  ]);
-  blueprint.connect("exit", () => {
-    console.debug("blueprint exit");
+export default function PanelUI({ builder, data_dir, term_console }) {
+  let lang;
+  const blueprint = createBlueprintClient({ data_dir });
+
+  async function convertToXML() {
+    term_console.clear();
+    settings.set_boolean("show-console", true);
+
+    let xml;
+
+    try {
+      xml = await compileBlueprint(
+        getLanguage("blueprint").document.buffer.text
+      );
+    } catch (err) {
+      if (err instanceof LSPError) {
+        logBluePrintError(err);
+        return;
+      }
+      throw err;
+    }
+    replaceBufferText(getLanguage("xml").document.buffer, xml);
+    settings.set_string("ui-lang", "xml");
+  }
+  const button_ui_export_xml = builder.get_object("button_ui_export_xml");
+  button_ui_export_xml.connect("clicked", () => {
+    convertToXML().catch(logError);
   });
-  blueprint.connect("output", (self, message) => {
-    console.debug("blueprint OUT:\n", message);
-  });
-  blueprint.connect("input", (self, message) => {
-    console.debug("blueprint IN:\n", message);
+
+  async function convertToBlueprint() {
+    term_console.clear();
+    settings.set_boolean("show-console", true);
+
+    let blp;
+
+    try {
+      blp = await decompileXML(getLanguage("xml").document.buffer.text);
+    } catch (err) {
+      if (err instanceof LSPError) {
+        logBluePrintError(err);
+        return;
+      }
+      throw err;
+    }
+    replaceBufferText(getLanguage("blueprint").document.buffer, blp);
+    settings.set_string("ui-lang", "blueprint");
+  }
+  const button_ui_export_blueprint = builder.get_object(
+    "button_ui_export_blueprint"
+  );
+  button_ui_export_blueprint.connect("clicked", () => {
+    convertToBlueprint().catch(logError);
   });
 
   const button_ui = builder.get_object("button_ui");
@@ -33,7 +77,6 @@ export default function PanelUI({ builder, data_dir }) {
     "visible",
     GObject.BindingFlags.SYNC_CREATE
   );
-  let lang;
 
   const panel = {
     xml: "",
@@ -62,7 +105,7 @@ export default function PanelUI({ builder, data_dir }) {
     Gio.SettingsBindFlags.DEFAULT
   );
 
-  let handler_id = null;
+  let handler_ids = null;
 
   async function update() {
     let xml;
@@ -71,23 +114,29 @@ export default function PanelUI({ builder, data_dir }) {
     } else {
       xml = await compileBlueprint(lang.document.buffer.text);
     }
-    panel.xml = xml;
+    panel.xml = xml || "";
     panel.emit("updated");
   }
 
   function onUpdate() {
-    update().catch(logError);
+    update().catch(logBluePrintError);
   }
+
   function start() {
     stop();
     lang = getLanguage(settings.get_string("ui-lang"));
-    handler_id = lang.document.buffer.connect("end-user-action", onUpdate);
+    // cannot use "changed" signal as it triggers many time for pasting
+    handler_ids = connect_signals(lang.document.buffer, {
+      "end-user-action": onUpdate,
+      undo: onUpdate,
+      redo: onUpdate,
+    });
   }
 
   function stop() {
-    if (handler_id !== null) {
-      lang.document.buffer.disconnect(handler_id);
-      handler_id = null;
+    if (handler_ids !== null) {
+      disconnect_signals(lang.document.buffer, handler_ids);
+      handler_ids = null;
     }
   }
 
@@ -101,18 +150,46 @@ export default function PanelUI({ builder, data_dir }) {
     if (!blueprint.proc) {
       blueprint.start();
 
-      // await lsp_client.request("initialize");
+      // await blueprint.request("initialize");
       // Make Blueprint language server cache Gtk 4
       // to make subsequence call faster (~500ms -> ~3ms)
-      // await lsp_client.request("x-blueprintcompiler/compile", {
-      //   text: "using Gtk 4.0;\nBox {}",
+      // await blueprint.request("x-blueprintcompiler/compile", {
+      //   text: "using Gtk 4.0;\nusing Adw 1;\nAdwBin {}",
       // });
     }
 
-    const { xml } = await blueprint.request("x-blueprintcompiler/compile", {
+    const { xml, info } = await blueprint.request(
+      "x-blueprintcompiler/compile",
+      {
+        text,
+      }
+    );
+
+    if (info.length) {
+      info.forEach(logBluePrintInfo);
+    } else {
+      term_console.clear();
+    }
+
+    return xml;
+  }
+
+  async function decompileXML(text) {
+    if (!blueprint.proc) {
+      blueprint.start();
+
+      // await blueprint.request("initialize");
+      // Make Blueprint language server cache Gtk 4
+      // to make subsequence call faster (~500ms -> ~3ms)
+      // await blueprint.request("x-blueprintcompiler/compile", {
+      //   text: "using Gtk 4.0;\nusing Adw 1;\nAdwBin {}",
+      // });
+    }
+
+    const { blp } = await blueprint.request("x-blueprintcompiler/decompile", {
       text,
     });
-    return xml;
+    return blp;
   }
 
   panel.start = start;
@@ -120,4 +197,48 @@ export default function PanelUI({ builder, data_dir }) {
   panel.update = update;
 
   return panel;
+}
+
+function logBluePrintError(err) {
+  GLib.log_structured("Blueprint", GLib.LogLevelFlags.LEVEL_CRITICAL, {
+    MESSAGE: `${err.message}`,
+    SYSLOG_IDENTIFIER: "re.sonny.Workbench",
+  });
+}
+
+function logBluePrintInfo(info) {
+  GLib.log_structured("Blueprint", GLib.LogLevelFlags.LEVEL_WARNING, {
+    MESSAGE: `${info.line + 1}:${info.col} ${info.message}`,
+    SYSLOG_IDENTIFIER: "re.sonny.Workbench",
+  });
+}
+
+function createBlueprintClient({ data_dir }) {
+  const file_blueprint_logs = Gio.File.new_for_path(
+    GLib.build_filenamev([data_dir, `blueprint-logs`])
+  );
+  file_blueprint_logs.replace_contents(
+    " ",
+    null,
+    false,
+    Gio.FileCreateFlags.REPLACE_DESTINATION,
+    null
+  );
+  const blueprint = new LSPClient([
+    // "/home/sonny/Projects/Workbench/blueprint-compiler/blueprint-compiler.py",
+    "blueprint-compiler",
+    "lsp",
+    "--logfile",
+    file_blueprint_logs.get_path(),
+  ]);
+  blueprint.connect("exit", () => {
+    logger.debug("blueprint exit");
+  });
+  blueprint.connect("output", (self, message) => {
+    logger.debug(`blueprint OUT:\n${message}`);
+  });
+  blueprint.connect("input", (self, message) => {
+    logger.debug(`blueprint IN:\n${message}`);
+  });
+  return blueprint;
 }

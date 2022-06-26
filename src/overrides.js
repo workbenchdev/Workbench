@@ -15,10 +15,13 @@ system.exit = function exit(code) {
 
 // GTypeName must be unique globally
 // there is no unregister equivalent to registerClass and
-// this is what GNOME Shell does too according to Verde
+// this is what GNOME Shell does too according to Verdre
 // https://github.com/sonnyp/Workbench/issues/50
+// const types = Object.create(null);
 // const _registerClass = GObject.registerClass;
 // GObject.registerClass = function registerClass(klass, ...args) {
-//   klass.GTypeName = klass.GTypeName + Math.random().toString().split("0.")[1];
+//   const { GTypeName } = klass;
+//   types[GTypeName] = (types[GTypeName] || 0) + 1;
+//   klass.GTypeName = GTypeName + types[GTypeName];
 //   return _registerClass(klass, ...args);
 // };
