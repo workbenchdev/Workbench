@@ -62,18 +62,30 @@ export default function Internal({
     } else {
       obj = updateBuilderNonRoot(object_preview);
     }
-    builder.expose_object(original_id, obj);
+
+    if (original_id) {
+      builder.expose_object(original_id, obj);
+    }
+  }
+
+  function setObjectRoot(object) {
+    object_root = object;
+    object_root.set_hide_on_close(true);
+    object_root.connect("close-request", () => {
+      onWindowChange(false);
+    });
   }
 
   function updateBuilderRoot(object_preview, builder, original_id) {
     stack.set_visible_child_name("open_window");
 
     if (!object_root) {
-      object_root = object_preview;
-      object_root.set_hide_on_close(true);
-      object_root.connect("close-request", () => {
-        onWindowChange(false);
-      });
+      setObjectRoot(object_preview);
+    } else if (
+      object_root.constructor.$gtype !== object_preview.constructor.$gtype
+    ) {
+      object_root.destroy();
+      setObjectRoot(object_preview);
     } else {
       for (const prop of object_root.constructor.list_properties()) {
         if (!(prop.flags & GObject.ParamFlags.WRITABLE)) continue;

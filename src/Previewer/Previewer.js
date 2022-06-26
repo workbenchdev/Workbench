@@ -1,5 +1,6 @@
 import Gtk from "gi://Gtk";
 import GObject from "gi://GObject";
+import GLib from "gi://GLib";
 
 import * as ltx from "../lib/ltx.js";
 import * as postcss from "../lib/postcss.js";
@@ -325,7 +326,7 @@ function targetBuildable(tree) {
   }
 
   const original_id = child.attrs.id;
-  const target_id = "workbench_" + Math.random().toString().substring(2);
+  const target_id = "workbench_" + GLib.uuid_string_random();
   child.attrs.id = target_id;
 
   return [target_id, tree.toString(), original_id];
