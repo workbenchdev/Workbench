@@ -18,6 +18,8 @@ import External from "./External.js";
 //  • When the out-of-process preview Window closed
 //  • When switching language
 
+let symbols;
+
 export default function Previewer({
   output,
   builder,
@@ -118,9 +120,10 @@ export default function Previewer({
     }
   );
 
+  let scope;
   function update() {
     const builder = new Gtk.Builder();
-    const scope = new BuilderScope();
+    scope = new BuilderScope();
     builder.set_scope(scope);
 
     let text = panel_ui.xml.trim();
@@ -239,6 +242,9 @@ export default function Previewer({
     setPanelCode(v) {
       panel_code = v;
     },
+    setClosures(closures) {
+      symbols = closures;
+    },
   };
 }
 
@@ -348,11 +354,19 @@ function assertBuildable(tree) {
 }
 
 function makeSignalHandler({ name, handler, after, id, type }) {
-  return function (object) {
+  return function (object, ...args) {
+    const symbol = symbols?.[handler];
+    const has_handler = typeof symbol === "function";
+    if (has_handler) {
+      symbol(object, ...args);
+    }
+
     const object_name = `${type}${id ? "$" + id : ""}`;
     // const object_name = object.toString(); // [object instance wrapper GIName:Gtk.Button jsobj@0x2937abc5c4c0 native@0x55fbfe53f620]
     logger.log(
-      `Handler "${handler}" triggered ${
+      `${
+        has_handler ? "Registered" : "Unregistered"
+      } handler "${handler}" triggered ${
         after ? "after" : "for"
       } signal "${name}" on ${object_name}`
     );
