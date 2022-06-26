@@ -17,11 +17,22 @@ system.exit = function exit(code) {
 // there is no unregister equivalent to registerClass and
 // this is what GNOME Shell does too according to Verdre
 // https://github.com/sonnyp/Workbench/issues/50
-// const types = Object.create(null);
-// const _registerClass = GObject.registerClass;
-// GObject.registerClass = function registerClass(klass, ...args) {
-//   const { GTypeName } = klass;
-//   types[GTypeName] = (types[GTypeName] || 0) + 1;
-//   klass.GTypeName = GTypeName + types[GTypeName];
-//   return _registerClass(klass, ...args);
-// };
+const types = Object.create(null);
+const _registerClass = GObject.registerClass;
+GObject.registerClass = function registerClass(klass, ...args) {
+  const { GTypeName } = klass;
+  if (GTypeName) {
+    types[GTypeName] = increment(GTypeName);
+    klass.GTypeName = GTypeName + types[GTypeName];
+  }
+  return _registerClass(klass, ...args);
+};
+function increment(name) {
+  return (types[name] || 0) + 1;
+}
+// This is used to tweak `workbench.template` in order to set the
+//  <template class="?"/> to something that will work next time
+// Object.registerClass is called with the corresponding GTypeName
+export function getClassNameType(name) {
+  return name + increment(name);
+}
