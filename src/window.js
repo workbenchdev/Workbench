@@ -216,7 +216,6 @@ export default function Window({ application }) {
     panel_ui.stop();
 
     const { language } = panel_code;
-    let exports;
     try {
       await panel_ui.update();
 
@@ -281,18 +280,14 @@ export default function Window({ application }) {
           Gio.FileCreateFlags.NONE,
           null
         );
-        // let exports;
+        let exports;
         try {
           exports = await import(`file://${file_javascript.get_path()}`);
         } catch (err) {
           previewer.update();
           throw err;
         }
-        // previewer.setClosures(exports);
-        // Object.entries(exports).forEach(([k, v]) => {
-        //   console.log(k, v);
-        //   previewer
-        // });
+        previewer.setSymbols(exports);
       } else if (language === "Vala") {
         compiler = compiler || Compiler(data_dir);
         const success = await compiler.compile(langs.vala.document.buffer.text);
@@ -318,7 +313,6 @@ export default function Window({ application }) {
 
     previewer.start();
     panel_ui.start();
-    previewer.setClosures(exports);
 
     button_run.set_sensitive(true);
     term_console.scrollToEnd();

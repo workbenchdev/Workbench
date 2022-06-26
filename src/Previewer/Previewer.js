@@ -18,8 +18,6 @@ import External from "./External.js";
 //  • When the out-of-process preview Window closed
 //  • When switching language
 
-let symbols;
-
 export default function Previewer({
   output,
   builder,
@@ -121,6 +119,7 @@ export default function Previewer({
   );
 
   let scope;
+  let symbols = null;
   function update() {
     const builder = new Gtk.Builder();
     scope = new BuilderScope();
@@ -148,7 +147,7 @@ export default function Previewer({
       return;
     }
 
-    registerSignals(tree, scope);
+    registerSignals(tree, scope, symbols);
 
     try {
       // For some reason this log warnings twice
@@ -178,6 +177,7 @@ export default function Previewer({
       original_id,
     });
     current.updateCSS(buffer_css.text);
+    symbols = null;
   }
 
   function useExternal() {
@@ -242,8 +242,8 @@ export default function Previewer({
     setPanelCode(v) {
       panel_code = v;
     },
-    setClosures(closures) {
-      symbols = closures;
+    setSymbols(_symbols) {
+      symbols = _symbols;
     },
   };
 }
@@ -353,11 +353,11 @@ function assertBuildable(tree) {
   }
 }
 
-function makeSignalHandler({ name, handler, after, id, type }) {
+function makeSignalHandler({ name, handler, after, id, type }, symbols) {
   return function (object, ...args) {
     const symbol = symbols?.[handler];
-    const has_handler = typeof symbol === "function";
-    if (has_handler) {
+    const registered_handler = typeof symbol === "function";
+    if (registered_handler) {
       symbol(object, ...args);
     }
 
@@ -365,7 +365,7 @@ function makeSignalHandler({ name, handler, after, id, type }) {
     // const object_name = object.toString(); // [object instance wrapper GIName:Gtk.Button jsobj@0x2937abc5c4c0 native@0x55fbfe53f620]
     logger.log(
       `${
-        has_handler ? "Registered" : "Unregistered"
+        registered_handler ? "Registered" : "Unregistered"
       } handler "${handler}" triggered ${
         after ? "after" : "for"
       } signal "${name}" on ${object_name}`
@@ -373,11 +373,11 @@ function makeSignalHandler({ name, handler, after, id, type }) {
   };
 }
 
-function registerSignals(tree, scope) {
+function registerSignals(tree, scope, symbols) {
   try {
     const signals = findSignals(tree);
     for (const signal of signals) {
-      scope[signal.handler] = makeSignalHandler(signal);
+      scope[signal.handler] = makeSignalHandler(signal, symbols);
     }
   } catch (err) {
     logError(err);
