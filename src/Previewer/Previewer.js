@@ -118,6 +118,7 @@ export default function Previewer({
     }
   );
 
+  let symbols = null;
   function update() {
     const builder = new Gtk.Builder();
     const scope = new BuilderScope();
@@ -145,7 +146,7 @@ export default function Previewer({
       return;
     }
 
-    registerSignals(tree, scope);
+    registerSignals(tree, scope, symbols);
 
     try {
       // For some reason this log warnings twice
@@ -175,6 +176,7 @@ export default function Previewer({
       original_id,
     });
     current.updateCSS(buffer_css.text);
+    symbols = null;
   }
 
   function useExternal() {
@@ -238,6 +240,9 @@ export default function Previewer({
     useInternal,
     setPanelCode(v) {
       panel_code = v;
+    },
+    setSymbols(_symbols) {
+      symbols = _symbols;
     },
   };
 }
@@ -347,23 +352,31 @@ function assertBuildable(tree) {
   }
 }
 
-function makeSignalHandler({ name, handler, after, id, type }) {
-  return function (object) {
+function makeSignalHandler({ name, handler, after, id, type }, symbols) {
+  return function (object, ...args) {
+    const symbol = symbols?.[handler];
+    const registered_handler = typeof symbol === "function";
+    if (registered_handler) {
+      symbol(object, ...args);
+    }
+
     const object_name = `${type}${id ? "$" + id : ""}`;
     // const object_name = object.toString(); // [object instance wrapper GIName:Gtk.Button jsobj@0x2937abc5c4c0 native@0x55fbfe53f620]
     logger.log(
-      `Handler "${handler}" triggered ${
+      `${
+        registered_handler ? "Registered" : "Unregistered"
+      } handler "${handler}" triggered ${
         after ? "after" : "for"
       } signal "${name}" on ${object_name}`
     );
   };
 }
 
-function registerSignals(tree, scope) {
+function registerSignals(tree, scope, symbols) {
   try {
     const signals = findSignals(tree);
     for (const signal of signals) {
-      scope[signal.handler] = makeSignalHandler(signal);
+      scope[signal.handler] = makeSignalHandler(signal, symbols);
     }
   } catch (err) {
     logError(err);
@@ -375,8 +388,10 @@ function findSignals(tree, signals = []) {
     const signal_elements = object.getChildren("signal");
     signals.push(
       ...signal_elements.map((el) => {
+        let id = object.attrs.id;
+        if (id?.startsWith("workbench_")) id = "";
         return {
-          id: object.attrs.id,
+          id,
           type: object.attrs.class,
           ...el.attrs,
         };

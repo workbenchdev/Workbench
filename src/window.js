@@ -8,7 +8,6 @@ import Vte from "gi://Vte?version=3.91";
 import { gettext as _ } from "gettext";
 
 import {
-  confirm,
   settings,
   createDataDir,
   getLanguageForFile,
@@ -209,7 +208,7 @@ export default function Window({ application }) {
     return code;
   }
 
-  async function runCode(prettify=true) {
+  async function runCode(prettify = true) {
     button_run.set_sensitive(false);
 
     term_console.clear();
@@ -281,12 +280,14 @@ export default function Window({ application }) {
           Gio.FileCreateFlags.NONE,
           null
         );
+        let exports;
         try {
-          await import(`file://${file_javascript.get_path()}`);
+          exports = await import(`file://${file_javascript.get_path()}`);
         } catch (err) {
           previewer.update();
           throw err;
         }
+        previewer.setSymbols(exports);
       } else if (language === "Vala") {
         compiler = compiler || Compiler(data_dir);
         const success = await compiler.compile(langs.vala.document.buffer.text);
@@ -336,8 +337,7 @@ export default function Window({ application }) {
   undo_action.connect("activate", (self, target) => {
     const updated = JSON.parse(target.unpack()).updated;
     languages.forEach(({ id, document }) => {
-      if (updated.includes(id))
-        document.buffer.undo();
+      if (updated.includes(id)) document.buffer.undo();
     });
 
     const panels = JSON.parse(target.unpack()).panels;
@@ -351,32 +351,34 @@ export default function Window({ application }) {
     settings.set_string("ui-lang", langs[1]);
   });
   window.add_action(undo_action);
-  
+
   async function openDemo(demo_name) {
     function load({ document: { buffer } }, str) {
       replaceBufferText(buffer, str);
     }
 
-    const { javascript, css, xml, blueprint, vala, panels }
-       = readDemo(demo_name);
-    
+    const { javascript, css, xml, blueprint, vala, panels } =
+      readDemo(demo_name);
+
     const toast = new Adw.Toast({
       title: _("The demo has been loaded"),
       button_label: _("Undo"),
       action_name: "win.workbench_undo",
-      action_target: GLib.Variant.new_string(JSON.stringify({
-        updated: ["javascript", "css", "xml", "blueprint", "vala"],
-        panels: [
-          settings.get_boolean("show-code"),
-          settings.get_boolean("show-style"),
-          settings.get_boolean("show-ui"),
-          settings.get_boolean("show-preview")
-        ],
-        langs: [
-          settings.get_int("code-language"),
-          settings.get_string("ui-lang")
-        ]
-      })),
+      action_target: GLib.Variant.new_string(
+        JSON.stringify({
+          updated: ["javascript", "css", "xml", "blueprint", "vala"],
+          panels: [
+            settings.get_boolean("show-code"),
+            settings.get_boolean("show-style"),
+            settings.get_boolean("show-ui"),
+            settings.get_boolean("show-preview"),
+          ],
+          langs: [
+            settings.get_int("code-language"),
+            settings.get_string("ui-lang"),
+          ],
+        })
+      ),
     });
     toast_overlay.add_toast(toast);
 
@@ -440,24 +442,26 @@ export default function Window({ application }) {
       toast_overlay.add_toast(toast);
       return;
     }
-    
+
     const toast = new Adw.Toast({
       title: _("The file has been loaded"),
       button_label: _("Undo"),
       action_name: "win.workbench_undo",
-      action_target: GLib.Variant.new_string(JSON.stringify({
-        updated: [language.id],
-        panels: [
-          settings.get_boolean("show-code"),
-          settings.get_boolean("show-style"),
-          settings.get_boolean("show-ui"),
-          settings.get_boolean("show-preview")
-        ],
-        langs: [
-          settings.get_int("code-language"),
-          settings.get_string("ui-lang")
-        ]
-      })),
+      action_target: GLib.Variant.new_string(
+        JSON.stringify({
+          updated: [language.id],
+          panels: [
+            settings.get_boolean("show-code"),
+            settings.get_boolean("show-style"),
+            settings.get_boolean("show-ui"),
+            settings.get_boolean("show-preview"),
+          ],
+          langs: [
+            settings.get_int("code-language"),
+            settings.get_string("ui-lang"),
+          ],
+        })
+      ),
     });
     toast_overlay.add_toast(toast);
 
