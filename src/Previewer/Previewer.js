@@ -352,11 +352,7 @@ function assertBuildable(tree) {
   }
 }
 
-function makeSignalHandler(
-  { name, handler, after, id, type },
-  symbols,
-  original_id
-) {
+function makeSignalHandler({ name, handler, after, id, type }, symbols) {
   return function (object, ...args) {
     const symbol = symbols?.[handler];
     const registered_handler = typeof symbol === "function";
@@ -364,7 +360,6 @@ function makeSignalHandler(
       symbol(object, ...args);
     }
 
-    if (id?.startsWith("workbench_")) id = "";
     const object_name = `${type}${id ? "$" + id : ""}`;
     // const object_name = object.toString(); // [object instance wrapper GIName:Gtk.Button jsobj@0x2937abc5c4c0 native@0x55fbfe53f620]
     logger.log(
@@ -393,8 +388,10 @@ function findSignals(tree, signals = []) {
     const signal_elements = object.getChildren("signal");
     signals.push(
       ...signal_elements.map((el) => {
+        let id = object.attrs.id;
+        if (id?.startsWith("workbench_")) id = "";
         return {
-          id: object.attrs.id,
+          id,
           type: object.attrs.class,
           ...el.attrs,
         };
