@@ -300,12 +300,12 @@ function getTemplate(tree) {
 
   tree.cnode(el);
 
-  return [
-    el.attrs.id,
-    tree.toString(),
-    undefined,
-    text_encoder.encode(original),
-  ];
+  return {
+    target_id: el.attrs.id,
+    text: tree.toString(),
+    original_id: undefined,
+    template: text_encoder.encode(original),
+  };
 }
 
 function findPreviewable(tree) {
@@ -344,7 +344,7 @@ function targetBuildable(tree) {
   const target_id = "workbench_" + GLib.uuid_string_random();
   child.attrs.id = target_id;
 
-  return [target_id, tree.toString(), original_id];
+  return { target_id, text: tree.toString(), original_id, template: "" };
 }
 
 // TODO: GTK Builder shouldn't crash when encountering a non buildable
