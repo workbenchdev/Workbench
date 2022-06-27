@@ -61,6 +61,9 @@ export default function Internal({
       application,
       builder,
       template,
+      preview(object) {
+        output.set_child(object);
+      },
     };
 
     let obj;

@@ -302,7 +302,6 @@ function getTemplate(tree) {
   template.children.forEach((child) => {
     el.cnode(child);
   });
-
   tree.cnode(el);
 
   return {

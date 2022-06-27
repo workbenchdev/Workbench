@@ -33,7 +33,10 @@ export default function Previewer({ output, builder, onWindowChange }) {
     updateColorScheme();
     stack.set_visible_child_name("close_window");
     try {
-      dbus_proxy.OpenWindowSync(output.get_allocated_width(), output.get_allocated_height());
+      dbus_proxy.OpenWindowSync(
+        output.get_allocated_width(),
+        output.get_allocated_height()
+      );
     } catch (err) {
       logger.debug(err);
     }

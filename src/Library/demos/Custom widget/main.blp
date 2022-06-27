@@ -1,10 +1,8 @@
 using Gtk 4.0;
 
-template AwesomeWidget: Box {
-  Button button {
-    label: "Custom Widget";
-    halign: center;
-    valign: center;
-    hexpand: true;
+template AwesomeButton: Button {
+  clicked => on_clicked();
+  Image {
+    icon-name: "penguin-alt-symbolic"
   }
 }

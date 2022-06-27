@@ -3,19 +3,27 @@ import Gtk from "gi://Gtk?version=4.0";
 
 Gtk.init();
 
-const AwesomeWidget = GObject.registerClass(
+const AwesomeButton = GObject.registerClass(
   {
-    GTypeName: "AwesomeWidget",
+    GTypeName: "AwesomeButton",
     Template: workbench.template,
-    Children: ["button"],
   },
-  class AwesomeWidget extends Gtk.Box {
+  class AwesomeButton extends Gtk.Button {
     _init(params = {}) {
       super._init(params);
+    }
+
+    on_clicked() {
+      console.log("Clicked");
     }
   }
 );
 
-const widget = new AwesomeWidget();
-log(widget);
-log(widget.button);
+const container = new Gtk.FlowBox();
+
+for (let i = 0; i < 100; i++) {
+  const widget = new AwesomeButton();
+  container.append(widget);
+}
+
+workbench.preview(container);
