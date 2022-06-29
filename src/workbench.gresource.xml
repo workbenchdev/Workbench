@@ -29,6 +29,10 @@
     <file>Library/demos/Application window/main.json</file>
     <file>Library/demos/Application window/main.blp</file>
     <file>Library/demos/Application window/main.ui</file>
+    <file>Library/demos/Custom widget/main.blp</file>
+    <file>Library/demos/Custom widget/main.ui</file>
+    <file>Library/demos/Custom widget/main.js</file>
+    <file>Library/demos/Custom widget/main.json</file>
     <file>language-specs/blueprint.lang</file>
   </gresource>
   <gresource prefix="/re/sonny/Workbench/js">

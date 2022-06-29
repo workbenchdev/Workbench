@@ -10,6 +10,7 @@ import { getLanguage, connect_signals, disconnect_signals } from "../util.js";
 
 import Internal from "./Internal.js";
 import External from "./External.js";
+import { getClassNameType } from "../overrides.js";
 
 // Workbench always defaults to in-process preview now even if Vala is selected.
 // Workbench will switch to out-of-process preview when Vala is run
@@ -128,10 +129,13 @@ export default function Previewer({
     let target_id;
     let tree;
     let original_id;
+    let template;
+
+    if (!text) return;
 
     try {
       tree = ltx.parse(text);
-      [target_id, text, original_id] = targetBuildable(tree);
+      ({ target_id, text, original_id, template } = targetBuildable(tree));
     } catch (err) {
       // logError(err);
       logger.debug(err);
@@ -174,6 +178,7 @@ export default function Previewer({
       object_preview,
       target_id,
       original_id,
+      template,
     });
     current.updateCSS(buffer_css.text);
     symbols = null;
@@ -270,6 +275,8 @@ export function scopeStylesheet(style) {
   return str;
 }
 
+const text_encoder = new TextEncoder();
+
 function getTemplate(tree) {
   const template = tree.getChild("template");
   if (!template) return;
@@ -283,19 +290,26 @@ function getTemplate(tree) {
   const object = new klass();
   if (!(object instanceof Gtk.Widget)) return;
 
+  template.attrs.class = getClassNameType(template.attrs.class);
+  const original = tree.toString();
   tree.remove(template);
 
+  const target_id = makeWorkbenchTargetId();
   const el = new ltx.Element("object", {
     class: parent,
-    id: "workbench_target",
+    id: target_id,
   });
   template.children.forEach((child) => {
     el.cnode(child);
   });
-
   tree.cnode(el);
 
-  return [el.attrs.id, tree.toString()];
+  return {
+    target_id: el.attrs.id,
+    text: tree.toString(),
+    original_id: undefined,
+    template: text_encoder.encode(original),
+  };
 }
 
 function findPreviewable(tree) {
@@ -308,8 +322,6 @@ function findPreviewable(tree) {
 
     const object = new klass();
     if (object instanceof Gtk.Widget) return child;
-    // if (object instanceof Gtk.Widget && !(object instanceof Gtk.Root))
-    //   return child;
   }
 }
 
@@ -331,10 +343,10 @@ function targetBuildable(tree) {
   }
 
   const original_id = child.attrs.id;
-  const target_id = "workbench_" + GLib.uuid_string_random();
+  const target_id = makeWorkbenchTargetId();
   child.attrs.id = target_id;
 
-  return [target_id, tree.toString(), original_id];
+  return { target_id, text: tree.toString(), original_id, template: null };
 }
 
 // TODO: GTK Builder shouldn't crash when encountering a non buildable
@@ -389,7 +401,7 @@ function findSignals(tree, signals = []) {
     signals.push(
       ...signal_elements.map((el) => {
         let id = object.attrs.id;
-        if (id?.startsWith("workbench_")) id = "";
+        if (id && isWorkbenchTargetId(id)) id = "";
         return {
           id,
           type: object.attrs.class,
@@ -403,4 +415,12 @@ function findSignals(tree, signals = []) {
     }
   }
   return signals;
+}
+
+const target_id_prefix = "workbench_";
+function makeWorkbenchTargetId() {
+  return target_id_prefix + GLib.uuid_string_random();
+}
+function isWorkbenchTargetId(id) {
+  return id.startsWith(target_id_prefix);
 }

@@ -49,11 +49,21 @@ export default function Internal({
     object_root = null;
   }
 
-  function updateXML({ builder, object_preview, target_id, original_id }) {
+  function updateXML({
+    builder,
+    object_preview,
+    target_id,
+    original_id,
+    template,
+  }) {
     globalThis.workbench = {
       window,
       application,
       builder,
+      template,
+      preview(object) {
+        output.set_child(object);
+      },
     };
 
     let obj;
