@@ -16,6 +16,7 @@ export default function Internal({
   builder,
   window,
   application,
+  dropdown_preview_align,
 }) {
   const stack = builder.get_object("stack_preview");
 
@@ -49,6 +50,10 @@ export default function Internal({
     object_root = null;
   }
 
+  function preview(object) {
+    output.set_child(object);
+  }
+
   function updateXML({
     builder,
     object_preview,
@@ -62,7 +67,9 @@ export default function Internal({
       builder,
       template,
       preview(object) {
-        output.set_child(object);
+        dropdown_preview_align.visible = false;
+        dropdown_preview_align.selected = 0;
+        preview(object);
       },
     };
 
@@ -140,7 +147,7 @@ export default function Internal({
     object_root = null;
 
     stack.set_visible_child_name("inline");
-    output.set_child(object_preview);
+    preview(object_preview);
     return object_preview;
   }
 

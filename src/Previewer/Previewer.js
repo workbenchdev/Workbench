@@ -1,12 +1,18 @@
 import Gtk from "gi://Gtk";
 import GObject from "gi://GObject";
 import GLib from "gi://GLib";
+import Gio from "gi://Gio";
 
 import * as ltx from "../lib/ltx.js";
 import * as postcss from "../lib/postcss.js";
 
 import logger from "../logger.js";
-import { getLanguage, connect_signals, disconnect_signals } from "../util.js";
+import {
+  getLanguage,
+  connect_signals,
+  disconnect_signals,
+  settings,
+} from "../util.js";
 
 import Internal from "./Internal.js";
 import External from "./External.js";
@@ -32,6 +38,14 @@ export default function Previewer({
 
   let current;
 
+  const dropdown_preview_align = builder.get_object("dropdown_preview_align");
+  // TODO: File a bug libadwaita
+  // flat does nothing on GtkDropdown or GtkComboBox or GtkComboBoxText
+  dropdown_preview_align
+    .get_first_child()
+    .get_style_context()
+    .add_class("flat");
+
   const internal = Internal({
     onWindowChange(open) {
       if (current !== internal) return;
@@ -45,6 +59,7 @@ export default function Previewer({
     builder,
     window,
     application,
+    dropdown_preview_align,
   });
   const external = External({
     onWindowChange(open) {
@@ -69,6 +84,21 @@ export default function Previewer({
   const stack = builder.get_object("stack_preview");
   const button_open = builder.get_object("button_open_preview_window");
   const button_close = builder.get_object("button_close_preview_window");
+
+  settings.bind(
+    "preview-align",
+    dropdown_preview_align,
+    "selected",
+    Gio.SettingsBindFlags.DEFAULT
+  );
+  dropdown_preview_align.connect("notify::selected", setPreviewAlign);
+  function setPreviewAlign() {
+    const alignment =
+      dropdown_preview_align.selected === 1 ? Gtk.Align.CENTER : Gtk.Align.FILL;
+    output.halign = alignment;
+    output.valign = alignment;
+  }
+  setPreviewAlign();
 
   function start() {
     stop();
@@ -171,6 +201,11 @@ export default function Previewer({
 
     const object_preview = builder.get_object(target_id);
     if (!object_preview) return;
+
+    if (!dropdown_preview_align.visible) {
+      dropdown_preview_align.selected = template ? 1 : 0;
+    }
+    dropdown_preview_align.visible = !!template;
 
     current.updateXML({
       xml: text,

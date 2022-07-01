@@ -418,6 +418,18 @@ Gtk.ApplicationWindow window {
               styles ["dim-label"]
             }
 
+            [center]
+            DropDown dropdown_preview_align {
+              visible: false;
+              model: StringList {
+                strings [
+                  _("Fill"),
+                  _("Center"),
+                ]
+              };
+              tooltip-text: _("Select Preview mode");
+            }
+
             [end]
             Button button_screenshot {
               icon-name: "photo-camera-symbolic";
@@ -437,12 +449,17 @@ Gtk.ApplicationWindow window {
             StackPage {
               name: "inline";
               child: Box {
-                ScrolledWindow output {
+                ScrolledWindow {
                   name: "workbench_output";
                   vexpand: true;
                   hexpand: true;
 
-                  styles ["background"]
+                  child: Viewport output {
+                    halign: fill;
+                    valign: fill;
+
+                    styles ["background"]
+                  };
                 }
 
                 Separator {

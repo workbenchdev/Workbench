@@ -28,5 +28,8 @@
     <key name="ui-lang" type="s">
       <default>"xml"</default>
     </key>
+    <key name="preview-align" type="i">
+      <default>0</default>
+    </key>
   </schema>
 </schemalist>
