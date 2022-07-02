@@ -1,0 +1,49 @@
+using Gtk 4.0;
+using Adw 1;
+
+template IconWidget: Button {
+  Image image {
+    icon-name: 'applications-science-symbolic'; // for template preview only
+    pixel-size: 42;
+  }
+  clicked => onClicked();
+}
+
+Adw.ToastOverlay overlay {
+  Box {
+    margin-top: 20;
+    orientation: vertical;
+
+    Adw.Clamp {
+      maximum-size: 800;
+      margin-bottom: 12;
+
+      Box {
+        orientation: vertical;
+
+        SearchEntry search_entry {
+          placeholder-text: _('Search for icons by name');
+        }
+
+        Label {
+          label: _('Workbench includes icons ready to use in your prototypes.\nUse <a href="https://apps.gnome.org/app/org.gnome.design.IconLibrary/">Icon Library</a> if you need to include them in your app.');
+          use-markup: true;
+          wrap: true;
+          justify: center;
+        }
+      }
+    }
+
+    ScrolledWindow {
+      hexpand: true;
+      vexpand: true;
+      Adw.Clamp {
+        maximum-size: 800;
+        FlowBox flow_box {
+          valign: start;
+          max-children-per-line: 100;
+        }
+      }
+    }
+  }
+}

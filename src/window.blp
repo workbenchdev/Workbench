@@ -449,17 +449,17 @@ Gtk.ApplicationWindow window {
             StackPage {
               name: "inline";
               child: Box {
-                ScrolledWindow {
-                  name: "workbench_output";
+                name: "workbench_output";
+                vexpand: true;
+                hexpand: true;
+
+                Box output {
+                  halign: fill;
+                  styles ["background"]
+                  valign: fill;
                   vexpand: true;
                   hexpand: true;
-
-                  child: Viewport output {
-                    halign: fill;
-                    valign: fill;
-
-                    styles ["background"]
-                  };
+                  homogeneous: true;
                 }
 
                 Separator {
