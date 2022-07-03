@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: re.sonny.Workbench\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-04 15:25+0200\n"
-"PO-Revision-Date: 2022-07-03 17:33+0000\n"
+"PO-Revision-Date: 2022-07-05 17:16+0000\n"
 "Last-Translator: Hudson FAS <hudsonfas@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/workbench/workbench/pt_BR/>\n"
 "Language: pt_BR\n"
@@ -99,7 +99,7 @@ msgstr "Melhorar o design do aplicativo"
 #: data/re.sonny.Workbench.metainfo.xml:59
 #: data/re.sonny.Workbench.metainfo.xml:69
 msgid "Distribute Library examples under CC0-1.0"
-msgstr "Distribuir exemplos de bibliotecas sobre a licença CC0-1.0"
+msgstr "Distribuir Bibliotecas de exemplos pela licença CC0-1.0"
 
 #: data/re.sonny.Workbench.metainfo.xml:60
 msgid "Respect system preference for color scheme"
@@ -107,7 +107,7 @@ msgstr "Respeitar a preferência do sistema para o esquema de cores"
 
 #: data/re.sonny.Workbench.metainfo.xml:61
 msgid "Add proper light/dark color schemes for Console"
-msgstr "Adicionar cores claras/escuras adequadas ao Console"
+msgstr "Adicionar esquemas de cores claro/escuro próprios para o Console"
 
 #: data/re.sonny.Workbench.metainfo.xml:62
 #: data/re.sonny.Workbench.metainfo.xml:74
@@ -160,7 +160,7 @@ msgstr "Mostrar um marcador de posição para os painéis visíveis"
 
 #: data/re.sonny.Workbench.metainfo.xml:78
 msgid "Crash fixes"
-msgstr "Correção de falhas"
+msgstr "Correções de falhas"
 
 #: data/re.sonny.Workbench.metainfo.xml:79
 msgid "Use org.gnome.Sdk runtime"
@@ -192,7 +192,7 @@ msgstr "Adicionar Adwaita Demo, GTK Demo, GTK Widget Factory e GTK Icon Browser"
 
 #: data/re.sonny.Workbench.metainfo.xml:93
 msgid "The Console can be collapsed by resizing it"
-msgstr "O Console pode ser recolhido quando redimensionando"
+msgstr "O Console pode ser recolhido quando redimensionado"
 
 #: data/re.sonny.Workbench.metainfo.xml:94
 msgid "Prevent system.exit from quitting Workbench"
@@ -257,7 +257,7 @@ msgstr "Atalhos de teclado"
 
 #: src/Library/demos/Application window/main.blp:55
 msgid "About My App"
-msgstr "Sobre My App"
+msgstr "Sobre Minha App"
 
 #: src/about.js:31
 msgid ""
@@ -406,7 +406,7 @@ msgstr ""
 
 #: src/window.blp:468
 msgid "Show Preview Window"
-msgstr "Mostrar Janela de Pré-visualização"
+msgstr "Mostrar Janela de Visualização"
 
 #: src/window.blp:486
 msgid "Close Preview Window"
