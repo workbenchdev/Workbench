@@ -10,7 +10,6 @@ const clipboard = display.get_clipboard();
 const toasts = new Set();
 
 const overlay = workbench.builder.get_object("overlay");
-const flow_box = workbench.builder.get_object("flow_box");
 const search_entry = workbench.builder.get_object("search_entry");
 
 const IconWidget = GObject.registerClass(

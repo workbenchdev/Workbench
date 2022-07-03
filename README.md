@@ -14,7 +14,8 @@ Among other things, Workbench comes with
 
 - realtime GTK/CSS preview
 - library of examples
-- JavaScript and Vala runs without any setup
+- 1000+ icons
+- JavaScript and Vala support
 - XML and Blueprint for describing user interface
 - syntax highlighting, undo/redo, autosave, session restore
 - code formatter

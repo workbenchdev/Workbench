@@ -95,10 +95,8 @@ export default function Previewer({
   function setPreviewAlign() {
     const alignment =
       dropdown_preview_align.selected === 1 ? Gtk.Align.CENTER : Gtk.Align.FILL;
-    // const homogeneous = dropdown_preview_align.selected === 1 ? Gtk.Align.CENTER : Gtk.Align.FILL;
     output.halign = alignment;
     output.valign = alignment;
-    // output.hom
   }
   setPreviewAlign();
 
@@ -169,7 +167,7 @@ export default function Previewer({
       tree = ltx.parse(text);
       ({ target_id, text, original_id, template } = targetBuildable(tree));
     } catch (err) {
-      logError(err);
+      // logError(err);
       logger.debug(err);
     }
 

@@ -51,9 +51,8 @@ export default function Internal({
   }
 
   function preview(object) {
-    for (const foo of output) {
-      output.remove?.(foo);
-      foo.destroy?.();
+    for (const child of output) {
+      output.remove?.(child);
     }
     output.append(object);
   }
