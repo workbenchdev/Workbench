@@ -21,6 +21,10 @@ Among other things, Workbench comes with
 - code formatter
 - console logs
 
+**Testimonials**
+
+> **“** It is an essential tool for those who develop applications with GTK **”** • **“** created a simple mockup using the amazing Workbench app **”** • **“** It used to be hard but Workbench helps me learn GTK. **”** • **“** I recommend it even to those who are new to GTK **”** • **“** This tool has simplified my life by saving my time drastically. **”** • **“** Gone too wild playing with Workbench **”**
+
 ## Tips and tricks
 
 <details>
@@ -129,3 +133,34 @@ cd ..
 cp -r icon-development-kit-www/img/symbolic/**/*.svg data/icons/hicolor/scalable/actions/
 cat icon-development-kit-www/_data/icons.yaml | python -c 'import sys, yaml, json; print(json.dumps(yaml.safe_load(sys.stdin.read())))' > src/icon-development-kit.json
 ```
+
+<details>
+  <summary>
+    Testimonials
+  </summary>
+
+From [Mirko Brombin](https://mirko.pm/) creator of [Bottles](https://usebottles.com/)
+
+> My favorite tool is definitely Workbench, an application that allows me to compose GTK interfaces with XML/Blueprint, JavaScript, and CSS, seeing the results in real-time. This tool has simplified my life by reducing my time drastically. It is an essential tool for those who develop applications with GTK and I recommend it even to those who are new to GTK.
+
+https://console.substack.com/p/console-112
+
+---
+
+From [Marco Melorio](https://twitter.com/melix9999) creator of [Telgrand](https://github.com/melix99/telegrand)
+
+> GSoC coding period started on Monday, so this is a good time to blog about what I’ve started working on and what’s my milestone to finish the project. First off, I’ve created a simple mockup using Sonny Piers’ amazing Workbench app. This is the first step in knowing how we want the UI to look like, at least in the first iteration.
+
+https://melix99.wordpress.com/2022/06/17/gsoc-update-1-planning/
+
+---
+
+> Workbench has been great! It used to be hard to mess around with GTK but Workbench helps me to learn GTK.
+
+https://twitter.com/synthesizedecho/status/1528958932911280129
+
+> Gone too wild playing with Workbench and Blueprint.
+
+https://mastodon.online/@waimus/108582108701889960
+
+</details>
