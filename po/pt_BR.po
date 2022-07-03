@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-04 15:25+0200\n"
 "PO-Revision-Date: 2022-07-05 17:16+0000\n"
-"Last-Translator: Hudson FAS <hudsonfas@gmail.com>\n"
+"Last-Translator: SWYK <swyknox@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/workbench/workbench/pt_BR/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -90,7 +90,7 @@ msgstr "Adicionar suporte para pre-visualizar gerenciadores de sinais"
 
 #: data/re.sonny.Workbench.metainfo.xml:57
 msgid "Include all icons from icon-development-kit"
-msgstr "Incluir todos os ícones do icon-development-kit"
+msgstr "Incluir todos os ícones do kit de desenvolvimento de ícones"
 
 #: data/re.sonny.Workbench.metainfo.xml:58
 msgid "Improve application design"
@@ -200,7 +200,7 @@ msgstr "Impedir que system.exit saia do Workbench"
 
 #: data/re.sonny.Workbench.metainfo.xml:95
 msgid "Allow calling GObject.registerClass multiple times"
-msgstr "Permitir chamadas ao GObject.registerClass múltiplas vezes"
+msgstr "Permitir chamar GObject.registerClass várias vezes"
 
 #: data/re.sonny.Workbench.metainfo.xml:96
 msgid "Prevent crash caused by using non GtkBuildable objects"
@@ -240,7 +240,7 @@ msgstr "Atualizar para a plataforma GNOME 42"
 
 #: data/re.sonny.Workbench.metainfo.xml:111
 msgid "Various fixes"
-msgstr "Diversas correções"
+msgstr "Várias correções"
 
 #: data/re.sonny.Workbench.metainfo.xml:117
 msgid "This is the first release of Workbench. We hope you like it."
@@ -358,7 +358,7 @@ msgstr "<b>Código</b>"
 
 #: src/window.blp:165 src/window.blp:321
 msgid "Switch document"
-msgstr "Substituir documento"
+msgstr "Alternar documento"
 
 #: src/window.blp:173
 msgid "_Run"
@@ -401,8 +401,8 @@ msgid ""
 "This interface can only be previewed as a separate window.\n"
 "We recommend using “Always on Top”"
 msgstr ""
-"A interface só pode ser pré-visualizada como uma janela separada.\n"
-"Recomenda-se utilizar \"Sempre em Cima\""
+"Esta interface só pode ser visualizada como uma janela separada.\n"
+"Recomendamos usar “Sempre no topo”"
 
 #: src/window.blp:468
 msgid "Show Preview Window"
@@ -410,7 +410,7 @@ msgstr "Mostrar Janela de Visualização"
 
 #: src/window.blp:486
 msgid "Close Preview Window"
-msgstr "Fechar Janela de Pré-visualização"
+msgstr "Fechar janela de visualização"
 
 #: src/window.blp:520
 msgid "C_onsole"
@@ -450,7 +450,7 @@ msgstr "Aprenda"
 
 #: src/window.blp:580
 msgid "Developer Documentation"
-msgstr "Documentação do Desenvolvedor"
+msgstr "Documentação do desenvolvedor"
 
 #: src/window.blp:587
 msgid "Human Interface Guidelines"
@@ -486,11 +486,11 @@ msgstr "Ferramentas da Plataforma"
 
 #: src/window.blp:632
 msgid "Adwaita Demo"
-msgstr "Demo Adwaita"
+msgstr "Demonstração Adwaita"
 
 #: src/window.blp:638
 msgid "GTK Demo"
-msgstr "Demo GTK"
+msgstr "Demonstração GTK"
 
 #: src/window.blp:644
 msgid "GTK Widget Factory"
