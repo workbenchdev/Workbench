@@ -1,12 +1,21 @@
 using Gtk 4.0;
 using Adw 1;
 
-template IconWidget: Button {
-  Image image {
-    icon-name: 'applications-science-symbolic'; // for template preview only
-    pixel-size: 42;
+template IconWidget : FlowBoxChild {
+  focusable: false;
+  halign: start;
+  Button button {
+    clicked => onClicked();
+    width-request: 48;
+    height-request: 48;
+    Image image {
+      icon-name: "applications-science-symbolic";
+      pixel-size: 32;
+      halign: center;
+      valign: center;
+    }
+    styles ["flat"]
   }
-  clicked => onClicked();
 }
 
 Adw.ToastOverlay overlay {
@@ -16,21 +25,9 @@ Adw.ToastOverlay overlay {
 
     Adw.Clamp {
       maximum-size: 800;
-      margin-bottom: 12;
 
-      Box {
-        orientation: vertical;
-
-        SearchEntry search_entry {
-          placeholder-text: _('Search for icons by name');
-        }
-
-        Label {
-          label: _('Workbench includes icons ready to use in your prototypes.\nUse <a href="https://apps.gnome.org/app/org.gnome.design.IconLibrary/">Icon Library</a> if you need to include them in your app.');
-          use-markup: true;
-          wrap: true;
-          justify: center;
-        }
+      SearchEntry search_entry {
+        placeholder-text: _('Search for icons by name, category or tag');
       }
     }
 
@@ -39,9 +36,44 @@ Adw.ToastOverlay overlay {
       vexpand: true;
       Adw.Clamp {
         maximum-size: 800;
-        FlowBox flow_box {
-          valign: start;
-          max-children-per-line: 100;
+
+        Box {
+          orientation: vertical;
+
+          Label {
+            styles ["title-4"]
+            label: "Icon Development Kit";
+            margin-bottom: 6;
+            margin-top: 12;
+            halign: start;
+          }
+
+          FlowBox flow_box_devkit {
+            valign: start;
+            min-children-per-line: 5;
+            max-children-per-line: 18;
+            activate-on-single-click: true;
+            selection-mode: none;
+            margin-bottom: 12;
+          }
+
+          Label {
+            styles ["title-4"]
+            label: "Platform icons";
+            margin-bottom: 6;
+            margin-top: 12;
+            halign: start;
+          }
+
+          FlowBox flow_box_platform {
+            valign: start;
+            min-children-per-line: 5;
+            max-children-per-line: 18;
+            activate-on-single-click: true;
+            selection-mode: none;
+            margin-bottom: 12;
+          }
+
         }
       }
     }

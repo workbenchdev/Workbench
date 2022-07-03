@@ -116,3 +116,15 @@ and the GNOME community 🖤
 GPLv3. Please see [COPYING](COPYING) file.
 
 Except for everything under src/Library/demos which is in the public domain under the terms of [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/).
+
+## Maintainers
+
+### Update icons
+
+```
+cd icon-development-kit-www
+git pull
+cd ..
+cp -r icon-development-kit-www/img/symbolic/**/*.svg data/icons/hicolor/scalable/actions/
+cat icon-development-kit-www/_data/icons.yaml | python -c 'import sys, yaml, json; print(json.dumps(yaml.safe_load(sys.stdin.read())))' > src/icon-development-kit.json
+```

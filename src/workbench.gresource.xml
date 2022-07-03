@@ -38,6 +38,7 @@
     <file>Library/demos/Custom widget/main.js</file>
     <file>Library/demos/Custom widget/main.json</file>
     <file>language-specs/blueprint.lang</file>
+    <file>icon-development-kit.json</file>
   </gresource>
   <gresource prefix="/re/sonny/Workbench/js">
     <file>lib/ltx.js</file>
