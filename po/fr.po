@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: re.sonny.Workbench\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-04 15:25+0200\n"
-"PO-Revision-Date: 2022-05-30 10:17+0000\n"
-"Last-Translator: Aurélien Hamy <aunetx@yandex.com>\n"
+"PO-Revision-Date: 2022-07-05 17:16+0000\n"
+"Last-Translator: Equinoxs <equinoxsoftime@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/workbench/workbench/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.13-dev\n"
+"X-Generator: Weblate 4.13.1-dev\n"
 
 #. TRANSLATORS: Don't translate
 #: data/re.sonny.Workbench.desktop:4
@@ -34,7 +34,7 @@ msgstr "CSS;JavaScript;GJS;Blueprint;builder;Vala;"
 
 #: data/re.sonny.Workbench.metainfo.xml:14
 msgid "Workbench goal is to let you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a GTK user interface."
-msgstr "Le but de Workbench est de vous laisser expérimenter les technologies GNOME, que ce soit pour bidouiller pour la première fois ou pour construire et tester une interface utilisateur GTK personnalisé."
+msgstr "Le but de Workbench est de vous laisser expérimenter les technologies GNOME, que ce soit pour bidouiller pour la première fois ou pour construire et tester une interface GTK personnalisé."
 
 #: data/re.sonny.Workbench.metainfo.xml:15
 msgid "Among other things, Workbench comes with"
@@ -62,7 +62,7 @@ msgstr "surlignage syntaxique, fonctions annuler / refaire, sauvegarde automatiq
 
 #: data/re.sonny.Workbench.metainfo.xml:22
 msgid "code formatter"
-msgstr "Formateur de code"
+msgstr "formateur de code"
 
 #: data/re.sonny.Workbench.metainfo.xml:23
 msgid "console logs"
@@ -119,8 +119,6 @@ msgid "Other changes"
 msgstr "Autres changements"
 
 #: data/re.sonny.Workbench.metainfo.xml:66
-#, fuzzy
-#| msgid "Platform Tools"
 msgid "Silence platform tools"
 msgstr "Taire l'outil de la plateforme"
 
@@ -130,97 +128,95 @@ msgstr "Fait n'ouvrir que les panneaux importants à la bibliothèque d'exemples
 
 #: data/re.sonny.Workbench.metainfo.xml:68
 msgid "Always open the Console when opening a Library example"
-msgstr ""
+msgstr "Toujours ouvrir la console à l'ouverture d'une bibliothèque d'exemple"
 
 #: data/re.sonny.Workbench.metainfo.xml:70
 msgid "Prevent running Code if the panel is not visible"
-msgstr ""
+msgstr "Ne pas lancer le code si le panneau n'est pas visible"
 
 #: data/re.sonny.Workbench.metainfo.xml:71
 msgid "Add icons and mnemonics for all buttons"
-msgstr ""
+msgstr "Ajouter des icônes et des mnémotechniques pour tous les boutons"
 
 #: data/re.sonny.Workbench.metainfo.xml:72
 msgid "Move Bookmarks to the main menu"
-msgstr ""
+msgstr "Déplacer les marque-pages dans le menu principal"
 
 #: data/re.sonny.Workbench.metainfo.xml:73
 msgid "Enable scrollbar and kinetic scrolling on Console"
-msgstr ""
+msgstr "Activer la barre de défilement et le défilement cinétique sur la console"
 
 #: data/re.sonny.Workbench.metainfo.xml:75
 msgid "Improve Library examples"
-msgstr ""
+msgstr "Améliorer les bibliothèques d'exemple"
 
 #: data/re.sonny.Workbench.metainfo.xml:76
 msgid "Performance optimizations"
-msgstr ""
+msgstr "Optimisations de performance"
 
 #: data/re.sonny.Workbench.metainfo.xml:77
 msgid "Show a placeholder when all panels are invisible"
-msgstr ""
+msgstr "Afficher un placeholder quand tous les panneaux sont invisibles"
 
 #: data/re.sonny.Workbench.metainfo.xml:78
-#, fuzzy
-#| msgid "Various fixes"
 msgid "Crash fixes"
 msgstr "Diverses corrections"
 
 #: data/re.sonny.Workbench.metainfo.xml:79
 msgid "Use org.gnome.Sdk runtime"
-msgstr ""
+msgstr "Utiliser org.gnome.Sdk"
 
 #: data/re.sonny.Workbench.metainfo.xml:86
 msgid "Add a Library of examples"
-msgstr ""
+msgstr "Ajouter une bibliothèque d'exemples"
 
 #: data/re.sonny.Workbench.metainfo.xml:87
 msgid "Add an example of WebSocket client"
-msgstr ""
+msgstr "Ajouter un exemple de client WebSocket"
 
 #: data/re.sonny.Workbench.metainfo.xml:88
 msgid "Add an example of toasts"
-msgstr ""
+msgstr "Ajouter un exemple d'avis"
 
 #: data/re.sonny.Workbench.metainfo.xml:89
 msgid "Add an example of application window"
-msgstr ""
+msgstr "Ajouter un exemple de fenêtre d'application"
 
 #: data/re.sonny.Workbench.metainfo.xml:90
 msgid "Add an example of desktop notification"
-msgstr ""
+msgstr "Ajouter un exemple de notification de bureau"
 
 #: data/re.sonny.Workbench.metainfo.xml:92
 msgid "Add Adwaita Demo, GTK Demo, GTK Widget Factory and GTK Icon Browser"
-msgstr ""
+msgstr "Ajouter Adwaita Demo, GTK Demo, GTK Widget Factory et GTK Icon Browser"
 
 #: data/re.sonny.Workbench.metainfo.xml:93
 msgid "The Console can be collapsed by resizing it"
-msgstr ""
+msgstr "La console peut être réduite en la redimensionnant"
 
 #: data/re.sonny.Workbench.metainfo.xml:94
 msgid "Prevent system.exit from quitting Workbench"
-msgstr ""
+msgstr "Empêcher system.exit de quitter Workbench"
 
 #: data/re.sonny.Workbench.metainfo.xml:95
 msgid "Allow calling GObject.registerClass multiple times"
-msgstr ""
+msgstr "Autoriser l'appel à GObject.registerClass plusieurs fois"
 
 #: data/re.sonny.Workbench.metainfo.xml:96
 msgid "Prevent crash caused by using non GtkBuildable objects"
-msgstr ""
+msgstr "Empêcher le crash causé par l'utilisation d'objets non GtkBuildable"
 
 #: data/re.sonny.Workbench.metainfo.xml:97
 msgid "Allow using DBus and Gio.Application"
-msgstr ""
+msgstr "Autoriser l'utilisation de DBus et Gio.Application"
 
 #: data/re.sonny.Workbench.metainfo.xml:98
 msgid "Allow using network"
-msgstr ""
+msgstr "Autoriser l'utilisation du réseau"
 
 #: data/re.sonny.Workbench.metainfo.xml:99
 msgid "Enable GtkWindow objects preview"
-msgstr ""
+msgstr "Activer la prévisualisation des objets GtkWindow"
 
 #: data/re.sonny.Workbench.metainfo.xml:106
 msgid "Take a png screenshot of the preview"
@@ -281,7 +277,6 @@ msgid "Import File"
 msgstr "Importer un fichier"
 
 #: src/actions.js:133
-#, fuzzy
 msgid "All supported"
 msgstr "Tous supportés"
 
@@ -498,7 +493,6 @@ msgid "GTK Demo"
 msgstr "Démonstration GTK"
 
 #: src/window.blp:644
-#, fuzzy
 msgid "GTK Widget Factory"
 msgstr "GTK Widget Factory"
 
