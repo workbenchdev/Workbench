@@ -1,5 +1,5 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# Copyright (C) YEAR Sonny Piers
 # This file is distributed under the same license as the re.sonny.Workbench package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
@@ -8,24 +8,24 @@ msgstr ""
 "Project-Id-Version: re.sonny.Workbench\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-04 15:25+0200\n"
-"PO-Revision-Date: 2022-06-07 11:17+0000\n"
-"Last-Translator: Onuralp SEZER <thunderbirdtr@gmail.com>\n"
-"Language-Team: Turkish <https://hosted.weblate.org/projects/workbench/workbench/tr/>\n"
-"Language: tr\n"
+"PO-Revision-Date: 2022-06-12 12:17+0000\n"
+"Last-Translator: llozi <zxc3123857948@gmail.com>\n"
+"Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/workbench/workbench/zh_Hans/>\n"
+"Language: zh_Hans\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 4.13-dev\n"
 
 #. TRANSLATORS: Don't translate
 #: data/re.sonny.Workbench.desktop:4
 msgid "Workbench"
-msgstr "Workbench"
+msgstr ""
 
 #: data/re.sonny.Workbench.desktop:5 data/re.sonny.Workbench.metainfo.xml:10
 msgid "Learn and prototype with GNOME technologies"
-msgstr "GNOME teknolojileriyle hem öğrenin hem de prototip oluşturun"
+msgstr "使用 GNOME 技术学习和制作原型"
 
 #. TRANSLATORS: Don't translate
 #: data/re.sonny.Workbench.desktop:12
@@ -33,46 +33,44 @@ msgid "CSS;JavaScript;GJS;Blueprint;builder;Vala;"
 msgstr "CSS;JavaScript;GJS;Blueprint;builder;Vala;"
 
 #: data/re.sonny.Workbench.metainfo.xml:14
-#, fuzzy
-#| msgid "Workbench goal is to let you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a custom GTK widget."
 msgid "Workbench goal is to let you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a GTK user interface."
-msgstr "Workbench'in amacı, ister ilk kez kurcalıyor, ister özel bir GTK widget'ı oluşturup test ediyor olun, GNOME teknolojilerini denemenize izin vermektir."
+msgstr "Workbench 的目标是让您试验 GNOME 技术，无论是第一次修补还是构建和测试 GTK 用户界面。"
 
 #: data/re.sonny.Workbench.metainfo.xml:15
 msgid "Among other things, Workbench comes with"
-msgstr "Diğer şeylerin yanı sıra, Workbench bunlarla birlikte gelir:"
+msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:17
 msgid "realtime GTK/CSS preview"
-msgstr "gerçek zamanlı GTK/CSS önizlemesi"
+msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:18
 msgid "library of examples"
-msgstr "kütüphane örnekleri"
+msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:19
 msgid "JavaScript and Vala runs without any setup"
-msgstr "Herhangi bir kurulum yapmadan JavaScript ve Vala çalıştırın"
+msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:20
 msgid "XML and Blueprint for describing user interface"
-msgstr "XML ve Blueprint kullanıcı arayüzünü açıklamak için"
+msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:21
 msgid "syntax highlighting, undo/redo, autosave, session restore"
-msgstr "Sözdizimi vurgulama, geri al/yeniden yap, otomatik kaydet, oturum geri yüklemek"
+msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:22
 msgid "code formatter"
-msgstr "kod formatlayıcı"
+msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:23
 msgid "console logs"
-msgstr "konsol logları"
+msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:51
 msgid "Highlights"
-msgstr "Vurgulamalar"
+msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:53
 msgid "Add Blueprint markup syntax for UI"
@@ -121,10 +119,8 @@ msgid "Other changes"
 msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:66
-#, fuzzy
-#| msgid "Platform Tools"
 msgid "Silence platform tools"
-msgstr "Platform Araçları"
+msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:67
 msgid "Make Library examples only open relevant panels"
@@ -163,10 +159,8 @@ msgid "Show a placeholder when all panels are invisible"
 msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:78
-#, fuzzy
-#| msgid "Various fixes"
 msgid "Crash fixes"
-msgstr "Çeşitli düzeltmeler"
+msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:79
 msgid "Use org.gnome.Sdk runtime"
@@ -214,361 +208,294 @@ msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:97
 msgid "Allow using DBus and Gio.Application"
-msgstr "DBus ve Gio.Application kullanımına izin ver"
+msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:98
 msgid "Allow using network"
-msgstr "Ağ kullanımına izin ver"
+msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:99
 msgid "Enable GtkWindow objects preview"
-msgstr "GtkWindow nesneleri için önizlemeyi etkinleştir"
+msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:106
 msgid "Take a png screenshot of the preview"
-msgstr "Önizlemenin png görüntüsünü al"
+msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:107
 msgid "The console is now resizable"
-msgstr "Konsol artık yeniden boyutlandırılabilir"
+msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:108
 msgid "Redesign the dark/light mode switcher"
-msgstr "Karanlık/ışık modu değiştiricisini yeniden tasarlayın"
+msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:109
 msgid "Show platform and dependencies in about dialog"
-msgstr "Hakkında iletişim kutusunda platformu ve bağımlılıkları göster"
+msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:110
 msgid "Update to GNOME platform 42"
-msgstr "GNOME platform 42'ye güncelle"
+msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:111
 msgid "Various fixes"
-msgstr "Çeşitli düzeltmeler"
+msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:117
 msgid "This is the first release of Workbench. We hope you like it."
-msgstr "Bu, Workbench'in ilk sürümüdür. Umarız beğenirsin."
+msgstr ""
 
 #: src/Library/Library.blp:7
 msgid "Library"
-msgstr "Kütüphane"
+msgstr ""
 
 #: src/Library/demos/Application window/main.blp:50 src/shortcutsWindow.blp:49
 #: src/window.blp:652
 msgid "Keyboard Shortcuts"
-msgstr "Klavye Kısayolları"
+msgstr ""
 
 #: src/Library/demos/Application window/main.blp:55
 msgid "About My App"
-msgstr "Uygulamam hakkında"
+msgstr ""
 
 #: src/about.js:31
-#, fuzzy
-#| msgid ""
-#| "Sandbox to learn and prototype with\n"
-#| "GNOME technologies"
 msgid ""
 "Learn and prototype with\n"
 "GNOME technologies"
 msgstr ""
-"GNOME teknolojileriyle\n"
-"öğrenmek ve prototip oluşturmak için korumalı alan"
 
 #. TRANSLATORS: eg. 'Translator Name <your.email@domain.com>' or 'Translator Name https://website.example'
 #: src/about.js:40
 msgid "translator-credits"
-msgstr "Emin Fedar<eminfedar@gmail.com>"
+msgstr ""
 
 #: src/actions.js:51 src/shortcutsWindow.blp:16
 msgid "Import File"
-msgstr "Dosya içe aktar"
+msgstr ""
 
 #: src/actions.js:133
 msgid "All supported"
-msgstr "Hepsi destekleniyor"
+msgstr ""
 
 #: src/shortcutsWindow.blp:11
 msgid "Run Code"
-msgstr "Kodu çalıştır"
+msgstr ""
 
 #: src/shortcutsWindow.blp:21
 msgid "Open Library"
-msgstr "Kütüphaneyi Aç"
+msgstr ""
 
 #: src/shortcutsWindow.blp:26
 msgid "Toggle Console"
-msgstr "Konsolu Aç/Kapat"
+msgstr ""
 
 #: src/shortcutsWindow.blp:31
 msgid "Clear Console"
-msgstr "Konsolu Temizle"
+msgstr ""
 
 #: src/shortcutsWindow.blp:37
 msgid "Inspector"
-msgstr "Denetçi"
+msgstr ""
 
 #: src/shortcutsWindow.blp:41
 msgid "Undo"
-msgstr "Geri al"
+msgstr ""
 
 #: src/shortcutsWindow.blp:45
 msgid "Redo"
-msgstr "Yinele"
+msgstr ""
 
 #: src/shortcutsWindow.blp:53
 msgid "Quit"
-msgstr "Çıkış"
+msgstr ""
 
 #: src/window.blp:15
 msgid "_Library"
-msgstr "Kütüphane"
+msgstr ""
 
 #: src/window.blp:19
 msgid "Open Library of Demos and Examples (Ctrl+Shift+O)"
-msgstr "Demolar ve Örnekler Kitaplığını Açın (Ctrl+Shift+O)"
+msgstr ""
 
 #: src/window.blp:37
 msgid "_Code"
-msgstr "_Kod"
+msgstr ""
 
 #: src/window.blp:54
 msgid "_Style"
-msgstr "_Stil"
+msgstr ""
 
 #: src/window.blp:71
 msgid "_UI"
-msgstr "_UI"
+msgstr ""
 
 #: src/window.blp:88
 msgid "_Preview"
-msgstr "_Önizleme"
+msgstr ""
 
 #: src/window.blp:109
 msgid "sun-symbolic"
-msgstr "sun-symbolic"
+msgstr ""
 
 #: src/window.blp:110 src/window.blp:113
 msgid "Use Light mode"
-msgstr "Aydınlık Modu Kullan"
+msgstr ""
 
 #: src/window.blp:118
 msgid "workbench-moon-rounded-symbolic"
-msgstr "workbench-moon-rounded-symbolic"
+msgstr ""
 
 #: src/window.blp:119 src/window.blp:122
 msgid "Use Dark mode"
-msgstr "Karanlık Modu Kullan"
+msgstr ""
 
 #: src/window.blp:149
 msgid "<b>Code</b>"
-msgstr "<b>Kod</b>"
+msgstr ""
 
 #: src/window.blp:165 src/window.blp:321
 msgid "Switch document"
-msgstr "Döküman değiştir"
+msgstr ""
 
 #: src/window.blp:173
 msgid "_Run"
-msgstr "_Çalıştır"
+msgstr ""
 
 #: src/window.blp:177
 msgid "Run (Ctrl+⏎)"
-msgstr "Çalıştır (Ctrl+⏎)"
+msgstr ""
 
 #: src/window.blp:248
 msgid "<b>Style CSS</b>"
-msgstr "<b>Stil CSS</b>"
+msgstr ""
 
 #: src/window.blp:293
 msgid "<b>UI</b>"
-msgstr "<b>UI</b>"
+msgstr ""
 
 #: src/window.blp:333 src/window.blp:335
 msgid "Convert to XML"
-msgstr "XML'e çevir"
+msgstr ""
 
 #: src/window.blp:344 src/window.blp:346
 msgid "Convert to Blueprint"
-msgstr "Blueprint'e çevir"
+msgstr ""
 
 #: src/window.blp:420
 msgid "<b>Preview</b>"
-msgstr "<b>Önizleme</b>"
+msgstr ""
 
 #: src/window.blp:428 src/window.blp:430
 msgid "Take Screenshot of Preview"
-msgstr "Önizlemenin Ekran Görüntüsünü Al"
+msgstr ""
 
 #: src/window.blp:460 src/window.blp:478
 msgid "Windowed Preview"
-msgstr "Pencereli Önizleme"
+msgstr ""
 
 #: src/window.blp:461 src/window.blp:479
-#, fuzzy
-#| msgid ""
-#| "This interface can only be previewed as a separate window.\n"
-#| "We recommend using \"Always on Top\""
 msgid ""
 "This interface can only be previewed as a separate window.\n"
 "We recommend using “Always on Top”"
 msgstr ""
-"Bu arayüz sadece ayrı bir pencere olarak önizlenebilir.\n"
-"\"Her Zaman En Üstte\" seçeneğini kullanmanızı öneririz"
 
 #: src/window.blp:468
 msgid "Show Preview Window"
-msgstr "Önizleme Penceresini Görüntüle"
+msgstr ""
 
 #: src/window.blp:486
 msgid "Close Preview Window"
-msgstr "Önizleme Penceresini Kapat"
+msgstr ""
 
 #: src/window.blp:520
 msgid "C_onsole"
-msgstr "K_onsol"
+msgstr ""
 
 #: src/window.blp:524
 msgid "Show logs (Ctrl+Shift+K)"
-msgstr "Logları göster (Ctrl+Shift+K)"
+msgstr ""
 
 #: src/window.blp:530
 msgid "_Inspector"
-msgstr "_Denetçi"
+msgstr ""
 
 #: src/window.blp:533
 msgid "Open GTK Inspector (Ctrl+Shift+I)"
-msgstr "GTK Inspector'ü aç (Ctrl+Shift+I)"
+msgstr ""
 
 #: src/window.blp:544
 msgid "Cl_ear"
-msgstr "Te_mizle"
+msgstr ""
 
 #: src/window.blp:548
 msgid "Clear console (Ctrl+K)"
-msgstr "Konsolu temizle (Ctrl+K)"
+msgstr ""
 
 #: src/window.blp:570
-#, fuzzy
-#| msgid "Open File…"
 msgid "Import File…"
-msgstr "Dosya Aç…"
+msgstr ""
 
 #: src/window.blp:575
 msgid "Bookmarks"
-msgstr "Yer İmleri"
+msgstr ""
 
 #: src/window.blp:577
 msgid "Learn"
-msgstr "Öğren"
+msgstr ""
 
 #: src/window.blp:580
 msgid "Developer Documentation"
-msgstr "Geliştirici Dökümanı"
+msgstr ""
 
 #: src/window.blp:587
-#, fuzzy
-#| msgid "Human Interface Guidelines (HIG)"
 msgid "Human Interface Guidelines"
-msgstr "İnsan Arayüzü Yönergeleri (Human Interface Guidelines, HIG)"
+msgstr ""
 
 #: src/window.blp:593
 msgid "JavaScript"
-msgstr "JavaScript"
+msgstr ""
 
 #: src/window.blp:599
 msgid "Vala"
-msgstr "Vala"
+msgstr ""
 
 #: src/window.blp:605
 msgid "Blueprint"
-msgstr "Blueprint"
+msgstr ""
 
 #: src/window.blp:612
 msgid "Get help"
-msgstr "Yardım al"
+msgstr ""
 
 #: src/window.blp:615
 msgid "Discourse"
-msgstr "Söylem"
+msgstr ""
 
 #: src/window.blp:621
 msgid "Matrix"
-msgstr "Matrix"
+msgstr ""
 
 #: src/window.blp:629
 msgid "Platform Tools"
-msgstr "Platform Araçları"
+msgstr ""
 
 #: src/window.blp:632
 msgid "Adwaita Demo"
-msgstr "Adwaita Demosu"
+msgstr ""
 
 #: src/window.blp:638
 msgid "GTK Demo"
-msgstr "GTK Demosu"
+msgstr ""
 
 #: src/window.blp:644
 msgid "GTK Widget Factory"
-msgstr "GTK Widget Factory"
+msgstr ""
 
 #: src/window.blp:657
 msgid "About Workbench"
-msgstr "Workbench Hakkında"
+msgstr ""
 
 #: src/window.js:396
 msgid "Are you sure you want to discard your changes?"
-msgstr "Değişikliklerinizi silmek istediğinizden emin misiniz?"
-
-#~ msgid "Side by side editors with live preview on the right and console in the bottom"
-#~ msgstr "Sağda canlı önizleme ve altta konsol bulunan yan yana düzenleyiciler"
-
-#~ msgid "JavaScript for quick and easy scripting"
-#~ msgstr "Hızlı ve Kolay scripting için JavaScript"
-
-#~ msgid "Run"
-#~ msgstr "Çalıştır"
-
-#~ msgid "Open Console"
-#~ msgstr "Konsolu Aç"
-
-#~ msgid "Code - JavaScript"
-#~ msgstr "Kod - JavaScript"
-
-#~ msgid "UI - XML"
-#~ msgstr "UI - XML"
-
-#~ msgid "Clear"
-#~ msgstr "Temizle"
-
-#~ msgid "GTK Icon Browser"
-#~ msgstr "GTK Icon Browser"
-
-#~ msgid "GNOME JavaScript (GJS)"
-#~ msgstr "GNOME JavaScript (GJS)"
-
-#~ msgid "UI components"
-#~ msgstr "UI bileşenleri"
-
-#~ msgid "Platform components"
-#~ msgstr "Platform bileşenleri"
-
-#~ msgid "Reference"
-#~ msgstr "Referans"
-
-#~ msgid "GJS"
-#~ msgstr "GJS"
-
-#~ msgid "Gtk"
-#~ msgstr "Gtk"
-
-#~ msgid "Adwaita"
-#~ msgstr "Adwaita"
-
-#~ msgid "Stack Overflow"
-#~ msgstr "Stack Overflow"
-
-#~ msgid "Reset to Demo"
-#~ msgstr "Demoya Sıfırla"
+msgstr ""
