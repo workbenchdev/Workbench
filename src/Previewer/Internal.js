@@ -51,10 +51,7 @@ export default function Internal({
   }
 
   function preview(object) {
-    for (const child of output) {
-      output.remove?.(child);
-    }
-    output.append(object);
+    output.set_child(object);
   }
 
   function updateXML({
