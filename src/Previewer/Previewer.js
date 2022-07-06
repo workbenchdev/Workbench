@@ -180,7 +180,7 @@ export default function Previewer({
       return;
     }
 
-    registerSignals(tree, scope, symbols);
+    registerSignals({ tree, scope, symbols, template });
 
     try {
       // For some reason this log warnings twice
@@ -322,8 +322,11 @@ function getTemplate(tree) {
   const klass = getObjectClass(parent);
   if (!klass) return;
 
-  const object = new klass();
-  if (!(object instanceof Gtk.Widget)) return;
+  // Error: Cannot instantiate abstract type GtkWidget
+  if (parent !== "GtkWidget") {
+    const object = new klass();
+    if (!(object instanceof Gtk.Widget)) return;
+  }
 
   template.attrs.class = getClassNameType(template.attrs.class);
   const original = tree.toString();
@@ -399,7 +402,10 @@ function assertBuildable(tree) {
   }
 }
 
-function makeSignalHandler({ name, handler, after, id, type }, symbols) {
+function makeSignalHandler(
+  { name, handler, after, id, type },
+  { symbols, template }
+) {
   return function (object, ...args) {
     const symbol = symbols?.[handler];
     const registered_handler = typeof symbol === "function";
@@ -409,21 +415,24 @@ function makeSignalHandler({ name, handler, after, id, type }, symbols) {
 
     const object_name = `${type}${id ? "$" + id : ""}`;
     // const object_name = object.toString(); // [object instance wrapper GIName:Gtk.Button jsobj@0x2937abc5c4c0 native@0x55fbfe53f620]
+    const handler_type = (() => {
+      if (template) return "Template";
+      if (registered_handler) return "Registered";
+      return "Unregistered";
+    })();
+    const handler_when = after ? "after" : "for";
+
     logger.log(
-      `${
-        registered_handler ? "Registered" : "Unregistered"
-      } handler "${handler}" triggered ${
-        after ? "after" : "for"
-      } signal "${name}" on ${object_name}`
+      `${handler_type} handler "${handler}" triggered ${handler_when} signal "${name}" on ${object_name}`
     );
   };
 }
 
-function registerSignals(tree, scope, symbols) {
+function registerSignals({ tree, scope, symbols, template }) {
   try {
     const signals = findSignals(tree);
     for (const signal of signals) {
-      scope[signal.handler] = makeSignalHandler(signal, symbols);
+      scope[signal.handler] = makeSignalHandler(signal, { symbols, template });
     }
   } catch (err) {
     logError(err);

@@ -47,6 +47,26 @@
   </screenshots>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="42.1" date="2022-07-03">
+      <ul>
+        <li>Icon Browser demo</li>
+        <li>Replace confirmation dialogs with toasts and undo</li>
+        <li>Support updates on root objects</li>
+        <li>Support binding signal handlers from UI</li>
+        <li
+        >Add workbench.template and workbench.preview APIs to allow using templates from Code</li>
+        <li>Add Center/Fill preview modes for templates</li>
+        <li
+        >Make external preview size the window after the internal preview</li>
+        <li>64 new icons available</li>
+        <li>Update Blueprint to 0.2.0</li>
+        <li>Fix empty preview on first load</li>
+        <li>Fix style scheme switch when system preference is light</li>
+        <li>Remove grid pattern on the source editors</li>
+      </ul>
+    </release>
+  </releases>
+  <releases>
     <release version="42.0" date="2022-06-04">
       <description>
         <p>Highlights</p>

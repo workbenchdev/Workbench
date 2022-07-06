@@ -13,13 +13,15 @@ const AwesomeButton = GObject.registerClass(
       super._init(params);
     }
 
-    on_clicked() {
+    onclicked() {
       console.log("Clicked");
     }
   }
 );
 
-const container = new Gtk.FlowBox();
+const container = new Gtk.FlowBox({
+  hexpand: true,
+});
 
 for (let i = 0; i < 100; i++) {
   const widget = new AwesomeButton();

@@ -1,7 +1,7 @@
 import Source from "gi://GtkSource?version=5";
 import Gio from "gi://Gio";
 import GLib from "gi://GLib";
-import { settings, replaceBufferText } from "./util.js";
+import { replaceBufferText } from "./util.js";
 import { promiseTask } from "./troll/src/util.js";
 
 export default function Document({
