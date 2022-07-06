@@ -23,7 +23,7 @@ Among other things, Workbench comes with
 
 **Testimonials**
 
-> **“** It is an essential tool for those who develop applications with GTK **”** • **“** created a simple mockup using the amazing Workbench app **”** • **“** It used to be hard but Workbench helps me learn GTK. **”** • **“** I recommend it even to those who are new to GTK **”** • **“** This tool has simplified my life by saving my time drastically. **”** • **“** Gone too wild playing with Workbench **”**
+> **“** It is an essential tool for those who develop applications with GTK **”** • **“** as someone who is learning GTK, Workbench is definitely a must have! **”** • **“** created a simple mockup using the amazing Workbench app **”** • **“** It used to be hard but Workbench helps me learn GTK. **”** • **“** I recommend it even to those who are new to GTK **”** • **“** This tool has simplified my life by saving my time drastically. **”** • **“** Gone too wild playing with Workbench **”**
 
 ## Tips and tricks
 
@@ -150,5 +150,9 @@ https://twitter.com/synthesizedecho/status/1528958932911280129
 > Gone too wild playing with Workbench and Blueprint.
 
 https://mastodon.online/@waimus/108582108701889960
+
+> as someone who is learning GTK, I can confirm that Workbench is definitely a must have for me!
+
+https://fosstodon.org/@TheEvilSkeleton/108598098682948266
 
 </details>

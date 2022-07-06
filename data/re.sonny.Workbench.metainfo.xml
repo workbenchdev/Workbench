@@ -16,7 +16,8 @@
     <ul>
       <li>realtime GTK/CSS preview</li>
       <li>library of examples</li>
-      <li>JavaScript and Vala runs without any setup</li>
+      <li>1000+ icons</li>
+      <li>JavaScript and Vala support</li>
       <li>XML and Blueprint for describing user interface</li>
       <li>syntax highlighting, undo/redo, autosave, session restore</li>
       <li>code formatter</li>
