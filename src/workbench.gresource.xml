@@ -9,6 +9,7 @@
     <file>Library/demos/Notifications/main.json</file>
     <file>Library/demos/Notifications/main.blp</file>
     <file>Library/demos/Notifications/main.ui</file>
+    <file>Library/demos/Notifications/main.vala</file>
     <file>Library/demos/Platform tools/main.blp</file>
     <file>Library/demos/Platform tools/main.js</file>
     <file>Library/demos/Platform tools/main.json</file>
@@ -17,10 +18,16 @@
     <file>Library/demos/Toasts/main.json</file>
     <file>Library/demos/Toasts/main.blp</file>
     <file>Library/demos/Toasts/main.ui</file>
+    <file>Library/demos/Toasts/main.vala</file>
+    <file>Library/demos/Icon Browser/main.js</file>
+    <file>Library/demos/Icon Browser/main.json</file>
+    <file>Library/demos/Icon Browser/main.blp</file>
+    <file>Library/demos/Icon Browser/main.ui</file>
     <file>Library/demos/WebSocket client/main.js</file>
     <file>Library/demos/WebSocket client/main.json</file>
     <file>Library/demos/WebSocket client/main.blp</file>
     <file>Library/demos/WebSocket client/main.ui</file>
+    <file>Library/demos/WebSocket client/main.vala</file>
     <file>Library/demos/Welcome/main.css</file>
     <file>Library/demos/Welcome/main.js</file>
     <file>Library/demos/Welcome/main.json</file>
@@ -30,7 +37,12 @@
     <file>Library/demos/Application window/main.json</file>
     <file>Library/demos/Application window/main.blp</file>
     <file>Library/demos/Application window/main.ui</file>
+    <file>Library/demos/Custom widget/main.blp</file>
+    <file>Library/demos/Custom widget/main.ui</file>
+    <file>Library/demos/Custom widget/main.js</file>
+    <file>Library/demos/Custom widget/main.json</file>
     <file>language-specs/blueprint.lang</file>
+    <file>icon-development-kit.json</file>
   </gresource>
   <gresource prefix="/re/sonny/Workbench/js">
     <file>lib/ltx.js</file>
@@ -66,27 +78,19 @@
  <gresource prefix="/re/sonny/Workbench/icons/scalable/actions">
     <file
       preprocess="xml-stripblanks"
-      alias="workbench-code-symbolic.svg"
-    >icons/workbench-code-symbolic.svg</file>
+      alias="re.sonny.Workbench-code-symbolic.svg"
+    >icons/re.sonny.Workbench-code-symbolic.svg</file>
     <file
       preprocess="xml-stripblanks"
-      alias="workbench-moon-rounded-symbolic.svg"
-    >icons/workbench-moon-rounded-symbolic.svg</file>
+      alias="re.sonny.Workbench-placeholder-symbolic.svg"
+    >icons/re.sonny.Workbench-placeholder-symbolic.svg</file>
     <file
       preprocess="xml-stripblanks"
-      alias="workbench-placeholder-symbolic.svg"
-    >icons/workbench-placeholder-symbolic.svg</file>
+      alias="re.sonny.Workbench-preview-symbolic.svg"
+    >icons/re.sonny.Workbench-preview-symbolic.svg</file>
     <file
       preprocess="xml-stripblanks"
-      alias="workbench-preview-symbolic.svg"
-    >icons/workbench-preview-symbolic.svg</file>
-    <file
-      preprocess="xml-stripblanks"
-      alias="workbench-style-symbolic.svg"
-    >icons/workbench-style-symbolic.svg</file>
-    <file
-      preprocess="xml-stripblanks"
-      alias="workbench-ui-symbolic.svg"
-    >icons/workbench-ui-symbolic.svg</file>
+      alias="re.sonny.Workbench-ui-symbolic.svg"
+    >icons/re.sonny.Workbench-ui-symbolic.svg</file>
   </gresource>
 </gresources>

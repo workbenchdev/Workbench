@@ -58,6 +58,8 @@ export default function Compiler(data_dir) {
         "gio-2.0",
         "--pkg",
         "libadwaita-1",
+        "--pkg",
+        "libsoup-3.0",
         "--vapi",
         "/dev/null",
       ],

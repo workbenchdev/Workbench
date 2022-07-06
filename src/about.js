@@ -43,6 +43,7 @@ ${getBlueprintVersion()}
   dialog.add_credit_section("Contributors", [
     "Lorenz Wildberg https://gitlab.gnome.org/lwildberg",
     "Tobias Bernard <tbernard@gnome.org>",
+    "Ben Foote http://www.bengineeri.ng",
     // Add yourself as
     // "John Doe",
     // or
@@ -62,5 +63,5 @@ function getValaVersion() {
 
 function getBlueprintVersion() {
   // https://gitlab.gnome.org/jwestman/blueprint-compiler/-/issues/61
-  return "Blueprint dev";
+  return "Blueprint 0.2.0-Workbench";
 }

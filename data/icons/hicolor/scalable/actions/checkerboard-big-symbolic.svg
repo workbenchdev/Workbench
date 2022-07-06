@@ -1,13 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg height="16px" viewBox="0 0 16 16" width="16px" xmlns="http://www.w3.org/2000/svg">
-    <g fill="#222222">
-        <path d="m 4 16 v -4 h -4 v 4 z m 0 0"/>
-        <path d="m 4 8 v -4 h -4 v 4 z m 0 0"/>
-        <path d="m 12 16 v -4 h -4 v 4 z m 0 0"/>
-        <path d="m 8 12 v -4 h -4 v 4 z m 0 0"/>
-        <path d="m 12 8 v -4 h -4 v 4 z m 0 0"/>
-        <path d="m 8 4 v -4 h -4 v 4 z m 0 0"/>
-        <path d="m 16 12 v -4 h -4 v 4 z m 0 0"/>
-        <path d="m 16 4 v -4 h -4 v 4 z m 0 0"/>
-    </g>
+    <path d="m 4 0 v 4 h 4 v -4 z m 4 4 v 4 h 4 v -4 z m 4 0 h 4 v -4 h -4 z m 0 4 v 4 h 4 v -4 z m 0 4 h -4 v 4 h 4 z m -4 0 v -4 h -4 v 4 z m -4 0 h -4 v 4 h 4 z m 0 -4 v -4 h -4 v 4 z m 0 0" fill="#222222"/>
 </svg>

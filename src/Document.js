@@ -1,7 +1,7 @@
 import Source from "gi://GtkSource?version=5";
 import Gio from "gi://Gio";
 import GLib from "gi://GLib";
-import { settings } from "./util.js";
+import { replaceBufferText } from "./util.js";
 import { promiseTask } from "./troll/src/util.js";
 
 export default function Document({
@@ -26,8 +26,7 @@ export default function Document({
 
   loadSourceBuffer({ file: source_file, buffer })
     .then((success) => {
-      if (!success) buffer.set_text(placeholder, -1);
-      settings.set_boolean("has-edits", false);
+      if (!success) replaceBufferText(buffer, placeholder, true);
     })
     .catch(logError);
   start();
@@ -41,7 +40,6 @@ export default function Document({
     handler_id = buffer.connect("modified-changed", () => {
       if (!buffer.get_modified()) return;
       save();
-      settings.set_boolean("has-edits", true);
     });
   }
 

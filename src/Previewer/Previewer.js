@@ -1,14 +1,22 @@
 import Gtk from "gi://Gtk";
 import GObject from "gi://GObject";
+import GLib from "gi://GLib";
+import Gio from "gi://Gio";
 
 import * as ltx from "../lib/ltx.js";
 import * as postcss from "../lib/postcss.js";
 
 import logger from "../logger.js";
-import { getLanguage, connect_signals, disconnect_signals } from "../util.js";
+import {
+  getLanguage,
+  connect_signals,
+  disconnect_signals,
+  settings,
+} from "../util.js";
 
 import Internal from "./Internal.js";
 import External from "./External.js";
+import { getClassNameType } from "../overrides.js";
 
 // Workbench always defaults to in-process preview now even if Vala is selected.
 // Workbench will switch to out-of-process preview when Vala is run
@@ -30,6 +38,14 @@ export default function Previewer({
 
   let current;
 
+  const dropdown_preview_align = builder.get_object("dropdown_preview_align");
+  // TODO: File a bug libadwaita
+  // flat does nothing on GtkDropdown or GtkComboBox or GtkComboBoxText
+  dropdown_preview_align
+    .get_first_child()
+    .get_style_context()
+    .add_class("flat");
+
   const internal = Internal({
     onWindowChange(open) {
       if (current !== internal) return;
@@ -43,6 +59,7 @@ export default function Previewer({
     builder,
     window,
     application,
+    dropdown_preview_align,
   });
   const external = External({
     onWindowChange(open) {
@@ -53,6 +70,7 @@ export default function Previewer({
         useInternal();
       }
     },
+    output,
     builder,
   });
 
@@ -66,6 +84,21 @@ export default function Previewer({
   const stack = builder.get_object("stack_preview");
   const button_open = builder.get_object("button_open_preview_window");
   const button_close = builder.get_object("button_close_preview_window");
+
+  settings.bind(
+    "preview-align",
+    dropdown_preview_align,
+    "selected",
+    Gio.SettingsBindFlags.DEFAULT
+  );
+  dropdown_preview_align.connect("notify::selected", setPreviewAlign);
+  function setPreviewAlign() {
+    const alignment =
+      dropdown_preview_align.selected === 1 ? Gtk.Align.CENTER : Gtk.Align.FILL;
+    output.halign = alignment;
+    output.valign = alignment;
+  }
+  setPreviewAlign();
 
   function start() {
     stop();
@@ -116,6 +149,7 @@ export default function Previewer({
     }
   );
 
+  let symbols = null;
   function update() {
     const builder = new Gtk.Builder();
     const scope = new BuilderScope();
@@ -124,10 +158,14 @@ export default function Previewer({
     let text = panel_ui.xml.trim();
     let target_id;
     let tree;
+    let original_id;
+    let template;
+
+    if (!text) return;
 
     try {
       tree = ltx.parse(text);
-      [target_id, text] = targetBuildable(tree);
+      ({ target_id, text, original_id, template } = targetBuildable(tree));
     } catch (err) {
       // logError(err);
       logger.debug(err);
@@ -142,7 +180,7 @@ export default function Previewer({
       return;
     }
 
-    registerSignals(tree, scope);
+    registerSignals({ tree, scope, symbols, template });
 
     try {
       // For some reason this log warnings twice
@@ -164,8 +202,21 @@ export default function Previewer({
     const object_preview = builder.get_object(target_id);
     if (!object_preview) return;
 
-    current.updateXML({ xml: text, builder, object_preview, target_id });
+    if (!dropdown_preview_align.visible) {
+      dropdown_preview_align.selected = template ? 1 : 0;
+    }
+    dropdown_preview_align.visible = !!template;
+
+    current.updateXML({
+      xml: text,
+      builder,
+      object_preview,
+      target_id,
+      original_id,
+      template,
+    });
     current.updateCSS(buffer_css.text);
+    symbols = null;
   }
 
   function useExternal() {
@@ -189,6 +240,7 @@ export default function Previewer({
     }
 
     current?.stop();
+    current?.closeInspector();
     current = previewer;
 
     handler_id_button_open = button_open.connect("clicked", () => {
@@ -221,10 +273,16 @@ export default function Previewer({
     close() {
       current.close();
     },
+    openInspector() {
+      current.openInspector();
+    },
     useExternal,
     useInternal,
     setPanelCode(v) {
       panel_code = v;
+    },
+    setSymbols(_symbols) {
+      symbols = _symbols;
     },
   };
 }
@@ -252,6 +310,8 @@ export function scopeStylesheet(style) {
   return str;
 }
 
+const text_encoder = new TextEncoder();
+
 function getTemplate(tree) {
   const template = tree.getChild("template");
   if (!template) return;
@@ -262,22 +322,32 @@ function getTemplate(tree) {
   const klass = getObjectClass(parent);
   if (!klass) return;
 
-  const object = new klass();
-  if (!(object instanceof Gtk.Widget)) return;
+  // Error: Cannot instantiate abstract type GtkWidget
+  if (parent !== "GtkWidget") {
+    const object = new klass();
+    if (!(object instanceof Gtk.Widget)) return;
+  }
 
+  template.attrs.class = getClassNameType(template.attrs.class);
+  const original = tree.toString();
   tree.remove(template);
 
+  const target_id = makeWorkbenchTargetId();
   const el = new ltx.Element("object", {
     class: parent,
-    id: "workbench_target",
+    id: target_id,
   });
   template.children.forEach((child) => {
     el.cnode(child);
   });
-
   tree.cnode(el);
 
-  return [el.attrs.id, tree.toString()];
+  return {
+    target_id: el.attrs.id,
+    text: tree.toString(),
+    original_id: undefined,
+    template: text_encoder.encode(original),
+  };
 }
 
 function findPreviewable(tree) {
@@ -290,8 +360,6 @@ function findPreviewable(tree) {
 
     const object = new klass();
     if (object instanceof Gtk.Widget) return child;
-    // if (object instanceof Gtk.Widget && !(object instanceof Gtk.Root))
-    //   return child;
   }
 }
 
@@ -312,11 +380,11 @@ function targetBuildable(tree) {
     return [null, ""];
   }
 
-  if (!child.attrs.id) {
-    child.attrs.id = "workbench_target";
-  }
+  const original_id = child.attrs.id;
+  const target_id = makeWorkbenchTargetId();
+  child.attrs.id = target_id;
 
-  return [child.attrs.id, tree.toString()];
+  return { target_id, text: tree.toString(), original_id, template: null };
 }
 
 // TODO: GTK Builder shouldn't crash when encountering a non buildable
@@ -334,23 +402,37 @@ function assertBuildable(tree) {
   }
 }
 
-function makeSignalHandler({ name, handler, after, id, type }) {
-  return function (object) {
+function makeSignalHandler(
+  { name, handler, after, id, type },
+  { symbols, template }
+) {
+  return function (object, ...args) {
+    const symbol = symbols?.[handler];
+    const registered_handler = typeof symbol === "function";
+    if (registered_handler) {
+      symbol(object, ...args);
+    }
+
     const object_name = `${type}${id ? "$" + id : ""}`;
     // const object_name = object.toString(); // [object instance wrapper GIName:Gtk.Button jsobj@0x2937abc5c4c0 native@0x55fbfe53f620]
+    const handler_type = (() => {
+      if (template) return "Template";
+      if (registered_handler) return "Registered";
+      return "Unregistered";
+    })();
+    const handler_when = after ? "after" : "for";
+
     logger.log(
-      `Handler "${handler}" triggered ${
-        after ? "after" : "for"
-      } signal "${name}" on ${object_name}`
+      `${handler_type} handler "${handler}" triggered ${handler_when} signal "${name}" on ${object_name}`
     );
   };
 }
 
-function registerSignals(tree, scope) {
+function registerSignals({ tree, scope, symbols, template }) {
   try {
     const signals = findSignals(tree);
     for (const signal of signals) {
-      scope[signal.handler] = makeSignalHandler(signal);
+      scope[signal.handler] = makeSignalHandler(signal, { symbols, template });
     }
   } catch (err) {
     logError(err);
@@ -362,8 +444,10 @@ function findSignals(tree, signals = []) {
     const signal_elements = object.getChildren("signal");
     signals.push(
       ...signal_elements.map((el) => {
+        let id = object.attrs.id;
+        if (id && isWorkbenchTargetId(id)) id = "";
         return {
-          id: object.attrs.id,
+          id,
           type: object.attrs.class,
           ...el.attrs,
         };
@@ -375,4 +459,12 @@ function findSignals(tree, signals = []) {
     }
   }
   return signals;
+}
+
+const target_id_prefix = "workbench_";
+function makeWorkbenchTargetId() {
+  return target_id_prefix + GLib.uuid_string_random();
+}
+function isWorkbenchTargetId(id) {
+  return id.startsWith(target_id_prefix);
 }
