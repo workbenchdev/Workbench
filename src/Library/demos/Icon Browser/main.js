@@ -136,8 +136,7 @@ function getPlatformIcons(dev_kit_icons) {
 
   for (const icon of icons_theme) {
     if (
-      icon.startsWith("workbench") ||
-      icon.startsWith("re.sonny") ||
+      icon.startsWith("re.sonny.Workbench") ||
       !icon.endsWith("-symbolic") ||
       icon in dev_kit_icons
     )

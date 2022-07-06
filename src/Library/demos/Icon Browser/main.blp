@@ -20,14 +20,17 @@ template IconWidget : FlowBoxChild {
 
 Adw.ToastOverlay overlay {
   Box {
-    margin-top: 20;
     orientation: vertical;
 
     Adw.Clamp {
       maximum-size: 800;
 
-      SearchEntry search_entry {
-        placeholder-text: _('Search for icons by name, category or tag');
+      Box {
+        styles ["toolbar"]
+        SearchEntry search_entry {
+          hexpand: true;
+          placeholder-text: _('Search for icons by name, category or tag');
+        }
       }
     }
 
