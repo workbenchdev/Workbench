@@ -1,0 +1,71 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: "Platform tools";
+
+  Box {
+    orientation: vertical;
+
+    Box {
+      orientation: vertical;
+      halign: center;
+
+      Button adwaita-1-demo {
+        label: "Adwaita Demo";
+        styles ["pill"]
+      }
+      LinkButton {
+        styles ["caption"]
+        margin-bottom: 24;
+        label: _("Source code");
+        uri: "https://gitlab.gnome.org/GNOME/libadwaita/-/tree/1.1.1/demo";
+      }
+
+      Button gtk4-demo {
+        label: "GTK Demo";
+        styles ["pill"]
+      }
+      LinkButton {
+        styles ["caption"]
+        margin-bottom: 24;
+        label: _("Source code");
+        uri: "https://gitlab.gnome.org/GNOME/gtk/-/tree/4.6.4/demos/gtk-demo";
+      }
+
+      Button gtk4-widget-factory {
+        label: "GTK Widget Factory";
+        styles ["pill"]
+      }
+      LinkButton {
+        styles ["caption"]
+        margin-bottom: 24;
+        label: _("Source code");
+        uri: "https://gitlab.gnome.org/GNOME/gtk/-/tree/4.6.4/demos/widget-factory";
+      }
+    }
+
+    Box {
+      margin-top: 24;
+      halign: center;
+      orientation: vertical;
+      Label {
+        label: _("As with most GTK applications, you can use the keyboard shortcut\nto open the Inspector and select an object to see what it is made of.");
+        justify: center;
+        styles ["body"]
+      }
+      ShortcutsShortcut {
+        halign: center;
+        accelerator: "<Control><Shift>I";
+        margin-top: 12;
+      }
+      LinkButton {
+        margin-top: 6;
+        halign: center;
+        label: "The GTK Inspector";
+        // https://gitlab.gnome.org/Teams/documentation/developer-www/-/issues/40
+        uri: "https://blog.gtk.org/2017/04/05/the-gtk-inspector/";
+      }
+    }
+  }
+}

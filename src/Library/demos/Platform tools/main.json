@@ -1,0 +1,7 @@
+{
+  "name": "Platform tools",
+  "category": "tools",
+  "description": "GTK Inspector, Adwaita Demo, GTK Demo and GTK Widget Factory",
+  "panels": ["preview"],
+  "autorun": true
+}

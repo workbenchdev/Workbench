@@ -49,7 +49,7 @@
       ]
     },
     {
-      "name": "blueprint",
+      "name": "blueprint-compiler",
       "buildsystem": "meson",
       "sources": [
         {
