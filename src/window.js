@@ -350,8 +350,14 @@ export default function Window({ application }) {
       replaceBufferText(buffer, str);
     }
 
-    const { javascript, css, xml, blueprint, vala, panels, autorun } =
-      readDemo(demo_name);
+    const demo = readDemo(demo_name);
+    const { javascript, css, xml, blueprint, panels, autorun } = demo;
+    let { vala } = demo;
+
+    if (!!javascript && !vala) {
+      settings.set_int("code-language", 0);
+      vala = `// Sorry, this demo is not available in Vala yet.`;
+    }
 
     const toast = new Adw.Toast({
       title: _("The demo has been loaded"),

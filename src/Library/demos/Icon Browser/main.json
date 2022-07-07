@@ -1,7 +1,7 @@
 {
   "name": "Icon Browser",
   "category": "tools",
-  "description": "Icons you can use in your prototypes. Features a custom widget and GtkFlowBox",
+  "description": "Find icons for your prototypes. Features a custom widget and GtkFlowBox with search.",
   "panels": ["preview"],
   "autorun": true
 }

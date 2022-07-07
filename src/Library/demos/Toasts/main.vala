@@ -14,7 +14,7 @@ public void main () {
     button_simple.sensitive = false;
   });
 
-  // This example is not available in Vala yet
+  // Sorry, this example is not available in Vala yet.
   // see https://github.com/sonnyp/Workbench/issues/110
   var button_advanced = workbench.builder.get_object("button_advanced") as Gtk.Button;
   button_advanced.sensitive = false;
