@@ -2,10 +2,55 @@
   margin-right: 6px;
 }
 
+/* Adapted from https://gitlab.gnome.org/GNOME/gnome-text-editor/-/blob/cd6e111e3142a80f509684e65c104c8b3a097761/src/style.css */
+
 /* Workaround Large Text issue */
 /* https://gitlab.gnome.org/GNOME/libadwaita/-/merge_requests/539 */
 combobox#dropdown_ui_lang button {
   padding-top: 2px;
   padding-bottom: 2px;
   min-height: 30px;
+}
+
+/* ThemeSelector */
+themeselector {
+  margin: 9px;
+}
+themeselector checkbutton {
+  padding: 0;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 1px;
+  background-clip: content-box;
+  border-radius: 9999px;
+  box-shadow: inset 0 0 0 1px @borders;
+}
+themeselector checkbutton.follow:checked,
+themeselector checkbutton.light:checked,
+themeselector checkbutton.dark:checked {
+  box-shadow: inset 0 0 0 2px @theme_selected_bg_color;
+}
+themeselector checkbutton.follow {
+  background-image: linear-gradient(to bottom right, #fff 49.99%, #202020 50.01%);
+}
+themeselector checkbutton.light {
+  background-color: #fff;
+}
+themeselector checkbutton.dark {
+  background-color: #202020;
+}
+themeselector checkbutton radio {
+  -gtk-icon-source: none;
+  border: none;
+  background: none;
+  box-shadow: none;
+  min-width: 12px;
+  min-height: 12px;
+  transform: translate(27px, 14px);
+  padding: 2px;
+}
+checkbutton.theme-selector radio:checked {
+  -gtk-icon-source: -gtk-icontheme("object-select-symbolic");
+  background-color: @theme_selected_bg_color;
+  color: @theme_selected_fg_color;
 }

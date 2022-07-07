@@ -8,7 +8,7 @@ import { gettext as _ } from "gettext";
 
 import About from "./about.js";
 import shortcutsWindow from "./shortcutsWindow.js";
-import { portal, languages } from "./util.js";
+import { portal, languages, settings } from "./util.js";
 
 export default function Actions({ application, version }) {
   const quit = new Gio.SimpleAction({
@@ -121,6 +121,8 @@ export default function Actions({ application, version }) {
     }
   });
   application.add_action(action_platform_tools);
+
+  application.add_action(settings.create_action("color-scheme"));
 }
 
 const lang_filters = languages.map((language) => {
