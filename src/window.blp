@@ -100,29 +100,6 @@ Gtk.ApplicationWindow window {
       icon-name: "open-menu-symbolic";
       primary: true;
     }
-
-    [end]
-    Box {
-      styles ["linked"]
-
-      ToggleButton button_light {
-        icon-name: "sun-symbolic";
-        tooltip-text: _("Use Light mode");
-
-        accessibility {
-          label: _("Use Light mode");
-        }
-      }
-
-      ToggleButton button_dark {
-        icon-name: "moon-filled-symbolic";
-        tooltip-text: _("Use Dark mode");
-
-        accessibility {
-          label: _("Use Dark mode");
-        }
-      }
-    }
   };
 
   [content]
@@ -579,9 +556,17 @@ Gtk.ApplicationWindow window {
 }
 
 menu menu_app {
-  item {
-    label: _("Import File…");
-    action: "app.open";
+  section {
+    item {
+      custom: "themeswitcher";
+    }
+  }
+
+  section {
+    item {
+      label: _("Import File…");
+      action: "app.open";
+    }
   }
 
   submenu {

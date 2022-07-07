@@ -28,6 +28,7 @@ import Previewer from "./Previewer/Previewer.js";
 import Compiler from "./Compiler.js";
 import logger from "./logger.js";
 import { promiseTask } from "./troll/src/util.js";
+import ThemeSelector from "./ThemeSelector.js";
 
 const scheme_manager = Source.StyleSchemeManager.get_default();
 const style_manager = Adw.StyleManager.get_default();
@@ -46,6 +47,11 @@ export default function Window({ application }) {
   const window = builder.get_object("window");
   // window.add_css_class("devel");
   window.set_application(application);
+
+  // Popover menu theme switcher
+  const button_menu = builder.get_object("button_menu");
+  const popover = button_menu.get_popover();
+  popover.add_child(new ThemeSelector(), "themeswitcher");
 
   const output = builder.get_object("output");
 
@@ -129,9 +135,6 @@ export default function Window({ application }) {
   const button_style = builder.get_object("button_style");
   const button_preview = builder.get_object("button_preview");
   const button_inspector = builder.get_object("button_inspector");
-  const button_light = builder.get_object("button_light");
-  const button_dark = builder.get_object("button_dark");
-  button_dark.set_group(button_light);
 
   function updateStyle() {
     const { dark } = style_manager;
@@ -140,21 +143,11 @@ export default function Window({ application }) {
       buffer.set_style_scheme(scheme);
     });
 
-    button_dark.active = dark;
-    button_light.active = !dark;
-
     // For Platform Tools
     setGtk4PreferDark(dark).catch(logError);
   }
   updateStyle();
   style_manager.connect("notify::dark", updateStyle);
-
-  button_light.connect("toggled", () => {
-    settings.set_int("color-scheme", Adw.ColorScheme.FORCE_LIGHT);
-  });
-  button_dark.connect("toggled", () => {
-    settings.set_int("color-scheme", Adw.ColorScheme.FORCE_DARK);
-  });
 
   settings.bind(
     "show-style",

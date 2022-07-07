@@ -2,6 +2,7 @@
 <gresources>
   <gresource prefix="/re/sonny/Workbench">
     <file>window.ui</file>
+    <file>ThemeSelector.ui</file>
     <file>shortcutsWindow.ui</file>
     <file>style.css</file>
     <file>Library/Library.ui</file>
@@ -74,6 +75,7 @@
     <file>util.js</file>
     <file>window.js</file>
     <file>Compiler.js</file>
+    <file>ThemeSelector.js</file>
   </gresource>
  <gresource prefix="/re/sonny/Workbench/icons/scalable/actions">
     <file
