@@ -389,10 +389,24 @@ Gtk.ApplicationWindow window {
           CenterBox {
             height-request: 46;
             [start]
-            Label {
+            Box {
+              Label {
               label: _("<b>Preview</b>");
               use-markup: true;
               styles ["dim-label"]
+              }
+
+              Separator {
+                styles ["spacer"]
+              }
+
+              DropDown dropdown_preview_target {
+                visible: false;
+                model: StringList {
+                  strings []
+                };
+                tooltip-text: _("Select object to preview");
+              }
             }
 
             [center]

@@ -39,6 +39,7 @@ export default function Previewer({
   let current;
 
   const dropdown_preview_align = builder.get_object("dropdown_preview_align");
+  const dropdown_preview_target = builder.get_object("dropdown_preview_target");
   // TODO: File a bug libadwaita
   // flat does nothing on GtkDropdown or GtkComboBox or GtkComboBoxText
   dropdown_preview_align
@@ -165,9 +166,12 @@ export default function Previewer({
 
     try {
       tree = ltx.parse(text);
-      ({ target_id, text, original_id, template } = targetBuildable(tree));
+      getPreviewables({ tree, dropdown_preview_target });
+      ({ target_id, text, original_id, template } = targetBuildable({
+        tree,
+      }));
     } catch (err) {
-      // logError(err);
+      logError(err);
       logger.debug(err);
     }
 
@@ -371,7 +375,24 @@ function getObjectClass(class_name) {
   return imports.gi[ns]?.[rest.join("")];
 }
 
-function targetBuildable(tree) {
+function getPreviewables({ tree, dropdown_preview_target }) {
+  const previewables = tree.children.filter((child) =>
+    ["object", "template"].includes(child.name)
+  );
+  if (previewables.length > 1) {
+    dropdown_preview_target.visible = true;
+    const list = Gtk.StringList.new(
+      previewables.map(({ name, attrs }) => {
+        return `${name} ${getObjectDisplayName(attrs.class, attrs.id)}`;
+      })
+    );
+    dropdown_preview_target.set_model(list);
+  } else {
+    dropdown_preview_target.visible = false;
+  }
+}
+
+function targetBuildable({ tree }) {
   const template = getTemplate(tree);
   if (template) return template;
 
@@ -413,7 +434,7 @@ function makeSignalHandler(
       symbol(object, ...args);
     }
 
-    const object_name = `${type}${id ? "$" + id : ""}`;
+    const object_name = getObjectDisplayName(type, id);
     // const object_name = object.toString(); // [object instance wrapper GIName:Gtk.Button jsobj@0x2937abc5c4c0 native@0x55fbfe53f620]
     const handler_type = (() => {
       if (template) return "Template";
@@ -426,6 +447,10 @@ function makeSignalHandler(
       `${handler_type} handler "${handler}" triggered ${handler_when} signal "${name}" on ${object_name}`
     );
   };
+}
+
+function getObjectDisplayName(type, id) {
+  return `${type}${id ? "#" + id : ""}`;
 }
 
 function registerSignals({ tree, scope, symbols, template }) {
