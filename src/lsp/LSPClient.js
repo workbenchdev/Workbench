@@ -83,7 +83,11 @@ export default class LSPClient {
     }
     if (message.error) {
       const err = new LSPError(message.error);
+      err.data = message.data;
+      err.code = message.code;
       this.emit(`error::${message.id}`, err);
+    } else if (message.params) {
+      this.emit(`notification::${message.method}`, message.params);
     }
   }
 

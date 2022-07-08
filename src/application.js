@@ -30,6 +30,7 @@ export default function Application({ version }) {
       window ||
       Window({
         application,
+        version,
       });
     window.window.present();
   });
