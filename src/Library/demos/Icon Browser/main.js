@@ -74,24 +74,7 @@ const platform_icons = getPlatformIcons(dev_kit_icons);
 const icons = Object.assign(Object.create(null), platform_icons, dev_kit_icons);
 
 const flow_box_devkit = workbench.builder.get_object("flow_box_devkit");
-for (const icon_name of Object.keys(dev_kit_icons).sort((a, b) =>
-  a.localeCompare(b)
-)) {
-  const icon = new IconWidget({
-    icon_name,
-  });
-  flow_box_devkit.append(icon);
-}
-
 const flow_box_platform = workbench.builder.get_object("flow_box_platform");
-for (const icon_name of Object.keys(platform_icons).sort((a, b) =>
-  a.localeCompare(b)
-)) {
-  const icon = new IconWidget({
-    icon_name,
-  });
-  flow_box_platform.append(icon);
-}
 
 function filter_func({ icon_name }) {
   return icons[icon_name]?.some((tag) => tag.includes(search_entry.text));
@@ -147,3 +130,30 @@ function getPlatformIcons(dev_kit_icons) {
 
   return icons;
 }
+
+function populateIconDevKit() {
+  for (const icon_name of Object.keys(dev_kit_icons).sort((a, b) =>
+    a.localeCompare(b)
+  )) {
+    const icon = new IconWidget({
+      icon_name,
+    });
+    flow_box_devkit.append(icon);
+  }
+  flow_box_devkit.visible = true;
+}
+
+function populatePlatformIcons() {
+  for (const icon_name of Object.keys(platform_icons).sort((a, b) =>
+    a.localeCompare(b)
+  )) {
+    const icon = new IconWidget({
+      icon_name,
+    });
+    flow_box_platform.append(icon);
+  }
+  flow_box_platform.visible = true;
+}
+
+populateIconDevKit();
+populatePlatformIcons();
