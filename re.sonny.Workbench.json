@@ -1,7 +1,7 @@
 {
   "app-id": "re.sonny.Workbench",
   "runtime": "org.gnome.Sdk",
-  "runtime-version": "master",
+  "runtime-version": "42",
   "sdk": "org.gnome.Sdk",
   "command": "workbench",
   "finish-args": [
@@ -29,18 +29,6 @@
           "type": "git",
           "url": "https://gitlab.gnome.org/GNOME/vte.git",
           "commit": "b51feeca889d4b597e95b21bc77dc078892af11d"
-        }
-      ]
-    },
-    {
-      "name": "gtksourceview",
-      "buildsystem": "meson",
-      "config-opts": ["-Dinstall_tests=false", "-Dvapi=false"],
-      "sources": [
-        {
-          "type": "git",
-          "url": "https://gitlab.gnome.org/GNOME/gtksourceview.git",
-          "branch": "master"
         }
       ]
     },

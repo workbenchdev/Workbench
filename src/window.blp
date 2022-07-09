@@ -275,7 +275,9 @@ Gtk.ApplicationWindow window {
               }
 
               Gtk.ComboBoxText dropdown_ui_lang {
-                active-id: "xml";
+                // TODO: report issue - active-id does not work
+                // also with GTK Builder XML
+                // active-id: "xml";
                 name: "dropdown_ui_lang";
                 items [
                   xml: "XML",
