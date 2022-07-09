@@ -19,7 +19,7 @@ import logger from "./logger.js";
 
 const { addSignalMethods } = imports.signals;
 
-export default function PanelUI({ builder, data_dir, term_console }) {
+export default function PanelUI({ builder, data_dir, version, term_console }) {
   let lang;
 
   const panel = {
@@ -36,7 +36,7 @@ export default function PanelUI({ builder, data_dir, term_console }) {
     buffer: buffer_blueprint,
   });
 
-  buffer_blueprint.document_version = 0;
+  let document_version = 0;
   prepareSourceView(getLanguage("blueprint").document.source_view);
 
   async function convertToXML() {
@@ -161,13 +161,44 @@ export default function PanelUI({ builder, data_dir, term_console }) {
 
   start();
 
+  async function setupLSP() {
+    if (blueprint.proc) return;
+    blueprint.start();
+
+    // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#initialize
+    await blueprint.request("initialize", {
+      processId: getPid(),
+      clientInfo: {
+        name: "re.sonny.Workbench",
+        version,
+      },
+      // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#clientCapabilities
+      capabilities: {
+        textDocument: {
+          publishDiagnostics: {},
+          "x-blueprintcompiler/publishCompiled": {},
+        },
+      },
+      locale: "en",
+    });
+
+    await blueprint.notify("textDocument/didOpen", {
+      textDocument: {
+        uri: "workbench://state.blp",
+        languageId: "blueprint",
+        version: ++document_version,
+        text: buffer_blueprint.text,
+      },
+    });
+  }
+
   async function compileBlueprint() {
-    await setupLSP({ blueprint, buffer: buffer_blueprint });
+    await setupLSP();
 
     await blueprint.notify("textDocument/didChange", {
       textDocument: {
         uri: "workbench://state.blp",
-        version: ++buffer_blueprint.document_version,
+        version: ++document_version,
       },
       contentChanges: [buffer_blueprint.text],
     });
@@ -181,7 +212,7 @@ export default function PanelUI({ builder, data_dir, term_console }) {
   }
 
   async function decompileXML(text) {
-    await setupLSP({ blueprint, buffer: buffer_blueprint });
+    await setupLSP();
 
     const { blp } = await blueprint.request("x-blueprintcompiler/decompile", {
       text,
@@ -243,10 +274,10 @@ function createBlueprintClient({ data_dir, panel, buffer }) {
     logger.debug("blueprint exit");
   });
   blueprint.connect("output", (self, message) => {
-    logger.debug(`blueprint OUT:\n${message}`);
+    logger.debug(`blueprint OUT:\n${JSON.stringify(message)}`);
   });
   blueprint.connect("input", (self, message) => {
-    logger.debug(`blueprint IN:\n${message}`);
+    logger.debug(`blueprint IN:\n${JSON.stringify(message)}`);
   });
 
   blueprint.connect(
@@ -305,28 +336,4 @@ function get_iters_at_range(buffer, { start, end }) {
   }
 
   return [start_iter, end_iter];
-}
-
-async function setupLSP({ blueprint, buffer }) {
-  if (blueprint.proc) return;
-  blueprint.start();
-
-  // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#initialize
-  await blueprint.request("initialize", {
-    processId: getPid(),
-    clientInfo: {
-      name: "re.sonny.Workbench",
-      version: 42.1,
-    },
-    locale: "en",
-  });
-
-  await blueprint.notify("textDocument/didOpen", {
-    textDocument: {
-      uri: "workbench://state.blp",
-      languageId: "blueprint",
-      version: ++buffer.document_version,
-      text: buffer.text,
-    },
-  });
 }
