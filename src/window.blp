@@ -275,23 +275,11 @@ Gtk.ApplicationWindow window {
               }
 
               Gtk.ComboBoxText dropdown_ui_lang {
-                // FIXME: Does not work as intended
-                // active-id: "xml";
-                // the XML counterpart works fine
-                // fix or report issue to Blueprint
-                // <child>
-                //   <object class="GtkComboBoxText" id="dropdown_ui_lang">
-                //     <property name="active_id">xml</property>
-                //     <items>
-                //       <item id="xml">XML</item>
-                //       <item id="blueprint">Blueprint</item>
-                //     </items>
-                //   </object>
-                // </child>
+                active-id: "xml";
                 name: "dropdown_ui_lang";
                 items [
-                  blueprint: "Blueprint",
                   xml: "XML",
+                  blueprint: "Blueprint",
                 ]
                 tooltip-text: _("Switch document");
               }

@@ -1,6 +1,8 @@
 import Gio from "gi://Gio";
 import GObject from "gi://GObject";
 import GLib from "gi://GLib";
+import Gtk from "gi://Gtk";
+import Pango from "gi://Pango";
 
 import LSPClient, { LSPError } from "./lsp/LSPClient.js";
 import {
@@ -147,6 +149,7 @@ export default function PanelUI({ builder, data_dir, term_console }) {
     start();
     onUpdate();
   });
+
   start();
 
   // async function compileBlueprint(text) {
@@ -186,7 +189,7 @@ export default function PanelUI({ builder, data_dir, term_console }) {
 
     const buffer = getLanguage("blueprint").document.buffer;
 
-    let pid = getPid();
+    prepareView(getLanguage("blueprint").document.source_view);
 
     async function youpi() {
       if (!blueprint.proc) {
@@ -194,10 +197,10 @@ export default function PanelUI({ builder, data_dir, term_console }) {
 
         // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#initialize
         const res = await blueprint.request("initialize", {
-          processId: pid,
+          processId: getPid(),
           clientInfo: {
-            name: "Workbench",
-            version: i,
+            name: "re.sonny.Workbench",
+            version: 42.1,
           },
           locale: "en",
         });
@@ -241,7 +244,7 @@ export default function PanelUI({ builder, data_dir, term_console }) {
     blueprint.connect(
       "notification::textDocument/publishDiagnostics",
       (self, params) => {
-        console.clear();
+        // console.clear();
         params.diagnostics.forEach(({ range, message, severity }) => {
           logger.log(
             `Blueprint-${severities[severity]} ${range.start.line + 1}:${
@@ -249,6 +252,7 @@ export default function PanelUI({ builder, data_dir, term_console }) {
             } to ${range.end.line + 1}:${range.end.character} ${message}`
           );
         });
+        handleDiagnostics(params.diagnostics, buffer);
       }
     );
 
@@ -356,4 +360,42 @@ function createBlueprintClient({ data_dir }) {
     logger.debug(`blueprint IN:\n${message}`);
   });
   return blueprint;
+}
+
+function prepareView(view) {
+  const tag_table = view.buffer.get_tag_table();
+  const tag = new Gtk.TextTag({
+    name: "error",
+    underline: Pango.Underline.ERROR,
+  });
+  tag_table.add(tag);
+}
+
+function handleDiagnostics(diagnostics, buffer) {
+  buffer.remove_tag_by_name(
+    "error",
+    buffer.get_start_iter(),
+    buffer.get_end_iter()
+  );
+
+  diagnostics.forEach((d) => handleDiagnostic(d, buffer));
+}
+
+function handleDiagnostic(diagnostic, buffer) {
+  const [start_iter, end_iter] = get_iters_at_range(buffer, diagnostic.range);
+  buffer.apply_tag_by_name("error", start_iter, end_iter);
+}
+
+function get_iters_at_range(buffer, range) {
+  const [, start_iter] = buffer.get_iter_at_line_offset(
+    range.start.line,
+    range.start.character
+  );
+
+  const [, end_iter] = buffer.get_iter_at_line_offset(
+    range.end.line,
+    range.end.character
+  );
+
+  return [start_iter, end_iter];
 }

@@ -1,13 +1,9 @@
 {
   "app-id": "re.sonny.Workbench",
   "runtime": "org.gnome.Sdk",
-  "runtime-version": "42",
+  "runtime-version": "master",
   "sdk": "org.gnome.Sdk",
-  "sdk-extensions": ["org.freedesktop.Sdk.Extension.node16"],
   "command": "workbench",
-  "build-options": {
-    "append-path": "/usr/lib/sdk/node16/bin"
-  },
   "finish-args": [
     "--share=ipc",
     "--socket=fallback-x11",
@@ -33,6 +29,18 @@
           "type": "git",
           "url": "https://gitlab.gnome.org/GNOME/vte.git",
           "commit": "b51feeca889d4b597e95b21bc77dc078892af11d"
+        }
+      ]
+    },
+    {
+      "name": "gtksourceview",
+      "buildsystem": "meson",
+      "config-opts": ["-Dinstall_tests=false", "-Dvapi=false"],
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://gitlab.gnome.org/GNOME/gtksourceview.git",
+          "branch": "master"
         }
       ]
     },
