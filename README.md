@@ -124,6 +124,25 @@ Except for everything under src/Library/demos which is in the public domain unde
 
 ## Maintainers
 
+### Release
+
+```sh
+$V = 45
+
+# Pull translatons
+git merge --squash l10n
+git commit -m 'Update translations'
+
+# Update version
+# bump version in meson.build
+git add meson.build
+
+git commit -m '$V'
+git tag '$V'
+git push
+git push origin $V
+```
+
 ### Update icons
 
 ```

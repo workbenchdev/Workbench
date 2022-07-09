@@ -58,7 +58,7 @@
         <li>Add APIs to allow using templates from Code</li>
         <li>Add Center/Fill preview modes for templates</li>
         <li
-        >Open external prevew with the dimensions of the the internal preview</li>
+        >Open external preview with the dimensions of the internal preview</li>
         <li>64 new icons available</li>
         <li>Update Blueprint to 0.2.0</li>
         <li>Fix empty preview on first load</li>
