@@ -3,11 +3,7 @@
   "runtime": "org.gnome.Sdk",
   "runtime-version": "42",
   "sdk": "org.gnome.Sdk",
-  "sdk-extensions": ["org.freedesktop.Sdk.Extension.node16"],
   "command": "workbench",
-  "build-options": {
-    "append-path": "/usr/lib/sdk/node16/bin"
-  },
   "finish-args": [
     "--share=ipc",
     "--socket=fallback-x11",
