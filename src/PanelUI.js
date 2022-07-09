@@ -37,7 +37,7 @@ export default function PanelUI({ builder, data_dir, term_console }) {
   });
 
   buffer_blueprint.document_version = 0;
-  prepareView(getLanguage("blueprint").document.source_view);
+  prepareSourceView(getLanguage("blueprint").document.source_view);
 
   async function convertToXML() {
     term_console.clear();
@@ -180,25 +180,6 @@ export default function PanelUI({ builder, data_dir, term_console }) {
     return xml;
   }
 
-  // async function compileBlueprint(text) {
-  //   await setupLSP({ blueprint, buffer: buffer_blueprint });
-
-  //   const { xml, info } = await blueprint.request(
-  //     "x-blueprintcompiler/compile",
-  //     {
-  //       text,
-  //     }
-  //   );
-
-  //   if (info.length) {
-  //     info.forEach(logBlueprintInfo);
-  //   } else {
-  //     term_console.clear();
-  //   }
-
-  //   return xml;
-  // }
-
   async function decompileXML(text) {
     await setupLSP({ blueprint, buffer: buffer_blueprint });
 
@@ -275,19 +256,11 @@ function createBlueprintClient({ data_dir, panel, buffer }) {
     }
   );
 
-  // blueprint.connect(
-  //   "notification::textDocument/x-blueprintcompiler/publishCompiled",
-  //   (self, params) => {
-  //     panel.xml = params.xml;
-  //     panel.emit("updated");
-  //   }
-  // );
-
   return blueprint;
 }
 
-function prepareView(view) {
-  const tag_table = view.buffer.get_tag_table();
+function prepareSourceView(source_view) {
+  const tag_table = source_view.buffer.get_tag_table();
   const tag = new Gtk.TextTag({
     name: "error",
     underline: Pango.Underline.ERROR,
