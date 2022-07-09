@@ -76,6 +76,7 @@
     <file>window.js</file>
     <file>Compiler.js</file>
     <file>ThemeSelector.js</file>
+    <file>WorkbenchHoverProvider.js</file>
   </gresource>
  <gresource prefix="/re/sonny/Workbench/icons/scalable/actions">
     <file
