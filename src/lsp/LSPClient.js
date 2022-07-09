@@ -1,20 +1,13 @@
 import GLib from "gi://GLib";
 import Gio from "gi://Gio";
 
+import { LSPError } from "./LSP.js";
+
 import { promiseTask, once } from "../troll/src/util.js";
 
 const { addSignalMethods } = imports.signals;
 
 const text_encoder = new TextEncoder();
-
-export class LSPError extends Error {
-  constructor({ message, code, data }) {
-    super(message);
-    this.name = "LSPError";
-    this.code = code;
-    this.data = data;
-  }
-}
 
 export default class LSPClient {
   constructor(argv) {
