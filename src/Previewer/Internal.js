@@ -6,6 +6,7 @@ import Graphene from "gi://Graphene";
 import Xdp from "gi://Xdp";
 import XdpGtk from "gi://XdpGtk4";
 import GObject from "gi://GObject";
+import Adw from "gi://Adw";
 
 import logger from "../logger.js";
 import { portal } from "../util.js";
@@ -110,6 +111,17 @@ export default function Internal({
         if (prop.flags & GObject.ParamFlags.CONSTRUCT_ONLY) continue;
 
         const prop_name = prop.get_name();
+        // AdwWindow has child and titlebar properties but does not support setting them
+        // "Using gtk_window_get_titlebar() and gtk_window_set_titlebar() is not supported and will result in a crash."
+        // https://gnome.pages.gitlab.gnome.org/libadwaita/doc/main/class.Window.html
+        // https://github.com/sonnyp/Workbench/issues/130
+        if (
+          object_preview instanceof Adw.Window &&
+          ["child", "titlebar"].includes(prop_name)
+        ) {
+          continue;
+        }
+
         if (
           [
             // The new window does not have "csd" at this time
