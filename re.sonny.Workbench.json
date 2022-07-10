@@ -1,12 +1,12 @@
 {
   "app-id": "re.sonny.Workbench",
   "runtime": "org.gnome.Sdk",
-  "runtime-version": "42",
+  "runtime-version": "master",
   "sdk": "org.gnome.Sdk",
   "command": "workbench",
   "finish-args": [
-    "--share=ipc",
-    "--socket=fallback-x11",
+    // "--share=ipc",
+    "--socket=x11",
     // "--socket=wayland",
     "--device=dri",
     "--socket=session-bus",
@@ -51,6 +51,17 @@
         {
           "type": "dir",
           "path": "./blueprint-compiler"
+        }
+      ]
+    },
+    {
+      "name": "gtksourceview",
+      "buildsystem": "meson",
+      "config-opts": ["-Dvapi=false"],
+      "sources": [
+        {
+          "type": "dir",
+          "path": "./gtksourceview"
         }
       ]
     },

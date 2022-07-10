@@ -4,7 +4,7 @@
 
 .hoverdisplay {
   padding: 8px;
-  border: solid 1px @borders;
+  border-radius: 10px;
 }
 
 /* Adapted from https://gitlab.gnome.org/GNOME/gnome-text-editor/-/blob/cd6e111e3142a80f509684e65c104c8b3a097761/src/style.css */

@@ -1,4 +1,4 @@
 #!/bin/sh
 
-SHELL=/bin/sh script --flush --quiet --return /var/tmp/workbench --command "re.sonny.Workbench $@"
+GDK_BACKEND=x11 SHELL=/bin/sh script --flush --quiet --return /var/tmp/workbench --command "re.sonny.Workbench $@"
 #SHELL=/bin/sh script --flush --quiet --return /var/tmp/workbench --command "G_MESSAGES_DEBUG=\"Gjs-Console Workbench\" re.sonny.Workbench $@"

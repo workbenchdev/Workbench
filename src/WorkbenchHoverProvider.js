@@ -8,7 +8,6 @@ class WorkbenchHoverProvider extends GObject.Object {
   constructor() {
     super();
     this.diagnostics = [];
-    this.last_container = null;
   }
 
   findDiagnostics(context) {
@@ -24,9 +23,7 @@ class WorkbenchHoverProvider extends GObject.Object {
   }
 
   showDiagnostics(display, diagnostics) {
-    for (const child of this.last_container || []) {
-      this.last_container.remove(child);
-    }
+    console.log(diagnostics);
 
     const container = new Gtk.Box({
       orientation: Gtk.Orientation.VERTICAL,
@@ -34,18 +31,18 @@ class WorkbenchHoverProvider extends GObject.Object {
     });
     container.add_css_class("hoverdisplay");
     container.add_css_class("osd");
+    container.add_css_class("frame");
 
     for (const { message } of diagnostics) {
       const label = new Gtk.Label({
         halign: Gtk.Align.START,
         label: `${message}`,
       });
-      label.add_css_class("caption");
+      label.add_css_class("body");
       container.append(label);
     }
 
     display.append(container);
-    this.last_container = container;
   }
 
   vfunc_populate(context, display) {
