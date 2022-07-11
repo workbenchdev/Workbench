@@ -68,6 +68,7 @@
     <file>Previewer/Internal.js</file>
     <file>Previewer/External.js</file>
     <file>Previewer/DBusPreviewer.js</file>
+    <file>Previewer/utils.js</file>
     <file>logger.js</file>
     <file>main.js</file>
     <file>overrides.js</file>
