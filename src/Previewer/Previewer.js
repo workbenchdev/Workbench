@@ -169,7 +169,7 @@ export default function Previewer({
       tree = ltx.parse(text);
       ({ target_id, text, original_id, template } = targetBuildable(tree));
     } catch (err) {
-      logError(err);
+      // logError(err);
       logger.debug(err);
     }
 
