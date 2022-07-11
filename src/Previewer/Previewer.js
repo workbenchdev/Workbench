@@ -167,7 +167,7 @@ export default function Previewer({
       tree = ltx.parse(text);
       ({ target_id, text, original_id, template } = targetBuildable(tree));
     } catch (err) {
-      // logError(err);
+      logError(err);
       logger.debug(err);
     }
 
@@ -324,8 +324,7 @@ function getTemplate(tree) {
 
   // Error: Cannot instantiate abstract type GtkWidget
   if (parent !== "GtkWidget") {
-    const object = new klass();
-    if (!(object instanceof Gtk.Widget)) return;
+    if (!GObject.type_is_a(klass, Gtk.Widget)) return;
   }
 
   template.attrs.class = getClassNameType(template.attrs.class);
@@ -358,8 +357,7 @@ function findPreviewable(tree) {
     const klass = getObjectClass(class_name);
     if (!klass) continue;
 
-    const object = new klass();
-    if (object instanceof Gtk.Widget) return child;
+    if (GObject.type_is_a(klass, Gtk.Widget)) return child;
   }
 }
 
@@ -387,15 +385,18 @@ function targetBuildable(tree) {
   return { target_id, text: tree.toString(), original_id, template: null };
 }
 
-// TODO: GTK Builder shouldn't crash when encountering a non buildable
+// TODO: GTK Builder shouldn't crash when encountering a non buildable parent
 // https://github.com/sonnyp/Workbench/issues/49
 function assertBuildable(tree) {
   for (const child of tree.getChildren("object")) {
     const klass = getObjectClass(child.attrs.class);
-    if (!klass) continue;
-    const object = new klass();
-    if (!(object instanceof Gtk.Buildable)) {
-      throw new Error(`${child.attrs.class} is not a GtkBuildable`);
+    if (klass) {
+      if (
+        !GObject.type_is_a(klass, Gtk.Buildable) &&
+        child.getChildren("child").length > 0
+      ) {
+        throw new Error(`${child.attrs.class} is not a GtkBuildable`);
+      }
     }
     const _child = child.getChild("child");
     if (_child) assertBuildable(_child);
