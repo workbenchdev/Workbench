@@ -18,6 +18,8 @@ import Internal from "./Internal.js";
 import External from "./External.js";
 import { getClassNameType } from "../overrides.js";
 
+import { assertBuildable, getObjectClass } from "./utils.js";
+
 // Workbench always defaults to in-process preview now even if Vala is selected.
 // Workbench will switch to out-of-process preview when Vala is run
 // Workbench will switch back to inline preview if any of the following happens
@@ -324,8 +326,7 @@ function getTemplate(tree) {
 
   // Error: Cannot instantiate abstract type GtkWidget
   if (parent !== "GtkWidget") {
-    const object = new klass();
-    if (!(object instanceof Gtk.Widget)) return;
+    if (!GObject.type_is_a(klass, Gtk.Widget)) return;
   }
 
   template.attrs.class = getClassNameType(template.attrs.class);
@@ -358,17 +359,8 @@ function findPreviewable(tree) {
     const klass = getObjectClass(class_name);
     if (!klass) continue;
 
-    const object = new klass();
-    if (object instanceof Gtk.Widget) return child;
+    if (GObject.type_is_a(klass, Gtk.Widget)) return child;
   }
-}
-
-function getObjectClass(class_name) {
-  const split = class_name.split(/(?=[A-Z])/);
-  if (split.length < 2) return;
-
-  const [ns, ...rest] = split;
-  return imports.gi[ns]?.[rest.join("")];
 }
 
 function targetBuildable(tree) {
@@ -385,21 +377,6 @@ function targetBuildable(tree) {
   child.attrs.id = target_id;
 
   return { target_id, text: tree.toString(), original_id, template: null };
-}
-
-// TODO: GTK Builder shouldn't crash when encountering a non buildable
-// https://github.com/sonnyp/Workbench/issues/49
-function assertBuildable(tree) {
-  for (const child of tree.getChildren("object")) {
-    const klass = getObjectClass(child.attrs.class);
-    if (!klass) continue;
-    const object = new klass();
-    if (!(object instanceof Gtk.Buildable)) {
-      throw new Error(`${child.attrs.class} is not a GtkBuildable`);
-    }
-    const _child = child.getChild("child");
-    if (_child) assertBuildable(_child);
-  }
 }
 
 function makeSignalHandler(
