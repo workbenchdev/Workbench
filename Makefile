@@ -5,6 +5,7 @@ lint:
 	./node_modules/.bin/eslint --cache --max-warnings=0 src/
 
 test: lint
+	./src/troll/tst/bin.js test/workbench.test.js
 # https://github.com/ximion/appstream/issues/398#issuecomment-1129454985
 # flatpak run org.freedesktop.appstream.cli validate --override=release-time-missing=info --no-net data/re.sonny.Workbench.metainfo.xml
 	desktop-file-validate --no-hints data/re.sonny.Workbench.desktop
