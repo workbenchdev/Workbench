@@ -8,24 +8,24 @@ msgstr ""
 "Project-Id-Version: re.sonny.Workbench\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-04 15:25+0200\n"
-"PO-Revision-Date: 2022-07-11 00:59+0000\n"
-"Last-Translator: Jose Belmar <belmartechie@gmail.com>\n"
-"Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/workbench/workbench/zh_Hans/>\n"
-"Language: zh_Hans\n"
+"PO-Revision-Date: 2022-07-12 02:16+0000\n"
+"Last-Translator: liimee <alt3753.7@gmail.com>\n"
+"Language-Team: Indonesian <https://hosted.weblate.org/projects/workbench/workbench/id/>\n"
+"Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.13.1-dev\n"
+"X-Generator: Weblate 4.14-dev\n"
 
 #. TRANSLATORS: Don't translate
 #: data/re.sonny.Workbench.desktop:4
 msgid "Workbench"
-msgstr ""
+msgstr "Workbench"
 
 #: data/re.sonny.Workbench.desktop:5 data/re.sonny.Workbench.metainfo.xml:10
 msgid "Learn and prototype with GNOME technologies"
-msgstr "使用 GNOME 技术学习和制作原型"
+msgstr ""
 
 #. TRANSLATORS: Don't translate
 #: data/re.sonny.Workbench.desktop:12
@@ -34,43 +34,43 @@ msgstr "CSS;JavaScript;GJS;Blueprint;builder;Vala;"
 
 #: data/re.sonny.Workbench.metainfo.xml:14
 msgid "Workbench goal is to let you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a GTK user interface."
-msgstr "Workbench 的目标是让您试验 GNOME 技术，无论是第一次修补还是构建和测试 GTK 用户界面。"
+msgstr "Tujuan Workbench adalah memungkinkan Anda untuk bereksperimen dengan teknologi GNOME, baik mencoba pertama kali atau membangun dan menguji sebuah antarmuka pengguna GTK."
 
 #: data/re.sonny.Workbench.metainfo.xml:15
 msgid "Among other things, Workbench comes with"
-msgstr "除了其他事项外，工作台也附带"
+msgstr "Antara lain, Workbench dilengkapi dengan"
 
 #: data/re.sonny.Workbench.metainfo.xml:17
 msgid "realtime GTK/CSS preview"
-msgstr "GTK/CSS实时预览"
+msgstr "pratinjau GTK/CSS waktu nyata"
 
 #: data/re.sonny.Workbench.metainfo.xml:18
 msgid "library of examples"
-msgstr "示例庫"
+msgstr "pustaka contoh"
 
 #: data/re.sonny.Workbench.metainfo.xml:19
 msgid "JavaScript and Vala runs without any setup"
-msgstr "運行javascript或vala不用額外的設置"
+msgstr "JavaScript dan Vala berjalan tanpa penyiapan apapun"
 
 #: data/re.sonny.Workbench.metainfo.xml:20
 msgid "XML and Blueprint for describing user interface"
-msgstr "可以选XML或是Blueprint设计用户界面"
+msgstr "XML dan Blueprint untuk menjelaskan antarmuka pengguna"
 
 #: data/re.sonny.Workbench.metainfo.xml:21
 msgid "syntax highlighting, undo/redo, autosave, session restore"
-msgstr "语法高亮、撤消/重做、自动保存、会话恢复"
+msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:22
 msgid "code formatter"
-msgstr "源代码格式化工具"
+msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:23
 msgid "console logs"
-msgstr "控制台日志"
+msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:51
 msgid "Highlights"
-msgstr ""
+msgstr "Sorotan"
 
 #: data/re.sonny.Workbench.metainfo.xml:53
 msgid "Add Blueprint markup syntax for UI"
@@ -78,7 +78,7 @@ msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:54
 msgid "Add Vala programming language for Code"
-msgstr ""
+msgstr "Menambahkan bahasa pemrograman Vala untuk Pemrograman"
 
 #: data/re.sonny.Workbench.metainfo.xml:55
 msgid "Add support for previewing templates"
@@ -94,7 +94,7 @@ msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:58
 msgid "Improve application design"
-msgstr ""
+msgstr "Meningkatkan desain aplikasi"
 
 #: data/re.sonny.Workbench.metainfo.xml:59
 #: data/re.sonny.Workbench.metainfo.xml:69
@@ -208,11 +208,11 @@ msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:97
 msgid "Allow using DBus and Gio.Application"
-msgstr ""
+msgstr "Mengizinkan penggunaan DBus dan Gio.Application"
 
 #: data/re.sonny.Workbench.metainfo.xml:98
 msgid "Allow using network"
-msgstr ""
+msgstr "Mengizinkan penggunaan jaringan"
 
 #: data/re.sonny.Workbench.metainfo.xml:99
 msgid "Enable GtkWindow objects preview"
@@ -248,16 +248,16 @@ msgstr ""
 
 #: src/Library/Library.blp:7
 msgid "Library"
-msgstr ""
+msgstr "Pustaka"
 
 #: src/Library/demos/Application window/main.blp:50 src/shortcutsWindow.blp:49
 #: src/window.blp:652
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Pintasan Papan Ketik"
 
 #: src/Library/demos/Application window/main.blp:55
 msgid "About My App"
-msgstr ""
+msgstr "Tentang Aplikasi Saya"
 
 #: src/about.js:31
 msgid ""
@@ -268,11 +268,11 @@ msgstr ""
 #. TRANSLATORS: eg. 'Translator Name <your.email@domain.com>' or 'Translator Name https://website.example'
 #: src/about.js:40
 msgid "translator-credits"
-msgstr ""
+msgstr "@liimee"
 
 #: src/actions.js:51 src/shortcutsWindow.blp:16
 msgid "Import File"
-msgstr ""
+msgstr "Impor Berkas"
 
 #: src/actions.js:133
 msgid "All supported"
@@ -280,7 +280,7 @@ msgstr ""
 
 #: src/shortcutsWindow.blp:11
 msgid "Run Code"
-msgstr ""
+msgstr "Jalankan Kode"
 
 #: src/shortcutsWindow.blp:21
 msgid "Open Library"
@@ -308,7 +308,7 @@ msgstr ""
 
 #: src/shortcutsWindow.blp:53
 msgid "Quit"
-msgstr ""
+msgstr "Keluar"
 
 #: src/window.blp:15
 msgid "_Library"
@@ -340,7 +340,7 @@ msgstr ""
 
 #: src/window.blp:110 src/window.blp:113
 msgid "Use Light mode"
-msgstr ""
+msgstr "Gunakan Mode cerah"
 
 #: src/window.blp:118
 msgid "workbench-moon-rounded-symbolic"
@@ -348,11 +348,11 @@ msgstr ""
 
 #: src/window.blp:119 src/window.blp:122
 msgid "Use Dark mode"
-msgstr ""
+msgstr "Gunakan Mode gelap"
 
 #: src/window.blp:149
 msgid "<b>Code</b>"
-msgstr ""
+msgstr "<b>Kode</b>"
 
 #: src/window.blp:165 src/window.blp:321
 msgid "Switch document"
@@ -364,31 +364,31 @@ msgstr ""
 
 #: src/window.blp:177
 msgid "Run (Ctrl+⏎)"
-msgstr ""
+msgstr "Jalankan (Ctrl+⏎)"
 
 #: src/window.blp:248
 msgid "<b>Style CSS</b>"
-msgstr ""
+msgstr "<b>CSS Gaya</b>"
 
 #: src/window.blp:293
 msgid "<b>UI</b>"
-msgstr ""
+msgstr "<b>UI</b>"
 
 #: src/window.blp:333 src/window.blp:335
 msgid "Convert to XML"
-msgstr ""
+msgstr "Konversikan ke XML"
 
 #: src/window.blp:344 src/window.blp:346
 msgid "Convert to Blueprint"
-msgstr ""
+msgstr "Konversikan ke Blueprint"
 
 #: src/window.blp:420
 msgid "<b>Preview</b>"
-msgstr ""
+msgstr "<b>Pratinjau</b>"
 
 #: src/window.blp:428 src/window.blp:430
 msgid "Take Screenshot of Preview"
-msgstr ""
+msgstr "Ambil Tangkapan Layar Pratinjau"
 
 #: src/window.blp:460 src/window.blp:478
 msgid "Windowed Preview"
@@ -402,11 +402,11 @@ msgstr ""
 
 #: src/window.blp:468
 msgid "Show Preview Window"
-msgstr ""
+msgstr "Tampilkan Jendela Pratinjau"
 
 #: src/window.blp:486
 msgid "Close Preview Window"
-msgstr ""
+msgstr "Tutup Jendela Pratinjau"
 
 #: src/window.blp:520
 msgid "C_onsole"
@@ -434,7 +434,7 @@ msgstr ""
 
 #: src/window.blp:570
 msgid "Import File…"
-msgstr ""
+msgstr "Impor berkas…"
 
 #: src/window.blp:575
 msgid "Bookmarks"
@@ -442,11 +442,11 @@ msgstr ""
 
 #: src/window.blp:577
 msgid "Learn"
-msgstr ""
+msgstr "Pelajari"
 
 #: src/window.blp:580
 msgid "Developer Documentation"
-msgstr ""
+msgstr "Dokumentasi Pengembang"
 
 #: src/window.blp:587
 msgid "Human Interface Guidelines"
@@ -454,27 +454,27 @@ msgstr ""
 
 #: src/window.blp:593
 msgid "JavaScript"
-msgstr ""
+msgstr "JavaScript"
 
 #: src/window.blp:599
 msgid "Vala"
-msgstr ""
+msgstr "Vala"
 
 #: src/window.blp:605
 msgid "Blueprint"
-msgstr ""
+msgstr "Blueprint"
 
 #: src/window.blp:612
 msgid "Get help"
-msgstr ""
+msgstr "Dapatkan bantuan"
 
 #: src/window.blp:615
 msgid "Discourse"
-msgstr ""
+msgstr "Discourse"
 
 #: src/window.blp:621
 msgid "Matrix"
-msgstr ""
+msgstr "Matrix"
 
 #: src/window.blp:629
 msgid "Platform Tools"
@@ -482,11 +482,11 @@ msgstr ""
 
 #: src/window.blp:632
 msgid "Adwaita Demo"
-msgstr ""
+msgstr "Demo Adwaita"
 
 #: src/window.blp:638
 msgid "GTK Demo"
-msgstr ""
+msgstr "Demo GTK"
 
 #: src/window.blp:644
 msgid "GTK Widget Factory"
@@ -494,8 +494,8 @@ msgstr ""
 
 #: src/window.blp:657
 msgid "About Workbench"
-msgstr ""
+msgstr "Tentang Workbench"
 
 #: src/window.js:396
 msgid "Are you sure you want to discard your changes?"
-msgstr ""
+msgstr "Apa Anda yakin ingin menghapus perubahan yang Anda buat?"

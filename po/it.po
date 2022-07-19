@@ -8,65 +8,65 @@ msgstr ""
 "Project-Id-Version: re.sonny.Workbench\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-04 15:25+0200\n"
-"PO-Revision-Date: 2022-05-08 15:35+0000\n"
-"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"PO-Revision-Date: 2022-07-17 19:20+0000\n"
+"Last-Translator: lupantano <luigi.pantano@p-engineering.it>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/workbench/workbench/it/>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.12.1\n"
+"X-Generator: Weblate 4.14-dev\n"
 
 #. TRANSLATORS: Don't translate
 #: data/re.sonny.Workbench.desktop:4
 msgid "Workbench"
-msgstr ""
+msgstr "Workbench"
 
 #: data/re.sonny.Workbench.desktop:5 data/re.sonny.Workbench.metainfo.xml:10
 msgid "Learn and prototype with GNOME technologies"
-msgstr ""
+msgstr "Impara e crea prototipi con le tecnologie di GNOME"
 
 #. TRANSLATORS: Don't translate
 #: data/re.sonny.Workbench.desktop:12
 msgid "CSS;JavaScript;GJS;Blueprint;builder;Vala;"
-msgstr ""
+msgstr "CSS;JavaScript;GJS;Blueprint;builder;Vala;"
 
 #: data/re.sonny.Workbench.metainfo.xml:14
 msgid "Workbench goal is to let you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a GTK user interface."
-msgstr ""
+msgstr "L'obiettivo di Workbench è quello di permettere di sperimentare con le tecnologie di GNOME, sia che si tratti della prima volta che di costruire e testare un'interfaccia utente GTK."
 
 #: data/re.sonny.Workbench.metainfo.xml:15
 msgid "Among other things, Workbench comes with"
-msgstr ""
+msgstr "Tra le altre cose, Workbench è dotato di"
 
 #: data/re.sonny.Workbench.metainfo.xml:17
 msgid "realtime GTK/CSS preview"
-msgstr ""
+msgstr "anteprima GTK/CSS in tempo reale"
 
 #: data/re.sonny.Workbench.metainfo.xml:18
 msgid "library of examples"
-msgstr ""
+msgstr "libreria degli esempi"
 
 #: data/re.sonny.Workbench.metainfo.xml:19
 msgid "JavaScript and Vala runs without any setup"
-msgstr ""
+msgstr "JavaScript e Vala funzionano senza alcuna impostazione"
 
 #: data/re.sonny.Workbench.metainfo.xml:20
 msgid "XML and Blueprint for describing user interface"
-msgstr ""
+msgstr "XML e Blueprint per la descrizione dell'interfaccia utente"
 
 #: data/re.sonny.Workbench.metainfo.xml:21
 msgid "syntax highlighting, undo/redo, autosave, session restore"
-msgstr ""
+msgstr "evidenziazione della sintassi, annulla/ripristina, salvataggio automatico, ripristino della sessione"
 
 #: data/re.sonny.Workbench.metainfo.xml:22
 msgid "code formatter"
-msgstr ""
+msgstr "formattazione del codice"
 
 #: data/re.sonny.Workbench.metainfo.xml:23
 msgid "console logs"
-msgstr ""
+msgstr "console logs"
 
 #: data/re.sonny.Workbench.metainfo.xml:51
 msgid "Highlights"
@@ -74,27 +74,27 @@ msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:53
 msgid "Add Blueprint markup syntax for UI"
-msgstr ""
+msgstr "Aggiunta della sintassi di markup Blueprint per l'interfaccia utente"
 
 #: data/re.sonny.Workbench.metainfo.xml:54
 msgid "Add Vala programming language for Code"
-msgstr ""
+msgstr "Aggiungi il linguaggio di programmazione Vala per Code"
 
 #: data/re.sonny.Workbench.metainfo.xml:55
 msgid "Add support for previewing templates"
-msgstr ""
+msgstr "Aggiungere il supporto per l'anteprima dei modelli"
 
 #: data/re.sonny.Workbench.metainfo.xml:56
 msgid "Add support for previewing signal handlers"
-msgstr ""
+msgstr "Aggiungere il supporto per l'anteprima dei gestori di segnali"
 
 #: data/re.sonny.Workbench.metainfo.xml:57
 msgid "Include all icons from icon-development-kit"
-msgstr ""
+msgstr "Includere tutte le icone del icon-development-kit"
 
 #: data/re.sonny.Workbench.metainfo.xml:58
 msgid "Improve application design"
-msgstr ""
+msgstr "Migliorare la progettazione dell'applicazione"
 
 #: data/re.sonny.Workbench.metainfo.xml:59
 #: data/re.sonny.Workbench.metainfo.xml:69
@@ -103,20 +103,20 @@ msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:60
 msgid "Respect system preference for color scheme"
-msgstr ""
+msgstr "Rispettare le preferenze del sistema per la combinazione di colori"
 
 #: data/re.sonny.Workbench.metainfo.xml:61
 msgid "Add proper light/dark color schemes for Console"
-msgstr ""
+msgstr "Aggiungi schema di colore chiaro/scuro adeguato per la console"
 
 #: data/re.sonny.Workbench.metainfo.xml:62
 #: data/re.sonny.Workbench.metainfo.xml:74
 msgid "Fix error when opening file"
-msgstr ""
+msgstr "Correggere l'errore all'apertura del file"
 
 #: data/re.sonny.Workbench.metainfo.xml:64
 msgid "Other changes"
-msgstr ""
+msgstr "Altre modifiche"
 
 #: data/re.sonny.Workbench.metainfo.xml:66
 msgid "Silence platform tools"
@@ -124,11 +124,11 @@ msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:67
 msgid "Make Library examples only open relevant panels"
-msgstr ""
+msgstr "Gli esempi della Libreria aprono solo i pannelli pertinenti"
 
 #: data/re.sonny.Workbench.metainfo.xml:68
 msgid "Always open the Console when opening a Library example"
-msgstr ""
+msgstr "Aprire sempre la console quando si apre un esempio di libreria"
 
 #: data/re.sonny.Workbench.metainfo.xml:70
 msgid "Prevent running Code if the panel is not visible"
