@@ -47,6 +47,12 @@
   </screenshots>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="42.2" date="2022-07-19">
+      <ul>
+        <li>Underline errors in Blueprint UI code</li>
+        <li>Fix bugs and crashes</li>
+      </ul>
+    </release>
     <release version="42.1" date="2022-07-07">
       <ul>
         <li>Add an Icon Browser to find the right icons for your prototypes</li>
@@ -66,8 +72,6 @@
         <li>Remove grid pattern on the source editors</li>
       </ul>
     </release>
-  </releases>
-  <releases>
     <release version="42.0" date="2022-06-04">
       <description>
         <p>Highlights</p>
