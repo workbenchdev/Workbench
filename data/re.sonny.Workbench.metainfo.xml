@@ -48,29 +48,34 @@
   <content_rating type="oars-1.1" />
   <releases>
     <release version="42.2" date="2022-07-19">
-      <ul>
-        <li>Underline errors in Blueprint UI code</li>
-        <li>Fix bugs and crashes</li>
-      </ul>
+      <description>
+        <ul>
+          <li>Underline errors in Blueprint UI code</li>
+          <li>Fix bugs and crashes</li>
+        </ul>
+      </description>
     </release>
     <release version="42.1" date="2022-07-07">
-      <ul>
-        <li>Add an Icon Browser to find the right icons for your prototypes</li>
-        <li>Add a Platform tools Library demo</li>
-        <li>Improve the style switcher</li>
-        <li>Replace confirmation dialogs with toasts and undo</li>
-        <li>Support updates on root objects</li>
-        <li>Support binding signal handlers from UI</li>
-        <li>Add APIs to allow using templates from Code</li>
-        <li>Add Center/Fill preview modes for templates</li>
-        <li
-        >Open external preview with the dimensions of the internal preview</li>
-        <li>64 new icons available</li>
-        <li>Update Blueprint to 0.2.0</li>
-        <li>Fix empty preview on first load</li>
-        <li>Fix style scheme switch when system preference is light</li>
-        <li>Remove grid pattern on the source editors</li>
-      </ul>
+      <description>
+        <ul>
+          <li
+          >Add an Icon Browser to find the right icons for your prototypes</li>
+          <li>Add a Platform tools Library demo</li>
+          <li>Improve the style switcher</li>
+          <li>Replace confirmation dialogs with toasts and undo</li>
+          <li>Support updates on root objects</li>
+          <li>Support binding signal handlers from UI</li>
+          <li>Add APIs to allow using templates from Code</li>
+          <li>Add Center/Fill preview modes for templates</li>
+          <li
+          >Open external preview with the dimensions of the internal preview</li>
+          <li>64 new icons available</li>
+          <li>Update Blueprint to 0.2.0</li>
+          <li>Fix empty preview on first load</li>
+          <li>Fix style scheme switch when system preference is light</li>
+          <li>Remove grid pattern on the source editors</li>
+        </ul>
+      </description>
     </release>
     <release version="42.0" date="2022-06-04">
       <description>
