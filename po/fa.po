@@ -8,24 +8,24 @@ msgstr ""
 "Project-Id-Version: re.sonny.Workbench\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-04 15:25+0200\n"
-"PO-Revision-Date: 2022-06-01 08:17+0000\n"
-"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
+"PO-Revision-Date: 2022-07-16 05:15+0000\n"
+"Last-Translator: Chapdast dev <chapdast.dev@gmail.com>\n"
 "Language-Team: Persian <https://hosted.weblate.org/projects/workbench/workbench/fa/>\n"
 "Language: fa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.13-dev\n"
+"X-Generator: Weblate 4.14-dev\n"
 
 #. TRANSLATORS: Don't translate
 #: data/re.sonny.Workbench.desktop:4
 msgid "Workbench"
-msgstr ""
+msgstr "میزکار"
 
 #: data/re.sonny.Workbench.desktop:5 data/re.sonny.Workbench.metainfo.xml:10
 msgid "Learn and prototype with GNOME technologies"
-msgstr ""
+msgstr "فناوری های GNOME بیآموز و نمونه‌سازی کن"
 
 #. TRANSLATORS: Don't translate
 #: data/re.sonny.Workbench.desktop:12
@@ -34,15 +34,15 @@ msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:14
 msgid "Workbench goal is to let you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a GTK user interface."
-msgstr ""
+msgstr "میزکار، هدفش دادن امکان آزمایش با فناوری‌های GNOME است، هرچند که برای سرگرمی یا قسمت از یک نمای‌کاربری با GTK را توسعه می‌دهید."
 
 #: data/re.sonny.Workbench.metainfo.xml:15
 msgid "Among other things, Workbench comes with"
-msgstr ""
+msgstr "همراه با موارد دیگر، میزکار همراه است با"
 
 #: data/re.sonny.Workbench.metainfo.xml:17
 msgid "realtime GTK/CSS preview"
-msgstr ""
+msgstr "پیش‌نمایش لحظه‌ای GTK/CSS"
 
 #: data/re.sonny.Workbench.metainfo.xml:18
 msgid "library of examples"
@@ -50,159 +50,153 @@ msgstr "کتابخانه نمونه ها"
 
 #: data/re.sonny.Workbench.metainfo.xml:19
 msgid "JavaScript and Vala runs without any setup"
-msgstr ""
+msgstr "JavaScript و Vala بدون هیج پیکربندی قابل استفاده است"
 
 #: data/re.sonny.Workbench.metainfo.xml:20
 msgid "XML and Blueprint for describing user interface"
-msgstr ""
+msgstr "XML و Blueprint برای شرح نمای‌کاربری"
 
 #: data/re.sonny.Workbench.metainfo.xml:21
 msgid "syntax highlighting, undo/redo, autosave, session restore"
-msgstr ""
+msgstr "نمایش سینتکس، ذخیره خودکار، بازگردانی نشست و undo/redo"
 
 #: data/re.sonny.Workbench.metainfo.xml:22
 msgid "code formatter"
-msgstr ""
+msgstr "مرتب کننده کد"
 
 #: data/re.sonny.Workbench.metainfo.xml:23
 msgid "console logs"
-msgstr ""
+msgstr "لاگ‌های کنسول"
 
 #: data/re.sonny.Workbench.metainfo.xml:51
 msgid "Highlights"
-msgstr ""
+msgstr "برجسته‌ها"
 
 #: data/re.sonny.Workbench.metainfo.xml:53
 msgid "Add Blueprint markup syntax for UI"
-msgstr ""
+msgstr "اضافه شده مارک‌آپ Blueprint برای UI"
 
 #: data/re.sonny.Workbench.metainfo.xml:54
 msgid "Add Vala programming language for Code"
-msgstr ""
+msgstr "اضافه شدن زبان Vala برای Code"
 
 #: data/re.sonny.Workbench.metainfo.xml:55
 msgid "Add support for previewing templates"
-msgstr ""
+msgstr "اضافه شده امکان نمایش قالب‌های آماده"
 
 #: data/re.sonny.Workbench.metainfo.xml:56
 msgid "Add support for previewing signal handlers"
-msgstr ""
+msgstr "اضافه شدن امکان پیش‌نمایش هندلر‌های سیگنال"
 
 #: data/re.sonny.Workbench.metainfo.xml:57
 msgid "Include all icons from icon-development-kit"
-msgstr ""
+msgstr "همراه داشتن تمام نشانه‌های icon-development-kit"
 
 #: data/re.sonny.Workbench.metainfo.xml:58
 msgid "Improve application design"
-msgstr ""
+msgstr "بهبود طراحی بصری"
 
 #: data/re.sonny.Workbench.metainfo.xml:59
 #: data/re.sonny.Workbench.metainfo.xml:69
 msgid "Distribute Library examples under CC0-1.0"
-msgstr ""
+msgstr "مثال کتابخانه‌گسترده تحت CC0-1.0"
 
 #: data/re.sonny.Workbench.metainfo.xml:60
 msgid "Respect system preference for color scheme"
-msgstr ""
+msgstr "نمایه‌ رنگ بر اساس تنظیمات رنگ سیستم"
 
 #: data/re.sonny.Workbench.metainfo.xml:61
 msgid "Add proper light/dark color schemes for Console"
-msgstr ""
+msgstr "اضافه شده نمایه‌های رنگی روشن/تاریک مناسب برای کنسول"
 
 #: data/re.sonny.Workbench.metainfo.xml:62
 #: data/re.sonny.Workbench.metainfo.xml:74
 msgid "Fix error when opening file"
-msgstr ""
+msgstr "رفع خطا در زمان باز کردن پرونده"
 
 #: data/re.sonny.Workbench.metainfo.xml:64
 msgid "Other changes"
-msgstr ""
+msgstr "و تغییرات دیگر"
 
 #: data/re.sonny.Workbench.metainfo.xml:66
-#, fuzzy
-#| msgid "Platform Tools"
 msgid "Silence platform tools"
-msgstr "ابزار های پلتفرم"
+msgstr "ابزار های پلتفرم Silence"
 
 #: data/re.sonny.Workbench.metainfo.xml:67
 msgid "Make Library examples only open relevant panels"
-msgstr ""
+msgstr "مثال‌های کتابخانه فقط پنل‌های لازم را باز کند"
 
 #: data/re.sonny.Workbench.metainfo.xml:68
 msgid "Always open the Console when opening a Library example"
-msgstr ""
+msgstr "همیشه کنسول، هنگام باز کردن مثال‌های کتابخانه، باز شود"
 
 #: data/re.sonny.Workbench.metainfo.xml:70
 msgid "Prevent running Code if the panel is not visible"
-msgstr ""
+msgstr "اگر پنل بسته یا ناپیداست، اجرا کد را متوقف شود"
 
 #: data/re.sonny.Workbench.metainfo.xml:71
 msgid "Add icons and mnemonics for all buttons"
-msgstr ""
+msgstr "برای تمام دکمه‌ها، نشانه یا نمایه اضافه شود"
 
 #: data/re.sonny.Workbench.metainfo.xml:72
 msgid "Move Bookmarks to the main menu"
-msgstr ""
+msgstr "نشانه‌گذاری‌ها، را به منو اصلی انتقال بده"
 
 #: data/re.sonny.Workbench.metainfo.xml:73
 msgid "Enable scrollbar and kinetic scrolling on Console"
-msgstr ""
+msgstr "در کنسول، اسکرول‌بار را فعال کن"
 
 #: data/re.sonny.Workbench.metainfo.xml:75
-#, fuzzy
-#| msgid "library of examples"
 msgid "Improve Library examples"
-msgstr "کتابخانه نمونه ها"
+msgstr "نمونه‌های کتابخانه"
 
 #: data/re.sonny.Workbench.metainfo.xml:76
 msgid "Performance optimizations"
-msgstr ""
+msgstr "بهبود بازدهی"
 
 #: data/re.sonny.Workbench.metainfo.xml:77
 msgid "Show a placeholder when all panels are invisible"
-msgstr ""
+msgstr "در هنگامی که تمام پنل‌ها ناپیداست، مکان‌نگهدار نمایش بده"
 
 #: data/re.sonny.Workbench.metainfo.xml:78
-#, fuzzy
-#| msgid "Various fixes"
 msgid "Crash fixes"
-msgstr "رفع مشکلات مختلف"
+msgstr "رفع Crash"
 
 #: data/re.sonny.Workbench.metainfo.xml:79
 msgid "Use org.gnome.Sdk runtime"
-msgstr ""
+msgstr "از محیط اجرای org.gnome.Sdk استفاده کن"
 
 #: data/re.sonny.Workbench.metainfo.xml:86
 msgid "Add a Library of examples"
-msgstr ""
+msgstr "افزودن یک کتابخانه از نمونه‌ها"
 
 #: data/re.sonny.Workbench.metainfo.xml:87
 msgid "Add an example of WebSocket client"
-msgstr ""
+msgstr "افزودن یک مثال کلاینت WebSocket"
 
 #: data/re.sonny.Workbench.metainfo.xml:88
 msgid "Add an example of toasts"
-msgstr ""
+msgstr "افزودن یک نمونه از اعلان toast"
 
 #: data/re.sonny.Workbench.metainfo.xml:89
 msgid "Add an example of application window"
-msgstr ""
+msgstr "افزودن یک نمونه از پنجره اپلیکیشن"
 
 #: data/re.sonny.Workbench.metainfo.xml:90
 msgid "Add an example of desktop notification"
-msgstr ""
+msgstr "افزودن یک نمونه از اعلان میزکار"
 
 #: data/re.sonny.Workbench.metainfo.xml:92
 msgid "Add Adwaita Demo, GTK Demo, GTK Widget Factory and GTK Icon Browser"
-msgstr ""
+msgstr "افزودن دمو Adwaita، GTK، GTK Widget Factory و مرورگر نشانه GTK"
 
 #: data/re.sonny.Workbench.metainfo.xml:93
 msgid "The Console can be collapsed by resizing it"
-msgstr ""
+msgstr "کنسول با تغییر دادن اندازه آن، میتوانید ببندید"
 
 #: data/re.sonny.Workbench.metainfo.xml:94
 msgid "Prevent system.exit from quitting Workbench"
-msgstr ""
+msgstr "میزکار با فرمان system.exit خارج نشود"
 
 #: data/re.sonny.Workbench.metainfo.xml:95
 msgid "Allow calling GObject.registerClass multiple times"
