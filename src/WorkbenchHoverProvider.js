@@ -23,8 +23,6 @@ class WorkbenchHoverProvider extends GObject.Object {
   }
 
   showDiagnostics(display, diagnostics) {
-    console.log(diagnostics);
-
     const container = new Gtk.Box({
       orientation: Gtk.Orientation.VERTICAL,
       spacing: 4,
@@ -59,22 +57,25 @@ class WorkbenchHoverProvider extends GObject.Object {
   }
 }
 
-function findDiagnostics(diagnostics, range) {
+function findDiagnostics(diagnostics, position) {
   return diagnostics.filter((diagnostic) => {
-    return isDiagnosticInRange(diagnostic, range);
+    return isDiagnosticInRange(diagnostic, position);
   });
 }
 
-function isDiagnosticInRange(diagnostic, range) {
+export function isDiagnosticInRange(diagnostic, { line, character }) {
   const { start, end } = diagnostic.range;
 
   // The tag is applied on the whole line
   // when diagnostic start and end ranges are equals
-  if (rangeEquals(start, end) && range.line === start.line) return true;
+  if (rangeEquals(start, end) && line === start.line) return true;
+
+  if (line < start.line) return false;
+  if (line > end.line) return false;
 
   return (
-    (range.line >= start.line && range.character >= start.character - 1) ||
-    (range.line <= end.line && range.character <= end.character + 1)
+    (line >= start.line && character >= start.character - 1) ||
+    (line <= end.line && character <= end.character + 1)
   );
 }
 
