@@ -7,6 +7,3 @@
 [submodule "icon-development-kit-www"]
 	path = icon-development-kit-www
 	url = https://gitlab.gnome.org/Teams/Design/icon-development-kit-www.git
-[submodule "gtksourceview"]
-	path = gtksourceview
-	url = https://gitlab.gnome.org/GNOME/gtksourceview.git

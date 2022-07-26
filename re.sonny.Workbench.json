@@ -14,53 +14,6 @@
   ],
   "x-run-args": [],
   "modules": [
-    // {
-    //   "name": "libsass",
-    //   "buildsystem": "meson",
-    //   "sources": [
-    //     {
-    //       "type": "git",
-    //       "url": "https://github.com/lazka/libsass.git",
-    //       "branch": "meson",
-    //       "commit": "302397c0c8ae2d7ab02f45ea461c2c3d768f248e"
-    //     }
-    //   ]
-    // },
-    // {
-    //   "name": "sassc",
-    //   "buildsystem": "meson",
-    //   "sources": [
-    //     {
-    //       "type": "git",
-    //       "url": "https://github.com/lazka/sassc.git",
-    //       "branch": "meson",
-    //       "commit": "82803377c33247265d779af034eceb5949e78354"
-    //     }
-    //   ]
-    // },
-    // {
-    //   "name": "gtk",
-    //   "buildsystem": "meson",
-    //   "config-opts": [
-    //     "-Dwin32-backend=false",
-    //     "-Dmacos-backend=false",
-    //     "-Dmedia-ffmpeg=disabled",
-    //     "-Dprint-cups=disabled",
-    //     "-Dintrospection=enabled",
-    //     "-Ddemos=false",
-    //     "-Dbuild-examples=false",
-    //     "-Dbuild-tests=false"
-    //   ],
-    //   "cleanup": ["/bin/gtk4-builder-tool", "/bin/gtk4-encode-symbolic-svg"],
-    //   "sources": [
-    //     {
-    //       "type": "git",
-    //       "url": "https://gitlab.gnome.org/GNOME/gtk.git",
-    //       "branch": "main",
-    //       "commit": "afe476c2e36359ffbed5ec0e5946b0ff55f3f682"
-    //     }
-    //   ]
-    // },
     {
       "name": "vte",
       "buildsystem": "meson",
@@ -75,7 +28,7 @@
         {
           "type": "git",
           "url": "https://gitlab.gnome.org/GNOME/vte.git",
-          "commit": "3ed53bfaa7344ce5b7727a60a2d33315b15201e5"
+          "commit": "b51feeca889d4b597e95b21bc77dc078892af11d"
         }
       ]
     },
@@ -98,17 +51,6 @@
         {
           "type": "dir",
           "path": "./blueprint-compiler"
-        }
-      ]
-    },
-    {
-      "name": "gtksourceview",
-      "buildsystem": "meson",
-      "config-opts": ["-Dvapi=false"],
-      "sources": [
-        {
-          "type": "dir",
-          "path": "./gtksourceview"
         }
       ]
     },
