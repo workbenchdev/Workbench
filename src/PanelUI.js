@@ -247,7 +247,7 @@ function logBlueprintError(err) {
 // }
 
 function logBlueprintDiagnostic({ range, message, severity }) {
-  GLib.log_structured("Blueprint", GLib.LogLevelFlags.LEVEL_WARNING, {
+  GLib.log_structured("Blueprint", GLib.LogLevelFlags.LEVEL_DEBUG, {
     MESSAGE: `Blueprint-${diagnostic_severities[severity]} ${
       range.start.line + 1
     }:${range.start.character} to ${range.end.line + 1}:${
