@@ -5,7 +5,7 @@ import Gtk from "gi://Gtk";
 import Pango from "gi://Pango";
 
 import LSPClient from "./lsp/LSPClient.js";
-import { LSPError, diagnostic_severities } from "./lsp/LSP.js";
+import { LSPError, diagnostic_severities, rangeEquals } from "./lsp/LSP.js";
 import {
   getLanguage,
   settings,
@@ -16,6 +16,7 @@ import {
 
 import { getPid, once } from "./troll/src/util.js";
 import logger from "./logger.js";
+import WorkbenchHoverProvider from "./WorkbenchHoverProvider.js";
 
 const { addSignalMethods } = imports.signals;
 
@@ -29,15 +30,19 @@ export default function PanelUI({ builder, data_dir, version, term_console }) {
 
   const buffer_blueprint = getLanguage("blueprint").document.buffer;
   const buffer_xml = getLanguage("xml").document.buffer;
+  const provider = new WorkbenchHoverProvider();
 
   const blueprint = createBlueprintClient({
     data_dir,
-    panel,
     buffer: buffer_blueprint,
+    provider,
   });
 
   let document_version = 0;
-  prepareSourceView(getLanguage("blueprint").document.source_view);
+  prepareSourceView({
+    source_view: getLanguage("blueprint").document.source_view,
+    provider,
+  });
 
   async function convertToXML() {
     term_console.clear();
@@ -242,7 +247,7 @@ function logBlueprintError(err) {
 // }
 
 function logBlueprintDiagnostic({ range, message, severity }) {
-  GLib.log_structured("Blueprint", GLib.LogLevelFlags.LEVEL_WARNING, {
+  GLib.log_structured("Blueprint", GLib.LogLevelFlags.LEVEL_DEBUG, {
     MESSAGE: `Blueprint-${diagnostic_severities[severity]} ${
       range.start.line + 1
     }:${range.start.character} to ${range.end.line + 1}:${
@@ -252,7 +257,7 @@ function logBlueprintDiagnostic({ range, message, severity }) {
   });
 }
 
-function createBlueprintClient({ data_dir, panel, buffer }) {
+function createBlueprintClient({ data_dir, buffer, provider }) {
   const file_blueprint_logs = Gio.File.new_for_path(
     GLib.build_filenamev([data_dir, `blueprint-logs`])
   );
@@ -282,31 +287,37 @@ function createBlueprintClient({ data_dir, panel, buffer }) {
 
   blueprint.connect(
     "notification::textDocument/publishDiagnostics",
-    (self, params) => {
-      handleDiagnostics(params.diagnostics, buffer);
+    (self, { diagnostics }) => {
+      handleDiagnostics({ diagnostics, buffer, provider });
     }
   );
 
   return blueprint;
 }
 
-function prepareSourceView(source_view) {
+function prepareSourceView({ source_view, provider }) {
   const tag_table = source_view.buffer.get_tag_table();
   const tag = new Gtk.TextTag({
     name: "error",
     underline: Pango.Underline.ERROR,
   });
   tag_table.add(tag);
+
+  const hover = source_view.get_hover();
+  // hover.hover_delay = 25;
+  hover.add_provider(provider);
 }
 
-function handleDiagnostics(diagnostics, buffer) {
+function handleDiagnostics({ diagnostics, buffer, provider }) {
+  provider.diagnostics = diagnostics;
+
   buffer.remove_tag_by_name(
     "error",
     buffer.get_start_iter(),
     buffer.get_end_iter()
   );
 
-  diagnostics.forEach((d) => handleDiagnostic(d, buffer));
+  diagnostics.forEach((diagnostic) => handleDiagnostic(diagnostic, buffer));
 }
 
 function handleDiagnostic(diagnostic, buffer) {
@@ -320,13 +331,14 @@ function get_iters_at_range(buffer, { start, end }) {
   let start_iter;
   let end_iter;
 
+  // Apply the tag on the whole line
+  // if diagnostic start and end are equals such as
   // Blueprint-Error 13:12 to 13:12 Could not determine what kind of syntax is meant here
-  if (start.line === end.line && start.character === end.character) {
+  if (rangeEquals(start, end)) {
     [, start_iter] = buffer.get_iter_at_line(start.line);
-    start_iter.forward_sentence_end();
-    start_iter.backward_sentence_start();
     [, end_iter] = buffer.get_iter_at_line(end.line);
-    end_iter.forward_sentence_end();
+    end_iter.forward_to_line_end();
+    start_iter.forward_find_char((char) => char !== "", end_iter);
   } else {
     [, start_iter] = buffer.get_iter_at_line_offset(
       start.line,

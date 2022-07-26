@@ -14,3 +14,7 @@ export class LSPError extends Error {
     this.data = data;
   }
 }
+
+export function rangeEquals(start, end) {
+  return start.line === end.line && start.character === end.character;
+}
