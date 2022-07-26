@@ -36,7 +36,6 @@ const IconWidget = GObject.registerClass(
         "icon-name",
         GObject.BindingFlags.SYNC_CREATE
       );
-      // https://gitlab.gnome.org/GNOME/gtk/-/issues/4941
       this.bind_property(
         "icon_name",
         this,
