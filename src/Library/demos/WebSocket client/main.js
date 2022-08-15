@@ -1,8 +1,6 @@
 import Soup from "gi://Soup?version=3.0";
 import GLib from "gi://GLib";
 
-const byteArray = imports.byteArray;
-
 const text_decoder = new TextDecoder("utf-8");
 const text_encoder = new TextEncoder("utf-8");
 
@@ -38,14 +36,14 @@ function onError(self, err) {
 
 function onMessage(self, type, message) {
   if (type !== Soup.WebsocketDataType.TEXT) return;
-  const str = text_decoder.decode(byteArray.fromGBytes(message));
+  const str = text_decoder.decode(message.toArray());
   console.log("received:", str);
 }
 
 function send(message) {
   connection.send_message(
     Soup.WebsocketDataType.TEXT,
-    byteArray.toGBytes(text_encoder.encode(message))
+    new GLib.Bytes(text_encoder.encode(message))
   );
   console.log("sent:", message);
 }

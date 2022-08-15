@@ -143,3 +143,10 @@ export function replaceBufferText(buffer, text, scroll_start = true) {
   buffer.end_user_action();
   scroll_start && buffer.place_cursor(buffer.get_start_iter());
 }
+
+export function decode(data) {
+  if (data instanceof GLib.Bytes) {
+    data = data.toArray();
+  }
+  return new TextDecoder().decode(data);
+}

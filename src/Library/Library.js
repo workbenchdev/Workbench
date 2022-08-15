@@ -2,7 +2,7 @@ import Gio from "gi://Gio";
 import Adw from "gi://Adw";
 import Gtk from "gi://Gtk";
 
-const byteArray = imports.byteArray;
+import { decode } from "../util.js";
 
 const prefix = "/re/sonny/Workbench/Library";
 
@@ -68,13 +68,14 @@ function getDemos() {
     `${prefix}/demos`,
     Gio.ResourceLookupFlags.NONE
   ).map((child) => {
-    const bytes = byteArray.fromGBytes(
-      Gio.resources_lookup_data(
-        `${prefix}/demos/${child}main.json`,
-        Gio.ResourceLookupFlags.NONE
+    return JSON.parse(
+      decode(
+        Gio.resources_lookup_data(
+          `${prefix}/demos/${child}main.json`,
+          Gio.ResourceLookupFlags.NONE
+        )
       )
     );
-    return JSON.parse(new TextDecoder().decode(bytes));
   });
 }
 
@@ -82,12 +83,10 @@ function readDemoFile(demo_name, file_name) {
   let str;
 
   try {
-    str = new TextDecoder().decode(
-      byteArray.fromGBytes(
-        Gio.resources_lookup_data(
-          `${prefix}/demos/${demo_name}/${file_name}`,
-          Gio.ResourceLookupFlags.NONE
-        )
+    str = decode(
+      Gio.resources_lookup_data(
+        `${prefix}/demos/${demo_name}/${file_name}`,
+        Gio.ResourceLookupFlags.NONE
       )
     );
   } catch (err) {
