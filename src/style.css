@@ -7,6 +7,29 @@
   border-radius: 10px;
 }
 
+.panel_header {
+  height: 46px;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+#toolbar_devtools {
+  border-bottom: solid 1px @borders;
+}
+
+#panel_code {
+  border-right: solid 1px @borders;
+}
+
+#panel_style {
+  border-right: solid 1px @borders;
+}
+
+#panel_ui {
+  border-right: solid 1px @borders;
+}
+
+
 /* Adapted from https://gitlab.gnome.org/GNOME/gnome-text-editor/-/blob/cd6e111e3142a80f509684e65c104c8b3a097761/src/style.css */
 
 /* Workaround Large Text issue */

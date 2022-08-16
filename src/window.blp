@@ -118,9 +118,12 @@ Gtk.ApplicationWindow window {
         homogeneous: true;
 
         Box panel_code {
+          name: "panel_code";
           orientation: vertical;
 
           CenterBox {
+            styles ["toolbar", "panel_header"]
+
             [start]
             Box {
               Label {
@@ -155,69 +158,62 @@ Gtk.ApplicationWindow window {
               tooltip-text: _("Run (Ctrl+⏎)");
               styles ["suggested-action"]
             }
-
-            styles ["toolbar"]
           }
 
           Separator {
           }
 
-          Box {
+          Stack stack_code {
             hexpand: true;
-            Stack stack_code {
-              hexpand: true;
-              StackPage {
-                name: 'JavaScript';
-                child: ScrolledWindow {
-                  vexpand: true;
-                  GtkSource.View source_view_javascript {
-                    buffer: GtkSource.Buffer {
-                    };
-                    monospace: true;
-                    auto-indent: true;
-                    highlight-current-line: true;
-                    indent-on-tab: true;
-                    indent-width: 2;
-                    insert-spaces-instead-of-tabs: true;
-                    show-line-marks: true;
-                    show-line-numbers: true;
-                    smart-backspace: true;
-                    tab-width: 2;
-                  }
-                };
-              }
-              StackPage {
-                name: 'Vala';
-                child: ScrolledWindow {
-                  vexpand: true;
-                  GtkSource.View source_view_vala {
-                    buffer: GtkSource.Buffer {
-                    };
-                    monospace: true;
-                    auto-indent: true;
-                    highlight-current-line: true;
-                    indent-on-tab: true;
-                    indent-width: 2;
-                    insert-spaces-instead-of-tabs: true;
-                    show-line-marks: true;
-                    show-line-numbers: true;
-                    smart-backspace: true;
-                    tab-width: 2;
-                  }
-                };
-              }
+            StackPage {
+              name: 'JavaScript';
+              child: ScrolledWindow {
+                vexpand: true;
+                GtkSource.View source_view_javascript {
+                  buffer: GtkSource.Buffer {
+                  };
+                  monospace: true;
+                  auto-indent: true;
+                  highlight-current-line: true;
+                  indent-on-tab: true;
+                  indent-width: 2;
+                  insert-spaces-instead-of-tabs: true;
+                  show-line-marks: true;
+                  show-line-numbers: true;
+                  smart-backspace: true;
+                  tab-width: 2;
+                }
+              };
             }
-
-            Separator {
+            StackPage {
+              name: 'Vala';
+              child: ScrolledWindow {
+                vexpand: true;
+                GtkSource.View source_view_vala {
+                  buffer: GtkSource.Buffer {
+                  };
+                  monospace: true;
+                  auto-indent: true;
+                  highlight-current-line: true;
+                  indent-on-tab: true;
+                  indent-width: 2;
+                  insert-spaces-instead-of-tabs: true;
+                  show-line-marks: true;
+                  show-line-numbers: true;
+                  smart-backspace: true;
+                  tab-width: 2;
+                }
+              };
             }
           }
         }
 
         Box panel_style {
+          name: "panel_style";
           orientation: vertical;
 
           CenterBox {
-            height-request: 46;
+            styles ["toolbar", "panel_header"]
 
             [start]
             Label {
@@ -225,43 +221,39 @@ Gtk.ApplicationWindow window {
               use-markup: true;
               styles ["dim-label"]
             }
-
-            styles ["toolbar"]
           }
 
           Separator {
           }
 
-          Box {
-            ScrolledWindow {
-              vexpand: true;
-              hexpand: true;
+          ScrolledWindow {
+            vexpand: true;
+            hexpand: true;
 
-              GtkSource.View source_view_css {
-                buffer: GtkSource.Buffer {
-                };
-                monospace: true;
-                auto-indent: true;
-                highlight-current-line: true;
-                indent-on-tab: true;
-                indent-width: 2;
-                insert-spaces-instead-of-tabs: true;
-                show-line-marks: true;
-                show-line-numbers: true;
-                smart-backspace: true;
-                tab-width: 2;
-              }
-            }
-
-            Separator {
+            GtkSource.View source_view_css {
+              buffer: GtkSource.Buffer {
+              };
+              monospace: true;
+              auto-indent: true;
+              highlight-current-line: true;
+              indent-on-tab: true;
+              indent-width: 2;
+              insert-spaces-instead-of-tabs: true;
+              show-line-marks: true;
+              show-line-numbers: true;
+              smart-backspace: true;
+              tab-width: 2;
             }
           }
         }
 
         Box panel_ui {
+          name: "panel_ui";
           orientation: vertical;
 
           CenterBox {
+            styles ["toolbar", "panel_header"]
+
             [start]
             Box {
               Label {
@@ -313,62 +305,55 @@ Gtk.ApplicationWindow window {
                 };
               }
             }
-
-            styles ["toolbar"]
           }
 
           Separator {
           }
 
-          Box {
-            Stack stack_ui {
-              hexpand: true;
+          Stack stack_ui {
+            hexpand: true;
 
-              StackPage {
-                name: 'blueprint';
-                child: ScrolledWindow {
-                  vexpand: true;
+            StackPage {
+              name: 'blueprint';
+              child: ScrolledWindow {
+                vexpand: true;
 
-                  GtkSource.View source_view_blueprint {
-                    buffer: GtkSource.Buffer {
-                    };
-                    monospace: true;
-                    auto-indent: true;
-                    highlight-current-line: true;
-                    indent-on-tab: true;
-                    indent-width: 2;
-                    insert-spaces-instead-of-tabs: true;
-                    show-line-marks: true;
-                    show-line-numbers: true;
-                    smart-backspace: true;
-                    tab-width: 2;
-                  }
-                };
-              }
-              StackPage {
-                name: 'xml';
-                child: ScrolledWindow {
-                  vexpand: true;
-
-                  GtkSource.View source_view_xml {
-                    buffer: GtkSource.Buffer {
-                    };
-                    monospace: true;
-                    auto-indent: true;
-                    highlight-current-line: true;
-                    indent-on-tab: true;
-                    indent-width: 2;
-                    insert-spaces-instead-of-tabs: true;
-                    show-line-marks: true;
-                    show-line-numbers: true;
-                    smart-backspace: true;
-                    tab-width: 2;
-                  }
-                };
-              }
+                GtkSource.View source_view_blueprint {
+                  buffer: GtkSource.Buffer {
+                  };
+                  monospace: true;
+                  auto-indent: true;
+                  highlight-current-line: true;
+                  indent-on-tab: true;
+                  indent-width: 2;
+                  insert-spaces-instead-of-tabs: true;
+                  show-line-marks: true;
+                  show-line-numbers: true;
+                  smart-backspace: true;
+                  tab-width: 2;
+                }
+              };
             }
+            StackPage {
+              name: 'xml';
+              child: ScrolledWindow {
+                vexpand: true;
 
-            Separator {
+                GtkSource.View source_view_xml {
+                  buffer: GtkSource.Buffer {
+                  };
+                  monospace: true;
+                  auto-indent: true;
+                  highlight-current-line: true;
+                  indent-on-tab: true;
+                  indent-width: 2;
+                  insert-spaces-instead-of-tabs: true;
+                  show-line-marks: true;
+                  show-line-numbers: true;
+                  smart-backspace: true;
+                  tab-width: 2;
+                }
+              };
             }
           }
         }
@@ -377,7 +362,8 @@ Gtk.ApplicationWindow window {
           orientation: vertical;
 
           CenterBox {
-            height-request: 46;
+            styles ["toolbar", "panel_header"]
+
             [start]
             Label {
               label: _("<b>Preview</b>");
@@ -405,8 +391,6 @@ Gtk.ApplicationWindow window {
                 label: _("Take Screenshot of Preview");
               }
             }
-
-            styles ["toolbar"]
           }
 
           Separator {
@@ -489,9 +473,11 @@ Gtk.ApplicationWindow window {
         orientation: vertical;
 
         CenterBox toolbar_devtools {
+          name: "toolbar_devtools";
           [start]
           Box {
-            styles ["toolbar"]
+            styles ["toolbar", "panel_header"]
+
 
             ToggleButton button_console {
               child: Adw.ButtonContent {
@@ -519,7 +505,7 @@ Gtk.ApplicationWindow window {
 
             Button button_clear {
               child: Adw.ButtonContent {
-                icon-name: "eraser-symbolic";
+                icon-name: "eraser4-symbolic";
                 label: _("Cl_ear");
                 use-underline: true;
               };
