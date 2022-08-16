@@ -939,10 +939,10 @@ class SaxLtx extends EventEmitter {
       if (!endTag) {
         this.emit("startElement", tagName, attrs);
         if (selfClosing) {
-          this.emit("endElement", tagName);
+          this.emit("endElement", tagName, true);
         }
       } else {
-        this.emit("endElement", tagName);
+        this.emit("endElement", tagName, false);
       }
     };
 
@@ -1400,4 +1400,4 @@ function JSONify(el) {
   };
 }
 
-export { Element, JSONify, Parser, attrsEqual, childrenEqual, clone, createElement, equal, escapeXML, escapeXMLText, isElement, isNode, isText, nameEqual, parse, stringify, tag, tagString, unescapeXML, unescapeXMLText };
+export { SaxLtx, Element, JSONify, Parser, attrsEqual, childrenEqual, clone, createElement, equal, escapeXML, escapeXMLText, isElement, isNode, isText, nameEqual, parse, stringify, tag, tagString, unescapeXML, unescapeXMLText };

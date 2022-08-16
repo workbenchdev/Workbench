@@ -43,16 +43,6 @@ matrix(
 );
 ```
 
-[XML](https://github.com/prettier/plugin-xml#ignore-ranges)
-
-```xml
-<foo>
-  <!-- prettier-ignore-start -->
-    <this-content-will-not-be-formatted     />
-  <!-- prettier-ignore-end -->
-</foo>
-```
-
 [CSS](https://prettier.io/docs/en/ignore.html#css)
 
 ```css
