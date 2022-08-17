@@ -41,6 +41,10 @@ export function format(str, indent = 2) {
     if (self_closing) {
       s += "/>";
     } else {
+      if (start_element) {
+        s += ">";
+      }
+
       s += `</${name}>`;
     }
 

@@ -35,6 +35,26 @@ test("format", () => {
     format(
       `
 <?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <object class="GtkBox"></object>
+</interface>
+  `.trim(),
+      2
+    ),
+    `
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <object class="GtkBox"></object>
+</interface>
+  `.trim()
+  );
+
+  assert.fixture(
+    format(
+      `
+<?xml version="1.0" encoding="UTF-8"?>
 <child>
   <object class="GtkImage">
     <property name="name">logo</property>
