@@ -28,7 +28,7 @@
         {
           "type": "git",
           "url": "https://gitlab.gnome.org/GNOME/vte.git",
-          "commit": "b51feeca889d4b597e95b21bc77dc078892af11d"
+          "commit": "b4abc09b0950e2b1593782116b7fa9fc2e7ffba1"
         }
       ]
     },
