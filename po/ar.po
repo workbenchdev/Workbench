@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: re.sonny.Workbench\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-04 15:25+0200\n"
-"PO-Revision-Date: 2022-07-18 21:34+0000\n"
+"PO-Revision-Date: 2022-07-20 12:17+0000\n"
 "Last-Translator: Mouhanad Masri <mouhanadmasre164@gmail.com>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/workbench/workbench/ar/>\n"
 "Language: ar\n"
@@ -288,218 +288,221 @@ msgstr "قم بتشغيل الكود"
 
 #: src/shortcutsWindow.blp:21
 msgid "Open Library"
-msgstr ""
+msgstr "افتح المكتبة"
 
 #: src/shortcutsWindow.blp:26
 msgid "Toggle Console"
-msgstr ""
+msgstr "تفعيل و ايقاف وحدة التحكم"
 
 #: src/shortcutsWindow.blp:31
 msgid "Clear Console"
-msgstr ""
+msgstr "تفريغ وحدة التحكم"
 
 #: src/shortcutsWindow.blp:37
+#, fuzzy
 msgid "Inspector"
-msgstr ""
+msgstr "مفتش"
 
 #: src/shortcutsWindow.blp:41
 msgid "Undo"
-msgstr ""
+msgstr "تراجع عن الإجراء"
 
 #: src/shortcutsWindow.blp:45
 msgid "Redo"
-msgstr ""
+msgstr "إعادة الاجراء"
 
 #: src/shortcutsWindow.blp:53
 msgid "Quit"
-msgstr ""
+msgstr "توقف التطبيق"
 
 #: src/window.blp:15
 msgid "_Library"
-msgstr ""
+msgstr "_مكتبة"
 
 #: src/window.blp:19
 msgid "Open Library of Demos and Examples (Ctrl+Shift+O)"
-msgstr ""
+msgstr "افتح مكتبة العروض التوضيحية والأمثلة (Ctrl + Shift + O)"
 
 #: src/window.blp:37
 msgid "_Code"
-msgstr ""
+msgstr "الكود"
 
 #: src/window.blp:54
 msgid "_Style"
-msgstr ""
+msgstr "_أسلوب"
 
 #: src/window.blp:71
 msgid "_UI"
-msgstr ""
+msgstr "_واجهة المستخدم"
 
 #: src/window.blp:88
 msgid "_Preview"
-msgstr ""
+msgstr "_عرض مسبق"
 
 #: src/window.blp:109
 msgid "sun-symbolic"
-msgstr ""
+msgstr "رمزية الشمس"
 
 #: src/window.blp:110 src/window.blp:113
 msgid "Use Light mode"
-msgstr ""
+msgstr "استخدم الوضع الفاتح"
 
 #: src/window.blp:118
 msgid "workbench-moon-rounded-symbolic"
-msgstr ""
+msgstr "طاولة العمل رمزية تقريب القمر"
 
 #: src/window.blp:119 src/window.blp:122
 msgid "Use Dark mode"
-msgstr ""
+msgstr "استخدم الوضع الداكن"
 
 #: src/window.blp:149
 msgid "<b>Code</b>"
-msgstr ""
+msgstr "<b> كود </ b>"
 
 #: src/window.blp:165 src/window.blp:321
 msgid "Switch document"
-msgstr ""
+msgstr "تبديل الوثيقة"
 
 #: src/window.blp:173
 msgid "_Run"
-msgstr ""
+msgstr "_يجري"
 
 #: src/window.blp:177
 msgid "Run (Ctrl+⏎)"
-msgstr ""
+msgstr "تشغيل (Ctrl + ⏎)"
 
 #: src/window.blp:248
 msgid "<b>Style CSS</b>"
-msgstr ""
+msgstr "<b> نمط CSS </ b>"
 
 #: src/window.blp:293
 msgid "<b>UI</b>"
-msgstr ""
+msgstr "<b> واجهة المستخدم </ ب>"
 
 #: src/window.blp:333 src/window.blp:335
 msgid "Convert to XML"
-msgstr ""
+msgstr "تحويل إلى XML"
 
 #: src/window.blp:344 src/window.blp:346
 msgid "Convert to Blueprint"
-msgstr ""
+msgstr "قم بالتحويل إلى مخطط"
 
 #: src/window.blp:420
 msgid "<b>Preview</b>"
-msgstr ""
+msgstr "<b> عرض مسبق </ b>"
 
 #: src/window.blp:428 src/window.blp:430
 msgid "Take Screenshot of Preview"
-msgstr ""
+msgstr "خذ لقطة شاشة للعرض المسبق"
 
 #: src/window.blp:460 src/window.blp:478
 msgid "Windowed Preview"
-msgstr ""
+msgstr "عرض مسبق في وضعية اطار"
 
 #: src/window.blp:461 src/window.blp:479
 msgid ""
 "This interface can only be previewed as a separate window.\n"
 "We recommend using “Always on Top”"
 msgstr ""
+"لا يمكن معاينة هذه الواجهة إلا كنافذة منفصلة.\n"
+"نوصي باستخدام \"دائمًا في المقدمة\""
 
 #: src/window.blp:468
 msgid "Show Preview Window"
-msgstr ""
+msgstr "إظهار نافذة العرض المسبق"
 
 #: src/window.blp:486
 msgid "Close Preview Window"
-msgstr ""
+msgstr "أغلق نافذة العرض المسبق"
 
 #: src/window.blp:520
 msgid "C_onsole"
-msgstr ""
+msgstr "وحدة التحكم"
 
 #: src/window.blp:524
 msgid "Show logs (Ctrl+Shift+K)"
-msgstr ""
+msgstr "إظهار السجلات (Ctrl + Shift + K)"
 
 #: src/window.blp:530
 msgid "_Inspector"
-msgstr ""
+msgstr "_مفتش"
 
 #: src/window.blp:533
 msgid "Open GTK Inspector (Ctrl+Shift+I)"
-msgstr ""
+msgstr "افتح مفتشGTK باستخدام (Ctrl+Shift+I)"
 
 #: src/window.blp:544
 msgid "Cl_ear"
-msgstr ""
+msgstr "تفريغ"
 
 #: src/window.blp:548
 msgid "Clear console (Ctrl+K)"
-msgstr ""
+msgstr "مسح وحدة التحكم (Ctrl + K)"
 
 #: src/window.blp:570
 msgid "Import File…"
-msgstr ""
+msgstr "استيراد ملف…"
 
 #: src/window.blp:575
 msgid "Bookmarks"
-msgstr ""
+msgstr "إشارات مرجعية"
 
 #: src/window.blp:577
 msgid "Learn"
-msgstr ""
+msgstr "تعلم"
 
 #: src/window.blp:580
 msgid "Developer Documentation"
-msgstr ""
+msgstr "وثائق المطور"
 
 #: src/window.blp:587
 msgid "Human Interface Guidelines"
-msgstr ""
+msgstr "إرشادات الواجهة"
 
 #: src/window.blp:593
 msgid "JavaScript"
-msgstr ""
+msgstr "JavaScript"
 
 #: src/window.blp:599
 msgid "Vala"
-msgstr ""
+msgstr "Vala"
 
 #: src/window.blp:605
 msgid "Blueprint"
-msgstr ""
+msgstr "Blueprint"
 
 #: src/window.blp:612
 msgid "Get help"
-msgstr ""
+msgstr "احصل على مساعدة"
 
 #: src/window.blp:615
 msgid "Discourse"
-msgstr ""
+msgstr "المناقشة"
 
 #: src/window.blp:621
 msgid "Matrix"
-msgstr ""
+msgstr "مصفوفة"
 
 #: src/window.blp:629
 msgid "Platform Tools"
-msgstr ""
+msgstr "أدوات النظام الأساسي"
 
 #: src/window.blp:632
 msgid "Adwaita Demo"
-msgstr ""
+msgstr "عرض Adwaita"
 
 #: src/window.blp:638
 msgid "GTK Demo"
-msgstr ""
+msgstr "عرض GTK"
 
 #: src/window.blp:644
 msgid "GTK Widget Factory"
-msgstr ""
+msgstr "مصنع قطع GTK"
 
 #: src/window.blp:657
 msgid "About Workbench"
-msgstr ""
+msgstr "حول Workbench"
 
 #: src/window.js:396
 msgid "Are you sure you want to discard your changes?"
-msgstr ""
+msgstr "هل أنت متأكد أنك تريد تجاهل تغييراتك؟"
