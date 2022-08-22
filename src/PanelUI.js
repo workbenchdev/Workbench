@@ -271,6 +271,7 @@ function createBlueprintClient({ data_dir, buffer, provider }) {
   );
   const blueprint = new LSPClient([
     // "/home/sonny/Projects/Workbench/blueprint-compiler/blueprint-compiler.py",
+    // "/app/bin/blueprint-compiler",
     "blueprint-compiler",
     "lsp",
     "--logfile",

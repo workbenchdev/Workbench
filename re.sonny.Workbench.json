@@ -1,7 +1,7 @@
 {
-  "app-id": "re.sonny.Workbench",
+  "id": "re.sonny.Workbench",
   "runtime": "org.gnome.Sdk",
-  "runtime-version": "master",
+  "runtime-version": "42",
   "sdk": "org.gnome.Sdk",
   "command": "workbench",
   "finish-args": [
@@ -47,6 +47,7 @@
     {
       "name": "blueprint-compiler",
       "buildsystem": "meson",
+      "builddir": true,
       "sources": [
         {
           "type": "dir",

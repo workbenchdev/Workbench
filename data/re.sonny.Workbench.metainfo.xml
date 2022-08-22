@@ -10,8 +10,7 @@
   <summary>Learn and prototype with GNOME technologies</summary>
   <translation type="gettext">re.sonny.Workbench</translation>
   <description>
-    <p
-    >Workbench goal is to let you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a GTK user interface.</p>
+    <p>Workbench goal is to let you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a GTK user interface.</p>
     <p>Among other things, Workbench comes with</p>
     <ul>
       <li>realtime GTK/CSS preview</li>
@@ -47,6 +46,19 @@
   </screenshots>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="42.3" date="2022-08-22">
+      <description>
+        <ul>
+          <li>Show tooltip hints in Blueprint UI code</li>
+          <li>Improve XML formatter</li>
+          <li>Add Ctrl+Shift+Return shortcut to format</li>
+          <li>Apply Style CSS to windowed preview</li>
+          <li>Improve application design</li>
+          <li>Prevent crash for templates with GtkWidget parent</li>
+          <li>Update VTE and icon-development-kit</li>
+        </ul>
+      </description>
+    </release>
     <release version="42.2" date="2022-07-19">
       <description>
         <ul>
