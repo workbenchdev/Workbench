@@ -324,8 +324,12 @@ function getTemplate(tree) {
   const klass = getObjectClass(parent);
   if (!klass) return;
 
-  // Error: Cannot instantiate abstract type GtkWidget
-  if (parent !== "GtkWidget") {
+  // GLib-GObject-ERROR: cannot create instance of abstract (non-instantiatable) type 'GtkWidget'
+  if (parent === "GtkWidget") {
+    return;
+    // parent is not an instance of GtkWidget
+    // Error: Cannot instantiate abstract type GtkWidget
+  } else {
     if (!GObject.type_is_a(klass, Gtk.Widget)) return;
   }
 
