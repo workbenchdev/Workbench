@@ -7,6 +7,7 @@ import Adw from "gi://Adw?version=1";
 import Vte from "gi://Vte?version=3.91";
 import { gettext as _ } from "gettext";
 
+import * as xml from "./xml.js";
 import {
   settings,
   createDataDir,
@@ -22,7 +23,6 @@ import Devtools from "./Devtools.js";
 import prettier from "./lib/prettier.js";
 import prettier_babel from "./lib/prettier-babel.js";
 import prettier_postcss from "./lib/prettier-postcss.js";
-import prettier_xml from "./lib/prettier-xml.js";
 import Library, { readDemo } from "./Library/Library.js";
 import Previewer from "./Previewer/Previewer.js";
 import Compiler from "./Compiler.js";
@@ -192,7 +192,14 @@ export default function Window({ application, version }) {
   });
 
   function format(buffer, formatter) {
-    const code = formatter(buffer.text.trim());
+    let code;
+
+    try {
+      code = formatter(buffer.text.trim());
+    } catch (err) {
+      logError(err);
+      return;
+    }
 
     const { cursor_position } = buffer;
 
@@ -200,6 +207,33 @@ export default function Window({ application, version }) {
     buffer.place_cursor(buffer.get_iter_at_offset(cursor_position));
 
     return code;
+  }
+
+  function formatCode() {
+    if (panel_code.panel.visible && panel_code.language === "JavaScript") {
+      format(langs.javascript.document.buffer, (text) => {
+        return prettier.format(text, {
+          parser: "babel",
+          plugins: [prettier_babel],
+          trailingComma: "all",
+        });
+      });
+    }
+
+    if (panel_style.visible) {
+      format(langs.css.document.buffer, (text) => {
+        return prettier.format(text, {
+          parser: "css",
+          plugins: [prettier_postcss],
+        });
+      });
+    }
+
+    if (panel_ui.panel.visible) {
+      format(langs.xml.document.buffer, (text) => {
+        return xml.format(text, 2);
+      });
+    }
   }
 
   async function runCode(prettify = true) {
@@ -214,46 +248,7 @@ export default function Window({ application, version }) {
       await panel_ui.update();
 
       if (prettify) {
-        if (language === "JavaScript") {
-          format(langs.javascript.document.buffer, (text) => {
-            return prettier.format(text, {
-              parser: "babel",
-              plugins: [prettier_babel],
-              trailingComma: "all",
-            });
-          });
-        }
-
-        format(langs.css.document.buffer, (text) => {
-          return prettier.format(text, {
-            parser: "css",
-            plugins: [prettier_postcss],
-          });
-        });
-
-        format(langs.xml.document.buffer, (text) => {
-          return prettier.format(text, {
-            parser: "xml",
-            plugins: [prettier_xml],
-            // xmlWhitespaceSensitivity: "ignore",
-            // breaks the following
-            // <child>
-            //   <object class="GtkLabel">
-            //     <property name="label">Edit Style and UI to reload the Preview</property>
-            //     <property name="justify">center</property>
-            //   </object>
-            // </child>
-            // by moving the value of the property label to a new line
-            // <child>
-            //   <object class="GtkLabel">
-            //     <property name="label">
-            //       Edit Style and UI to reload the Preview
-            //     </property>
-            //     <property name="justify">center</property>
-            //   </object>
-            // </child>
-          });
-        });
+        formatCode();
       }
 
       if (language === "JavaScript") {
@@ -323,6 +318,15 @@ export default function Window({ application, version }) {
   });
   window.add_action(action_run);
   application.set_accels_for_action("win.run", ["<Control>Return"]);
+
+  const action_format = new Gio.SimpleAction({
+    name: "format",
+  });
+  action_format.connect("activate", () => {
+    formatCode();
+  });
+  window.add_action(action_format);
+  application.set_accels_for_action("win.format", ["<Control><Shift>Return"]);
 
   const undo_action = new Gio.SimpleAction({
     name: "workbench_undo",

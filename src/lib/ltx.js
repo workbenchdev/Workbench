@@ -544,10 +544,6 @@ function escapeXMLText(s) {
   return s.replace(/[&<>]/g, escapeXMLReplace);
 }
 
-function unescapeXMLText(s) {
-  return s.replace(/&(amp|#38|lt|#60|gt|#62);/g, unescapeXMLReplace);
-}
-
 /**
  * Element
  *
@@ -939,10 +935,10 @@ class SaxLtx extends EventEmitter {
       if (!endTag) {
         this.emit("startElement", tagName, attrs);
         if (selfClosing) {
-          this.emit("endElement", tagName);
+          this.emit("endElement", tagName, true);
         }
       } else {
-        this.emit("endElement", tagName);
+        this.emit("endElement", tagName, false);
       }
     };
 
@@ -1232,172 +1228,4 @@ function parse(data, options) {
   }
 }
 
-function nameEqual(a, b) {
-  return a.name === b.name;
-}
-
-function attrsEqual(a, b) {
-  const { attrs } = a;
-  const keys = Object.keys(attrs);
-  const { length } = keys;
-  if (length !== Object.keys(b.attrs).length) return false;
-  for (let i = 0, l = length; i < l; i++) {
-    const key = keys[i];
-    const value = attrs[key];
-    // === null || undefined
-    if (value == null || b.attrs[key] == null) {
-      if (value !== b.attrs[key]) return false;
-    } else if (value.toString() !== b.attrs[key].toString()) {
-      return false;
-    }
-  }
-  return true;
-}
-
-function childrenEqual(a, b) {
-  const { children } = a;
-  const { length } = children;
-  if (length !== b.children.length) return false;
-  for (let i = 0, l = length; i < l; i++) {
-    const child = children[i];
-    if (typeof child === "string") {
-      if (child !== b.children[i]) return false;
-    } else {
-      if (!equal(child, b.children[i])) return false;
-    }
-  }
-  return true;
-}
-
-function equal(a, b) {
-  if (!nameEqual(a, b)) return false;
-  if (!attrsEqual(a, b)) return false;
-  if (!childrenEqual(a, b)) return false;
-  return true;
-}
-
-function append(el, child) {
-  if (Array.isArray(child)) {
-    for (const c of child) append(el, c);
-    return;
-  }
-
-  if (child === "" || child == null || child === true || child === false) {
-    return;
-  }
-
-  el.cnode(child);
-}
-
-/**
- * JSX compatible API, use this function as pragma
- * https://facebook.github.io/jsx/
- *
- * @param  {string} name  name of the element
- * @param  {object} attrs object of attribute key/value pairs
- * @return {Element}      Element
- */
-function createElement(name, attrs, ...children) {
-  if (typeof attrs === "object" && attrs !== null) {
-    // __self and __source are added by babel in development
-    // https://github.com/facebook/react/pull/4596
-    // https://babeljs.io/docs/en/babel-preset-react#development
-    // https://babeljs.io/docs/en/babel-plugin-transform-react-jsx-source
-    delete attrs.__source;
-    delete attrs.__self;
-
-    for (const [key, value] of Object.entries(attrs)) {
-      if (value == null) delete attrs[key];
-      else attrs[key] = value.toString(10);
-    }
-  }
-
-  const el = new Element(name, attrs);
-
-  for (const child of children) {
-    append(el, child);
-  }
-
-  return el;
-}
-
-function tagString(literals, ...substitutions) {
-  let str = "";
-
-  for (let i = 0; i < substitutions.length; i++) {
-    str += literals[i];
-    str += escapeXML(substitutions[i]);
-  }
-  str += literals[literals.length - 1];
-
-  return str;
-}
-
-function tag(...args) {
-  return parse(tagString(...args));
-}
-
-function isNode(el) {
-  return el instanceof Element || typeof el === "string";
-}
-
-function isElement(el) {
-  return el instanceof Element;
-}
-
-function isText(el) {
-  return typeof el === "string";
-}
-
-function clone(el) {
-  if (typeof el !== "object") return el;
-  const copy = new el.constructor(el.name, el.attrs);
-  for (let i = 0; i < el.children.length; i++) {
-    const child = el.children[i];
-    copy.cnode(clone(child));
-  }
-  return copy;
-}
-
-function stringify(el, indent, level) {
-  if (typeof indent === "number") indent = " ".repeat(indent);
-  if (!level) level = 1;
-  let s = `<${el.name}`;
-
-  for (const k in el.attrs) {
-    const v = el.attrs[k];
-    // === null || undefined
-    if (v != null) {
-      s += ` ${k}="${escapeXML(typeof v === "string" ? v : v.toString(10))}"`;
-    }
-  }
-
-  if (el.children.length > 0) {
-    s += ">";
-    for (const child of el.children) {
-      if (child == null) continue;
-      if (indent) s += "\n" + indent.repeat(level);
-      s +=
-        typeof child === "string"
-          ? escapeXMLText(child)
-          : stringify(child, indent, level + 1);
-    }
-    if (indent) s += "\n" + indent.repeat(level - 1);
-    s += `</${el.name}>`;
-  } else {
-    s += "/>";
-  }
-
-  return s;
-}
-
-function JSONify(el) {
-  if (typeof el !== "object") return el;
-  return {
-    name: el.name,
-    attrs: el.attrs,
-    children: el.children.map(JSONify),
-  };
-}
-
-export { Element, JSONify, Parser, attrsEqual, childrenEqual, clone, createElement, equal, escapeXML, escapeXMLText, isElement, isNode, isText, nameEqual, parse, stringify, tag, tagString, unescapeXML, unescapeXMLText };
+export { Element, SaxLtx, escapeXML, escapeXMLText, parse };
