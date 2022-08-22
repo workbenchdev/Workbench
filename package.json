@@ -11,7 +11,7 @@
     "eslint": "^8.19.0",
     "eslint-plugin-import": "^2.26.0",
     "events": "^3.3.0",
-    "ltx": "^3.0.0",
+    "ltx": "git://github.com/xmppjs/ltx.git#093c7bdced57c22f7eccba3bccfc141150654395",
     "postcss": "^8.4.14",
     "prettier": "^2.7.1",
     "rollup": "^2.76.0",

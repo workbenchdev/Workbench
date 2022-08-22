@@ -5,11 +5,11 @@ import nodePolyfills from "rollup-plugin-node-polyfills";
 
 export default [
   {
-    input: "node_modules/ltx/src/ltx.js",
+    input: "src/ltx.js",
     output: {
       file: "src/lib/ltx.js",
     },
-    plugins: [nodePolyfills()],
+    plugins: [nodePolyfills(), commonjs(), nodeResolve()],
   },
 
   {

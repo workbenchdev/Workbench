@@ -228,6 +228,7 @@ export default function PanelUI({ builder, data_dir, version, term_console }) {
   panel.start = start;
   panel.stop = stop;
   panel.update = update;
+  panel.panel = panel_ui;
 
   return panel;
 }

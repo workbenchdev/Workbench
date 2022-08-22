@@ -3,7 +3,7 @@ import GObject from "gi://GObject";
 import GLib from "gi://GLib";
 import Gio from "gi://Gio";
 
-import * as ltx from "../lib/ltx.js";
+import * as xml from "../xml.js";
 import * as postcss from "../lib/postcss.js";
 
 import logger from "../logger.js";
@@ -166,7 +166,7 @@ export default function Previewer({
     if (!text) return;
 
     try {
-      tree = ltx.parse(text);
+      tree = xml.parse(text);
       ({ target_id, text, original_id, template } = targetBuildable(tree));
     } catch (err) {
       // logError(err);
@@ -338,7 +338,7 @@ function getTemplate(tree) {
   tree.remove(template);
 
   const target_id = makeWorkbenchTargetId();
-  const el = new ltx.Element("object", {
+  const el = new xml.Element("object", {
     class: parent,
     id: target_id,
   });

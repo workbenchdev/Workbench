@@ -192,7 +192,14 @@ export default function Window({ application, version }) {
   });
 
   function format(buffer, formatter) {
-    const code = formatter(buffer.text.trim());
+    let code;
+
+    try {
+      code = formatter(buffer.text.trim());
+    } catch (err) {
+      logError(err);
+      return;
+    }
 
     const { cursor_position } = buffer;
 
@@ -203,7 +210,7 @@ export default function Window({ application, version }) {
   }
 
   function formatCode() {
-    if (panel_code.language === "JavaScript") {
+    if (panel_code.panel.visible && panel_code.language === "JavaScript") {
       format(langs.javascript.document.buffer, (text) => {
         return prettier.format(text, {
           parser: "babel",
@@ -213,16 +220,20 @@ export default function Window({ application, version }) {
       });
     }
 
-    format(langs.css.document.buffer, (text) => {
-      return prettier.format(text, {
-        parser: "css",
-        plugins: [prettier_postcss],
+    if (panel_style.visible) {
+      format(langs.css.document.buffer, (text) => {
+        return prettier.format(text, {
+          parser: "css",
+          plugins: [prettier_postcss],
+        });
       });
-    });
+    }
 
-    format(langs.xml.document.buffer, (text) => {
-      return xml.format(text, 2);
-    });
+    if (panel_ui.panel.visible) {
+      format(langs.xml.document.buffer, (text) => {
+        return xml.format(text, 2);
+      });
+    }
   }
 
   async function runCode(prettify = true) {

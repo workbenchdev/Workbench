@@ -35,8 +35,8 @@ test("format", () => {
     format(
       `
 <?xml version="1.0" encoding="UTF-8"?>
+<requires lib="gtk" version="4.0"/>
 <interface>
-  <requires lib="gtk" version="4.0"/>
   <object class="GtkBox"></object>
 </interface>
   `.trim(),
@@ -44,11 +44,30 @@ test("format", () => {
     ),
     `
 <?xml version="1.0" encoding="UTF-8"?>
+<requires lib="gtk" version="4.0"/>
 <interface>
-  <requires lib="gtk" version="4.0"/>
   <object class="GtkBox"></object>
 </interface>
   `.trim()
+  );
+
+  assert.fixture(
+    format(
+      `
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <object class="GtkBox">
+  </object>
+</interface>
+    `.trim(),
+      2
+    ),
+    `
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <object class="GtkBox"></object>
+</interface>
+    `.trim()
   );
 
   assert.fixture(
@@ -83,6 +102,32 @@ test("format", () => {
 </child>
   `.trim()
   );
+});
+
+test("invalid documents", () => {
+  assert.throws(() => {
+    format(`<foo><bar hello/></foo>`);
+  }, /Invalid XML document/);
+
+  assert.throws(() => {
+    format(`<foo><bar></foo>`);
+  }, /Invalid XML document/);
+
+  assert.throws(() => {
+    format(`<foo></bar>`);
+  }, /Invalid XML document/);
+
+  assert.throws(() => {
+    format(`<foo>`);
+  }, /Invalid XML document/);
+
+  assert.throws(() => {
+    format(`<foo>hello`);
+  }, /Invalid XML document/);
+
+  assert.throws(() => {
+    format(`<foo><bar></end>`);
+  }, /Invalid XML document/);
 });
 
 test("library examples", () => {

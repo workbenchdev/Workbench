@@ -1,23 +1,24 @@
-import { escapeXML, escapeXMLText, SaxLtx } from "./lib/ltx.js";
+// elint-disable-next-line import/named
+import { escapeXML, escapeXMLText, SaxLtx, parse, Element } from "./lib/ltx.js";
 
-// adapted from ltx.stringify to work without Elemen and ignore whitespace
+// adapted from ltx.stringify to work without Element and ignore whitespace
 // and mixed content in order to use the same algo as blueprint-compiler xml_emitter.py
-export function format(str, indent = 2) {
+function format(str, indent = 2) {
   const p = new SaxLtx();
   if (typeof indent === "number") indent = " ".repeat(indent);
 
   let level = 0;
-
-  let s = '<?xml version="1.0" encoding="UTF-8"?>';
-
-  let start_element = false;
+  let current_tag;
   let needs_newline = false;
+  let s = '<?xml version="1.0" encoding="UTF-8"?>';
 
   function _indent() {
     s += "\n" + indent.repeat(level);
   }
 
   p.on("startElement", (name, attrs) => {
+    // console.debug("startElement", name, attrs);
+    current_tag = name;
     _indent();
 
     s += `<${name}`;
@@ -28,10 +29,14 @@ export function format(str, indent = 2) {
     }
 
     level++;
-    start_element = true;
     needs_newline = false;
   });
   p.on("endElement", (name, self_closing) => {
+    // console.debug("endElement", name, self_closing);
+    if (current_tag && name !== current_tag) {
+      throw new Error("Invalid XML document");
+    }
+
     level--;
 
     if (needs_newline) {
@@ -41,19 +46,21 @@ export function format(str, indent = 2) {
     if (self_closing) {
       s += "/>";
     } else {
-      if (start_element) {
+      if (current_tag) {
         s += ">";
       }
 
       s += `</${name}>`;
     }
 
-    start_element = false;
+    current_tag = null;
     needs_newline = true;
   });
   p.on("text", (str) => {
-    if (start_element) {
+    // console.debug("text", str);
+    if (current_tag) {
       s += ">";
+      current_tag = null;
     }
 
     str = str.trim();
@@ -61,13 +68,15 @@ export function format(str, indent = 2) {
 
     s += escapeXMLText(str);
     needs_newline = false;
-    start_element = false;
-  });
-  p.on("error", (err) => {
-    throw err;
   });
 
   p.write(str);
 
+  if (level !== 0) {
+    throw new Error("Invalid XML document");
+  }
+
   return s;
 }
+
+export { parse, Element, format };
