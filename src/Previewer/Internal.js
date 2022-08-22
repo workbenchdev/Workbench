@@ -152,6 +152,10 @@ export default function Internal({
       }
     }
 
+    if (!object_root.name) {
+      object_root.name = "workbench_output";
+    }
+
     return object_root;
   }
 
@@ -175,8 +179,9 @@ export default function Internal({
 
     let style = css;
     if (!style) return;
+
     try {
-      style = scopeStylesheet(style);
+      style = scopeStylesheet(style, object_root?.name);
     } catch (err) {
       logger.debug(err);
       // logError(err);
@@ -218,12 +223,15 @@ export default function Internal({
 // https://github.com/prettier/prettier/issues/9114
 // We are not using https://github.com/pazams/postcss-scopify
 // because it's not compatible with postcss 8
-export function scopeStylesheet(style) {
+export function scopeStylesheet(style, id) {
   const ast = postcss.parse(style);
+  id = id || "workbench_output";
 
   for (const node of ast.nodes) {
-    if (node.selector) {
-      node.selector = "#workbench_output " + node.selector;
+    if (node.selector === "window") {
+      node.selector = `window#${id}`;
+    } else if (node.selector) {
+      node.selector = `#${id} ${node.selector}`;
     }
   }
 
