@@ -1,5 +1,4 @@
 import system from "system";
-import logger from "./logger.js";
 import GObject from "gi://GObject";
 
 /*
@@ -10,7 +9,7 @@ import GObject from "gi://GObject";
 // Makes the app unersponsive - by blocking the mainloop I presume.
 // Anyway, code shouldn't be able to exit
 system.exit = function exit(code) {
-  logger.log(`Intercept exit with status "${code}"`);
+  console.log(`Intercept exit with status "${code}"`);
 };
 
 // GTypeName must be unique globally

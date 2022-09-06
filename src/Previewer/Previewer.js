@@ -6,7 +6,6 @@ import Gio from "gi://Gio";
 import * as xml from "../xml.js";
 import * as postcss from "../lib/postcss.js";
 
-import logger from "../logger.js";
 import {
   getLanguage,
   connect_signals,
@@ -144,7 +143,9 @@ export default function Previewer({
           panel_code.language === "JavaScript" &&
           flags & Gtk.BuilderClosureFlags.SWAPPED
         ) {
-          logger.warning('Signal flag "swapped" is unsupported in JavaScript.');
+          console.warning(
+            'Signal flag "swapped" is unsupported in JavaScript.'
+          );
         }
         return this[function_name] || this.noop;
       }
@@ -170,7 +171,7 @@ export default function Previewer({
       ({ target_id, text, original_id, template } = targetBuildable(tree));
     } catch (err) {
       // logError(err);
-      logger.debug(err);
+      console.debug(err);
     }
 
     if (!target_id) return;
@@ -178,7 +179,7 @@ export default function Previewer({
     try {
       assertBuildable(tree);
     } catch (err) {
-      logger.critical(err.message);
+      console.critical(err.message);
       return;
     }
 
@@ -403,7 +404,7 @@ function makeSignalHandler(
     })();
     const handler_when = after ? "after" : "for";
 
-    logger.log(
+    console.log(
       `${handler_type} handler "${handler}" triggered ${handler_when} signal "${name}" on ${object_name}`
     );
   };

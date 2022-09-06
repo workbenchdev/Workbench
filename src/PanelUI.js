@@ -15,7 +15,6 @@ import {
 } from "./util.js";
 
 import { getPid, once } from "./troll/src/util.js";
-import logger from "./logger.js";
 import WorkbenchHoverProvider from "./WorkbenchHoverProvider.js";
 
 const { addSignalMethods } = imports.signals;
@@ -278,13 +277,13 @@ function createBlueprintClient({ data_dir, buffer, provider }) {
     file_blueprint_logs.get_path(),
   ]);
   blueprint.connect("exit", () => {
-    logger.debug("blueprint exit");
+    console.debug("blueprint exit");
   });
   blueprint.connect("output", (self, message) => {
-    logger.debug(`blueprint OUT:\n${JSON.stringify(message)}`);
+    console.debug(`blueprint OUT:\n${JSON.stringify(message)}`);
   });
   blueprint.connect("input", (self, message) => {
-    logger.debug(`blueprint IN:\n${JSON.stringify(message)}`);
+    console.debug(`blueprint IN:\n${JSON.stringify(message)}`);
   });
 
   blueprint.connect(

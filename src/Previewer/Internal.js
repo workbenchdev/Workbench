@@ -8,7 +8,6 @@ import XdpGtk from "gi://XdpGtk4";
 import GObject from "gi://GObject";
 import Adw from "gi://Adw";
 
-import logger from "../logger.js";
 import { portal } from "../util.js";
 
 export default function Internal({
@@ -185,7 +184,7 @@ export default function Internal({
     try {
       style = scopeStylesheet(style, object_root?.name);
     } catch (err) {
-      logger.debug(err);
+      console.debug(err);
       // logError(err);
     }
 
