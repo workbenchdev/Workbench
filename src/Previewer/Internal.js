@@ -179,6 +179,8 @@ export default function Internal({
 
     let style = css;
     if (!style) return;
+    // Workaround https://github.com/sonnyp/Workbench/issues/147
+    if (style.match(/#$/g)) return;
 
     try {
       style = scopeStylesheet(style, object_root?.name);
