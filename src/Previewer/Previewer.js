@@ -179,7 +179,7 @@ export default function Previewer({
     try {
       assertBuildable(tree);
     } catch (err) {
-      console.critical(err.message);
+      console.error(err);
       return;
     }
 

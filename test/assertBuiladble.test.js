@@ -8,47 +8,60 @@ import { assertBuildable } from "../src/Previewer/utils.js";
 const test = tst("assertBuildable");
 
 test("assertBuildable", () => {
-  assertBuildable(
-    parse(
-      `
+  assert.not.throws(() => {
+    assertBuildable(
+      parse(
+        `
 <interface>
 </interface>
 `.trim()
-    )
-  );
-  assertBuildable(
-    parse(
-      `
+      )
+    );
+  });
+
+  assert.not.throws(() => {
+    assertBuildable(
+      parse(
+        `
 <interface>
   <object>
   </object>
 </interface>
 `.trim()
-    )
-  );
-  assertBuildable(
-    parse(
-      `
+      )
+    );
+  });
+
+  assert.not.throws(() => {
+    assertBuildable(
+      parse(
+        `
 <interface>
   <object class="Foobar">
   </object>
 </interface>
 `.trim()
-    )
-  );
-  assertBuildable(
-    parse(
-      `
+      )
+    );
+  });
+
+  assert.not.throws(() => {
+    assertBuildable(
+      parse(
+        `
 <interface>
   <object class="AdwLeafletPage">
   </object>
 </interface>
 `.trim()
-    )
-  );
-  assertBuildable(
-    parse(
-      `
+      )
+    );
+  });
+
+  assert.throws(() => {
+    assertBuildable(
+      parse(
+        `
 <interface>
   <object class="AdwLeafletPage">
     <child>
@@ -56,8 +69,10 @@ test("assertBuildable", () => {
   </object>
 </interface>
 `.trim()
-    )
-  );
+      )
+    );
+  }, /AdwLeafletPage is not a GtkBuildable/);
+
   assert.throws(() => {
     assertBuildable(
       parse(
@@ -72,12 +87,13 @@ test("assertBuildable", () => {
   `.trim()
       )
     );
-  });
+  }, /AdwLeafletPage is not a GtkBuildable/);
 
   // https://github.com/sonnyp/Workbench/issues/49
-  assertBuildable(
-    parse(
-      `
+  assert.not.throws(() => {
+    assertBuildable(
+      parse(
+        `
 <?xml version='1.0' encoding='UTF-8' ?>
 <interface>
   <child>
@@ -87,8 +103,9 @@ test("assertBuildable", () => {
   </child>
 </interface>
 `.trim()
-    )
-  );
+      )
+    );
+  });
 
   // https://github.com/sonnyp/Workbench/issues/49
   assert.throws(() => {
@@ -116,9 +133,10 @@ test("assertBuildable", () => {
   }, /AdwTabPage is not a GtkBuildable/);
 
   // https://github.com/sonnyp/Workbench/issues/135
-  assertBuildable(
-    parse(
-      `
+  assert.not.throws(() => {
+    assertBuildable(
+      parse(
+        `
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <requires lib="gtk" version="4.0"/>
@@ -200,8 +218,56 @@ test("assertBuildable", () => {
   </template>
 </interface>
 `.trim()
-    )
-  );
+      )
+    );
+  });
+
+  // https://github.com/sonnyp/Workbench/issues/145
+  assert.throws(() => {
+    assertBuildable(
+      parse(
+        `
+<?xml version='1.0' encoding='UTF-8' ?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <object class="AdwHeaderBar" id="workbench_ff14cad7-32cd-4758-b511-9f659df79fb7">
+    <child type="title">
+      <object class="AdwViewSwitcherTitle" id="title">
+        <property name="stack">stack</property>
+      </object>
+    </child>
+  </object>
+  <object class="AdwToastOverlay" id="overlay">
+    <child>
+      <object class="AdwViewStack" id="stack">
+        <child>
+          <object class="AdwViewStackPage">
+            <property name="name">overview</property>
+            <property name="title">Overview</property>
+            <property name="child">
+              <object class="AdwStatusPage"/>
+            </property>
+            <child>
+              <object class="AdwViewStackPage">
+                <property name="name">overview</property>
+                <property name="title">Overview</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="AdwViewSwitcherBar">
+        <property name="stack">stack</property>
+      </object>
+    </child>
+  </object>
+</interface>
+  `.trim()
+      )
+    );
+  }, /AdwViewStackPage is not a GtkBuildable/);
 });
 
 export default test;
