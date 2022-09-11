@@ -13,7 +13,7 @@ import { getFlatpakInfo } from "./util.js";
 export default function About({ application, version }) {
   const flatpak_info = getFlatpakInfo();
 
-  const system_information = `
+  const debug_info = `
 ${GLib.get_os_info("ID")} ${GLib.get_os_info("VERSION_ID")}
 
 GJS ${getGjsVersion()}
@@ -38,7 +38,7 @@ ${getBlueprintVersion()}
     issue_url: "https://github.com/sonnyp/Workbench/issues",
     // TRANSLATORS: eg. 'Translator Name <your.email@domain.com>' or 'Translator Name https://website.example'
     translator_credits: _("translator-credits"),
-    debug_info: system_information,
+    debug_info,
     developers: [
       "Sonny Piers https://sonny.re",
       "Lorenz Wildberg https://gitlab.gnome.org/lwildberg",
@@ -56,7 +56,6 @@ ${getBlueprintVersion()}
     // or
     // "John Doe https://john.com",
   ]);
-
   dialog.present();
 
   return { dialog };
