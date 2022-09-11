@@ -36,14 +36,27 @@ ${getBlueprintVersion()}
     website: "https://workbench.sonny.re",
     application_icon: "re.sonny.Workbench",
     issue_url: "https://github.com/sonnyp/Workbench/issues",
+    // TRANSLATORS: eg. 'Translator Name <your.email@domain.com>' or 'Translator Name https://website.example'
+    translator_credits: _("translator-credits"),
     debug_info: system_information,
     developers: [
       "Sonny Piers https://sonny.re",
       "Lorenz Wildberg https://gitlab.gnome.org/lwildberg",
-      "Ben Foote http://www.bengineeri.ng",
     ],
     designers: ["Tobias Bernard <tbernard@gnome.org>"],
   });
+
+  dialog.add_credit_section(_("Contributors"), [
+    "Ben Foote http://www.bengineeri.ng",
+    "Hari Rana https://github.com/TheEvilSkeleton",
+    // Add yourself as
+    // "John Doe",
+    // or
+    // "John Doe <john@example.com>",
+    // or
+    // "John Doe https://john.com",
+  ]);
+
   dialog.present();
 
   return { dialog };
