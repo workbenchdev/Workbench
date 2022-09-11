@@ -12,6 +12,7 @@ import {
   connect_signals,
   disconnect_signals,
   replaceBufferText,
+  unstack,
 } from "./util.js";
 
 import { getPid, once } from "./troll/src/util.js";
@@ -47,17 +48,7 @@ export default function PanelUI({ builder, data_dir, version, term_console }) {
     term_console.clear();
     settings.set_boolean("show-console", true);
 
-    let xml;
-
-    try {
-      xml = await compileBlueprint(buffer_blueprint.text);
-    } catch (err) {
-      if (err instanceof LSPError) {
-        logBlueprintError(err);
-        return;
-      }
-      throw err;
-    }
+    const xml = await compileBlueprint(buffer_blueprint.text);
     replaceBufferText(buffer_xml, xml);
     settings.set_string("ui-lang", "xml");
   }
@@ -125,7 +116,8 @@ export default function PanelUI({ builder, data_dir, version, term_console }) {
 
   let handler_ids = null;
 
-  async function update() {
+  // eslint-disable-next-line prefer-arrow-callback
+  const scheduleUpdate = unstack(async function update() {
     let xml;
     if (lang.id === "xml") {
       xml = lang.document.buffer.text;
@@ -134,20 +126,16 @@ export default function PanelUI({ builder, data_dir, version, term_console }) {
     }
     panel.xml = xml || "";
     panel.emit("updated");
-  }
-
-  function onUpdate() {
-    update().catch(logBlueprintError);
-  }
+  });
 
   function start() {
     stop();
     lang = getLanguage(settings.get_string("ui-lang"));
     // cannot use "changed" signal as it triggers many time for pasting
     handler_ids = connect_signals(lang.document.buffer, {
-      "end-user-action": onUpdate,
-      undo: onUpdate,
-      redo: onUpdate,
+      "end-user-action": scheduleUpdate,
+      undo: scheduleUpdate,
+      redo: scheduleUpdate,
     });
   }
 
@@ -160,7 +148,7 @@ export default function PanelUI({ builder, data_dir, version, term_console }) {
 
   settings.connect_after("changed::ui-lang", () => {
     start();
-    onUpdate();
+    scheduleUpdate();
   });
 
   start();
@@ -226,7 +214,7 @@ export default function PanelUI({ builder, data_dir, version, term_console }) {
 
   panel.start = start;
   panel.stop = stop;
-  panel.update = update;
+  panel.update = scheduleUpdate;
   panel.panel = panel_ui;
 
   return panel;
