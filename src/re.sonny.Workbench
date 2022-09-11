@@ -3,6 +3,11 @@
 import { programInvocationName, exit } from "system";
 import Gio from "gi://Gio";
 import GLib from "gi://GLib";
+import { setConsoleLogDomain } from "console";
+
+setConsoleLogDomain("re.sonny.Workbench");
+GLib.set_prgname("re.sonny.Workbench");
+GLib.set_application_name("Workbench");
 
 const resource = Gio.resource_load(
   "/app/share/re.sonny.Workbench/workbench.gresource"

@@ -26,7 +26,6 @@ import prettier_postcss from "./lib/prettier-postcss.js";
 import Library, { readDemo } from "./Library/Library.js";
 import Previewer from "./Previewer/Previewer.js";
 import Compiler from "./Compiler.js";
-import logger from "./logger.js";
 import { promiseTask } from "./troll/src/util.js";
 import ThemeSelector from "./ThemeSelector.js";
 
@@ -296,7 +295,7 @@ export default function Window({ application, version }) {
       if (err instanceof Error) {
         logError(err);
       } else {
-        logger.error(err);
+        console.error(err);
       }
     }
 

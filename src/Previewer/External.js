@@ -1,6 +1,5 @@
 import Adw from "gi://Adw?version=1";
 import Gio from "gi://Gio";
-import logger from "../logger.js";
 import DBusPreviewer from "./DBusPreviewer.js";
 
 export default function Previewer({ output, builder, onWindowChange }) {
@@ -38,7 +37,7 @@ export default function Previewer({ output, builder, onWindowChange }) {
         output.get_allocated_height()
       );
     } catch (err) {
-      logger.debug(err);
+      console.debug(err);
     }
   }
 
@@ -47,7 +46,7 @@ export default function Previewer({ output, builder, onWindowChange }) {
       dbus_proxy.CloseWindowSync();
       // eslint-disable-next-line no-empty
     } catch (err) {
-      logger.debug(err);
+      console.debug(err);
     }
     stack.set_visible_child_name("open_window");
   }
@@ -60,7 +59,7 @@ export default function Previewer({ output, builder, onWindowChange }) {
     try {
       dbus_proxy.UpdateUiSync(xml, target_id, original_id);
     } catch (err) {
-      logger.debug(err);
+      console.debug(err);
     }
   }
 
@@ -68,7 +67,7 @@ export default function Previewer({ output, builder, onWindowChange }) {
     try {
       dbus_proxy.EnableInspectorSync(true);
     } catch (err) {
-      logger.debug(err);
+      console.debug(err);
     }
   }
 
@@ -76,7 +75,7 @@ export default function Previewer({ output, builder, onWindowChange }) {
     try {
       dbus_proxy.EnableInspectorSync(false);
     } catch (err) {
-      logger.debug(err);
+      console.debug(err);
     }
   }
 
@@ -85,7 +84,7 @@ export default function Previewer({ output, builder, onWindowChange }) {
     try {
       dbus_proxy.ColorScheme = style_manager.color_scheme;
     } catch (err) {
-      logger.debug(err);
+      console.debug(err);
     }
   }
   style_manager.connect("notify::color-scheme", updateColorScheme);
@@ -102,7 +101,7 @@ export default function Previewer({ output, builder, onWindowChange }) {
       try {
         dbus_proxy.UpdateCssSync(css);
       } catch (err) {
-        logger.debug(err);
+        console.debug(err);
       }
     },
     screenshot() {},
