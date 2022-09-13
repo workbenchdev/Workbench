@@ -1,7 +1,7 @@
 {
   "id": "re.sonny.Workbench",
   "runtime": "org.gnome.Sdk",
-  "runtime-version": "43beta",
+  "runtime-version": "42",
   "sdk": "org.gnome.Sdk",
   "command": "workbench",
   "finish-args": [
