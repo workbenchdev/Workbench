@@ -150,3 +150,26 @@ export function decode(data) {
   }
   return new TextDecoder().decode(data);
 }
+
+// Take a function that return a promise and returns a function
+// that will discard all calls during a pending execution
+// it's like a job queue with a max size of 1 and no concurrency
+export function unstack(fn) {
+  let latest_promise;
+  let latest_arguments;
+  let pending = false;
+
+  return function unstack_wrapper(...args) {
+    latest_arguments = args;
+
+    if (pending) return;
+
+    if (!latest_promise) latest_promise = fn(...latest_arguments);
+
+    pending = true;
+    latest_promise.finally(() => {
+      pending = false;
+      latest_promise = fn(...latest_arguments);
+    });
+  };
+}
