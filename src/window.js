@@ -135,7 +135,6 @@ export default function Window({ application, version }) {
   previewer.setPanelCode(panel_code);
 
   const button_run = builder.get_object("button_run");
-  // const button_style = builder.get_object("button_style");
   const button_preview = builder.get_object("button_preview");
   const button_inspector = builder.get_object("button_inspector");
 
@@ -151,19 +150,6 @@ export default function Window({ application, version }) {
   }
   updateStyle();
   style_manager.connect("notify::dark", updateStyle);
-
-  // settings.bind(
-  //   "show-style",
-  //   button_style,
-  //   "active",
-  //   Gio.SettingsBindFlags.DEFAULT
-  // );
-  // button_style.bind_property(
-  //   "active",
-  //   panel_style,
-  //   "visible",
-  //   GObject.BindingFlags.SYNC_CREATE
-  // );
 
   settings.bind(
     "show-preview",

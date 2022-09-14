@@ -41,12 +41,7 @@ export default function PanelStyle({ builder }) {
   };
 
   function onUpdate() {
-    buffer.remove_tag_by_name(
-      "error",
-      buffer.get_start_iter(),
-      buffer.get_end_iter()
-    );
-    provider.diagnostics = [];
+    panel.reset();
   }
 
   connect_signals(buffer, {
@@ -63,6 +58,15 @@ export default function PanelStyle({ builder }) {
 
     const [start_iter, end_iter] = getItersAtRange(buffer, diagnostic.range);
     buffer.apply_tag_by_name("error", start_iter, end_iter);
+  };
+
+  panel.reset = function reset() {
+    buffer.remove_tag_by_name(
+      "error",
+      buffer.get_start_iter(),
+      buffer.get_end_iter()
+    );
+    provider.diagnostics = [];
   };
 
   return panel;

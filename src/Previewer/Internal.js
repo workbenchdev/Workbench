@@ -190,6 +190,7 @@ export default function Internal({
     }
 
     css_provider = new Gtk.CssProvider();
+    panel_style.reset();
     css_provider.connect("parsing-error", (self, section, error) => {
       panel_style.handleCssParserError(section, error);
     });
