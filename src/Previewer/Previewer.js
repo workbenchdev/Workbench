@@ -75,6 +75,7 @@ export default function Previewer({
     },
     output,
     builder,
+    panel_style,
   });
 
   const buffer_css = getLanguage("css").document.buffer;
@@ -220,6 +221,7 @@ export default function Previewer({
       original_id,
       template,
     });
+    panel_style.reset();
     current.updateCSS(buffer_css.text);
     symbols = null;
   }

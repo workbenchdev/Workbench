@@ -50,12 +50,10 @@ export default function PanelStyle({ builder }) {
     redo: onUpdate,
   });
 
-  panel.handleCssParserError = function handleCssParserError(section, error) {
-    console.debug(`CssParser ${section.to_string()} ${error.message}`);
+  panel.handleDiagnostic = function handleCssDiagnostic(diagnostic) {
+    // console.debug(`CssParser ${section.to_string()} ${error.message}`);
 
-    const diagnostic = getDiagnostic(section, error);
     provider.diagnostics.push(diagnostic);
-
     const [start_iter, end_iter] = getItersAtRange(buffer, diagnostic.range);
     buffer.apply_tag_by_name("error", start_iter, end_iter);
   };
@@ -83,23 +81,4 @@ function prepareSourceView({ source_view, provider }) {
   const hover = source_view.get_hover();
   // hover.hover_delay = 25;
   hover.add_provider(provider);
-}
-
-// Converts a Gtk.CssSection and Gtk.CssError to an LSP diagnostic object
-function getDiagnostic(section, error) {
-  const start_location = section.get_start_location();
-  const end_location = section.get_end_location();
-
-  const range = {
-    start: {
-      line: start_location.lines,
-      character: start_location.line_chars,
-    },
-    end: {
-      line: end_location.lines,
-      character: end_location.line_chars,
-    },
-  };
-
-  return { range, message: error.message };
 }
