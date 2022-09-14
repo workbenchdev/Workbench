@@ -17,6 +17,7 @@ export default function Internal({
   window,
   application,
   dropdown_preview_align,
+  panel_style,
 }) {
   const stack = builder.get_object("stack_preview");
 
@@ -189,6 +190,9 @@ export default function Internal({
     }
 
     css_provider = new Gtk.CssProvider();
+    css_provider.connect("parsing-error", (self, section, error) => {
+      panel_style.handleCssParserError(section, error);
+    });
     css_provider.load_from_data(style);
     Gtk.StyleContext.add_provider_for_display(
       output.get_display(),

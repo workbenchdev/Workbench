@@ -5,7 +5,7 @@ import Gtk from "gi://Gtk";
 import Pango from "gi://Pango";
 
 import LSPClient from "./lsp/LSPClient.js";
-import { LSPError, diagnostic_severities, rangeEquals } from "./lsp/LSP.js";
+import { LSPError, diagnostic_severities } from "./lsp/LSP.js";
 import {
   getLanguage,
   settings,
@@ -13,6 +13,7 @@ import {
   disconnect_signals,
   replaceBufferText,
   unstack,
+  getItersAtRange,
 } from "./util.js";
 
 import { getPid, once } from "./troll/src/util.js";
@@ -312,29 +313,6 @@ function handleDiagnostics({ diagnostics, buffer, provider }) {
 function handleDiagnostic(diagnostic, buffer) {
   logBlueprintDiagnostic(diagnostic);
 
-  const [start_iter, end_iter] = get_iters_at_range(buffer, diagnostic.range);
+  const [start_iter, end_iter] = getItersAtRange(buffer, diagnostic.range);
   buffer.apply_tag_by_name("error", start_iter, end_iter);
-}
-
-function get_iters_at_range(buffer, { start, end }) {
-  let start_iter;
-  let end_iter;
-
-  // Apply the tag on the whole line
-  // if diagnostic start and end are equals such as
-  // Blueprint-Error 13:12 to 13:12 Could not determine what kind of syntax is meant here
-  if (rangeEquals(start, end)) {
-    [, start_iter] = buffer.get_iter_at_line(start.line);
-    [, end_iter] = buffer.get_iter_at_line(end.line);
-    end_iter.forward_to_line_end();
-    start_iter.forward_find_char((char) => char !== "", end_iter);
-  } else {
-    [, start_iter] = buffer.get_iter_at_line_offset(
-      start.line,
-      start.character
-    );
-    [, end_iter] = buffer.get_iter_at_line_offset(end.line, end.character);
-  }
-
-  return [start_iter, end_iter];
 }

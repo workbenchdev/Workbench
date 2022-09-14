@@ -34,6 +34,7 @@ export default function Previewer({
   application,
   data_dir,
   term_console,
+  panel_style,
 }) {
   let panel_code;
 
@@ -61,6 +62,7 @@ export default function Previewer({
     window,
     application,
     dropdown_preview_align,
+    panel_style,
   });
   const external = External({
     onWindowChange(open) {
