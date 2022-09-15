@@ -74,6 +74,62 @@ export default function Window({ application, version }) {
     data_dir,
   });
 
+  const shortcuts = [
+    [
+      ["<Ctrl>/", "<Ctrl>J"],
+      () => {
+        const buffer = langs.javascript.document.source_view.buffer;
+        const line_comment_start = buffer
+          .get_language()
+          .get_metadata("line-comment-start");
+
+        const start = buffer.get_iter_at_offset(buffer.cursor_position);
+        const end = start.copy();
+        start.set_line_offset(0);
+        end.forward_line();
+        buffer.delete(start, end);
+      },
+    ],
+    [
+      [
+        // VSCode
+        "<Ctrl><Shift>K",
+        // GNOME Builder
+        "<Ctrl>D",
+      ],
+      () => {
+        const buffer = langs.javascript.document.source_view.buffer;
+
+        const start = buffer.get_iter_at_offset(buffer.cursor_position);
+        const end = start.copy();
+        start.set_line_offset(0);
+        end.forward_lines(1);
+
+        if (end.is_end()) {
+          if (start.backward_line() && !start.ends_line())
+            start.forward_to_line_end();
+        }
+
+        // console.log(start.get_line(), start.get_line_offset());
+        // console.log(end.get_line(), end.get_line_offset());
+
+        buffer.delete(start, end);
+      },
+    ],
+  ];
+  const shortcutController = new Gtk.ShortcutController();
+  shortcuts.forEach(([accels, fn]) => {
+    const shortcut = new Gtk.Shortcut({
+      trigger: Gtk.ShortcutTrigger.parse_string(accels.join("|")),
+      action: Gtk.CallbackAction.new(() => {
+        fn();
+        return true;
+      }),
+    });
+    shortcutController.add_shortcut(shortcut);
+  });
+  langs.javascript.document.source_view.add_controller(shortcutController);
+
   langs.vala.document = Document({
     source_view: builder.get_object("source_view_vala"),
     lang: "vala",
