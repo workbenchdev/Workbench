@@ -34,6 +34,7 @@ export default function Previewer({
   application,
   data_dir,
   term_console,
+  panel_style,
 }) {
   let panel_code;
 
@@ -61,6 +62,7 @@ export default function Previewer({
     window,
     application,
     dropdown_preview_align,
+    panel_style,
   });
   const external = External({
     onWindowChange(open) {
@@ -73,6 +75,7 @@ export default function Previewer({
     },
     output,
     builder,
+    panel_style,
   });
 
   const buffer_css = getLanguage("css").document.buffer;
@@ -218,6 +221,7 @@ export default function Previewer({
       original_id,
       template,
     });
+    panel_style.reset();
     current.updateCSS(buffer_css.text);
     symbols = null;
   }

@@ -64,6 +64,7 @@
     <file>PanelUI.js</file>
     <file>PanelCode.js</file>
     <file>Library/Library.js</file>
+    <file>PanelStyle.js</file>
     <file>Previewer/Previewer.js</file>
     <file>Previewer/Internal.js</file>
     <file>Previewer/External.js</file>

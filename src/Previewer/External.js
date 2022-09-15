@@ -2,7 +2,12 @@ import Adw from "gi://Adw?version=1";
 import Gio from "gi://Gio";
 import DBusPreviewer from "./DBusPreviewer.js";
 
-export default function Previewer({ output, builder, onWindowChange }) {
+export default function Previewer({
+  output,
+  builder,
+  onWindowChange,
+  panel_style,
+}) {
   const stack = builder.get_object("stack_preview");
 
   (function start_process() {
@@ -23,6 +28,29 @@ export default function Previewer({ output, builder, onWindowChange }) {
   dbus_proxy.connectSignal("WindowOpen", (proxy, name_owner, [open]) => {
     onWindowChange(open);
   });
+
+  dbus_proxy.connectSignal(
+    "CssParserError",
+    (
+      proxy,
+      name_owner,
+      [message, start_line, start_char, end_line, end_char]
+    ) => {
+      panel_style.handleDiagnostic({
+        message,
+        range: {
+          start: {
+            line: start_line,
+            character: start_char,
+          },
+          end: {
+            line: end_line,
+            character: end_char,
+          },
+        },
+      });
+    }
+  );
 
   function start() {
     builder.get_object("button_screenshot").visible = false;

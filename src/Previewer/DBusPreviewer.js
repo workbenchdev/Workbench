@@ -30,6 +30,13 @@ const ifaceXml = `
     <signal name="WindowOpen">
       <arg type="b" name="open"/>
     </signal>
+    <signal name="CssParserError">
+      <arg type="s" name="message"/>
+      <arg type="i" name="start_line"/>
+      <arg type="i" name="start_char"/>
+      <arg type="i" name="end_line"/>
+      <arg type="i" name="end_char"/>
+    </signal>
     <property type="i" name="ColorScheme" access="readwrite"/>
   </interface>
 </node>`;

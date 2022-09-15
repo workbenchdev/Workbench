@@ -32,7 +32,10 @@ namespace Workbench {
         if (!(this.window.get_type () == target.get_type ())) {
           this.window.destroy ();
           this.window = target as Gtk.Window;
-          this.window.close_request.connect (() => { this.window_open (false); return false; });
+          this.window.close_request.connect (() => {
+            this.window_open (false);
+            return false;
+          });
         } else if (target is Adw.Window) {
           var child = ((Adw.Window) target).content;
           ((Adw.Window) target).content = null;
@@ -55,6 +58,11 @@ namespace Workbench {
       if (this.css != null)
         Gtk.StyleContext.remove_provider_for_display (Gdk.Display.get_default (), this.css);
       this.css = new Gtk.CssProvider ();
+      this.css.parsing_error.connect((self, section, error) => {
+        var start = section.get_start_location();
+        var end = section.get_end_location();
+        this.css_parser_error(error.message, (int)start.lines, (int)start.line_chars, (int)end.lines, (int)end.line_chars);
+      });
       this.css.load_from_data (content.data);
       Gtk.StyleContext.add_provider_for_display (Gdk.Display.get_default (), this.css , Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
     }
@@ -146,6 +154,8 @@ namespace Workbench {
     public Adw.ColorScheme ColorScheme { get; set; default = Adw.ColorScheme.DEFAULT; }
 
     public signal void window_open (bool open);
+
+    public signal void css_parser_error (string message, int start_line, int start_char, int end_line, int end_char);
 
     [CCode (has_target=false)]
     private delegate void RunFunction ();
