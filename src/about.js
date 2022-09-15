@@ -13,7 +13,7 @@ import { getFlatpakInfo } from "./util.js";
 export default function About({ application, version }) {
   const flatpak_info = getFlatpakInfo();
 
-  const system_information = `
+  const debug_info = `
 ${GLib.get_os_info("ID")} ${GLib.get_os_info("VERSION_ID")}
 
 GJS ${getGjsVersion()}
@@ -25,25 +25,30 @@ ${getValaVersion()}
 ${getBlueprintVersion()}
 `.trim();
 
-  const dialog = new Gtk.AboutDialog({
-    application,
-    authors: ["Sonny Piers https://sonny.re"],
-    comments: _("Learn and prototype with\nGNOME technologies"),
+  const dialog = new Adw.AboutWindow({
+    application_name: "Workbench",
+    developer_name: "Sonny Piers",
     copyright: "Copyright 2022 Sonny Piers",
     license_type: Gtk.License.GPL_3_0_ONLY,
     version,
     transient_for: application.get_active_window(),
     modal: true,
     website: "https://workbench.sonny.re",
-    logo_icon_name: "re.sonny.Workbench",
+    application_icon: "re.sonny.Workbench",
+    issue_url: "https://github.com/sonnyp/Workbench/issues",
     // TRANSLATORS: eg. 'Translator Name <your.email@domain.com>' or 'Translator Name https://website.example'
     translator_credits: _("translator-credits"),
-    system_information,
+    debug_info,
+    developers: [
+      "Sonny Piers https://sonny.re",
+      "Lorenz Wildberg https://gitlab.gnome.org/lwildberg",
+    ],
+    designers: ["Tobias Bernard <tbernard@gnome.org>"],
   });
-  dialog.add_credit_section("Contributors", [
-    "Lorenz Wildberg https://gitlab.gnome.org/lwildberg",
-    "Tobias Bernard <tbernard@gnome.org>",
+
+  dialog.add_credit_section(_("Contributors"), [
     "Ben Foote http://www.bengineeri.ng",
+    "Hari Rana (TheEvilSkeleton) https://theevilskeleton.gitlab.io",
     // Add yourself as
     // "John Doe",
     // or
