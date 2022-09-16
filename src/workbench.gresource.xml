@@ -74,6 +74,7 @@
     <file>overrides.js</file>
     <file>shortcutsWindow.js</file>
     <file>util.js</file>
+    <file>editor_utils.js</file>
     <file>window.js</file>
     <file>Compiler.js</file>
     <file>ThemeSelector.js</file>

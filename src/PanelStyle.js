@@ -3,12 +3,8 @@ import GObject from "gi://GObject";
 import Gtk from "gi://Gtk";
 import Pango from "gi://Pango";
 
-import {
-  connect_signals,
-  getLanguage,
-  settings,
-  getItersAtRange,
-} from "./util.js";
+import { connect_signals, getLanguage, settings } from "./util.js";
+import { getItersAtRange } from "./editor_utils.js";
 
 import WorkbenchHoverProvider from "./WorkbenchHoverProvider.js";
 

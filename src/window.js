@@ -29,6 +29,10 @@ import Previewer from "./Previewer/Previewer.js";
 import Compiler from "./Compiler.js";
 import { promiseTask } from "./troll/src/util.js";
 import ThemeSelector from "./ThemeSelector.js";
+import {
+  remove_line_at_cursor,
+  toggle_comment_line_at_cursor,
+} from "./editor_utils.js";
 
 const scheme_manager = Source.StyleSchemeManager.get_default();
 const style_manager = Adw.StyleManager.get_default();
@@ -76,46 +80,30 @@ export default function Window({ application, version }) {
 
   const shortcuts = [
     [
-      ["<Ctrl>/", "<Ctrl>J"],
-      () => {
-        const buffer = langs.javascript.document.source_view.buffer;
-        const line_comment_start = buffer
-          .get_language()
-          .get_metadata("line-comment-start");
-
-        const start = buffer.get_iter_at_offset(buffer.cursor_position);
-        const end = start.copy();
-        start.set_line_offset(0);
-        end.forward_line();
-        buffer.delete(start, end);
-      },
-    ],
-    [
       [
         // VSCode
-        "<Ctrl><Shift>K",
-        // GNOME Builder
-        "<Ctrl>D",
+        // "<Ctrl>/",
+        // nope
+        "<Ctrl>B",
       ],
       () => {
+        log("cool");
         const buffer = langs.javascript.document.source_view.buffer;
-
-        const start = buffer.get_iter_at_offset(buffer.cursor_position);
-        const end = start.copy();
-        start.set_line_offset(0);
-        end.forward_lines(1);
-
-        if (end.is_end()) {
-          if (start.backward_line() && !start.ends_line())
-            start.forward_to_line_end();
-        }
-
-        // console.log(start.get_line(), start.get_line_offset());
-        // console.log(end.get_line(), end.get_line_offset());
-
-        buffer.delete(start, end);
+        toggle_comment_line_at_cursor(buffer);
       },
     ],
+    // [
+    //   [
+    //     // VSCode
+    //     "<Ctrl><Shift>K",
+    //     // GNOME Builder
+    //     "<Ctrl>D",
+    //   ],
+    //   () => {
+    //     const buffer = langs.javascript.document.source_view.buffer;
+    //     remove_line_at_cursor(buffer);
+    //   },
+    // ],
   ];
   const shortcutController = new Gtk.ShortcutController();
   shortcuts.forEach(([accels, fn]) => {
