@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: re.sonny.Workbench\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-04 15:25+0200\n"
-"PO-Revision-Date: 2022-06-22 22:18+0000\n"
-"Last-Translator: Daudix UFO <ddaudix@gmail.com>\n"
+"PO-Revision-Date: 2022-08-30 16:19+0000\n"
+"Last-Translator: Vik <xasertop@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/workbench/workbench/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.13.1-dev\n"
+"X-Generator: Weblate 4.14.1-dev\n"
 
 #. TRANSLATORS: Don't translate
 #: data/re.sonny.Workbench.desktop:4
@@ -25,7 +25,7 @@ msgstr "Workbench"
 
 #: data/re.sonny.Workbench.desktop:5 data/re.sonny.Workbench.metainfo.xml:10
 msgid "Learn and prototype with GNOME technologies"
-msgstr "Изучайте и делайте прототипы с технологиями GNOME"
+msgstr "Изучайте и создавайте прототипы с технологиями GNOME"
 
 #. TRANSLATORS: Don't translate
 #: data/re.sonny.Workbench.desktop:12
@@ -34,7 +34,7 @@ msgstr "CSS;JavaScript;GJS;Blueprint;builder;Vala;"
 
 #: data/re.sonny.Workbench.metainfo.xml:14
 msgid "Workbench goal is to let you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a GTK user interface."
-msgstr "Цель Workbench — позволить вам экспериментировать с технологиями GNOME, независимо от того, возитесь ли вы впервые или создаете и тестируете пользовательский интерфейс GTK."
+msgstr "Цель Workbench — позволить вам экспериментировать с технологиями GNOME, независимо от того, делаете ли вы это впервые или создаете и тестируете пользовательский интерфейс GTK."
 
 #: data/re.sonny.Workbench.metainfo.xml:15
 msgid "Among other things, Workbench comes with"
@@ -66,7 +66,7 @@ msgstr "средством форматирования кода"
 
 #: data/re.sonny.Workbench.metainfo.xml:23
 msgid "console logs"
-msgstr "журналоми консоли"
+msgstr "журналами консоли"
 
 #: data/re.sonny.Workbench.metainfo.xml:51
 msgid "Highlights"
@@ -120,7 +120,7 @@ msgstr "Другие изменения"
 
 #: data/re.sonny.Workbench.metainfo.xml:66
 msgid "Silence platform tools"
-msgstr "Заглушены инструменты платформы"
+msgstr "Инструменты платформы Silence"
 
 #: data/re.sonny.Workbench.metainfo.xml:67
 msgid "Make Library examples only open relevant panels"
@@ -132,7 +132,7 @@ msgstr "Теперь всегда открывается консоль при �
 
 #: data/re.sonny.Workbench.metainfo.xml:70
 msgid "Prevent running Code if the panel is not visible"
-msgstr "Добавлена предотвращение запуска кода, если панель не видна"
+msgstr "Добавлено предотвращение запуска кода, если панель не видна"
 
 #: data/re.sonny.Workbench.metainfo.xml:71
 msgid "Add icons and mnemonics for all buttons"
@@ -152,11 +152,11 @@ msgstr "Улудшены примеры библеотек"
 
 #: data/re.sonny.Workbench.metainfo.xml:76
 msgid "Performance optimizations"
-msgstr "Оптимизации производительности"
+msgstr "Оптимизация производительности"
 
 #: data/re.sonny.Workbench.metainfo.xml:77
 msgid "Show a placeholder when all panels are invisible"
-msgstr "Теперь будет отображатся заглушка когда все панели невидемые"
+msgstr "Теперь будет отображаться заглушка, когда все панели невидимые"
 
 #: data/re.sonny.Workbench.metainfo.xml:78
 msgid "Crash fixes"
@@ -164,11 +164,11 @@ msgstr "Исправлены сбои"
 
 #: data/re.sonny.Workbench.metainfo.xml:79
 msgid "Use org.gnome.Sdk runtime"
-msgstr "Теперь используется org.gnome.Sdk runtime"
+msgstr "Используется среда выполнения org.gnome.Sdk"
 
 #: data/re.sonny.Workbench.metainfo.xml:86
 msgid "Add a Library of examples"
-msgstr "Добавлена библеотека примеров"
+msgstr "Добавлена библиотека примеров"
 
 #: data/re.sonny.Workbench.metainfo.xml:87
 msgid "Add an example of WebSocket client"
@@ -184,7 +184,7 @@ msgstr "Добавлен пример окна приложения"
 
 #: data/re.sonny.Workbench.metainfo.xml:90
 msgid "Add an example of desktop notification"
-msgstr "Добавлен пример уведомления"
+msgstr "Добавлен пример уведомления рабочего стола"
 
 #: data/re.sonny.Workbench.metainfo.xml:92
 msgid "Add Adwaita Demo, GTK Demo, GTK Widget Factory and GTK Icon Browser"
@@ -200,7 +200,7 @@ msgstr "Предотвращен выход system.exit из Workbench"
 
 #: data/re.sonny.Workbench.metainfo.xml:95
 msgid "Allow calling GObject.registerClass multiple times"
-msgstr "Разрешен вызов GObject.registerClass несколько раз"
+msgstr "Разрешен многоразовый вызов GObject.registerClass"
 
 #: data/re.sonny.Workbench.metainfo.xml:96
 msgid "Prevent crash caused by using non GtkBuildable objects"
@@ -220,7 +220,7 @@ msgstr "Включен предварительный просмотр объе�
 
 #: data/re.sonny.Workbench.metainfo.xml:106
 msgid "Take a png screenshot of the preview"
-msgstr "Теперь можно делать скриншот предварительного просмотра в формате png"
+msgstr "Можно сделать скриншот предварительного просмотра в формате png"
 
 #: data/re.sonny.Workbench.metainfo.xml:107
 msgid "The console is now resizable"
@@ -270,7 +270,9 @@ msgstr ""
 #. TRANSLATORS: eg. 'Translator Name <your.email@domain.com>' or 'Translator Name https://website.example'
 #: src/about.js:40
 msgid "translator-credits"
-msgstr "Давид Лапшин <ddaudix@gmail.com>"
+msgstr ""
+"Давид Лапшин <ddaudix@gmail.com>\n"
+"ViktorOn https://github.com/ViktorOn"
 
 #: src/actions.js:51 src/shortcutsWindow.blp:16
 msgid "Import File"
@@ -418,7 +420,7 @@ msgstr "К_онсоль"
 
 #: src/window.blp:524
 msgid "Show logs (Ctrl+Shift+K)"
-msgstr "Показать логи (Ctrl+Shift+K)"
+msgstr "Показать журналы (Ctrl+Shift+K)"
 
 #: src/window.blp:530
 msgid "_Inspector"
@@ -426,7 +428,7 @@ msgstr "_Инспектор"
 
 #: src/window.blp:533
 msgid "Open GTK Inspector (Ctrl+Shift+I)"
-msgstr "Открыть GTK Inspector (Ctrl+Shift+I)"
+msgstr "Открыть Инспектор GTK (Ctrl+Shift+I)"
 
 #: src/window.blp:544
 msgid "Cl_ear"
@@ -446,7 +448,7 @@ msgstr "Закладки"
 
 #: src/window.blp:577
 msgid "Learn"
-msgstr "Учитесь"
+msgstr "Учиться"
 
 #: src/window.blp:580
 msgid "Developer Documentation"
