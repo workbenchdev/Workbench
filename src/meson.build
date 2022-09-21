@@ -23,7 +23,15 @@ blueprints = custom_target('blueprints',
     'ThemeSelector.blp',
   ),
   output: '.',
-  command: [find_program('blueprint-compiler'), 'batch-compile', '@OUTPUT@', '@CURRENT_SOURCE_DIR@', '@INPUT@'],
+  command: [
+    find_program(
+      # Flatpak
+      '/app/bin/blueprint-compiler',
+      # host
+      '../blueprint-compiler/blueprint-compiler.py'
+    ),
+    'batch-compile', '@OUTPUT@', '@CURRENT_SOURCE_DIR@', '@INPUT@'
+  ],
 )
 
 data_res = gnome.compile_resources('workbench',
