@@ -1,12 +1,33 @@
 import Gio from "gi://Gio";
+import GLib from "gi://GLib";
 import GObject from "gi://GObject";
 
-import { settings } from "./util.js";
+import LSPClient from "./lsp/LSPClient.js";
+import { LSPError, diagnostic_severities } from "./lsp/LSP.js";
 
-export default function PanelCode({ builder, previewer }) {
+import { getLanguage, settings, prepareSourceView } from "./util.js";
+import WorkbenchHoverProvider from "./WorkbenchHoverProvider.js";
+import { getPid } from "./troll/src/util.js";
+
+export default function PanelCode({ builder, previewer, data_dir, version }) {
   const panel_code = builder.get_object("panel_code");
   const button_code = builder.get_object("button_code");
   const stack_code = builder.get_object("stack_code");
+
+  const buffer_vala = getLanguage("vala").document.buffer;
+  const provider = new WorkbenchHoverProvider();
+
+  let document_version = 0;
+  prepareSourceView({
+    source_view: getLanguage("vala").document.source_view,
+    provider,
+  });
+
+  const vls = createVLSClient({
+    data_dir,
+    buffer: buffer_vala,
+    provider,
+  });
 
   const dropdown_code_lang = builder.get_object("dropdown_code_lang");
   // TODO: File a bug libadwaita
@@ -46,5 +67,66 @@ export default function PanelCode({ builder, previewer }) {
   }
   switchLanguage();
 
+  async function setupLSP() {
+    if (vls.proc) return;
+    vls.start();
+
+    // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#initialize
+    await vls.request("initialize", {
+      processId: getPid(),
+      clientInfo: {
+        name: "re.sonny.Workbench",
+        version,
+      },
+      rootPath: data_dir,
+      rootUri: Gio.File.new_for_path (data_dir).get_uri (),
+    });
+
+    await vls.notify("textDocument/didOpen", {
+      textDocument: {
+        uri: "workbench://state.vala",
+        languageId: "vala",
+        version: ++document_version,
+        text: buffer_vala.text,
+      },
+    });
+  }
+  setupLSP().catch(logError);
+
   return panel;
+}
+
+function createVLSClient({ data_dir, buffer, provider }) {
+  const file_vls_logs = Gio.File.new_for_path(
+    GLib.build_filenamev([data_dir, `vls-logs`])
+  );
+  file_vls_logs.replace_contents(
+    " ",
+    null,
+    false,
+    Gio.FileCreateFlags.REPLACE_DESTINATION,
+    null
+  );
+  const vls = new LSPClient([
+    // "/usr/lib/sdk/vala/bin/vala-language-server",
+    "sh", "-c", "vala-language-server", ">", file_vls_logs.get_path()
+  ]);
+  vls.connect("exit", () => {
+    console.debug("vls exit");
+  });
+  vls.connect("output", (self, message) => {
+    console.debug(`vls OUT:\n${JSON.stringify(message)}`);
+  });
+  vls.connect("input", (self, message) => {
+    console.debug(`vls IN:\n${JSON.stringify(message)}`);
+  });
+
+  vls.connect(
+    "notification::textDocument/publishDiagnostics",
+    (self, { diagnostics }) => {
+      handleDiagnostics({ diagnostics, buffer, provider });
+    }
+  );
+
+  return vls;
 }

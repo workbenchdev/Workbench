@@ -18,6 +18,7 @@ import {
 
 import { getPid, once } from "../troll/src/util.js";
 import WorkbenchHoverProvider from "./WorkbenchHoverProvider.js";
+import { prepareSourceView } from "./util.js"
 
 const { addSignalMethods } = imports.signals;
 
@@ -310,19 +311,6 @@ function createBlueprintClient({ data_dir, buffer, provider }) {
   );
 
   return blueprint;
-}
-
-function prepareSourceView({ source_view, provider }) {
-  const tag_table = source_view.buffer.get_tag_table();
-  const tag = new Gtk.TextTag({
-    name: "error",
-    underline: Pango.Underline.ERROR,
-  });
-  tag_table.add(tag);
-
-  const hover = source_view.get_hover();
-  // hover.hover_delay = 25;
-  hover.add_provider(provider);
 }
 
 function handleDiagnostics({ diagnostics, buffer, provider }) {

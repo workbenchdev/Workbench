@@ -1,6 +1,8 @@
 import GLib from "gi://GLib";
 import Gio from "gi://Gio";
 import Xdp from "gi://Xdp";
+import Gtk from "gi://Gtk";
+import Pango from "gi://Pango";
 import { rangeEquals } from "./lsp/LSP.js";
 
 export const portal = new Xdp.Portal();
@@ -195,4 +197,18 @@ export function getItersAtRange(buffer, { start, end }) {
   }
 
   return [start_iter, end_iter];
+}
+
+
+export function prepareSourceView({ source_view, provider }) {
+  const tag_table = source_view.buffer.get_tag_table();
+  const tag = new Gtk.TextTag({
+    name: "error",
+    underline: Pango.Underline.ERROR,
+  });
+  tag_table.add(tag);
+
+  const hover = source_view.get_hover();
+  // hover.hover_delay = 25;
+  hover.add_provider(provider);
 }

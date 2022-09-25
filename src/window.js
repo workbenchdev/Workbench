@@ -140,6 +140,8 @@ export default function Window({ application }) {
   const panel_code = PanelCode({
     builder,
     previewer,
+    data_dir,
+    version,
   });
 
   previewer.setPanelCode(panel_code);
