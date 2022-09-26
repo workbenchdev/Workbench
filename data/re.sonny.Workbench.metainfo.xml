@@ -46,6 +46,19 @@
   </screenshots>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="43.0" date="2022-09-21">
+      <description>
+        <ul>
+          <li>GNOME 43</li>
+          <li>Display CSS errors inline</li>
+          <li>Fix responsiveness when working on large Blueprint files</li>
+          <li>Use AdwAboutWindow</li>
+          <li>Blueprint 0.4.0</li>
+          <li>VTE 0.70.0</li>
+          <li>Various bug and crash fixes</li>
+        </ul>
+      </description>
+    </release>
     <release version="42.3" date="2022-08-22">
       <description>
         <ul>

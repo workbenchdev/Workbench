@@ -125,6 +125,7 @@ git commit -m 'Update translations'
 
 # Update version
 # bump version in meson.build
+# add release notes to metainfo
 git add meson.build
 
 git commit -m '$V'

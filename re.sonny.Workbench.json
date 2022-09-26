@@ -1,7 +1,7 @@
 {
   "id": "re.sonny.Workbench",
   "runtime": "org.gnome.Sdk",
-  "runtime-version": "43beta",
+  "runtime-version": "43",
   "sdk": "org.gnome.Sdk",
   "command": "workbench",
   "finish-args": [
@@ -28,7 +28,8 @@
         {
           "type": "git",
           "url": "https://gitlab.gnome.org/GNOME/vte.git",
-          "commit": "fb604fe287abf64645a83ef27e2c05da14fbbae0"
+          "commit": "ae4a5d7df9e32ab40ceca5e06240561e819db148",
+          "tag": "0.70.0"
         }
       ]
     },
