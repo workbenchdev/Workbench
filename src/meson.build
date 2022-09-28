@@ -1,7 +1,7 @@
 bin_conf = configuration_data()
 bin_conf.set('GJS', find_program('gjs').path())
-bin_conf.set('PACKAGE_VERSION', meson.project_version())
-bin_conf.set('PACKAGE_NAME', meson.project_name())
+bin_conf.set('version', meson.project_version() + version_suffix)
+bin_conf.set('app_id', app_id)
 bin_conf.set('prefix', prefix)
 bin_conf.set('libdir', join_paths(get_option('prefix'), get_option('libdir')))
 bin_conf.set('datadir', datadir)
@@ -34,8 +34,8 @@ blueprints = custom_target('blueprints',
   ],
 )
 
-data_res = gnome.compile_resources('workbench',
-  'workbench.gresource.xml',
+data_res = gnome.compile_resources(app_id + '.src',
+  'app.gresource.xml',
   dependencies: blueprints,
   gresource_bundle: true,
   install: true,
@@ -44,7 +44,7 @@ data_res = gnome.compile_resources('workbench',
 
 configure_file(
   input: 're.sonny.Workbench',
-  output: 're.sonny.Workbench',
+  output: app_id,
   configuration: bin_conf,
   install: true,
   install_dir: get_option('bindir')

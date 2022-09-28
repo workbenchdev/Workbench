@@ -1,7 +1,5 @@
 import Gio from "gi://Gio";
 import Adw from "gi://Adw";
-import Gtk from "gi://Gtk";
-import Gdk from "gi://Gdk";
 
 import Window from "./window.js";
 import Actions from "./actions.js";
@@ -9,10 +7,13 @@ import { settings } from "./util.js";
 
 const style_manager = Adw.StyleManager.get_default();
 
-export default function Application({ version }) {
+export default function Application() {
   const application = new Adw.Application({
-    application_id: "re.sonny.Workbench",
+    application_id: pkg.name,
     flags: Gio.ApplicationFlags.HANDLES_OPEN,
+    // Defaults to /re/sonny/Workbench/Devel
+    // if pkg.name is re.sonny.Workbench.Devel
+    resource_base_path: "/re/sonny/Workbench",
   });
 
   let window;
@@ -26,23 +27,13 @@ export default function Application({ version }) {
   });
 
   application.connect("activate", () => {
-    window =
-      window ||
-      Window({
+    if (!window) {
+      window = Window({
         application,
-        version,
       });
-    window.window.present();
-  });
+    }
 
-  application.connect("startup", () => {
-    const provider = new Gtk.CssProvider();
-    provider.load_from_resource("/re/sonny/Workbench/style.css");
-    Gtk.StyleContext.add_provider_for_display(
-      Gdk.Display.get_default(),
-      provider,
-      Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
-    );
+    window.window.present();
   });
 
   application.set_option_context_description("<https://workbench.sonny.re>");
@@ -50,7 +41,7 @@ export default function Application({ version }) {
   // TODO: Add examples
   // application.set_option_context_summary("");
 
-  Actions({ application, version });
+  Actions({ application });
 
   import("./overrides.js").catch(logError);
 

@@ -21,7 +21,9 @@ import WorkbenchHoverProvider from "./WorkbenchHoverProvider.js";
 
 const { addSignalMethods } = imports.signals;
 
-export default function PanelUI({ builder, data_dir, version, term_console }) {
+const SYSLOG_IDENTIFIER = pkg.name;
+
+export default function PanelUI({ builder, data_dir, term_console }) {
   let lang;
 
   const panel = {
@@ -162,8 +164,8 @@ export default function PanelUI({ builder, data_dir, version, term_console }) {
     await blueprint.request("initialize", {
       processId: getPid(),
       clientInfo: {
-        name: "re.sonny.Workbench",
-        version,
+        name: pkg.name,
+        version: pkg.version,
       },
       // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#clientCapabilities
       capabilities: {
@@ -224,14 +226,14 @@ export default function PanelUI({ builder, data_dir, version, term_console }) {
 function logBlueprintError(err) {
   GLib.log_structured("Blueprint", GLib.LogLevelFlags.LEVEL_CRITICAL, {
     MESSAGE: `${err.message}`,
-    SYSLOG_IDENTIFIER: "re.sonny.Workbench",
+    SYSLOG_IDENTIFIER,
   });
 }
 
 // function logBlueprintInfo(info) {
 //   GLib.log_structured("Blueprint", GLib.LogLevelFlags.LEVEL_WARNING, {
 //     MESSAGE: `${info.line + 1}:${info.col} ${info.message}`,
-//     SYSLOG_IDENTIFIER: "re.sonny.Workbench",
+//     SYSLOG_IDENTIFIER,
 //   });
 // }
 
@@ -242,7 +244,7 @@ function logBlueprintDiagnostic({ range, message, severity }) {
     }:${range.start.character} to ${range.end.line + 1}:${
       range.end.character
     } ${message}`,
-    SYSLOG_IDENTIFIER: "re.sonny.Workbench",
+    SYSLOG_IDENTIFIER,
   });
 }
 

@@ -10,7 +10,7 @@ import {
 } from "./troll/src/util.js";
 import { getFlatpakInfo } from "./util.js";
 
-export default function About({ application, version }) {
+export default function About({ application }) {
   const flatpak_info = getFlatpakInfo();
 
   const debug_info = `
@@ -30,11 +30,11 @@ ${getBlueprintVersion()}
     developer_name: "Sonny Piers",
     copyright: "Copyright 2022 Sonny Piers",
     license_type: Gtk.License.GPL_3_0_ONLY,
-    version,
+    version: pkg.version,
     transient_for: application.get_active_window(),
     modal: true,
     website: "https://workbench.sonny.re",
-    application_icon: "re.sonny.Workbench",
+    application_icon: pkg.name,
     issue_url: "https://github.com/sonnyp/Workbench/issues",
     // TRANSLATORS: eg. 'Translator Name <your.email@domain.com>' or 'Translator Name https://website.example'
     translator_credits: _("translator-credits"),

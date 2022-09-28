@@ -1,21 +1,22 @@
-#!/usr/bin/env -S gjs -m
+#!@GJS@ -m
 
-import { programInvocationName, exit } from "system";
-import Gio from "gi://Gio";
+// -*- mode: js; -*-
+
+import { exit } from "system";
 import GLib from "gi://GLib";
 import { setConsoleLogDomain } from "console";
 
-setConsoleLogDomain("re.sonny.Workbench");
-GLib.set_prgname("re.sonny.Workbench");
+imports.package.init({
+  name: "@app_id@",
+  version: "@version@",
+  prefix: "@prefix@",
+  libdir: "@libdir@",
+  datadir: "@datadir@",
+});
+setConsoleLogDomain(pkg.name);
 GLib.set_application_name("Workbench");
 
-const resource = Gio.resource_load(
-  "/app/share/re.sonny.Workbench/workbench.gresource"
-);
-Gio.resources_register(resource);
-
 const loop = new GLib.MainLoop(null, false);
-
 // eslint-disable-next-line import/no-unresolved
 import("resource:///re/sonny/Workbench/js/main.js")
   .then((main) => {
@@ -23,14 +24,10 @@ import("resource:///re/sonny/Workbench/js/main.js")
     // https://gitlab.gnome.org/GNOME/gjs/-/issues/468
     GLib.idle_add(GLib.PRIORITY_DEFAULT_IDLE, () => {
       loop.quit();
-      const exit_code = main.default([programInvocationName, ...ARGV], {
-        version: "@PACKAGE_VERSION@",
-        datadir: "@datadir@",
-      });
+      const exit_code = imports.package.run(main);
       exit(exit_code);
       return GLib.SOURCE_REMOVE;
     });
   })
   .catch(logError);
-
 loop.run();

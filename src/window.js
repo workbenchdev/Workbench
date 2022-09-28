@@ -35,7 +35,7 @@ const style_manager = Adw.StyleManager.get_default();
 
 const langs = Object.fromEntries(languages.map((lang) => [lang.id, lang]));
 
-export default function Window({ application, version }) {
+export default function Window({ application }) {
   Vte.Terminal.new();
 
   const data_dir = createDataDir();
@@ -45,7 +45,9 @@ export default function Window({ application, version }) {
   );
 
   const window = builder.get_object("window");
-  // window.add_css_class("devel");
+  if (pkg.name.endsWith("Devel")) {
+    window.add_css_class("devel");
+  }
   window.set_application(application);
 
   // Popover menu theme switcher
@@ -110,7 +112,6 @@ export default function Window({ application, version }) {
     builder,
     langs,
     data_dir,
-    version,
     term_console,
   });
 
