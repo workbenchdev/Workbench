@@ -10,7 +10,7 @@ import About from "./about.js";
 import shortcutsWindow from "./shortcutsWindow.js";
 import { portal, languages, settings } from "./util.js";
 
-export default function Actions({ application, version }) {
+export default function Actions({ application }) {
   const quit = new Gio.SimpleAction({
     name: "quit",
     parameter_type: null,
@@ -26,7 +26,7 @@ export default function Actions({ application, version }) {
     parameter_type: null,
   });
   showAboutDialog.connect("activate", () => {
-    About({ application, version });
+    About({ application });
   });
   application.add_action(showAboutDialog);
 

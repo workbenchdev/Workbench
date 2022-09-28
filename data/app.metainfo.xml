@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <component type="desktop">
-  <id>re.sonny.Workbench</id>
-  <launchable type="desktop-id">re.sonny.Workbench.desktop</launchable>
+  <id>@app_id@</id>
+  <launchable type="desktop-id">@app_id@.desktop</launchable>
   <name translatable="no">Workbench</name>
   <developer_name translatable="no">Sonny Piers</developer_name>
   <update_contact>sonnyp@gnome.org</update_contact>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0</project_license>
   <summary>Learn and prototype with GNOME technologies</summary>
-  <translation type="gettext">re.sonny.Workbench</translation>
+  <translation type="gettext">@app_id@</translation>
   <description>
     <p>Workbench goal is to let you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a GTK user interface.</p>
     <p>Among other things, Workbench comes with</p>

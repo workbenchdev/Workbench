@@ -86,6 +86,8 @@ cd Workbench
 git submodule update
 ```
 
+Also make sure that you're building the development target (`re.sonny.Workbench.Devel`).
+
 Feel free to come by [#workbench:matrix.org](https://matrix.to/#/#workbench:matrix.org).
 
 ## Packaging
