@@ -32,7 +32,7 @@ appstream_file = i18n.merge_file(
 
 appstream_cli = find_program('appstreamcli', required: false)
 if appstream_cli.found()
-  test('Validate metainfo file', appstream_util,
+  test('Validate metainfo file', appstream_cli,
     args: ['validate', '--override=release-time-missing=info', '--no-net', appstream_file]
   )
 endif
