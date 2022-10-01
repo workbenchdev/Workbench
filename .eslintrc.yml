@@ -1,5 +1,11 @@
 env:
-  es2020: true
+  es2022: true
+parser: "@babel/eslint-parser"
+parserOptions:
+  sourceType: module
+  requireConfigFile: false
+  babelOptions:
+    plugins: ["@babel/plugin-syntax-import-assertions"]
 extends:
   - "eslint:recommended"
   - "plugin:import/errors"
@@ -24,8 +30,6 @@ globals:
   setTimeout: readonly
   clearInterval: readonly
   clearTimeout: readonly
-parserOptions:
-  sourceType: module
 rules:
   # https://eslint.org/docs/rules/no-unused-vars
   no-unused-vars: [error, { args: none }]

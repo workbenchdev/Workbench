@@ -28,7 +28,7 @@ import Library, { readDemo } from "./Library/Library.js";
 import Previewer from "./Previewer/Previewer.js";
 import Compiler from "./Compiler.js";
 import { promiseTask } from "../troll/src/util.js";
-import ThemeSelector from "./ThemeSelector.js";
+import ThemeSelector from "../troll/src/widgets/ThemeSelector.js";
 
 import resource from "./window.blp";
 
