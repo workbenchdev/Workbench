@@ -6,11 +6,6 @@ import { exit } from "system";
 import GLib from "gi://GLib";
 import { setConsoleLogDomain } from "console";
 import Gio from "gi://Gio";
-import Gtk from "gi://Gtk?version=4.0";
-import Adw from "gi://Adw?version=1";
-
-Gtk.init();
-Adw.init();
 
 imports.package.init({
   name: "@app_id@",

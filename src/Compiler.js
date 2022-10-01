@@ -13,7 +13,7 @@ export default function Compiler(data_dir) {
     GLib.build_filenamev([data_dir, "libworkbenchcode.so"])
   );
   const api_file = Gio.File.new_for_path(
-    GLib.build_filenamev([pkg.datadir, pkg.name, "workbench-api.vala"])
+    GLib.build_filenamev([pkg.pkgdatadir, "workbench-api.vala"])
   );
 
   async function compile(code) {
