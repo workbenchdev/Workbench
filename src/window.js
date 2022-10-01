@@ -28,7 +28,7 @@ import Library, { readDemo } from "./Library/Library.js";
 import Previewer from "./Previewer/Previewer.js";
 import Compiler from "./Compiler.js";
 import { promiseTask } from "../troll/src/util.js";
-// import ThemeSelector from "./ThemeSelector.js";
+import ThemeSelector from "./ThemeSelector.js";
 
 import resource from "./window.blp";
 
@@ -51,9 +51,9 @@ export default function Window({ application }) {
   window.set_application(application);
 
   // Popover menu theme switcher
-  // const button_menu = builder.get_object("button_menu");
-  // const popover = button_menu.get_popover();
-  // popover.add_child(new ThemeSelector(), "themeswitcher");
+  const button_menu = builder.get_object("button_menu");
+  const popover = button_menu.get_popover();
+  popover.add_child(new ThemeSelector(), "themeswitcher");
 
   const output = builder.get_object("output");
 
