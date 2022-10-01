@@ -30,6 +30,13 @@ appstream_file = i18n.merge_file(
   install_dir: join_paths(get_option('datadir'), 'metainfo')
 )
 
+appstream_cli = find_program('appstreamcli', required: false)
+if appstream_cli.found()
+  test('Validate metainfo file', appstream_util,
+    args: ['validate', '--override=release-time-missing=info', '--no-net', appstream_file]
+  )
+endif
+
 configure_file(
   input: 'app.service',
   output: '@0@.service'.format(app_id),

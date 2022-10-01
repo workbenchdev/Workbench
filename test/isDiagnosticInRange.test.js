@@ -1,6 +1,6 @@
 import "gi://Gtk?version=4.0";
 
-import tst, { assert } from "../src/troll/tst/tst.js";
+import tst, { assert } from "../troll/tst/tst.js";
 
 import { isDiagnosticInRange } from "../src/WorkbenchHoverProvider.js";
 

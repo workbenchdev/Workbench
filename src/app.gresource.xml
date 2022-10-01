@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <gresources>
   <gresource prefix="/re/sonny/Workbench">
-    <file>window.ui</file>
-    <file>ThemeSelector.ui</file>
-    <file>shortcutsWindow.ui</file>
     <file>style.css</file>
-    <file>Library/Library.ui</file>
+    <file>language-specs/blueprint.lang</file>
+    <file>icon-development-kit.json</file>
     <file>Library/demos/Notifications/main.js</file>
     <file>Library/demos/Notifications/main.json</file>
     <file>Library/demos/Notifications/main.blp</file>
@@ -41,44 +39,6 @@
     <file>Library/demos/Custom widget/main.ui</file>
     <file>Library/demos/Custom widget/main.js</file>
     <file>Library/demos/Custom widget/main.json</file>
-    <file>language-specs/blueprint.lang</file>
-    <file>icon-development-kit.json</file>
-  </gresource>
-  <gresource prefix="/re/sonny/Workbench/js">
-    <file>lib/ltx.js</file>
-    <file>lib/postcss.js</file>
-    <file>lib/prettier-babel.js</file>
-    <file>lib/prettier-postcss.js</file>
-    <file>lib/prettier-xml.js</file>
-    <file>lib/prettier.js</file>
-    <file>lsp/LSPClient.js</file>
-    <file>lsp/LSP.js</file>
-    <file>troll/src/util.js</file>
-    <file>about.js</file>
-    <file>actions.js</file>
-    <file>application.js</file>
-    <file>TermConsole.js</file>
-    <file>Devtools.js</file>
-    <file>Document.js</file>
-    <file>log_handler.js</file>
-    <file>PanelUI.js</file>
-    <file>PanelCode.js</file>
-    <file>Library/Library.js</file>
-    <file>PanelStyle.js</file>
-    <file>Previewer/Previewer.js</file>
-    <file>Previewer/Internal.js</file>
-    <file>Previewer/External.js</file>
-    <file>Previewer/DBusPreviewer.js</file>
-    <file>Previewer/utils.js</file>
-    <file>main.js</file>
-    <file>overrides.js</file>
-    <file>shortcutsWindow.js</file>
-    <file>util.js</file>
-    <file>window.js</file>
-    <file>Compiler.js</file>
-    <file>ThemeSelector.js</file>
-    <file>WorkbenchHoverProvider.js</file>
-    <file>xml.js</file>
   </gresource>
  <gresource prefix="/re/sonny/Workbench/icons/scalable/actions">
     <file

@@ -27,8 +27,10 @@ import prettier_postcss from "./lib/prettier-postcss.js";
 import Library, { readDemo } from "./Library/Library.js";
 import Previewer from "./Previewer/Previewer.js";
 import Compiler from "./Compiler.js";
-import { promiseTask } from "./troll/src/util.js";
+import { promiseTask } from "../troll/src/util.js";
 import ThemeSelector from "./ThemeSelector.js";
+
+import resource from "./window.blp";
 
 const scheme_manager = Source.StyleSchemeManager.get_default();
 const style_manager = Adw.StyleManager.get_default();
@@ -40,9 +42,7 @@ export default function Window({ application }) {
 
   const data_dir = createDataDir();
 
-  const builder = Gtk.Builder.new_from_resource(
-    "/re/sonny/Workbench/window.ui"
-  );
+  const builder = Gtk.Builder.new_from_resource(resource);
 
   const window = builder.get_object("window");
   if (pkg.name.endsWith("Devel")) {
