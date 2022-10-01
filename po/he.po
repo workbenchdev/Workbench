@@ -8,22 +8,24 @@ msgstr ""
 "Project-Id-Version: re.sonny.Workbench\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-04 15:25+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2022-10-06 05:16+0000\n"
+"Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
+"Language-Team: Hebrew <https://hosted.weblate.org/projects/workbench/workbench/he/>\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && n % 10 == 0) ? 2 : 3));\n"
+"X-Generator: Weblate 4.14.1\n"
 
 #. TRANSLATORS: Don't translate
 #: data/re.sonny.Workbench.desktop:4
 msgid "Workbench"
-msgstr ""
+msgstr "Workbench"
 
 #: data/re.sonny.Workbench.desktop:5 data/re.sonny.Workbench.metainfo.xml:10
 msgid "Learn and prototype with GNOME technologies"
-msgstr ""
+msgstr "לימוד והתנסות בטכנולוגיות של GNOME"
 
 #. TRANSLATORS: Don't translate
 #: data/re.sonny.Workbench.desktop:12
@@ -44,7 +46,7 @@ msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:18
 msgid "library of examples"
-msgstr ""
+msgstr "ספריית דוגמאות"
 
 #: data/re.sonny.Workbench.metainfo.xml:19
 msgid "JavaScript and Vala runs without any setup"
@@ -138,11 +140,11 @@ msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:72
 msgid "Move Bookmarks to the main menu"
-msgstr ""
+msgstr "הסימניות הועברו לתפריט הראשי"
 
 #: data/re.sonny.Workbench.metainfo.xml:73
 msgid "Enable scrollbar and kinetic scrolling on Console"
-msgstr ""
+msgstr "הפעלת סרגל גלילה וגלילה קינטית במסוף"
 
 #: data/re.sonny.Workbench.metainfo.xml:75
 msgid "Improve Library examples"
@@ -202,15 +204,15 @@ msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:96
 msgid "Prevent crash caused by using non GtkBuildable objects"
-msgstr ""
+msgstr "נמנעו קריסות שנגרמו על ידי שימוש ברכיבים שאינם GtkBuildable"
 
 #: data/re.sonny.Workbench.metainfo.xml:97
 msgid "Allow using DBus and Gio.Application"
-msgstr ""
+msgstr "לאפשר שימוש ב־DBus וב־Gio.Application"
 
 #: data/re.sonny.Workbench.metainfo.xml:98
 msgid "Allow using network"
-msgstr ""
+msgstr "לאפשר שימוש ברשת"
 
 #: data/re.sonny.Workbench.metainfo.xml:99
 msgid "Enable GtkWindow objects preview"
@@ -234,103 +236,105 @@ msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:110
 msgid "Update to GNOME platform 42"
-msgstr ""
+msgstr "עדכון לפלטפורמת 42 של GNOME"
 
 #: data/re.sonny.Workbench.metainfo.xml:111
 msgid "Various fixes"
-msgstr ""
+msgstr "מגוון תיקונים"
 
 #: data/re.sonny.Workbench.metainfo.xml:117
 msgid "This is the first release of Workbench. We hope you like it."
-msgstr ""
+msgstr "זו המהדורה הראשונה של Workbench. מקווים שהיא נשאה חן בעיניך."
 
 #: src/Library/Library.blp:7
 msgid "Library"
-msgstr ""
+msgstr "ספרייה"
 
 #: src/Library/demos/Application window/main.blp:50 src/shortcutsWindow.blp:49
 #: src/window.blp:652
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "קיצורי מקלדת"
 
 #: src/Library/demos/Application window/main.blp:55
 msgid "About My App"
-msgstr ""
+msgstr "על היישום שלי"
 
 #: src/about.js:31
 msgid ""
 "Learn and prototype with\n"
 "GNOME technologies"
 msgstr ""
+"למידה והתנסות\n"
+"בטכנולוגיות GNOME"
 
 #. TRANSLATORS: eg. 'Translator Name <your.email@domain.com>' or 'Translator Name https://website.example'
 #: src/about.js:40
 msgid "translator-credits"
-msgstr ""
+msgstr "ירון שהרבני https://github.com/yarons"
 
 #: src/actions.js:51 src/shortcutsWindow.blp:16
 msgid "Import File"
-msgstr ""
+msgstr "ייבוא קובץ"
 
 #: src/actions.js:133
 msgid "All supported"
-msgstr ""
+msgstr "כל הנתמכים"
 
 #: src/shortcutsWindow.blp:11
 msgid "Run Code"
-msgstr ""
+msgstr "הרצת קוד"
 
 #: src/shortcutsWindow.blp:21
 msgid "Open Library"
-msgstr ""
+msgstr "פתיחת ספרייה"
 
 #: src/shortcutsWindow.blp:26
 msgid "Toggle Console"
-msgstr ""
+msgstr "הצגת/הסתרת מסוף"
 
 #: src/shortcutsWindow.blp:31
 msgid "Clear Console"
-msgstr ""
+msgstr "מחיקת המסוף"
 
 #: src/shortcutsWindow.blp:37
 msgid "Inspector"
-msgstr ""
+msgstr "חוקר"
 
 #: src/shortcutsWindow.blp:41
 msgid "Undo"
-msgstr ""
+msgstr "ביטול"
 
 #: src/shortcutsWindow.blp:45
 msgid "Redo"
-msgstr ""
+msgstr "ביצוע חוזר"
 
 #: src/shortcutsWindow.blp:53
 msgid "Quit"
-msgstr ""
+msgstr "יציאה"
 
 #: src/window.blp:15
 msgid "_Library"
-msgstr ""
+msgstr "_ספרייה"
 
 #: src/window.blp:19
 msgid "Open Library of Demos and Examples (Ctrl+Shift+O)"
-msgstr ""
+msgstr "פתיחת ספריית ההדגמות והדוגמאות (Ctrl+Shift+O)"
 
 #: src/window.blp:37
 msgid "_Code"
-msgstr ""
+msgstr "_קוד"
 
 #: src/window.blp:54
 msgid "_Style"
-msgstr ""
+msgstr "_סגנון"
 
 #: src/window.blp:71
 msgid "_UI"
-msgstr ""
+msgstr "מ_נשק משתמש"
 
 #: src/window.blp:88
 msgid "_Preview"
-msgstr ""
+msgstr "ת_צוגה מקדימה"
 
 #: src/window.blp:109
 msgid "sun-symbolic"
@@ -338,7 +342,7 @@ msgstr ""
 
 #: src/window.blp:110 src/window.blp:113
 msgid "Use Light mode"
-msgstr ""
+msgstr "להשתמש במצב בהיר"
 
 #: src/window.blp:118
 msgid "workbench-moon-rounded-symbolic"
@@ -346,51 +350,51 @@ msgstr ""
 
 #: src/window.blp:119 src/window.blp:122
 msgid "Use Dark mode"
-msgstr ""
+msgstr "להשתמש במצב כהה"
 
 #: src/window.blp:149
 msgid "<b>Code</b>"
-msgstr ""
+msgstr "<b>קוד</b>"
 
 #: src/window.blp:165 src/window.blp:321
 msgid "Switch document"
-msgstr ""
+msgstr "החלפת מסמך"
 
 #: src/window.blp:173
 msgid "_Run"
-msgstr ""
+msgstr "ה_רצה"
 
 #: src/window.blp:177
 msgid "Run (Ctrl+⏎)"
-msgstr ""
+msgstr "הרצה (Ctrl+⏎‎)"
 
 #: src/window.blp:248
 msgid "<b>Style CSS</b>"
-msgstr ""
+msgstr "<b>CSS סגנון</b>"
 
 #: src/window.blp:293
 msgid "<b>UI</b>"
-msgstr ""
+msgstr "<b>מנשק משתמש</b>"
 
 #: src/window.blp:333 src/window.blp:335
 msgid "Convert to XML"
-msgstr ""
+msgstr "המרה ל־XML"
 
 #: src/window.blp:344 src/window.blp:346
 msgid "Convert to Blueprint"
-msgstr ""
+msgstr "המרה למסמך תכנון"
 
 #: src/window.blp:420
 msgid "<b>Preview</b>"
-msgstr ""
+msgstr "<b>תצוגה מקדימה</b>"
 
 #: src/window.blp:428 src/window.blp:430
 msgid "Take Screenshot of Preview"
-msgstr ""
+msgstr "צילום מסך של התצוגה המקדימה"
 
 #: src/window.blp:460 src/window.blp:478
 msgid "Windowed Preview"
-msgstr ""
+msgstr "תצוגה מקדימה בחלון"
 
 #: src/window.blp:461 src/window.blp:479
 msgid ""
@@ -400,91 +404,91 @@ msgstr ""
 
 #: src/window.blp:468
 msgid "Show Preview Window"
-msgstr ""
+msgstr "הצגת חלון התצוגה המקדימה"
 
 #: src/window.blp:486
 msgid "Close Preview Window"
-msgstr ""
+msgstr "סגירת חלון התצוגה המקדימה"
 
 #: src/window.blp:520
 msgid "C_onsole"
-msgstr ""
+msgstr "מ_סוף"
 
 #: src/window.blp:524
 msgid "Show logs (Ctrl+Shift+K)"
-msgstr ""
+msgstr "הצגת יומנים (Ctrl+Shift+K)"
 
 #: src/window.blp:530
 msgid "_Inspector"
-msgstr ""
+msgstr "_חוקר"
 
 #: src/window.blp:533
 msgid "Open GTK Inspector (Ctrl+Shift+I)"
-msgstr ""
+msgstr "פתיחת חוקר GTK‏ (Ctrl+Shift+I)"
 
 #: src/window.blp:544
 msgid "Cl_ear"
-msgstr ""
+msgstr "מ_חיקה"
 
 #: src/window.blp:548
 msgid "Clear console (Ctrl+K)"
-msgstr ""
+msgstr "מחיקת המסוף (Ctrl+K)"
 
 #: src/window.blp:570
 msgid "Import File…"
-msgstr ""
+msgstr "ייבוא קובץ…"
 
 #: src/window.blp:575
 msgid "Bookmarks"
-msgstr ""
+msgstr "סימניות"
 
 #: src/window.blp:577
 msgid "Learn"
-msgstr ""
+msgstr "למידה"
 
 #: src/window.blp:580
 msgid "Developer Documentation"
-msgstr ""
+msgstr "תיעוד למפתחים"
 
 #: src/window.blp:587
 msgid "Human Interface Guidelines"
-msgstr ""
+msgstr "הנחיות למנשק אנושי"
 
 #: src/window.blp:593
 msgid "JavaScript"
-msgstr ""
+msgstr "JavaScript"
 
 #: src/window.blp:599
 msgid "Vala"
-msgstr ""
+msgstr "‎Vala"
 
 #: src/window.blp:605
 msgid "Blueprint"
-msgstr ""
+msgstr "מסמך תכנון"
 
 #: src/window.blp:612
 msgid "Get help"
-msgstr ""
+msgstr "קבלת עזרה"
 
 #: src/window.blp:615
 msgid "Discourse"
-msgstr ""
+msgstr "דיסקורס"
 
 #: src/window.blp:621
 msgid "Matrix"
-msgstr ""
+msgstr "Matrix"
 
 #: src/window.blp:629
 msgid "Platform Tools"
-msgstr ""
+msgstr "כלי פלטפורמה"
 
 #: src/window.blp:632
 msgid "Adwaita Demo"
-msgstr ""
+msgstr "הדגמה של Adwaita"
 
 #: src/window.blp:638
 msgid "GTK Demo"
-msgstr ""
+msgstr "הדגמה של GTK"
 
 #: src/window.blp:644
 msgid "GTK Widget Factory"
@@ -492,8 +496,8 @@ msgstr ""
 
 #: src/window.blp:657
 msgid "About Workbench"
-msgstr ""
+msgstr "על Workbench"
 
 #: src/window.js:396
 msgid "Are you sure you want to discard your changes?"
-msgstr ""
+msgstr "להתעלם מהשינויים שערכת?"
