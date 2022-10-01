@@ -99,7 +99,6 @@ async function loadSourceBuffer({ file, buffer }) {
 }
 
 const language_manager = new Source.LanguageManager();
-language_manager.set_search_path([
-  ...language_manager.get_search_path(),
-  "resource:///re/sonny/Workbench/language-specs",
-]);
+language_manager.append_search_path(
+  "resource:///re/sonny/Workbench/language-specs"
+);
