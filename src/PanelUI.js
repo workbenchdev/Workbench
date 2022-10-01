@@ -16,7 +16,7 @@ import {
   getItersAtRange,
 } from "./util.js";
 
-import { getPid, once } from "./troll/src/util.js";
+import { getPid, once } from "../troll/src/util.js";
 import WorkbenchHoverProvider from "./WorkbenchHoverProvider.js";
 
 const { addSignalMethods } = imports.signals;

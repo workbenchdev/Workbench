@@ -3,7 +3,7 @@ import Gio from "gi://Gio";
 
 import { LSPError } from "./LSP.js";
 
-import { promiseTask, once } from "../troll/src/util.js";
+import { promiseTask, once } from "../../troll/src/util.js";
 
 const { addSignalMethods } = imports.signals;
 

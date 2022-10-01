@@ -9,8 +9,6 @@ bin_conf.set('pkgdatadir', pkgdatadir)
 
 blueprints = custom_target('blueprints',
   input: files(
-    'shortcutsWindow.blp',
-    'Library/Library.blp',
     'Library/demos/Toasts/main.blp',
     'Library/demos/WebSocket client/main.blp',
     'Library/demos/Welcome/main.blp',
@@ -19,8 +17,6 @@ blueprints = custom_target('blueprints',
     'Library/demos/Notifications/main.blp',
     'Library/demos/Platform tools/main.blp',
     'Library/demos/Icon Browser/main.blp',
-    'window.blp',
-    'ThemeSelector.blp',
   ),
   output: '.',
   command: [
@@ -34,7 +30,7 @@ blueprints = custom_target('blueprints',
   ],
 )
 
-data_res = gnome.compile_resources(app_id + '.src',
+gnome.compile_resources(app_id + '.src',
   'app.gresource.xml',
   dependencies: blueprints,
   gresource_bundle: true,
@@ -58,5 +54,24 @@ configure_file(
   install_dir: get_option('bindir')
 )
 
-install_data('workbench-api.vala', install_dir: datadir)
+install_data('workbench-api.vala', install_dir: pkgdatadir)
 subdir('Previewer/vala-previewer')
+
+gjspack = find_program('../troll/gjspack/bin/gjspack')
+gresource = custom_target(app_id + '.gresource',
+  input: ['main.js', '../po/POTFILES'],
+  output: app_id + '.gresource',
+  command: [
+    gjspack,
+    '--appid=' + app_id,
+    '--prefix', '/re/sonny/Workbench',
+    '--resource-root', meson.project_source_root(),
+    '--no-executable',
+    '@INPUT0@',
+    '--potfiles', '@INPUT1@',
+    '@OUTDIR@',
+  ],
+  install: true,
+  install_dir: pkgdatadir,
+  build_always_stale: true,
+)

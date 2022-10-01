@@ -4,6 +4,8 @@ import Gtk from "gi://Gtk";
 
 import { decode } from "../util.js";
 
+import resource from "./Library.blp";
+
 const prefix = "/re/sonny/Workbench/Library";
 
 export default function Library({
@@ -11,7 +13,7 @@ export default function Library({
   window: appliation_window,
   application,
 }) {
-  const builder = Gtk.Builder.new_from_resource(`${prefix}/Library.ui`);
+  const builder = Gtk.Builder.new_from_resource(resource);
   const window = builder.get_object("library");
   window.set_transient_for(appliation_window);
 
