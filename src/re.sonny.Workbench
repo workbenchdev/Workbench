@@ -20,9 +20,6 @@ GLib.set_application_name("Workbench");
 const resource = Gio.resource_load("@pkgdatadir@/@app_id@.gresource");
 Gio.resources_register(resource);
 
-const resource2 = Gio.resource_load("@pkgdatadir@/@app_id@.src.gresource");
-Gio.resources_register(resource2);
-
 const loop = new GLib.MainLoop(null, false);
 // eslint-disable-next-line import/no-unresolved
 import("resource:///re/sonny/Workbench/src/main.js")
