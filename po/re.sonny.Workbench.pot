@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: re.sonny.Workbench\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-01 20:37+0200\n"
+"POT-Creation-Date: 2022-10-01 22:39+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -586,18 +586,6 @@ msgstr ""
 msgid "About Workbench"
 msgstr ""
 
-#: src/ThemeSelector.blp:24 src/ThemeSelector.blp:27
-msgid "Follow system style"
-msgstr ""
-
-#: src/ThemeSelector.blp:43 src/ThemeSelector.blp:46
-msgid "Light style"
-msgstr ""
-
-#: src/ThemeSelector.blp:62 src/ThemeSelector.blp:65
-msgid "Dark style"
-msgstr ""
-
 #: src/shortcutsWindow.blp:11
 msgid "Run Code"
 msgstr ""
@@ -632,4 +620,19 @@ msgstr ""
 
 #: src/Library/Library.blp:7
 msgid "Library"
+msgstr ""
+
+#: troll/src/widgets/ThemeSelector.blp:22
+#: troll/src/widgets/ThemeSelector.blp:25
+msgid "Follow system style"
+msgstr ""
+
+#: troll/src/widgets/ThemeSelector.blp:41
+#: troll/src/widgets/ThemeSelector.blp:44
+msgid "Light style"
+msgstr ""
+
+#: troll/src/widgets/ThemeSelector.blp:60
+#: troll/src/widgets/ThemeSelector.blp:63
+msgid "Dark style"
 msgstr ""
