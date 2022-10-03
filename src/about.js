@@ -43,7 +43,11 @@ ${getBlueprintVersion()}
       "Sonny Piers https://sonny.re",
       "Lorenz Wildberg https://gitlab.gnome.org/lwildberg",
     ],
-    designers: ["Tobias Bernard <tbernard@gnome.org>"],
+    designers: [
+      "Sonny Piers https://sonny.re",
+      "Tobias Bernard <tbernard@gnome.org>",
+    ],
+    artists: ["Tobias Bernard <tbernard@gnome.org>"],
   });
 
   dialog.add_credit_section(_("Contributors"), [

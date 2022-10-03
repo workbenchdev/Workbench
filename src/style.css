@@ -17,14 +17,8 @@
   border-bottom: solid 1px @borders;
 }
 
-#panel_code {
-  border-right: solid 1px @borders;
-}
-
-#panel_style {
-  border-right: solid 1px @borders;
-}
-
+#panel_code,
+#panel_style,
 #panel_ui {
   border-right: solid 1px @borders;
 }

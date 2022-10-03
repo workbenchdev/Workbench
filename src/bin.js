@@ -1,7 +1,5 @@
 #!@GJS@ -m
 
-// -*- mode: js; -*-
-
 import { exit } from "system";
 import GLib from "gi://GLib";
 import { setConsoleLogDomain } from "console";
@@ -21,7 +19,6 @@ const resource = Gio.resource_load("@pkgdatadir@/@app_id@.gresource");
 Gio.resources_register(resource);
 
 const loop = new GLib.MainLoop(null, false);
-// eslint-disable-next-line import/no-unresolved
 import("resource:///re/sonny/Workbench/src/main.js")
   .then((main) => {
     // Workaround for issue

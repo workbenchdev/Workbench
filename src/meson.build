@@ -1,5 +1,5 @@
 bin_conf = configuration_data()
-bin_conf.set('GJS', find_program('gjs').path())
+bin_conf.set('GJS', find_program('gjs').full_path())
 bin_conf.set('version', meson.project_version() + version_suffix)
 bin_conf.set('app_id', app_id)
 bin_conf.set('prefix', prefix)
@@ -41,7 +41,7 @@ gnome.compile_resources(app_id,
 )
 
 configure_file(
-  input: 're.sonny.Workbench',
+  input: 'bin.js',
   output: app_id,
   configuration: bin_conf,
   install: true,
