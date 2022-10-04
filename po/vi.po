@@ -8,13 +8,15 @@ msgstr ""
 "Project-Id-Version: re.sonny.Workbench\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-04 15:25+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2022-10-06 05:16+0000\n"
+"Last-Translator: lebao3105 <bao12345yocoo@gmail.com>\n"
+"Language-Team: Vietnamese <https://hosted.weblate.org/projects/workbench/workbench/vi/>\n"
 "Language: vi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.14.1\n"
 
 #. TRANSLATORS: Don't translate
 #: data/re.sonny.Workbench.desktop:4
@@ -31,32 +33,34 @@ msgid "CSS;JavaScript;GJS;Blueprint;builder;Vala;"
 msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:14
+#, fuzzy
 msgid "Workbench goal is to let you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a GTK user interface."
-msgstr ""
+msgstr "Mục tiêu của Workbench là để bạn trải nghiệm với các công nghệ của GNOME, kể cả khi đây là lần đầu tiên bạn mày mò về cả giao diện GTK."
 
 #: data/re.sonny.Workbench.metainfo.xml:15
 msgid "Among other things, Workbench comes with"
-msgstr ""
+msgstr "Giữa những thứ khác, Workbench đến với"
 
 #: data/re.sonny.Workbench.metainfo.xml:17
 msgid "realtime GTK/CSS preview"
-msgstr ""
+msgstr "Xem trước GTK/CSS trực tiếp"
 
 #: data/re.sonny.Workbench.metainfo.xml:18
 msgid "library of examples"
-msgstr ""
+msgstr "một kho với những ví dụ"
 
 #: data/re.sonny.Workbench.metainfo.xml:19
+#, fuzzy
 msgid "JavaScript and Vala runs without any setup"
-msgstr ""
+msgstr "Chạy JavaScript và Vala mà không cần setup"
 
 #: data/re.sonny.Workbench.metainfo.xml:20
 msgid "XML and Blueprint for describing user interface"
-msgstr ""
+msgstr "XML và Blueprint cho việc thiết lập giao diện người dùng"
 
 #: data/re.sonny.Workbench.metainfo.xml:21
 msgid "syntax highlighting, undo/redo, autosave, session restore"
-msgstr ""
+msgstr "tô sáng cú pháp, hoàn tác/làm lại, tự động lưu, khôi phục phiên"
 
 #: data/re.sonny.Workbench.metainfo.xml:22
 msgid "code formatter"
@@ -75,24 +79,27 @@ msgid "Add Blueprint markup syntax for UI"
 msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:54
+#, fuzzy
 msgid "Add Vala programming language for Code"
-msgstr ""
+msgstr "Thêm ngôn ngữ lập trình Vala cho Code"
 
 #: data/re.sonny.Workbench.metainfo.xml:55
 msgid "Add support for previewing templates"
-msgstr ""
+msgstr "Thêm hỗ trợ cho xem trước các mẫu"
 
 #: data/re.sonny.Workbench.metainfo.xml:56
+#, fuzzy
 msgid "Add support for previewing signal handlers"
-msgstr ""
+msgstr "Thêm hỗ trợ cho xem trước việc xử lý tín hiệu"
 
 #: data/re.sonny.Workbench.metainfo.xml:57
+#, fuzzy
 msgid "Include all icons from icon-development-kit"
-msgstr ""
+msgstr "Bao gồm tất cả các hình ảnh từ icon-development-kit"
 
 #: data/re.sonny.Workbench.metainfo.xml:58
 msgid "Improve application design"
-msgstr ""
+msgstr "Cải thiện thiết kế ứng dụng"
 
 #: data/re.sonny.Workbench.metainfo.xml:59
 #: data/re.sonny.Workbench.metainfo.xml:69
