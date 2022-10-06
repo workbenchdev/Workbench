@@ -7,8 +7,9 @@ import { promiseTask, once } from "../../troll/src/util.js";
 
 const { addSignalMethods } = imports.signals;
 
-const text_encoder = new TextEncoder();
-
+const encoder_utf8 = new TextEncoder("utf8");
+const decoder_utf8 = new TextDecoder("utf8");
+const decoder_ascii = new TextDecoder("ascii");
 export default class LSPClient {
   constructor(argv) {
     this.argv = argv;
@@ -41,31 +42,63 @@ export default class LSPClient {
       base_stream: this.proc.get_stdout_pipe(),
       close_base_stream: true,
     });
-    this._read();
+
+    this._read().catch(logError);
   }
 
-  _read() {
-    this.stdout.read_line_async(0, null, (self, res) => {
-      let line;
-      try {
-        [line] = this.stdout.read_line_finish_utf8(res);
-      } catch (err) {
-        logError(err);
-        return;
-      }
+  async _read_headers() {
+    const headers = Object.create(null);
 
-      if (line === null) return;
-      if (line.startsWith("{")) {
-        try {
-          this._onmessage(JSON.parse(line));
-          // eslint-disable-next-line no-empty
-        } catch (err) {
-          logError(err);
-        }
-      }
+    // eslint-disable-next-line no-constant-condition
+    while (true) {
+      const [bytes] = await promiseTask(
+        this.stdout,
+        "read_line_async",
+        "read_line_finish",
+        0,
+        null
+      );
+      const line = decoder_ascii.decode(bytes).trim();
+      if (!line) break;
 
-      this._read();
-    });
+      const idx = line.indexOf(": ");
+      const key = line.substring(0, idx);
+      const value = line.substring(idx + 2);
+      headers[key] = value;
+    }
+
+    return headers;
+  }
+
+  async _read_content(length) {
+    const bytes = await promiseTask(
+      this.stdout,
+      "read_bytes_async",
+      "read_bytes_finish",
+      length,
+      0,
+      null
+    );
+    const str = decoder_utf8.decode(bytes.toArray());
+    try {
+      return JSON.parse(str);
+      // eslint-disable-next-line no-empty
+    } catch (err) {
+      logError(err);
+    }
+  }
+
+  // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#baseProtocol
+  async _read() {
+    const headers = await this._read_headers();
+
+    const length = headers["Content-Length"];
+    const content = await this._read_content(length);
+    if (content) {
+      this._onmessage(content);
+    }
+
+    this._read().catch(logError);
   }
 
   _onmessage(message) {
@@ -86,7 +119,7 @@ export default class LSPClient {
     const message = { ...json, jsonrpc: "2.0" };
 
     const str = JSON.stringify(message);
-    const length = text_encoder.encode(str).byteLength;
+    const length = encoder_utf8.encode(str).byteLength;
     const bytes = new GLib.Bytes(`Content-Length: ${length}\r\n\r\n${str}`);
 
     if (this.stdin.clear_pending()) {
