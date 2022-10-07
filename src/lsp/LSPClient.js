@@ -102,6 +102,7 @@ export default class LSPClient {
   }
 
   _onmessage(message) {
+    console.log(message);
     this.emit("input", message);
 
     if (message.result) {

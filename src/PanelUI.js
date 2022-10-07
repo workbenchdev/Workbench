@@ -5,7 +5,7 @@ import Gtk from "gi://Gtk";
 import Pango from "gi://Pango";
 
 import LSPClient from "./lsp/LSPClient.js";
-import { LSPError, diagnostic_severities } from "./lsp/LSP.js";
+import { LSPError } from "./lsp/LSP.js";
 import {
   getLanguage,
   settings,
@@ -14,6 +14,7 @@ import {
   replaceBufferText,
   unstack,
   getItersAtRange,
+  handleDiagnostics,
 } from "./util.js";
 
 import { getPid, once } from "../troll/src/util.js";
@@ -263,17 +264,6 @@ function logBlueprintError(err) {
 //   });
 // }
 
-function logBlueprintDiagnostic({ range, message, severity }) {
-  GLib.log_structured("Blueprint", GLib.LogLevelFlags.LEVEL_DEBUG, {
-    MESSAGE: `Blueprint-${diagnostic_severities[severity]} ${
-      range.start.line + 1
-    }:${range.start.character} to ${range.end.line + 1}:${
-      range.end.character
-    } ${message}`,
-    SYSLOG_IDENTIFIER,
-  });
-}
-
 function createBlueprintClient({ data_dir, buffer, provider }) {
   const file_blueprint_logs = Gio.File.new_for_path(
     GLib.build_filenamev([data_dir, `blueprint-logs`])
@@ -306,28 +296,10 @@ function createBlueprintClient({ data_dir, buffer, provider }) {
   blueprint.connect(
     "notification::textDocument/publishDiagnostics",
     (self, { diagnostics }) => {
+      diagnostics.language = "Blueprint";
       handleDiagnostics({ diagnostics, buffer, provider });
     }
   );
 
   return blueprint;
-}
-
-function handleDiagnostics({ diagnostics, buffer, provider }) {
-  provider.diagnostics = diagnostics;
-
-  buffer.remove_tag_by_name(
-    "error",
-    buffer.get_start_iter(),
-    buffer.get_end_iter()
-  );
-
-  diagnostics.forEach((diagnostic) => handleDiagnostic(diagnostic, buffer));
-}
-
-function handleDiagnostic(diagnostic, buffer) {
-  logBlueprintDiagnostic(diagnostic);
-
-  const [start_iter, end_iter] = getItersAtRange(buffer, diagnostic.range);
-  buffer.apply_tag_by_name("error", start_iter, end_iter);
 }

@@ -3,7 +3,7 @@ import Gio from "gi://Gio";
 import Xdp from "gi://Xdp";
 import Gtk from "gi://Gtk";
 import Pango from "gi://Pango";
-import { rangeEquals } from "./lsp/LSP.js";
+import { rangeEquals, diagnostic_severities } from "./lsp/LSP.js";
 
 export const portal = new Xdp.Portal();
 
@@ -211,4 +211,35 @@ export function prepareSourceView({ source_view, provider }) {
   const hover = source_view.get_hover();
   // hover.hover_delay = 25;
   hover.add_provider(provider);
+}
+
+export function handleDiagnostics({ diagnostics, buffer, provider }) {
+  provider.diagnostics = diagnostics;
+
+  buffer.remove_tag_by_name(
+    "error",
+    buffer.get_start_iter(),
+    buffer.get_end_iter()
+  );
+
+  diagnostics.forEach((diagnostic) => { diagnostic.language = diagnostics.language; handleDiagnostic(diagnostic, buffer); });
+}
+
+function handleDiagnostic(diagnostic, buffer) {
+  logLanguageServerDiagnostic(diagnostic);
+
+  const [start_iter, end_iter] = getItersAtRange(buffer, diagnostic.range);
+  buffer.apply_tag_by_name("error", start_iter, end_iter);
+}
+
+function logLanguageServerDiagnostic({ range, message, severity, language }) {
+  console.log(language);
+  GLib.log_structured(language, GLib.LogLevelFlags.LEVEL_DEBUG, {
+    MESSAGE: `${language}-${diagnostic_severities[severity]} ${
+      range.start.line + 1
+    }:${range.start.character} to ${range.end.line + 1}:${
+      range.end.character
+    } ${message}`,
+    SYSLOG_IDENTIFIER: pkg.name,
+  });
 }

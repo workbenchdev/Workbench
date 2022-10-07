@@ -141,7 +141,6 @@ export default function Window({ application }) {
     builder,
     previewer,
     data_dir,
-    version,
   });
 
   previewer.setPanelCode(panel_code);
