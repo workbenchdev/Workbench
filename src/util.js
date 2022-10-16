@@ -233,7 +233,6 @@ function handleDiagnostic(diagnostic, buffer) {
 }
 
 function logLanguageServerDiagnostic({ range, message, severity, language }) {
-  console.log(language);
   GLib.log_structured(language, GLib.LogLevelFlags.LEVEL_DEBUG, {
     MESSAGE: `${language}-${diagnostic_severities[severity]} ${
       range.start.line + 1
