@@ -17,6 +17,13 @@ export default function Compiler(data_dir) {
   );
 
   async function compile(code) {
+    let args;
+    try {
+      args = code.split("\n")[0].split("/vala ")[1].split(" ");
+    } catch (error) {
+      console.debug(error);
+      return;
+    }
     await Promise.all([
       promiseTask(
         code_file,
@@ -37,11 +44,11 @@ export default function Compiler(data_dir) {
       ).catch(() => {}),
     ]);
 
+    GLib.chdir(data_dir);
     const valac = Gio.Subprocess.new(
       [
         "valac",
         code_file.get_path(),
-        api_file.get_path(),
         "--hide-internal",
         "-X",
         "-shared",
@@ -51,17 +58,9 @@ export default function Compiler(data_dir) {
         "workbench",
         "-o",
         module_file.get_path(),
-        "--pkg",
-        "gtk4",
-        "--pkg",
-        "gio-2.0",
-        "--pkg",
-        "libadwaita-1",
-        "--pkg",
-        "libsoup-3.0",
         "--vapi",
         "/dev/null",
-      ],
+      ].concat(args),
       Gio.SubprocessFlags.NONE
     );
 
