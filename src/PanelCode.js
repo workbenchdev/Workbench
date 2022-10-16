@@ -18,6 +18,10 @@ export default function PanelCode({ builder, previewer, data_dir }) {
   const state_file = getLanguage("vala").document.file;
   const provider = new WorkbenchHoverProvider();
 
+  const api_file = Gio.File.new_for_path(
+    GLib.build_filenamev([pkg.pkgdatadir, "workbench-api.vala"])
+  );
+
   let document_version = 0;
   prepareSourceView({
     source_view: getLanguage("vala").document.source_view,
@@ -72,6 +76,8 @@ export default function PanelCode({ builder, previewer, data_dir }) {
     if (vls.proc) return;
     vls.start();
 
+    api_file.copy(Gio.File.new_for_path (data_dir).get_child("workbench.vala"), Gio.FileCopyFlags.OVERWRITE, null, null);
+
     // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#initialize
     await vls.request("initialize", {
       processId: getPid(),
@@ -94,41 +100,51 @@ export default function PanelCode({ builder, previewer, data_dir }) {
   }
   setupLSP().catch(logError);
 
+  function createVLSClient({ data_dir, buffer, provider }) {
+    const vls = new LSPClient([
+      // "/usr/lib/sdk/vala/bin/vala-language-server",
+      "vala-language-server",
+    ]);
+    vls.connect("exit", () => {
+      console.debug("vls exit");
+    });
+    vls.connect("output", (self, message) => {
+      console.debug(`vls OUT:\n${JSON.stringify(message)}`);
+    });
+    vls.connect("input", (self, message) => {
+      console.debug(`vls IN:\n${JSON.stringify(message)}`);
+    });
+
+    vls.connect(
+      "notification::textDocument/publishDiagnostics",
+      (self, { diagnostics, uri }) => {
+        if (!state_file.equal(Gio.File.new_for_uri(uri))) {
+          return;
+        }
+        diagnostics.language = "Vala";
+        handleDiagnostics({ diagnostics, buffer, provider });
+      }
+    );
+
+    buffer.connect("modified-changed", () => {
+      if (!buffer.get_modified()) return;
+      updateVLS().catch(logError);
+    });
+
+    return vls;
+  }
+
+  async function updateVLS() {
+    await setupLSP();
+
+    await vls.notify("textDocument/didChange", {
+      textDocument: {
+        uri: state_file.get_uri (),
+        version: ++document_version,
+      },
+      contentChanges: [{ text: buffer_vala.text }],
+    });
+  }
+
   return panel;
-}
-
-function createVLSClient({ data_dir, buffer, provider }) {
-  const file_vls_logs = Gio.File.new_for_path(
-    GLib.build_filenamev([data_dir, `vls-logs`])
-  );
-  file_vls_logs.replace_contents(
-    " ",
-    null,
-    false,
-    Gio.FileCreateFlags.REPLACE_DESTINATION,
-    null
-  );
-  const vls = new LSPClient([
-    // "/usr/lib/sdk/vala/bin/vala-language-server",
-    "vala-language-server",
-  ]);
-  vls.connect("exit", () => {
-    console.debug("vls exit");
-  });
-  vls.connect("output", (self, message) => {
-    console.debug(`vls OUT:\n${JSON.stringify(message)}`);
-  });
-  vls.connect("input", (self, message) => {
-    console.debug(`vls IN:\n${JSON.stringify(message)}`);
-  });
-
-  vls.connect(
-    "notification::textDocument/publishDiagnostics",
-    (self, { diagnostics }) => {
-      diagnostics.language = "Vala";
-      handleDiagnostics({ diagnostics, buffer, provider });
-    }
-  );
-
-  return vls;
 }
