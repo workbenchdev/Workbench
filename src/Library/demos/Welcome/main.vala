@@ -1,3 +1,4 @@
+#!/usr/bin/vala workbench.vala --pkg gtk4 --pkg libadwaita-1
 
 public void main () {
 	  Gtk.init ();

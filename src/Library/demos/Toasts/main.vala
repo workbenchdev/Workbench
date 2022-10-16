@@ -1,3 +1,5 @@
+#!/usr/bin/vala workbench.vala --pkg gtk4 --pkg libadwaita-1
+
 public void main () {
   var overlay = workbench.builder.get_object ("overlay") as Adw.ToastOverlay;
 
