@@ -1,5 +1,5 @@
 {
-  "app-id": "re.sonny.Workbench",
+  "app-id": "re.sonny.Workbench.Devel",
   "runtime": "org.gnome.Sdk",
   "runtime-version": "43",
   "sdk": "org.gnome.Sdk",
@@ -46,13 +46,12 @@
     },
     {
       "name": "blueprint-compiler",
-      "builddir": true,
       "buildsystem": "meson",
+      "builddir": true,
       "sources": [
         {
-          "type": "git",
-          "url": "https://gitlab.gnome.org/sonny/blueprint-compiler",
-          "commit": "592ed7acab26f1633c03b0cd703a9cf2b7f09cb9"
+          "type": "dir",
+          "path": "./blueprint-compiler"
         }
       ]
     },
@@ -60,13 +59,11 @@
       "name": "Workbench",
       "buildsystem": "meson",
       "builddir": true,
-      "config-opts": ["-Dprofile=default"],
+      "config-opts": ["-Dprofile=development"],
       "sources": [
         {
-          "type": "git",
-          "url": "https://github.com/sonnyp/Workbench.git",
-          "tag": "v43.0",
-          "commit": "dff12cab700f452601b23e4cafbbb4c24d610946"
+          "type": "dir",
+          "path": "."
         }
       ]
     }

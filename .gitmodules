@@ -1,5 +1,5 @@
 [submodule "troll"]
-	path = src/troll
+	path = troll
 	url = https://github.com/sonnyp/troll.git
 [submodule "src/blueprint-compiler"]
 	path = blueprint-compiler

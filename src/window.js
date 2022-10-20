@@ -27,29 +27,31 @@ import prettier_postcss from "./lib/prettier-postcss.js";
 import Library, { readDemo } from "./Library/Library.js";
 import Previewer from "./Previewer/Previewer.js";
 import Compiler from "./Compiler.js";
-import { promiseTask } from "./troll/src/util.js";
-import ThemeSelector from "./ThemeSelector.js";
+import { promiseTask } from "../troll/src/util.js";
+import ThemeSelector from "../troll/src/widgets/ThemeSelector.js";
 import {
   remove_line_at_cursor,
   toggle_comment_line_at_cursor,
 } from "./editor_utils.js";
+
+import resource from "./window.blp";
 
 const scheme_manager = Source.StyleSchemeManager.get_default();
 const style_manager = Adw.StyleManager.get_default();
 
 const langs = Object.fromEntries(languages.map((lang) => [lang.id, lang]));
 
-export default function Window({ application, version }) {
+export default function Window({ application }) {
   Vte.Terminal.new();
 
   const data_dir = createDataDir();
 
-  const builder = Gtk.Builder.new_from_resource(
-    "/re/sonny/Workbench/window.ui"
-  );
+  const builder = Gtk.Builder.new_from_resource(resource);
 
   const window = builder.get_object("window");
-  // window.add_css_class("devel");
+  if (pkg.name.endsWith("Devel")) {
+    window.add_css_class("devel");
+  }
   window.set_application(application);
 
   // Popover menu theme switcher
@@ -154,7 +156,6 @@ export default function Window({ application, version }) {
     builder,
     langs,
     data_dir,
-    version,
     term_console,
   });
 

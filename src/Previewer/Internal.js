@@ -7,6 +7,7 @@ import Xdp from "gi://Xdp";
 import XdpGtk from "gi://XdpGtk4";
 import GObject from "gi://GObject";
 import Adw from "gi://Adw";
+import Gio from "gi://Gio";
 
 import { portal } from "../util.js";
 
@@ -281,7 +282,13 @@ function screenshot({ widget, window, data_dir }) {
     Xdp.OpenUriFlags.NONE, // flags
     null, // cancellable
     (self, result) => {
-      portal.open_uri_finish(result);
+      try {
+        portal.open_uri_finish(result);
+      } catch (err) {
+        if (err.code !== Gio.IOErrorEnum.CANCELLED) {
+          logError(err);
+        }
+      }
     }
   );
 }

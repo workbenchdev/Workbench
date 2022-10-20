@@ -1,5 +1,5 @@
-project('re.sonny.Workbench', ['vala', 'c'],
-  version: '42.3',
+project('Workbench', ['vala', 'c'],
+  version: '43.0',
   meson_version: '>= 0.59.0',
   license: 'GPL-3.0-only'
 )
@@ -7,11 +7,23 @@ project('re.sonny.Workbench', ['vala', 'c'],
 gnome = import('gnome')
 i18n = import('i18n')
 
-application_id = meson.project_name()
+if get_option('profile') == 'development'
+	app_id = 're.sonny.Workbench.Devel'
+  vcs_tag = run_command('git', 'rev-parse', '--short', 'HEAD').stdout().strip()
+  if vcs_tag == ''
+    version_suffix = '-devel'
+  else
+    version_suffix = '-@0@'.format(vcs_tag)
+  endif
+else
+  app_id = 're.sonny.Workbench'
+  version_suffix = ''
+endif
+
 prefix = get_option('prefix')
 bindir = join_paths(prefix, 'bin')
 datadir = join_paths(prefix, get_option('datadir'))
-pkgdatadir = join_paths(datadir, application_id)
+pkgdatadir = join_paths(datadir, app_id)
 
 subdir('data')
 subdir('src')

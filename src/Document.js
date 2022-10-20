@@ -2,7 +2,7 @@ import Source from "gi://GtkSource?version=5";
 import Gio from "gi://Gio";
 import GLib from "gi://GLib";
 import { replaceBufferText } from "./util.js";
-import { promiseTask } from "./troll/src/util.js";
+import { promiseTask } from "../troll/src/util.js";
 
 export default function Document({
   data_dir,
@@ -99,7 +99,6 @@ async function loadSourceBuffer({ file, buffer }) {
 }
 
 const language_manager = new Source.LanguageManager();
-language_manager.set_search_path([
-  ...language_manager.get_search_path(),
-  "resource:///re/sonny/Workbench/language-specs",
-]);
+language_manager.append_search_path(
+  "resource:///re/sonny/Workbench/language-specs"
+);

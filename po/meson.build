@@ -1,1 +1,1 @@
-i18n.gettext(application_id, preset: 'glib', args: ['--no-wrap'])
+i18n.gettext('re.sonny.Workbench', preset: 'glib', args: ['--no-wrap'])

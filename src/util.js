@@ -13,15 +13,12 @@ export function logEnum(obj, value) {
 }
 
 export const settings = new Gio.Settings({
-  schema_id: "re.sonny.Workbench",
+  schema_id: pkg.name,
   path: "/re/sonny/Workbench/",
 });
 
 export function createDataDir() {
-  const data_dir = GLib.build_filenamev([
-    GLib.get_user_data_dir(),
-    "re.sonny.Workbench",
-  ]);
+  const data_dir = GLib.build_filenamev([GLib.get_user_data_dir(), pkg.name]);
 
   try {
     Gio.File.new_for_path(data_dir).make_directory(null);

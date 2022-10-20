@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <component type="desktop">
-  <id>re.sonny.Workbench</id>
-  <launchable type="desktop-id">re.sonny.Workbench.desktop</launchable>
+  <id>@app_id@</id>
+  <launchable type="desktop-id">@app_id@.desktop</launchable>
   <name translatable="no">Workbench</name>
   <developer_name translatable="no">Sonny Piers</developer_name>
   <update_contact>sonnyp@gnome.org</update_contact>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0</project_license>
   <summary>Learn and prototype with GNOME technologies</summary>
-  <translation type="gettext">re.sonny.Workbench</translation>
+  <translation type="gettext">@app_id@</translation>
   <description>
     <p>Workbench goal is to let you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a GTK user interface.</p>
     <p>Among other things, Workbench comes with</p>
@@ -46,6 +46,19 @@
   </screenshots>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="43.0" date="2022-09-21">
+      <description>
+        <ul>
+          <li>GNOME 43</li>
+          <li>Display CSS errors inline</li>
+          <li>Fix responsiveness when working on large Blueprint files</li>
+          <li>Use AdwAboutWindow</li>
+          <li>Blueprint 0.4.0</li>
+          <li>VTE 0.70.0</li>
+          <li>Various bug and crash fixes</li>
+        </ul>
+      </description>
+    </release>
     <release version="42.3" date="2022-08-22">
       <description>
         <ul>
