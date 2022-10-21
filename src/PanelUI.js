@@ -47,44 +47,6 @@ export default function PanelUI({ builder, data_dir, term_console }) {
     provider,
   });
 
-  async function convertToXML() {
-    term_console.clear();
-    settings.set_boolean("show-console", true);
-
-    const xml = await compileBlueprint(buffer_blueprint.text);
-    replaceBufferText(buffer_xml, xml);
-    // settings.set_string("ui-lang", "xml");
-  }
-  // const button_ui_export_xml = builder.get_object("button_ui_export_xml");
-  // button_ui_export_xml.connect("clicked", () => {
-  //   convertToXML().catch(logError);
-  // });
-
-  async function convertToBlueprint() {
-    term_console.clear();
-    settings.set_boolean("show-console", true);
-
-    let blp;
-
-    try {
-      blp = await decompileXML(buffer_xml.text);
-    } catch (err) {
-      if (err instanceof LSPError) {
-        logBlueprintError(err);
-        return;
-      }
-      throw err;
-    }
-    replaceBufferText(buffer_blueprint, blp);
-    // settings.set_string("ui-lang", "blueprint");
-  }
-  // const button_ui_export_blueprint = builder.get_object(
-  //   "button_ui_export_blueprint"
-  // );
-  // button_ui_export_blueprint.connect("clicked", () => {
-  //   convertToBlueprint().catch(logError);
-  // });
-
   const button_ui = builder.get_object("button_ui");
   const panel_ui = builder.get_object("panel_ui");
   settings.bind("show-ui", button_ui, "active", Gio.SettingsBindFlags.DEFAULT);
@@ -95,10 +57,45 @@ export default function PanelUI({ builder, data_dir, term_console }) {
     GObject.BindingFlags.SYNC_CREATE
   );
 
+  const stack_ui = builder.get_object("stack_ui");
   const dropdown_ui_lang = builder.get_object("dropdown_ui_lang");
   // TODO: File a bug libadwaita
   // flat does nothing on GtkDropdown or GtkComboBox or GtkComboBoxText
   dropdown_ui_lang.get_first_child().get_style_context().add_class("flat");
+
+  async function convertToXML() {
+    term_console.clear();
+    settings.set_boolean("show-console", true);
+
+    try {
+      const xml = await compileBlueprint(buffer_blueprint.text);
+      replaceBufferText(buffer_xml, xml);
+      stack_ui.set_visible_child_name("xml");
+    } catch (err) {
+      logError(err);
+      stack_ui.set_visible_child_name("blueprint");
+      dropdown_ui_lang.set_selected(1);
+    }
+  }
+
+  async function convertToBlueprint() {
+    term_console.clear();
+    settings.set_boolean("show-console", true);
+
+    try {
+      const blp = await decompileXML(buffer_xml.text);
+      replaceBufferText(buffer_blueprint, blp);
+      stack_ui.set_visible_child_name("blueprint");
+    } catch (err) {
+      if (err instanceof LSPError) {
+        logBlueprintError(err);
+      } else {
+        logError(err);
+      }
+      stack_ui.set_visible_child_name("xml");
+      dropdown_ui_lang.set_selected(0);
+    }
+  }
 
   settings.bind(
     "ui-language",
@@ -110,14 +107,17 @@ export default function PanelUI({ builder, data_dir, term_console }) {
   dropdown_ui_lang.connect("notify::selected-item", switchLanguage);
   function switchLanguage() {
     const language = getLanguage(dropdown_ui_lang.selected_item.string);
-    console.log(language);
-    // panel.language = dropdown_code_lang.selected_item.string;
-    // stack_code.visible_child_name = panel.language;
-    // previewer.useInternal();
-    // previewer.update();
-    builder.get_object("stack_ui").set_visible_child_name(language.id);
+    if (stack_ui.get_visible_child_name() === language.id) return;
+
+    if (language.id === "xml") {
+      convertToXML();
+    } else if (language.id === "blueprint") {
+      convertToBlueprint();
+    }
   }
-  switchLanguage();
+  stack_ui.set_visible_child_name(
+    getLanguage(dropdown_ui_lang.selected_item.string).id
+  );
 
   let handler_ids = null;
 
@@ -136,7 +136,6 @@ export default function PanelUI({ builder, data_dir, term_console }) {
   function start() {
     stop();
     lang = getLanguage(dropdown_ui_lang.selected_item.string);
-    console.log(lang);
     // cannot use "changed" signal as it triggers many time for pasting
     handler_ids = connect_signals(lang.document.buffer, {
       "end-user-action": scheduleUpdate,
