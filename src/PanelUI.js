@@ -53,12 +53,12 @@ export default function PanelUI({ builder, data_dir, term_console }) {
 
     const xml = await compileBlueprint(buffer_blueprint.text);
     replaceBufferText(buffer_xml, xml);
-    settings.set_string("ui-lang", "xml");
+    // settings.set_string("ui-lang", "xml");
   }
-  const button_ui_export_xml = builder.get_object("button_ui_export_xml");
-  button_ui_export_xml.connect("clicked", () => {
-    convertToXML().catch(logError);
-  });
+  // const button_ui_export_xml = builder.get_object("button_ui_export_xml");
+  // button_ui_export_xml.connect("clicked", () => {
+  //   convertToXML().catch(logError);
+  // });
 
   async function convertToBlueprint() {
     term_console.clear();
@@ -76,14 +76,14 @@ export default function PanelUI({ builder, data_dir, term_console }) {
       throw err;
     }
     replaceBufferText(buffer_blueprint, blp);
-    settings.set_string("ui-lang", "blueprint");
+    // settings.set_string("ui-lang", "blueprint");
   }
-  const button_ui_export_blueprint = builder.get_object(
-    "button_ui_export_blueprint"
-  );
-  button_ui_export_blueprint.connect("clicked", () => {
-    convertToBlueprint().catch(logError);
-  });
+  // const button_ui_export_blueprint = builder.get_object(
+  //   "button_ui_export_blueprint"
+  // );
+  // button_ui_export_blueprint.connect("clicked", () => {
+  //   convertToBlueprint().catch(logError);
+  // });
 
   const button_ui = builder.get_object("button_ui");
   const panel_ui = builder.get_object("panel_ui");
@@ -98,24 +98,26 @@ export default function PanelUI({ builder, data_dir, term_console }) {
   const dropdown_ui_lang = builder.get_object("dropdown_ui_lang");
   // TODO: File a bug libadwaita
   // flat does nothing on GtkDropdown or GtkComboBox or GtkComboBoxText
-  dropdown_ui_lang
-    .get_first_child()
-    .get_first_child()
-    .get_style_context()
-    .add_class("flat");
+  dropdown_ui_lang.get_first_child().get_style_context().add_class("flat");
 
   settings.bind(
-    "ui-lang",
+    "ui-language",
     dropdown_ui_lang,
-    "active_id",
+    "selected",
     Gio.SettingsBindFlags.DEFAULT
   );
-  settings.bind(
-    "ui-lang",
-    builder.get_object("stack_ui"),
-    "visible-child-name",
-    Gio.SettingsBindFlags.DEFAULT
-  );
+
+  dropdown_ui_lang.connect("notify::selected-item", switchLanguage);
+  function switchLanguage() {
+    const language = getLanguage(dropdown_ui_lang.selected_item.string);
+    console.log(language);
+    // panel.language = dropdown_code_lang.selected_item.string;
+    // stack_code.visible_child_name = panel.language;
+    // previewer.useInternal();
+    // previewer.update();
+    builder.get_object("stack_ui").set_visible_child_name(language.id);
+  }
+  switchLanguage();
 
   let handler_ids = null;
 
@@ -133,7 +135,8 @@ export default function PanelUI({ builder, data_dir, term_console }) {
 
   function start() {
     stop();
-    lang = getLanguage(settings.get_string("ui-lang"));
+    lang = getLanguage(dropdown_ui_lang.selected_item.string);
+    console.log(lang);
     // cannot use "changed" signal as it triggers many time for pasting
     handler_ids = connect_signals(lang.document.buffer, {
       "end-user-action": scheduleUpdate,
@@ -149,7 +152,7 @@ export default function PanelUI({ builder, data_dir, term_console }) {
     }
   }
 
-  settings.connect_after("changed::ui-lang", () => {
+  settings.connect_after("changed::ui-language", () => {
     start();
     scheduleUpdate();
   });

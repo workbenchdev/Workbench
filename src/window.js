@@ -335,7 +335,7 @@ export default function Window({ application }) {
 
     const langs = JSON.parse(target.unpack()).langs;
     settings.set_int("code-language", langs[0]);
-    settings.set_string("ui-lang", langs[1]);
+    settings.set_int("ui-language", langs[1]);
   });
   window.add_action(undo_action);
 
@@ -368,7 +368,7 @@ export default function Window({ application }) {
           ],
           langs: [
             settings.get_int("code-language"),
-            settings.get_string("ui-lang"),
+            settings.get_int("ui-language"),
           ],
         })
       ),
@@ -449,7 +449,7 @@ export default function Window({ application }) {
           ],
           langs: [
             settings.get_int("code-language"),
-            settings.get_string("ui-lang"),
+            settings.get_int("ui-language"),
           ],
         })
       ),
@@ -473,10 +473,10 @@ export default function Window({ application }) {
 
     settings.set_boolean(`show-${language.panel}`, true);
 
-    if (language.id === "blueprint") {
-      settings.set_string("ui-lang", "blueprint");
-    } else if (language.id === "xml") {
-      settings.set_string("ui-lang", "xml");
+    if (language.id === "xml") {
+      settings.set_int("ui-language", 0);
+    } else if (language.id === "blueprint") {
+      settings.set_int("ui-language", 1);
     } else if (language.id === "javascript") {
       settings.set_int("code-language", 0);
     } else if (language.id === "vala") {
