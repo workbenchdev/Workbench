@@ -32,6 +32,11 @@ import ThemeSelector from "../troll/src/widgets/ThemeSelector.js";
 
 import resource from "./window.blp";
 
+import "./icons/re.sonny.Workbench-code-symbolic.svg" assert { type: "icon" };
+import "./icons/re.sonny.Workbench-placeholder-symbolic.svg" assert { type: "icon" };
+import "./icons/re.sonny.Workbench-preview-symbolic.svg" assert { type: "icon" };
+import "./icons/re.sonny.Workbench-ui-symbolic.svg" assert { type: "icon" };
+
 const scheme_manager = Source.StyleSchemeManager.get_default();
 const style_manager = Adw.StyleManager.get_default();
 
@@ -109,6 +114,7 @@ export default function Window({ application }) {
   });
 
   const panel_ui = PanelUI({
+    application,
     builder,
     langs,
     data_dir,
@@ -335,7 +341,7 @@ export default function Window({ application }) {
 
     const langs = JSON.parse(target.unpack()).langs;
     settings.set_int("code-language", langs[0]);
-    settings.set_string("ui-lang", langs[1]);
+    settings.set_int("ui-language", langs[1]);
   });
   window.add_action(undo_action);
 
@@ -368,7 +374,7 @@ export default function Window({ application }) {
           ],
           langs: [
             settings.get_int("code-language"),
-            settings.get_string("ui-lang"),
+            settings.get_int("ui-language"),
           ],
         })
       ),
@@ -449,7 +455,7 @@ export default function Window({ application }) {
           ],
           langs: [
             settings.get_int("code-language"),
-            settings.get_string("ui-lang"),
+            settings.get_int("ui-language"),
           ],
         })
       ),
@@ -473,10 +479,10 @@ export default function Window({ application }) {
 
     settings.set_boolean(`show-${language.panel}`, true);
 
-    if (language.id === "blueprint") {
-      settings.set_string("ui-lang", "blueprint");
-    } else if (language.id === "xml") {
-      settings.set_string("ui-lang", "xml");
+    if (language.id === "xml") {
+      settings.set_int("ui-language", 0);
+    } else if (language.id === "blueprint") {
+      settings.set_int("ui-language", 1);
     } else if (language.id === "javascript") {
       settings.set_int("code-language", 0);
     } else if (language.id === "vala") {

@@ -4,8 +4,8 @@ using Vte 3.91;
 using GtkSource 5;
 
 Gtk.ApplicationWindow window {
-  default-width: "800";
-  default-height: "600";
+  default-width: 800;
+  default-height: 600;
   maximized: true;
   titlebar: Gtk.HeaderBar {
     [start]
@@ -263,16 +263,14 @@ Gtk.ApplicationWindow window {
                 styles ["spacer"]
               }
 
-              Gtk.ComboBoxText dropdown_ui_lang {
-                // TODO: report issue - active-id does not work
-                // also with GTK Builder XML
-                // active-id: "xml";
-                name: "dropdown_ui_lang";
-                items [
-                  xml: "XML",
-                  blueprint: "Blueprint",
-                ]
-                tooltip-text: _("Switch document");
+              DropDown dropdown_ui_lang {
+                model: StringList {
+                  strings [
+                    "XML",
+                    "Blueprint",
+                  ]
+                };
+                tooltip-text: _("Convert and switch syntax");
               }
             }
 

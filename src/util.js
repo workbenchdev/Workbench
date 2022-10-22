@@ -89,7 +89,9 @@ export const languages = [
 ];
 
 export function getLanguage(id) {
-  return languages.find((language) => language.id === id);
+  return languages.find(
+    (language) => language.id.toLowerCase() === id.toLowerCase()
+  );
 }
 
 export function getLanguageForFile(file) {

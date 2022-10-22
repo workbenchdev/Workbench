@@ -23,7 +23,12 @@ const { addSignalMethods } = imports.signals;
 
 const SYSLOG_IDENTIFIER = pkg.name;
 
-export default function PanelUI({ builder, data_dir, term_console }) {
+export default function PanelUI({
+  application,
+  builder,
+  data_dir,
+  term_console,
+}) {
   let lang;
 
   const panel = {
@@ -47,13 +52,30 @@ export default function PanelUI({ builder, data_dir, term_console }) {
     provider,
   });
 
+  const button_ui = builder.get_object("button_ui");
+  const panel_ui = builder.get_object("panel_ui");
+
+  settings.bind("show-ui", button_ui, "active", Gio.SettingsBindFlags.DEFAULT);
+  button_ui.bind_property(
+    "active",
+    panel_ui,
+    "visible",
+    GObject.BindingFlags.SYNC_CREATE
+  );
+
+  const stack_ui = builder.get_object("stack_ui");
+  const dropdown_ui_lang = builder.get_object("dropdown_ui_lang");
+  // TODO: File a bug libadwaita
+  // flat does nothing on GtkDropdown or GtkComboBox or GtkComboBoxText
+  dropdown_ui_lang.get_first_child().get_style_context().add_class("flat");
+
   async function convertToXML() {
     term_console.clear();
     settings.set_boolean("show-console", true);
 
     const xml = await compileBlueprint(buffer_blueprint.text);
     replaceBufferText(buffer_xml, xml);
-    settings.set_string("ui-lang", "xml");
+    settings.set_int("ui-language", 0);
   }
   const button_ui_export_xml = builder.get_object("button_ui_export_xml");
   button_ui_export_xml.connect("clicked", () => {
@@ -75,8 +97,9 @@ export default function PanelUI({ builder, data_dir, term_console }) {
       }
       throw err;
     }
+
     replaceBufferText(buffer_blueprint, blp);
-    settings.set_string("ui-lang", "blueprint");
+    settings.set_int("ui-language", 1);
   }
   const button_ui_export_blueprint = builder.get_object(
     "button_ui_export_blueprint"
@@ -85,37 +108,19 @@ export default function PanelUI({ builder, data_dir, term_console }) {
     convertToBlueprint().catch(logError);
   });
 
-  const button_ui = builder.get_object("button_ui");
-  const panel_ui = builder.get_object("panel_ui");
-  settings.bind("show-ui", button_ui, "active", Gio.SettingsBindFlags.DEFAULT);
-  button_ui.bind_property(
-    "active",
-    panel_ui,
-    "visible",
-    GObject.BindingFlags.SYNC_CREATE
-  );
-
-  const dropdown_ui_lang = builder.get_object("dropdown_ui_lang");
-  // TODO: File a bug libadwaita
-  // flat does nothing on GtkDropdown or GtkComboBox or GtkComboBoxText
-  dropdown_ui_lang
-    .get_first_child()
-    .get_first_child()
-    .get_style_context()
-    .add_class("flat");
-
   settings.bind(
-    "ui-lang",
+    "ui-language",
     dropdown_ui_lang,
-    "active_id",
+    "selected",
     Gio.SettingsBindFlags.DEFAULT
   );
-  settings.bind(
-    "ui-lang",
-    builder.get_object("stack_ui"),
-    "visible-child-name",
-    Gio.SettingsBindFlags.DEFAULT
-  );
+
+  dropdown_ui_lang.connect("notify::selected-item", switchLanguage);
+  function switchLanguage() {
+    const language = getLanguage(dropdown_ui_lang.selected_item.string);
+    stack_ui.set_visible_child_name(language.id);
+  }
+  switchLanguage();
 
   let handler_ids = null;
 
@@ -133,7 +138,7 @@ export default function PanelUI({ builder, data_dir, term_console }) {
 
   function start() {
     stop();
-    lang = getLanguage(settings.get_string("ui-lang"));
+    lang = getLanguage(dropdown_ui_lang.selected_item.string);
     // cannot use "changed" signal as it triggers many time for pasting
     handler_ids = connect_signals(lang.document.buffer, {
       "end-user-action": scheduleUpdate,
@@ -149,7 +154,7 @@ export default function PanelUI({ builder, data_dir, term_console }) {
     }
   }
 
-  settings.connect_after("changed::ui-lang", () => {
+  settings.connect_after("changed::ui-language", () => {
     start();
     scheduleUpdate();
   });
