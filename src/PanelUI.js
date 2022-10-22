@@ -3,6 +3,8 @@ import GObject from "gi://GObject";
 import GLib from "gi://GLib";
 import Gtk from "gi://Gtk";
 import Pango from "gi://Pango";
+import Adw from "gi://Adw";
+import { gettext as _ } from "gettext";
 
 import LSPClient from "./lsp/LSPClient.js";
 import { LSPError, diagnostic_severities } from "./lsp/LSP.js";
@@ -23,7 +25,12 @@ const { addSignalMethods } = imports.signals;
 
 const SYSLOG_IDENTIFIER = pkg.name;
 
-export default function PanelUI({ builder, data_dir, term_console }) {
+export default function PanelUI({
+  application,
+  builder,
+  data_dir,
+  term_console,
+}) {
   let lang;
 
   const panel = {
@@ -49,6 +56,10 @@ export default function PanelUI({ builder, data_dir, term_console }) {
 
   const button_ui = builder.get_object("button_ui");
   const panel_ui = builder.get_object("panel_ui");
+  const ui_experimental_blueprint = builder.get_object(
+    "ui_experimental_blueprint"
+  );
+
   settings.bind("show-ui", button_ui, "active", Gio.SettingsBindFlags.DEFAULT);
   button_ui.bind_property(
     "active",
@@ -64,7 +75,8 @@ export default function PanelUI({ builder, data_dir, term_console }) {
   dropdown_ui_lang.get_first_child().get_style_context().add_class("flat");
 
   async function convertToXML() {
-    term_console.clear();
+    log("xml");
+    // term_console.clear();
     settings.set_boolean("show-console", true);
 
     try {
@@ -79,7 +91,8 @@ export default function PanelUI({ builder, data_dir, term_console }) {
   }
 
   async function convertToBlueprint() {
-    term_console.clear();
+    log("blueprint");
+    // term_console.clear();
     settings.set_boolean("show-console", true);
 
     try {
@@ -107,6 +120,7 @@ export default function PanelUI({ builder, data_dir, term_console }) {
   dropdown_ui_lang.connect("notify::selected-item", switchLanguage);
   function switchLanguage() {
     const language = getLanguage(dropdown_ui_lang.selected_item.string);
+    ui_experimental_blueprint.visible = language.id === "blueprint";
     if (stack_ui.get_visible_child_name() === language.id) return;
 
     if (language.id === "xml") {
@@ -115,9 +129,21 @@ export default function PanelUI({ builder, data_dir, term_console }) {
       convertToBlueprint();
     }
   }
-  stack_ui.set_visible_child_name(
-    getLanguage(dropdown_ui_lang.selected_item.string).id
-  );
+  const language = getLanguage(dropdown_ui_lang.selected_item.string);
+  stack_ui.set_visible_child_name(language.id);
+  ui_experimental_blueprint.visible = language.id === "blueprint";
+  ui_experimental_blueprint.connect("clicked", () => {
+    const dialog = new Adw.MessageDialog({
+      transient_for: application.get_active_window(),
+      heading: _("Experimental"),
+      body: _(
+        'Blueprint is experimental.\nFuture versions may have breaking syntax changes.\n<a href="https://jwestman.pages.gitlab.gnome.org/blueprint-compiler/">Homepage</a>'
+      ),
+      body_use_markup: true,
+    });
+    dialog.add_response("ok", _("Understood"));
+    dialog.present();
+  });
 
   let handler_ids = null;
 

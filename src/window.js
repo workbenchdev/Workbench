@@ -32,6 +32,11 @@ import ThemeSelector from "../troll/src/widgets/ThemeSelector.js";
 
 import resource from "./window.blp";
 
+import "./icons/re.sonny.Workbench-code-symbolic.svg" assert { type: "icon" };
+import "./icons/re.sonny.Workbench-placeholder-symbolic.svg" assert { type: "icon" };
+import "./icons/re.sonny.Workbench-preview-symbolic.svg" assert { type: "icon" };
+import "./icons/re.sonny.Workbench-ui-symbolic.svg" assert { type: "icon" };
+
 const scheme_manager = Source.StyleSchemeManager.get_default();
 const style_manager = Adw.StyleManager.get_default();
 
@@ -109,6 +114,7 @@ export default function Window({ application }) {
   });
 
   const panel_ui = PanelUI({
+    application,
     builder,
     langs,
     data_dir,

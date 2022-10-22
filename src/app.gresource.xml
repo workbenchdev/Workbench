@@ -40,22 +40,4 @@
     <file>Library/demos/Custom widget/main.js</file>
     <file>Library/demos/Custom widget/main.json</file>
   </gresource>
- <gresource prefix="/re/sonny/Workbench/icons/scalable/actions">
-    <file
-      preprocess="xml-stripblanks"
-      alias="re.sonny.Workbench-code-symbolic.svg"
-    >icons/re.sonny.Workbench-code-symbolic.svg</file>
-    <file
-      preprocess="xml-stripblanks"
-      alias="re.sonny.Workbench-placeholder-symbolic.svg"
-    >icons/re.sonny.Workbench-placeholder-symbolic.svg</file>
-    <file
-      preprocess="xml-stripblanks"
-      alias="re.sonny.Workbench-preview-symbolic.svg"
-    >icons/re.sonny.Workbench-preview-symbolic.svg</file>
-    <file
-      preprocess="xml-stripblanks"
-      alias="re.sonny.Workbench-ui-symbolic.svg"
-    >icons/re.sonny.Workbench-ui-symbolic.svg</file>
-  </gresource>
 </gresources>
