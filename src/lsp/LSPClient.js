@@ -58,7 +58,6 @@ export default class LSPClient {
         0,
         null
       );
-      if (!bytes) break;
       const line = decoder_ascii.decode(bytes).trim();
       if (!line) break;
 
@@ -80,7 +79,6 @@ export default class LSPClient {
       0,
       null
     );
-    if (!bytes) return;
     const str = decoder_utf8.decode(bytes.toArray());
     try {
       return JSON.parse(str);
