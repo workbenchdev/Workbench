@@ -272,10 +272,32 @@ Gtk.ApplicationWindow window {
                 };
                 tooltip-text: _("Convert and switch syntax");
               }
+            }
 
-              Button ui_experimental_blueprint {
-                icon-name: "applications-science-symbolic";
-              tooltip-text: _("Informaton about Blueprint");
+            [end]
+            Stack stack_ui_export {
+              visible-child-name: bind stack_ui.visible-child-name;
+
+              StackPage {
+                name: 'blueprint';
+                child: Button button_ui_export_xml {
+                  icon-name: "horizontal-arrows-right-symbolic";
+                  tooltip-text: _("Convert to XML");
+                  accessibility {
+                    label: _("Convert to XML");
+                  }
+                };
+              }
+
+              StackPage {
+                name: 'xml';
+                child: Button button_ui_export_blueprint {
+                  icon-name: "horizontal-arrows-left-symbolic";
+                  tooltip-text: _("Convert to Blueprint");
+                  accessibility {
+                    label: _("Convert to Blueprint");
+                  }
+                };
               }
             }
           }
