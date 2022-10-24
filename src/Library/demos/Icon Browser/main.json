@@ -1,7 +1,0 @@
-{
-  "name": "Icon Browser",
-  "category": "tools",
-  "description": "Find icons for your prototypes. Features a custom widget and GtkFlowBox with search.",
-  "panels": ["preview"],
-  "autorun": true
-}

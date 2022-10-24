@@ -1,0 +1,18 @@
+using Gtk 4.0;
+
+template IconWidget : FlowBoxChild {
+  focusable: false;
+  halign: start;
+  Button button {
+    clicked => onClicked();
+    width-request: 48;
+    height-request: 48;
+    Image image {
+      icon-name: "applications-science-symbolic"; // preview only
+      pixel-size: 32;
+      halign: center;
+      valign: center;
+    }
+    styles ["flat"]
+  }
+}

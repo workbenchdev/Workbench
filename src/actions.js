@@ -10,6 +10,8 @@ import About from "./about.js";
 import shortcutsWindow from "./shortcutsWindow.js";
 import { portal, languages, settings } from "./util.js";
 
+import IconLibrary from "./IconLibrary/main.js";
+
 export default function Actions({ application }) {
   const quit = new Gio.SimpleAction({
     name: "quit",
@@ -70,11 +72,21 @@ export default function Actions({ application }) {
   application.add_action(action_open_file);
   application.set_accels_for_action("app.open", ["<Control>O"]);
 
-  const open_uri = new Gio.SimpleAction({
+  const action_icon_library = new Gio.SimpleAction({
+    name: "icon_library",
+  });
+  let window_icon_browser;
+  action_icon_library.connect("activate", (self, target) => {
+    window_icon_browser ??= IconLibrary();
+    window_icon_browser.present();
+  });
+  application.add_action(action_icon_library);
+
+  const action_open_uri = new Gio.SimpleAction({
     name: "open_uri",
     parameter_type: new GLib.VariantType("s"),
   });
-  open_uri.connect("activate", (self, target) => {
+  action_open_uri.connect("activate", (self, target) => {
     // This is not using the portal but we silence the GVFS warnings
     // in `log_handler.js`
     Gtk.show_uri(
@@ -99,7 +111,7 @@ export default function Actions({ application }) {
     //   }
     // );
   });
-  application.add_action(open_uri);
+  application.add_action(action_open_uri);
 
   const action_platform_tools = new Gio.SimpleAction({
     name: "platform_tools",

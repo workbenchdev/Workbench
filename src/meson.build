@@ -23,7 +23,6 @@ blueprints = custom_target('blueprints',
     'Library/demos/Custom widget/main.blp',
     'Library/demos/Notifications/main.blp',
     'Library/demos/Platform tools/main.blp',
-    'Library/demos/Icon Browser/main.blp',
   ),
   output: '.',
   command: [
