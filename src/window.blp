@@ -272,6 +272,10 @@ Gtk.ApplicationWindow window {
                 };
                 tooltip-text: _("Convert and switch syntax");
               }
+              Button button_ui_experimental_blueprint {
+                icon-name: "applications-science-symbolic";
+                tooltip-text: _("Informaton about Blueprint");
+              }
             }
 
             [end]
@@ -521,6 +525,23 @@ Gtk.ApplicationWindow window {
       }
     }
   }
+}
+
+.Modal modal_blueprint_experimental {
+  default-width: 368;
+  default-height: 480;
+
+  child: Adw.StatusPage {
+    vexpand: true;
+    description: _("Future versions may have breaking syntax.");
+    title: _("Blueprint is\nExperimental");
+    icon-name: "re.sonny.Workbench-beaker";
+    Button button_blueprint_documentation {
+      halign: center;
+      label: _("Documentation");
+      styles ["suggested-action", "pill"]
+    }
+  };
 }
 
 menu menu_app {

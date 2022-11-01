@@ -115,10 +115,30 @@ export default function PanelUI({
     Gio.SettingsBindFlags.DEFAULT
   );
 
+  const button_ui_experimental_blueprint = builder.get_object(
+    "button_ui_experimental_blueprint"
+  );
+  button_ui_experimental_blueprint.connect("clicked", () => {
+    const modal = builder.get_object("modal_blueprint_experimental");
+    modal.set_transient_for(application.get_active_window());
+    modal.present();
+  });
+  const button_blueprint_documentation = builder.get_object(
+    "button_blueprint_documentation"
+  );
+  button_blueprint_documentation.connect("clicked", () => {
+    Gtk.show_uri(
+      null,
+      "https://jwestman.pages.gitlab.gnome.org/blueprint-compiler/",
+      null
+    );
+  });
+
   dropdown_ui_lang.connect("notify::selected-item", switchLanguage);
   function switchLanguage() {
     const language = getLanguage(dropdown_ui_lang.selected_item.string);
     stack_ui.set_visible_child_name(language.id);
+    button_ui_experimental_blueprint.visible = language.id === "blueprint";
   }
   switchLanguage();
 

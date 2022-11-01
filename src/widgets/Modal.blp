@@ -1,0 +1,22 @@
+using Gtk 4.0;
+using Adw 1;
+
+template Modal : Adw.Window {
+  title: "";
+  modal: true;
+  hide-on-close: true;
+
+  content: Box {
+    vexpand: true;
+    orientation: vertical;
+
+    Adw.HeaderBar {
+      styles ["flat"]
+    }
+
+    Box container {
+      vexpand: true;
+      orientation: vertical;
+    }
+  };
+}

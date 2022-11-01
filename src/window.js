@@ -32,10 +32,13 @@ import ThemeSelector from "../troll/src/widgets/ThemeSelector.js";
 
 import resource from "./window.blp";
 
+import "./icons/re.sonny.Workbench-beaker.svg" assert { type: "icon" };
 import "./icons/re.sonny.Workbench-code-symbolic.svg" assert { type: "icon" };
 import "./icons/re.sonny.Workbench-placeholder-symbolic.svg" assert { type: "icon" };
 import "./icons/re.sonny.Workbench-preview-symbolic.svg" assert { type: "icon" };
 import "./icons/re.sonny.Workbench-ui-symbolic.svg" assert { type: "icon" };
+
+import "./widgets/Modal.js";
 
 const scheme_manager = Source.StyleSchemeManager.get_default();
 const style_manager = Adw.StyleManager.get_default();
