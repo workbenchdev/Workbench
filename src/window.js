@@ -414,7 +414,7 @@ export default function Window({ application }) {
     } else {
       term_console.clear();
       panel_ui.start();
-      panel_ui.update();
+      await panel_ui.update();
       previewer.start();
       previewer.update();
     }

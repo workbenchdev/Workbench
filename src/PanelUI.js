@@ -144,8 +144,8 @@ export default function PanelUI({
 
   let handler_ids = null;
 
-  // eslint-disable-next-line prefer-arrow-callback
-  const scheduleUpdate = unstack(async function update() {
+  const scheduleUpdate = unstack(update);
+  async function update() {
     let xml;
     if (lang.id === "xml") {
       xml = lang.document.buffer.text;
@@ -154,7 +154,7 @@ export default function PanelUI({
     }
     panel.xml = xml || "";
     panel.emit("updated");
-  });
+  }
 
   function start() {
     stop();
@@ -242,7 +242,7 @@ export default function PanelUI({
 
   panel.start = start;
   panel.stop = stop;
-  panel.update = scheduleUpdate;
+  panel.update = update;
   panel.panel = panel_ui;
 
   return panel;
