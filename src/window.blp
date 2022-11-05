@@ -181,6 +181,14 @@ Gtk.ApplicationWindow window {
                   show-line-numbers: true;
                   smart-backspace: true;
                   tab-width: 2;
+
+                  ShortcutController js_controller {
+                    scope: managed;
+                    Shortcut {
+                      trigger: '<Control>j';
+                      action: 'cool';
+                    }
+                  }
                 }
               };
             }

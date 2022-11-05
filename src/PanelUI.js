@@ -13,8 +13,8 @@ import {
   disconnect_signals,
   replaceBufferText,
   unstack,
-  getItersAtRange,
 } from "./util.js";
+import { getItersAtRange } from "./editor_utils.js";
 
 import { getPid, once } from "../troll/src/util.js";
 import WorkbenchHoverProvider from "./WorkbenchHoverProvider.js";

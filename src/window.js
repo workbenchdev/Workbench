@@ -29,6 +29,10 @@ import Previewer from "./Previewer/Previewer.js";
 import Compiler from "./Compiler.js";
 import { promiseTask } from "../troll/src/util.js";
 import ThemeSelector from "../troll/src/widgets/ThemeSelector.js";
+import {
+  remove_line_at_cursor,
+  toggle_comment_line_at_cursor,
+} from "./editor_utils.js";
 
 import resource from "./window.blp";
 
@@ -83,6 +87,46 @@ export default function Window({ application }) {
     ext: "js",
     data_dir,
   });
+
+  const shortcuts = [
+    [
+      [
+        // VSCode
+        // "<Ctrl>/",
+        // nope
+        "<Ctrl>B",
+      ],
+      () => {
+        log("cool");
+        const buffer = langs.javascript.document.source_view.buffer;
+        toggle_comment_line_at_cursor(buffer);
+      },
+    ],
+    // [
+    //   [
+    //     // VSCode
+    //     "<Ctrl><Shift>K",
+    //     // GNOME Builder
+    //     "<Ctrl>D",
+    //   ],
+    //   () => {
+    //     const buffer = langs.javascript.document.source_view.buffer;
+    //     remove_line_at_cursor(buffer);
+    //   },
+    // ],
+  ];
+  const shortcutController = new Gtk.ShortcutController();
+  shortcuts.forEach(([accels, fn]) => {
+    const shortcut = new Gtk.Shortcut({
+      trigger: Gtk.ShortcutTrigger.parse_string(accels.join("|")),
+      action: Gtk.CallbackAction.new(() => {
+        fn();
+        return true;
+      }),
+    });
+    shortcutController.add_shortcut(shortcut);
+  });
+  langs.javascript.document.source_view.add_controller(shortcutController);
 
   langs.vala.document = Document({
     source_view: builder.get_object("source_view_vala"),
