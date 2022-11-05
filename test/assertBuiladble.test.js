@@ -45,18 +45,18 @@ test("assertBuildable", () => {
     );
   });
 
-  assert.not.throws(() => {
+  assert.throws(() => {
     assertBuildable(
       parse(
         `
-<interface>
-  <object class="AdwLeafletPage">
-  </object>
-</interface>
-`.trim()
+  <interface>
+    <object class="AdwLeafletPage">
+    </object>
+  </interface>
+  `.trim()
       )
     );
-  });
+  }, /AdwLeafletPage is not a GtkBuildable/);
 
   assert.throws(() => {
     assertBuildable(
@@ -268,6 +268,19 @@ test("assertBuildable", () => {
       )
     );
   }, /AdwViewStackPage is not a GtkBuildable/);
+
+  assert.throws(() => {
+    assertBuildable(
+      parse(
+        `
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <object class="GtkWidget"></object>
+</interface>
+`.trim()
+      )
+    );
+  }, /GtkWidget is an abstract type/);
 });
 
 export default test;

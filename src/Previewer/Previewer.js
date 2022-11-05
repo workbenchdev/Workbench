@@ -17,7 +17,7 @@ import Internal from "./Internal.js";
 import External from "./External.js";
 import { getClassNameType } from "../overrides.js";
 
-import { assertBuildable, getObjectClass } from "./utils.js";
+import { assertBuildable, isPreviewable } from "./utils.js";
 
 // Workbench always defaults to in-process preview now even if Vala is selected.
 // Workbench will switch to out-of-process preview when Vala is run
@@ -318,16 +318,6 @@ export function scopeStylesheet(style) {
 }
 
 const text_encoder = new TextEncoder();
-
-function isPreviewable(class_name) {
-  const klass = getObjectClass(class_name);
-  if (!klass) return false;
-
-  // GLib-GObject-ERROR: cannot create instance of abstract (non-instantiatable) type 'GtkWidget'
-  if (GObject.type_test_flags(klass, GObject.TypeFlags.ABSTRACT)) return false;
-
-  return GObject.type_is_a(klass, Gtk.Widget);
-}
 
 function getTemplate(tree) {
   const template = tree.getChild("template");

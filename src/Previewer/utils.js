@@ -9,6 +9,13 @@ export function getObjectClass(class_name) {
   return imports.gi[ns]?.[rest.join("")];
 }
 
+export function isPreviewable(class_name) {
+  const klass = getObjectClass(class_name);
+  if (!klass) return false;
+
+  return GObject.type_is_a(klass, Gtk.Widget);
+}
+
 // TODO: GTK Builder shouldn't crash when encountering a non buildable parent
 // https://github.com/sonnyp/Workbench/issues/49
 export function assertBuildable(el) {
@@ -18,12 +25,15 @@ export function assertBuildable(el) {
 }
 
 function assertObjectBuildable(el_object) {
-  const children = el_object.getChildren("child");
-
-  if (children.length > 0 && el_object.attrs.class) {
-    const klass = getObjectClass(el_object.attrs.class);
+  const class_name = el_object.attrs.class;
+  if (class_name) {
+    const klass = getObjectClass(class_name);
+    // GLib-GObject-ERROR: cannot create instance of abstract (non-instantiatable) type 'GtkWidget'
+    if (klass && GObject.type_test_flags(klass, GObject.TypeFlags.ABSTRACT)) {
+      throw new Error(`${class_name} is an abstract type`);
+    }
     if (klass && !GObject.type_is_a(klass, Gtk.Buildable)) {
-      throw new Error(`${el_object.attrs.class} is not a GtkBuildable`);
+      throw new Error(`${class_name} is not a GtkBuildable`);
     }
   }
 
