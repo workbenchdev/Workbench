@@ -85,7 +85,7 @@ export default function Previewer({
 
   function updateXML({ xml, target_id, original_id }) {
     try {
-      dbus_proxy.UpdateUiSync(xml, target_id, original_id);
+      dbus_proxy.UpdateUiSync(xml, target_id, original_id || "");
     } catch (err) {
       console.debug(err);
     }

@@ -365,7 +365,7 @@ function targetBuildable(tree) {
 
   const child = findPreviewable(tree);
   if (!child) {
-    return [null, ""];
+    return {};
   }
 
   const original_id = child.attrs.id;
