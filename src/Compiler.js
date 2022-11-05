@@ -17,9 +17,13 @@ export default function Compiler(data_dir) {
   );
 
   async function compile(code) {
+    function get_valac_args_from_buffer(text) {
+      return text.split("\n")[0].split("/vala ")[1].split(" ");
+    }
+
     let args;
     try {
-      args = code.split("\n")[0].split("/vala ")[1].split(" ");
+      args = get_valac_args_from_buffer(code);
     } catch (error) {
       console.debug(error);
       return;
@@ -44,8 +48,9 @@ export default function Compiler(data_dir) {
       ).catch(() => {}),
     ]);
 
-    GLib.chdir(data_dir);
-    const valac = Gio.Subprocess.new(
+    const valac_launcher = new Gio.SubprocessLauncher();
+    valac_launcher.set_cwd(data_dir);
+    const valac = valac_launcher.spawnv(
       [
         "valac",
         code_file.get_path(),
