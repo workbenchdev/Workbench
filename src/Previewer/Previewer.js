@@ -319,6 +319,16 @@ export function scopeStylesheet(style) {
 
 const text_encoder = new TextEncoder();
 
+function isPreviewable(class_name) {
+  const klass = getObjectClass(class_name);
+  if (!klass) return false;
+
+  // GLib-GObject-ERROR: cannot create instance of abstract (non-instantiatable) type 'GtkWidget'
+  if (GObject.type_test_flags(klass, GObject.TypeFlags.ABSTRACT)) return false;
+
+  return GObject.type_is_a(klass, Gtk.Widget);
+}
+
 function getTemplate(tree) {
   const template = tree.getChild("template");
   if (!template) return;
@@ -326,17 +336,7 @@ function getTemplate(tree) {
   const { parent } = template.attrs;
   if (!parent) return;
 
-  const klass = getObjectClass(parent);
-  if (!klass) return;
-
-  // GLib-GObject-ERROR: cannot create instance of abstract (non-instantiatable) type 'GtkWidget'
-  if (parent === "GtkWidget") {
-    return;
-    // parent is not an instance of GtkWidget
-    // Error: Cannot instantiate abstract type GtkWidget
-  } else {
-    if (!GObject.type_is_a(klass, Gtk.Widget)) return;
-  }
+  if (!isPreviewable(parent)) return null;
 
   template.attrs.class = getClassNameType(template.attrs.class);
   const original = tree.toString();
@@ -365,10 +365,7 @@ function findPreviewable(tree) {
     const class_name = child.attrs.class;
     if (!class_name) continue;
 
-    const klass = getObjectClass(class_name);
-    if (!klass) continue;
-
-    if (GObject.type_is_a(klass, Gtk.Widget)) return child;
+    if (isPreviewable(class_name)) return child;
   }
 }
 

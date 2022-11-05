@@ -77,7 +77,7 @@ export default function Internal({
 
     let obj;
     if (object_preview instanceof Gtk.Root) {
-      obj = updateBuilderRoot(object_preview, builder, original_id);
+      obj = updateBuilderRoot(object_preview);
     } else {
       obj = updateBuilderNonRoot(object_preview);
     }
@@ -95,7 +95,7 @@ export default function Internal({
     });
   }
 
-  function updateBuilderRoot(object_preview, builder, original_id) {
+  function updateBuilderRoot(object_preview) {
     stack.set_visible_child_name("open_window");
 
     if (!object_root) {
