@@ -3,56 +3,77 @@ namespace Workbench {
   [DBus (name="re.sonny.Workbench.vala_previewer")]
   public class Previewer : Object {
     construct {
-      this.window = new Gtk.Window () {
-        // Ensure the header bar has the same height as Workbench
-        titlebar = new Gtk.HeaderBar (),
-        title = "Preview",
-        hide_on_close = true,
-        default_width = 600,
-        default_height = 800
-      };
-      this.window.close_request.connect (() => {
-        this.window_open (false);
-        return false;
-      });
       this.notify["ColorScheme"].connect (() => {
         this.style_manager.color_scheme = this.ColorScheme;
       });
     }
 
+    private void ensure_window() {
+      if (this.window != null) {
+        return;
+      }
+      var window = new Gtk.Window () {
+        // Ensure the header bar has the same height as the one on Workbench main window
+        titlebar = new Gtk.HeaderBar (),
+        title = "Preview",
+        default_width = 600,
+        default_height = 800
+      };
+      this.set_window(window);
+    }
+
+    private void set_window(Gtk.Window window) {
+      if (this.window != null) {
+        this.window.destroy();
+      }
+      this.window = window;
+      this.window.close_request.connect (this.on_window_closed);
+    }
+
+    private bool on_window_closed () {
+      this.window_open (false);
+      this.window = null;
+      return false;
+    }
+
     public void update_ui (string content, string target_id, string original_id = "") {
       this.builder = new Gtk.Builder.from_string (content, content.length);
+
       var target = this.builder.get_object (target_id) as Gtk.Widget;
       if (target == null) {
         stderr.printf (@"Widget with target_id='$target_id' could not be found.\n");
           return;
       }
+
       if (original_id != "") {
         this.builder.expose_object(original_id, target);
       }
-      if (target is Gtk.Root) {
-        if (!(this.window.get_type () == target.get_type ())) {
-          this.window.destroy ();
-          this.window = target as Gtk.Window;
-          this.window.close_request.connect (() => {
-            this.window_open (false);
-            return false;
-          });
-        } else if (target is Adw.Window) {
-          var child = ((Adw.Window) target).content;
-          ((Adw.Window) target).content = null;
-          ((Adw.Window) this.window).content = child;
-        } else if (target is Adw.ApplicationWindow) {
-          var child = ((Adw.ApplicationWindow) target).content;
-          ((Adw.ApplicationWindow) target).content = null;
-          ((Adw.ApplicationWindow) this.window).content = child;
-        } else if (target is Gtk.Window) {
-          var child = ((Gtk.Window) target).child;
-          ((Gtk.Window) target).child = null;
-          this.window.child = child;
-        }
-      } else {
+
+      // Not a Root/Window
+      if (!(target is Gtk.Root)) {
+        this.ensure_window();
         this.window.child = target;
+        return;
+      }
+
+      // Set target as window directly
+      if (this.window == null || this.window.get_type () != target.get_type ()) {
+        this.set_window(target as Gtk.Window);
+        return;
+      }
+
+      if (target is Adw.Window) {
+        var child = ((Adw.Window) target).content;
+        ((Adw.Window) target).content = null;
+        ((Adw.Window) this.window).content = child;
+      } else if (target is Adw.ApplicationWindow) {
+        var child = ((Adw.ApplicationWindow) target).content;
+        ((Adw.ApplicationWindow) target).content = null;
+        ((Adw.ApplicationWindow) this.window).content = child;
+      } else if (target is Gtk.Window) {
+        var child = ((Gtk.Window) target).child;
+        ((Gtk.Window) target).child = null;
+        this.window.child = child;
       }
     }
 

@@ -19,7 +19,7 @@ import { getClassNameType } from "../overrides.js";
 
 import { assertBuildable, isPreviewable } from "./utils.js";
 
-// Workbench always defaults to in-process preview now even if Vala is selected.
+// Workbench always defaults to in-process preview now if Vala is selected.
 // Workbench will switch to out-of-process preview when Vala is run
 // Workbench will switch back to inline preview if any of the following happens
 //  • When a demo is selected
@@ -63,6 +63,7 @@ export default function Previewer({
     application,
     dropdown_preview_align,
     panel_style,
+    panel_ui,
   });
   const external = External({
     onWindowChange(open) {
@@ -76,6 +77,7 @@ export default function Previewer({
     output,
     builder,
     panel_style,
+    panel_ui,
   });
 
   const buffer_css = getLanguage("css").document.buffer;
