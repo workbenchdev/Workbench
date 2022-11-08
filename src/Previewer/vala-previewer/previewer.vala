@@ -19,7 +19,8 @@ namespace Workbench {
         default_width = 600,
         default_height = 800
       };
-      this.set_window(window);
+      this.window = window;
+      this.window.close_request.connect (this.on_window_closed);
     }
 
     private void set_window(Gtk.Window window) {
@@ -42,7 +43,7 @@ namespace Workbench {
       var target = this.builder.get_object (target_id) as Gtk.Widget;
       if (target == null) {
         stderr.printf (@"Widget with target_id='$target_id' could not be found.\n");
-          return;
+        return;
       }
 
       if (original_id != "") {
@@ -75,6 +76,12 @@ namespace Workbench {
         ((Gtk.Window) target).child = null;
         this.window.child = child;
       }
+
+      // FIXME: working for Internal but not here
+      // the list of root objects keeps growing in Inspector as you make changes to UI
+      // Toplevel windows returned by these functions will stay around until the user explicitly destroys them with gtk_window_destroy().
+      // https://docs.gtk.org/gtk4/class.Builder.html
+      target.destroy();
     }
 
     public void update_css (string content) {

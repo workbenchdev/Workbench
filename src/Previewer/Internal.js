@@ -158,6 +158,12 @@ export default function Internal({
           object_root[prop_name] = new_value;
         }
       }
+
+      // Toplevel windows returned by these functions will stay around until the user explicitly destroys them with gtk_window_destroy().
+      // https://docs.gtk.org/gtk4/class.Builder.html
+      if (object_preview instanceof Gtk.Root) {
+        object_preview.destroy();
+      }
     }
 
     if (!object_root.name) {
