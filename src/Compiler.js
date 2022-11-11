@@ -6,7 +6,6 @@ import { promiseTask } from "../troll/src/util.js";
 const proxy = DBusPreviewer();
 
 export default function Compiler(data_dir) {
-  console.log({ data_dir });
   const code_file = Gio.File.new_for_path(
     GLib.build_filenamev([data_dir, "code.vala"])
   );
