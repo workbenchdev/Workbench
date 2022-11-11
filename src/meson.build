@@ -58,9 +58,9 @@ configure_file(
 install_data('workbench-api.vala', install_dir: pkgdatadir)
 subdir('Previewer/vala-previewer')
 
-gjspack = find_program('../troll/gjspack/bin/gjspack')
+gjspack = find_program(meson.project_source_root() / 'troll/gjspack/bin/gjspack')
 gresource = custom_target('gjspack',
-  input: ['main.js', '../po/POTFILES'],
+  input: [meson.project_source_root() / 'src/main.js', meson.project_source_root() / 'po/POTFILES'],
   output: app_id + '.src.gresource',
   command: [
     gjspack,

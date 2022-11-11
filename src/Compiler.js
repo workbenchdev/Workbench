@@ -6,24 +6,18 @@ import { promiseTask } from "../troll/src/util.js";
 const proxy = DBusPreviewer();
 
 export default function Compiler(data_dir) {
+  console.log({ data_dir });
   const code_file = Gio.File.new_for_path(
     GLib.build_filenamev([data_dir, "code.vala"])
   );
   const module_file = Gio.File.new_for_path(
     GLib.build_filenamev([data_dir, "libworkbenchcode.so"])
   );
-  const api_file = Gio.File.new_for_path(
-    GLib.build_filenamev([pkg.pkgdatadir, "workbench-api.vala"])
-  );
 
   async function compile(code) {
-    function get_valac_args_from_buffer(text) {
-      return text.split("\n")[0].split("/vala ")[1].split(" ");
-    }
-
     let args;
     try {
-      args = get_valac_args_from_buffer(code);
+      args = getValaCompilerArguments(code);
     } catch (error) {
       console.debug(error);
       return;
@@ -70,7 +64,10 @@ export default function Compiler(data_dir) {
     );
 
     await promiseTask(valac, "wait_async", "wait_finish", null);
-    return valac.get_successful();
+
+    const result = valac.get_successful();
+    valac_launcher.close();
+    return result;
   }
 
   function run() {
@@ -90,4 +87,12 @@ export default function Compiler(data_dir) {
   }
 
   return { compile, run };
+}
+
+// Takes a string starting with the line
+// #!/usr/bin/env -S vala workbench.vala --pkg gtk4 --pkg libadwaita-1
+// and return ["--pkg", "gtk4", "--pkg", "libadwaita-1"]
+// FIXME: consider using https://docs.gtk.org/glib/struct.OptionContext.html instead
+function getValaCompilerArguments(text) {
+  return text.split("\n")[0].split("-S vala ")[1].split(" ");
 }
