@@ -2,7 +2,6 @@ import Gio from "gi://Gio";
 import GObject from "gi://GObject";
 import GLib from "gi://GLib";
 import Gtk from "gi://Gtk";
-import Pango from "gi://Pango";
 
 import LSPClient from "./lsp/LSPClient.js";
 import { LSPError } from "./lsp/LSP.js";
@@ -13,13 +12,12 @@ import {
   disconnect_signals,
   replaceBufferText,
   unstack,
-  getItersAtRange,
   handleDiagnostics,
+  prepareSourceView,
 } from "./util.js";
 
 import { getPid, once } from "../troll/src/util.js";
 import WorkbenchHoverProvider from "./WorkbenchHoverProvider.js";
-import { prepareSourceView } from "./util.js"
 
 const { addSignalMethods } = imports.signals;
 

@@ -3,11 +3,15 @@ import GLib from "gi://GLib";
 import GObject from "gi://GObject";
 
 import LSPClient from "./lsp/LSPClient.js";
-import { LSPError, diagnostic_severities } from "./lsp/LSP.js";
 
-import { getLanguage, settings, prepareSourceView, handleDiagnostics } from "./util.js";
+import {
+  getLanguage,
+  settings,
+  prepareSourceView,
+  handleDiagnostics,
+} from "./util.js";
 import WorkbenchHoverProvider from "./WorkbenchHoverProvider.js";
-import { getPid } from "./troll/src/util.js";
+import { getPid } from "../troll/src/util.js";
 
 export default function PanelCode({ builder, previewer, data_dir }) {
   const panel_code = builder.get_object("panel_code");
@@ -76,7 +80,12 @@ export default function PanelCode({ builder, previewer, data_dir }) {
     if (vls.proc) return;
     vls.start();
 
-    api_file.copy(Gio.File.new_for_path (data_dir).get_child("workbench.vala"), Gio.FileCopyFlags.OVERWRITE, null, null);
+    api_file.copy(
+      Gio.File.new_for_path(data_dir).get_child("workbench.vala"),
+      Gio.FileCopyFlags.OVERWRITE,
+      null,
+      null
+    );
 
     // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#initialize
     await vls.request("initialize", {
@@ -86,12 +95,12 @@ export default function PanelCode({ builder, previewer, data_dir }) {
         version: pkg.name,
       },
       rootPath: data_dir,
-      rootUri: Gio.File.new_for_path (data_dir).get_uri (),
+      rootUri: Gio.File.new_for_path(data_dir).get_uri(),
     });
 
     await vls.notify("textDocument/didOpen", {
       textDocument: {
-        uri: state_file.get_uri (),
+        uri: state_file.get_uri(),
         languageId: "vala",
         version: ++document_version,
         text: buffer_vala.text,
@@ -139,7 +148,7 @@ export default function PanelCode({ builder, previewer, data_dir }) {
 
     await vls.notify("textDocument/didChange", {
       textDocument: {
-        uri: state_file.get_uri (),
+        uri: state_file.get_uri(),
         version: ++document_version,
       },
       contentChanges: [{ text: buffer_vala.text }],

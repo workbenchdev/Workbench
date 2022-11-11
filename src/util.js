@@ -199,7 +199,6 @@ export function getItersAtRange(buffer, { start, end }) {
   return [start_iter, end_iter];
 }
 
-
 export function prepareSourceView({ source_view, provider }) {
   const tag_table = source_view.buffer.get_tag_table();
   const tag = new Gtk.TextTag({
@@ -222,7 +221,10 @@ export function handleDiagnostics({ diagnostics, buffer, provider }) {
     buffer.get_end_iter()
   );
 
-  diagnostics.forEach((diagnostic) => { diagnostic.language = diagnostics.language; handleDiagnostic(diagnostic, buffer); });
+  diagnostics.forEach((diagnostic) => {
+    diagnostic.language = diagnostics.language;
+    handleDiagnostic(diagnostic, buffer);
+  });
 }
 
 function handleDiagnostic(diagnostic, buffer) {

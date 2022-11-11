@@ -44,24 +44,22 @@ export default function Compiler(data_dir) {
 
     const valac_launcher = new Gio.SubprocessLauncher();
     valac_launcher.set_cwd(data_dir);
-    const valac = valac_launcher.spawnv(
-      [
-        "valac",
-        code_file.get_path(),
-        "--hide-internal",
-        "-X",
-        "-shared",
-        "-X",
-        "-fpic",
-        "--library",
-        "workbench",
-        "-o",
-        module_file.get_path(),
-        "--vapi",
-        "/dev/null",
-      ].concat(args),
-      Gio.SubprocessFlags.NONE
-    );
+    const valac = valac_launcher.spawnv([
+      "valac",
+      code_file.get_path(),
+      "--hide-internal",
+      "-X",
+      "-shared",
+      "-X",
+      "-fpic",
+      "--library",
+      "workbench",
+      "-o",
+      module_file.get_path(),
+      "--vapi",
+      "/dev/null",
+      ...args,
+    ]);
 
     await promiseTask(valac, "wait_async", "wait_finish", null);
 
