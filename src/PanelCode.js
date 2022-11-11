@@ -18,26 +18,6 @@ export default function PanelCode({ builder, previewer, data_dir }) {
   const button_code = builder.get_object("button_code");
   const stack_code = builder.get_object("stack_code");
 
-  const buffer_vala = getLanguage("vala").document.buffer;
-  const state_file = getLanguage("vala").document.file;
-  const provider = new WorkbenchHoverProvider();
-
-  const api_file = Gio.File.new_for_path(
-    GLib.build_filenamev([pkg.pkgdatadir, "workbench-api.vala"])
-  );
-
-  let document_version = 0;
-  prepareSourceView({
-    source_view: getLanguage("vala").document.source_view,
-    provider,
-  });
-
-  const vls = createVLSClient({
-    data_dir,
-    buffer: buffer_vala,
-    provider,
-  });
-
   const dropdown_code_lang = builder.get_object("dropdown_code_lang");
   // TODO: File a bug libadwaita
   // flat does nothing on GtkDropdown or GtkComboBox or GtkComboBoxText
@@ -68,6 +48,8 @@ export default function PanelCode({ builder, previewer, data_dir }) {
     panel: panel_code,
   };
 
+  setupVala({ data_dir });
+
   function switchLanguage() {
     panel.language = dropdown_code_lang.selected_item.string;
     stack_code.visible_child_name = panel.language;
@@ -75,6 +57,30 @@ export default function PanelCode({ builder, previewer, data_dir }) {
     previewer.update();
   }
   switchLanguage();
+
+  return panel;
+}
+
+function setupVala({ data_dir }) {
+  const buffer_vala = getLanguage("vala").document.buffer;
+  const state_file = getLanguage("vala").document.file;
+  const provider = new WorkbenchHoverProvider();
+
+  const api_file = Gio.File.new_for_path(
+    GLib.build_filenamev([pkg.pkgdatadir, "workbench-api.vala"])
+  );
+
+  let document_version = 0;
+  prepareSourceView({
+    source_view: getLanguage("vala").document.source_view,
+    provider,
+  });
+
+  const vls = createVLSClient({
+    data_dir,
+    buffer: buffer_vala,
+    provider,
+  });
 
   async function setupLSP() {
     if (vls.proc) return;
@@ -130,8 +136,7 @@ export default function PanelCode({ builder, previewer, data_dir }) {
         if (!state_file.equal(Gio.File.new_for_uri(uri))) {
           return;
         }
-        diagnostics.language = "Vala";
-        handleDiagnostics({ diagnostics, buffer, provider });
+        handleDiagnostics({ language: "Vala", diagnostics, buffer, provider });
       }
     );
 
@@ -154,6 +159,4 @@ export default function PanelCode({ builder, previewer, data_dir }) {
       contentChanges: [{ text: buffer_vala.text }],
     });
   }
-
-  return panel;
 }

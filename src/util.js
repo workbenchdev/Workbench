@@ -212,7 +212,7 @@ export function prepareSourceView({ source_view, provider }) {
   hover.add_provider(provider);
 }
 
-export function handleDiagnostics({ diagnostics, buffer, provider }) {
+export function handleDiagnostics({ language, diagnostics, buffer, provider }) {
   provider.diagnostics = diagnostics;
 
   buffer.remove_tag_by_name(
@@ -222,19 +222,18 @@ export function handleDiagnostics({ diagnostics, buffer, provider }) {
   );
 
   diagnostics.forEach((diagnostic) => {
-    diagnostic.language = diagnostics.language;
-    handleDiagnostic(diagnostic, buffer);
+    handleDiagnostic(language, diagnostic, buffer);
   });
 }
 
-function handleDiagnostic(diagnostic, buffer) {
-  logLanguageServerDiagnostic(diagnostic);
+function handleDiagnostic(language, diagnostic, buffer) {
+  logLanguageServerDiagnostic(language, diagnostic);
 
   const [start_iter, end_iter] = getItersAtRange(buffer, diagnostic.range);
   buffer.apply_tag_by_name("error", start_iter, end_iter);
 }
 
-function logLanguageServerDiagnostic({ range, message, severity, language }) {
+function logLanguageServerDiagnostic(language, { range, message, severity }) {
   GLib.log_structured(language, GLib.LogLevelFlags.LEVEL_DEBUG, {
     MESSAGE: `${language}-${diagnostic_severities[severity]} ${
       range.start.line + 1

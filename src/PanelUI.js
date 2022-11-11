@@ -294,8 +294,12 @@ function createBlueprintClient({ data_dir, buffer, provider }) {
   blueprint.connect(
     "notification::textDocument/publishDiagnostics",
     (self, { diagnostics }) => {
-      diagnostics.language = "Blueprint";
-      handleDiagnostics({ diagnostics, buffer, provider });
+      handleDiagnostics({
+        language: "Blueprint",
+        diagnostics,
+        buffer,
+        provider,
+      });
     }
   );
 
