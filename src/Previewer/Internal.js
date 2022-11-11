@@ -19,6 +19,7 @@ export default function Internal({
   application,
   dropdown_preview_align,
   panel_style,
+  panel_ui,
 }) {
   const stack = builder.get_object("stack_preview");
 
@@ -29,8 +30,20 @@ export default function Internal({
     builder.get_object("button_screenshot").visible = true;
   }
 
-  function open() {
-    if (!object_root) return;
+  async function open() {
+    // The flow for internal preview is complicated after the window has been destroyed (on close)
+    // Internal cannot rebuild it on its own so it calls panel_ui.update which will endup trigering internal.updateXML.
+    // instead - Internal could work like the Vala previwer and take a XML string that it can parse whenever it needs
+    if (!object_root) {
+      try {
+        await panel_ui.update();
+      } catch (err) {
+        logError(err);
+        return;
+      }
+      if (!object_root) return;
+    }
+
     object_root.present_with_time(Gdk.CURRENT_TIME);
     onWindowChange(true);
   }
@@ -89,8 +102,8 @@ export default function Internal({
 
   function setObjectRoot(object) {
     object_root = object;
-    object_root.set_hide_on_close(true);
     object_root.connect("close-request", () => {
+      object_root = null;
       onWindowChange(false);
     });
   }
