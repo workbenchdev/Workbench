@@ -24,14 +24,13 @@ export default class LSPClient {
   }
 
   _start_process() {
-    let flags = Gio.SubprocessFlags.STDIN_PIPE | Gio.SubprocessFlags.STDOUT_PIPE;
-    if (!pkg.name.endsWith("Devel")) {
+    let flags =
+      Gio.SubprocessFlags.STDIN_PIPE | Gio.SubprocessFlags.STDOUT_PIPE;
+    if (!pkg.name.endsWith(".Devel")) {
       flags |= Gio.SubprocessFlags.STDERR_SILENCE;
     }
-    this.proc = Gio.Subprocess.new(
-      this.argv,
-      flags
-    );
+
+    this.proc = Gio.Subprocess.new(this.argv, flags);
     this.proc.wait_async(null, (self, res) => {
       try {
         this.proc.wait_finish(res);

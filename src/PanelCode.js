@@ -77,7 +77,6 @@ function setupVala({ data_dir }) {
   });
 
   const vls = createVLSClient({
-    data_dir,
     buffer: buffer_vala,
     provider,
   });
@@ -115,7 +114,7 @@ function setupVala({ data_dir }) {
   }
   setupLSP().catch(logError);
 
-  function createVLSClient({ data_dir, buffer, provider }) {
+  function createVLSClient({ buffer, provider }) {
     const vls = new LSPClient([
       // "/usr/lib/sdk/vala/bin/vala-language-server",
       "vala-language-server",
