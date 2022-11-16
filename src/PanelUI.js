@@ -2,10 +2,9 @@ import Gio from "gi://Gio";
 import GObject from "gi://GObject";
 import GLib from "gi://GLib";
 import Gtk from "gi://Gtk";
-import Pango from "gi://Pango";
 
 import LSPClient from "./lsp/LSPClient.js";
-import { LSPError, diagnostic_severities } from "./lsp/LSP.js";
+import { LSPError } from "./lsp/LSP.js";
 import {
   getLanguage,
   settings,
@@ -13,7 +12,8 @@ import {
   disconnect_signals,
   replaceBufferText,
   unstack,
-  getItersAtRange,
+  handleDiagnostics,
+  prepareSourceView,
 } from "./util.js";
 
 import { getPid, once } from "../troll/src/util.js";
@@ -262,17 +262,6 @@ function logBlueprintError(err) {
 //   });
 // }
 
-function logBlueprintDiagnostic({ range, message, severity }) {
-  GLib.log_structured("Blueprint", GLib.LogLevelFlags.LEVEL_DEBUG, {
-    MESSAGE: `Blueprint-${diagnostic_severities[severity]} ${
-      range.start.line + 1
-    }:${range.start.character} to ${range.end.line + 1}:${
-      range.end.character
-    } ${message}`,
-    SYSLOG_IDENTIFIER,
-  });
-}
-
 function createBlueprintClient({ data_dir, buffer, provider }) {
   const file_blueprint_logs = Gio.File.new_for_path(
     GLib.build_filenamev([data_dir, `blueprint-logs`])
@@ -305,41 +294,14 @@ function createBlueprintClient({ data_dir, buffer, provider }) {
   blueprint.connect(
     "notification::textDocument/publishDiagnostics",
     (self, { diagnostics }) => {
-      handleDiagnostics({ diagnostics, buffer, provider });
+      handleDiagnostics({
+        language: "Blueprint",
+        diagnostics,
+        buffer,
+        provider,
+      });
     }
   );
 
   return blueprint;
-}
-
-function prepareSourceView({ source_view, provider }) {
-  const tag_table = source_view.buffer.get_tag_table();
-  const tag = new Gtk.TextTag({
-    name: "error",
-    underline: Pango.Underline.ERROR,
-  });
-  tag_table.add(tag);
-
-  const hover = source_view.get_hover();
-  // hover.hover_delay = 25;
-  hover.add_provider(provider);
-}
-
-function handleDiagnostics({ diagnostics, buffer, provider }) {
-  provider.diagnostics = diagnostics;
-
-  buffer.remove_tag_by_name(
-    "error",
-    buffer.get_start_iter(),
-    buffer.get_end_iter()
-  );
-
-  diagnostics.forEach((diagnostic) => handleDiagnostic(diagnostic, buffer));
-}
-
-function handleDiagnostic(diagnostic, buffer) {
-  logBlueprintDiagnostic(diagnostic);
-
-  const [start_iter, end_iter] = getItersAtRange(buffer, diagnostic.range);
-  buffer.apply_tag_by_name("error", start_iter, end_iter);
 }

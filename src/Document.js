@@ -50,7 +50,7 @@ export default function Document({
     }
   }
 
-  return { start, stop, save, source_view, buffer };
+  return { start, stop, save, source_view, buffer, file };
 }
 
 async function saveSourceBuffer({ file, buffer }) {

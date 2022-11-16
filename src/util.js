@@ -1,7 +1,9 @@
 import GLib from "gi://GLib";
 import Gio from "gi://Gio";
 import Xdp from "gi://Xdp";
-import { rangeEquals } from "./lsp/LSP.js";
+import Gtk from "gi://Gtk";
+import Pango from "gi://Pango";
+import { rangeEquals, diagnostic_severities } from "./lsp/LSP.js";
 
 export const portal = new Xdp.Portal();
 
@@ -195,4 +197,49 @@ export function getItersAtRange(buffer, { start, end }) {
   }
 
   return [start_iter, end_iter];
+}
+
+export function prepareSourceView({ source_view, provider }) {
+  const tag_table = source_view.buffer.get_tag_table();
+  const tag = new Gtk.TextTag({
+    name: "error",
+    underline: Pango.Underline.ERROR,
+  });
+  tag_table.add(tag);
+
+  const hover = source_view.get_hover();
+  // hover.hover_delay = 25;
+  hover.add_provider(provider);
+}
+
+export function handleDiagnostics({ language, diagnostics, buffer, provider }) {
+  provider.diagnostics = diagnostics;
+
+  buffer.remove_tag_by_name(
+    "error",
+    buffer.get_start_iter(),
+    buffer.get_end_iter()
+  );
+
+  diagnostics.forEach((diagnostic) => {
+    handleDiagnostic(language, diagnostic, buffer);
+  });
+}
+
+function handleDiagnostic(language, diagnostic, buffer) {
+  logLanguageServerDiagnostic(language, diagnostic);
+
+  const [start_iter, end_iter] = getItersAtRange(buffer, diagnostic.range);
+  buffer.apply_tag_by_name("error", start_iter, end_iter);
+}
+
+function logLanguageServerDiagnostic(language, { range, message, severity }) {
+  GLib.log_structured(language, GLib.LogLevelFlags.LEVEL_DEBUG, {
+    MESSAGE: `${language}-${diagnostic_severities[severity]} ${
+      range.start.line + 1
+    }:${range.start.character} to ${range.end.line + 1}:${
+      range.end.character
+    } ${message}`,
+    SYSLOG_IDENTIFIER: pkg.name,
+  });
 }

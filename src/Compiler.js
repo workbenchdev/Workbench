@@ -12,11 +12,15 @@ export default function Compiler(data_dir) {
   const module_file = Gio.File.new_for_path(
     GLib.build_filenamev([data_dir, "libworkbenchcode.so"])
   );
-  const api_file = Gio.File.new_for_path(
-    GLib.build_filenamev([pkg.pkgdatadir, "workbench-api.vala"])
-  );
 
   async function compile(code) {
+    let args;
+    try {
+      args = getValaCompilerArguments(code);
+    } catch (error) {
+      console.debug(error);
+      return;
+    }
     await Promise.all([
       promiseTask(
         code_file,
@@ -37,36 +41,30 @@ export default function Compiler(data_dir) {
       ).catch(() => {}),
     ]);
 
-    const valac = Gio.Subprocess.new(
-      [
-        "valac",
-        code_file.get_path(),
-        api_file.get_path(),
-        "--hide-internal",
-        "-X",
-        "-shared",
-        "-X",
-        "-fpic",
-        "--library",
-        "workbench",
-        "-o",
-        module_file.get_path(),
-        "--pkg",
-        "gtk4",
-        "--pkg",
-        "gio-2.0",
-        "--pkg",
-        "libadwaita-1",
-        "--pkg",
-        "libsoup-3.0",
-        "--vapi",
-        "/dev/null",
-      ],
-      Gio.SubprocessFlags.NONE
-    );
+    const valac_launcher = new Gio.SubprocessLauncher();
+    valac_launcher.set_cwd(data_dir);
+    const valac = valac_launcher.spawnv([
+      "valac",
+      code_file.get_path(),
+      "--hide-internal",
+      "-X",
+      "-shared",
+      "-X",
+      "-fpic",
+      "--library",
+      "workbench",
+      "-o",
+      module_file.get_path(),
+      "--vapi",
+      "/dev/null",
+      ...args,
+    ]);
 
     await promiseTask(valac, "wait_async", "wait_finish", null);
-    return valac.get_successful();
+
+    const result = valac.get_successful();
+    valac_launcher.close();
+    return result;
   }
 
   function run() {
@@ -86,4 +84,12 @@ export default function Compiler(data_dir) {
   }
 
   return { compile, run };
+}
+
+// Takes a string starting with the line
+// #!/usr/bin/env -S vala workbench.vala --pkg gtk4 --pkg libadwaita-1
+// and return ["--pkg", "gtk4", "--pkg", "libadwaita-1"]
+// FIXME: consider using https://docs.gtk.org/glib/struct.OptionContext.html instead
+function getValaCompilerArguments(text) {
+  return text.split("\n")[0].split("-S vala ")[1].split(" ");
 }
