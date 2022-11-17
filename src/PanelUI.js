@@ -181,6 +181,8 @@ export default function PanelUI({
 
   start();
 
+  const uri = "workbench://state.blp";
+
   async function setupLSP() {
     if (blueprint.proc) return;
     blueprint.start();
@@ -204,7 +206,7 @@ export default function PanelUI({
 
     await blueprint.notify("textDocument/didOpen", {
       textDocument: {
-        uri: "workbench://state.blp",
+        uri,
         languageId: "blueprint",
         version: ++document_version,
         text: buffer_blueprint.text,
@@ -217,7 +219,7 @@ export default function PanelUI({
 
     await blueprint.notify("textDocument/didChange", {
       textDocument: {
-        uri: "workbench://state.blp",
+        uri,
         version: ++document_version,
       },
       contentChanges: [buffer_blueprint.text],

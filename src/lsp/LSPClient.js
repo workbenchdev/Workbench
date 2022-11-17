@@ -10,6 +10,7 @@ const { addSignalMethods } = imports.signals;
 const encoder_utf8 = new TextEncoder("utf8");
 const decoder_utf8 = new TextDecoder("utf8");
 const decoder_ascii = new TextDecoder("ascii");
+
 export default class LSPClient {
   constructor(argv) {
     this.argv = argv;
@@ -24,11 +25,13 @@ export default class LSPClient {
   }
 
   _start_process() {
-    let flags =
-      Gio.SubprocessFlags.STDIN_PIPE | Gio.SubprocessFlags.STDOUT_PIPE;
-    if (!pkg.name.endsWith(".Devel")) {
-      flags |= Gio.SubprocessFlags.STDERR_SILENCE;
-    }
+    const flags =
+      Gio.SubprocessFlags.STDIN_PIPE |
+      Gio.SubprocessFlags.STDOUT_PIPE |
+      // vala-language-server emit lots of criticals https://github.com/vala-lang/vala-language-server/issues/274
+      // It's harmless but it looks scary.
+      // If you need to debug a language server, remove this flag
+      Gio.SubprocessFlags.STDERR_SILENCE;
 
     this.proc = Gio.Subprocess.new(this.argv, flags);
     this.proc.wait_async(null, (self, res) => {

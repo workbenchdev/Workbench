@@ -3,12 +3,8 @@
   "runtime": "org.gnome.Sdk",
   "runtime-version": "43",
   "sdk": "org.gnome.Sdk",
-  "sdk-extensions": [
-    "org.freedesktop.Sdk.Extension.vala"
-  ],
-  "runtime-extensions": [
-    "org.freedesktop.Sdk.Extension.vala"
-  ],
+  "sdk-extensions": ["org.freedesktop.Sdk.Extension.vala"],
+  "runtime-extensions": ["org.freedesktop.Sdk.Extension.vala"],
   "command": "workbench",
   "finish-args": [
     "--share=ipc",
