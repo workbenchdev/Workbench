@@ -17,7 +17,7 @@ export default function Document({
   buffer.set_language(language_manager.get_language(lang));
 
   const file = Gio.File.new_for_path(
-    GLib.build_filenamev([data_dir, `state.${ext}`])
+    GLib.build_filenamev([data_dir, `state.${ext}`]),
   );
 
   const source_file = new Source.File({
@@ -64,7 +64,7 @@ async function saveSourceBuffer({ file, buffer }) {
     "save_finish",
     GLib.PRIORITY_DEFAULT,
     null,
-    null
+    null,
   );
   if (success) {
     buffer.set_modified(false);
@@ -84,7 +84,7 @@ async function loadSourceBuffer({ file, buffer }) {
       "load_finish",
       GLib.PRIORITY_DEFAULT,
       null,
-      null
+      null,
     );
   } catch (err) {
     if (err.code !== Gio.IOErrorEnum.NOT_FOUND) {
@@ -100,5 +100,5 @@ async function loadSourceBuffer({ file, buffer }) {
 
 const language_manager = new Source.LanguageManager();
 language_manager.append_search_path(
-  "resource:///re/sonny/Workbench/language-specs"
+  "resource:///re/sonny/Workbench/language-specs",
 );

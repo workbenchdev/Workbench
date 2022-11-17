@@ -57,7 +57,7 @@ export default function Internal({
     if (css_provider) {
       Gtk.StyleContext.remove_provider_for_display(
         output.get_display(),
-        css_provider
+        css_provider,
       );
       css_provider = null;
     }
@@ -69,13 +69,7 @@ export default function Internal({
     output.set_child(object);
   }
 
-  function updateXML({
-    builder,
-    object_preview,
-    target_id,
-    original_id,
-    template,
-  }) {
+  function updateXML({ builder, object_preview, original_id, template }) {
     globalThis.workbench = {
       window,
       application,
@@ -186,7 +180,7 @@ export default function Internal({
     if (css_provider) {
       Gtk.StyleContext.remove_provider_for_display(
         output.get_display(),
-        css_provider
+        css_provider,
       );
       css_provider = null;
     }
@@ -204,7 +198,7 @@ export default function Internal({
     }
 
     css_provider = new Gtk.CssProvider();
-    css_provider.connect("parsing-error", (self, section, error) => {
+    css_provider.connect("parsing-error", (_self, section, error) => {
       const diagnostic = getDiagnostic(section, error);
       panel_style.handleDiagnostic(diagnostic);
     });
@@ -212,7 +206,7 @@ export default function Internal({
     Gtk.StyleContext.add_provider_for_display(
       output.get_display(),
       css_provider,
-      Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+      Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
     );
   }
 
@@ -284,7 +278,7 @@ function screenshot({ widget, window, data_dir }) {
   });
   const texture = renderer.render_texture(node, rect);
 
-  const path = GLib.build_filenamev([data_dir, `Workbench screenshot.png`]);
+  const path = GLib.build_filenamev([data_dir, "Workbench screenshot.png"]);
   texture.save_to_png(path);
 
   const parent = XdpGtk.parent_new_gtk(window);
@@ -294,7 +288,7 @@ function screenshot({ widget, window, data_dir }) {
     `file://${path}`,
     Xdp.OpenUriFlags.NONE, // flags
     null, // cancellable
-    (self, result) => {
+    (_self, result) => {
       try {
         portal.open_uri_finish(result);
       } catch (err) {
@@ -302,7 +296,7 @@ function screenshot({ widget, window, data_dir }) {
           logError(err);
         }
       }
-    }
+    },
   );
 }
 

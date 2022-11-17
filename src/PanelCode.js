@@ -27,20 +27,20 @@ export default function PanelCode({ builder, previewer, data_dir }) {
     "show-code",
     button_code,
     "active",
-    Gio.SettingsBindFlags.DEFAULT
+    Gio.SettingsBindFlags.DEFAULT,
   );
   button_code.bind_property(
     "active",
     panel_code,
     "visible",
-    GObject.BindingFlags.SYNC_CREATE
+    GObject.BindingFlags.SYNC_CREATE,
   );
 
   settings.bind(
     "code-language",
     dropdown_code_lang,
     "selected",
-    Gio.SettingsBindFlags.DEFAULT
+    Gio.SettingsBindFlags.DEFAULT,
   );
   dropdown_code_lang.connect("notify::selected-item", switchLanguage);
 
@@ -67,7 +67,7 @@ function setupVala({ data_dir }) {
   const provider = new WorkbenchHoverProvider();
 
   const api_file = Gio.File.new_for_path(
-    GLib.build_filenamev([pkg.pkgdatadir, "workbench-api.vala"])
+    GLib.build_filenamev([pkg.pkgdatadir, "workbench-api.vala"]),
   );
 
   let document_version = 0;
@@ -89,7 +89,7 @@ function setupVala({ data_dir }) {
       Gio.File.new_for_path(data_dir).get_child("workbench.vala"),
       Gio.FileCopyFlags.OVERWRITE,
       null,
-      null
+      null,
     );
 
     // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#initialize
@@ -122,21 +122,21 @@ function setupVala({ data_dir }) {
     vls.connect("exit", () => {
       console.debug("vls exit");
     });
-    vls.connect("output", (self, message) => {
+    vls.connect("output", (_self, message) => {
       console.debug(`vls OUT:\n${JSON.stringify(message)}`);
     });
-    vls.connect("input", (self, message) => {
+    vls.connect("input", (_self, message) => {
       console.debug(`vls IN:\n${JSON.stringify(message)}`);
     });
 
     vls.connect(
       "notification::textDocument/publishDiagnostics",
-      (self, { diagnostics, uri }) => {
+      (_self, { diagnostics, uri }) => {
         if (!state_file.equal(Gio.File.new_for_uri(uri))) {
           return;
         }
         handleDiagnostics({ language: "Vala", diagnostics, buffer, provider });
-      }
+      },
     );
 
     buffer.connect("modified-changed", () => {

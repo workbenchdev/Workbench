@@ -2,7 +2,7 @@
 .PHONY: test
 
 lint:
-	./node_modules/.bin/eslint --cache --max-warnings=0 src/
+	./node_modules/.bin/rome ci .
 
 test: lint
 	./troll/tst/bin.js test/*.test.js

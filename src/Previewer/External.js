@@ -13,7 +13,7 @@ export default function Previewer({
   (function start_process() {
     Gio.Subprocess.new(
       ["workbench-vala-previewer"],
-      Gio.SubprocessFlags.NONE
+      Gio.SubprocessFlags.NONE,
     ).wait_async(null, (proc, res) => {
       try {
         proc.wait_finish(res);
@@ -25,16 +25,16 @@ export default function Previewer({
   })();
 
   const dbus_proxy = DBusPreviewer();
-  dbus_proxy.connectSignal("WindowOpen", (proxy, name_owner, [open]) => {
+  dbus_proxy.connectSignal("WindowOpen", (_proxy, _name_owner, [open]) => {
     onWindowChange(open);
   });
 
   dbus_proxy.connectSignal(
     "CssParserError",
     (
-      proxy,
-      name_owner,
-      [message, start_line, start_char, end_line, end_char]
+      _proxy,
+      _name_owner,
+      [message, start_line, start_char, end_line, end_char],
     ) => {
       panel_style.handleDiagnostic({
         message,
@@ -49,7 +49,7 @@ export default function Previewer({
           },
         },
       });
-    }
+    },
   );
 
   function start() {
@@ -62,7 +62,7 @@ export default function Previewer({
     try {
       dbus_proxy.OpenWindowSync(
         output.get_allocated_width(),
-        output.get_allocated_height()
+        output.get_allocated_height(),
       );
     } catch (err) {
       console.debug(err);
@@ -72,7 +72,6 @@ export default function Previewer({
   function close() {
     try {
       dbus_proxy.CloseWindowSync();
-      // eslint-disable-next-line no-empty
     } catch (err) {
       console.debug(err);
     }

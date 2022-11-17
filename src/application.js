@@ -15,7 +15,7 @@ const application = new Adw.Application({
 });
 
 let window;
-application.connect("open", (self, files, hint) => {
+application.connect("open", (_self, files, _hint) => {
   if (!window) return;
 
   for (const file of files) {

@@ -56,7 +56,7 @@ export default function Actions({ application }) {
       null, // choices
       Xdp.OpenFileFlags.NONE,
       null, // cancellable,
-      (self, res) => {
+      (_self, res) => {
         let uri;
         try {
           const results = portal.open_file_finish(res);
@@ -66,7 +66,7 @@ export default function Actions({ application }) {
         }
 
         application.open([Gio.File.new_for_uri(uri)], "open");
-      }
+      },
     );
   });
   application.add_action(action_open_file);
@@ -76,7 +76,7 @@ export default function Actions({ application }) {
     name: "icon_library",
   });
   let window_icon_browser;
-  action_icon_library.connect("activate", (self, target) => {
+  action_icon_library.connect("activate", (_self, _target) => {
     window_icon_browser ??= IconLibrary();
     window_icon_browser.present();
   });
@@ -86,13 +86,13 @@ export default function Actions({ application }) {
     name: "open_uri",
     parameter_type: new GLib.VariantType("s"),
   });
-  action_open_uri.connect("activate", (self, target) => {
+  action_open_uri.connect("activate", (_self, target) => {
     // This is not using the portal but we silence the GVFS warnings
     // in `log_handler.js`
     Gtk.show_uri(
       application.get_active_window(),
       target.unpack(),
-      Gdk.CURRENT_TIME
+      Gdk.CURRENT_TIME,
     );
     // an other option is to use libportal:
     // const parent = XdpGtk.parent_new_gtk(application.get_active_window());
@@ -117,7 +117,7 @@ export default function Actions({ application }) {
     name: "platform_tools",
     parameter_type: new GLib.VariantType("s"),
   });
-  action_platform_tools.connect("activate", (self, target) => {
+  action_platform_tools.connect("activate", (_self, target) => {
     const name = target.unpack();
 
     if (

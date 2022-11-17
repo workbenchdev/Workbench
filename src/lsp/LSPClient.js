@@ -34,7 +34,7 @@ export default class LSPClient {
       Gio.SubprocessFlags.STDERR_SILENCE;
 
     this.proc = Gio.Subprocess.new(this.argv, flags);
-    this.proc.wait_async(null, (self, res) => {
+    this.proc.wait_async(null, (_self, res) => {
       try {
         this.proc.wait_finish(res);
       } catch (err) {
@@ -55,14 +55,13 @@ export default class LSPClient {
   async _read_headers() {
     const headers = Object.create(null);
 
-    // eslint-disable-next-line no-constant-condition
     while (true) {
       const [bytes] = await promiseTask(
         this.stdout,
         "read_line_async",
         "read_line_finish",
         0,
-        null
+        null,
       );
       const line = decoder_ascii.decode(bytes).trim();
       if (!line) break;
@@ -83,12 +82,11 @@ export default class LSPClient {
       "read_bytes_finish",
       length,
       0,
-      null
+      null,
     );
     const str = decoder_utf8.decode(bytes.toArray());
     try {
       return JSON.parse(str);
-      // eslint-disable-next-line no-empty
     } catch (err) {
       logError(err);
     }
@@ -138,7 +136,7 @@ export default class LSPClient {
       "write_bytes_finish",
       bytes,
       GLib.PRIORITY_DEFAULT,
-      null
+      null,
     );
 
     this.emit("output", message);

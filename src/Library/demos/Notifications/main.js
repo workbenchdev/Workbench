@@ -6,7 +6,7 @@ const notification = new Gio.Notification();
 
 notification.set_title("Lunch is ready");
 notification.set_body(
-  "Today we have pancakes and salad, and fruit and cake for dessert"
+  "Today we have pancakes and salad, and fruit and cake for dessert",
 );
 notification.set_default_action("app.notification-reply");
 notification.add_button("Accept", "app.notification-accept");

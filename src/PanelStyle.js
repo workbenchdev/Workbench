@@ -27,13 +27,13 @@ export default function PanelStyle({ builder }) {
     "show-style",
     button_style,
     "active",
-    Gio.SettingsBindFlags.DEFAULT
+    Gio.SettingsBindFlags.DEFAULT,
   );
   button_style.bind_property(
     "active",
     panel_style,
     "visible",
-    GObject.BindingFlags.SYNC_CREATE
+    GObject.BindingFlags.SYNC_CREATE,
   );
 
   const panel = {
@@ -62,7 +62,7 @@ export default function PanelStyle({ builder }) {
     buffer.remove_tag_by_name(
       "error",
       buffer.get_start_iter(),
-      buffer.get_end_iter()
+      buffer.get_end_iter(),
     );
     provider.diagnostics = [];
   };

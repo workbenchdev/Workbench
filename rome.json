@@ -1,0 +1,21 @@
+{
+  "formatter": {
+    "enabled": true,
+    "ignore": ["icon-development-kit-www", ".flatpak", "src/lib", "troll"],
+    "indentStyle": "space",
+    "indentSize": 2
+  },
+  "linter": {
+    "enabled": true,
+    "ignore": ["icon-development-kit-www", ".flatpak", "src/lib", "troll"],
+    "rules": {
+      "recommended": true,
+      "correctness": {
+        "noUnusedVariables": "error"
+      },
+      "style": {
+        "useBlockStatements": "off"
+      }
+    }
+  }
+}

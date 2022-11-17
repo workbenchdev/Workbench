@@ -7,10 +7,10 @@ const proxy = DBusPreviewer();
 
 export default function Compiler(data_dir) {
   const code_file = Gio.File.new_for_path(
-    GLib.build_filenamev([data_dir, "code.vala"])
+    GLib.build_filenamev([data_dir, "code.vala"]),
   );
   const module_file = Gio.File.new_for_path(
-    GLib.build_filenamev([data_dir, "libworkbenchcode.so"])
+    GLib.build_filenamev([data_dir, "libworkbenchcode.so"]),
   );
 
   async function compile(code) {
@@ -30,14 +30,14 @@ export default function Compiler(data_dir) {
         null,
         false,
         Gio.FileCreateFlags.NONE,
-        null
+        null,
       ),
       promiseTask(
         module_file,
         "delete_async",
         "delete_finish",
         GLib.PRIORITY_DEFAULT,
-        null
+        null,
       ).catch(() => {}),
     ]);
 
@@ -74,7 +74,7 @@ export default function Compiler(data_dir) {
         "main",
         "set_builder",
         "set_window",
-        "set_app"
+        "set_app",
       );
     } catch (error) {
       console.debug(error);

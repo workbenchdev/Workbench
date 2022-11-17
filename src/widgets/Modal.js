@@ -48,9 +48,9 @@ export default GObject.registerClass(
         "",
         "",
         GObject.ParamFlags.READWRITE | GObject.ParamFlags.CONSTRUCT_ONLY,
-        Gtk.Widget.$gtype
+        Gtk.Widget.$gtype,
       ),
     },
   },
-  Modal
+  Modal,
 );

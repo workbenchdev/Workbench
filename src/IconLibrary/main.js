@@ -18,7 +18,7 @@ export default function IconLibrary() {
   const icons = Object.assign(
     Object.create(null),
     platform_icons,
-    dev_kit_icons
+    dev_kit_icons,
   );
 
   const builder = Gtk.Builder.new_from_resource(resource);
@@ -57,7 +57,7 @@ export default function IconLibrary() {
 
   function populateIconDevKit() {
     for (const icon_name of Object.keys(dev_kit_icons).sort((a, b) =>
-      a.localeCompare(b)
+      a.localeCompare(b),
     )) {
       const icon = new IconWidget({
         icon_name,
@@ -70,7 +70,7 @@ export default function IconLibrary() {
 
   function populatePlatformIcons() {
     for (const icon_name of Object.keys(platform_icons).sort((a, b) =>
-      a.localeCompare(b)
+      a.localeCompare(b),
     )) {
       const icon = new IconWidget({
         icon_name,
@@ -97,7 +97,7 @@ function getDevKitIcons() {
 
   const bytes = Gio.resources_lookup_data(
     "/re/sonny/Workbench/icon-development-kit.json",
-    Gio.ResourceLookupFlags.NONE
+    Gio.ResourceLookupFlags.NONE,
   );
   const icons_dev_kit = JSON.parse(new TextDecoder().decode(bytes.get_data()));
   for (const icon of icons_dev_kit) {

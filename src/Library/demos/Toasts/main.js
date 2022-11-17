@@ -36,8 +36,8 @@ const action_console = new Gio.SimpleAction({
   name: "undo",
   parameter_type: new GLib.VariantType("s"),
 });
-action_console.connect("activate", (self, target) => {
+action_console.connect("activate", (_self, target) => {
   const value = target.unpack();
-  console.log("undo " + value);
+  console.log(`undo ${value}`);
 });
 workbench.window.add_action(action_console);

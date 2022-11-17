@@ -14,8 +14,8 @@ test("assertBuildable", () => {
         `
 <interface>
 </interface>
-`.trim()
-      )
+`.trim(),
+      ),
     );
   });
 
@@ -27,8 +27,8 @@ test("assertBuildable", () => {
   <object>
   </object>
 </interface>
-`.trim()
-      )
+`.trim(),
+      ),
     );
   });
 
@@ -40,8 +40,8 @@ test("assertBuildable", () => {
   <object class="Foobar">
   </object>
 </interface>
-`.trim()
-      )
+`.trim(),
+      ),
     );
   });
 
@@ -53,8 +53,8 @@ test("assertBuildable", () => {
     <object class="AdwLeafletPage">
     </object>
   </interface>
-  `.trim()
-      )
+  `.trim(),
+      ),
     );
   }, /AdwLeafletPage is not a GtkBuildable/);
 
@@ -68,8 +68,8 @@ test("assertBuildable", () => {
     </child>
   </object>
 </interface>
-`.trim()
-      )
+`.trim(),
+      ),
     );
   }, /AdwLeafletPage is not a GtkBuildable/);
 
@@ -84,8 +84,8 @@ test("assertBuildable", () => {
       </child>
     </object>
   </interface>
-  `.trim()
-      )
+  `.trim(),
+      ),
     );
   }, /AdwLeafletPage is not a GtkBuildable/);
 
@@ -102,8 +102,8 @@ test("assertBuildable", () => {
     </object>
   </child>
 </interface>
-`.trim()
-      )
+`.trim(),
+      ),
     );
   });
 
@@ -127,8 +127,8 @@ test("assertBuildable", () => {
       </child>
     </object>
   </interface>
-  `.trim()
-      )
+  `.trim(),
+      ),
     );
   }, /AdwTabPage is not a GtkBuildable/);
 
@@ -217,8 +217,8 @@ test("assertBuildable", () => {
     </child>
   </template>
 </interface>
-`.trim()
-      )
+`.trim(),
+      ),
     );
   });
 
@@ -264,8 +264,8 @@ test("assertBuildable", () => {
     </child>
   </object>
 </interface>
-  `.trim()
-      )
+  `.trim(),
+      ),
     );
   }, /AdwViewStackPage is not a GtkBuildable/);
 
@@ -277,8 +277,8 @@ test("assertBuildable", () => {
   <requires lib="gtk" version="4.0"/>
   <object class="GtkWidget"></object>
 </interface>
-`.trim()
-      )
+`.trim(),
+      ),
     );
   }, /GtkWidget is an abstract type/);
 });

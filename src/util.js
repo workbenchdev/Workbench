@@ -7,14 +7,6 @@ import { rangeEquals, diagnostic_severities } from "./lsp/LSP.js";
 
 export const portal = new Xdp.Portal();
 
-export function logEnum(obj, value) {
-  console.log(
-    Object.entries(obj).find(([k, v]) => {
-      return v === value;
-    })[0]
-  );
-}
-
 export const settings = new Gio.Settings({
   schema_id: pkg.name,
   path: "/re/sonny/Workbench/",
@@ -92,7 +84,7 @@ export const languages = [
 
 export function getLanguage(id) {
   return languages.find(
-    (language) => language.id.toLowerCase() === id.toLowerCase()
+    (language) => language.id.toLowerCase() === id.toLowerCase(),
   );
 }
 
@@ -103,7 +95,7 @@ export function getLanguageForFile(file) {
     const info = file.query_info(
       "standard::content-type",
       Gio.FileQueryInfoFlags.NONE,
-      null
+      null,
     );
     content_type = info.get_content_type();
   } catch (err) {
@@ -191,7 +183,7 @@ export function getItersAtRange(buffer, { start, end }) {
   } else {
     [, start_iter] = buffer.get_iter_at_line_offset(
       start.line,
-      start.character
+      start.character,
     );
     [, end_iter] = buffer.get_iter_at_line_offset(end.line, end.character);
   }
@@ -218,7 +210,7 @@ export function handleDiagnostics({ language, diagnostics, buffer, provider }) {
   buffer.remove_tag_by_name(
     "error",
     buffer.get_start_iter(),
-    buffer.get_end_iter()
+    buffer.get_end_iter(),
   );
 
   diagnostics.forEach((diagnostic) => {

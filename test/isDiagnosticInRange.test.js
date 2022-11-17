@@ -24,9 +24,9 @@ test("in range", () => {
       {
         line: 5,
         character: 12,
-      }
+      },
     ),
-    true
+    true,
   );
 });
 
@@ -48,9 +48,9 @@ test("same line", () => {
       {
         line: 5,
         character: 15,
-      }
+      },
     ),
-    true
+    true,
   );
 });
 
@@ -72,9 +72,9 @@ test("between lines", () => {
       {
         line: 3,
         character: 9,
-      }
+      },
     ),
-    true
+    true,
   );
 });
 
@@ -96,9 +96,9 @@ test("not in range", () => {
       {
         line: 5,
         character: 12,
-      }
+      },
     ),
-    false
+    false,
   );
 });
 

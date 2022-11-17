@@ -34,8 +34,12 @@ import resource from "./window.blp";
 
 import "./icons/re.sonny.Workbench-beaker.svg" assert { type: "icon" };
 import "./icons/re.sonny.Workbench-code-symbolic.svg" assert { type: "icon" };
-import "./icons/re.sonny.Workbench-placeholder-symbolic.svg" assert { type: "icon" };
-import "./icons/re.sonny.Workbench-preview-symbolic.svg" assert { type: "icon" };
+import "./icons/re.sonny.Workbench-placeholder-symbolic.svg" assert {
+  type: "icon",
+};
+import "./icons/re.sonny.Workbench-preview-symbolic.svg" assert {
+  type: "icon",
+};
 import "./icons/re.sonny.Workbench-ui-symbolic.svg" assert { type: "icon" };
 
 import "./widgets/Modal.js";
@@ -166,13 +170,13 @@ export default function Window({ application }) {
     "show-preview",
     button_preview,
     "active",
-    Gio.SettingsBindFlags.DEFAULT
+    Gio.SettingsBindFlags.DEFAULT,
   );
   button_preview.bind_property(
     "active",
     panel_preview,
     "visible",
-    GObject.BindingFlags.SYNC_CREATE
+    GObject.BindingFlags.SYNC_CREATE,
   );
 
   function updatePanel() {
@@ -266,7 +270,7 @@ export default function Window({ application }) {
           null,
           false,
           Gio.FileCreateFlags.NONE,
-          null
+          null,
         );
         let exports;
         try {
@@ -331,7 +335,7 @@ export default function Window({ application }) {
     name: "workbench_undo",
     parameter_type: new GLib.VariantType("s"),
   });
-  undo_action.connect("activate", (self, target) => {
+  undo_action.connect("activate", (_self, target) => {
     const updated = JSON.parse(target.unpack()).updated;
     languages.forEach(({ id, document }) => {
       if (updated.includes(id)) document.buffer.undo();
@@ -360,7 +364,7 @@ export default function Window({ application }) {
 
     if (!!javascript && !vala) {
       settings.set_int("code-language", 0);
-      vala = `// Sorry, this demo is not available in Vala yet.`;
+      vala = "// Sorry, this demo is not available in Vala yet.";
     }
 
     const toast = new Adw.Toast({
@@ -380,7 +384,7 @@ export default function Window({ application }) {
             settings.get_int("code-language"),
             settings.get_int("ui-language"),
           ],
-        })
+        }),
       ),
     });
     toast_overlay.add_toast(toast);
@@ -461,7 +465,7 @@ export default function Window({ application }) {
             settings.get_int("code-language"),
             settings.get_int("ui-language"),
           ],
-        })
+        }),
       ),
     });
     toast_overlay.add_toast(toast);
@@ -494,7 +498,7 @@ export default function Window({ application }) {
     }
 
     if (language.panel === "ui") {
-      settings.set_boolean(`show-preview`, true);
+      settings.set_boolean("show-preview", true);
     }
   }
   return { window, openFile };
@@ -509,7 +513,6 @@ async function setGtk4PreferDark(dark) {
   const settings = new GLib.KeyFile();
   try {
     settings.load_from_file(settings_path, GLib.KeyFileFlags.NONE);
-    // eslint-disable-next-line no-empty
   } catch (err) {
     if (err.code !== GLib.FileError.NOENT) throw err;
   }

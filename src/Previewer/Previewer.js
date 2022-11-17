@@ -95,7 +95,7 @@ export default function Previewer({
     "preview-align",
     dropdown_preview_align,
     "selected",
-    Gio.SettingsBindFlags.DEFAULT
+    Gio.SettingsBindFlags.DEFAULT,
   );
   dropdown_preview_align.connect("notify::selected", setPreviewAlign);
   function setPreviewAlign() {
@@ -135,6 +135,7 @@ export default function Previewer({
 
   // Using this custom scope we make sure that previewing UI definitions
   // with signals doesn't fail - in addition, checkout registerSignals
+  // rome-ignore lint(correctness/noUnusedVariables): https://github.com/rome/tools/issues/3779
   const BuilderScope = GObject.registerClass(
     {
       Implements: [Gtk.BuilderScope],
@@ -142,19 +143,19 @@ export default function Previewer({
     class BuilderScope extends GObject.Object {
       noop() {}
       // https://docs.gtk.org/gtk4/vfunc.BuilderScope.create_closure.html
-      vfunc_create_closure(builder, function_name, flags, object) {
+      vfunc_create_closure(_builder, function_name, flags, _object) {
         if (
           panel_code.panel.visible &&
           panel_code.language === "JavaScript" &&
           flags & Gtk.BuilderClosureFlags.SWAPPED
         ) {
           console.warning(
-            'Signal flag "swapped" is unsupported in JavaScript.'
+            'Signal flag "swapped" is unsupported in JavaScript.',
           );
         }
         return this[function_name] || this.noop;
       }
-    }
+    },
   );
 
   let symbols = null;
@@ -307,7 +308,7 @@ export function scopeStylesheet(style) {
 
   for (const node of ast.nodes) {
     if (node.selector) {
-      node.selector = "#workbench_output " + node.selector;
+      node.selector = `#workbench_output ${node.selector}`;
     }
   }
 
@@ -379,7 +380,7 @@ function targetBuildable(tree) {
 
 function makeSignalHandler(
   { name, handler, after, id, type },
-  { symbols, template }
+  { symbols, template },
 ) {
   return function (object, ...args) {
     const symbol = symbols?.[handler];
@@ -388,7 +389,7 @@ function makeSignalHandler(
       symbol(object, ...args);
     }
 
-    const object_name = `${type}${id ? "$" + id : ""}`;
+    const object_name = `${type}${id ? `$${id}` : ""}`;
     // const object_name = object.toString(); // [object instance wrapper GIName:Gtk.Button jsobj@0x2937abc5c4c0 native@0x55fbfe53f620]
     const handler_type = (() => {
       if (template) return "Template";
@@ -398,7 +399,7 @@ function makeSignalHandler(
     const handler_when = after ? "after" : "for";
 
     console.log(
-      `${handler_type} handler "${handler}" triggered ${handler_when} signal "${name}" on ${object_name}`
+      `${handler_type} handler "${handler}" triggered ${handler_when} signal "${name}" on ${object_name}`,
     );
   };
 }
@@ -426,7 +427,7 @@ function findSignals(tree, signals = []) {
           type: object.attrs.class,
           ...el.attrs,
         };
-      })
+      }),
     );
 
     for (const child of object.getChildren("child")) {

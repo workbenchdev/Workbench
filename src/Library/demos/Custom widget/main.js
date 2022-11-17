@@ -3,20 +3,21 @@ import Gtk from "gi://Gtk?version=4.0";
 
 Gtk.init();
 
+// rome-ignore lint(correctness/noUnusedVariables): https://github.com/rome/tools/issues/3779
 const AwesomeButton = GObject.registerClass(
   {
     GTypeName: "AwesomeButton",
     Template: workbench.template,
   },
   class AwesomeButton extends Gtk.Button {
-    _init(params = {}) {
-      super._init(params);
+    constructor(params = {}) {
+      super(params);
     }
 
     onclicked() {
       console.log("Clicked");
     }
-  }
+  },
 );
 
 const container = new Gtk.FlowBox({

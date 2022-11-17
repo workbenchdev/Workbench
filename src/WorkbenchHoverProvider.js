@@ -84,5 +84,5 @@ export default GObject.registerClass(
     GTypeName: "WorkbenchHoverProvider",
     Implements: [Source.HoverProvider],
   },
-  WorkbenchHoverProvider
+  WorkbenchHoverProvider,
 );

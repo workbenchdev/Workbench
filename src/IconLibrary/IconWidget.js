@@ -4,19 +4,19 @@ import GObject from "gi://GObject";
 import Template from "./IconWidget.blp" assert { type: "uri" };
 
 class IconWidget extends Gtk.FlowBoxChild {
-  _init(params = {}) {
-    super._init(params);
+  constructor(params = {}) {
+    super(params);
     this.bind_property(
       "icon_name",
       this._image,
       "icon-name",
-      GObject.BindingFlags.SYNC_CREATE
+      GObject.BindingFlags.SYNC_CREATE,
     );
     this.bind_property(
       "icon_name",
       this,
       "tooltip_text",
-      GObject.BindingFlags.SYNC_CREATE
+      GObject.BindingFlags.SYNC_CREATE,
     );
   }
   onClicked() {
@@ -35,12 +35,12 @@ export default GObject.registerClass(
         "icon_name", // Nick
         "", // Blurb
         GObject.ParamFlags.READWRITE, // Flags
-        null // Default value
+        null, // Default value
       ),
     },
     Signals: {
       clicked: {},
     },
   },
-  IconWidget
+  IconWidget,
 );

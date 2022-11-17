@@ -60,7 +60,7 @@ export default function PanelUI({
     "active",
     panel_ui,
     "visible",
-    GObject.BindingFlags.SYNC_CREATE
+    GObject.BindingFlags.SYNC_CREATE,
   );
 
   const stack_ui = builder.get_object("stack_ui");
@@ -102,7 +102,7 @@ export default function PanelUI({
     settings.set_int("ui-language", 1);
   }
   const button_ui_export_blueprint = builder.get_object(
-    "button_ui_export_blueprint"
+    "button_ui_export_blueprint",
   );
   button_ui_export_blueprint.connect("clicked", () => {
     convertToBlueprint().catch(logError);
@@ -112,11 +112,11 @@ export default function PanelUI({
     "ui-language",
     dropdown_ui_lang,
     "selected",
-    Gio.SettingsBindFlags.DEFAULT
+    Gio.SettingsBindFlags.DEFAULT,
   );
 
   const button_ui_experimental_blueprint = builder.get_object(
-    "button_ui_experimental_blueprint"
+    "button_ui_experimental_blueprint",
   );
   button_ui_experimental_blueprint.connect("clicked", () => {
     const modal = builder.get_object("modal_blueprint_experimental");
@@ -124,13 +124,13 @@ export default function PanelUI({
     modal.present();
   });
   const button_blueprint_documentation = builder.get_object(
-    "button_blueprint_documentation"
+    "button_blueprint_documentation",
   );
   button_blueprint_documentation.connect("clicked", () => {
     Gtk.show_uri(
       null,
       "https://jwestman.pages.gitlab.gnome.org/blueprint-compiler/",
-      null
+      null,
     );
   });
 
@@ -227,7 +227,7 @@ export default function PanelUI({
 
     const [{ xml }] = await once(
       blueprint,
-      "notification::textDocument/x-blueprintcompiler/publishCompiled"
+      "notification::textDocument/x-blueprintcompiler/publishCompiled",
     );
 
     return xml;
@@ -266,14 +266,14 @@ function logBlueprintError(err) {
 
 function createBlueprintClient({ data_dir, buffer, provider }) {
   const file_blueprint_logs = Gio.File.new_for_path(
-    GLib.build_filenamev([data_dir, `blueprint-logs`])
+    GLib.build_filenamev([data_dir, "blueprint-logs"]),
   );
   file_blueprint_logs.replace_contents(
     " ",
     null,
     false,
     Gio.FileCreateFlags.REPLACE_DESTINATION,
-    null
+    null,
   );
   const blueprint = new LSPClient([
     // "/home/sonny/Projects/Workbench/blueprint-compiler/blueprint-compiler.py",
@@ -286,23 +286,23 @@ function createBlueprintClient({ data_dir, buffer, provider }) {
   blueprint.connect("exit", () => {
     console.debug("blueprint exit");
   });
-  blueprint.connect("output", (self, message) => {
+  blueprint.connect("output", (_self, message) => {
     console.debug(`blueprint OUT:\n${JSON.stringify(message)}`);
   });
-  blueprint.connect("input", (self, message) => {
+  blueprint.connect("input", (_self, message) => {
     console.debug(`blueprint IN:\n${JSON.stringify(message)}`);
   });
 
   blueprint.connect(
     "notification::textDocument/publishDiagnostics",
-    (self, { diagnostics }) => {
+    (_self, { diagnostics }) => {
       handleDiagnostics({
         language: "Blueprint",
         diagnostics,
         buffer,
         provider,
       });
-    }
+    },
   );
 
   return blueprint;
