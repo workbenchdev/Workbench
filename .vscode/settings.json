@@ -13,7 +13,6 @@
     ".flatpak/**": true,
     "_build/**": true
   },
-  "vala.languageServerPath": "/home/sonny/Projects/Workbench/.flatpak/vala-language-server.sh",
   "editor.defaultFormatter": "rome.rome",
   "[javascript]": {
     "editor.defaultFormatter": "rome.rome"

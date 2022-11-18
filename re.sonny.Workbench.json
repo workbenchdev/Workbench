@@ -1,10 +1,9 @@
 {
-  "app-id": "re.sonny.Workbench",
+  "id": "re.sonny.Workbench",
   "runtime": "org.gnome.Sdk",
   "runtime-version": "43",
   "sdk": "org.gnome.Sdk",
   "sdk-extensions": ["org.freedesktop.Sdk.Extension.vala"],
-  "runtime-extensions": ["org.freedesktop.Sdk.Extension.vala"],
   "command": "workbench",
   "finish-args": [
     "--share=ipc",
@@ -48,8 +47,8 @@
     },
     {
       "name": "blueprint-compiler",
-      "builddir": true,
       "buildsystem": "meson",
+      "builddir": true,
       "sources": [
         {
           "type": "git",
@@ -65,10 +64,8 @@
       "config-opts": ["-Dprofile=default"],
       "sources": [
         {
-          "type": "git",
-          "url": "https://github.com/sonnyp/Workbench.git",
-          "tag": "v43.0",
-          "commit": "dff12cab700f452601b23e4cafbbb4c24d610946"
+          "type": "dir",
+          "path": "."
         }
       ]
     }
