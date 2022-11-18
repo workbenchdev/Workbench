@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: re.sonny.Workbench\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-01 22:39+0200\n"
+"POT-Creation-Date: 2022-11-18 13:24+0100\n"
 "PO-Revision-Date: 2022-06-10 11:14+0000\n"
 "Last-Translator: Philip Goto <philip.goto@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/workbench/"
@@ -82,342 +82,379 @@ msgid "console logs"
 msgstr "Console-logboeken"
 
 #: data/app.metainfo.xml:52
-msgid "GNOME 43"
+msgid "Use Vala Language Server for diagnostics"
 msgstr ""
 
 #: data/app.metainfo.xml:53
-msgid "Display CSS errors inline"
-msgstr ""
+#, fuzzy
+msgid "Move Icon Browser to the main application menu"
+msgstr "Bladwijzers naar het hoofdmenu verplaatst"
 
 #: data/app.metainfo.xml:54
-msgid "Fix responsiveness when working on large Blueprint files"
+msgid "Reset window preview on close"
 msgstr ""
 
 #: data/app.metainfo.xml:55
-msgid "Use AdwAboutWindow"
+msgid "Add a warning about Blueprint being experimental"
 msgstr ""
 
 #: data/app.metainfo.xml:56
-#, fuzzy
-msgid "Blueprint 0.4.0"
-msgstr "Blueprint"
+msgid "Fix loading and running code with Blueprint UI"
+msgstr ""
 
 #: data/app.metainfo.xml:57
-msgid "VTE 0.70.0"
+msgid "Fix crash when using abstract UI types"
 msgstr ""
 
 #: data/app.metainfo.xml:58
-#, fuzzy
-msgid "Various bug and crash fixes"
-msgstr "Verscheidene foutoplossingen"
-
-#: data/app.metainfo.xml:65
-msgid "Show tooltip hints in Blueprint UI code"
+msgid "Fix \"No UI definition loaded yet.\" preview error when using Vala"
 msgstr ""
 
-#: data/app.metainfo.xml:66
-#, fuzzy
-msgid "Improve XML formatter"
-msgstr "Code-formateerder"
+#: data/app.metainfo.xml:59
+msgid "Fix error message when hovering text with no diagnostic"
+msgstr ""
+
+#: data/app.metainfo.xml:60
+msgid "VTE 0.70.1"
+msgstr ""
 
 #: data/app.metainfo.xml:67
-msgid "Add Ctrl+Shift+Return shortcut to format"
+msgid "GNOME 43"
 msgstr ""
 
 #: data/app.metainfo.xml:68
-msgid "Apply Style CSS to windowed preview"
+msgid "Display CSS errors inline"
 msgstr ""
 
-#: data/app.metainfo.xml:69 data/app.metainfo.xml:114
-msgid "Improve application design"
-msgstr "Toepassingsontwerp verbeterd"
+#: data/app.metainfo.xml:69
+msgid "Fix responsiveness when working on large Blueprint files"
+msgstr ""
 
 #: data/app.metainfo.xml:70
-msgid "Prevent crash for templates with GtkWidget parent"
+msgid "Use AdwAboutWindow"
 msgstr ""
 
 #: data/app.metainfo.xml:71
 #, fuzzy
+msgid "Blueprint 0.4.0"
+msgstr "Blueprint"
+
+#: data/app.metainfo.xml:72
+msgid "VTE 0.70.0"
+msgstr ""
+
+#: data/app.metainfo.xml:73
+#, fuzzy
+msgid "Various bug and crash fixes"
+msgstr "Verscheidene foutoplossingen"
+
+#: data/app.metainfo.xml:80
+msgid "Show tooltip hints in Blueprint UI code"
+msgstr ""
+
+#: data/app.metainfo.xml:81
+#, fuzzy
+msgid "Improve XML formatter"
+msgstr "Code-formateerder"
+
+#: data/app.metainfo.xml:82
+msgid "Add Ctrl+Shift+Return shortcut to format"
+msgstr ""
+
+#: data/app.metainfo.xml:83
+msgid "Apply Style CSS to windowed preview"
+msgstr ""
+
+#: data/app.metainfo.xml:84 data/app.metainfo.xml:129
+msgid "Improve application design"
+msgstr "Toepassingsontwerp verbeterd"
+
+#: data/app.metainfo.xml:85
+msgid "Prevent crash for templates with GtkWidget parent"
+msgstr ""
+
+#: data/app.metainfo.xml:86
+#, fuzzy
 msgid "Update VTE and icon-development-kit"
 msgstr "Alle pictogrammen van icon-development-kit bijgevoegd"
 
-#: data/app.metainfo.xml:78
+#: data/app.metainfo.xml:93
 msgid "Underline errors in Blueprint UI code"
 msgstr ""
 
-#: data/app.metainfo.xml:79
+#: data/app.metainfo.xml:94
 msgid "Fix bugs and crashes"
 msgstr ""
 
-#: data/app.metainfo.xml:87
+#: data/app.metainfo.xml:102
 msgid "Add an Icon Browser to find the right icons for your prototypes"
 msgstr ""
 
-#: data/app.metainfo.xml:88
+#: data/app.metainfo.xml:103
 msgid "Add a Platform tools Library demo"
 msgstr ""
 
-#: data/app.metainfo.xml:89
+#: data/app.metainfo.xml:104
 msgid "Improve the style switcher"
 msgstr ""
 
-#: data/app.metainfo.xml:90
+#: data/app.metainfo.xml:105
 msgid "Replace confirmation dialogs with toasts and undo"
 msgstr ""
 
-#: data/app.metainfo.xml:91
+#: data/app.metainfo.xml:106
 msgid "Support updates on root objects"
 msgstr ""
 
-#: data/app.metainfo.xml:92
+#: data/app.metainfo.xml:107
 #, fuzzy
 msgid "Support binding signal handlers from UI"
 msgstr "Ondersteuning toegevoegd voor het voorvertonen van signaalafhandelaars"
 
-#: data/app.metainfo.xml:93
+#: data/app.metainfo.xml:108
 msgid "Add APIs to allow using templates from Code"
 msgstr ""
 
-#: data/app.metainfo.xml:94
+#: data/app.metainfo.xml:109
 #, fuzzy
 msgid "Add Center/Fill preview modes for templates"
 msgstr "Ondersteuning toegevoegd voor het voorvertonen van sjablonen"
 
-#: data/app.metainfo.xml:96
+#: data/app.metainfo.xml:111
 msgid "Open external preview with the dimensions of the internal preview"
 msgstr ""
 
-#: data/app.metainfo.xml:97
+#: data/app.metainfo.xml:112
 msgid "64 new icons available"
 msgstr ""
 
-#: data/app.metainfo.xml:98
+#: data/app.metainfo.xml:113
 msgid "Update Blueprint to 0.2.0"
 msgstr ""
 
-#: data/app.metainfo.xml:99
+#: data/app.metainfo.xml:114
 msgid "Fix empty preview on first load"
 msgstr ""
 
-#: data/app.metainfo.xml:100
+#: data/app.metainfo.xml:115
 msgid "Fix style scheme switch when system preference is light"
 msgstr ""
 
-#: data/app.metainfo.xml:101
+#: data/app.metainfo.xml:116
 msgid "Remove grid pattern on the source editors"
 msgstr ""
 
-#: data/app.metainfo.xml:107
+#: data/app.metainfo.xml:122
 msgid "Highlights"
 msgstr "Hoogtepunten"
 
-#: data/app.metainfo.xml:109
+#: data/app.metainfo.xml:124
 msgid "Add Blueprint markup syntax for UI"
 msgstr "Blueprint-opmaaksyntaxis toegevoegd voor interfaces"
 
-#: data/app.metainfo.xml:110
+#: data/app.metainfo.xml:125
 msgid "Add Vala programming language for Code"
 msgstr "Vala-programmeertaal toegevoegd voor code"
 
-#: data/app.metainfo.xml:111
+#: data/app.metainfo.xml:126
 msgid "Add support for previewing templates"
 msgstr "Ondersteuning toegevoegd voor het voorvertonen van sjablonen"
 
-#: data/app.metainfo.xml:112
+#: data/app.metainfo.xml:127
 msgid "Add support for previewing signal handlers"
 msgstr "Ondersteuning toegevoegd voor het voorvertonen van signaalafhandelaars"
 
-#: data/app.metainfo.xml:113
+#: data/app.metainfo.xml:128
 msgid "Include all icons from icon-development-kit"
 msgstr "Alle pictogrammen van icon-development-kit bijgevoegd"
 
-#: data/app.metainfo.xml:115
+#: data/app.metainfo.xml:130
 msgid "Distribute Library examples under CC0-1.0"
 msgstr "Bibliotheekvoorbeelden uitgebracht onder CC0-1.0"
 
-#: data/app.metainfo.xml:116
+#: data/app.metainfo.xml:131
 msgid "Respect system preference for color scheme"
 msgstr "Systeemvoorkeur voor kleurenschema wordt respecteerd"
 
-#: data/app.metainfo.xml:117
+#: data/app.metainfo.xml:132
 msgid "Add proper light/dark color schemes for Console"
 msgstr "Degelijke lichte en donkere kleurenschema's voor console toegevoegd"
 
-#: data/app.metainfo.xml:118
+#: data/app.metainfo.xml:133
 #, fuzzy
 msgid "Fix error when importing files"
 msgstr "Fout bij openen bestand opgelost"
 
-#: data/app.metainfo.xml:120
+#: data/app.metainfo.xml:135
 msgid "Other changes"
 msgstr "Andere wijzigingen"
 
-#: data/app.metainfo.xml:122
+#: data/app.metainfo.xml:137
 msgid "Silence platform tools"
 msgstr "Platformgereedschap gedempt"
 
-#: data/app.metainfo.xml:123
+#: data/app.metainfo.xml:138
 msgid "Remove GTK Icon browser platform tool"
 msgstr ""
 
-#: data/app.metainfo.xml:124
+#: data/app.metainfo.xml:139
 msgid "Make Library examples only open relevant panels"
 msgstr ""
 "Ervoor gezorgd dat bibliotheekvoorbeelden alleen relevante panelen openen"
 
-#: data/app.metainfo.xml:125
+#: data/app.metainfo.xml:140
 msgid "Always open the Console when opening a Library example"
 msgstr ""
 "Console wordt altijd geopend wanneer een bibliotheekvoorbeeld wordt geopend"
 
-#: data/app.metainfo.xml:126
+#: data/app.metainfo.xml:141
 msgid "Prevent running Code if the panel is not visible"
 msgstr "Code wordt weerhouden van uitvoeren als het paneel niet zichtbaar is"
 
-#: data/app.metainfo.xml:127
+#: data/app.metainfo.xml:142
 msgid "Add icons and mnemonics for all buttons"
 msgstr "Pictogrammen en toetsaanwijzingen voor alle knoppen toegevoegd"
 
-#: data/app.metainfo.xml:128
+#: data/app.metainfo.xml:143
 msgid "Move Bookmarks to the main menu"
 msgstr "Bladwijzers naar het hoofdmenu verplaatst"
 
-#: data/app.metainfo.xml:129
+#: data/app.metainfo.xml:144
 msgid "Enable scrollbar and kinetic scrolling on Console"
 msgstr "Scrollbalk en kinetisch scrollen toegevoegd aan console"
 
-#: data/app.metainfo.xml:130
+#: data/app.metainfo.xml:145
 msgid "Improve Library examples"
 msgstr "Bibliotheekvoorbeelden verbeterd"
 
-#: data/app.metainfo.xml:131
+#: data/app.metainfo.xml:146
 msgid "Performance optimizations"
 msgstr "Prestatieverbeteringen"
 
-#: data/app.metainfo.xml:132
+#: data/app.metainfo.xml:147
 msgid "Show a placeholder when all panels are invisible"
 msgstr "Een placeholder wordt getoond wanneer alle panelen onzichtbaar zijn"
 
-#: data/app.metainfo.xml:133
+#: data/app.metainfo.xml:148
 msgid "Crash fixes"
 msgstr "Crashoplossingen"
 
-#: data/app.metainfo.xml:134
+#: data/app.metainfo.xml:149
 msgid "Use org.gnome.Sdk runtime"
 msgstr "De runtime org.gnome.Sdk gebruikt"
 
-#: data/app.metainfo.xml:141
+#: data/app.metainfo.xml:156
 msgid "Add a Library of examples"
 msgstr "Bibliotheek met voorbeelden toegevoegd"
 
-#: data/app.metainfo.xml:142
+#: data/app.metainfo.xml:157
 msgid "Add an example of WebSocket client"
 msgstr "Voorbeeld van WebSocket-cliënt toegevoegd"
 
-#: data/app.metainfo.xml:143
+#: data/app.metainfo.xml:158
 msgid "Add an example of toasts"
 msgstr "Toasts-voorbeeld toegevoegd"
 
-#: data/app.metainfo.xml:144
+#: data/app.metainfo.xml:159
 msgid "Add an example of application window"
 msgstr "Voorbeeld van toepassingsvenster toegevoegd"
 
-#: data/app.metainfo.xml:145
+#: data/app.metainfo.xml:160
 msgid "Add an example of desktop notification"
 msgstr "Voorbeeld van bureaubladnotificatie toegevoegd"
 
-#: data/app.metainfo.xml:147
+#: data/app.metainfo.xml:162
 msgid "Add Adwaita Demo, GTK Demo, GTK Widget Factory and GTK Icon Browser"
 msgstr ""
 "Adwaita-demo, GTK-demo, GTK-widgetfabriek en GTK-pictogrambrowser toegevoegd"
 
-#: data/app.metainfo.xml:148
+#: data/app.metainfo.xml:163
 msgid "The Console can be collapsed by resizing it"
 msgstr "De console kan worden ingevouwen door de grootte aan te passen"
 
-#: data/app.metainfo.xml:149
+#: data/app.metainfo.xml:164
 msgid "Prevent system.exit from quitting Workbench"
 msgstr "Voorkomen dat system.exit Workbench sluit"
 
-#: data/app.metainfo.xml:150
+#: data/app.metainfo.xml:165
 msgid "Allow calling GObject.registerClass multiple times"
 msgstr "GObject.registerClass meerdere keren aanroepen wordt toegestaan"
 
-#: data/app.metainfo.xml:151
+#: data/app.metainfo.xml:166
 msgid "Prevent crash caused by using non GtkBuildable objects"
 msgstr "Crash voorkomen door het gebruik van niet-GtkBuildable-objecten"
 
-#: data/app.metainfo.xml:152
+#: data/app.metainfo.xml:167
 msgid "Allow using DBus and Gio.Application"
 msgstr "Gebruik van DBus en Gio.Application toegestaan"
 
-#: data/app.metainfo.xml:153
+#: data/app.metainfo.xml:168
 msgid "Allow using network"
 msgstr "Gebruik van netwerk toegestaan"
 
-#: data/app.metainfo.xml:154
+#: data/app.metainfo.xml:169
 msgid "Enable GtkWindow objects preview"
 msgstr "GtkWindow-objectvoorvertoning toegestaan"
 
-#: data/app.metainfo.xml:161
+#: data/app.metainfo.xml:176
 msgid "Take a png screenshot of the preview"
 msgstr "Een png-schermafdruk van het voorbeeld nemen toegestaan"
 
-#: data/app.metainfo.xml:162
+#: data/app.metainfo.xml:177
 msgid "The console is now resizable"
 msgstr "Het mogelijk gemaakt de grootte van de console te veranderen"
 
-#: data/app.metainfo.xml:163
+#: data/app.metainfo.xml:178
 msgid "Redesign the dark/light mode switcher"
 msgstr "De schakelaar voor donkere/lichte modus herontworpen"
 
-#: data/app.metainfo.xml:164
+#: data/app.metainfo.xml:179
 msgid "Show platform and dependencies in about dialog"
 msgstr "Platform en afhankelijkheden aan over-dialoog toegevoegd"
 
-#: data/app.metainfo.xml:165
+#: data/app.metainfo.xml:180
 msgid "Update to GNOME platform 42"
 msgstr "Geüpdate naar Gnome-platform 42"
 
-#: data/app.metainfo.xml:166
+#: data/app.metainfo.xml:181
 msgid "Various fixes"
 msgstr "Verscheidene foutoplossingen"
 
-#: data/app.metainfo.xml:172
+#: data/app.metainfo.xml:187
 msgid "This is the first release of Workbench. We hope you like it."
 msgstr ""
 "Dit is de eerste uitgave van Workbench. We hopen dat u er tevreden mee bent."
 
-#: src/window.js:357
+#: src/window.js:371
 msgid "The demo has been loaded"
 msgstr ""
 
-#: src/window.js:358 src/window.js:439 src/shortcutsWindow.blp:46
+#: src/window.js:372 src/window.js:453 src/shortcutsWindow.blp:46
 msgid "Undo"
 msgstr "Ongedaan maken"
 
-#: src/window.js:431
+#: src/window.js:445
 msgid "This file cannot be loaded"
 msgstr ""
 
-#: src/window.js:438
+#: src/window.js:452
 msgid "The file has been loaded"
 msgstr ""
 
 #. TRANSLATORS: eg. 'Translator Name <your.email@domain.com>' or 'Translator Name https://website.example'
-#: src/about.js:40
+#: src/about.js:39
 msgid "translator-credits"
 msgstr "Philip Goto"
 
-#: src/about.js:49
+#: src/about.js:52
 msgid "Contributors"
 msgstr ""
 
-#: src/actions.js:51 src/shortcutsWindow.blp:21
+#: src/actions.js:53 src/shortcutsWindow.blp:21
 msgid "Import File"
 msgstr "Bestand importeren"
 
-#: src/actions.js:135
+#: src/actions.js:147
 msgid "All supported"
 msgstr "Alle ondersteunde"
 
@@ -449,7 +486,7 @@ msgstr "_Voorbeeld"
 msgid "<b>Code</b>"
 msgstr "<b>Code</b>"
 
-#: src/window.blp:146 src/window.blp:278
+#: src/window.blp:146
 msgid "Switch document"
 msgstr "Van document wisselen"
 
@@ -461,48 +498,57 @@ msgstr "_Uitvoeren"
 msgid "Run (Ctrl+⏎)"
 msgstr "Uitvoeren (Ctrl+⏎)"
 
-#: src/window.blp:220
+#: src/window.blp:218
 msgid "<b>Style CSS</b>"
 msgstr "<b>Stijl-CSS</b>"
 
-#: src/window.blp:260
+#: src/window.blp:257
 msgid "<b>UI</b>"
 msgstr "<b>Interface</b>"
 
-#: src/window.blp:290 src/window.blp:292
+#: src/window.blp:273
+msgid "Convert and switch syntax"
+msgstr ""
+
+#: src/window.blp:277
+#, fuzzy
+msgid "Informaton about Blueprint"
+msgstr "Naar Blueprint converteren"
+
+#: src/window.blp:289 src/window.blp:291
 msgid "Convert to XML"
 msgstr "Naar XML converteren"
 
-#: src/window.blp:301 src/window.blp:303
+#: src/window.blp:300 src/window.blp:302
 msgid "Convert to Blueprint"
 msgstr "Naar Blueprint converteren"
 
-#: src/window.blp:369
+#: src/window.blp:366
 msgid "<b>Preview</b>"
 msgstr "<b>Voorbeeld</b>"
 
-#: src/window.blp:379
+#: src/window.blp:376
 msgid "Fill"
 msgstr ""
 
-#: src/window.blp:380
+#: src/window.blp:377
 msgid "Center"
 msgstr ""
 
-#: src/window.blp:383
+#: src/window.blp:380
 #, fuzzy
 msgid "Select Preview mode"
 msgstr "Voorbeeldvenster sluiten"
 
-#: src/window.blp:389 src/window.blp:391
+#: src/window.blp:386 src/window.blp:388
 msgid "Take Screenshot of Preview"
 msgstr "Schermafdruk van voorbeeld nemen"
 
-#: src/window.blp:423 src/window.blp:441
+#: src/window.blp:420 src/window.blp:438
 msgid "Windowed Preview"
 msgstr "Voorbeeld in venster"
 
-#: src/window.blp:424 src/window.blp:442
+#: src/window.blp:421 src/window.blp:439
 #, fuzzy
 msgid ""
 "This interface can only be previewed as a separate window.\n"
@@ -511,103 +557,123 @@ msgstr ""
 "Deze interface kan alleen worden voorvertoond als apart venster.\n"
 "We bevelen aan “Altijd voorop” te gebruiken."
 
-#: src/window.blp:431
+#: src/window.blp:428
 msgid "Show Preview Window"
 msgstr "Voorbeeldvenster tonen"
 
-#: src/window.blp:449
+#: src/window.blp:446
 msgid "Close Preview Window"
 msgstr "Voorbeeldvenster sluiten"
 
-#: src/window.blp:484
+#: src/window.blp:481
 msgid "C_onsole"
 msgstr "_Console"
 
-#: src/window.blp:488
+#: src/window.blp:485
 msgid "Show logs (Ctrl+Shift+K)"
 msgstr "Logboeken tonen (Ctrl+Shift+K)"
 
-#: src/window.blp:494
+#: src/window.blp:491
 msgid "_Inspector"
 msgstr "_Inspector"
 
-#: src/window.blp:497
+#: src/window.blp:494
 msgid "Open GTK Inspector (Ctrl+Shift+I)"
 msgstr "GTK-Inspector openen (Ctrl+Shift+I)"
 
-#: src/window.blp:508
+#: src/window.blp:505
 msgid "Cl_ear"
 msgstr "_Wissen"
 
-#: src/window.blp:512
+#: src/window.blp:509
 msgid "Clear console (Ctrl+K)"
 msgstr "Console wissen (Ctrl+K)"
 
-#: src/window.blp:542
+#: src/window.blp:536
+msgid "Future versions may have breaking syntax."
+msgstr ""
+
+#: src/window.blp:537
+msgid ""
+"Blueprint is\n"
+"Experimental"
+msgstr ""
+
+#: src/window.blp:541
+#, fuzzy
+msgid "Documentation"
+msgstr "Ontwikkelaarsdocumentatie"
+
+#: src/window.blp:556
 msgid "Import File…"
 msgstr "Bestand importeren…"
 
-#: src/window.blp:548
+#: src/window.blp:562
 msgid "Bookmarks"
 msgstr "Bladwijzers"
 
-#: src/window.blp:550
+#: src/window.blp:564
 msgid "Learn"
 msgstr "Leren"
 
-#: src/window.blp:553
+#: src/window.blp:567
 msgid "Developer Documentation"
 msgstr "Ontwikkelaarsdocumentatie"
 
-#: src/window.blp:560
+#: src/window.blp:574
 msgid "Human Interface Guidelines"
 msgstr "Human Interface Guidelines"
 
-#: src/window.blp:566
+#: src/window.blp:580
 msgid "JavaScript"
 msgstr "JavaScript"
 
-#: src/window.blp:572
+#: src/window.blp:586
 msgid "Vala"
 msgstr "Vala"
 
-#: src/window.blp:578
+#: src/window.blp:592
 msgid "Blueprint"
 msgstr "Blueprint"
 
-#: src/window.blp:585
+#: src/window.blp:599
 msgid "Get help"
 msgstr "Hulp verkrijgen"
 
-#: src/window.blp:588
+#: src/window.blp:602
 msgid "Discourse"
 msgstr "Discourse"
 
-#: src/window.blp:594
+#: src/window.blp:608
 msgid "Matrix"
 msgstr "Matrix"
 
-#: src/window.blp:602
+#: src/window.blp:616
+#, fuzzy
+msgid "Icon Library"
+msgstr "Bibliotheek openen"
+
+#: src/window.blp:621
 msgid "Platform Tools"
 msgstr "Platformgereedschap"
 
-#: src/window.blp:605
+#: src/window.blp:624
 msgid "Adwaita Demo"
 msgstr "Adwaita-demo"
 
-#: src/window.blp:611
+#: src/window.blp:630
 msgid "GTK Demo"
 msgstr "GTK-demo"
 
-#: src/window.blp:617
+#: src/window.blp:636
 msgid "GTK Widget Factory"
 msgstr "GTK-widgetfabriek"
 
-#: src/window.blp:625 src/shortcutsWindow.blp:54
+#: src/window.blp:644 src/shortcutsWindow.blp:54
 msgid "Keyboard Shortcuts"
 msgstr "Sneltoetsen"
 
-#: src/window.blp:630
+#: src/window.blp:649
 msgid "About Workbench"
 msgstr "Over Workbench"
 

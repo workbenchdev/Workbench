@@ -13,12 +13,12 @@
     ".flatpak/**": true,
     "_build/**": true
   },
-  "mesonbuild.configureOnOpen": false,
-  "mesonbuild.buildFolder": "_build",
-  "mesonbuild.mesonPath": "/home/sonny/Projects/Workbench/.flatpak/meson.sh",
   "vala.languageServerPath": "/home/sonny/Projects/Workbench/.flatpak/vala-language-server.sh",
   "editor.defaultFormatter": "rome.rome",
   "[javascript]": {
     "editor.defaultFormatter": "rome.rome"
-  }
+  },
+  "mesonbuild.configureOnOpen": false,
+  "mesonbuild.buildFolder": "_build",
+  "mesonbuild.mesonPath": "/home/sonny/Projects/Workbench/.flatpak/meson.sh"
 }
