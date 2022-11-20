@@ -3,7 +3,6 @@
   "runtime": "org.gnome.Sdk",
   "runtime-version": "43",
   "sdk": "org.gnome.Sdk",
-  "sdk-extensions": ["org.freedesktop.Sdk.Extension.vala"],
   "command": "workbench",
   "finish-args": [
     "--share=ipc",
@@ -54,6 +53,73 @@
           "type": "git",
           "url": "https://gitlab.gnome.org/sonny/blueprint-compiler",
           "commit": "592ed7acab26f1633c03b0cd703a9cf2b7f09cb9"
+        }
+      ]
+    },
+    {
+      "name": "vls",
+      "buildsystem": "meson",
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://github.com/vala-lang/vala-language-server/",
+          "branch": "master",
+          "commit": "bf978c0cda97cff946f355477ec8da08b1cb4e5e"
+        }
+      ],
+      "modules": [
+        {
+          "name": "jsonrpc",
+          "buildsystem": "meson",
+          "sources": [
+            {
+              "type": "archive",
+              "url": "https://download.gnome.org/sources/jsonrpc-glib/3.42/jsonrpc-glib-3.42.0.tar.xz",
+              "sha256": "221989a57ca82a12467dc427822cd7651b0cad038140c931027bf1074208276b",
+              "x-checker-data": {
+                "type": "gnome",
+                "name": "jsonrpc-glib",
+                "stable-only": true
+              }
+            }
+          ],
+          "cleanup": [
+            "/include",
+            "*.pc",
+            "*.gir",
+            "*.typelib"
+          ]
+        },
+        {
+          "name": "gee",
+          "buildsystem": "autotools",
+          "sources": [
+            {
+              "type": "archive",
+              "url": "https://download.gnome.org/sources/libgee/0.20/libgee-0.20.5.tar.xz",
+              "sha256": "31863a8957d5a727f9067495cabf0a0889fa5d3d44626e54094331188d5c1518",
+              "x-checker-data": {
+                "type": "gnome",
+                "name": "libgee",
+                "stable-only": true
+              }
+            }
+          ]
+        },
+        {
+          "name": "uncrustify",
+          "buildsystem": "cmake-ninja",
+          "config-opts": [
+            "-DCMAKE_BUILD_TYPE=Release"
+          ],
+          "builddir": true,
+          "sources": [
+            {
+              "type": "archive",
+              "url": "https://github.com/uncrustify/uncrustify/archive/uncrustify-0.75.1.tar.gz",
+              "sha256": "fd14acc0a31ed88b33137bdc26d32964327488c835f885696473ef07caf2e182"
+            }
+          ]
         }
       ]
     },

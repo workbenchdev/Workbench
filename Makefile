@@ -14,3 +14,5 @@ test: lint
 	flatpak-builder --show-manifest re.sonny.Workbench.json > /dev/null
 	flatpak-builder --show-manifest re.sonny.Workbench.Devel.json > /dev/null
 	find po/ -type f -name "*po" -print0 | xargs -0 -n1 msgfmt -o /dev/null --check
+	flatpak run --command=flatpak-builder-lint org.flatpak.Builder --exceptions re.sonny.Workbench.json
+	flatpak run org.flathub.flatpak-external-data-checker re.sonny.Workbench.json

@@ -19,5 +19,6 @@
   },
   "mesonbuild.configureOnOpen": false,
   "mesonbuild.buildFolder": "_build",
-  "mesonbuild.mesonPath": "/home/sonny/Projects/Workbench/.flatpak/meson.sh"
+  "mesonbuild.mesonPath": "/home/sonny/Projects/Workbench/.flatpak/meson.sh",
+  "vala.languageServerPath": "/home/sonny/Projects/Workbench/.flatpak/vala-language-server.sh"
 }
