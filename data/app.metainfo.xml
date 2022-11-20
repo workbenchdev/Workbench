@@ -46,6 +46,13 @@
   </screenshots>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="43.2" date="2022-11-20">
+      <description>
+        <ul>
+          <li>Fix application not starting</li>
+        </ul>
+      </description>
+    </release>
     <release version="43.1" date="2022-11-18">
       <description>
         <ul>
