@@ -4,6 +4,7 @@ import GObject from "gi://GObject";
 import { settings } from "./util.js";
 
 import { setup as setupVala } from "./langs/vala.js";
+import { setup as setupJavaScript } from "./langs/javascript.js";
 
 export default function PanelCode({ builder, previewer, data_dir }) {
   const panel_code = builder.get_object("panel_code");
@@ -41,6 +42,7 @@ export default function PanelCode({ builder, previewer, data_dir }) {
   };
 
   setupVala({ data_dir });
+  setupJavaScript({ data_dir });
 
   function switchLanguage() {
     panel.language = dropdown_code_lang.selected_item.string;
