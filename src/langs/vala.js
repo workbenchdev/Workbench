@@ -8,7 +8,7 @@ import WorkbenchHoverProvider from "../WorkbenchHoverProvider.js";
 import { getPid } from "../../troll/src/util.js";
 
 export function setup({ data_dir }) {
-  const buffer_vala = getLanguage("vala").document.buffer;
+  const buffer = getLanguage("vala").document.buffer;
   const state_file = getLanguage("vala").document.file;
   const provider = new WorkbenchHoverProvider();
 
@@ -22,14 +22,14 @@ export function setup({ data_dir }) {
     provider,
   });
 
-  const vls = createVLSClient({
-    buffer: buffer_vala,
+  const lspc = createLSPClient({
+    buffer: buffer,
     provider,
   });
 
   async function setupLSP() {
-    if (vls.proc) return;
-    vls.start();
+    if (lspc.proc) return;
+    lspc.start();
 
     api_file.copy(
       Gio.File.new_for_path(data_dir).get_child("workbench.vala"),
@@ -39,43 +39,42 @@ export function setup({ data_dir }) {
     );
 
     // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#initialize
-    await vls.request("initialize", {
+    await lspc.request("initialize", {
       processId: getPid(),
       clientInfo: {
         name: "re.sonny.Workbench",
         version: pkg.name,
       },
-      rootPath: data_dir,
       rootUri: Gio.File.new_for_path(data_dir).get_uri(),
     });
 
-    await vls.notify("textDocument/didOpen", {
+    await lspc.notify("textDocument/didOpen", {
       textDocument: {
         uri: state_file.get_uri(),
         languageId: "vala",
         version: ++document_version,
-        text: buffer_vala.text,
+        text: buffer.text,
       },
     });
   }
   setupLSP().catch(logError);
 
-  function createVLSClient({ buffer, provider }) {
-    const vls = new LSPClient([
+  function createLSPClient({ buffer, provider }) {
+    const lspc = new LSPClient([
       // "/usr/lib/sdk/vala/bin/vala-language-server",
       "vala-language-server",
     ]);
-    vls.connect("exit", () => {
-      console.debug("vls exit");
+    lspc.connect("exit", () => {
+      console.debug("vala language server exit");
     });
-    vls.connect("output", (_self, message) => {
-      console.debug(`vls OUT:\n${JSON.stringify(message)}`);
+    lspc.connect("output", (_self, message) => {
+      console.debug(`vala language server OUT:\n${JSON.stringify(message)}`);
     });
-    vls.connect("input", (_self, message) => {
-      console.debug(`vls IN:\n${JSON.stringify(message)}`);
+    lspc.connect("input", (_self, message) => {
+      console.debug(`vala language server IN:\n${JSON.stringify(message)}`);
     });
 
-    vls.connect(
+    lspc.connect(
       "notification::textDocument/publishDiagnostics",
       (_self, { diagnostics, uri }) => {
         if (!state_file.equal(Gio.File.new_for_uri(uri))) {
@@ -87,21 +86,21 @@ export function setup({ data_dir }) {
 
     buffer.connect("modified-changed", () => {
       if (!buffer.get_modified()) return;
-      updateVLS().catch(logError);
+      sendChanges().catch(logError);
     });
 
-    return vls;
+    return lspc;
   }
 
-  async function updateVLS() {
+  async function sendChanges() {
     await setupLSP();
 
-    await vls.notify("textDocument/didChange", {
+    await lspc.notify("textDocument/didChange", {
       textDocument: {
         uri: state_file.get_uri(),
         version: ++document_version,
       },
-      contentChanges: [{ text: buffer_vala.text }],
+      contentChanges: [{ text: buffer.text }],
     });
   }
 }
