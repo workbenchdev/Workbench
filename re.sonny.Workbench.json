@@ -56,7 +56,7 @@
         {
           "type": "git",
           "url": "https://gitlab.gnome.org/sonny/blueprint-compiler",
-          "commit": "592ed7acab26f1633c03b0cd703a9cf2b7f09cb9"
+          "commit": "c587c13a96efa79954e3ac3b9dfd8751e32e5a25"
         }
       ]
     },

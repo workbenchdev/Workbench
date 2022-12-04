@@ -73,8 +73,7 @@ export function setup({ data_dir }) {
             uri,
             version: ++document_version,
           },
-          // FIXME: https://gitlab.gnome.org/jwestman/blueprint-compiler/-/merge_requests/84
-          contentChanges: [buffer.text],
+          contentChanges: [{text: buffer.text}],
         })
         .catch(logError);
     });
@@ -94,11 +93,8 @@ export function setup({ data_dir }) {
     );
     const lspc = new LSPClient([
       // "/home/sonny/Projects/Workbench/blueprint-compiler/blueprint-compiler.py",
-      // "/app/bin/blueprint-compiler",
-      "blueprint-compiler",
+      "/app/bin/blueprint-compiler",
       "lsp",
-      "--logfile",
-      file_blueprint_logs.get_path(),
     ]);
     lspc.connect("exit", () => {
       console.debug("blueprint language server exit");
@@ -138,8 +134,7 @@ export function setup({ data_dir }) {
           uri,
           version: ++document_version,
         },
-        // FIXME: https://gitlab.gnome.org/jwestman/blueprint-compiler/-/merge_requests/84
-        contentChanges: [buffer.text],
+        contentChanges: [{text: buffer.text}],
       });
 
       const [{ xml }] = await once(
