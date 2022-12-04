@@ -55,7 +55,7 @@ configure_file(
   install_dir: get_option('bindir')
 )
 
-install_data('workbench-api.vala', install_dir: pkgdatadir)
+install_data('langs/vala/workbench-api.vala', install_dir: pkgdatadir)
 subdir('Previewer/vala-previewer')
 
 gjspack = find_program('../troll/gjspack/bin/gjspack')

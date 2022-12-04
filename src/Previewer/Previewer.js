@@ -3,7 +3,7 @@ import GObject from "gi://GObject";
 import GLib from "gi://GLib";
 import Gio from "gi://Gio";
 
-import * as xml from "../xml.js";
+import * as xml from "../langs/xml/xml.js";
 import * as postcss from "../lib/postcss.js";
 
 import {

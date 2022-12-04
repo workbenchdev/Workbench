@@ -1,7 +1,7 @@
 import Gio from "gi://Gio";
 import GLib from "gi://GLib";
-import DBusPreviewer from "./Previewer/DBusPreviewer.js";
-import { promiseTask } from "../troll/src/util.js";
+import DBusPreviewer from "../../Previewer/DBusPreviewer.js";
+import { promiseTask } from "../../../troll/src/util.js";
 
 const proxy = DBusPreviewer();
 
@@ -91,5 +91,5 @@ export default function Compiler(data_dir) {
 // and return ["--pkg", "gtk4", "--pkg", "libadwaita-1"]
 // FIXME: consider using https://docs.gtk.org/glib/struct.OptionContext.html instead
 function getValaCompilerArguments(text) {
-  return text.split("\n")[0].split("-S vala ")[1].split(" ");
+  return text.split("\n")[0]?.split("-S vala ")[1]?.split(" ") || [];
 }

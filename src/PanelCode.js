@@ -3,8 +3,8 @@ import GObject from "gi://GObject";
 
 import { settings } from "./util.js";
 
-import { setup as setupVala } from "./langs/vala.js";
-import { setup as setupJavaScript } from "./langs/javascript.js";
+import { setup as setupVala } from "./langs/vala/vala.js";
+import { setup as setupJavaScript } from "./langs/javascript/javascript.js";
 
 export default function PanelCode({ builder, previewer, data_dir }) {
   const panel_code = builder.get_object("panel_code");

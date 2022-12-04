@@ -63,6 +63,7 @@ export default class LSPClient {
         0,
         null,
       );
+      if (!bytes) break;
       const line = decoder_ascii.decode(bytes).trim();
       if (!line) break;
 

@@ -7,7 +7,7 @@ import Adw from "gi://Adw?version=1";
 import Vte from "gi://Vte?version=3.91";
 import { gettext as _ } from "gettext";
 
-import * as xml from "./xml.js";
+import * as xml from "./langs/xml/xml.js";
 import {
   settings,
   createDataDir,
@@ -26,7 +26,7 @@ import prettier_babel from "./lib/prettier-babel.js";
 import prettier_postcss from "./lib/prettier-postcss.js";
 import Library, { readDemo } from "./Library/Library.js";
 import Previewer from "./Previewer/Previewer.js";
-import Compiler from "./Compiler.js";
+import Compiler from "./langs/vala/Compiler.js";
 import { promiseTask } from "../troll/src/util.js";
 import ThemeSelector from "../troll/src/widgets/ThemeSelector.js";
 

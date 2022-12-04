@@ -1,11 +1,15 @@
 import Gio from "gi://Gio";
 import GLib from "gi://GLib";
 
-import LSPClient from "../lsp/LSPClient.js";
+import LSPClient from "../../lsp/LSPClient.js";
 
-import { getLanguage, prepareSourceView, handleDiagnostics } from "../util.js";
-import WorkbenchHoverProvider from "../WorkbenchHoverProvider.js";
-import { getPid } from "../../troll/src/util.js";
+import {
+  getLanguage,
+  prepareSourceView,
+  handleDiagnostics,
+} from "../../util.js";
+import WorkbenchHoverProvider from "../../WorkbenchHoverProvider.js";
+import { getPid } from "../../../troll/src/util.js";
 
 export function setup({ data_dir }) {
   const buffer = getLanguage("vala").document.buffer;
@@ -16,6 +20,7 @@ export function setup({ data_dir }) {
     GLib.build_filenamev([pkg.pkgdatadir, "workbench-api.vala"]),
   );
 
+  const uri = state_file.get_uri();
   let document_version = 0;
   prepareSourceView({
     source_view: getLanguage("vala").document.source_view,
@@ -27,8 +32,11 @@ export function setup({ data_dir }) {
     provider,
   });
 
+  let modifed_changed_signal;
   async function setupLSP() {
     if (lspc.proc) return;
+
+    modifed_changed_signal && lspc.disconnect(modifed_changed_signal);
     lspc.start();
 
     api_file.copy(
@@ -46,15 +54,30 @@ export function setup({ data_dir }) {
         version: pkg.name,
       },
       rootUri: Gio.File.new_for_path(data_dir).get_uri(),
+      locale: "en",
     });
 
     await lspc.notify("textDocument/didOpen", {
       textDocument: {
-        uri: state_file.get_uri(),
+        uri,
         languageId: "vala",
         version: ++document_version,
         text: buffer.text,
       },
+    });
+
+    modifed_changed_signal = buffer.connect("modified-changed", () => {
+      if (!buffer.get_modified()) return;
+
+      lspc
+        .notify("textDocument/didChange", {
+          textDocument: {
+            uri,
+            version: ++document_version,
+          },
+          contentChanges: [{ text: buffer.text }],
+        })
+        .catch(logError);
     });
   }
   setupLSP().catch(logError);
@@ -84,23 +107,6 @@ export function setup({ data_dir }) {
       },
     );
 
-    buffer.connect("modified-changed", () => {
-      if (!buffer.get_modified()) return;
-      sendChanges().catch(logError);
-    });
-
     return lspc;
-  }
-
-  async function sendChanges() {
-    await setupLSP();
-
-    await lspc.notify("textDocument/didChange", {
-      textDocument: {
-        uri: state_file.get_uri(),
-        version: ++document_version,
-      },
-      contentChanges: [{ text: buffer.text }],
-    });
   }
 }
