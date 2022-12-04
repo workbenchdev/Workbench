@@ -108,13 +108,14 @@ export default class LSPClient {
   _onmessage(message) {
     this.emit("input", message);
 
-    if (message.result) {
+    if ("result" in message) {
       this.emit(`result::${message.id}`, message.result);
-    }
-    if (message.error) {
+    } else if ("error" in message) {
       const err = new LSPError(message.error);
       this.emit(`error::${message.id}`, err);
-    } else if (message.params) {
+    } else if ("id" in message) {
+      this.emit(`request::${message.method}`, message);
+    } else {
       this.emit(`notification::${message.method}`, message.params);
     }
   }

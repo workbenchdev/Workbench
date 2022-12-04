@@ -4,6 +4,7 @@ import Xdp from "gi://Xdp";
 import Gtk from "gi://Gtk";
 import Pango from "gi://Pango";
 import { rangeEquals, diagnostic_severities } from "./lsp/LSP.js";
+import Gdk from "gi://Gdk";
 
 export const portal = new Xdp.Portal();
 
@@ -193,11 +194,24 @@ export function getItersAtRange(buffer, { start, end }) {
 
 export function prepareSourceView({ source_view, provider }) {
   const tag_table = source_view.buffer.get_tag_table();
-  const tag = new Gtk.TextTag({
+
+  const color_error = new Gdk.RGBA();
+  color_error.parse("#e01b24");
+  const tag_error = new Gtk.TextTag({
     name: "error",
     underline: Pango.Underline.ERROR,
+    underline_rgba: color_error,
   });
-  tag_table.add(tag);
+  tag_table.add(tag_error);
+
+  const color_warning = new Gdk.RGBA();
+  color_warning.parse("#ffa348");
+  const tag_warning = new Gtk.TextTag({
+    name: "warning",
+    underline: Pango.Underline.ERROR,
+    underline_rgba: color_warning,
+  });
+  tag_table.add(tag_warning);
 
   const hover = source_view.get_hover();
   // hover.hover_delay = 25;
@@ -212,6 +226,11 @@ export function handleDiagnostics({ language, diagnostics, buffer, provider }) {
     buffer.get_start_iter(),
     buffer.get_end_iter(),
   );
+  buffer.remove_tag_by_name(
+    "warning",
+    buffer.get_start_iter(),
+    buffer.get_end_iter(),
+  );
 
   diagnostics.forEach((diagnostic) => {
     handleDiagnostic(language, diagnostic, buffer);
@@ -222,7 +241,11 @@ function handleDiagnostic(language, diagnostic, buffer) {
   logLanguageServerDiagnostic(language, diagnostic);
 
   const [start_iter, end_iter] = getItersAtRange(buffer, diagnostic.range);
-  buffer.apply_tag_by_name("error", start_iter, end_iter);
+  buffer.apply_tag_by_name(
+    diagnostic.severity === 1 ? "error" : "warning",
+    start_iter,
+    end_iter,
+  );
 }
 
 function logLanguageServerDiagnostic(language, { range, message, severity }) {
