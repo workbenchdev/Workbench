@@ -18,6 +18,11 @@ GLib.set_application_name("Workbench");
 const resource = Gio.resource_load("@pkgdatadir@/@app_id@.gresource");
 Gio.resources_register(resource);
 
+globalThis.__DEV__ = pkg.name.endsWith(".Devel");
+if (__DEV__) {
+  pkg.sourcedir = "@sourcedir@";
+}
+
 const loop = new GLib.MainLoop(null, false);
 import("resource:///re/sonny/Workbench/src/main.js")
   .then((main) => {

@@ -10,6 +10,7 @@ import {
   disconnect_signals,
   replaceBufferText,
   unstack,
+  listenProperty,
 } from "./util.js";
 
 import {
@@ -60,12 +61,7 @@ export default function PanelUI({
 
     const xml = await compile();
     replaceBufferText(buffer_xml, xml);
-    settings.set_int("ui-language", 0);
   }
-  const button_ui_export_xml = builder.get_object("button_ui_export_xml");
-  button_ui_export_xml.connect("clicked", () => {
-    convertToXML().catch(logError);
-  });
 
   async function convertToBlueprint() {
     term_console.clear();
@@ -84,21 +80,7 @@ export default function PanelUI({
     }
 
     replaceBufferText(buffer_blueprint, blp);
-    settings.set_int("ui-language", 1);
   }
-  const button_ui_export_blueprint = builder.get_object(
-    "button_ui_export_blueprint",
-  );
-  button_ui_export_blueprint.connect("clicked", () => {
-    convertToBlueprint().catch(logError);
-  });
-
-  settings.bind(
-    "ui-language",
-    dropdown_ui_lang,
-    "selected",
-    Gio.SettingsBindFlags.DEFAULT,
-  );
 
   const button_ui_experimental_blueprint = builder.get_object(
     "button_ui_experimental_blueprint",
@@ -119,21 +101,13 @@ export default function PanelUI({
     );
   });
 
-  dropdown_ui_lang.connect("notify::selected-item", switchLanguage);
-  function switchLanguage() {
-    const language = getLanguage(dropdown_ui_lang.selected_item.string);
-    stack_ui.set_visible_child_name(language.id);
-    button_ui_experimental_blueprint.visible = language.id === "blueprint";
-  }
-  switchLanguage();
-
   let handler_ids = null;
 
   const scheduleUpdate = unstack(update);
   async function update() {
     let xml;
     if (lang.id === "xml") {
-      xml = lang.document.buffer.text;
+      xml = buffer_xml.text;
     } else {
       xml = await compile();
     }
@@ -159,12 +133,44 @@ export default function PanelUI({
     }
   }
 
-  settings.connect_after("changed::ui-language", () => {
-    start();
-    scheduleUpdate();
+  async function onChangeLang(value) {
+    if (value === 0) {
+      try {
+        await convertToXML();
+      } catch (err) {
+        logError(err);
+        dropdown_ui_lang.block();
+        dropdown_ui_lang.set_selected(1);
+        dropdown_ui_lang.unblock();
+        return;
+      }
+    } else if (value === 1) {
+      try {
+        await convertToBlueprint();
+      } catch (err) {
+        logError(err);
+        dropdown_ui_lang.block();
+        dropdown_ui_lang.set_selected(0);
+        dropdown_ui_lang.unblock();
+        return;
+      }
+    }
+
+    settings.set_int("ui-language", dropdown_ui_lang.selected);
+    setupLanguage();
+  }
+
+  dropdown_ui_lang.set_selected(settings.get_int("ui-language"));
+  listenProperty(dropdown_ui_lang, "selected", (value) => {
+    onChangeLang(value).catch(logError);
   });
 
-  start();
+  function setupLanguage() {
+    start();
+    stack_ui.set_visible_child_name(lang.id);
+    button_ui_experimental_blueprint.visible = lang.id === "blueprint";
+  }
+  setupLanguage();
 
   panel.start = start;
   panel.stop = stop;

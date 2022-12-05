@@ -7,6 +7,8 @@ import {
   getLanguage,
   prepareSourceView,
   handleDiagnostics,
+  connect_signals,
+  disconnect_signals,
 } from "../../util.js";
 import WorkbenchHoverProvider from "../../WorkbenchHoverProvider.js";
 import { getPid, once } from "../../../troll/src/util.js";
@@ -30,11 +32,14 @@ export function setup({ data_dir }) {
     provider,
   });
 
-  let modifed_changed_signal;
+  let handler_ids = null;
   async function setupLSP() {
     if (lspc.proc) return;
 
-    modifed_changed_signal && lspc.disconnect(modifed_changed_signal);
+    if (handler_ids !== null) {
+      disconnect_signals(buffer, handler_ids);
+      handler_ids = null;
+    }
     lspc.start();
 
     // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#initialize
@@ -64,18 +69,22 @@ export function setup({ data_dir }) {
       },
     });
 
-    modifed_changed_signal = buffer.connect("modified-changed", () => {
-      if (!buffer.get_modified()) return;
-
+    function onUpdate() {
       lspc
         .notify("textDocument/didChange", {
           textDocument: {
             uri,
             version: ++document_version,
           },
-          contentChanges: [{text: buffer.text}],
+          contentChanges: [{ text: buffer.text }],
         })
         .catch(logError);
+    }
+
+    handler_ids = connect_signals(buffer, {
+      "end-user-action": onUpdate,
+      undo: onUpdate,
+      redo: onUpdate,
     });
   }
   setupLSP().catch(logError);
@@ -92,8 +101,12 @@ export function setup({ data_dir }) {
       null,
     );
     const lspc = new LSPClient([
-      // "/home/sonny/Projects/Workbench/blueprint-compiler/blueprint-compiler.py",
-      "/app/bin/blueprint-compiler",
+      __DEV__
+        ? GLib.build_filenamev([
+            pkg.sourcedir,
+            "blueprint-compiler/blueprint-compiler.py",
+          ])
+        : "/app/bin/blueprint-compiler",
       "lsp",
     ]);
     lspc.connect("exit", () => {
@@ -134,7 +147,7 @@ export function setup({ data_dir }) {
           uri,
           version: ++document_version,
         },
-        contentChanges: [{text: buffer.text}],
+        contentChanges: [{ text: buffer.text }],
       });
 
       const [{ xml }] = await once(

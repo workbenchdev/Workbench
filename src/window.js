@@ -57,7 +57,7 @@ export default function Window({ application }) {
   const builder = Gtk.Builder.new_from_resource(resource);
 
   const window = builder.get_object("window");
-  if (pkg.name.endsWith("Devel")) {
+  if (__DEV__) {
     window.add_css_class("devel");
   }
   window.set_application(application);

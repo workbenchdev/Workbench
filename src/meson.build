@@ -6,6 +6,7 @@ bin_conf.set('prefix', prefix)
 bin_conf.set('libdir', join_paths(get_option('prefix'), get_option('libdir')))
 bin_conf.set('datadir', datadir)
 bin_conf.set('pkgdatadir', pkgdatadir)
+bin_conf.set('sourcedir', meson.source_root())
 
 blueprint_compiler = find_program(
   # Flatpak

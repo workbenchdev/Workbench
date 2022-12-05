@@ -117,6 +117,29 @@ export function getLanguageForFile(file) {
   });
 }
 
+export function listenProperty(
+  object,
+  property,
+  fn,
+  { initial = false, equal = true } = {},
+) {
+  let value = object[property];
+  if (initial) {
+    fn(value);
+  }
+  const signal_spec = object.connect(`notify::${property}`, () => {
+    const new_value = object[property];
+    if (equal && new_value === value) return;
+    value = new_value;
+    fn(value);
+  });
+  return {
+    disconnect() {
+      return signal_spec.disconnect();
+    },
+  };
+}
+
 export function connect_signals(target, signals) {
   return Object.entries(signals).map(([signal, handler]) => {
     return target.connect_after(signal, handler);

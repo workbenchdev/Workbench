@@ -25,13 +25,13 @@ export default class LSPClient {
   }
 
   _start_process() {
-    const flags =
-      Gio.SubprocessFlags.STDIN_PIPE |
-      Gio.SubprocessFlags.STDOUT_PIPE |
-      // vala-language-server emit lots of criticals https://github.com/vala-lang/vala-language-server/issues/274
-      // It's harmless but it looks scary.
-      // If you need to debug a language server, remove this flag
-      Gio.SubprocessFlags.STDERR_SILENCE;
+    let flags =
+      Gio.SubprocessFlags.STDIN_PIPE | Gio.SubprocessFlags.STDOUT_PIPE;
+    // vala-language-server emit lots of criticals so we disable this on release
+    // https://github.com/vala-lang/vala-language-server/issues/274
+    if (!__DEV__) {
+      flags = flags | Gio.SubprocessFlags.STDERR_SILENCE;
+    }
 
     this.proc = Gio.Subprocess.new(this.argv, flags);
     this.proc.wait_async(null, (_self, res) => {
