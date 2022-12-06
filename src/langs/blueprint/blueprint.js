@@ -7,8 +7,6 @@ import {
   getLanguage,
   prepareSourceView,
   handleDiagnostics,
-  connect_signals,
-  disconnect_signals,
 } from "../../util.js";
 import WorkbenchHoverProvider from "../../WorkbenchHoverProvider.js";
 import { getPid, once } from "../../../troll/src/util.js";
@@ -32,14 +30,9 @@ export function setup({ data_dir }) {
     provider,
   });
 
-  let handler_ids = null;
   async function setupLSP() {
     if (lspc.proc) return;
 
-    if (handler_ids !== null) {
-      disconnect_signals(buffer, handler_ids);
-      handler_ids = null;
-    }
     lspc.start();
 
     // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#initialize
@@ -67,24 +60,6 @@ export function setup({ data_dir }) {
         version: ++document_version,
         text: buffer.text,
       },
-    });
-
-    function onUpdate() {
-      lspc
-        .notify("textDocument/didChange", {
-          textDocument: {
-            uri,
-            version: ++document_version,
-          },
-          contentChanges: [{ text: buffer.text }],
-        })
-        .catch(logError);
-    }
-
-    handler_ids = connect_signals(buffer, {
-      "end-user-action": onUpdate,
-      undo: onUpdate,
-      redo: onUpdate,
     });
   }
   setupLSP().catch(logError);
@@ -139,7 +114,17 @@ export function setup({ data_dir }) {
   }
 
   return {
-    async compile() {
+    lspc,
+    async update(text) {
+      return lspc.notify("textDocument/didChange", {
+        textDocument: {
+          uri,
+          version: ++document_version,
+        },
+        contentChanges: [{ text }],
+      });
+    },
+    async compile(text) {
       await setupLSP();
 
       await lspc.notify("textDocument/didChange", {
@@ -147,7 +132,7 @@ export function setup({ data_dir }) {
           uri,
           version: ++document_version,
         },
-        contentChanges: [{ text: buffer.text }],
+        contentChanges: [{ text }],
       });
 
       const [{ xml }] = await once(

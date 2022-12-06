@@ -12,6 +12,7 @@ import {
   unstack,
   listenProperty,
 } from "./util.js";
+import { once } from "../troll/src/util.js";
 
 import {
   setup as setupBlueprint,
@@ -53,13 +54,15 @@ export default function PanelUI({
   // flat does nothing on GtkDropdown or GtkComboBox or GtkComboBoxText
   dropdown_ui_lang.get_first_child().get_style_context().add_class("flat");
 
-  const { compile, decompile } = setupBlueprint({ data_dir });
+  const blueprint = setupBlueprint({
+    data_dir,
+  });
 
   async function convertToXML() {
     term_console.clear();
     settings.set_boolean("show-console", true);
 
-    const xml = await compile();
+    const xml = await blueprint.compile(buffer_blueprint.text);
     replaceBufferText(buffer_xml, xml);
   }
 
@@ -70,7 +73,7 @@ export default function PanelUI({
     let blp;
 
     try {
-      blp = await decompile(buffer_xml.text);
+      blp = await blueprint.decompile(buffer_xml.text);
     } catch (err) {
       if (err instanceof LSPError) {
         logBlueprintError(err);
@@ -101,35 +104,65 @@ export default function PanelUI({
     );
   });
 
-  let handler_ids = null;
+  let handler_ids_xml = null;
+  let handler_ids_blueprint = null;
+  let handler_id_lsp = null;
 
-  const scheduleUpdate = unstack(update);
+  // FIXME we should wait for previewer update instead
+  // when loading demo
   async function update() {
-    let xml;
-    if (lang.id === "xml") {
-      xml = buffer_xml.text;
-    } else {
-      xml = await compile();
+    if (lang.id === "blueprint") {
+      await blueprint.update(buffer_blueprint.text);
+      await once(
+        blueprint.lspc,
+        "notification::textDocument/x-blueprintcompiler/publishCompiled",
+      );
+    } else if (lang.id === "xml") {
+      onXML(buffer_xml.text);
     }
+  }
+
+  function onXML(xml) {
     panel.xml = xml || "";
     panel.emit("updated");
   }
+
+  const onBlueprint = unstack(function onBlueprint() {
+    return blueprint.update(buffer_blueprint.text);
+  });
 
   function start() {
     stop();
     lang = getLanguage(dropdown_ui_lang.selected_item.string);
     // cannot use "changed" signal as it triggers many time for pasting
-    handler_ids = connect_signals(lang.document.buffer, {
-      "end-user-action": scheduleUpdate,
-      undo: scheduleUpdate,
-      redo: scheduleUpdate,
+    handler_ids_xml = connect_signals(buffer_xml, {
+      "end-user-action": () => onXML(buffer_xml.text),
+      undo: () => onXML(buffer_xml.text),
+      redo: () => onXML(buffer_xml.text),
     });
+    handler_ids_blueprint = connect_signals(buffer_blueprint, {
+      "end-user-action": onBlueprint,
+      undo: onBlueprint,
+      redo: onBlueprint,
+    });
+    handler_id_lsp = blueprint.lspc.connect(
+      "notification::textDocument/x-blueprintcompiler/publishCompiled",
+      (_self, { xml }) => onXML(xml),
+    );
   }
 
   function stop() {
-    if (handler_ids !== null) {
-      disconnect_signals(lang.document.buffer, handler_ids);
-      handler_ids = null;
+    if (handler_ids_xml !== null) {
+      disconnect_signals(buffer_xml, handler_ids_xml);
+      handler_ids_xml = null;
+    }
+    if (handler_ids_blueprint !== null) {
+      disconnect_signals(buffer_blueprint, handler_ids_blueprint);
+      handler_ids_blueprint = null;
+    }
+    if (handler_id_lsp !== null) {
+      blueprint.lspc.disconnect(handler_id_lsp);
+      handler_id_lsp = null;
     }
   }
 
