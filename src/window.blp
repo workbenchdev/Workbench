@@ -167,40 +167,14 @@ Gtk.ApplicationWindow window {
             hexpand: true;
             StackPage {
               name: 'JavaScript';
-              child: ScrolledWindow {
-                vexpand: true;
-                GtkSource.View source_view_javascript {
-                  buffer: GtkSource.Buffer {};
-                  monospace: true;
-                  auto-indent: true;
-                  highlight-current-line: true;
-                  indent-on-tab: true;
-                  indent-width: 2;
-                  insert-spaces-instead-of-tabs: true;
-                  show-line-marks: true;
-                  show-line-numbers: true;
-                  smart-backspace: true;
-                  tab-width: 2;
-                }
+              child: .CodeView code_view_javascript {
+                language_id: 'js';
               };
             }
             StackPage {
               name: 'Vala';
-              child: ScrolledWindow {
-                vexpand: true;
-                GtkSource.View source_view_vala {
-                  buffer: GtkSource.Buffer {};
-                  monospace: true;
-                  auto-indent: true;
-                  highlight-current-line: true;
-                  indent-on-tab: true;
-                  indent-width: 2;
-                  insert-spaces-instead-of-tabs: true;
-                  show-line-marks: true;
-                  show-line-numbers: true;
-                  smart-backspace: true;
-                  tab-width: 2;
-                }
+              child: .CodeView code_view_vala {
+                language_id: 'vala';
               };
             }
           }
@@ -224,23 +198,8 @@ Gtk.ApplicationWindow window {
           Separator {
           }
 
-          ScrolledWindow {
-            vexpand: true;
-            hexpand: true;
-
-            GtkSource.View source_view_css {
-              buffer: GtkSource.Buffer {};
-              monospace: true;
-              auto-indent: true;
-              highlight-current-line: true;
-              indent-on-tab: true;
-              indent-width: 2;
-              insert-spaces-instead-of-tabs: true;
-              show-line-marks: true;
-              show-line-numbers: true;
-              smart-backspace: true;
-              tab-width: 2;
-            }
+          .CodeView code_view_css {
+            language_id: 'css';
           }
         }
 
@@ -287,42 +246,14 @@ Gtk.ApplicationWindow window {
 
             StackPage {
               name: 'blueprint';
-              child: ScrolledWindow {
-                vexpand: true;
-
-                GtkSource.View source_view_blueprint {
-                  buffer: GtkSource.Buffer {};
-                  monospace: true;
-                  auto-indent: true;
-                  highlight-current-line: true;
-                  indent-on-tab: true;
-                  indent-width: 2;
-                  insert-spaces-instead-of-tabs: true;
-                  show-line-marks: true;
-                  show-line-numbers: true;
-                  smart-backspace: true;
-                  tab-width: 2;
-                }
+              child: .CodeView code_view_blueprint {
+                language_id: 'blueprint';
               };
             }
             StackPage {
               name: 'xml';
-              child: ScrolledWindow {
-                vexpand: true;
-
-                GtkSource.View source_view_xml {
-                  buffer: GtkSource.Buffer {};
-                  monospace: true;
-                  auto-indent: true;
-                  highlight-current-line: true;
-                  indent-on-tab: true;
-                  indent-width: 2;
-                  insert-spaces-instead-of-tabs: true;
-                  show-line-marks: true;
-                  show-line-numbers: true;
-                  smart-backspace: true;
-                  tab-width: 2;
-                }
+              child: .CodeView code_view_xml {
+                language_id: 'xml';
               };
             }
           }

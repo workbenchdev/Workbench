@@ -3,15 +3,7 @@ import GObject from "gi://GObject";
 import Gtk from "gi://Gtk";
 
 import { LSPError } from "./lsp/LSP.js";
-import {
-  getLanguage,
-  settings,
-  connect_signals,
-  disconnect_signals,
-  replaceBufferText,
-  unstack,
-  listenProperty,
-} from "./util.js";
+import { getLanguage, settings, unstack, listenProperty } from "./util.js";
 import { once } from "../troll/src/util.js";
 
 import {
@@ -26,16 +18,21 @@ export default function PanelUI({
   builder,
   data_dir,
   term_console,
+  document_xml,
+  document_blueprint,
 }) {
   let lang;
+
+  const code_view_xml = document_xml.code_view;
+  const code_view_blueprint = document_blueprint.code_view;
 
   const panel = {
     xml: "",
   };
   addSignalMethods(panel);
 
-  const buffer_blueprint = getLanguage("blueprint").document.buffer;
-  const buffer_xml = getLanguage("xml").document.buffer;
+  const buffer_blueprint = code_view_blueprint.buffer;
+  const buffer_xml = code_view_xml.buffer;
 
   const button_ui = builder.get_object("button_ui");
   const panel_ui = builder.get_object("panel_ui");
@@ -56,6 +53,7 @@ export default function PanelUI({
 
   const blueprint = setupBlueprint({
     data_dir,
+    document: document_blueprint,
   });
 
   async function convertToXML() {
@@ -63,7 +61,7 @@ export default function PanelUI({
     settings.set_boolean("show-console", true);
 
     const xml = await blueprint.compile(buffer_blueprint.text);
-    replaceBufferText(buffer_xml, xml);
+    code_view_xml.replaceText(xml);
   }
 
   async function convertToBlueprint() {
@@ -82,7 +80,7 @@ export default function PanelUI({
       throw err;
     }
 
-    replaceBufferText(buffer_blueprint, blp);
+    code_view_blueprint.replaceText(blp);
   }
 
   const button_ui_experimental_blueprint = builder.get_object(
@@ -104,9 +102,8 @@ export default function PanelUI({
     );
   });
 
-  let handler_ids_xml = null;
-  let handler_ids_blueprint = null;
-  let handler_id_lsp = null;
+  let handler_id_xml = null;
+  let handler_id_blueprint = null;
 
   // FIXME we should wait for previewer update instead
   // when loading demo
@@ -134,35 +131,25 @@ export default function PanelUI({
   function start() {
     stop();
     lang = getLanguage(dropdown_ui_lang.selected_item.string);
-    // cannot use "changed" signal as it triggers many time for pasting
-    handler_ids_xml = connect_signals(buffer_xml, {
-      "end-user-action": () => onXML(buffer_xml.text),
-      undo: () => onXML(buffer_xml.text),
-      redo: () => onXML(buffer_xml.text),
-    });
-    handler_ids_blueprint = connect_signals(buffer_blueprint, {
-      "end-user-action": onBlueprint,
-      undo: onBlueprint,
-      redo: onBlueprint,
-    });
-    handler_id_lsp = blueprint.lspc.connect(
+    handler_id_xml = code_view_xml.connect(
+      "changed",
+      () => code_view_xml.buffer.text,
+    );
+    handler_id_blueprint = code_view_blueprint.connect("changed", onBlueprint);
+    blueprint.lspc.connect(
       "notification::textDocument/x-blueprintcompiler/publishCompiled",
       (_self, { xml }) => onXML(xml),
     );
   }
 
   function stop() {
-    if (handler_ids_xml !== null) {
-      disconnect_signals(buffer_xml, handler_ids_xml);
-      handler_ids_xml = null;
+    if (handler_id_xml !== null) {
+      code_view_xml.disconnect(handler_id_xml);
+      handler_id_xml = null;
     }
-    if (handler_ids_blueprint !== null) {
-      disconnect_signals(buffer_blueprint, handler_ids_blueprint);
-      handler_ids_blueprint = null;
-    }
-    if (handler_id_lsp !== null) {
-      blueprint.lspc.disconnect(handler_id_lsp);
-      handler_id_lsp = null;
+    if (handler_id_blueprint !== null) {
+      code_view_blueprint.disconnect(handler_id_blueprint);
+      handler_id_blueprint = null;
     }
   }
 

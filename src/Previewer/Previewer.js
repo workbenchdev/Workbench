@@ -6,12 +6,7 @@ import Gio from "gi://Gio";
 import * as xml from "../langs/xml/xml.js";
 import * as postcss from "../lib/postcss.js";
 
-import {
-  getLanguage,
-  connect_signals,
-  disconnect_signals,
-  settings,
-} from "../util.js";
+import { settings } from "../util.js";
 
 import Internal from "./Internal.js";
 import External from "./External.js";
@@ -34,7 +29,6 @@ export default function Previewer({
   application,
   data_dir,
   term_console,
-  panel_style,
 }) {
   let panel_code;
 
@@ -62,7 +56,6 @@ export default function Previewer({
     window,
     application,
     dropdown_preview_align,
-    panel_style,
     panel_ui,
   });
   const external = External({
@@ -76,14 +69,13 @@ export default function Previewer({
     },
     output,
     builder,
-    panel_style,
     panel_ui,
   });
 
-  const buffer_css = getLanguage("css").document.buffer;
+  const code_view_css = builder.get_object("code_view_css");
 
   let handler_id_ui = null;
-  let handler_ids_css = null;
+  let handler_id_css = null;
   let handler_id_button_open;
   let handler_id_button_close;
 
@@ -111,13 +103,8 @@ export default function Previewer({
     if (handler_id_ui === null) {
       handler_id_ui = panel_ui.connect("updated", update);
     }
-    if (handler_ids_css === null) {
-      // cannot use "changed" signal as it triggers many time for pasting
-      handler_ids_css = connect_signals(buffer_css, {
-        "end-user-action": update,
-        undo: update,
-        redo: update,
-      });
+    if (handler_id_css === null) {
+      handler_id_css = code_view_css.connect("changed", update);
     }
   }
 
@@ -127,15 +114,14 @@ export default function Previewer({
       handler_id_ui = null;
     }
 
-    if (handler_ids_css) {
-      disconnect_signals(buffer_css, handler_ids_css);
-      handler_ids_css = null;
+    if (handler_id_css) {
+      code_view_css.disconnect(handler_id_css);
+      handler_id_css = null;
     }
   }
 
   // Using this custom scope we make sure that previewing UI definitions
   // with signals doesn't fail - in addition, checkout registerSignals
-  // rome-ignore lint(correctness/noUnusedVariables): https://github.com/rome/tools/issues/3779
   const BuilderScope = GObject.registerClass(
     {
       Implements: [Gtk.BuilderScope],
@@ -224,8 +210,8 @@ export default function Previewer({
       original_id,
       template,
     });
-    panel_style.reset();
-    current.updateCSS(buffer_css.text);
+    code_view_css.clearDiagnostics();
+    current.updateCSS(code_view_css.buffer.text);
     symbols = null;
   }
 

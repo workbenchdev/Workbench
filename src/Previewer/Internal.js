@@ -18,7 +18,6 @@ export default function Internal({
   window,
   application,
   dropdown_preview_align,
-  panel_style,
   panel_ui,
 }) {
   const stack = builder.get_object("stack_preview");
@@ -199,8 +198,8 @@ export default function Internal({
 
     css_provider = new Gtk.CssProvider();
     css_provider.connect("parsing-error", (_self, section, error) => {
-      const diagnostic = getDiagnostic(section, error);
-      panel_style.handleDiagnostic(diagnostic);
+      const diagnostic = getCssDiagnostic(section, error);
+      builder.get_object("code_view_css").handleDiagnostics([diagnostic]);
     });
     css_provider.load_from_data(style);
     Gtk.StyleContext.add_provider_for_display(
@@ -301,7 +300,7 @@ function screenshot({ widget, window, data_dir }) {
 }
 
 // Converts a Gtk.CssSection and Gtk.CssError to an LSP diagnostic object
-function getDiagnostic(section, error) {
+function getCssDiagnostic(section, error) {
   const start_location = section.get_start_location();
   const end_location = section.get_end_location();
 
@@ -316,5 +315,5 @@ function getDiagnostic(section, error) {
     },
   };
 
-  return { range, message: error.message };
+  return { range, message: error.message, severity: 1 };
 }

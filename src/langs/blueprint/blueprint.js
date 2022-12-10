@@ -3,151 +3,48 @@ import GLib from "gi://GLib";
 
 import LSPClient from "../../lsp/LSPClient.js";
 
-import {
-  getLanguage,
-  prepareSourceView,
-  handleDiagnostics,
-} from "../../util.js";
-import WorkbenchHoverProvider from "../../WorkbenchHoverProvider.js";
-import { getPid, once } from "../../../troll/src/util.js";
+import { once } from "../../../troll/src/util.js";
 
-export function setup({ data_dir }) {
-  const buffer = getLanguage("blueprint").document.buffer;
-  const provider = new WorkbenchHoverProvider();
+export function setup({ data_dir, document }) {
+  const { code_view } = document;
 
   // FIXME: Blueprint language server emits a KeyError for this
-  // const state_file = getLanguage("blueprint").document.file;
+  // const { file } = document;
   // const uri = state_file.get_uri();
   const uri = "workbench://state.blp";
-  let document_version = 0;
-  prepareSourceView({
-    source_view: getLanguage("blueprint").document.source_view,
-    provider,
-  });
 
   const lspc = createLSPClient({
-    buffer: buffer,
-    provider,
+    data_dir,
+    uri,
+    code_view,
   });
 
-  async function setupLSP() {
-    if (lspc.proc) return;
-
-    lspc.start();
-
-    // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#initialize
-    await lspc.request("initialize", {
-      processId: getPid(),
-      clientInfo: {
-        name: pkg.name,
-        version: pkg.version,
-      },
-      // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#clientCapabilities
-      capabilities: {
-        textDocument: {
-          publishDiagnostics: {},
-          "x-blueprintcompiler/publishCompiled": {},
-        },
-      },
-      rootUri: Gio.File.new_for_path(data_dir).get_uri(),
-      locale: "en",
-    });
-
-    await lspc.notify("textDocument/didOpen", {
-      textDocument: {
-        uri,
-        languageId: "blueprint",
-        version: ++document_version,
-        text: buffer.text,
-      },
-    });
-  }
-  setupLSP().catch(logError);
-
-  function createLSPClient({ buffer, provider }) {
-    const file_blueprint_logs = Gio.File.new_for_path(
-      GLib.build_filenamev([data_dir, "blueprint-logs"]),
-    );
-    file_blueprint_logs.replace_contents(
-      " ",
-      null,
-      false,
-      Gio.FileCreateFlags.REPLACE_DESTINATION,
-      null,
-    );
-    const lspc = new LSPClient([
-      __DEV__
-        ? GLib.build_filenamev([
-            pkg.sourcedir,
-            "blueprint-compiler/blueprint-compiler.py",
-          ])
-        : "/app/bin/blueprint-compiler",
-      "lsp",
-    ]);
-    lspc.connect("exit", () => {
-      console.debug("blueprint language server exit");
-    });
-    lspc.connect("output", (_self, message) => {
-      console.debug(
-        `blueprint language server OUT:\n${JSON.stringify(message)}`,
-      );
-    });
-    lspc.connect("input", (_self, message) => {
-      console.debug(
-        `blueprint language server IN:\n${JSON.stringify(message)}`,
-      );
-    });
-
-    lspc.connect(
-      "notification::textDocument/publishDiagnostics",
-      (_self, { diagnostics }) => {
-        handleDiagnostics({
-          language: "Blueprint",
-          diagnostics,
-          buffer,
-          provider,
-        });
-      },
-    );
-
-    return lspc;
-  }
+  lspc.start().catch(logError);
 
   return {
     lspc,
-    async update(text) {
-      return lspc.notify("textDocument/didChange", {
-        textDocument: {
-          uri,
-          version: ++document_version,
-        },
-        contentChanges: [{ text }],
-      });
+    async update() {
+      return lspc.didChange();
     },
-    async compile(text) {
-      await setupLSP();
-
-      await lspc.notify("textDocument/didChange", {
-        textDocument: {
-          uri,
-          version: ++document_version,
-        },
-        contentChanges: [{ text }],
-      });
+    async compile() {
+      await lspc.didChange();
 
       const [{ xml }] = await once(
         lspc,
         "notification::textDocument/x-blueprintcompiler/publishCompiled",
+        { timeout: 5000 },
       );
 
       return xml;
     },
     async decompile(text) {
-      await setupLSP();
-
-      const { blp } = await lspc.request("x-blueprintcompiler/decompile", {
-        text,
-      });
+      const { blp } = await lspc.request(
+        "x-blueprintcompiler/decompile",
+        {
+          text,
+        },
+        { timeout: 5000 },
+      );
       return blp;
     },
   };
@@ -167,4 +64,40 @@ export function logBlueprintInfo(info) {
     MESSAGE: `${info.line + 1}:${info.col} ${info.message}`,
     SYSLOG_IDENTIFIER,
   });
+}
+
+function createLSPClient({ code_view, data_dir, uri }) {
+  const bin = __DEV__
+    ? GLib.build_filenamev([
+        pkg.sourcedir,
+        "blueprint-compiler/blueprint-compiler.py",
+      ])
+    : "/app/bin/blueprint-compiler";
+
+  const lspc = new LSPClient([bin, "lsp"], {
+    rootUri: Gio.File.new_for_path(data_dir).get_uri(),
+    uri,
+    languageId: "blueprint",
+    buffer: code_view.buffer,
+  });
+  lspc.capabilities.textDocument["x-blueprintcompiler/publishCompiled"] = {};
+
+  lspc.connect("exit", () => {
+    console.debug("blueprint language server exit");
+  });
+  lspc.connect("output", (_self, message) => {
+    console.debug(`blueprint language server OUT:\n${JSON.stringify(message)}`);
+  });
+  lspc.connect("input", (_self, message) => {
+    console.debug(`blueprint language server IN:\n${JSON.stringify(message)}`);
+  });
+
+  lspc.connect(
+    "notification::textDocument/publishDiagnostics",
+    (_self, { diagnostics }) => {
+      code_view.handleDiagnostics(diagnostics);
+    },
+  );
+
+  return lspc;
 }

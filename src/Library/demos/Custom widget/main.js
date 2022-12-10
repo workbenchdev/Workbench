@@ -3,7 +3,6 @@ import Gtk from "gi://Gtk?version=4.0";
 
 Gtk.init();
 
-// rome-ignore lint(correctness/noUnusedVariables): https://github.com/rome/tools/issues/3779
 const AwesomeButton = GObject.registerClass(
   {
     GTypeName: "AwesomeButton",
