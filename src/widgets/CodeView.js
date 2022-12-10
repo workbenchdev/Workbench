@@ -1,5 +1,5 @@
 import GObject from "gi://GObject";
-import Source from "gi://GtkSource?version=5";
+import Source from "gi://GtkSource";
 import Gtk from "gi://Gtk";
 import Pango from "gi://Pango";
 import { rangeEquals, diagnostic_severities } from "../lsp/LSP.js";

@@ -2,8 +2,8 @@ import Gtk from "gi://Gtk";
 import GLib from "gi://GLib";
 import GObject from "gi://GObject";
 import Gio from "gi://Gio";
-import Adw from "gi://Adw?version=1";
-import Vte from "gi://Vte?version=3.91";
+import Adw from "gi://Adw";
+import Vte from "gi://Vte";
 import { gettext as _ } from "gettext";
 
 import * as xml from "./langs/xml/xml.js";

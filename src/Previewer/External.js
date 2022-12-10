@@ -1,4 +1,4 @@
-import Adw from "gi://Adw?version=1";
+import Adw from "gi://Adw";
 import Gio from "gi://Gio";
 import DBusPreviewer from "./DBusPreviewer.js";
 

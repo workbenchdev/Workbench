@@ -1,4 +1,4 @@
-import "gi://Gtk?version=4.0";
+import "../src/init.js";
 
 import tst, { assert } from "../troll/tst/tst.js";
 
