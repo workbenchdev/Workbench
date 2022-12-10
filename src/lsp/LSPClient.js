@@ -29,6 +29,7 @@ export default class LSPClient {
       Gio.SubprocessFlags.STDIN_PIPE | Gio.SubprocessFlags.STDOUT_PIPE;
     // vala-language-server emit lots of criticals so we disable this on release
     // https://github.com/vala-lang/vala-language-server/issues/274
+    // blueprint logs everything on stderr and is also quite verbose
     if (!__DEV__) {
       flags = flags | Gio.SubprocessFlags.STDERR_SILENCE;
     }

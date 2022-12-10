@@ -128,16 +128,16 @@
           "only-arches": [
             "aarch64"
           ],
-          "url": "https://registry.npmjs.org/@rometools/cli-linux-arm64/-/cli-linux-arm64-10.0.1.tgz",
-          "sha512": "2658d9b27b9dd4a09f7b7e9536c561fcbad8740ce06ca6dcb024f37828d6f513a4332363f29990fe021417167e3f284c160a301c80c68a1a0d7f89bea60a7190"
+          "url": "https://registry.npmjs.org/@rometools/cli-linux-arm64/-/cli-linux-arm64-11.0.0.tgz",
+          "sha512": "764b53249953a66c9c059d93c212417003bcced2bc0dd7af772667145c5d611bed9898138c8b02d9415ac9ffd26ca7b0f01f2ad48848d22b7e0fa8a101e2297a"
         },
         {
           "type": "archive",
           "only-arches": [
             "x86_64"
           ],
-          "url": "https://registry.npmjs.org/@rometools/cli-linux-x64/-/cli-linux-x64-10.0.1.tgz",
-          "sha512": "8d722a77d883c9951ec64eb70917c05c3038ccd0d41e912b52609e8e319a6f77610edd4a038d1f0ea29bfa4c59a40858ded42858d48d432a3be74cd7e4d6b02f"
+          "url": "https://registry.npmjs.org/@rometools/cli-linux-x64/-/cli-linux-x64-11.0.0.tgz",
+          "sha512": "5957275cf35d586516a34a78354f18ceeb618d847babe6f8bd1723771b4fd43969a616664aca02fd1484f399c4a91033f210a170a51a9ec57338f33c052b2e18"
         }
       ]
     },
