@@ -4,13 +4,11 @@ import GLib from "gi://GLib";
 import LSPClient from "../../lsp/LSPClient.js";
 
 export function setup({ data_dir, document }) {
-  const { file: state_file, code_view } = document;
+  const { file, code_view } = document;
 
   const api_file = Gio.File.new_for_path(
     GLib.build_filenamev([pkg.pkgdatadir, "workbench-api.vala"]),
   );
-
-  const uri = state_file.get_uri();
 
   api_file.copy(
     Gio.File.new_for_path(data_dir).get_child("workbench.vala"),
@@ -21,9 +19,8 @@ export function setup({ data_dir, document }) {
 
   const lspc = createLSPClient({
     code_view,
-    uri,
+    uri: file.get_uri(),
     data_dir,
-    state_file,
   });
 
   lspc.start().catch(logError);
@@ -33,7 +30,7 @@ export function setup({ data_dir, document }) {
   });
 }
 
-function createLSPClient({ code_view, uri, data_dir, state_file }) {
+function createLSPClient({ code_view, uri, data_dir }) {
   const lspc = new LSPClient(
     [
       // "/usr/lib/sdk/vala/bin/vala-language-server",
@@ -58,11 +55,11 @@ function createLSPClient({ code_view, uri, data_dir, state_file }) {
 
   lspc.connect(
     "notification::textDocument/publishDiagnostics",
-    (_self, { diagnostics, uri }) => {
-      if (!state_file.equal(Gio.File.new_for_uri(uri))) {
+    (_self, params) => {
+      if (params.uri !== uri) {
         return;
       }
-      code_view.handleDiagnostics(diagnostics);
+      code_view.handleDiagnostics(params.diagnostics);
     },
   );
 

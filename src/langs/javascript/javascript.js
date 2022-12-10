@@ -3,14 +3,12 @@ import Gio from "gi://Gio";
 import LSPClient from "../../lsp/LSPClient.js";
 
 export function setup({ data_dir, document }) {
-  const { file: state_file, code_view } = document;
+  const { file, code_view } = document;
 
-  const uri = state_file.get_uri();
   const lspc = createLSPClient({
-    uri,
     code_view,
+    uri: file.get_uri(),
     data_dir,
-    state_file,
   });
 
   lspc.start().catch(logError);
@@ -20,7 +18,7 @@ export function setup({ data_dir, document }) {
   });
 }
 
-function createLSPClient({ uri, code_view, data_dir, state_file }) {
+function createLSPClient({ uri, code_view, data_dir }) {
   const lspc = new LSPClient(["rome", "lsp-proxy"], {
     rootUri: Gio.File.new_for_path(data_dir).get_uri(),
     uri,
@@ -72,11 +70,11 @@ function createLSPClient({ uri, code_view, data_dir, state_file }) {
   // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_publishDiagnostics
   lspc.connect(
     "notification::textDocument/publishDiagnostics",
-    (_self, { diagnostics, uri }) => {
-      if (!state_file.equal(Gio.File.new_for_uri(uri))) {
+    (_self, params) => {
+      if (params.uri !== uri) {
         return;
       }
-      code_view.handleDiagnostics(diagnostics);
+      code_view.handleDiagnostics(params.diagnostics);
     },
   );
 

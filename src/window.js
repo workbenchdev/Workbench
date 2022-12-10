@@ -258,9 +258,7 @@ export default function Window({ application }) {
           file_javascript,
           "replace_contents_async",
           "replace_contents_finish",
-          new GLib.Bytes(
-            langs.javascript.document.code_view.buffer.text || " ",
-          ),
+          new GLib.Bytes(document_javascript.code_view.buffer.text || " "),
           null,
           false,
           Gio.FileCreateFlags.NONE,
@@ -272,6 +270,14 @@ export default function Window({ application }) {
         } catch (err) {
           previewer.update();
           throw err;
+        } finally {
+          promiseTask(
+            file_javascript,
+            "delete_async",
+            "delete_finish",
+            GLib.PRIORITY_DEFAULT,
+            null,
+          ).catch(logError);
         }
         previewer.setSymbols(exports);
       } else if (language === "Vala") {

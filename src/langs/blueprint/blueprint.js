@@ -6,17 +6,12 @@ import LSPClient from "../../lsp/LSPClient.js";
 import { once } from "../../../troll/src/util.js";
 
 export function setup({ data_dir, document }) {
-  const { code_view } = document;
-
-  // FIXME: Blueprint language server emits a KeyError for this
-  // const { file } = document;
-  // const uri = state_file.get_uri();
-  const uri = "workbench://state.blp";
+  const { file, code_view } = document;
 
   const lspc = createLSPClient({
-    data_dir,
-    uri,
     code_view,
+    uri: file.get_uri(),
+    data_dir,
   });
 
   lspc.start().catch(logError);
@@ -94,8 +89,11 @@ function createLSPClient({ code_view, data_dir, uri }) {
 
   lspc.connect(
     "notification::textDocument/publishDiagnostics",
-    (_self, { diagnostics }) => {
-      code_view.handleDiagnostics(diagnostics);
+    (_self, params) => {
+      if (params.uri !== uri) {
+        return;
+      }
+      code_view.handleDiagnostics(params.diagnostics);
     },
   );
 
