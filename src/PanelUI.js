@@ -131,9 +131,8 @@ export default function PanelUI({
   function start() {
     stop();
     lang = getLanguage(dropdown_ui_lang.selected_item.string);
-    handler_id_xml = code_view_xml.connect(
-      "changed",
-      () => code_view_xml.buffer.text,
+    handler_id_xml = code_view_xml.connect("changed", () =>
+      onXML(code_view_xml.buffer.text),
     );
     handler_id_blueprint = code_view_blueprint.connect("changed", onBlueprint);
     blueprint.lspc.connect(

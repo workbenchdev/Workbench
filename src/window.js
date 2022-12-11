@@ -247,7 +247,7 @@ export default function Window({ application }) {
       }
 
       if (language === "JavaScript") {
-        previewer.update();
+        await previewer.update();
 
         // We have to create a new file each time
         // because gjs doesn't appear to use etag for module caching
@@ -268,7 +268,7 @@ export default function Window({ application }) {
         try {
           exports = await import(`file://${file_javascript.get_path()}`);
         } catch (err) {
-          previewer.update();
+          await previewer.update();
           throw err;
         } finally {
           promiseTask(
@@ -287,12 +287,12 @@ export default function Window({ application }) {
         );
         if (success) {
           previewer.useExternal();
-          previewer.update();
+          await previewer.update();
           if (compiler.run()) {
             previewer.open();
           } else {
             previewer.useInternal();
-            previewer.update();
+            await previewer.update();
           }
         }
       }
@@ -399,7 +399,7 @@ export default function Window({ application }) {
       panel_ui.start();
       await panel_ui.update();
       previewer.start();
-      previewer.update();
+      await previewer.update();
     }
 
     documents.forEach((document) => {

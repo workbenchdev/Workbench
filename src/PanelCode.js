@@ -54,7 +54,7 @@ export default function PanelCode({
     panel.language = dropdown_code_lang.selected_item.string;
     stack_code.visible_child_name = panel.language;
     previewer.useInternal();
-    previewer.update();
+    previewer.update().catch(logError);
   }
   switchLanguage();
 
