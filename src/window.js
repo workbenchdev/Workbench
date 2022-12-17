@@ -39,6 +39,9 @@ import "./icons/re.sonny.Workbench-preview-symbolic.svg" assert {
   type: "icon",
 };
 import "./icons/re.sonny.Workbench-ui-symbolic.svg" assert { type: "icon" };
+import "./icons/re.sonny.Workbench-screenshot-symbolic.svg" assert {
+  type: "icon",
+};
 
 import "./widgets/Modal.js";
 import "./widgets/CodeView.js";

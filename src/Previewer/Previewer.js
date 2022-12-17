@@ -164,9 +164,9 @@ export default function Previewer({
 
     if (!target_id) return;
 
-    console.time("builderable");
+    // console.time("builderable");
     if (!(await isBuilderable(text))) return;
-    console.timeEnd("builderable");
+    // console.timeEnd("builderable");
 
     const builder = new Gtk.Builder();
     const scope = new BuilderScope();
