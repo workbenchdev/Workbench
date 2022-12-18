@@ -3,7 +3,7 @@ import Gio from "gi://Gio";
 
 import { LSPError } from "./LSP.js";
 
-import { promiseTask, once } from "../../troll/src/util.js";
+import { getPid, promiseTask, once } from "../../troll/src/util.js";
 
 const { addSignalMethods } = imports.signals;
 
@@ -11,27 +11,128 @@ const encoder_utf8 = new TextEncoder("utf8");
 const decoder_utf8 = new TextDecoder("utf8");
 const decoder_ascii = new TextDecoder("ascii");
 
+const processId = getPid();
+const clientInfo = {
+  name: pkg.name,
+  version: pkg.version,
+};
+
 export default class LSPClient {
-  constructor(argv) {
+  constructor(argv, { rootUri, uri, languageId, buffer }) {
     this.argv = argv;
+    this.started = false;
+    this.proc = null;
+    this.rootUri = rootUri;
+    this.uri = uri;
+    this.languageId = languageId;
+    this.version = 0;
+    this.buffer = buffer;
+    this.ready = false;
+
+    // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#clientCapabilities
+    this.capabilities = {
+      textDocument: {
+        publishDiagnostics: {},
+        "x-blueprintcompiler/publishCompiled": {},
+      },
+    };
   }
 
-  start() {
+  async start() {
     this._start_process();
+
+    await this._initialize();
+    await this._didOpen();
+
+    this.ready = true;
+    this.emit("ready");
+
     // For testing blueprint language server restart
     // setTimeout(() => {
-    //   this.proc.force_exit();
+    //   this.stop()
     // }, 5000);
   }
 
+  async _ready() {
+    if (this.ready) return;
+    return once(this, "ready");
+  }
+
+  async _initialize() {
+    const { capabilities, rootUri } = this;
+
+    // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#initialize
+    const result = await this._request("initialize", {
+      processId,
+      clientInfo,
+      capabilities,
+      rootUri,
+      locale: "en",
+    });
+
+    // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#initialized
+    await this._notify("initialized", {});
+
+    return result;
+  }
+
+  async stop() {
+    await promiseTask(this.stdin, "close_async", "close_finish", null);
+    await promiseTask(this.stdout, "close_async", "close_finish", null);
+    // this.proc?.force_exit();
+    this.proc.send_signal(15);
+  }
+
+  async send(...args) {
+    await this._ready();
+    return this._send(...args);
+  }
+
+  async notify(...args) {
+    await this._ready();
+    return this._notify(...args);
+  }
+
+  async request(...args) {
+    await this._ready();
+    return this._request(...args);
+  }
+
+  async didChange(...args) {
+    await this._ready();
+    return this._didChange(...args);
+  }
+
+  _didOpen() {
+    const { uri, languageId, version, buffer } = this;
+    return this._notify("textDocument/didOpen", {
+      textDocument: {
+        uri,
+        languageId,
+        version,
+        text: buffer.text,
+      },
+    });
+  }
+
+  _didChange() {
+    const { uri, buffer } = this;
+    return this._notify("textDocument/didChange", {
+      textDocument: {
+        uri,
+        version: ++this.version,
+      },
+      contentChanges: [{ text: buffer.text }],
+    });
+  }
+
   _start_process() {
-    const flags =
-      Gio.SubprocessFlags.STDIN_PIPE |
-      Gio.SubprocessFlags.STDOUT_PIPE |
-      // vala-language-server emit lots of criticals https://github.com/vala-lang/vala-language-server/issues/274
-      // It's harmless but it looks scary.
-      // If you need to debug a language server, remove this flag
-      Gio.SubprocessFlags.STDERR_SILENCE;
+    let flags =
+      Gio.SubprocessFlags.STDIN_PIPE | Gio.SubprocessFlags.STDOUT_PIPE;
+    // vala-language-server and blueprint are very verbose
+    // https://github.com/vala-lang/vala-language-server/issues/274
+    // comment this to debug LSP
+    flags = flags | Gio.SubprocessFlags.STDERR_SILENCE;
 
     this.proc = Gio.Subprocess.new(this.argv, flags);
     this.proc.wait_async(null, (_self, res) => {
@@ -41,7 +142,7 @@ export default class LSPClient {
         logError(err);
       }
       this.emit("exit");
-      this._start_process();
+      // this._start_process();
     });
     this.stdin = this.proc.get_stdin_pipe();
     this.stdout = new Gio.DataInputStream({
@@ -63,6 +164,7 @@ export default class LSPClient {
         0,
         null,
       );
+      if (!bytes) break;
       const line = decoder_ascii.decode(bytes).trim();
       if (!line) break;
 
@@ -108,18 +210,19 @@ export default class LSPClient {
   _onmessage(message) {
     this.emit("input", message);
 
-    if (message.result) {
+    if ("result" in message) {
       this.emit(`result::${message.id}`, message.result);
-    }
-    if (message.error) {
+    } else if ("error" in message) {
       const err = new LSPError(message.error);
       this.emit(`error::${message.id}`, err);
-    } else if (message.params) {
+    } else if ("id" in message) {
+      this.emit(`request::${message.method}`, message);
+    } else {
       this.emit(`notification::${message.method}`, message.params);
     }
   }
 
-  async send(json) {
+  async _send(json) {
     const message = { ...json, jsonrpc: "2.0" };
 
     const str = JSON.stringify(message);
@@ -142,9 +245,9 @@ export default class LSPClient {
     this.emit("output", message);
   }
 
-  async request(method, params = {}) {
+  async _request(method, params = {}) {
     const id = rid();
-    await this.send({
+    await this._send({
       id,
       method,
       params,
@@ -156,8 +259,8 @@ export default class LSPClient {
     return result;
   }
 
-  async notify(method, params = {}) {
-    return this.send({
+  async _notify(method, params = {}) {
+    return this._send({
       method,
       params,
     });

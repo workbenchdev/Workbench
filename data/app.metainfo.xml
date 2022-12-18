@@ -46,6 +46,18 @@
   </screenshots>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="43.2" date="2022-12-xx">
+      <description>
+        <ul>
+          <li>Switching between XML and Blueprint will now convert between the two</li>
+          <li>Add support for JavaScript diagnostics and linting</li>
+          <li>Optimize Blueprint preview</li>
+          <li>Blueprint 0.6.0</li>
+          <li>Fix preview of non GtkBuildable</li>
+          <li>Prevent all GtkBuilder related crash</li>
+        </ul>
+      </description>
+    </release>
     <release version="43.2" date="2022-11-20">
       <description>
         <ul>

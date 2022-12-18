@@ -3,21 +3,16 @@ import GObject from "gi://GObject";
 import GLib from "gi://GLib";
 import Gio from "gi://Gio";
 
-import * as xml from "../xml.js";
+import * as xml from "../langs/xml/xml.js";
 import * as postcss from "../lib/postcss.js";
 
-import {
-  getLanguage,
-  connect_signals,
-  disconnect_signals,
-  settings,
-} from "../util.js";
+import { settings, unstack } from "../util.js";
 
 import Internal from "./Internal.js";
 import External from "./External.js";
 import { getClassNameType } from "../overrides.js";
 
-import { assertBuildable, isPreviewable } from "./utils.js";
+import { isBuilderable, isPreviewable } from "./utils.js";
 
 // Workbench always defaults to in-process preview now if Vala is selected.
 // Workbench will switch to out-of-process preview when Vala is run
@@ -34,7 +29,6 @@ export default function Previewer({
   application,
   data_dir,
   term_console,
-  panel_style,
 }) {
   let panel_code;
 
@@ -62,7 +56,6 @@ export default function Previewer({
     window,
     application,
     dropdown_preview_align,
-    panel_style,
     panel_ui,
   });
   const external = External({
@@ -76,14 +69,13 @@ export default function Previewer({
     },
     output,
     builder,
-    panel_style,
     panel_ui,
   });
 
-  const buffer_css = getLanguage("css").document.buffer;
+  const code_view_css = builder.get_object("code_view_css");
 
   let handler_id_ui = null;
-  let handler_ids_css = null;
+  let handler_id_css = null;
   let handler_id_button_open;
   let handler_id_button_close;
 
@@ -109,15 +101,10 @@ export default function Previewer({
   function start() {
     stop();
     if (handler_id_ui === null) {
-      handler_id_ui = panel_ui.connect("updated", update);
+      handler_id_ui = panel_ui.connect("updated", schedule_update);
     }
-    if (handler_ids_css === null) {
-      // cannot use "changed" signal as it triggers many time for pasting
-      handler_ids_css = connect_signals(buffer_css, {
-        "end-user-action": update,
-        undo: update,
-        redo: update,
-      });
+    if (handler_id_css === null) {
+      handler_id_css = code_view_css.connect("changed", schedule_update);
     }
   }
 
@@ -127,15 +114,14 @@ export default function Previewer({
       handler_id_ui = null;
     }
 
-    if (handler_ids_css) {
-      disconnect_signals(buffer_css, handler_ids_css);
-      handler_ids_css = null;
+    if (handler_id_css) {
+      code_view_css.disconnect(handler_id_css);
+      handler_id_css = null;
     }
   }
 
   // Using this custom scope we make sure that previewing UI definitions
   // with signals doesn't fail - in addition, checkout registerSignals
-  // rome-ignore lint(correctness/noUnusedVariables): https://github.com/rome/tools/issues/3779
   const BuilderScope = GObject.registerClass(
     {
       Implements: [Gtk.BuilderScope],
@@ -159,11 +145,7 @@ export default function Previewer({
   );
 
   let symbols = null;
-  function update() {
-    const builder = new Gtk.Builder();
-    const scope = new BuilderScope();
-    builder.set_scope(scope);
-
+  async function update() {
     let text = panel_ui.xml.trim();
     let target_id;
     let tree;
@@ -182,31 +164,28 @@ export default function Previewer({
 
     if (!target_id) return;
 
-    try {
-      assertBuildable(tree);
-    } catch (err) {
-      console.error(err);
-      return;
-    }
+    // console.time("builderable");
+    if (!(await isBuilderable(text))) return;
+    // console.timeEnd("builderable");
+
+    const builder = new Gtk.Builder();
+    const scope = new BuilderScope();
+    builder.set_scope(scope);
 
     registerSignals({ tree, scope, symbols, template });
 
+    term_console.clear();
+
     try {
-      // For some reason this log warnings twice
       builder.add_from_string(text, -1);
     } catch (err) {
-      // The following while being obviously invalid
-      // does no produce an error - so we will need to strictly validate the XML
-      // before constructing the builder
-      // prettier-xml throws but doesn't give a stack trace
-      // <style>
-      //   <class name="title-1"
-      // </style>
+      if (err instanceof GLib.MarkupError || err instanceof Gtk.BuilderError) {
+        console.warn(err.message);
+        return;
+      }
       logError(err);
       return;
     }
-
-    term_console.clear();
 
     const object_preview = builder.get_object(target_id);
     if (!object_preview) return;
@@ -224,10 +203,12 @@ export default function Previewer({
       original_id,
       template,
     });
-    panel_style.reset();
-    current.updateCSS(buffer_css.text);
+    code_view_css.clearDiagnostics();
+    current.updateCSS(code_view_css.buffer.text);
     symbols = null;
   }
+
+  const schedule_update = unstack(update, logError);
 
   function useExternal() {
     if (current === external) return;

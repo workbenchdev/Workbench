@@ -1,0 +1,23 @@
+using Gtk 4.0;
+using GtkSource 5;
+
+template CodeView : Gtk.Widget {
+  layout-manager: BinLayout {};
+  vexpand: true;
+  ScrolledWindow scrolled_window {
+    vexpand: true;
+    GtkSource.View source_view {
+      buffer: GtkSource.Buffer {};
+      monospace: true;
+      auto-indent: true;
+      highlight-current-line: true;
+      indent-on-tab: true;
+      indent-width: 2;
+      insert-spaces-instead-of-tabs: true;
+      show-line-marks: true;
+      show-line-numbers: true;
+      smart-backspace: true;
+      tab-width: 2;
+    }
+  }
+}

@@ -1,5 +1,11 @@
 // elint-disable-next-line import/named
-import { escapeXML, escapeXMLText, SaxLtx, parse, Element } from "./lib/ltx.js";
+import {
+  escapeXML,
+  escapeXMLText,
+  SaxLtx,
+  parse,
+  Element,
+} from "../../lib/ltx.js";
 
 // adapted from ltx.stringify to work without Element and ignore whitespace
 // and mixed content in order to use the same algo as blueprint-compiler xml_emitter.py

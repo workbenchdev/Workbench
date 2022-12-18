@@ -6,6 +6,7 @@ bin_conf.set('prefix', prefix)
 bin_conf.set('libdir', join_paths(get_option('prefix'), get_option('libdir')))
 bin_conf.set('datadir', datadir)
 bin_conf.set('pkgdatadir', pkgdatadir)
+bin_conf.set('sourcedir', meson.source_root())
 
 blueprint_compiler = find_program(
   # Flatpak
@@ -55,8 +56,8 @@ configure_file(
   install_dir: get_option('bindir')
 )
 
-install_data('workbench-api.vala', install_dir: pkgdatadir)
-subdir('Previewer/vala-previewer')
+install_data('langs/vala/workbench-api.vala', install_dir: pkgdatadir)
+subdir('Previewer')
 
 gjspack = find_program('../troll/gjspack/bin/gjspack')
 gresource = custom_target('gjspack',

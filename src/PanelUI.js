@@ -1,56 +1,38 @@
 import Gio from "gi://Gio";
 import GObject from "gi://GObject";
-import GLib from "gi://GLib";
 import Gtk from "gi://Gtk";
 
-import LSPClient from "./lsp/LSPClient.js";
 import { LSPError } from "./lsp/LSP.js";
-import {
-  getLanguage,
-  settings,
-  connect_signals,
-  disconnect_signals,
-  replaceBufferText,
-  unstack,
-  handleDiagnostics,
-  prepareSourceView,
-} from "./util.js";
+import { getLanguage, settings, unstack, listenProperty } from "./util.js";
+import { once } from "../troll/src/util.js";
 
-import { getPid, once } from "../troll/src/util.js";
-import WorkbenchHoverProvider from "./WorkbenchHoverProvider.js";
+import {
+  setup as setupBlueprint,
+  logBlueprintError,
+} from "./langs/blueprint/blueprint.js";
 
 const { addSignalMethods } = imports.signals;
-
-const SYSLOG_IDENTIFIER = pkg.name;
 
 export default function PanelUI({
   application,
   builder,
   data_dir,
   term_console,
+  document_xml,
+  document_blueprint,
 }) {
   let lang;
+
+  const code_view_xml = document_xml.code_view;
+  const code_view_blueprint = document_blueprint.code_view;
 
   const panel = {
     xml: "",
   };
   addSignalMethods(panel);
 
-  const buffer_blueprint = getLanguage("blueprint").document.buffer;
-  const buffer_xml = getLanguage("xml").document.buffer;
-  const provider = new WorkbenchHoverProvider();
-
-  const blueprint = createBlueprintClient({
-    data_dir,
-    buffer: buffer_blueprint,
-    provider,
-  });
-
-  let document_version = 0;
-  prepareSourceView({
-    source_view: getLanguage("blueprint").document.source_view,
-    provider,
-  });
+  const buffer_blueprint = code_view_blueprint.buffer;
+  const buffer_xml = code_view_xml.buffer;
 
   const button_ui = builder.get_object("button_ui");
   const panel_ui = builder.get_object("panel_ui");
@@ -69,18 +51,18 @@ export default function PanelUI({
   // flat does nothing on GtkDropdown or GtkComboBox or GtkComboBoxText
   dropdown_ui_lang.get_first_child().get_style_context().add_class("flat");
 
+  const blueprint = setupBlueprint({
+    data_dir,
+    document: document_blueprint,
+  });
+
   async function convertToXML() {
     term_console.clear();
     settings.set_boolean("show-console", true);
 
-    const xml = await compileBlueprint(buffer_blueprint.text);
-    replaceBufferText(buffer_xml, xml);
-    settings.set_int("ui-language", 0);
+    const xml = await blueprint.compile(buffer_blueprint.text);
+    code_view_xml.replaceText(xml);
   }
-  const button_ui_export_xml = builder.get_object("button_ui_export_xml");
-  button_ui_export_xml.connect("clicked", () => {
-    convertToXML().catch(logError);
-  });
 
   async function convertToBlueprint() {
     term_console.clear();
@@ -89,7 +71,7 @@ export default function PanelUI({
     let blp;
 
     try {
-      blp = await decompileXML(buffer_xml.text);
+      blp = await blueprint.decompile(buffer_xml.text);
     } catch (err) {
       if (err instanceof LSPError) {
         logBlueprintError(err);
@@ -98,22 +80,8 @@ export default function PanelUI({
       throw err;
     }
 
-    replaceBufferText(buffer_blueprint, blp);
-    settings.set_int("ui-language", 1);
+    code_view_blueprint.replaceText(blp);
   }
-  const button_ui_export_blueprint = builder.get_object(
-    "button_ui_export_blueprint",
-  );
-  button_ui_export_blueprint.connect("clicked", () => {
-    convertToBlueprint().catch(logError);
-  });
-
-  settings.bind(
-    "ui-language",
-    dropdown_ui_lang,
-    "selected",
-    Gio.SettingsBindFlags.DEFAULT,
-  );
 
   const button_ui_experimental_blueprint = builder.get_object(
     "button_ui_experimental_blueprint",
@@ -134,113 +102,94 @@ export default function PanelUI({
     );
   });
 
-  dropdown_ui_lang.connect("notify::selected-item", switchLanguage);
-  function switchLanguage() {
-    const language = getLanguage(dropdown_ui_lang.selected_item.string);
-    stack_ui.set_visible_child_name(language.id);
-    button_ui_experimental_blueprint.visible = language.id === "blueprint";
-  }
-  switchLanguage();
+  let handler_id_xml = null;
+  let handler_id_blueprint = null;
 
-  let handler_ids = null;
-
-  const scheduleUpdate = unstack(update);
+  // FIXME we should wait for previewer update instead
+  // when loading demo
   async function update() {
-    let xml;
-    if (lang.id === "xml") {
-      xml = lang.document.buffer.text;
-    } else {
-      xml = await compileBlueprint(lang.document.buffer.text);
+    if (lang.id === "blueprint") {
+      await blueprint.update(buffer_blueprint.text);
+      await once(
+        blueprint.lspc,
+        "notification::textDocument/x-blueprintcompiler/publishCompiled",
+      );
+    } else if (lang.id === "xml") {
+      onXML(buffer_xml.text);
     }
+  }
+
+  function onXML(xml) {
     panel.xml = xml || "";
     panel.emit("updated");
   }
 
+  const onBlueprint = unstack(function onBlueprint() {
+    return blueprint.update(buffer_blueprint.text);
+  });
+
   function start() {
     stop();
     lang = getLanguage(dropdown_ui_lang.selected_item.string);
-    // cannot use "changed" signal as it triggers many time for pasting
-    handler_ids = connect_signals(lang.document.buffer, {
-      "end-user-action": scheduleUpdate,
-      undo: scheduleUpdate,
-      redo: scheduleUpdate,
-    });
+    handler_id_xml = code_view_xml.connect("changed", () =>
+      onXML(code_view_xml.buffer.text),
+    );
+    handler_id_blueprint = code_view_blueprint.connect("changed", onBlueprint);
+    blueprint.lspc.connect(
+      "notification::textDocument/x-blueprintcompiler/publishCompiled",
+      (_self, { xml }) => onXML(xml),
+    );
   }
 
   function stop() {
-    if (handler_ids !== null) {
-      disconnect_signals(lang.document.buffer, handler_ids);
-      handler_ids = null;
+    if (handler_id_xml !== null) {
+      code_view_xml.disconnect(handler_id_xml);
+      handler_id_xml = null;
+    }
+    if (handler_id_blueprint !== null) {
+      code_view_blueprint.disconnect(handler_id_blueprint);
+      handler_id_blueprint = null;
     }
   }
 
-  settings.connect_after("changed::ui-language", () => {
-    start();
-    scheduleUpdate();
+  async function onChangeLang(value) {
+    if (value === 0) {
+      try {
+        await convertToXML();
+      } catch (err) {
+        logError(err);
+        dropdown_ui_lang.block();
+        dropdown_ui_lang.set_selected(1);
+        dropdown_ui_lang.unblock();
+        return;
+      }
+    } else if (value === 1) {
+      try {
+        await convertToBlueprint();
+      } catch (err) {
+        logError(err);
+        dropdown_ui_lang.block();
+        dropdown_ui_lang.set_selected(0);
+        dropdown_ui_lang.unblock();
+        return;
+      }
+    }
+
+    settings.set_int("ui-language", dropdown_ui_lang.selected);
+    setupLanguage();
+  }
+
+  dropdown_ui_lang.set_selected(settings.get_int("ui-language"));
+  listenProperty(dropdown_ui_lang, "selected", (value) => {
+    onChangeLang(value).catch(logError);
   });
 
-  start();
-
-  const uri = "workbench://state.blp";
-
-  async function setupLSP() {
-    if (blueprint.proc) return;
-    blueprint.start();
-
-    // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#initialize
-    await blueprint.request("initialize", {
-      processId: getPid(),
-      clientInfo: {
-        name: pkg.name,
-        version: pkg.version,
-      },
-      // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#clientCapabilities
-      capabilities: {
-        textDocument: {
-          publishDiagnostics: {},
-          "x-blueprintcompiler/publishCompiled": {},
-        },
-      },
-      locale: "en",
-    });
-
-    await blueprint.notify("textDocument/didOpen", {
-      textDocument: {
-        uri,
-        languageId: "blueprint",
-        version: ++document_version,
-        text: buffer_blueprint.text,
-      },
-    });
+  function setupLanguage() {
+    start();
+    stack_ui.set_visible_child_name(lang.id);
+    button_ui_experimental_blueprint.visible = lang.id === "blueprint";
   }
-
-  async function compileBlueprint() {
-    await setupLSP();
-
-    await blueprint.notify("textDocument/didChange", {
-      textDocument: {
-        uri,
-        version: ++document_version,
-      },
-      contentChanges: [buffer_blueprint.text],
-    });
-
-    const [{ xml }] = await once(
-      blueprint,
-      "notification::textDocument/x-blueprintcompiler/publishCompiled",
-    );
-
-    return xml;
-  }
-
-  async function decompileXML(text) {
-    await setupLSP();
-
-    const { blp } = await blueprint.request("x-blueprintcompiler/decompile", {
-      text,
-    });
-    return blp;
-  }
+  setupLanguage();
 
   panel.start = start;
   panel.stop = stop;
@@ -248,62 +197,4 @@ export default function PanelUI({
   panel.panel = panel_ui;
 
   return panel;
-}
-
-function logBlueprintError(err) {
-  GLib.log_structured("Blueprint", GLib.LogLevelFlags.LEVEL_CRITICAL, {
-    MESSAGE: `${err.message}`,
-    SYSLOG_IDENTIFIER,
-  });
-}
-
-// function logBlueprintInfo(info) {
-//   GLib.log_structured("Blueprint", GLib.LogLevelFlags.LEVEL_WARNING, {
-//     MESSAGE: `${info.line + 1}:${info.col} ${info.message}`,
-//     SYSLOG_IDENTIFIER,
-//   });
-// }
-
-function createBlueprintClient({ data_dir, buffer, provider }) {
-  const file_blueprint_logs = Gio.File.new_for_path(
-    GLib.build_filenamev([data_dir, "blueprint-logs"]),
-  );
-  file_blueprint_logs.replace_contents(
-    " ",
-    null,
-    false,
-    Gio.FileCreateFlags.REPLACE_DESTINATION,
-    null,
-  );
-  const blueprint = new LSPClient([
-    // "/home/sonny/Projects/Workbench/blueprint-compiler/blueprint-compiler.py",
-    // "/app/bin/blueprint-compiler",
-    "blueprint-compiler",
-    "lsp",
-    "--logfile",
-    file_blueprint_logs.get_path(),
-  ]);
-  blueprint.connect("exit", () => {
-    console.debug("blueprint exit");
-  });
-  blueprint.connect("output", (_self, message) => {
-    console.debug(`blueprint OUT:\n${JSON.stringify(message)}`);
-  });
-  blueprint.connect("input", (_self, message) => {
-    console.debug(`blueprint IN:\n${JSON.stringify(message)}`);
-  });
-
-  blueprint.connect(
-    "notification::textDocument/publishDiagnostics",
-    (_self, { diagnostics }) => {
-      handleDiagnostics({
-        language: "Blueprint",
-        diagnostics,
-        buffer,
-        provider,
-      });
-    },
-  );
-
-  return blueprint;
 }

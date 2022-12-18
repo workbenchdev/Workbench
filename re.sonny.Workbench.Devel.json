@@ -35,7 +35,11 @@
     {
       "name": "libportal",
       "buildsystem": "meson",
-      "config-opts": ["-Ddocs=false", "-Dvapi=false", "-Dbackends=gtk4"],
+      "config-opts": [
+        "-Ddocs=false",
+        "-Dvapi=false",
+        "-Dbackends=gtk4"
+      ],
       "sources": [
         {
           "type": "archive",
@@ -62,7 +66,6 @@
         {
           "type": "git",
           "url": "https://github.com/vala-lang/vala-language-server/",
-          "branch": "master",
           "commit": "bf978c0cda97cff946f355477ec8da08b1cb4e5e"
         }
       ],
@@ -113,10 +116,38 @@
       ]
     },
     {
+      "name": "rome",
+      "buildsystem": "simple",
+      "build-commands": [
+        "chmod +x rome",
+        "cp rome /app/bin/rome"
+      ],
+      "sources": [
+        {
+          "type": "archive",
+          "only-arches": [
+            "aarch64"
+          ],
+          "url": "https://registry.npmjs.org/@rometools/cli-linux-arm64/-/cli-linux-arm64-11.0.0.tgz",
+          "sha512": "764b53249953a66c9c059d93c212417003bcced2bc0dd7af772667145c5d611bed9898138c8b02d9415ac9ffd26ca7b0f01f2ad48848d22b7e0fa8a101e2297a"
+        },
+        {
+          "type": "archive",
+          "only-arches": [
+            "x86_64"
+          ],
+          "url": "https://registry.npmjs.org/@rometools/cli-linux-x64/-/cli-linux-x64-11.0.0.tgz",
+          "sha512": "5957275cf35d586516a34a78354f18ceeb618d847babe6f8bd1723771b4fd43969a616664aca02fd1484f399c4a91033f210a170a51a9ec57338f33c052b2e18"
+        }
+      ]
+    },
+    {
       "name": "Workbench",
       "buildsystem": "meson",
       "builddir": true,
-      "config-opts": ["-Dprofile=development"],
+      "config-opts": [
+        "-Dprofile=development"
+      ],
       "sources": [
         {
           "type": "dir",

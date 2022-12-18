@@ -2,7 +2,7 @@
 .PHONY: test
 
 lint:
-	./node_modules/.bin/rome ci .
+	./node_modules/.bin/rome ci src test
 
 test: lint
 	./troll/tst/bin.js test/*.test.js
