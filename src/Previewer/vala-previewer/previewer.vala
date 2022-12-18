@@ -77,11 +77,7 @@ namespace Workbench {
         this.window.child = child;
       }
 
-      // FIXME: working for Internal but not here
-      // the list of root objects keeps growing in Inspector as you make changes to UI
-      // Toplevel windows returned by these functions will stay around until the user explicitly destroys them with gtk_window_destroy().
-      // https://docs.gtk.org/gtk4/class.Builder.html
-      target.destroy();
+      ((Gtk.Window) target).destroy();
     }
 
     public void update_css (string content) {
