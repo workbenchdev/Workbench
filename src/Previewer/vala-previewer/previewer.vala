@@ -75,7 +75,10 @@ namespace Workbench {
         ((Gtk.Window) target).child = null;
         this.window.child = child;
       }
-      ((Gtk.Window) target).destroy();
+
+      if (target is Gtk.Window) {
+        ((Gtk.Window) target).destroy();
+      }
     }
 
     public void update_css (string content) {
