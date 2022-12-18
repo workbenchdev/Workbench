@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: re.sonny.Workbench\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-04 15:25+0200\n"
-"PO-Revision-Date: 2022-09-12 15:18+0000\n"
-"Last-Translator: Sonny Piers <sonny@sonny.re>\n"
+"PO-Revision-Date: 2022-12-19 01:54+0000\n"
+"Last-Translator: rene-coty <irenee.thirion@e.email>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/workbench/workbench/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.14.1-dev\n"
+"X-Generator: Weblate 4.15.1-dev\n"
 
 #. TRANSLATORS: Don't translate
 #: data/re.sonny.Workbench.desktop:4
@@ -34,7 +34,7 @@ msgstr "CSS;JavaScript;GJS;Blueprint;builder;Vala;"
 
 #: data/re.sonny.Workbench.metainfo.xml:14
 msgid "Workbench goal is to let you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a GTK user interface."
-msgstr "Le but de Workbench est de vous laisser expérimenter les technologies GNOME, que ce soit pour bidouiller pour la première fois ou pour construire et tester une interface GTK personnalisé."
+msgstr "Le but de Workbench est de vous laisser expérimenter les technologies GNOME, que ce soit pour bidouiller pour la première fois ou pour construire et tester une interface GTK personnalisée."
 
 #: data/re.sonny.Workbench.metainfo.xml:15
 msgid "Among other things, Workbench comes with"
@@ -42,31 +42,31 @@ msgstr "Workbench comporte entre autres"
 
 #: data/re.sonny.Workbench.metainfo.xml:17
 msgid "realtime GTK/CSS preview"
-msgstr "prévisualisation GTK / CSS en temps réel"
+msgstr "une prévisualisation GTK / CSS en temps réel"
 
 #: data/re.sonny.Workbench.metainfo.xml:18
 msgid "library of examples"
-msgstr "bibliothèque d'exemples"
+msgstr "une bibliothèque d’exemples"
 
 #: data/re.sonny.Workbench.metainfo.xml:19
 msgid "JavaScript and Vala runs without any setup"
-msgstr "JavaScript et Vala fonctionnnent sans aucune installation"
+msgstr "JavaScript et Vala fonctionnent sans aucune installation"
 
 #: data/re.sonny.Workbench.metainfo.xml:20
 msgid "XML and Blueprint for describing user interface"
-msgstr "XML et Blueprint pour décrire l'interface utilisateur"
+msgstr "XML et Blueprint pour décrire l’interface utilisateur"
 
 #: data/re.sonny.Workbench.metainfo.xml:21
 msgid "syntax highlighting, undo/redo, autosave, session restore"
-msgstr "surlignage syntaxique, fonctions annuler / refaire, sauvegarde automatique, restaurer la session"
+msgstr "un surlignage syntaxique, les fonctions annuler / refaire, sauvegarde automatique, un restaurateur de session"
 
 #: data/re.sonny.Workbench.metainfo.xml:22
 msgid "code formatter"
-msgstr "formateur de code"
+msgstr "un formateur de code"
 
 #: data/re.sonny.Workbench.metainfo.xml:23
 msgid "console logs"
-msgstr "Journaux de console"
+msgstr "des journaux de console"
 
 #: data/re.sonny.Workbench.metainfo.xml:51
 msgid "Highlights"
@@ -74,7 +74,7 @@ msgstr "Points clés"
 
 #: data/re.sonny.Workbench.metainfo.xml:53
 msgid "Add Blueprint markup syntax for UI"
-msgstr "Ajout de la syntaxe de balisage Blueprint pour l'interface utilisateur"
+msgstr "Ajout de la syntaxe de balisage Blueprint pour l’interface utilisateur"
 
 #: data/re.sonny.Workbench.metainfo.xml:54
 msgid "Add Vala programming language for Code"
@@ -99,11 +99,11 @@ msgstr "Amélioration de la conception des applications"
 #: data/re.sonny.Workbench.metainfo.xml:59
 #: data/re.sonny.Workbench.metainfo.xml:69
 msgid "Distribute Library examples under CC0-1.0"
-msgstr "Distribution de la bibliothèque d'exemple sous la license CC0-1.0"
+msgstr "Distribution de la bibliothèque d’exemples sous la license CC0-1.0"
 
 #: data/re.sonny.Workbench.metainfo.xml:60
 msgid "Respect system preference for color scheme"
-msgstr "Respect de la préférence système pour les couleurs de l'application"
+msgstr "Respect de la préférence système pour les couleurs de l’application"
 
 #: data/re.sonny.Workbench.metainfo.xml:61
 msgid "Add proper light/dark color schemes for Console"
@@ -112,7 +112,7 @@ msgstr "Ajout des couleurs claires/sombres approriées pour la Console"
 #: data/re.sonny.Workbench.metainfo.xml:62
 #: data/re.sonny.Workbench.metainfo.xml:74
 msgid "Fix error when opening file"
-msgstr "Correction d'une erreur lors de l'ouverture de fichier"
+msgstr "Correction d’une erreur lors de l’ouverture de fichiers"
 
 #: data/re.sonny.Workbench.metainfo.xml:64
 msgid "Other changes"
