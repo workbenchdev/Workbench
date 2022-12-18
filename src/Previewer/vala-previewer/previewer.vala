@@ -19,8 +19,7 @@ namespace Workbench {
         default_width = 600,
         default_height = 800
       };
-      this.window = window;
-      this.window.close_request.connect (this.on_window_closed);
+      this.set_window(window);
     }
 
     private void set_window(Gtk.Window window) {
@@ -76,7 +75,6 @@ namespace Workbench {
         ((Gtk.Window) target).child = null;
         this.window.child = child;
       }
-
       ((Gtk.Window) target).destroy();
     }
 
