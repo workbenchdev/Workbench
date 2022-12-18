@@ -42,7 +42,7 @@ namespace Workbench {
       var target = this.builder.get_object (target_id) as Gtk.Widget;
       if (target == null) {
         stderr.printf (@"Widget with target_id='$target_id' could not be found.\n");
-          return;
+        return;
       }
 
       if (original_id != "") {
@@ -74,6 +74,13 @@ namespace Workbench {
         var child = ((Gtk.Window) target).child;
         ((Gtk.Window) target).child = null;
         this.window.child = child;
+      }
+
+      // Toplevel windows returned by these functions will stay around
+      // until the user explicitly destroys them with gtk_window_destroy().
+      // https://docs.gtk.org/gtk4/class.Builder.html
+      if (target is Gtk.Window) {
+        ((Gtk.Window) target).destroy();
       }
     }
 
