@@ -76,6 +76,9 @@ namespace Workbench {
         this.window.child = child;
       }
 
+      // Toplevel windows returned by these functions will stay around
+      // until the user explicitly destroys them with gtk_window_destroy().
+      // https://docs.gtk.org/gtk4/class.Builder.html
       if (target is Gtk.Window) {
         ((Gtk.Window) target).destroy();
       }
