@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: re.sonny.Workbench\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-04 15:25+0200\n"
-"PO-Revision-Date: 2022-06-10 11:14+0000\n"
+"PO-Revision-Date: 2022-12-29 16:51+0000\n"
 "Last-Translator: Philip Goto <philip.goto@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/workbench/workbench/nl/>\n"
 "Language: nl\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.13-dev\n"
+"X-Generator: Weblate 4.15.1-dev\n"
 
 #. TRANSLATORS: Don't translate
 #: data/re.sonny.Workbench.desktop:4
@@ -94,7 +94,7 @@ msgstr "Alle pictogrammen van icon-development-kit bijgevoegd"
 
 #: data/re.sonny.Workbench.metainfo.xml:58
 msgid "Improve application design"
-msgstr "Toepassingsontwerp verbeterd"
+msgstr "App-ontwerp verbeterd"
 
 #: data/re.sonny.Workbench.metainfo.xml:59
 #: data/re.sonny.Workbench.metainfo.xml:69
@@ -180,7 +180,7 @@ msgstr "Toasts-voorbeeld toegevoegd"
 
 #: data/re.sonny.Workbench.metainfo.xml:89
 msgid "Add an example of application window"
-msgstr "Voorbeeld van toepassingsvenster toegevoegd"
+msgstr "Voorbeeld van app-venster toegevoegd"
 
 #: data/re.sonny.Workbench.metainfo.xml:90
 msgid "Add an example of desktop notification"
