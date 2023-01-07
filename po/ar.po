@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: re.sonny.Workbench\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-04 15:25+0200\n"
-"PO-Revision-Date: 2022-12-05 04:28+0000\n"
-"Last-Translator: bonbonboi <hamzah.abusamak@gmail.com>\n"
+"PO-Revision-Date: 2023-01-08 18:51+0000\n"
+"Last-Translator: Yassine Oudjana <y.oudjana@protonmail.com>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/workbench/workbench/ar/>\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Weblate 4.15-dev\n"
+"X-Generator: Weblate 4.15.1-dev\n"
 
 #. TRANSLATORS: Don't translate
 #: data/re.sonny.Workbench.desktop:4
@@ -25,7 +25,7 @@ msgstr "منضدة"
 
 #: data/re.sonny.Workbench.desktop:5 data/re.sonny.Workbench.metainfo.xml:10
 msgid "Learn and prototype with GNOME technologies"
-msgstr "تعلن و اصنع النماذج مستعملا تقنيات GNOME"
+msgstr "تعلم وصمم نماذجًا بتقنيات GNOME"
 
 #. TRANSLATORS: Don't translate
 #: data/re.sonny.Workbench.desktop:12
@@ -34,7 +34,7 @@ msgstr "CSS;JavaScript;GJS;Blueprint;builder;Vala;"
 
 #: data/re.sonny.Workbench.metainfo.xml:14
 msgid "Workbench goal is to let you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a GTK user interface."
-msgstr "هدف Workbench هو تمكينك من بتجربة تقنيات GNOME، بغض النظر عما إذا كنت تقوم بالعبث لأول مرة أو بناء واختبار واجهة مستخدم GTK."
+msgstr "هدف Workbench هو تمكينك من تجربة تقنيات GNOME، بغض النظر عمّا إذا كنت تقوم بتجربتها لأول مرة أو بناء واختبار واجهة GTK."
 
 #: data/re.sonny.Workbench.metainfo.xml:15
 msgid "Among other things, Workbench comes with"
@@ -42,7 +42,7 @@ msgstr "من بين أمور أخرى ، يأتي Workbench مع"
 
 #: data/re.sonny.Workbench.metainfo.xml:17
 msgid "realtime GTK/CSS preview"
-msgstr "عرض مسبق ل GTK / CSS في الوقت الحقيقي"
+msgstr "عرض مباشر لـ GTK و CSS"
 
 #: data/re.sonny.Workbench.metainfo.xml:18
 msgid "library of examples"
@@ -66,7 +66,7 @@ msgstr "منسق التعليمات البرمجية"
 
 #: data/re.sonny.Workbench.metainfo.xml:23
 msgid "console logs"
-msgstr "يسجل الاحداث في لوحة مراقبة"
+msgstr "السجلات"
 
 #: data/re.sonny.Workbench.metainfo.xml:51
 msgid "Highlights"
