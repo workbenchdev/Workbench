@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: re.sonny.Workbench\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-04 15:25+0200\n"
-"PO-Revision-Date: 2022-12-10 16:49+0000\n"
+"PO-Revision-Date: 2023-01-12 01:45+0000\n"
 "Last-Translator: K.B.Dharun Krishna <kbdharunkrishna@gmail.com>\n"
 "Language-Team: Tamil <https://hosted.weblate.org/projects/workbench/workbench/ta/>\n"
 "Language: ta\n"
@@ -16,12 +16,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.15-dev\n"
+"X-Generator: Weblate 4.15.1-dev\n"
 
 #. TRANSLATORS: Don't translate
 #: data/re.sonny.Workbench.desktop:4
 msgid "Workbench"
-msgstr "பணிப்பெட்டி"
+msgstr "Workbench"
 
 #: data/re.sonny.Workbench.desktop:5 data/re.sonny.Workbench.metainfo.xml:10
 msgid "Learn and prototype with GNOME technologies"
@@ -30,117 +30,117 @@ msgstr "GNOME (க்னோம்) தொழில்நுட்பங்கள
 #. TRANSLATORS: Don't translate
 #: data/re.sonny.Workbench.desktop:12
 msgid "CSS;JavaScript;GJS;Blueprint;builder;Vala;"
-msgstr "CSS;ஜாவாஸ்கிரிப்ட்;GJS;புளூபிரிண்ட்;பில்டர்;வாலா;"
+msgstr "CSS;JavaScript;GJS;Blueprint;builder;Vala;"
 
 #: data/re.sonny.Workbench.metainfo.xml:14
 msgid "Workbench goal is to let you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a GTK user interface."
-msgstr ""
+msgstr "முதன்முறையாக டிங்கரிங் செய்தாலும் அல்லது GTK பயனர் இடைமுகத்தை உருவாக்கி சோதனை செய்தாலும் க்னோம் தொழில்நுட்பங்களைப் பரிசோதிக்க உங்களை அனுமதிப்பதே பணிப்பெட்டியின் இலக்காகும்."
 
 #: data/re.sonny.Workbench.metainfo.xml:15
 msgid "Among other things, Workbench comes with"
-msgstr ""
+msgstr "மற்ற விஷயங்களுக்கு மத்தியில், பணிப்பெட்டி உடன் வரும்"
 
 #: data/re.sonny.Workbench.metainfo.xml:17
 msgid "realtime GTK/CSS preview"
-msgstr ""
+msgstr "நிகழ்நேர GTK/CSS முன்னோட்டம்"
 
 #: data/re.sonny.Workbench.metainfo.xml:18
 msgid "library of examples"
-msgstr ""
+msgstr "எடுத்துக்காட்டுகளின் நூலகம்"
 
 #: data/re.sonny.Workbench.metainfo.xml:19
 msgid "JavaScript and Vala runs without any setup"
-msgstr ""
+msgstr "ஜாவாஸ்கிரிப்ட் மற்றும் வாலா எந்த அமைப்பும் இல்லாமல் இயங்குகிறது"
 
 #: data/re.sonny.Workbench.metainfo.xml:20
 msgid "XML and Blueprint for describing user interface"
-msgstr ""
+msgstr "பயனர் இடைமுகத்தை விவரிப்பதற்கான XML மற்றும் புளூபிரிண்ட்"
 
 #: data/re.sonny.Workbench.metainfo.xml:21
 msgid "syntax highlighting, undo/redo, autosave, session restore"
-msgstr ""
+msgstr "தொடரியல் சிறப்பம்சமாக்குதல், செயல்தவிர்/மீண்டும் செய், தானாகச் சேமித்தல், அமர்வு மீட்டமைத்தல்"
 
 #: data/re.sonny.Workbench.metainfo.xml:22
 msgid "code formatter"
-msgstr ""
+msgstr "குறியீடு வடிவமைப்பாளர்"
 
 #: data/re.sonny.Workbench.metainfo.xml:23
 msgid "console logs"
-msgstr ""
+msgstr "கன்சோல் பதிவுகள்"
 
 #: data/re.sonny.Workbench.metainfo.xml:51
 msgid "Highlights"
-msgstr ""
+msgstr "சிறப்பம்சங்கள்"
 
 #: data/re.sonny.Workbench.metainfo.xml:53
 msgid "Add Blueprint markup syntax for UI"
-msgstr ""
+msgstr "UIக்கான புளூபிரிண்ட் மார்க்அப் தொடரியல் சேர்க்கவும்"
 
 #: data/re.sonny.Workbench.metainfo.xml:54
 msgid "Add Vala programming language for Code"
-msgstr ""
+msgstr "குறியீட்டிற்கு வாலா நிரலாக்க மொழியைச் சேர்க்கவும்"
 
 #: data/re.sonny.Workbench.metainfo.xml:55
 msgid "Add support for previewing templates"
-msgstr ""
+msgstr "வார்ப்புருக்களை முன்னோட்டமிடுவதற்கான ஆதரவைச் சேர்க்கவும்"
 
 #: data/re.sonny.Workbench.metainfo.xml:56
 msgid "Add support for previewing signal handlers"
-msgstr ""
+msgstr "சிக்னல் கையாளுபவர்களை முன்னோட்டமிடுவதற்கான ஆதரவைச் சேர்க்கவும்"
 
 #: data/re.sonny.Workbench.metainfo.xml:57
 msgid "Include all icons from icon-development-kit"
-msgstr ""
+msgstr "icon-development-kit (சின்னம்-வளர்ச்சி-கிட்)இலிருந்து அனைத்து ஐகான்களையும் சேர்க்கவும்"
 
 #: data/re.sonny.Workbench.metainfo.xml:58
 msgid "Improve application design"
-msgstr ""
+msgstr "பயன்பாட்டு வடிவமைப்பை மேம்படுத்தவும்"
 
 #: data/re.sonny.Workbench.metainfo.xml:59
 #: data/re.sonny.Workbench.metainfo.xml:69
 msgid "Distribute Library examples under CC0-1.0"
-msgstr ""
+msgstr "CC0-1.0 இன் கீழ் நூலக உதாரணங்களை விநியோகிக்கவும்"
 
 #: data/re.sonny.Workbench.metainfo.xml:60
 msgid "Respect system preference for color scheme"
-msgstr ""
+msgstr "வண்ணத் திட்டத்திற்கான கணினி விருப்பத்தை மதிக்கவும்"
 
 #: data/re.sonny.Workbench.metainfo.xml:61
 msgid "Add proper light/dark color schemes for Console"
-msgstr ""
+msgstr "கன்சோலுக்கு சரியான ஒளி/அடர் வண்ணத் திட்டங்களைச் சேர்க்கவும்"
 
 #: data/re.sonny.Workbench.metainfo.xml:62
 #: data/re.sonny.Workbench.metainfo.xml:74
 msgid "Fix error when opening file"
-msgstr ""
+msgstr "கோப்பைத் திறக்கும் போது பிழையை சரிசெய்யவும்"
 
 #: data/re.sonny.Workbench.metainfo.xml:64
 msgid "Other changes"
-msgstr ""
+msgstr "மற்ற மாற்றங்கள்"
 
 #: data/re.sonny.Workbench.metainfo.xml:66
 msgid "Silence platform tools"
-msgstr ""
+msgstr "நிசப்தம் நடைமேடை கருவிகள்"
 
 #: data/re.sonny.Workbench.metainfo.xml:67
 msgid "Make Library examples only open relevant panels"
-msgstr ""
+msgstr "தொடர்புடைய பேனல்களை மட்டும் திறக்கும் நூலக உதாரணங்களை உருவாக்கவும்"
 
 #: data/re.sonny.Workbench.metainfo.xml:68
 msgid "Always open the Console when opening a Library example"
-msgstr ""
+msgstr "நூலக உதாரணத்தைத் திறக்கும் போது எப்போதும் கன்சோலைத் திறக்கவும்"
 
 #: data/re.sonny.Workbench.metainfo.xml:70
 msgid "Prevent running Code if the panel is not visible"
-msgstr ""
+msgstr "பேனல் தெரியவில்லை என்றால் குறியீட்டை இயக்குவதைத் தடுக்கவும்"
 
 #: data/re.sonny.Workbench.metainfo.xml:71
 msgid "Add icons and mnemonics for all buttons"
-msgstr ""
+msgstr "அனைத்து பொத்தான்களுக்கும் சின்னங்கள் மற்றும் நினைவூட்டல்களைச் சேர்க்கவும்"
 
 #: data/re.sonny.Workbench.metainfo.xml:72
 msgid "Move Bookmarks to the main menu"
-msgstr ""
+msgstr "புக்மார்க்குகளை பிரதான மெனுவிற்கு நகர்த்தவும்"
 
 #: data/re.sonny.Workbench.metainfo.xml:73
 msgid "Enable scrollbar and kinetic scrolling on Console"
