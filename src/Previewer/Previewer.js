@@ -234,14 +234,22 @@ export default function Previewer({
     current?.closeInspector();
     current = previewer;
 
-    handler_id_button_open = button_open.connect("clicked", () => {
-      current.open();
-      stack.set_visible_child_name("close_window");
+    handler_id_button_open = button_open.connect("clicked", async () => {
+      try {
+        await current.open();
+        stack.set_visible_child_name("close_window");
+      } catch (err) {
+        logError(err);
+      }
     });
 
-    handler_id_button_close = button_close.connect("clicked", () => {
-      current.close();
-      stack.set_visible_child_name("open_window");
+    handler_id_button_close = button_close.connect("clicked", async () => {
+      try {
+        await current.close();
+        stack.set_visible_child_name("open_window");
+      } catch (err) {
+        logError(err);
+      }
     });
 
     current.start();

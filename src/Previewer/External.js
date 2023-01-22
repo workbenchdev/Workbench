@@ -34,7 +34,7 @@ export default function Previewer({ output, builder, onWindowChange }) {
     builder.get_object("button_screenshot").visible = false;
   }
 
-  function open() {
+  async function open() {
     updateColorScheme();
     stack.set_visible_child_name("close_window");
     try {
@@ -47,7 +47,7 @@ export default function Previewer({ output, builder, onWindowChange }) {
     }
   }
 
-  function close() {
+  async function close() {
     try {
       dbus_proxy.CloseWindowSync();
     } catch (err) {

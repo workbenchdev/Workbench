@@ -9,7 +9,11 @@ import GObject from "gi://GObject";
 import Adw from "gi://Adw";
 import Gio from "gi://Gio";
 
+import { once } from "../../troll/src/util.js";
+
 import { portal } from "../util.js";
+
+const { addSignalMethods } = imports.signals;
 
 export default function Internal({
   onWindowChange,
@@ -20,6 +24,9 @@ export default function Internal({
   dropdown_preview_align,
   panel_ui,
 }) {
+  const bus = {};
+  addSignalMethods(bus);
+
   const stack = builder.get_object("stack_preview");
 
   let css_provider = null;
@@ -36,18 +43,18 @@ export default function Internal({
     if (!object_root) {
       try {
         await panel_ui.update();
+        await once(bus, "object_root", { timeout: 5000 });
       } catch (err) {
         logError(err);
         return;
       }
-      if (!object_root) return;
     }
 
     object_root.present_with_time(Gdk.CURRENT_TIME);
     onWindowChange(true);
   }
 
-  function close() {
+  async function close() {
     object_root?.close();
   }
 
@@ -99,6 +106,7 @@ export default function Internal({
       object_root = null;
       onWindowChange(false);
     });
+    bus.emit("object_root");
   }
 
   function updateBuilderRoot(object_preview) {

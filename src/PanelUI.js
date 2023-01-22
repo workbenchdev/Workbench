@@ -131,13 +131,17 @@ export default function PanelUI({
   function start() {
     stop();
     lang = getLanguage(dropdown_ui_lang.selected_item.string);
-    handler_id_xml = code_view_xml.connect("changed", () =>
-      onXML(code_view_xml.buffer.text),
-    );
+    handler_id_xml = code_view_xml.connect("changed", () => {
+      if (lang.id !== "xml") return;
+      onXML(code_view_xml.buffer.text);
+    });
     handler_id_blueprint = code_view_blueprint.connect("changed", onBlueprint);
     blueprint.lspc.connect(
       "notification::textDocument/x-blueprintcompiler/publishCompiled",
-      (_self, { xml }) => onXML(xml),
+      (_self, { xml }) => {
+        if (lang.id !== "blueprint") return;
+        onXML(xml);
+      },
     );
   }
 
