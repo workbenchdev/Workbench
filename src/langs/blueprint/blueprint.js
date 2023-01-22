@@ -62,12 +62,11 @@ export function logBlueprintInfo(info) {
 }
 
 function createLSPClient({ code_view, data_dir, uri }) {
-  const bin = __DEV__
-    ? GLib.build_filenamev([
-        pkg.sourcedir,
-        "blueprint-compiler/blueprint-compiler.py",
-      ])
-    : "/app/bin/blueprint-compiler";
+  const bin = "/app/bin/blueprint-compiler";
+  // const bin = GLib.build_filenamev([
+  //   pkg.sourcedir,
+  //   "blueprint-compiler/blueprint-compiler.py",
+  // ]);
 
   const lspc = new LSPClient([bin, "lsp"], {
     rootUri: Gio.File.new_for_path(data_dir).get_uri(),
