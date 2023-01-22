@@ -1,5 +1,5 @@
 project('Workbench', ['vala', 'c'],
-  version: '43.2',
+  version: '43.3',
   meson_version: '>= 0.59.0',
   license: 'GPL-3.0-only'
 )

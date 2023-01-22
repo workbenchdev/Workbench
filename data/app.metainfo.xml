@@ -46,16 +46,17 @@
   </screenshots>
   <content_rating type="oars-1.1" />
   <releases>
-    <release version="43.3" date="2023-01-xx">
+    <release version="43.3" date="2023-01-23">
       <description>
         <ul>
-          <li>Switching between XML and Blueprint will now convert between the two</li>
+          <li>Switching between XML and Blueprint will now export</li>
           <li>Add support for JavaScript diagnostics and linting</li>
           <li>Optimize Blueprint preview</li>
-          <li>Blueprint 0.6.0</li>
-          <li>Fix preview of non GtkBuildable</li>
+          <li>Update Blueprint 0.4.0 to 0.6.0</li>
+          <li>Fix preview of non GtkBuildable objects</li>
           <li>Prevent GtkBuilder related crashes</li>
           <li>Reset top-level windows on update</li>
+          <li>Destroy Vala top-level objects on close</li>
         </ul>
       </description>
     </release>
