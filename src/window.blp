@@ -4,8 +4,8 @@ using Vte 3.91;
 using GtkSource 5;
 
 Gtk.ApplicationWindow window {
-  default-width: "800";
-  default-height: "600";
+  default-width: 800;
+  default-height: 600;
   maximized: true;
   titlebar: Gtk.HeaderBar {
     [start]
@@ -167,42 +167,14 @@ Gtk.ApplicationWindow window {
             hexpand: true;
             StackPage {
               name: 'JavaScript';
-              child: ScrolledWindow {
-                vexpand: true;
-                GtkSource.View source_view_javascript {
-                  buffer: GtkSource.Buffer {
-                  };
-                  monospace: true;
-                  auto-indent: true;
-                  highlight-current-line: true;
-                  indent-on-tab: true;
-                  indent-width: 2;
-                  insert-spaces-instead-of-tabs: true;
-                  show-line-marks: true;
-                  show-line-numbers: true;
-                  smart-backspace: true;
-                  tab-width: 2;
-                }
+              child: .CodeView code_view_javascript {
+                language_id: 'js';
               };
             }
             StackPage {
               name: 'Vala';
-              child: ScrolledWindow {
-                vexpand: true;
-                GtkSource.View source_view_vala {
-                  buffer: GtkSource.Buffer {
-                  };
-                  monospace: true;
-                  auto-indent: true;
-                  highlight-current-line: true;
-                  indent-on-tab: true;
-                  indent-width: 2;
-                  insert-spaces-instead-of-tabs: true;
-                  show-line-marks: true;
-                  show-line-numbers: true;
-                  smart-backspace: true;
-                  tab-width: 2;
-                }
+              child: .CodeView code_view_vala {
+                language_id: 'vala';
               };
             }
           }
@@ -226,24 +198,8 @@ Gtk.ApplicationWindow window {
           Separator {
           }
 
-          ScrolledWindow {
-            vexpand: true;
-            hexpand: true;
-
-            GtkSource.View source_view_css {
-              buffer: GtkSource.Buffer {
-              };
-              monospace: true;
-              auto-indent: true;
-              highlight-current-line: true;
-              indent-on-tab: true;
-              indent-width: 2;
-              insert-spaces-instead-of-tabs: true;
-              show-line-marks: true;
-              show-line-numbers: true;
-              smart-backspace: true;
-              tab-width: 2;
-            }
+          .CodeView code_view_css {
+            language_id: 'css';
           }
         }
 
@@ -266,43 +222,18 @@ Gtk.ApplicationWindow window {
                 styles ["spacer"]
               }
 
-              Gtk.ComboBoxText dropdown_ui_lang {
-                // TODO: report issue - active-id does not work
-                // also with GTK Builder XML
-                // active-id: "xml";
-                name: "dropdown_ui_lang";
-                items [
-                  xml: "XML",
-                  blueprint: "Blueprint",
-                ]
-                tooltip-text: _("Switch document");
-              }
-            }
-
-            [end]
-            Stack stack_ui_export {
-              visible-child-name: bind stack_ui.visible-child-name;
-
-              StackPage {
-                name: 'blueprint';
-                child: Button button_ui_export_xml {
-                  icon-name: "horizontal-arrows-right-symbolic";
-                  tooltip-text: _("Convert to XML");
-                  accessibility {
-                    label: _("Convert to XML");
-                  }
+              DropDown dropdown_ui_lang {
+                model: StringList {
+                  strings [
+                    "XML",
+                    "Blueprint",
+                  ]
                 };
+                tooltip-text: _("Convert and switch syntax");
               }
-
-              StackPage {
-                name: 'xml';
-                child: Button button_ui_export_blueprint {
-                  icon-name: "horizontal-arrows-left-symbolic";
-                  tooltip-text: _("Convert to Blueprint");
-                  accessibility {
-                    label: _("Convert to Blueprint");
-                  }
-                };
+              Button button_ui_experimental_blueprint {
+                icon-name: "applications-science-symbolic";
+                tooltip-text: _("Informaton about Blueprint");
               }
             }
           }
@@ -315,44 +246,14 @@ Gtk.ApplicationWindow window {
 
             StackPage {
               name: 'blueprint';
-              child: ScrolledWindow {
-                vexpand: true;
-
-                GtkSource.View source_view_blueprint {
-                  buffer: GtkSource.Buffer {
-                  };
-                  monospace: true;
-                  auto-indent: true;
-                  highlight-current-line: true;
-                  indent-on-tab: true;
-                  indent-width: 2;
-                  insert-spaces-instead-of-tabs: true;
-                  show-line-marks: true;
-                  show-line-numbers: true;
-                  smart-backspace: true;
-                  tab-width: 2;
-                }
+              child: .CodeView code_view_blueprint {
+                language_id: 'blueprint';
               };
             }
             StackPage {
               name: 'xml';
-              child: ScrolledWindow {
-                vexpand: true;
-
-                GtkSource.View source_view_xml {
-                  buffer: GtkSource.Buffer {
-                  };
-                  monospace: true;
-                  auto-indent: true;
-                  highlight-current-line: true;
-                  indent-on-tab: true;
-                  indent-width: 2;
-                  insert-spaces-instead-of-tabs: true;
-                  show-line-marks: true;
-                  show-line-numbers: true;
-                  smart-backspace: true;
-                  tab-width: 2;
-                }
+              child: .CodeView code_view_xml {
+                language_id: 'xml';
               };
             }
           }
@@ -385,7 +286,7 @@ Gtk.ApplicationWindow window {
 
             [end]
             Button button_screenshot {
-              icon-name: "photo-camera-symbolic";
+              icon-name: "re.sonny.Workbench-screenshot-symbolic";
               tooltip-text: _("Take Screenshot of Preview");
               accessibility {
                 label: _("Take Screenshot of Preview");
@@ -530,6 +431,23 @@ Gtk.ApplicationWindow window {
   }
 }
 
+.Modal modal_blueprint_experimental {
+  default-width: 368;
+  default-height: 480;
+
+  child: Adw.StatusPage {
+    vexpand: true;
+    description: _("Future versions may have breaking syntax.");
+    title: _("Blueprint is\nExperimental");
+    icon-name: "re.sonny.Workbench-beaker";
+    Button button_blueprint_documentation {
+      halign: center;
+      label: _("Documentation");
+      styles ["suggested-action", "pill"]
+    }
+  };
+}
+
 menu menu_app {
   section {
     item {
@@ -593,9 +511,14 @@ menu menu_app {
       item {
         label: _("Matrix");
         action: "app.open_uri";
-        target: "https://matrix.to/#/#workbench:matrix.org";
+        target: "https://matrix.to/#/#workbench:gnome.org";
       }
     }
+  }
+
+  item {
+    label: _("Icon Library");
+    action: "app.icon_library";
   }
 
   submenu {

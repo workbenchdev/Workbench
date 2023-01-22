@@ -22,7 +22,7 @@ export default function Devtools({ application, window, builder }) {
     "show-console",
     button_console,
     "active",
-    Gio.SettingsBindFlags.DEFAULT
+    Gio.SettingsBindFlags.DEFAULT,
   );
 
   let position;

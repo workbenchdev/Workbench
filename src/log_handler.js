@@ -103,14 +103,14 @@ function log_handler(domain, level, message) {
     return GLib.LogWriterOutput.HANDLED;
   }
 
-  let str = `\n`;
+  let str = "\n";
 
   if (!["Gjs", "Gjs-Console"].includes(domain)) {
     str += `${domain}-`;
   }
 
   const level_name = get_log_level_name(level, domain);
-  str += level_name ? level_name + ": " : "";
+  str += level_name ? `${level_name}: ` : "";
   str += message;
   str += "\n";
 

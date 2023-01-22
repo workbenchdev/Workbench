@@ -1,3 +1,5 @@
+#!/usr/bin/env -S vala workbench.vala --pkg gtk4 --pkg libadwaita-1 --pkg libsoup-3.0
+
 private Gtk.Button button_connect;
 private Gtk.Button button_disconnect;
 private Gtk.Button button_send;

@@ -1,17 +1,8 @@
 import GLib from "gi://GLib";
 import Gio from "gi://Gio";
 import Xdp from "gi://Xdp";
-import { rangeEquals } from "./lsp/LSP.js";
 
 export const portal = new Xdp.Portal();
-
-export function logEnum(obj, value) {
-  console.log(
-    Object.entries(obj).find(([k, v]) => {
-      return v === value;
-    })[0]
-  );
-}
 
 export const settings = new Gio.Settings({
   schema_id: pkg.name,
@@ -89,7 +80,9 @@ export const languages = [
 ];
 
 export function getLanguage(id) {
-  return languages.find((language) => language.id === id);
+  return languages.find(
+    (language) => language.id.toLowerCase() === id.toLowerCase(),
+  );
 }
 
 export function getLanguageForFile(file) {
@@ -99,7 +92,7 @@ export function getLanguageForFile(file) {
     const info = file.query_info(
       "standard::content-type",
       Gio.FileQueryInfoFlags.NONE,
-      null
+      null,
     );
     content_type = info.get_content_type();
   } catch (err) {
@@ -120,26 +113,27 @@ export function getLanguageForFile(file) {
   });
 }
 
-export function connect_signals(target, signals) {
-  return Object.entries(signals).map(([signal, handler]) => {
-    return target.connect_after(signal, handler);
-  });
-}
-
-export function disconnect_signals(target, handler_ids) {
-  handler_ids.forEach((handler_id) => target.disconnect(handler_id));
-}
-
-export function replaceBufferText(buffer, text, scroll_start = true) {
-  // this is against GtkSourceView not accounting an empty-string to empty-string change as user-edit
-  if (text === "") {
-    text = " ";
+export function listenProperty(
+  object,
+  property,
+  fn,
+  { initial = false, equal = true } = {},
+) {
+  let value = object[property];
+  if (initial) {
+    fn(value);
   }
-  buffer.begin_user_action();
-  buffer.delete(buffer.get_start_iter(), buffer.get_end_iter());
-  buffer.insert(buffer.get_start_iter(), text, -1);
-  buffer.end_user_action();
-  scroll_start && buffer.place_cursor(buffer.get_start_iter());
+  const signal_spec = object.connect(`notify::${property}`, () => {
+    const new_value = object[property];
+    if (equal && new_value === value) return;
+    value = new_value;
+    fn(value);
+  });
+  return {
+    disconnect() {
+      return signal_spec.disconnect();
+    },
+  };
 }
 
 export function decode(data) {
@@ -152,7 +146,7 @@ export function decode(data) {
 // Take a function that return a promise and returns a function
 // that will discard all calls during a pending execution
 // it's like a job queue with a max size of 1 and no concurrency
-export function unstack(fn) {
+export function unstack(fn, onError = console.error) {
   let latest_promise;
   let latest_arguments;
   let pending = false;
@@ -162,35 +156,13 @@ export function unstack(fn) {
 
     if (pending) return;
 
-    if (!latest_promise) latest_promise = fn(...latest_arguments);
+    if (!latest_promise)
+      latest_promise = fn(...latest_arguments).catch(onError);
 
     pending = true;
     latest_promise.finally(() => {
       pending = false;
-      latest_promise = fn(...latest_arguments);
+      latest_promise = fn(...latest_arguments).catch(onError);
     });
   };
-}
-
-export function getItersAtRange(buffer, { start, end }) {
-  let start_iter;
-  let end_iter;
-
-  // Apply the tag on the whole line
-  // if diagnostic start and end are equals such as
-  // Blueprint-Error 13:12 to 13:12 Could not determine what kind of syntax is meant here
-  if (rangeEquals(start, end)) {
-    [, start_iter] = buffer.get_iter_at_line(start.line);
-    [, end_iter] = buffer.get_iter_at_line(end.line);
-    end_iter.forward_to_line_end();
-    start_iter.forward_find_char((char) => char !== "", end_iter);
-  } else {
-    [, start_iter] = buffer.get_iter_at_line_offset(
-      start.line,
-      start.character
-    );
-    [, end_iter] = buffer.get_iter_at_line_offset(end.line, end.character);
-  }
-
-  return [start_iter, end_iter];
 }

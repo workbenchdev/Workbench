@@ -7,8 +7,13 @@ import Xdp from "gi://Xdp";
 import XdpGtk from "gi://XdpGtk4";
 import GObject from "gi://GObject";
 import Adw from "gi://Adw";
+import Gio from "gi://Gio";
+
+import { once } from "../../troll/src/util.js";
 
 import { portal } from "../util.js";
+
+const { addSignalMethods } = imports.signals;
 
 export default function Internal({
   onWindowChange,
@@ -17,8 +22,11 @@ export default function Internal({
   window,
   application,
   dropdown_preview_align,
-  panel_style,
+  panel_ui,
 }) {
+  const bus = {};
+  addSignalMethods(bus);
+
   const stack = builder.get_object("stack_preview");
 
   let css_provider = null;
@@ -28,13 +36,25 @@ export default function Internal({
     builder.get_object("button_screenshot").visible = true;
   }
 
-  function open() {
-    if (!object_root) return;
+  async function open() {
+    // The flow for internal preview is complicated after the window has been destroyed (on close)
+    // Internal cannot rebuild it on its own so it calls panel_ui.update which will endup trigering internal.updateXML.
+    // instead - Internal could work like the Vala previwer and take a XML string that it can parse whenever it needs
+    if (!object_root) {
+      try {
+        await panel_ui.update();
+        await once(bus, "object_root", { timeout: 5000 });
+      } catch (err) {
+        logError(err);
+        return;
+      }
+    }
+
     object_root.present_with_time(Gdk.CURRENT_TIME);
     onWindowChange(true);
   }
 
-  function close() {
+  async function close() {
     object_root?.close();
   }
 
@@ -43,7 +63,7 @@ export default function Internal({
     if (css_provider) {
       Gtk.StyleContext.remove_provider_for_display(
         output.get_display(),
-        css_provider
+        css_provider,
       );
       css_provider = null;
     }
@@ -55,13 +75,7 @@ export default function Internal({
     output.set_child(object);
   }
 
-  function updateXML({
-    builder,
-    object_preview,
-    target_id,
-    original_id,
-    template,
-  }) {
+  function updateXML({ builder, object_preview, original_id, template }) {
     globalThis.workbench = {
       window,
       application,
@@ -76,7 +90,7 @@ export default function Internal({
 
     let obj;
     if (object_preview instanceof Gtk.Root) {
-      obj = updateBuilderRoot(object_preview, builder, original_id);
+      obj = updateBuilderRoot(object_preview);
     } else {
       obj = updateBuilderNonRoot(object_preview);
     }
@@ -88,13 +102,14 @@ export default function Internal({
 
   function setObjectRoot(object) {
     object_root = object;
-    object_root.set_hide_on_close(true);
     object_root.connect("close-request", () => {
+      object_root = null;
       onWindowChange(false);
     });
+    bus.emit("object_root");
   }
 
-  function updateBuilderRoot(object_preview, builder, original_id) {
+  function updateBuilderRoot(object_preview) {
     stack.set_visible_child_name("open_window");
 
     if (!object_root) {
@@ -150,6 +165,13 @@ export default function Internal({
           object_root[prop_name] = new_value;
         }
       }
+
+      // Toplevel windows returned by these functions will stay around
+      // until the user explicitly destroys them with gtk_window_destroy().
+      // https://docs.gtk.org/gtk4/class.Builder.html
+      if (object_preview instanceof Gtk.Window) {
+        object_preview.destroy();
+      }
     }
 
     if (!object_root.name) {
@@ -172,7 +194,7 @@ export default function Internal({
     if (css_provider) {
       Gtk.StyleContext.remove_provider_for_display(
         output.get_display(),
-        css_provider
+        css_provider,
       );
       css_provider = null;
     }
@@ -190,15 +212,15 @@ export default function Internal({
     }
 
     css_provider = new Gtk.CssProvider();
-    css_provider.connect("parsing-error", (self, section, error) => {
-      const diagnostic = getDiagnostic(section, error);
-      panel_style.handleDiagnostic(diagnostic);
+    css_provider.connect("parsing-error", (_self, section, error) => {
+      const diagnostic = getCssDiagnostic(section, error);
+      builder.get_object("code_view_css").handleDiagnostics([diagnostic]);
     });
     css_provider.load_from_data(style);
     Gtk.StyleContext.add_provider_for_display(
       output.get_display(),
       css_provider,
-      Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+      Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
     );
   }
 
@@ -270,7 +292,7 @@ function screenshot({ widget, window, data_dir }) {
   });
   const texture = renderer.render_texture(node, rect);
 
-  const path = GLib.build_filenamev([data_dir, `Workbench screenshot.png`]);
+  const path = GLib.build_filenamev([data_dir, "Workbench screenshot.png"]);
   texture.save_to_png(path);
 
   const parent = XdpGtk.parent_new_gtk(window);
@@ -280,14 +302,20 @@ function screenshot({ widget, window, data_dir }) {
     `file://${path}`,
     Xdp.OpenUriFlags.NONE, // flags
     null, // cancellable
-    (self, result) => {
-      portal.open_uri_finish(result);
-    }
+    (_self, result) => {
+      try {
+        portal.open_uri_finish(result);
+      } catch (err) {
+        if (err.code !== Gio.IOErrorEnum.CANCELLED) {
+          logError(err);
+        }
+      }
+    },
   );
 }
 
 // Converts a Gtk.CssSection and Gtk.CssError to an LSP diagnostic object
-function getDiagnostic(section, error) {
+function getCssDiagnostic(section, error) {
   const start_location = section.get_start_location();
   const end_location = section.get_end_location();
 
@@ -302,5 +330,5 @@ function getDiagnostic(section, error) {
     },
   };
 
-  return { range, message: error.message };
+  return { range, message: error.message, severity: 1 };
 }

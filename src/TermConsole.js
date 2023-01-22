@@ -30,12 +30,12 @@ export default function TermConsole({ builder, window, application }) {
     null,
     -1, // timeout
     null, // cancellable
-    null // child_setup
+    null, // child_setup
   );
 
   function clear() {
     terminal.feed(
-      `${ERASE_ENTIRE_SCREEN}${ERASE_SAVED_LINES}${MOVE_CURSOR_HOME}`
+      `${ERASE_ENTIRE_SCREEN}${ERASE_SAVED_LINES}${MOVE_CURSOR_HOME}`,
     );
     terminal.reset(true, true);
   }
@@ -50,10 +50,10 @@ export default function TermConsole({ builder, window, application }) {
     "show-console",
     button_clear,
     "visible",
-    Gio.SettingsBindFlags.DEFAULT
+    Gio.SettingsBindFlags.DEFAULT,
   );
 
-  terminal.connect("notify::visible", (self) => {
+  terminal.connect("notify::visible", (_self) => {
     if (terminal.visible) {
       scrollToEnd();
     }
@@ -68,7 +68,7 @@ export default function TermConsole({ builder, window, application }) {
   application.set_accels_for_action("win.clear", ["<Control>K"]);
 
   style_manager.connect("notify::color-scheme", () =>
-    updateTerminalColors(terminal)
+    updateTerminalColors(terminal),
   );
   updateTerminalColors(terminal);
 

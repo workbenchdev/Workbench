@@ -15,12 +15,12 @@
     <ul>
       <li>realtime GTK/CSS preview</li>
       <li>library of examples</li>
-      <li>1000+ icons</li>
       <li>JavaScript and Vala support</li>
       <li>XML and Blueprint for describing user interface</li>
       <li>syntax highlighting, undo/redo, autosave, session restore</li>
-      <li>code formatter</li>
+      <li>code formatter, linter</li>
       <li>console logs</li>
+      <li>1000+ icons</li>
     </ul>
   </description>
   <url type="homepage">https://workbench.sonny.re</url>
@@ -46,6 +46,41 @@
   </screenshots>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="43.3" date="2023-01-xx">
+      <description>
+        <ul>
+          <li>Switching between XML and Blueprint will now convert between the two</li>
+          <li>Add support for JavaScript diagnostics and linting</li>
+          <li>Optimize Blueprint preview</li>
+          <li>Blueprint 0.6.0</li>
+          <li>Fix preview of non GtkBuildable</li>
+          <li>Prevent GtkBuilder related crashes</li>
+          <li>Reset top-level windows on update</li>
+        </ul>
+      </description>
+    </release>
+    <release version="43.2" date="2022-11-20">
+      <description>
+        <ul>
+          <li>Fix application not starting</li>
+        </ul>
+      </description>
+    </release>
+    <release version="43.1" date="2022-11-18">
+      <description>
+        <ul>
+          <li>Use Vala Language Server for diagnostics</li>
+          <li>Move Icon Browser to the main application menu</li>
+          <li>Reset window preview on close</li>
+          <li>Add a warning about Blueprint being experimental</li>
+          <li>Fix loading and running code with Blueprint UI</li>
+          <li>Fix crash when using abstract UI types</li>
+          <li>Fix "No UI definition loaded yet." preview error when using Vala</li>
+          <li>Fix error message when hovering text with no diagnostic</li>
+          <li>VTE 0.70.1</li>
+        </ul>
+      </description>
+    </release>
     <release version="43.0" date="2022-09-21">
       <description>
         <ul>

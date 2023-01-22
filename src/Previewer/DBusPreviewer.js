@@ -47,7 +47,7 @@ export default function DBusPreviewer() {
   const proxy = WorkbenchProxy(
     Gio.DBus.session,
     "re.sonny.Workbench.vala_previewer",
-    "/re/sonny/workbench/vala_previewer"
+    "/re/sonny/workbench/vala_previewer",
   );
 
   return proxy;

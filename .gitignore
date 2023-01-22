@@ -12,3 +12,4 @@ install
 Workbench.flatpak
 
 /subprojects/blueprint-compiler
+.fenv

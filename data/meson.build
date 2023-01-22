@@ -18,6 +18,13 @@ if desktop_utils.found()
   )
 endif
 
+configure_file(
+  input: 'app.service',
+  output: '@0@.service'.format(app_id),
+  configuration: { 'app_id': app_id, 'bindir': bindir },
+  install_dir: join_paths(get_option('datadir'), 'dbus-1/services')
+)
+
 appstream_file = i18n.merge_file(
   input: configure_file(
     input: 'app.metainfo.xml',
@@ -30,12 +37,12 @@ appstream_file = i18n.merge_file(
   install_dir: join_paths(get_option('datadir'), 'metainfo')
 )
 
-configure_file(
-  input: 'app.service',
-  output: '@0@.service'.format(app_id),
-  configuration: { 'app_id': app_id, 'bindir': bindir },
-  install_dir: join_paths(get_option('datadir'), 'dbus-1/services')
-)
+appstream_cli = find_program('appstreamcli', required: false)
+if appstream_cli.found()
+  test('Validate metainfo file', appstream_cli,
+    args: ['validate', '--override=release-time-missing=info', '--no-net', appstream_file]
+  )
+endif
 
 appstream_util = find_program('appstream-util', required: false)
 if appstream_util.found()

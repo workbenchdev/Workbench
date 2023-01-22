@@ -29,12 +29,12 @@ function onClosed() {
   button_send.sensitive = false;
 }
 
-function onError(self, err) {
+function onError(_self, err) {
   console.log("error");
   logError(err);
 }
 
-function onMessage(self, type, message) {
+function onMessage(_self, type, message) {
   if (type !== Soup.WebsocketDataType.TEXT) return;
   const str = text_decoder.decode(message.toArray());
   console.log("received:", str);
@@ -43,7 +43,7 @@ function onMessage(self, type, message) {
 function send(message) {
   connection.send_message(
     Soup.WebsocketDataType.TEXT,
-    new GLib.Bytes(text_encoder.encode(message))
+    new GLib.Bytes(text_encoder.encode(message)),
   );
   console.log("sent:", message);
 }
@@ -61,7 +61,7 @@ button_connect.connect("clicked", () => {
     [],
     null,
     null,
-    (self, result) => {
+    (_self, result) => {
       try {
         // https://libsoup.org/libsoup-3.0/SoupSession.html#soup-session-websocket-connect-finish
         connection = session.websocket_connect_finish(result);
@@ -75,7 +75,7 @@ button_connect.connect("clicked", () => {
       connection.connect("message", onMessage);
 
       onOpen();
-    }
+    },
   );
 });
 

@@ -1,5 +1,5 @@
 project('Workbench', ['vala', 'c'],
-  version: '43.0',
+  version: '43.2',
   meson_version: '>= 0.59.0',
   license: 'GPL-3.0-only'
 )
@@ -13,7 +13,7 @@ if get_option('profile') == 'development'
   if vcs_tag == ''
     version_suffix = '-devel'
   else
-    version_suffix = '-@0@'.format (vcs_tag)
+    version_suffix = '-@0@'.format(vcs_tag)
   endif
 else
   app_id = 're.sonny.Workbench'

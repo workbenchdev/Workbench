@@ -1,5 +1,5 @@
 {
-  "app-id": "re.sonny.Workbench",
+  "id": "re.sonny.Workbench",
   "runtime": "org.gnome.Sdk",
   "runtime-version": "43",
   "sdk": "org.gnome.Sdk",
@@ -27,15 +27,19 @@
         {
           "type": "git",
           "url": "https://gitlab.gnome.org/GNOME/vte.git",
-          "commit": "ae4a5d7df9e32ab40ceca5e06240561e819db148",
-          "tag": "0.70.0"
+          "commit": "5bf476f1d7283bc805ac8ae6abe94f81ffd7be05",
+          "tag": "0.70.1"
         }
       ]
     },
     {
       "name": "libportal",
       "buildsystem": "meson",
-      "config-opts": ["-Ddocs=false", "-Dvapi=false", "-Dbackends=gtk4"],
+      "config-opts": [
+        "-Ddocs=false",
+        "-Dvapi=false",
+        "-Dbackends=gtk4"
+      ],
       "sources": [
         {
           "type": "archive",
@@ -52,7 +56,89 @@
         {
           "type": "git",
           "url": "https://gitlab.gnome.org/sonny/blueprint-compiler",
-          "commit": "592ed7acab26f1633c03b0cd703a9cf2b7f09cb9"
+          "commit": "65340b69628d578024fc53f5629e2289848f2c92"
+        }
+      ]
+    },
+    {
+      "name": "vls",
+      "buildsystem": "meson",
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://github.com/vala-lang/vala-language-server/",
+          "commit": "bf978c0cda97cff946f355477ec8da08b1cb4e5e"
+        }
+      ],
+      "modules": [
+        {
+          "name": "jsonrpc",
+          "buildsystem": "meson",
+          "sources": [
+            {
+              "type": "archive",
+              "url": "https://download.gnome.org/sources/jsonrpc-glib/3.42/jsonrpc-glib-3.42.0.tar.xz",
+              "sha256": "221989a57ca82a12467dc427822cd7651b0cad038140c931027bf1074208276b"
+            }
+          ],
+          "cleanup": [
+            "/include",
+            "*.pc",
+            "*.gir",
+            "*.typelib"
+          ]
+        },
+        {
+          "name": "gee",
+          "buildsystem": "autotools",
+          "sources": [
+            {
+              "type": "archive",
+              "url": "https://download.gnome.org/sources/libgee/0.20/libgee-0.20.5.tar.xz",
+              "sha256": "31863a8957d5a727f9067495cabf0a0889fa5d3d44626e54094331188d5c1518"
+            }
+          ]
+        },
+        {
+          "name": "uncrustify",
+          "buildsystem": "cmake-ninja",
+          "config-opts": [
+            "-DCMAKE_BUILD_TYPE=Release"
+          ],
+          "builddir": true,
+          "sources": [
+            {
+              "type": "archive",
+              "url": "https://github.com/uncrustify/uncrustify/archive/uncrustify-0.75.1.tar.gz",
+              "sha256": "fd14acc0a31ed88b33137bdc26d32964327488c835f885696473ef07caf2e182"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "rome",
+      "buildsystem": "simple",
+      "build-commands": [
+        "chmod +x rome",
+        "cp rome /app/bin/rome"
+      ],
+      "sources": [
+        {
+          "type": "archive",
+          "only-arches": [
+            "aarch64"
+          ],
+          "url": "https://registry.npmjs.org/@rometools/cli-linux-arm64/-/cli-linux-arm64-11.0.0.tgz",
+          "sha512": "764b53249953a66c9c059d93c212417003bcced2bc0dd7af772667145c5d611bed9898138c8b02d9415ac9ffd26ca7b0f01f2ad48848d22b7e0fa8a101e2297a"
+        },
+        {
+          "type": "archive",
+          "only-arches": [
+            "x86_64"
+          ],
+          "url": "https://registry.npmjs.org/@rometools/cli-linux-x64/-/cli-linux-x64-11.0.0.tgz",
+          "sha512": "5957275cf35d586516a34a78354f18ceeb618d847babe6f8bd1723771b4fd43969a616664aca02fd1484f399c4a91033f210a170a51a9ec57338f33c052b2e18"
         }
       ]
     },
@@ -60,13 +146,13 @@
       "name": "Workbench",
       "buildsystem": "meson",
       "builddir": true,
-      "config-opts": ["-Dprofile=default"],
+      "config-opts": [
+        "-Dprofile=default"
+      ],
       "sources": [
         {
-          "type": "git",
-          "url": "https://github.com/sonnyp/Workbench.git",
-          "tag": "v43.0",
-          "commit": "dff12cab700f452601b23e4cafbbb4c24d610946"
+          "type": "dir",
+          "path": "."
         }
       ]
     }

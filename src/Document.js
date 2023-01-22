@@ -1,24 +1,11 @@
-import Source from "gi://GtkSource?version=5";
+import Source from "gi://GtkSource";
 import Gio from "gi://Gio";
 import GLib from "gi://GLib";
-import { replaceBufferText } from "./util.js";
-import { promiseTask } from "./troll/src/util.js";
+import { promiseTask } from "../troll/src/util.js";
 
-export default function Document({
-  data_dir,
-  source_view,
-  lang,
-  placeholder,
-  ext,
-}) {
-  const { buffer } = source_view;
+export default function Document({ code_view, placeholder, file }) {
+  const { buffer } = code_view;
   let handler_id = null;
-
-  buffer.set_language(language_manager.get_language(lang));
-
-  const file = Gio.File.new_for_path(
-    GLib.build_filenamev([data_dir, `state.${ext}`])
-  );
 
   const source_file = new Source.File({
     location: file,
@@ -26,7 +13,7 @@ export default function Document({
 
   loadSourceBuffer({ file: source_file, buffer })
     .then((success) => {
-      if (!success) replaceBufferText(buffer, placeholder, true);
+      if (!success) code_view.replaceText(placeholder, true);
     })
     .catch(logError);
   start();
@@ -50,7 +37,7 @@ export default function Document({
     }
   }
 
-  return { start, stop, save, source_view, buffer };
+  return { start, stop, save, code_view, file };
 }
 
 async function saveSourceBuffer({ file, buffer }) {
@@ -64,7 +51,7 @@ async function saveSourceBuffer({ file, buffer }) {
     "save_finish",
     GLib.PRIORITY_DEFAULT,
     null,
-    null
+    null,
   );
   if (success) {
     buffer.set_modified(false);
@@ -84,7 +71,7 @@ async function loadSourceBuffer({ file, buffer }) {
       "load_finish",
       GLib.PRIORITY_DEFAULT,
       null,
-      null
+      null,
     );
   } catch (err) {
     if (err.code !== Gio.IOErrorEnum.NOT_FOUND) {
@@ -97,9 +84,3 @@ async function loadSourceBuffer({ file, buffer }) {
   }
   return success;
 }
-
-const language_manager = new Source.LanguageManager();
-language_manager.set_search_path([
-  ...language_manager.get_search_path(),
-  "resource:///re/sonny/Workbench/language-specs",
-]);

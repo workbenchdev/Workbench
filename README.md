@@ -121,8 +121,12 @@ Except for everything under src/Library/demos which is in the public domain unde
 ```sh
 $V = 45
 
-# Pull translatons
+git checkout l10n
+git pull
+git checkout main
 git merge --squash l10n
+meson compile re.sonny.Workbench-pot -C _build
+meson compile re.sonny.Workbench-update-po -C _build
 git commit -m 'Update translations'
 
 # Update version

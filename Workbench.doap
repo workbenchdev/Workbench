@@ -4,12 +4,10 @@
   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
   xmlns:foaf="http://xmlns.com/foaf/0.1/"
   xmlns:gnome="http://api.gnome.org/doap-extensions#"
-  xmlns="http://usefulinc.com/ns/doap#"
->
+  xmlns="http://usefulinc.com/ns/doap#">
   <name>Workbench</name>
   <shortdesc>Learn and prototype with GNOME technologies</shortdesc>
-  <description
-  >Workbench goal is to let you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a custom GTK widget.</description>
+  <description>Workbench goal is to let you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a custom GTK widget.</description>
 
   <homepage rdf:resource="https://workbench.sonny.re" />
   <bug-database rdf:resource="https://workbench.sonny.re/feedback" />
@@ -19,6 +17,7 @@
     <foaf:Person>
       <foaf:name>Sonny Piers</foaf:name>
       <foaf:mbox rdf:resource="mailto:sonnyp@gnome.org" />
+      <gnome:userid>sonnyp</gnome:userid>
       <foaf:account>
         <foaf:OnlineAccount>
             <foaf:accountServiceHomepage rdf:resource="https://github.com/" />
@@ -27,9 +26,7 @@
       </foaf:account>
       <foaf:account>
         <foaf:OnlineAccount>
-          <foaf:accountServiceHomepage
-            rdf:resource="https://gitlab.gnome.org"
-          />
+          <foaf:accountServiceHomepage rdf:resource="https://gitlab.gnome.org"/>
           <foaf:accountName>sonny</foaf:accountName>
         </foaf:OnlineAccount>
       </foaf:account>

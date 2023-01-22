@@ -1,6 +1,6 @@
-import "gi://Gtk?version=4.0";
+import "../src/init.js";
 
-import tst, { assert } from "../src/troll/tst/tst.js";
+import tst, { assert } from "../troll/tst/tst.js";
 
 import { isDiagnosticInRange } from "../src/WorkbenchHoverProvider.js";
 
@@ -24,9 +24,9 @@ test("in range", () => {
       {
         line: 5,
         character: 12,
-      }
+      },
     ),
-    true
+    true,
   );
 });
 
@@ -48,9 +48,9 @@ test("same line", () => {
       {
         line: 5,
         character: 15,
-      }
+      },
     ),
-    true
+    true,
   );
 });
 
@@ -72,9 +72,9 @@ test("between lines", () => {
       {
         line: 3,
         character: 9,
-      }
+      },
     ),
-    true
+    true,
   );
 });
 
@@ -96,9 +96,9 @@ test("not in range", () => {
       {
         line: 5,
         character: 12,
-      }
+      },
     ),
-    false
+    false,
   );
 });
 

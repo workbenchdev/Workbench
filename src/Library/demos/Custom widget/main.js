@@ -9,14 +9,14 @@ const AwesomeButton = GObject.registerClass(
     Template: workbench.template,
   },
   class AwesomeButton extends Gtk.Button {
-    _init(params = {}) {
-      super._init(params);
+    constructor(params = {}) {
+      super(params);
     }
 
     onclicked() {
       console.log("Clicked");
     }
-  }
+  },
 );
 
 const container = new Gtk.FlowBox({

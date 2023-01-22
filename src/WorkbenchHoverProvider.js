@@ -46,14 +46,14 @@ class WorkbenchHoverProvider extends GObject.Object {
   vfunc_populate(context, display) {
     try {
       const diagnostics = this.findDiagnostics(context);
-      if (diagnostics.length < 1) return false;
+      if (diagnostics.length < 1) return [false, null];
       this.showDiagnostics(display, diagnostics);
     } catch (err) {
       logError(err);
-      return false;
+      return [false, null];
     }
 
-    return true;
+    return [true, null];
   }
 }
 
@@ -84,5 +84,5 @@ export default GObject.registerClass(
     GTypeName: "WorkbenchHoverProvider",
     Implements: [Source.HoverProvider],
   },
-  WorkbenchHoverProvider
+  WorkbenchHoverProvider,
 );

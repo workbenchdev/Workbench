@@ -4,6 +4,8 @@ import Gtk from "gi://Gtk";
 
 import { decode } from "../util.js";
 
+import resource from "./Library.blp";
+
 const prefix = "/re/sonny/Workbench/Library";
 
 export default function Library({
@@ -11,7 +13,7 @@ export default function Library({
   window: appliation_window,
   application,
 }) {
-  const builder = Gtk.Builder.new_from_resource(`${prefix}/Library.ui`);
+  const builder = Gtk.Builder.new_from_resource(resource);
   const window = builder.get_object("library");
   window.set_transient_for(appliation_window);
 
@@ -28,7 +30,7 @@ export default function Library({
     widget.add_suffix(
       new Gtk.Image({
         icon_name: "go-next-symbolic",
-      })
+      }),
     );
     widget.connect("activated", () => {
       last_selected = widget;
@@ -66,15 +68,15 @@ export function readDemo(demo_name) {
 function getDemos() {
   return Gio.resources_enumerate_children(
     `${prefix}/demos`,
-    Gio.ResourceLookupFlags.NONE
+    Gio.ResourceLookupFlags.NONE,
   ).map((child) => {
     return JSON.parse(
       decode(
         Gio.resources_lookup_data(
           `${prefix}/demos/${child}main.json`,
-          Gio.ResourceLookupFlags.NONE
-        )
-      )
+          Gio.ResourceLookupFlags.NONE,
+        ),
+      ),
     );
   });
 }
@@ -86,8 +88,8 @@ function readDemoFile(demo_name, file_name) {
     str = decode(
       Gio.resources_lookup_data(
         `${prefix}/demos/${demo_name}/${file_name}`,
-        Gio.ResourceLookupFlags.NONE
-      )
+        Gio.ResourceLookupFlags.NONE,
+      ),
     );
   } catch (err) {
     if (err.code !== Gio.ResourceError.NOT_FOUND) {
