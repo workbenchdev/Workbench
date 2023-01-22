@@ -15,12 +15,12 @@
     <ul>
       <li>realtime GTK/CSS preview</li>
       <li>library of examples</li>
-      <li>1000+ icons</li>
       <li>JavaScript and Vala support</li>
       <li>XML and Blueprint for describing user interface</li>
       <li>syntax highlighting, undo/redo, autosave, session restore</li>
-      <li>code formatter</li>
+      <li>code formatter, linter</li>
       <li>console logs</li>
+      <li>1000+ icons</li>
     </ul>
   </description>
   <url type="homepage">https://workbench.sonny.re</url>
@@ -46,7 +46,7 @@
   </screenshots>
   <content_rating type="oars-1.1" />
   <releases>
-    <release version="43.2" date="2022-12-xx">
+    <release version="43.3" date="2023-01-xx">
       <description>
         <ul>
           <li>Switching between XML and Blueprint will now convert between the two</li>
@@ -54,7 +54,8 @@
           <li>Optimize Blueprint preview</li>
           <li>Blueprint 0.6.0</li>
           <li>Fix preview of non GtkBuildable</li>
-          <li>Prevent all GtkBuilder related crash</li>
+          <li>Prevent GtkBuilder related crashes</li>
+          <li>Reset top-level windows on update</li>
         </ul>
       </description>
     </release>
