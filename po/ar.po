@@ -7,18 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: re.sonny.Workbench\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-18 13:24+0100\n"
-"PO-Revision-Date: 2022-07-20 12:17+0000\n"
-"Last-Translator: Mouhanad Masri <mouhanadmasre164@gmail.com>\n"
-"Language-Team: Arabic <https://hosted.weblate.org/projects/workbench/"
-"workbench/ar/>\n"
+"POT-Creation-Date: 2022-06-04 15:25+0200\n"
+"PO-Revision-Date: 2023-01-08 18:51+0000\n"
+"Last-Translator: Yassine Oudjana <y.oudjana@protonmail.com>\n"
+"Language-Team: Arabic <https://hosted.weblate.org/projects/workbench/workbench/ar/>\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
-"&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Weblate 4.14-dev\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"X-Generator: Weblate 4.15.1-dev\n"
 
 #. TRANSLATORS: Don't translate
 #: data/app.desktop:4
@@ -27,20 +25,16 @@ msgstr "منضدة"
 
 #: data/app.desktop:5 data/app.metainfo.xml:10
 msgid "Learn and prototype with GNOME technologies"
-msgstr "تعلن و اصنع النماذج مستعملا تقنيات GNOME"
+msgstr "تعلم وصمم نماذجًا بتقنيات GNOME"
 
 #. TRANSLATORS: Don't translate
 #: data/app.desktop:12
 msgid "CSS;JavaScript;GJS;Blueprint;builder;Vala;"
 msgstr "CSS;JavaScript;GJS;Blueprint;builder;Vala;"
 
-#: data/app.metainfo.xml:13
-msgid ""
-"Workbench goal is to let you experiment with GNOME technologies, no matter "
-"if tinkering for the first time or building and testing a GTK user interface."
-msgstr ""
-"هدف Workbench هو تمكينك من بتجربة تقنيات GNOME، بغض النظر عما إذا كنت تقوم "
-"بالعبث لأول مرة أو بناء واختبار واجهة مستخدم GTK."
+#: data/re.sonny.Workbench.metainfo.xml:14
+msgid "Workbench goal is to let you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a GTK user interface."
+msgstr "هدف Workbench هو تمكينك من تجربة تقنيات GNOME، بغض النظر عمّا إذا كنت تقوم بتجربتها لأول مرة أو بناء واختبار واجهة GTK."
 
 #: data/app.metainfo.xml:14
 msgid "Among other things, Workbench comes with"
@@ -48,7 +42,7 @@ msgstr "من بين أمور أخرى ، يأتي Workbench مع"
 
 #: data/app.metainfo.xml:16
 msgid "realtime GTK/CSS preview"
-msgstr "عرض مسبق ل GTK / CSS في الوقت الحقيقي"
+msgstr "عرض مباشر لـ GTK و CSS"
 
 #: data/app.metainfo.xml:17
 msgid "library of examples"
@@ -78,7 +72,7 @@ msgstr "منسق التعليمات البرمجية"
 
 #: data/app.metainfo.xml:23
 msgid "console logs"
-msgstr "يسجل الاحداث في لوحة مراقبة"
+msgstr "السجلات"
 
 #: data/app.metainfo.xml:52
 msgid "Use Vala Language Server for diagnostics"
@@ -288,10 +282,9 @@ msgstr "إصلاح الخطأ عند فتح الملف"
 msgid "Other changes"
 msgstr "تغييرات أخرى"
 
-#: data/app.metainfo.xml:137
-#, fuzzy
+#: data/re.sonny.Workbench.metainfo.xml:66
 msgid "Silence platform tools"
-msgstr "أدوات منصة الصمت"
+msgstr "أدوات نظام الصمت"
 
 #: data/app.metainfo.xml:138
 msgid "Remove GTK Icon browser platform tool"
@@ -309,10 +302,9 @@ msgstr "افتح لوحة التحكم دائمًا عند فتح مثال مك�
 msgid "Prevent running Code if the panel is not visible"
 msgstr "منع تشغيل الكود إذا كانت اللوحة غير مرئية"
 
-#: data/app.metainfo.xml:142
-#, fuzzy
+#: data/re.sonny.Workbench.metainfo.xml:71
 msgid "Add icons and mnemonics for all buttons"
-msgstr "أضف أيقونات وذكريات لجميع الأزرار"
+msgstr "إضافة أيقونات وفن الإستذكار لجميع الأزرار"
 
 #: data/app.metainfo.xml:143
 msgid "Move Bookmarks to the main menu"
@@ -352,7 +344,7 @@ msgstr "أضف مثالاً لعميل WebSocket"
 
 #: data/app.metainfo.xml:158
 msgid "Add an example of toasts"
-msgstr ""
+msgstr "أضف مثال على شرب النخب"
 
 #: data/app.metainfo.xml:159
 msgid "Add an example of application window"
@@ -426,7 +418,40 @@ msgstr "هذا هو الإصدار الأول من Workbench. نأمل أن تن
 msgid "The demo has been loaded"
 msgstr ""
 
-#: src/window.js:372 src/window.js:453 src/shortcutsWindow.blp:46
+#. TRANSLATORS: eg. 'Translator Name <your.email@domain.com>' or 'Translator Name https://website.example'
+#: src/about.js:40
+msgid "translator-credits"
+msgstr "إعتمادات المترجم"
+
+#: src/actions.js:51 src/shortcutsWindow.blp:16
+msgid "Import File"
+msgstr "استيراد ملف"
+
+#: src/actions.js:133
+msgid "All supported"
+msgstr "كله الدعم"
+
+#: src/shortcutsWindow.blp:11
+msgid "Run Code"
+msgstr "قم بتشغيل الكود"
+
+#: src/shortcutsWindow.blp:21
+msgid "Open Library"
+msgstr "افتح المكتبة"
+
+#: src/shortcutsWindow.blp:26
+msgid "Toggle Console"
+msgstr "تفعيل و ايقاف وحدة التحكم"
+
+#: src/shortcutsWindow.blp:31
+msgid "Clear Console"
+msgstr "تفريغ وحدة التحكم"
+
+#: src/shortcutsWindow.blp:37
+msgid "Inspector"
+msgstr "المتفحص"
+
+#: src/shortcutsWindow.blp:41
 msgid "Undo"
 msgstr "تراجع عن الإجراء"
 
@@ -481,7 +506,7 @@ msgstr "_عرض مسبق"
 
 #: src/window.blp:130
 msgid "<b>Code</b>"
-msgstr "<b> كود </ b>"
+msgstr "<b>Code</b>"
 
 #: src/window.blp:146
 msgid "Switch document"
@@ -497,11 +522,11 @@ msgstr "تشغيل (Ctrl + ⏎)"
 
 #: src/window.blp:218
 msgid "<b>Style CSS</b>"
-msgstr "<b> نمط CSS </ b>"
+msgstr "<b>Style CSS</b>"
 
 #: src/window.blp:257
 msgid "<b>UI</b>"
-msgstr "<b> واجهة المستخدم </ ب>"
+msgstr "<b>UI</b>"
 
 #: src/window.blp:273
 msgid "Convert and switch syntax"
@@ -522,7 +547,7 @@ msgstr "قم بالتحويل إلى مخطط"
 
 #: src/window.blp:366
 msgid "<b>Preview</b>"
-msgstr "<b> عرض مسبق </ b>"
+msgstr "<b>معاينه</b>"
 
 #: src/window.blp:376
 msgid "Fill"
@@ -627,11 +652,11 @@ msgstr "JavaScript"
 
 #: src/window.blp:586
 msgid "Vala"
-msgstr "Vala"
+msgstr "فالا"
 
 #: src/window.blp:592
 msgid "Blueprint"
-msgstr "Blueprint"
+msgstr "مخطط"
 
 #: src/window.blp:599
 msgid "Get help"

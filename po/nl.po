@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: re.sonny.Workbench\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-18 13:24+0100\n"
-"PO-Revision-Date: 2022-06-10 11:14+0000\n"
+"POT-Creation-Date: 2022-06-04 15:25+0200\n"
+"PO-Revision-Date: 2022-12-29 16:51+0000\n"
 "Last-Translator: Philip Goto <philip.goto@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/workbench/"
 "workbench/nl/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.13-dev\n"
+"X-Generator: Weblate 4.15.1-dev\n"
 
 #. TRANSLATORS: Don't translate
 #: data/app.desktop:4
@@ -167,7 +167,7 @@ msgstr ""
 
 #: data/app.metainfo.xml:84 data/app.metainfo.xml:129
 msgid "Improve application design"
-msgstr "Toepassingsontwerp verbeterd"
+msgstr "App-ontwerp verbeterd"
 
 #: data/app.metainfo.xml:85
 msgid "Prevent crash for templates with GtkWidget parent"
@@ -357,7 +357,7 @@ msgstr "Toasts-voorbeeld toegevoegd"
 
 #: data/app.metainfo.xml:159
 msgid "Add an example of application window"
-msgstr "Voorbeeld van toepassingsvenster toegevoegd"
+msgstr "Voorbeeld van app-venster toegevoegd"
 
 #: data/app.metainfo.xml:160
 msgid "Add an example of desktop notification"

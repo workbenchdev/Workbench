@@ -7,28 +7,30 @@ msgid ""
 msgstr ""
 "Project-Id-Version: re.sonny.Workbench\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-18 13:24+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"POT-Creation-Date: 2022-06-04 15:25+0200\n"
+"PO-Revision-Date: 2022-10-06 05:16+0000\n"
+"Last-Translator: Kaz Sibuya <sibuyakazokuu@gmail.com>\n"
+"Language-Team: Japanese <https://hosted.weblate.org/projects/workbench/workbench/ja/>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.14.1\n"
 
 #. TRANSLATORS: Don't translate
 #: data/app.desktop:4
 msgid "Workbench"
-msgstr ""
+msgstr "Workbench"
 
 #: data/app.desktop:5 data/app.metainfo.xml:10
 msgid "Learn and prototype with GNOME technologies"
-msgstr ""
+msgstr "GNOMEのテクノロジーを学びし、プロトタイプを作成する"
 
 #. TRANSLATORS: Don't translate
 #: data/app.desktop:12
 msgid "CSS;JavaScript;GJS;Blueprint;builder;Vala;"
-msgstr ""
+msgstr "CSS;JavaScript;GJS;Blueprint;builder;Vala;"
 
 #: data/app.metainfo.xml:13
 msgid ""
@@ -38,19 +40,19 @@ msgstr ""
 
 #: data/app.metainfo.xml:14
 msgid "Among other things, Workbench comes with"
-msgstr ""
+msgstr "Workbench の特徴は、"
 
 #: data/app.metainfo.xml:16
 msgid "realtime GTK/CSS preview"
-msgstr ""
+msgstr "リアルタイムでの GTK/CSS のプレビュー"
 
 #: data/app.metainfo.xml:17
 msgid "library of examples"
-msgstr ""
+msgstr "サンプルのライブラリ"
 
-#: data/app.metainfo.xml:18
-msgid "1000+ icons"
-msgstr ""
+#: data/re.sonny.Workbench.metainfo.xml:19
+msgid "JavaScript and Vala runs without any setup"
+msgstr "JavaScript と Vala はセットアップなしで動作します"
 
 #: data/app.metainfo.xml:19
 msgid "JavaScript and Vala support"
@@ -58,43 +60,43 @@ msgstr ""
 
 #: data/app.metainfo.xml:20
 msgid "XML and Blueprint for describing user interface"
-msgstr ""
+msgstr "ユーザーインターフェイスを記述するためのXMLとBlueprint"
 
 #: data/app.metainfo.xml:21
 msgid "syntax highlighting, undo/redo, autosave, session restore"
-msgstr ""
+msgstr "構文強調表示、元に戻す／やり直し、自動保存、セッションリストア"
 
 #: data/app.metainfo.xml:22
 msgid "code formatter"
-msgstr ""
+msgstr "コードフォーマッタ"
 
 #: data/app.metainfo.xml:23
 msgid "console logs"
-msgstr ""
+msgstr "コンソールログ"
 
-#: data/app.metainfo.xml:52
-msgid "Use Vala Language Server for diagnostics"
-msgstr ""
+#: data/re.sonny.Workbench.metainfo.xml:51
+msgid "Highlights"
+msgstr "ハイライト"
 
-#: data/app.metainfo.xml:53
-msgid "Move Icon Browser to the main application menu"
-msgstr ""
+#: data/re.sonny.Workbench.metainfo.xml:53
+msgid "Add Blueprint markup syntax for UI"
+msgstr "UI の Blueprintマークアップ構文の追加"
 
-#: data/app.metainfo.xml:54
-msgid "Reset window preview on close"
-msgstr ""
+#: data/re.sonny.Workbench.metainfo.xml:54
+msgid "Add Vala programming language for Code"
+msgstr "コードにVala プログラミング言語を追加"
 
-#: data/app.metainfo.xml:55
-msgid "Add a warning about Blueprint being experimental"
-msgstr ""
+#: data/re.sonny.Workbench.metainfo.xml:55
+msgid "Add support for previewing templates"
+msgstr "テンプレートのプレビューに対応"
 
-#: data/app.metainfo.xml:56
-msgid "Fix loading and running code with Blueprint UI"
-msgstr ""
+#: data/re.sonny.Workbench.metainfo.xml:56
+msgid "Add support for previewing signal handlers"
+msgstr "シグナルハンドラのプレビューのサポートの追加"
 
-#: data/app.metainfo.xml:57
-msgid "Fix crash when using abstract UI types"
-msgstr ""
+#: data/re.sonny.Workbench.metainfo.xml:57
+msgid "Include all icons from icon-development-kit"
+msgstr "icon-development-kit に含まれるすべてのアイコンを含める"
 
 #: data/app.metainfo.xml:58
 msgid "Fix \"No UI definition loaded yet.\" preview error when using Vala"
@@ -154,7 +156,7 @@ msgstr ""
 
 #: data/app.metainfo.xml:84 data/app.metainfo.xml:129
 msgid "Improve application design"
-msgstr ""
+msgstr "アプリケーション設計の改善"
 
 #: data/app.metainfo.xml:85
 msgid "Prevent crash for templates with GtkWidget parent"
@@ -254,23 +256,24 @@ msgstr ""
 
 #: data/app.metainfo.xml:130
 msgid "Distribute Library examples under CC0-1.0"
-msgstr ""
+msgstr "サンプルのライブラリをCC0-1.0 で配布する"
 
 #: data/app.metainfo.xml:131
 msgid "Respect system preference for color scheme"
-msgstr ""
+msgstr "システムの配色に従う"
 
 #: data/app.metainfo.xml:132
 msgid "Add proper light/dark color schemes for Console"
-msgstr ""
+msgstr "コンソールに適切な明るい/暗い配色を追加"
 
-#: data/app.metainfo.xml:133
-msgid "Fix error when importing files"
-msgstr ""
+#: data/re.sonny.Workbench.metainfo.xml:62
+#: data/re.sonny.Workbench.metainfo.xml:74
+msgid "Fix error when opening file"
+msgstr "ファイルを開くときのエラーを修正"
 
 #: data/app.metainfo.xml:135
 msgid "Other changes"
-msgstr ""
+msgstr "他の変更"
 
 #: data/app.metainfo.xml:137
 msgid "Silence platform tools"
@@ -286,7 +289,7 @@ msgstr ""
 
 #: data/app.metainfo.xml:140
 msgid "Always open the Console when opening a Library example"
-msgstr ""
+msgstr "ライブラリのサンプルを開くときは必ずコンソールを開く"
 
 #: data/app.metainfo.xml:141
 msgid "Prevent running Code if the panel is not visible"
@@ -587,39 +590,43 @@ msgstr ""
 
 #: src/window.blp:564
 msgid "Learn"
-msgstr ""
+msgstr "学ぶ"
 
-#: src/window.blp:567
+#: src/window.blp:580
+#, fuzzy
 msgid "Developer Documentation"
-msgstr ""
+msgstr "開発者のドキュメント"
 
-#: src/window.blp:574
+#: src/window.blp:587
+#, fuzzy
 msgid "Human Interface Guidelines"
-msgstr ""
+msgstr "Human Interface Guidelines"
 
 #: src/window.blp:580
 msgid "JavaScript"
-msgstr ""
+msgstr "JavaScript"
 
 #: src/window.blp:586
 msgid "Vala"
-msgstr ""
+msgstr "Vala"
 
 #: src/window.blp:592
 msgid "Blueprint"
-msgstr ""
+msgstr "Blueprint"
 
-#: src/window.blp:599
+#: src/window.blp:612
+#, fuzzy
 msgid "Get help"
-msgstr ""
+msgstr "助けを得る"
 
-#: src/window.blp:602
+#: src/window.blp:615
+#, fuzzy
 msgid "Discourse"
-msgstr ""
+msgstr "Discourse"
 
 #: src/window.blp:608
 msgid "Matrix"
-msgstr ""
+msgstr "Matrix"
 
 #: src/window.blp:616
 msgid "Icon Library"
@@ -627,19 +634,19 @@ msgstr ""
 
 #: src/window.blp:621
 msgid "Platform Tools"
-msgstr ""
+msgstr "プラットフォームのツール"
 
 #: src/window.blp:624
 msgid "Adwaita Demo"
-msgstr ""
+msgstr "Adwaitaのデモ"
 
 #: src/window.blp:630
 msgid "GTK Demo"
-msgstr ""
+msgstr "GTK デモ"
 
 #: src/window.blp:636
 msgid "GTK Widget Factory"
-msgstr ""
+msgstr "GTK Widget Factory"
 
 #: src/window.blp:644 src/shortcutsWindow.blp:54
 msgid "Keyboard Shortcuts"
@@ -647,55 +654,8 @@ msgstr ""
 
 #: src/window.blp:649
 msgid "About Workbench"
-msgstr ""
+msgstr "Workbench について"
 
-#: src/shortcutsWindow.blp:11
-msgid "Run Code"
-msgstr ""
-
-#: src/shortcutsWindow.blp:16
-msgid "Format"
-msgstr ""
-
-#: src/shortcutsWindow.blp:26
-msgid "Open Library"
-msgstr ""
-
-#: src/shortcutsWindow.blp:31
-msgid "Toggle Console"
-msgstr ""
-
-#: src/shortcutsWindow.blp:36
-msgid "Clear Console"
-msgstr ""
-
-#: src/shortcutsWindow.blp:42
-msgid "Inspector"
-msgstr ""
-
-#: src/shortcutsWindow.blp:50
-msgid "Redo"
-msgstr ""
-
-#: src/shortcutsWindow.blp:58
-msgid "Quit"
-msgstr ""
-
-#: src/Library/Library.blp:7
-msgid "Library"
-msgstr ""
-
-#: troll/src/widgets/ThemeSelector.blp:22
-#: troll/src/widgets/ThemeSelector.blp:25
-msgid "Follow system style"
-msgstr ""
-
-#: troll/src/widgets/ThemeSelector.blp:41
-#: troll/src/widgets/ThemeSelector.blp:44
-msgid "Light style"
-msgstr ""
-
-#: troll/src/widgets/ThemeSelector.blp:60
-#: troll/src/widgets/ThemeSelector.blp:63
-msgid "Dark style"
-msgstr ""
+#: src/window.js:396
+msgid "Are you sure you want to discard your changes?"
+msgstr "変更を破棄してもよろしいですか?"

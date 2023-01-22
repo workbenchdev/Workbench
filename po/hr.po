@@ -8,24 +8,22 @@ msgstr ""
 "Project-Id-Version: re.sonny.Workbench\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-04 15:25+0200\n"
-"PO-Revision-Date: 2022-12-21 13:47+0000\n"
-"Last-Translator: jolupa <jolupameister@gmail.com>\n"
-"Language-Team: Catalan <https://hosted.weblate.org/projects/workbench/workbench/ca/>\n"
-"Language: ca\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: hr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.15.1-dev\n"
 
 #. TRANSLATORS: Don't translate
 #: data/re.sonny.Workbench.desktop:4
 msgid "Workbench"
-msgstr "Workbench"
+msgstr ""
 
 #: data/re.sonny.Workbench.desktop:5 data/re.sonny.Workbench.metainfo.xml:10
 msgid "Learn and prototype with GNOME technologies"
-msgstr "Aprèn i prototipa amb les tecnologies de GNOME"
+msgstr ""
 
 #. TRANSLATORS: Don't translate
 #: data/re.sonny.Workbench.desktop:12
@@ -34,31 +32,31 @@ msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:14
 msgid "Workbench goal is to let you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a GTK user interface."
-msgstr "L'objectiu de Workbench és deixar-te experimentar amb les tecnologies de GNOME, sense importar si ets jugant per primera vegada o desenvolupant i testant una interficie d'usuari en GTK."
+msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:15
 msgid "Among other things, Workbench comes with"
-msgstr "Entre d'altres coses Workbench ve amb"
+msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:17
 msgid "realtime GTK/CSS preview"
-msgstr "previsualització en temps real de GTK/CSS"
+msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:18
 msgid "library of examples"
-msgstr "llibreria d'exemples"
+msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:19
 msgid "JavaScript and Vala runs without any setup"
-msgstr "JavaScript i Vala funcionan sense cap configuració"
+msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:20
 msgid "XML and Blueprint for describing user interface"
-msgstr "XML i Blueprint per descriure l'interficie d'usuari"
+msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:21
 msgid "syntax highlighting, undo/redo, autosave, session restore"
-msgstr "resaltat de la sintaxis, fer/desfer, desà automàtic, restauració de sessions"
+msgstr ""
 
 #: data/re.sonny.Workbench.metainfo.xml:22
 msgid "code formatter"
