@@ -6,7 +6,7 @@ import Gio from "gi://Gio";
 import * as xml from "../langs/xml/xml.js";
 import * as postcss from "../lib/postcss.js";
 
-import { settings, unstack } from "../util.js";
+import { encode, settings, unstack } from "../util.js";
 
 import Internal from "./Internal.js";
 import External from "./External.js";
@@ -14,12 +14,15 @@ import { getClassNameType } from "../overrides.js";
 
 import { isBuilderable, isPreviewable } from "./utils.js";
 
-// Workbench always defaults to in-process preview now if Vala is selected.
-// Workbench will switch to out-of-process preview when Vala is run
-// Workbench will switch back to inline preview if any of the following happens
-//  • When a demo is selected
-//  • When the out-of-process preview Window closed
-//  • When switching language
+/*
+  Always default to in-process preview
+  Switch to out-of-process preview when Vala is run
+  Switch back to in-process preview if any of the following happens
+   • A demo is loaded
+   • The out-of-process preview Window closed
+   • Switching language
+   * A file is open
+*/
 
 export default function Previewer({
   output,
@@ -64,7 +67,8 @@ export default function Previewer({
       if (open) {
         stack.set_visible_child_name("close_window");
       } else {
-        useInternal();
+        stack.set_visible_child_name("open_window");
+        useInternal().catch(logError);
       }
     },
     output,
@@ -195,7 +199,7 @@ export default function Previewer({
     }
     dropdown_preview_align.visible = !!template;
 
-    current.updateXML({
+    await current.updateXML({
       xml: text,
       builder,
       object_preview,
@@ -204,25 +208,26 @@ export default function Previewer({
       template,
     });
     code_view_css.clearDiagnostics();
-    current.updateCSS(code_view_css.buffer.text);
+    await current.updateCSS(code_view_css.buffer.text);
     symbols = null;
   }
 
   const schedule_update = unstack(update, logError);
 
-  function useExternal() {
+  async function useExternal() {
     if (current === external) return;
-    stack.set_visible_child_name("open_window");
-    setPreviewer(external);
+    await setPreviewer(external);
+    stack.set_visible_child_name("close_window");
+    await update();
   }
 
-  function useInternal() {
+  async function useInternal() {
     if (current === internal) return;
-    setPreviewer(internal);
-    update();
+    await setPreviewer(internal);
+    await update();
   }
 
-  function setPreviewer(previewer) {
+  async function setPreviewer(previewer) {
     if (handler_id_button_open) {
       button_open.disconnect(handler_id_button_open);
     }
@@ -230,8 +235,14 @@ export default function Previewer({
       button_close.disconnect(handler_id_button_close);
     }
 
-    current?.stop();
-    current?.closeInspector();
+    try {
+      await current?.closeInspector();
+    } catch {}
+
+    try {
+      await current?.stop();
+    } catch {}
+
     current = previewer;
 
     handler_id_button_open = button_open.connect("clicked", async () => {
@@ -252,7 +263,11 @@ export default function Previewer({
       }
     });
 
-    current.start();
+    try {
+      await current.start();
+    } catch (err) {
+      logError(err);
+    }
   }
 
   builder.get_object("button_screenshot").connect("clicked", () => {
@@ -267,13 +282,13 @@ export default function Previewer({
     stop,
     update,
     open() {
-      current.open();
+      return current.open();
     },
     close() {
-      current.close();
+      return current.close();
     },
     openInspector() {
-      current.openInspector();
+      return current.openInspector();
     },
     useExternal,
     useInternal,
@@ -309,8 +324,6 @@ export function scopeStylesheet(style) {
   return str;
 }
 
-const text_encoder = new TextEncoder();
-
 function getTemplate(tree) {
   const template = tree.getChild("template");
   if (!template) return;
@@ -338,7 +351,7 @@ function getTemplate(tree) {
     target_id: el.attrs.id,
     text: tree.toString(),
     original_id: undefined,
-    template: text_encoder.encode(original),
+    template: encode(original),
   };
 }
 

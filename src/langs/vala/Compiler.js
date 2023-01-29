@@ -1,9 +1,7 @@
 import Gio from "gi://Gio";
 import GLib from "gi://GLib";
-import DBusPreviewer from "../../Previewer/DBusPreviewer.js";
+import dbus_previewer from "../../Previewer/DBusPreviewer.js";
 import { promiseTask } from "../../../troll/src/util.js";
-
-const proxy = DBusPreviewer();
 
 export default function Compiler(data_dir) {
   const code_file = Gio.File.new_for_path(
@@ -67,19 +65,20 @@ export default function Compiler(data_dir) {
     return result;
   }
 
-  function run() {
+  async function run() {
     try {
-      proxy.RunSync(
+      const proxy = await dbus_previewer.getProxy();
+      await proxy.RunAsync(
         module_file.get_path(),
         "main",
         "set_builder",
         "set_window",
-        "set_app",
       );
-    } catch (error) {
-      console.debug(error);
+    } catch (err) {
+      logError(err);
       return false;
     }
+
     return true;
   }
 

@@ -143,6 +143,12 @@ export function decode(data) {
   return new TextDecoder().decode(data);
 }
 
+export function encode(data) {
+  return new TextEncoder().encode(
+    data.to_string?.() || data?.toString?.() || data,
+  );
+}
+
 // Take a function that return a promise and returns a function
 // that will discard all calls during a pending execution
 // it's like a job queue with a max size of 1 and no concurrency
