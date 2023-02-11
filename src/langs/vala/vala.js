@@ -12,7 +12,7 @@ export function setup({ data_dir, document }) {
 
   api_file.copy(
     Gio.File.new_for_path(data_dir).get_child("workbench.vala"),
-    Gio.FileCopyFlags.OVERWRITE,
+    Gio.FileCopyFlags.OVERWRITE | Gio.FileCopyFlags.TARGET_DEFAULT_PERMS,
     null,
     null,
   );
