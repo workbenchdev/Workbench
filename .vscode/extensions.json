@@ -2,12 +2,12 @@
   "recommendations": [
     "bilelmoussaoui.flatpak-vscode",
     "editorconfig.editorconfig",
-    "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
     "mrorz.language-gettext",
     "yzhang.markdown-all-in-one",
     "mesonbuild.mesonbuild",
     "prince781.vala",
-    "bodil.blueprint-gtk"
+    "bodil.blueprint-gtk",
+    "rome.rome"
   ]
 }

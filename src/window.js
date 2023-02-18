@@ -184,7 +184,7 @@ export default function Window({ application }) {
   settings.connect("changed", updatePanel);
 
   button_inspector.connect("clicked", () => {
-    previewer.openInspector();
+    previewer.openInspector().catch(logError);
   });
 
   function format(code_view, formatter) {
@@ -289,19 +289,17 @@ export default function Window({ application }) {
           langs.vala.document.code_view.buffer.text,
         );
         if (success) {
-          previewer.useExternal();
-          await previewer.update();
-          if (compiler.run()) {
-            previewer.open();
+          await previewer.useExternal();
+          if (await compiler.run()) {
+            await previewer.open();
           } else {
-            previewer.useInternal();
-            await previewer.update();
+            await previewer.useInternal();
           }
         }
       }
     } catch (err) {
       // prettier xml errors are not instances of Error
-      if (err instanceof Error) {
+      if (err instanceof Error || err instanceof GLib.Error) {
         logError(err);
       } else {
         console.error(err);
@@ -393,7 +391,7 @@ export default function Window({ application }) {
     // in the future we may let each demo decide
     settings.set_boolean("show-console", true);
 
-    previewer.useInternal();
+    await previewer.useInternal();
 
     if (panel_code.language === "JavaScript" && autorun === true) {
       await runCode(false);

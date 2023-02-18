@@ -75,7 +75,7 @@ export default function Internal({
     output.set_child(object);
   }
 
-  function updateXML({ builder, object_preview, original_id, template }) {
+  async function updateXML({ builder, object_preview, original_id, template }) {
     globalThis.workbench = {
       window,
       application,
@@ -190,7 +190,7 @@ export default function Internal({
     return object_preview;
   }
 
-  function updateCSS(css) {
+  async function updateCSS(css) {
     if (css_provider) {
       Gtk.StyleContext.remove_provider_for_display(
         output.get_display(),
@@ -233,10 +233,10 @@ export default function Internal({
     stop,
     updateXML,
     updateCSS,
-    openInspector() {
+    async openInspector() {
       Gtk.Window.set_interactive_debugging(true);
     },
-    closeInspector() {
+    async closeInspector() {
       Gtk.Window.set_interactive_debugging(false);
     },
     screenshot({ window, data_dir }) {

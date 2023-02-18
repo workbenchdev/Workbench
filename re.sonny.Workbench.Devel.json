@@ -9,7 +9,6 @@
     "--socket=fallback-x11",
     "--socket=wayland",
     "--device=dri",
-    "--socket=session-bus",
     "--share=network"
   ],
   "modules": [
