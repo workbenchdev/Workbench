@@ -2,4 +2,3 @@
 
 SHELL=/bin/sh script --flush --quiet --return /var/tmp/workbench --command "@app_id@ $@"
 # SHELL=/bin/sh script --flush --quiet --return /var/tmp/workbench --command "G_MESSAGES_DEBUG=\"@app_id@\" @app_id@ $@"
-# G_MESSAGES_DEBUG=\"@app_id@\" @app_id@ $@

@@ -28,11 +28,14 @@ async function startProcess() {
   );
 
   const connection = await new Promise((resolve) => {
-    const handler_id = server.connect("new-connection", (_self, connection) => {
-      server.disconnect(handler_id);
-      resolve(connection);
-      return true;
-    });
+    const _handler_id = server.connect(
+      "new-connection",
+      (_self, connection) => {
+        server.disconnect(_handler_id);
+        resolve(connection);
+        return true;
+      },
+    );
   });
 
   console.debug(

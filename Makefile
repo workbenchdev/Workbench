@@ -1,5 +1,5 @@
 
-.PHONY: test
+.PHONY: lint test
 
 lint:
 	./node_modules/.bin/rome ci src test

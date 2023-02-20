@@ -62,33 +62,6 @@ Use GNOME Builder to start a new project using the appropriate GNOME Application
 
 </details>
 
-## Translation
-
-If you'd like to help translating Workbench into your language, please head over to [Weblate](https://hosted.weblate.org/engage/workbench/).
-
-<a href="https://hosted.weblate.org/engage/workbench/">
-  <img src="https://hosted.weblate.org/widgets/workbench/-/workbench/multi-auto.svg" alt="Translation status" />
-</a>
-
-Thank you for your help!
-
-## Development
-
-1. Install [GNOME Builder](https://apps.gnome.org/app/org.gnome.Builder/)
-2. Open Builder and select "Clone Repository..."
-3. Clone `https://github.com/sonnyp/Workbench.git` (or your fork)
-4. Press the Run ▶ button
-
-If you used an other method, don't forget to fetch the submodules.
-
-```sh
-cd Workbench
-git submodule update
-```
-
-Also make sure that you're building the development target (`re.sonny.Workbench.Devel`).
-
-Feel free to come by [#workbench:matrix.org](https://matrix.to/#/#workbench:matrix.org).
 
 ## Packaging
 
@@ -113,42 +86,6 @@ and the GNOME community 🖤
 GPLv3. Please see [COPYING](COPYING) file.
 
 Except for everything under src/Library/demos which is in the public domain under the terms of [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/).
-
-## Maintainers
-
-### Release
-
-```sh
-$V = 45
-
-git checkout l10n
-git pull
-git checkout main
-git merge --squash l10n
-meson compile re.sonny.Workbench-pot -C _build
-meson compile re.sonny.Workbench-update-po -C _build
-git commit -m 'Update translations'
-
-# Update version
-# bump version in meson.build
-# add release notes to metainfo
-git add meson.build
-
-git commit -m '$V'
-git tag '$V'
-git push
-git push origin $V
-```
-
-### Update icons
-
-```
-cd icon-development-kit-www
-git pull
-cd ..
-cp -r icon-development-kit-www/img/symbolic/**/*.svg data/icons/hicolor/scalable/actions/
-cat icon-development-kit-www/_data/icons.yaml | python -c 'import sys, yaml, json; print(json.dumps(yaml.safe_load(sys.stdin.read())))' > src/icon-development-kit.json
-```
 
 <details>
   <summary>
