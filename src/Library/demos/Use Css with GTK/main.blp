@@ -1,0 +1,28 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: "Using CSS with GTK";
+
+  Box {
+    orientation: vertical;
+
+    Box {
+      orientation: vertical;
+      halign: center;
+
+      Label {
+        label: _("GTK supports CSS properties and shorthands as far as they can be applied in the context of widgets, and adds its own properties only when needed. All GTK-specific properties have a -gtk prefix.All properties support the following keywords: inherit, initial, unset, with the same meaning as in CSS.");
+        justify: center;
+        styles ["body"]
+      }
+
+      Button Find_More {
+        label: "More Info here";
+        uri: 'https://docs.gtk.org/gtk3/css-overview.html';
+        styles ["pill"]
+      }
+
+    }
+  }
+})
