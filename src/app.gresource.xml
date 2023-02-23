@@ -37,5 +37,7 @@
     <file>Library/demos/Custom widget/main.ui</file>
     <file>Library/demos/Custom widget/main.js</file>
     <file>Library/demos/Custom widget/main.json</file>
+    <file>Library/demos/Use Css with GTK/main.blp</file>
+    <file>Library/demos/Use Css with GTK/main.json</file>
   </gresource>
 </gresources>
