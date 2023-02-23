@@ -2,6 +2,7 @@ import Gio from "gi://Gio";
 
 const { application, builder } = workbench;
 
+// https://gjs-docs.gnome.org/gio20/gio.notification
 const notification = new Gio.Notification();
 
 notification.set_title("Lunch is ready");

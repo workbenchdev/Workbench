@@ -24,7 +24,7 @@ public void main () {
         uri
       );
 
-      // https://libsoup.org/libsoup-3.0/SoupSession.html#soup-session-websocket-connect-async
+      // https://valadoc.org/libsoup-3.0/Soup.Session.websocket_connect_async.html
       session.websocket_connect_async.begin (
         message,
         null,
