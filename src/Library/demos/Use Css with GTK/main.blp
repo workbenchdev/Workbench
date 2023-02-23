@@ -1,0 +1,29 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: "Using CSS with GTK";
+
+  Box {
+    orientation: vertical;
+
+    Box {
+      orientation: vertical;
+      halign: center;
+
+      Label {
+        label: _("GTK is a popular toolkit for creating graphical user interfaces in Linux and other Unix-based systems. While GTK provides its own theming system, it is also possible to use CSS to customize the appearance of GTK applications.\nHere are the general steps to use CSS with GTK:\n1)Create a CSS file: Create a new CSS file that defines the styles you want to apply to your GTK application.You can use any text editor to create this file, and save it with a .css file extension.\n2)Load the CSS file: In your GTK application, load the CSS file using the GtkCssProvider class.\n3)Apply the styles: Finally, apply the styles to the GTK widgets in your application using the gtk_style_context_add_provider function\nYou can repeat step 3 for each widget in your application that you want to style.\n\nNote that some GTK widgets may have their own CSS classes that you can use to apply styles to specific parts of the widget.\nFor example, the GtkButton widget has a button CSS class that you can use to style the button itself, as well as a label CSS class that you can use to style the label inside the button.\nAlso, keep in mind that not all CSS properties are supported by GTK. You can find a list of supported properties in the GTK documentation.");
+        justify: center;
+        styles ["body"]
+      }
+
+      LinkButton {
+        margin-top: 6;
+        halign: center;
+        label: "More Info Here";
+        uri: "https://docs.gtk.org/gtk3/css-overview.html";
+      }
+
+    }
+  }
+})

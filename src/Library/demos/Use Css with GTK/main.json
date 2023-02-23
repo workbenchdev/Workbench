@@ -1,0 +1,8 @@
+{
+  "name": "Use Css with GTK",
+  "category": "how_to",
+  "description": "Using Css with GTK overview and more information",
+  "panels": [
+    "preview"
+  ]
+}
