@@ -1,7 +1,10 @@
 {
-  "name": "Application window",
+  "name": "Window",
   "category": "user_interface",
-  "description": "An application main window containing a status page and menu button",
-  "panels": ["ui", "preview"],
+  "description": "A window containing a status page and menu button",
+  "panels": [
+    "ui",
+    "preview"
+  ],
   "autorun": false
 }

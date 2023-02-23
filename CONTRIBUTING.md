@@ -54,7 +54,13 @@ You can find ideas in [this issue](https://github.com/sonnyp/Workbench/issues/69
 
 Once you're satisfied with the result - you can add the entry to Workbench source code and send a pull request to make it available to everyone.
 
-To do so, add the files in [`src/Library`](./src/Library) and the paths to [`src/app.gresource.xml`](./src/app.gresource.xml). If you're struggling - search the code base for an existing entry name (for example `WebSocket client`) and do the same thing for yours.
+To do so
+
+1. add the files in [`src/Library`](./src/Library)
+2. the paths to [`src/app.gresource.xml`](./src/app.gresource.xml)
+3. the `main.blp` path to the `blueprints` target in [`src/meson.build](./src/meson.build).
+
+If you're struggling - search the code base for an existing entry name (for example `WebSocket client`) and do the same thing for yours.
 
 Make sure it's working by running Workbench and launching your entry via the Library. If not - double check what you did and compare with other Library entries.
 
