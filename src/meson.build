@@ -18,12 +18,12 @@ blueprint_compiler = find_program(
 blueprints = custom_target('blueprints',
   input: files(
     'Library/demos/Toasts/main.blp',
-    'Library/demos/WebSocket client/main.blp',
+    'Library/demos/WebSocket Client/main.blp',
     'Library/demos/Welcome/main.blp',
     'Library/demos/Window/main.blp',
-    'Library/demos/Custom widget/main.blp',
+    'Library/demos/Custom Widget/main.blp',
     'Library/demos/Notifications/main.blp',
-    'Library/demos/Platform tools/main.blp',
+    'Library/demos/Platform Tools/main.blp',
   ),
   output: '.',
   command: [

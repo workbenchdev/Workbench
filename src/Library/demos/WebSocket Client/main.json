@@ -1,7 +1,10 @@
 {
-  "name": "WebSocket client",
+  "name": "WebSocket Client",
   "category": "network",
   "description": "Using libsoup to establish a WebSocket connection.",
-  "panels": ["code", "preview"],
+  "panels": [
+    "code",
+    "preview"
+  ],
   "autorun": true
 }
