@@ -1,0 +1,7 @@
+{
+  "name": "GTK Switch",
+  "category": "user_interface",
+  "description": "Overview of GTK Switch",
+  "panels": ["ui", "preview"],
+  "autorun": true
+}
