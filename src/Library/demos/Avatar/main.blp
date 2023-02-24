@@ -1,0 +1,29 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: "Avatar";
+
+  Box {
+    orientation: vertical;
+    halign: center;
+
+    Adw.Avatar avatar {
+      size:128;
+      show-initials: true;
+      text: "John Doe";
+      margin-bottom:30;
+    }
+
+    Label name {
+      label: "John Doe";
+      margin-bottom: 20;
+    }
+
+    LinkButton {
+      label: "API Reference";
+      uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/main/class.Avatar.html";
+    }
+
+  }
+}
