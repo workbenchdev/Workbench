@@ -22,10 +22,10 @@ function checkone(){
 function checktwo(){
   if (Switch2.get_active()){
     console.log("Switch turned on");
-    Label2.label = "Currently in Inactive State";
+    Label2.label = "Currently in Active State";
   } else {
     console.log("Switch turned off");
-    Label2.label = "Currently in Active State";
+    Label2.label = "Currently in Inactive State";
   }
 }
 
