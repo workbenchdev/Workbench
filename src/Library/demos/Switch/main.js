@@ -1,71 +1,29 @@
-using Gtk 4.0;
-using Adw 1;
+import Gtk from "gi://Gtk?version=4.0";
+import GObject from "gi://GObject";
 
-Adw.StatusPage {
-  title: "Switch";
-  description: _("A simple on/off control");
+const switch_on = workbench.builder.get_object("switch_on");
+const label_on = workbench.builder.get_object("label_on");
+const switch_off = workbench.builder.get_object("switch_off");
+const label_off = workbench.builder.get_object("label_off");
 
-  Box {
-    orientation: vertical;
+switch_on.set_active(true);
+switch_off.set_active(false);
 
-    Box {
-      orientation: vertical;
-      halign: center;
-
-      Switch switch_on {
-      margin-bottom: 10;
-      }
-    }
-    Label label_on {
-    label: "On";
-    margin-bottom: 40;
-    }
-
-    Box {
-     orientation: vertical;
-     halign: center;
-
-     Switch switch_off {
-     margin-bottom: 10;
-     }
-    }
-
-    Label label_off {
-    label: "Off";
-    margin-bottom: 40;
-    }
-
-    Box {
-     orientation: vertical;
-     halign: center;
-
-     Switch Disabled_Switch {
-     margin-bottom: 10;
-     sensitive: false;
-     }
-    }
-
-    Label Disabled {
-    label: "Disabled";
-    margin-bottom: 40;
-    }
-
-    LinkButton{
-    label: "Tutorial";
-    uri: "https://developer.gnome.org/documentation/tutorials/beginners/components/switch.html";
-    }
-
-    LinkButton{
-    label: "API Reference";
-    uri: "https://docs.gtk.org/gtk4/class.Switch.html";
-    }
-
-    LinkButton{
-    label: "Human Interface Guidelines";
-    uri: "https://developer.gnome.org/hig/patterns/controls/switches.html";
-    }
-
-
-
+function checkone(){
+  if (switch_on.get_active()){
+    label_on.label = "On";
+  } else {
+    label_on.label = "Off";
   }
-})
+}
+
+function checktwo(){
+  if (switch_off.get_active()){
+    label_off.label = "On";
+  } else {
+    label_off.label = "Off";
+  }
+}
+
+switch_on.connect("notify::active",checkone);
+switch_off.connect("notify::active",checktwo);
