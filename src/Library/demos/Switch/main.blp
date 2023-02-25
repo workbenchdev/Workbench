@@ -1,0 +1,59 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: "Switch";
+  description: _("A simple on/off control");
+
+  Box {
+    orientation: vertical;
+
+    Switch switch_on {
+      active: true;
+      halign: center;
+      margin-bottom: 6;
+    }
+
+    Label label_on {
+      label: "On";
+      margin-bottom: 30;
+    }
+
+    Switch switch_off {
+      active: false;
+      halign: center;
+      margin-bottom: 6;
+    }
+
+    Label label_off {
+      label: "Off";
+      margin-bottom: 30;
+    }
+
+    Switch {
+      sensitive: false;
+      halign: center;
+      margin-bottom: 6;
+    }
+
+    Label {
+      label: "Disabled";
+      margin-bottom: 30;
+    }
+
+    LinkButton{
+      label: "Tutorial";
+      uri: "https://developer.gnome.org/documentation/tutorials/beginners/components/switch.html";
+    }
+
+    LinkButton{
+      label: "API Reference";
+      uri: "https://docs.gtk.org/gtk4/class.Switch.html";
+    }
+
+    LinkButton{
+      label: "Human Interface Guidelines";
+      uri: "https://developer.gnome.org/hig/patterns/controls/switches.html";
+    }
+  }
+}

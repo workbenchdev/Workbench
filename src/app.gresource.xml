@@ -37,5 +37,8 @@
     <file>Library/demos/Custom Widget/main.ui</file>
     <file>Library/demos/Custom Widget/main.js</file>
     <file>Library/demos/Custom Widget/main.json</file>
+     <file>Library/demos/Switch/main.json</file>
+    <file>Library/demos/Switch/main.js</file>
+    <file>Library/demos/Switch/main.blp</file>
   </gresource>
 </gresources>
