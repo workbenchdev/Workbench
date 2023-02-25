@@ -8,64 +8,52 @@ Adw.StatusPage {
   Box {
     orientation: vertical;
 
-    Box {
-      orientation: vertical;
+    Switch switch_on {
+      active: true;
       halign: center;
-
-      Switch switch_on {
-      margin-bottom: 10;
-      }
+      margin-bottom: 6;
     }
+
     Label label_on {
-    label: "On";
-    margin-bottom: 40;
+      label: "On";
+      margin-bottom: 30;
     }
 
-    Box {
-     orientation: vertical;
-     halign: center;
-
-     Switch switch_off {
-     margin-bottom: 10;
-     }
+    Switch switch_off {
+      active: false;
+      halign: center;
+      margin-bottom: 6;
     }
 
     Label label_off {
-    label: "Off";
-    margin-bottom: 40;
+      label: "Off";
+      margin-bottom: 30;
     }
 
-    Box {
-     orientation: vertical;
-     halign: center;
-
-     Switch Disabled_Switch {
-     margin-bottom: 10;
-     sensitive: false;
-     }
+    Switch {
+      sensitive: false;
+      halign: center;
+      margin-bottom: 6;
     }
 
-    Label Disabled {
-    label: "Disabled";
-    margin-bottom: 40;
+    Label {
+      label: "Disabled";
+      margin-bottom: 30;
     }
 
     LinkButton{
-    label: "Tutorial";
-    uri: "https://developer.gnome.org/documentation/tutorials/beginners/components/switch.html";
+      label: "Tutorial";
+      uri: "https://developer.gnome.org/documentation/tutorials/beginners/components/switch.html";
     }
 
     LinkButton{
-    label: "API Reference";
-    uri: "https://docs.gtk.org/gtk4/class.Switch.html";
+      label: "API Reference";
+      uri: "https://docs.gtk.org/gtk4/class.Switch.html";
     }
 
     LinkButton{
-    label: "Human Interface Guidelines";
-    uri: "https://developer.gnome.org/hig/patterns/controls/switches.html";
+      label: "Human Interface Guidelines";
+      uri: "https://developer.gnome.org/hig/patterns/controls/switches.html";
     }
-
-
-
   }
-})
+}
