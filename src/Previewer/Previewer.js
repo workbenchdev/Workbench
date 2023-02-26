@@ -156,7 +156,9 @@ export default function Previewer({
     let original_id;
     let template;
 
-    if (!text) return;
+    if (!text) {
+      text = `<?xml version="1.0" encoding="UTF-8"?><interface><object class="GtkBox"></object></interface>";`;
+    }
 
     try {
       tree = xml.parse(text);

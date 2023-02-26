@@ -4,7 +4,6 @@ import Gtk from "gi://Gtk";
 
 import { LSPError } from "./lsp/LSP.js";
 import { getLanguage, settings, unstack, listenProperty } from "./util.js";
-import { once } from "../troll/src/util.js";
 
 import {
   setup as setupBlueprint,
@@ -109,11 +108,7 @@ export default function PanelUI({
   // when loading demo
   async function update() {
     if (lang.id === "blueprint") {
-      await blueprint.update(buffer_blueprint.text);
-      await once(
-        blueprint.lspc,
-        "notification::textDocument/x-blueprintcompiler/publishCompiled",
-      );
+      onXML(await blueprint.compile());
     } else if (lang.id === "xml") {
       onXML(buffer_xml.text);
     }
@@ -125,8 +120,8 @@ export default function PanelUI({
   }
 
   const onBlueprint = unstack(function onBlueprint() {
-    return blueprint.update(buffer_blueprint.text);
-  });
+    return blueprint.compile().then(onXML);
+  }, logError);
 
   function start() {
     stop();
@@ -136,13 +131,6 @@ export default function PanelUI({
       onXML(code_view_xml.buffer.text);
     });
     handler_id_blueprint = code_view_blueprint.connect("changed", onBlueprint);
-    blueprint.lspc.connect(
-      "notification::textDocument/x-blueprintcompiler/publishCompiled",
-      (_self, { xml }) => {
-        if (lang.id !== "blueprint") return;
-        onXML(xml);
-      },
-    );
   }
 
   function stop() {

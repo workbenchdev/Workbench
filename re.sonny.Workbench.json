@@ -3,12 +3,12 @@
   "runtime": "org.gnome.Sdk",
   "runtime-version": "43",
   "sdk": "org.gnome.Sdk",
-  "sdk-extensions" : [
+  "sdk-extensions": [
     "org.freedesktop.Sdk.Extension.vala"
   ],
-  "build-options" : {
-    "append-path" : "/usr/lib/sdk/vala/bin",
-    "append-ld-library-path" : "/usr/lib/sdk/vala/lib"
+  "build-options": {
+    "append-path": "/usr/lib/sdk/vala/bin",
+    "append-ld-library-path": "/usr/lib/sdk/vala/lib"
   },
   "command": "workbench",
   "finish-args": [
@@ -62,7 +62,7 @@
         {
           "type": "git",
           "url": "https://gitlab.gnome.org/sonny/blueprint-compiler",
-          "commit": "65340b69628d578024fc53f5629e2289848f2c92"
+          "commit": "87a8ef8a3bdfeff5547dc6d6cc1ca41a303ce6fb"
         }
       ]
     },
