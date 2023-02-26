@@ -1,5 +1,4 @@
 import Gtk from "gi://Gtk";
-import Gdk from "gi://Gdk";
 import * as postcss from "../lib/postcss.js";
 import GLib from "gi://GLib";
 import Graphene from "gi://Graphene";
@@ -50,7 +49,7 @@ export default function Internal({
       }
     }
 
-    object_root.present_with_time(Gdk.CURRENT_TIME);
+    object_root.present();
     onWindowChange(true);
   }
 
