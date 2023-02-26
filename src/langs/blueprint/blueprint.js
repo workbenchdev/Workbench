@@ -3,8 +3,6 @@ import GLib from "gi://GLib";
 
 import LSPClient from "../../lsp/LSPClient.js";
 
-import { once } from "../../../troll/src/util.js";
-
 export function setup({ data_dir, document }) {
   const { file, code_view } = document;
 
@@ -24,17 +22,23 @@ export function setup({ data_dir, document }) {
     async compile() {
       await lspc.didChange();
 
-      const [{ xml }] = await once(
-        lspc,
-        "notification::textDocument/x-blueprintcompiler/publishCompiled",
-        { timeout: 5000 },
-      );
+      let xml = null;
+
+      try {
+        ({ xml } = await lspc.request("textDocument/x-blueprint-compile", {
+          textDocument: {
+            uri: file.get_uri(),
+          },
+        }));
+      } catch (err) {
+        console.debug(err);
+      }
 
       return xml;
     },
     async decompile(text) {
       const { blp } = await lspc.request(
-        "x-blueprintcompiler/decompile",
+        "x-blueprint/decompile",
         {
           text,
         },
@@ -74,7 +78,6 @@ function createLSPClient({ code_view, data_dir, uri }) {
     languageId: "blueprint",
     buffer: code_view.buffer,
   });
-  lspc.capabilities.textDocument["x-blueprintcompiler/publishCompiled"] = {};
 
   lspc.connect("exit", () => {
     console.debug("blueprint language server exit");
