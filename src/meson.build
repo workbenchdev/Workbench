@@ -11,21 +11,21 @@ bin_conf.set('sourcedir', meson.source_root())
 blueprint_compiler = find_program(
   # Flatpak
   '/app/bin/blueprint-compiler',
-  # host
+  # local
   '../blueprint-compiler/blueprint-compiler.py'
 )
 
-blueprints = custom_target('blueprints',
-  input: files(
-    'Library/demos/Toasts/main.blp',
-    'Library/demos/WebSocket Client/main.blp',
-    'Library/demos/Welcome/main.blp',
-    'Library/demos/Window/main.blp',
-    'Library/demos/Custom Widget/main.blp',
-    'Library/demos/Notifications/main.blp',
-    'Library/demos/Platform Tools/main.blp',
-  ),
+install_subdir('Library/demos', install_dir : join_paths(pkgdatadir, 'Library'))
+
+output = run_command('../build-aux/list-demo-blp-files.sh', check: true)
+blueprint_files = output.stdout().strip().split('\n')
+message('blueprint files: @0@'.format(blueprint_files))
+
+custom_target('blueprints',
+  input: blueprint_files,
   output: '.',
+  install: true,
+  install_dir: pkgdatadir,
   command: [
     blueprint_compiler,
     'batch-compile', '@OUTPUT@', '@CURRENT_SOURCE_DIR@', '@INPUT@'
@@ -34,7 +34,6 @@ blueprints = custom_target('blueprints',
 
 gnome.compile_resources(app_id,
   'app.gresource.xml',
-  dependencies: blueprints,
   gresource_bundle: true,
   install: true,
   install_dir: pkgdatadir,

@@ -1,4 +1,5 @@
 import Gio from "gi://Gio";
+import GLib from "gi://GLib";
 import Adw from "gi://Adw";
 import Gtk from "gi://Gtk";
 
@@ -6,7 +7,9 @@ import { decode } from "../util.js";
 
 import resource from "./Library.blp";
 
-const prefix = "/re/sonny/Workbench/Library";
+const demo_dir = Gio.File.new_for_path(
+  GLib.build_filenamev([pkg.pkgdatadir, "Library/demos"]),
+);
 
 export default function Library({
   openDemo,
@@ -66,33 +69,32 @@ export function readDemo(demo_name) {
 }
 
 function getDemos() {
-  return Gio.resources_enumerate_children(
-    `${prefix}/demos`,
-    Gio.ResourceLookupFlags.NONE,
-  ).map((child) => {
-    return JSON.parse(
-      decode(
-        Gio.resources_lookup_data(
-          `${prefix}/demos/${child}main.json`,
-          Gio.ResourceLookupFlags.NONE,
-        ),
-      ),
-    );
+  const children = [
+    ...demo_dir.enumerate_children(
+      "",
+      Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
+      null,
+    ),
+  ];
+
+  const folders = children.filter((file_info) => {
+    return file_info.get_file_type() === Gio.FileType.DIRECTORY;
+  });
+
+  return folders.map((folder) => {
+    return JSON.parse(readDemoFile(folder.get_name(), "main.json"));
   });
 }
 
 function readDemoFile(demo_name, file_name) {
+  const file = demo_dir.resolve_relative_path(`${demo_name}/${file_name}`);
+
   let str;
 
   try {
-    str = decode(
-      Gio.resources_lookup_data(
-        `${prefix}/demos/${demo_name}/${file_name}`,
-        Gio.ResourceLookupFlags.NONE,
-      ),
-    );
+    str = decode(file.load_contents(null)[1]);
   } catch (err) {
-    if (err.code !== Gio.ResourceError.NOT_FOUND) {
+    if (err.code !== Gio.IOErrorEnum.NOT_FOUND) {
       throw err;
     }
     str = "";
