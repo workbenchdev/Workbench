@@ -52,6 +52,7 @@ ${getBlueprintVersion()}
   dialog.add_credit_section(_("Contributors"), [
     "Ben Foote http://www.bengineeri.ng",
     "Hari Rana (TheEvilSkeleton) https://theevilskeleton.gitlab.io",
+    "Sriyansh Shivam https://linktr.ee/sonic_here",
     // Add yourself as
     // "John Doe",
     // or

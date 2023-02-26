@@ -23,9 +23,7 @@ namespace Workbench {
     }
 
     private void set_window(Gtk.Window window) {
-      if (this.window != null) {
-        this.window.destroy();
-      }
+      this.window?.destroy ();
       this.window = window;
       this.window.close_request.connect (this.on_window_closed);
     }
@@ -190,7 +188,7 @@ namespace Workbench {
     [CCode (has_target=false)]
     private delegate void WindowFunction (Gtk.Window window);
 
-    private Gtk.Window window;
+    private Gtk.Window? window;
     private Gtk.CssProvider? css = null;
     private Module module;
     private Gtk.Builder? builder = null;
