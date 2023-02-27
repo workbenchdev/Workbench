@@ -2,7 +2,8 @@ using Gtk 4.0;
 using Adw 1;
 
 Adw.StatusPage {
-  title: "Notifications";
+  title: "Notification";
+  description: "Desktop notifications";
 
   Box {
     orientation: vertical;
@@ -10,7 +11,7 @@ Adw.StatusPage {
 
     Button button_simple {
       label: "Trigger notification";
-      margin-bottom: 24;
+      margin-bottom: 30;
       styles ["pill"]
     }
 

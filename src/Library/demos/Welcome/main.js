@@ -2,15 +2,16 @@ import Gtk from "gi://Gtk?version=4.0";
 
 Gtk.init();
 
-const main = workbench.builder.get_object("welcome");
+const subtitle_box = workbench.builder.get_object("subtitle");
 
 // https://gjs-docs.gnome.org/gtk40/gtk.button
 const button = new Gtk.Button({
   label: "Press me",
-  margin_top: 24,
+  margin_top: 6,
 });
+button.get_style_context().add_class("suggested-action");
 button.connect("clicked", greet);
-main.append(button);
+subtitle_box.append(button);
 
 console.log("Welcome to Workbench!");
 

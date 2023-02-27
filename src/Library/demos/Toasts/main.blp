@@ -4,20 +4,21 @@ using Adw 1;
 Adw.ToastOverlay overlay {
   Adw.StatusPage {
     title: "Toasts";
+    description: "In-app notifications";
 
     Box {
       orientation: vertical;
       halign: center;
 
       Button button_simple {
-        label: "Simple In-App notification";
-        margin-bottom: 24;
+        label: "Simple";
+        margin-bottom: 30;
         styles ["pill"]
       }
 
       Button button_advanced {
-        label: "Advanced Usage";
-        margin-bottom: 24;
+        label: "Advanced";
+        margin-bottom: 30;
         styles ["pill"]
       }
 

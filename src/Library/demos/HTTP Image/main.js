@@ -1,10 +1,9 @@
-import Gtk from "gi://Gtk?version=4.0";
 import Soup from "gi://Soup?version=3.0";
 import GLib from "gi://GLib";
 import Gio from "gi://Gio";
 import GdkPixbuf from "gi://GdkPixbuf";
 
-Gtk.init();
+const IMAGE_URL = "https://cataas.com/cat";
 
 Gio._promisify(Soup.Session.prototype, "send_async", "send_finish");
 Gio._promisify(
@@ -13,11 +12,9 @@ Gio._promisify(
   "new_from_stream_finish",
 );
 
-const input_stream = await getInputStream("https://cataas.com/cat");
+const input_stream = await getInputStream(IMAGE_URL);
 const pixbuf = await GdkPixbuf.Pixbuf.new_from_stream_async(input_stream, null);
-const image = new Gtk.Image();
-image.set_from_pixbuf(pixbuf);
-workbench.preview(image);
+workbench.builder.get_object("picture").set_pixbuf(pixbuf);
 
 async function getInputStream(url) {
   const session = new Soup.Session();

@@ -2,7 +2,6 @@
 
 Thank you for considering contributing to Workbench. Feel free to [get in touch](https://matrix.to/#/%23workbench:gnome.org).
 
-
 ## Development
 
 ### Setup
@@ -31,12 +30,11 @@ Here is a compilation of resources to learn more about the GNOME platform.
 
 * [Workbench](https://github.com/sonnyp/Workbench) 😉
 * [GObject](https://gjs.guide/guides/gobject/basics.html#gobject-construction)
-* [Asynchronous programming](https://gjs.guide/guides/gjs/asynchronous-programming.html#the-main-loop)
 * [GTK4 + GJS Book](https://rmnvgr.gitlab.io/gtk4-gjs-book/)
+* [Asynchronous programming](https://gjs.guide/guides/gjs/asynchronous-programming.html#the-main-loop)
 * [API references](https://gjs-docs.gnome.org/) make sure to enable at least GTK, GJS, GLib, Gio
 * [GJS docs](https://gitlab.gnome.org/GNOME/gjs/-/tree/master/doc)
 * [GJS examples](https://gitlab.gnome.org/GNOME/gjs/-/tree/master/examples)
-
 
 ### Library
 
@@ -46,23 +44,17 @@ Library examples and demos have 3 functions
 2. Teach how to use the APIs, patterns and widgets
 3. Provide functional snippets ready to use
 
-Keep them concise and interactive. They should have links to learn more about the topics covered.
-
 The easiest way to get started is to write an entry within Workbench directly.
 
-You can find ideas in [this issue](https://github.com/sonnyp/Workbench/issues/69). Start with something small and accessible.
+Keep them concise and interactive. They should have links to learn more about the topics covered. Make sure to follow the patterns of similar/existing entries.
 
-Once you're satisfied with the result - you can add the entry to Workbench source code and send a pull request to make it available to everyone.
+* [Check here for ideas](https://github.com/sonnyp/Workbench/issues/69)
+* Start with something small and accessible
+* Make sure to select "Blueprint" instead of "XML" in the UI panel
 
-To do so
+Once you're satisfied with the result - you can send a pull request to include it in Workbench. All you need to do is add the files to [`src/Library`](./src/Library).
 
-1. add the files in [`src/Library`](./src/Library)
-2. the paths to [`src/app.gresource.xml`](./src/app.gresource.xml)
-3. the `main.blp` path to the `blueprints` target in [`src/meson.build](./src/meson.build).
-
-If you're struggling - search the code base for an existing entry name (for example `WebSocket client`) and do the same thing for yours.
-
-Make sure it's working by running Workbench and launching your entry via the Library. If not - double check what you did and compare with other Library entries.
+Make sure it's working by rebuilding Workbench and launching your entry via the Library. If not - double check what you did and compare with other Library entries.
 
 ## Debugging
 
