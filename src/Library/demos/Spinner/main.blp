@@ -1,0 +1,46 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: "Spinner";
+  description: _("Display loading state");
+
+  Box {
+    orientation: vertical;
+    halign: center;
+
+    Box {
+      orientation: vertical;
+      halign: center;
+
+       Spinner spinner {
+          spinning: true;
+          margin-bottom: 30;
+        }
+
+      Button  btn {
+        icon-name: "media-playback-stop";
+        margin-bottom: 30;
+        styles ["circular"]
+        }
+
+    }
+
+    LinkButton{
+      label: "Tutorial";
+      uri: "https://developer.gnome.org/documentation/tutorials/beginners/components/spinner.html";
+    }
+
+    LinkButton{
+      label: "API Reference";
+      uri: "https://docs.gtk.org/gtk4/class.Spinner.html";
+    }
+
+    LinkButton{
+      label: "Human Interface Guidelines";
+      uri: "https://developer.gnome.org/hig/patterns/feedback/spinners.html";
+    }
+  }
+}
+
+
