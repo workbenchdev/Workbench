@@ -1,7 +1,7 @@
 {
   "name": "Avatar",
   "category": "user_interface",
-  "description": "A widget displaying an image, with a generated fallback.",
-  "panels": ["code", "preview"],
+  "description": "Display a round avatar for image or initials.",
+  "panels": ["ui", "preview"],
   "autorun": true
 }
