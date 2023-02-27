@@ -44,17 +44,28 @@ Library examples and demos have 3 functions
 2. Teach how to use the APIs, patterns and widgets
 3. Provide functional snippets ready to use
 
-The easiest way to get started is to write an entry within Workbench directly.
+The easiest way to get started is to write an entry within Workbench directly. [Check here for ideas](https://github.com/sonnyp/Workbench/issues/69).
 
-Keep them concise and interactive. They should have links to learn more about the topics covered. Make sure to follow the patterns of similar/existing entries.
+Some guidelines
 
-* [Check here for ideas](https://github.com/sonnyp/Workbench/issues/69)
 * Start with something small and accessible
-* Make sure to select "Blueprint" instead of "XML" in the UI panel
+* Focus on quality over quantity
+* Make sure you don't pick something deprecated [or soon to be](https://docs.gtk.org/gtk4/#classes)
+* Select "Blueprint" instead of "XML" in the UI panel
+* Keep it concise and interactive
+* Add links to follow up on the topic covered
+* Follow the patterns of existing entries
+* in `Code`, use properties (`widget.senstitive`) over methods (`widget.set/get_sensitive`)
 
-Once you're satisfied with the result - you can send a pull request to include it in Workbench. All you need to do is add the files to [`src/Library`](./src/Library).
+Once you're satisfied with the result - you can send a pull request to include it in Workbench. All you need to do is add the files to [`src/Library/demos`](./src/Library/demos).
 
 Make sure it's working by rebuilding Workbench and launching your entry via the Library. If not - double check what you did and compare with other Library entries.
+
+## Submitting a contribution
+
+1. Unless you don't want too - add your name to [the list of contributors](./src/about.js)
+2. Use a short PR title - eg. "library: Add Video entry" - it will be used as commit message
+3. If relevant, mention the related issue in the PR description
 
 ## Debugging
 
@@ -80,3 +91,24 @@ If you'd like to help translating Workbench into your language, please head over
 
 Thank you for your help!
 -->
+
+## Troubleshooting
+
+### The app won't build/run anymore - even on clean `main`
+
+Clean the build directory.
+
+On GNOME Builder, open the search palette with `Ctrl+Enter` and search/select `Clean`.
+
+### git says `blueprint-compiler` is modified
+
+Update submodules.
+
+On GNOME Builder, open search palette with `Ctrl+Enter` and search/select `Update Dependencies...`
+
+or
+
+```sh
+cd workbench
+git submodule update
+```
