@@ -4,26 +4,50 @@ using Adw 1;
 Adw.StatusPage {
   title: "Avatar";
   description: "Display a round avatar for image or initials.";
+
   Box {
     orientation: vertical;
     halign: center;
 
-    Adw.Avatar avatar {
-      size:128;
+    Adw.Avatar {
+      size: 96;
       show-initials: true;
       text: "Jay Doe";
-      margin-bottom:30;
+      margin-bottom: 6;
     }
 
-    Label name {
-      label: "John Doe";
-      margin-bottom: 20;
+    Label {
+      label: "Initials";
+      margin-bottom: 30;
+    }
+
+    Adw.Avatar avatar_image {
+      size: 96;
+      margin-bottom: 6;
+    }
+
+    Button button {
+      label: "Image…";
+      margin-bottom: 30;
+
+      styles [
+        "pill",
+      ]
+    }
+
+    Adw.Avatar {
+      size: 96;
+      margin-bottom: 6;
+    }
+
+    Label {
+      label: "Fallback";
+      margin-bottom: 30;
     }
 
     LinkButton {
       label: "API Reference";
       uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.2/class.Avatar.html";
     }
-
   }
 }
