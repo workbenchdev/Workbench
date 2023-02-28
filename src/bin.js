@@ -4,6 +4,7 @@ import { exit } from "system";
 import GLib from "gi://GLib";
 import { setConsoleLogDomain } from "console";
 import Gio from "gi://Gio";
+import Xdp from "gi://Xdp";
 
 imports.package.init({
   name: "@app_id@",
@@ -14,6 +15,13 @@ imports.package.init({
 });
 setConsoleLogDomain(pkg.name);
 GLib.set_application_name("Workbench");
+
+if (!Xdp.Portal.running_under_flatpak()) {
+  console.error(
+    "Workbench is only meant to be run sandboxed as a Flatpak and a specific target environment.\nBypassing this will exposes users to arbitrary code execution and breakage.",
+  );
+  exit(1);
+}
 
 const resource = Gio.resource_load("@pkgdatadir@/@app_id@.gresource");
 Gio.resources_register(resource);

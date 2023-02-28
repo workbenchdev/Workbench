@@ -14,12 +14,14 @@ Among other things, Workbench comes with
 
 - realtime GTK/CSS preview
 - library of examples
-- 1000+ icons
 - JavaScript and Vala support
 - XML and Blueprint for describing user interface
 - syntax highlighting, undo/redo, autosave, session restore
-- code formatter
-- console logs
+- code linter and formatter
+- terminal output
+- 1000+ icons
+
+ℹ️ Workbench is made possible by Flatpak. Only Flathub Workbench is supported.
 
 **Testimonials**
 
@@ -62,18 +64,11 @@ Use GNOME Builder to start a new project using the appropriate GNOME Application
 
 </details>
 
-
-## Packaging
-
-Please do not attempt to package Workbench any other way than as a Flatpak application.
-
-It is unsupported and may put users at risk.
-
 ## Credits
 
 Workbench would not be possible without
 
-GTK, GLib, Flatpak, GtkSourceView, libadwaita, VTE, GJS, Blueprint, icon-development-kit, Vala
+Flatpak, GTK, GLib, GtkSourceView, libadwaita, VTE, GJS, Blueprint, icon-development-kit, Vala
 
 and the GNOME community 🖤
 
