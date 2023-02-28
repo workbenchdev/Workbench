@@ -6,7 +6,7 @@ button.connect("clicked", () => {
     button.icon_name = "media-playback-start";
     spinner.spinning = false;
   } else {
-    button.icon_name = "media-playback-stop";
+    button.icon_name = "media-playback-pause";
     spinner.spinning = true;
   }
 });
