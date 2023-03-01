@@ -8,116 +8,107 @@ Adw.StatusPage {
   Box {
     orientation: vertical;
     halign: center;
+    margin-top: 20;
+    margin-bottom: 20;
 
-       Grid buttons {
-         column-spacing: 40;
-         row-spacing: 40;
-         margin-bottom: 50;
+    FlowBox {
+      min-children-per-line:3;
+      margin-bottom: 20;
+
 
          Button Regular {
               name: "regular";
               label: "Regular";
-              layout {
-                column: 1;
-                row: 1;
-              }
+              margin-end: 40;
             }
 
          Button Flat {
               name: "flat";
               label: "Flat";
-              layout {
-                column: 3;
-                row: 3;
-              }
+              margin-end: 40;
               styles ["flat"]
             }
 
          Button Suggested {
               name: "suggested";
               label: "Suggested";
-              layout {
-                column: 3;
-                row: 1;
-              }
               styles ["suggested-action"]
             }
+        }
+
+   FlowBox {
+     min-children-per-line:3;
+     margin-bottom: 20;
 
          Button Destructive {
               name: "destructive";
               label: "Destructive";
-              layout {
-                column: 1;
-                row: 3;
-              }
+              margin-end: 40;
               styles ["destructive-action"]
             }
 
          Button Custom {
               name: "custom";
               label: "Custom";
-              layout {
-                column: 2;
-                row: 2;
-              }
-              styles ["pill","opaque"]
-            }
-
-         Button Plus {
-              name: "plus";
-              icon-name: "plus";
-              halign: center;
-              layout {
-                column: 2;
-                row: 1;
-              }
-              styles ["circular"]
-            }
-
-
-         Button Left {
-              name: "left";
-              icon-name: "go-previous";
-              halign: center;
-              layout {
-                column: 1;
-                row: 2;
-              }
-              styles ["circular"]
-            }
-
-         Button Right {
-              name: "right";
-              icon-name: "go-next";
-              halign: center;
-              layout {
-                column: 3;
-                row: 2;
-              }
-              styles ["circular"]
-            }
-
-         Button Minus {
-              name: "minus";
-              icon-name: "minus";
-              halign: center;
-              layout {
-                column: 2;
-                row: 3;
-              }
-              styles ["circular"]
+              margin-end: 40;
             }
 
          Button Disabled {
               name: "disabled";
               label: "Disabled";
-              layout {
-                column: 2;
-                row: 4;
-              }
+              sensitive: false;
             }
 
-          }
+        }
+
+
+   Box {
+     orientation: horizontal;
+     margin-bottom: 40;
+
+
+          Button Plus {
+              name: "plus";
+              icon-name: "plus";
+              margin-start: 13;
+              margin-end: 20;
+              valign: center;
+              styles ["circular","opaque"]
+            }
+
+          Button Minus {
+              name: "minus";
+              icon-name: "minus";
+              margin-end: 80;
+              valign: center;
+              styles ["circular","opaque"]
+            }
+
+          Button Pill {
+              name: "pill";
+              label: "Pill";
+              margin-end: 65;
+              styles ["pill"]
+            }
+
+          Button Left {
+              name: "left";
+              icon-name: "go-previous";
+              margin-end: 20;
+              valign: center;
+              styles ["osd"]
+            }
+
+          Button Right {
+              name: "right";
+              icon-name: "go-next";
+              valign: center;
+              halign: center;
+              styles ["osd"]
+            }
+
+         }
+
 
        LinkButton {
           label: "Tutorial";
@@ -134,7 +125,8 @@ Adw.StatusPage {
           uri: "https://developer.gnome.org/hig/patterns/controls/buttons.html";
           }
       }
-  })
+  }
+
 
 
 

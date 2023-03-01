@@ -6,6 +6,8 @@ const minus = workbench.builder.get_object("Minus");
 const left = workbench.builder.get_object("Left");
 const right = workbench.builder.get_object("Right");
 const flat = workbench.builder.get_object("Flat");
+const regular = workbench.builder.get_object("Regular");
+const pill = workbench.builder.get_object("Pill");
 
 function handleClick() {
   console.log("Button was Clicked");
@@ -20,3 +22,5 @@ left.connect("clicked", handleClick);
 right.connect("clicked", handleClick);
 flat.connect("clicked", handleClick);
 custom.connect("clicked", handleClick);
+regular.connect("clicked", handleClick);
+pill.connect("clicked", handleClick);
