@@ -1,0 +1,16 @@
+#plus, #minus, #right, #left {
+  background-color: #000000;
+  color: #ffffff;
+  min-height: 45px;
+  min-width: 45px;
+}
+
+#custom {
+  color: #000000;
+  background-color: #ffa500;
+}
+#disabled {
+  color: #e7411f;
+  min-height: 45px;
+}
+

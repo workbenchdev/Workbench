@@ -1,0 +1,141 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: "Button";
+  description: _("Allow people to perform actions by clicking");
+
+  Box {
+    orientation: vertical;
+    halign: center;
+
+       Grid buttons {
+         column-spacing: 40;
+         row-spacing: 40;
+         margin-bottom: 50;
+
+         Button Regular {
+              name: "regular";
+              label: "Regular";
+              layout {
+                column: 1;
+                row: 1;
+              }
+            }
+
+         Button Flat {
+              name: "flat";
+              label: "Flat";
+              layout {
+                column: 3;
+                row: 3;
+              }
+              styles ["flat"]
+            }
+
+         Button Suggested {
+              name: "suggested";
+              label: "Suggested";
+              layout {
+                column: 3;
+                row: 1;
+              }
+              styles ["suggested-action"]
+            }
+
+         Button Destructive {
+              name: "destructive";
+              label: "Destructive";
+              layout {
+                column: 1;
+                row: 3;
+              }
+              styles ["destructive-action"]
+            }
+
+         Button Custom {
+              name: "custom";
+              label: "Custom";
+              layout {
+                column: 2;
+                row: 2;
+              }
+              styles ["pill","opaque"]
+            }
+
+         Button Plus {
+              name: "plus";
+              icon-name: "plus";
+              halign: center;
+              layout {
+                column: 2;
+                row: 1;
+              }
+              styles ["circular"]
+            }
+
+
+         Button Left {
+              name: "left";
+              icon-name: "go-previous";
+              halign: center;
+              layout {
+                column: 1;
+                row: 2;
+              }
+              styles ["circular"]
+            }
+
+         Button Right {
+              name: "right";
+              icon-name: "go-next";
+              halign: center;
+              layout {
+                column: 3;
+                row: 2;
+              }
+              styles ["circular"]
+            }
+
+         Button Minus {
+              name: "minus";
+              icon-name: "minus";
+              halign: center;
+              layout {
+                column: 2;
+                row: 3;
+              }
+              styles ["circular"]
+            }
+
+         Button Disabled {
+              name: "disabled";
+              label: "Disabled";
+              layout {
+                column: 2;
+                row: 4;
+              }
+            }
+
+          }
+
+       LinkButton {
+          label: "Tutorial";
+          uri: "https://developer.gnome.org/documentation/tutorials/beginners/components/button.html";
+          }
+
+       LinkButton {
+          label: "API Reference";
+          uri: "https://docs.gtk.org/gtk4/class.Button.html";
+          }
+
+       LinkButton {
+          label: "Human Interface Guidelines";
+          uri: "https://developer.gnome.org/hig/patterns/controls/buttons.html";
+          }
+      }
+  })
+
+
+
+
