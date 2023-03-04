@@ -1,0 +1,10 @@
+{
+  "name": "Text Input",
+  "category": "user_interface",
+  "description": "Widgets used for reading text input",
+  "panels": [
+    "code",
+    "preview"
+  ],
+  "autorun": true
+}

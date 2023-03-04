@@ -1,0 +1,310 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.Clamp {
+  Box {
+    orientation: vertical;
+
+    Label {
+      label: "Text Input";
+      margin-top: 10;
+      margin-bottom: 10;
+
+      styles [
+        "title-1",
+      ]
+    }
+
+    Label {
+      label: "Widgets used for reading text input";
+      margin-bottom: 10;
+    }
+
+    Label {
+      label: "Entry";
+      margin-top: 10;
+      halign: start;
+
+      styles [
+        "heading",
+      ]
+    }
+
+    Label {
+      label: "A simple but versatile widget that allows single line text entry and editing.";
+      margin-top: 10;
+      margin-bottom: 10;
+      halign: start;
+
+      styles [
+        "dim-label",
+      ]
+    }
+
+    FlowBox {
+      homogeneous: true;
+      row-spacing: 20;
+
+      Box {
+        orientation: vertical;
+
+        Label {
+          label: "Regular";
+          margin-bottom: 10;
+        }
+
+        Entry entry {
+
+        }
+      }
+
+      Box {
+        orientation: vertical;
+
+        Label {
+          label: "Overwritable";
+          margin-bottom: 10;
+        }
+
+        Entry {
+          overwrite-mode: true;
+          buffer: bind entry.buffer;
+        }
+      }
+
+      Box {
+        orientation: vertical;
+
+        Label {
+          label: "Activity";
+          margin-bottom: 10;
+
+        }
+
+        Entry progress_entry{
+          progress-fraction: 0;
+          progress-pulse-step: 0.2;
+          buffer: bind entry.buffer;
+        }
+      }
+
+      Box {
+        orientation: vertical;
+
+        Label {
+          label: "Placeholder Text";
+          margin-bottom: 10;
+        }
+
+        Entry {
+          placeholder-text: "Enter text here";
+          buffer: bind entry.buffer;
+        }
+      }
+
+      Box {
+        orientation: vertical;
+
+        Label {
+          label: "Icons";
+          margin-bottom: 10;
+        }
+
+        Entry icon_entry {
+          primary-icon-name: "about-symbolic";
+          primary-icon-activatable: true;
+          primary-icon-tooltip-text: "Click on me!";
+          secondary-icon-name: "bell-symbolic";
+          secondary-icon-tooltip-text: "No click on me!";
+          buffer: bind entry.buffer;
+        }
+      }
+
+      Box {
+        orientation: vertical;
+
+        Label {
+          label: "Visiblity";
+          margin-bottom: 10;
+        }
+
+        Entry visibility_entry {
+          visibility: false;
+          secondary-icon-name: "eye-open-negative-filled-symbolic";
+          secondary-icon-activatable: true;
+          buffer: bind entry.buffer;
+        }
+      }
+    }
+
+    Box {
+      halign: center;
+      margin-top: 20;
+      margin-bottom: 20;
+
+      LinkButton{
+        label: "Tutorial";
+        uri: "https://developer.gnome.org/documentation/tutorials/beginners/components/entry.html";
+      }
+
+      LinkButton{
+        label: "API Reference";
+        uri: "https://docs.gtk.org/gtk4/class.Entry.html";
+      }
+    }
+
+    Separator {
+      margin-bottom: 20;
+    }
+
+    Label {
+      label: "Search Entry";
+      halign: start;
+
+      styles [
+        "heading",
+      ]
+    }
+
+    Label {
+      label: "An entry widget that has been tailored for searching.";
+      margin-top: 10;
+      margin-bottom: 10;
+      halign: start;
+
+      styles [
+        "dim-label",
+      ]
+    }
+
+    SearchEntry search_entry {
+      margin-bottom: 10;
+      placeholder-text: "Search for items...";
+    }
+
+    ListBox items {
+      margin-bottom: 10;
+
+      styles [
+        "boxed-list",
+      ]
+
+      ListBoxRow {
+        Label {
+          label: "Apples";
+          margin-top: 10;
+          margin-bottom: 10;
+        }
+      }
+
+      ListBoxRow {
+        Label {
+          label: "Oranges";
+          margin-top: 10;
+          margin-bottom: 10;
+        }
+      }
+
+      ListBoxRow {
+        Label {
+          label: "Bananas";
+          margin-top: 10;
+          margin-bottom: 10;
+        }
+      }
+
+      ListBoxRow {
+        Label {
+          label: "Strawberries";
+          margin-top: 10;
+          margin-bottom: 10;
+        }
+      }
+
+      ListBoxRow {
+        Label {
+          label: "Pineapples";
+          margin-top: 10;
+          margin-bottom: 10;
+        }
+      }
+
+      ListBoxRow {
+        Label {
+          label: "Blueberries";
+          margin-top: 10;
+          margin-bottom: 10;
+        }
+      }
+    }
+
+    LinkButton {
+      label: "API Reference";
+      uri: "https://docs.gtk.org/gtk4/class.SearchEntry.html";
+      margin-top: 20;
+      margin-bottom: 20;
+    }
+
+    Separator {
+      margin-bottom: 20;
+    }
+
+    Label {
+      label: "Password Entry";
+      halign: start;
+
+      styles [
+        "heading",
+      ]
+    }
+
+    Label {
+      label: "An entry with dedicated control for entering secrets and passwords.";
+      margin-top: 10;
+      margin-bottom: 10;
+      margin-end: 10;
+      halign: start;
+
+      styles [
+        "dim-label",
+      ]
+    }
+
+    PasswordEntry passwd_entry{
+      show-peek-icon: true;
+      placeholder-text: "Enter password";
+      margin-bottom: 10;
+    }
+
+    PasswordEntry confirm_passwd_entry{
+      show-peek-icon: true;
+      placeholder-text: "Confirm password";
+      margin-bottom: 10;
+    }
+
+    Label passwd_label {
+    }
+
+    Box {
+      halign: center;
+      margin-top: 5;
+      margin-bottom: 20;
+
+      LinkButton{
+        label: "Tutorial";
+        uri: "https://developer.gnome.org/documentation/tutorials/beginners/components/password_entry.html";
+      }
+
+      LinkButton{
+        label: "API Reference";
+        uri: "https://docs.gtk.org/gtk4/class.PasswordEntry.html";
+      }
+    }
+
+    LinkButton{
+      label: "Human Interface Guidelines";
+      uri: "https://developer.gnome.org/hig/patterns/controls/text-fields.html";
+      margin-bottom:5;
+    }
+  }
+}
