@@ -12,17 +12,31 @@ const invert_icons = {
   "eye-not-looking-symbolic": "eye-open-negative-filled-symbolic",
 };
 
-buffer.connect("inserted-text", () => {
-  console.log("Text is being inserted!");
-});
-
 entry.connect("activate", () => {
   console.log(`"${entry.text}" was entered!`);
 });
 
-setInterval(() => {
-  progress_entry.progress_pulse();
-}, 100);
+const target = Adw.PropertyAnimationTarget.new(
+  progress_entry,
+  "progress-fraction",
+);
+
+const animation = new Adw.TimedAnimation({
+  widget: progress_entry,
+  value_from: 0,
+  value_to: 1,
+  duration: 2000,
+  easing: Adw.Easing["LINEAR"],
+  target: target,
+});
+
+animation.connect("done", () => {
+  animation.reset();
+});
+
+progress_entry.connect("activate", () => {
+  animation.play();
+});
 
 icon_entry.connect("icon-press", () => {
   console.log("Icon Pressed!");
@@ -86,3 +100,4 @@ function validate_password(passwd, confirm_passwd) {
     return "Both fields are mandatory!";
   }
 }
+

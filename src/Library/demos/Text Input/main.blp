@@ -76,14 +76,13 @@ Adw.Clamp {
         orientation: vertical;
 
         Label {
-          label: "Activity";
+          label: "Progress Bar";
           margin-bottom: 10;
 
         }
 
         Entry progress_entry{
           progress-fraction: 0;
-          progress-pulse-step: 0.2;
           buffer: bind entry.buffer;
         }
       }
