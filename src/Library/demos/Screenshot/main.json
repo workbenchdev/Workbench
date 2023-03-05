@@ -1,0 +1,10 @@
+{
+  "name": "Screenshot",
+  "category": "portal",
+  "description": "Keep a snapshot of your current screen",
+  "panels": [
+    "ui",
+    "preview"
+  ],
+  "autorun": true
+}

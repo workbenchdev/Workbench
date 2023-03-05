@@ -1,0 +1,28 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: "Screenshot";
+  description: _("Keep a snapshot of your current screen");
+
+  Box {
+    orientation: vertical;
+    halign: center;
+
+    Button Screenshot {
+      icon-name: "camera";
+      margin-bottom: 40;
+    }
+
+    LinkButton {
+      label: "API Reference";
+      uri: "https://libportal.org/";
+    }
+
+    LinkButton {
+      label: "Source Code";
+      uri: "https://developer.gnome.org/hig/patterns/controls/sliders.html";
+    }
+  }
+})
+
