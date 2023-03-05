@@ -1,0 +1,20 @@
+using Gtk 4.0;
+
+Box main {
+  orientation: vertical;
+  halign: center;
+  valign: center;
+  spacing: 12;
+
+  Label label {
+    label: "Hello, Rainbow!";
+
+    styles [
+      "title-1",
+    ]
+  }
+
+  Label {
+    label: "Colored with Pango attributes";
+  }
+}
