@@ -1,7 +1,8 @@
-import Adw from "gi://Adw";
 import Gtk from "gi://Gtk";
 import Gdk from "gi://Gdk";
 import Gio from "gi://Gio";
+
+Gio._promisify(Gtk.FileDialog.prototype, "open", "open_finish");
 
 const avatar_image = workbench.builder.get_object("avatar_image");
 const button = workbench.builder.get_object("button");
@@ -17,15 +18,13 @@ const dialog = new Gtk.FileDialog({
   default_filter: filter,
 });
 
-Gio._promisify(Gtk.FileDialog.prototype, "open", "open_finish");
-
 button.connect("clicked", async () => {
   try {
     const file = await dialog.open(workbench.window, null);
     const texture = Gdk.Texture.new_from_file(file);
     avatar_image.set_custom_image(texture);
-  } catch {
-    return;
+  } catch (err) {
+    logError(err);
   }
 });
 

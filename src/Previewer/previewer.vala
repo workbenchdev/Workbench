@@ -82,7 +82,7 @@ namespace Workbench {
       }
     }
 
-    public void update_css (string[] content) {
+    public void update_css (string content) {
       if (this.css != null)
         Gtk.StyleContext.remove_provider_for_display (Gdk.Display.get_default (), this.css);
       this.css = new Gtk.CssProvider ();
@@ -218,3 +218,4 @@ namespace Workbench {
     loop.run();
   }
 }
+
