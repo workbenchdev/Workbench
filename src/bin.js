@@ -16,7 +16,7 @@ imports.package.init({
 setConsoleLogDomain(pkg.name);
 GLib.set_application_name("Workbench");
 
-if (Xdp.Portal.running_under_flatpak()) {
+if (!Xdp.Portal.running_under_flatpak()) {
   console.error(
     "Flatpak required\nWorkbench is only meant to be run sandboxed in a specific target environment.\nBypassing this will exposes users to arbitrary code execution and breakage.",
   );
