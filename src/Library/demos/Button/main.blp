@@ -1,0 +1,145 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: "Button";
+  description: _("Allow people to perform actions by clicking");
+
+  Box {
+    orientation: vertical;
+    halign: center;
+
+    Box {
+      margin-bottom: 24;
+
+      Button regular {
+        name: "regular";
+        label: "Regular";
+        margin-end: 40;
+      }
+
+      Button flat {
+        name: "flat";
+        label: "Flat";
+        margin-end: 40;
+
+        styles [
+          "flat",
+        ]
+      }
+
+      Button suggested {
+        name: "suggested";
+        label: "Suggested";
+
+        styles [
+          "suggested-action",
+        ]
+      }
+    }
+
+    Box {
+      margin-bottom: 24;
+
+      Button destructive {
+        name: "destructive";
+        label: "Destructive";
+        margin-end: 40;
+
+        styles [
+          "destructive-action",
+        ]
+      }
+
+      Button custom {
+        name: "custom";
+        label: "Custom";
+        margin-end: 40;
+      }
+
+      Button disabled {
+        name: "disabled";
+        label: "Disabled";
+        sensitive: false;
+      }
+    }
+
+    Box {
+      orientation: horizontal;
+      margin-bottom: 30;
+
+      Button circular-plus {
+        name: "circular-plus";
+        icon-name: "plus";
+        margin-start: 13;
+        margin-end: 20;
+        valign: center;
+
+        styles [
+          "circular",
+          "opaque",
+        ]
+      }
+
+      Button circular-minus {
+        name: "circular-minus";
+        icon-name: "minus";
+        margin-end: 70;
+        valign: center;
+
+        styles [
+          "circular",
+          "opaque",
+        ]
+      }
+
+      Button pill {
+        name: "pill";
+        label: "Pill";
+        margin-end: 60;
+
+        styles [
+          "pill",
+        ]
+      }
+
+      Button osd-left {
+        name: "osd-left";
+        icon-name: "go-previous";
+        margin-end: 20;
+        valign: center;
+
+        styles [
+          "osd",
+        ]
+      }
+
+      Button osd-right {
+        name: "osd-right";
+        icon-name: "go-next";
+        valign: center;
+        halign: center;
+
+        styles [
+          "osd",
+        ]
+      }
+    }
+
+    LinkButton {
+      label: "Tutorial";
+      uri: "https://developer.gnome.org/documentation/tutorials/beginners/components/button.html";
+    }
+
+    LinkButton {
+      label: "API Reference";
+      uri: "https://docs.gtk.org/gtk4/class.Button.html";
+    }
+
+    LinkButton {
+      label: "Human Interface Guidelines";
+      uri: "https://developer.gnome.org/hig/patterns/controls/buttons.html";
+    }
+  }
+}
+

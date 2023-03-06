@@ -69,21 +69,27 @@ export function readDemo(demo_name) {
 }
 
 function getDemos() {
-  const children = [
-    ...demo_dir.enumerate_children(
-      "",
-      Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
-      null,
-    ),
-  ];
+  const demos = [];
 
-  const folders = children.filter((file_info) => {
-    return file_info.get_file_type() === Gio.FileType.DIRECTORY;
-  });
+  for (const child of demo_dir.enumerate_children(
+    "",
+    Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
+    null,
+  )) {
+    if (child.get_file_type() !== Gio.FileType.DIRECTORY) continue;
 
-  return folders.map((folder) => {
-    return JSON.parse(readDemoFile(folder.get_name(), "main.json"));
-  });
+    let demo;
+    try {
+      demo = JSON.parse(readDemoFile(child.get_name(), "main.json"));
+    } catch (err) {
+      console.debug(err);
+      continue;
+    }
+
+    demos.push(demo);
+  }
+
+  return demos;
 }
 
 function readDemoFile(demo_name, file_name) {

@@ -18,8 +18,8 @@
       <li>JavaScript and Vala support</li>
       <li>XML and Blueprint for describing user interface</li>
       <li>syntax highlighting, undo/redo, autosave, session restore</li>
-      <li>code formatter, linter</li>
-      <li>console logs</li>
+      <li>code linter and formatter</li>
+      <li>terminal output</li>
       <li>1000+ icons</li>
     </ul>
   </description>
