@@ -14,7 +14,7 @@ function _takeScreenshot() {
     let path = null;
 
     try {
-      const uri = this._portal.take_screenshot_finish(result);
+      const uri = portal.take_screenshot_finish(result);
       const [path] = GLib.filename_from_uri(uri);
       const pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(
         path,
@@ -22,7 +22,7 @@ function _takeScreenshot() {
         40,
         true,
       );
-      portal.image.set_from_pixbuf(pixbuf);
+      workbench.builder.get_object("picture").set_pixbuf(pixbuf);
     } catch (e) {
       logError(e);
       return;
@@ -31,3 +31,4 @@ function _takeScreenshot() {
 }
 
 Screenshot.connect("clicked", _takeScreenshot);
+
