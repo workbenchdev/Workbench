@@ -40,6 +40,12 @@ Adw.StatusPage {
       orientation: horizontal;
       sensitive: false;
       margin-bottom: 20;
+      adjustment: Gtk.Adjustment {
+        lower: 0;
+        upper: 50;
+        value: 25;
+      };
+     }
     }
 
     LinkButton {
