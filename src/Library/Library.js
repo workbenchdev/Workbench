@@ -13,12 +13,11 @@ const demo_dir = Gio.File.new_for_path(
 
 export default function Library({
   openDemo,
-  window: appliation_window,
+  window: application_window,
   application,
 }) {
   const builder = Gtk.Builder.new_from_resource(resource);
   const window = builder.get_object("library");
-  window.set_transient_for(appliation_window);
 
   let last_selected;
 
@@ -38,7 +37,9 @@ export default function Library({
     widget.connect("activated", () => {
       last_selected = widget;
       openDemo(demo.name)
-        .then(() => window.close())
+        .then(() => {
+          application_window.present();
+        })
         .catch(logError);
     });
 
@@ -53,7 +54,7 @@ export default function Library({
     window.present();
     last_selected?.grab_focus();
   });
-  appliation_window.add_action(action_library);
+  application_window.add_action(action_library);
   application.set_accels_for_action("win.library", ["<Control><Shift>O"]);
 }
 
