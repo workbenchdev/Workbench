@@ -8,8 +8,6 @@ scale_two.add_mark(75.0, "right", "C");
 scale_two.add_mark(100.0, "right", "D");
 scale_two.set_increments(25.0, 25.0);
 
-scale_disabled.set_range(true, 50);
-scale_disabled.set_value(25);
 scale_disabled.set_show_fill_level(25);
 
 scale_one.connect("value-changed", () => {
