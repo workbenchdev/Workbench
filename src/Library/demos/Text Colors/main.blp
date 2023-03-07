@@ -7,7 +7,7 @@ Box main {
   spacing: 12;
 
   Label label {
-    label: "Hello, Rainbow!";
+    label: bind entry.text;
 
     styles [
       "title-1",
@@ -17,4 +17,11 @@ Box main {
   Label {
     label: "Colored with Pango attributes";
   }
+
+  Entry entry {
+    margin-top: 12;
+    text: "Hello, Rainbow!";
+    halign: center;
+  }
 }
+

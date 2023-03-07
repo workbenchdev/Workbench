@@ -3,9 +3,13 @@
 import Pango from "gi://Pango?version=1.0";
 
 const label = workbench.builder.get_object("label");
-const label_content = label.label;
-// A Pango Attribute List is used to style the label
-label.attributes = rainbow_attributes(label_content);
+label.connect("notify::label", updateAttributes);
+updateAttributes();
+
+function updateAttributes() {
+  // A Pango Attribute List is used to style the label
+  label.attributes = rainbow_attributes(label.label);
+}
 
 // Generates an Attribute List that styles the label in rainbow colors.
 // The `str` parameter is needed to detect string length + position of spaces
