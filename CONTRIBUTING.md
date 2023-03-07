@@ -6,23 +6,19 @@ Thank you for considering contributing to Workbench. Feel free to [get in touch]
 
 ### Setup
 
-If you know what you are doing you can also use VSCode with the extensions recommended in this workspace or anything else you are comfortable with.
+The following is the recommended setup:
 
-The following is the simplest solution
-
-1. Install [GNOME Builder](https://apps.gnome.org/app/org.gnome.Builder/)
+1. Install [GNOME Builder from Flathub](https://flathub.org/apps/details/org.gnome.Builder)
+2. [Enable GNOME Nightly repository](https://wiki.gnome.org/Apps/Nightly#Setting_up_GNOME_nightlies)
 2. Open Builder and select "Clone Repository..."
 3. Clone `https://github.com/sonnyp/Workbench.git` (or your fork)
 4. Press the Run ▶ button
 
-If you used an other method, don't forget to fetch the submodules.
+Make sure that you're building the development target `re.sonny.Workbench.Devel`.
 
-```sh
-cd Workbench
-git submodule update
-```
+ℹ️ Please select "Blueprint" instead of "XML" in Workbench UI panel. Blueprint is experimental but that's what we use for making Workbench.
 
-Make sure that you're building the development target (`re.sonny.Workbench.Devel`).
+If you know what you are doing you can also use VSCode with the extensions recommended in this workspace or anything else you are comfortable with. Don't forget to fetch the submodules.
 
 ### Learn
 
@@ -44,7 +40,7 @@ Library examples and demos have 3 functions
 2. Teach how to use the APIs, patterns and widgets
 3. Provide functional snippets ready to use
 
-The easiest way to get started is to write an entry within Workbench directly. [Check here for ideas](https://github.com/sonnyp/Workbench/issues/69).
+The easiest way to get started is to write an entry within Workbench directly. Check [here for ideas](https://github.com/sonnyp/Workbench/issues/69) and [here for examples](https://github.com/sonnyp/Workbench/issues?q=label%3A%22Library+%F0%9F%93%9A%EF%B8%8F%22).
 
 Some guidelines
 
