@@ -12,30 +12,30 @@ Adw.StatusPage {
     Box{
       halign: center;
 
-        Scale one {
-          orientation: horizontal;
-          margin-bottom: 18;
-          width-request: 130;
-          draw-value: true;
-          margin-end: 36;
-          adjustment: Gtk.Adjustment {
-            lower: 0;
-            upper: 100;
-            value: 0;
-          };
-        }
+      Scale one {
+        orientation: horizontal;
+        margin-bottom: 18;
+        width-request: 130;
+        draw-value: true;
+        margin-end: 36;
+        adjustment: Gtk.Adjustment {
+          lower: 0;
+          upper: 100;
+          value: 0;
+        };
+      }
 
-        Scale two {
-          orientation: vertical;
-          margin-bottom: 18;
-          height-request: 140;
-          adjustment: Gtk.Adjustment {
-            lower: 0;
-            upper: 100;
-            value: 0;
-          };
-        }
-       }
+      Scale two {
+        orientation: vertical;
+        margin-bottom: 18;
+        height-request: 140;
+        adjustment: Gtk.Adjustment {
+          lower: 0;
+          upper: 100;
+          value: 0;
+        };
+      }
+    }
     Scale disabled {
       orientation: horizontal;
       sensitive: false;
@@ -59,7 +59,3 @@ Adw.StatusPage {
     }
   }
 }
-
-
-
-
