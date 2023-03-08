@@ -1,0 +1,27 @@
+using Gtk 4.0;
+
+Box main {
+  orientation: vertical;
+  halign: center;
+  valign: center;
+  spacing: 12;
+
+  Label label {
+    label: bind entry.text;
+
+    styles [
+      "title-1",
+    ]
+  }
+
+  Label {
+    label: "Colored with Pango attributes";
+  }
+
+  Entry entry {
+    margin-top: 12;
+    text: "Hello, Rainbow!";
+    halign: center;
+  }
+}
+
