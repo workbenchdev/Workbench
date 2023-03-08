@@ -25,7 +25,7 @@ function createSimpleDialog() {
   dialog.set_response_appearance("save", Adw.ResponseAppearance.SUGGESTED);
 
   dialog.connect("response", (dialog, response) => {
-    console.log(`Clicked "${dialog.get_response_label(response)}" response.`);
+    console.log(`Selected "${response}" response.`);
   });
 
   dialog.present();
@@ -53,9 +53,9 @@ function createAdvancedDialog() {
 
   dialog.connect("response", (dialog, response) => {
     if (dialog.get_response_label(response) === "Login") {
-      console.log(`Clicked "${dialog.get_response_label(response)}" response with password "${entry.get_text()}"`);
+      console.log(`Selected "${response}" response with password "${entry.get_text()}"`);
     } else {
-      console.log(`Clicked "${dialog.get_response_label(response)}" response.`);
+      console.log(`Selected "${response}" response.`);
     }
   });
 
