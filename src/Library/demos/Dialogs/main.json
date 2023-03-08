@@ -1,7 +1,7 @@
 {
   "name": "Dialogs",
   "category": "user_interface",
-  "description": "A widget to convery important information to the user",
+  "description": "Present options, choices or information to users",
   "panels": [
     "code",
     "preview"
