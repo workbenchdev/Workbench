@@ -3,28 +3,33 @@ using Adw 1;
 
 Adw.StatusPage {
   title: "Dialogs";
-  description: _("Message Dialogs convey important information to the user. These adaptive dialogs have a heading, a body, an optional child widget, and one or multiple responses, each presented as a button. ");
-  icon-name: "dialog-symbolic";
+  description: _("These adaptive dialogs have a heading, a body, an optional child widget, and one or multiple responses, each presented as a button. ");
 
   Box {
     orientation: vertical;
     halign: center;
 
     Button button_simple {
-      label: "Message Dialog";
+      label: "Confirmation Dialog";
+      margin-bottom: 30;
+      styles ["pill"]
+    }
+
+     Button button_error {
+      label: "Error Dialog";
       margin-bottom: 30;
       styles ["pill"]
     }
 
      Button button_advanced {
-      label: "Advanced Dialog";
+      label: "Advanced Error Dialog";
       margin-bottom: 30;
       styles ["pill"]
     }
 
     LinkButton {
       label: "API Reference";
-      uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/main/class.MessageDialog.html";
+      uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.2/class.MessageDialog.html";
     }
 
      LinkButton {
