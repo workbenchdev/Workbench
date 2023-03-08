@@ -19,8 +19,8 @@ function createSimpleDialog() {
   //Negative responses like Cancel or Close should use the default appearance.
   dialog.add_response("cancel", "Cancel");
 
-  //Use DESTRUCTIVE to draw attention to the potentially damaging consequences of using response.
   dialog.add_response("discard", "Discard");
+  // Use DESTRUCTIVE appearance to draw attention to the potentially damaging consequences of this action
   dialog.set_response_appearance("discard", Adw.ResponseAppearance.DESTRUCTIVE);
 
   dialog.add_response("save", "Save");
