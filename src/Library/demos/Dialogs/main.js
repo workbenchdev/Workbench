@@ -11,12 +11,9 @@ function createSimpleDialog() {
     body: "Opened files have unsaved changes. Unsaved changes will be lost forever!",
     close_response: "cancel",
     modal: true,
+    transient_for: window
   });
 
-  // Make the dialog transient over the main window
-  dialog.set_transient_for(window);
-
-  //Negative responses like Cancel or Close should use the default appearance.
   dialog.add_response("cancel", "Cancel");
 
   dialog.add_response("discard", "Discard");
@@ -41,15 +38,16 @@ function createAdvancedDialog() {
     body: "A valid password is needed to continue!",
     close_response: "cancel",
     modal: true,
+    transient_for: window
   });
 
-  dialog.set_transient_for(window);
   dialog.add_response("cancel", "Cancel");
   dialog.add_response("login", "Login");
   dialog.set_response_appearance("login", Adw.ResponseAppearance.SUGGESTED);
 
-  let entry = new Gtk.PasswordEntry();
-  entry.set_show_peek_icon(true);
+  let entry = new Gtk.PasswordEntry({
+  show_peek_icon : true
+  });
 
   dialog.set_extra_child(entry);
 
@@ -66,4 +64,3 @@ function createAdvancedDialog() {
 
 button_simple.connect("clicked", createSimpleDialog);
 button_advanced.connect("clicked", createAdvancedDialog);
-
