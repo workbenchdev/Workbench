@@ -1,0 +1,10 @@
+{
+  "name": "Dialogs",
+  "category": "user_interface",
+  "description": "A widget to convery important information to the user",
+  "panels": [
+    "code",
+    "preview"
+  ],
+  "autorun": true
+}

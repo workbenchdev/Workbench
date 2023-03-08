@@ -1,0 +1,46 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: "Dialogs";
+  description: _("Message Dialogs convey important information to the user. These adaptive dialogs have a heading, a body, an optional child widget, and one or multiple responses, each presented as a button. ");
+  icon-name: "dialog-symbolic";
+
+  Box {
+    orientation: vertical;
+    halign: center;
+
+    Button button_simple {
+      label: "Message Dialog";
+      margin-bottom: 30;
+      styles["pill"]
+    }
+
+     Button button_advanced {
+      label: "Advanced Dialog";
+      margin-bottom: 30;
+      styles["pill"]
+    }
+
+    LinkButton {
+      label: "API Reference";
+      uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/main/class.MessageDialog.html";
+    }
+
+     LinkButton {
+      label: "Human Interface Guidelines";
+      uri: "https://developer.gnome.org/hig/patterns/feedback/dialogs.html";
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
