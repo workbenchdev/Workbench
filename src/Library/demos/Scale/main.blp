@@ -14,10 +14,10 @@ Adw.StatusPage {
 
         Scale one {
           orientation: horizontal;
-          margin-bottom: 20;
+          margin-bottom: 18;
           width-request: 130;
           draw-value: true;
-          margin-end: 40;
+          margin-end: 36;
           adjustment: Gtk.Adjustment {
             lower: 0;
             upper: 100;
@@ -27,7 +27,7 @@ Adw.StatusPage {
 
         Scale two {
           orientation: vertical;
-          margin-bottom: 20;
+          margin-bottom: 18;
           height-request: 140;
           adjustment: Gtk.Adjustment {
             lower: 0;
@@ -39,7 +39,8 @@ Adw.StatusPage {
     Scale disabled {
       orientation: horizontal;
       sensitive: false;
-      margin-bottom: 20;
+      margin-bottom: 18;
+      show-fill-level: true;
       adjustment: Gtk.Adjustment {
         lower: 0;
         upper: 50;
@@ -58,6 +59,7 @@ Adw.StatusPage {
     }
   }
 }
+
 
 
 
