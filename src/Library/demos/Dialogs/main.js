@@ -23,8 +23,8 @@ function createSimpleDialog() {
   dialog.add_response("discard", "Discard");
   dialog.set_response_appearance("discard", Adw.ResponseAppearance.DESTRUCTIVE);
 
-  //Use SUGGESTED to mark important responses such as the affirmative action, like the Save button in the example.
   dialog.add_response("save", "Save");
+  // Use SUGGESTED appearance to mark important responses such as the affirmative action
   dialog.set_response_appearance("save", Adw.ResponseAppearance.SUGGESTED);
 
   dialog.connect("response", (dialog, response) => {
