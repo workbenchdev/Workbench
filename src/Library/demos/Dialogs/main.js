@@ -1,28 +1,43 @@
 import Adw from "gi://Adw";
 import Gtk from "gi://Gtk";
 
-const button_simple = workbench.builder.get_object("button_simple");
+const button_confirmation = workbench.builder.get_object("button_confirmation");
+const button_error = workbench.builder.get_object("button_error");
 const button_advanced = workbench.builder.get_object("button_advanced");
-const window = button_simple.get_ancestor(Gtk.Window);
+const window = button_confirmation.get_ancestor(Gtk.Window);
 
-function createSimpleDialog() {
+function createConfirmationDialog() {
   let dialog = new Adw.MessageDialog({
-    heading: "Save Changes?",
-    body: "Opened files have unsaved changes. Unsaved changes will be lost forever!",
+    heading: "Replace File?",
+    body: 'A file named "example.png" already exists. Do you want to replace it?',
     close_response: "cancel",
     modal: true,
-    transient_for: window
+    transient_for: window,
   });
 
   dialog.add_response("cancel", "Cancel");
+  dialog.add_response("replace", "Replace");
 
-  dialog.add_response("discard", "Discard");
   // Use DESTRUCTIVE appearance to draw attention to the potentially damaging consequences of this action
-  dialog.set_response_appearance("discard", Adw.ResponseAppearance.DESTRUCTIVE);
+  dialog.set_response_appearance("replace", Adw.ResponseAppearance.DESTRUCTIVE);
 
-  dialog.add_response("save", "Save");
-  // Use SUGGESTED appearance to mark important responses such as the affirmative action
-  dialog.set_response_appearance("save", Adw.ResponseAppearance.SUGGESTED);
+  dialog.connect("response", (dialog, response) => {
+    console.log(`Selected "${response}" response.`);
+  });
+
+  dialog.present();
+}
+
+function createErrorDialog() {
+  let dialog = new Adw.MessageDialog({
+    heading: "Critical Error",
+    body: "You did something you should not have",
+    close_response: "okay",
+    modal: true,
+    transient_for: window,
+  });
+
+  dialog.add_response("okay", "Okay");
 
   dialog.connect("response", (dialog, response) => {
     console.log(`Selected "${response}" response.`);
@@ -38,22 +53,26 @@ function createAdvancedDialog() {
     body: "A valid password is needed to continue!",
     close_response: "cancel",
     modal: true,
-    transient_for: window
+    transient_for: window,
   });
 
   dialog.add_response("cancel", "Cancel");
   dialog.add_response("login", "Login");
+
+  // Use SUGGESTED appearance to mark important responses such as the affirmative action
   dialog.set_response_appearance("login", Adw.ResponseAppearance.SUGGESTED);
 
   let entry = new Gtk.PasswordEntry({
-  show_peek_icon : true
+    show_peek_icon: true,
   });
 
   dialog.set_extra_child(entry);
 
   dialog.connect("response", (dialog, response) => {
     if (dialog.get_response_label(response) === "Login") {
-      console.log(`Selected "${response}" response with password "${entry.get_text()}"`);
+      console.log(
+        `Selected "${response}" response with password "${entry.get_text()}"`,
+      );
     } else {
       console.log(`Selected "${response}" response.`);
     }
@@ -62,5 +81,6 @@ function createAdvancedDialog() {
   dialog.present();
 }
 
-button_simple.connect("clicked", createSimpleDialog);
+button_confirmation.connect("clicked", createConfirmationDialog);
+button_error.connect("clicked", createErrorDialog);
 button_advanced.connect("clicked", createAdvancedDialog);
