@@ -50,6 +50,7 @@ ${getBlueprintVersion()}
   });
 
   dialog.add_credit_section(_("Contributors"), [
+    "Akshay Warrier https://github.com/AkshayWarrier",
     "Ben Foote http://www.bengineeri.ng",
     "Hari Rana (TheEvilSkeleton) https://theevilskeleton.gitlab.io",
     "Sriyansh Shivam https://linktr.ee/sonic_here",
