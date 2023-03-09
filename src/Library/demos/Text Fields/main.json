@@ -1,7 +1,7 @@
 {
-  "name": "Text Input",
+  "name": "Text Fields",
   "category": "user_interface",
-  "description": "Widgets used for reading text input",
+  "description": "Single line widgets to enter text",
   "panels": [
     "ui",
     "preview"
