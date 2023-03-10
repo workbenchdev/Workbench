@@ -22,7 +22,6 @@ Adw.Clamp {
 
     Box {
       orientation: vertical;
-      margin-bottom: 24;
 
       Box {
         hexpand: true;
@@ -85,9 +84,24 @@ Adw.Clamp {
 
       ScrolledWindow {
         Box interactive_box {
-          spacing: 10;
+          spacing: 12;
           orientation: horizontal;
           vexpand: true;
+        }
+      }
+
+      Box{
+        halign: center;
+        margin-bottom: 12;
+
+        LinkButton{
+          label: "Tutorial";
+          uri: "https://developer.gnome.org/documentation/tutorials/beginners/components/box.html";
+        }
+
+        LinkButton{
+          label: "API Reference";
+          uri: "https://docs.gtk.org/gtk4/class.Box.html";
         }
       }
     }
