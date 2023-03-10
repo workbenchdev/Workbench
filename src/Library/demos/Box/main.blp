@@ -1,0 +1,96 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.Clamp {
+  Box {
+    orientation: vertical;
+
+    Label {
+      label: "Box";
+      margin-top: 12;
+      margin-bottom: 12;
+
+      styles [
+        "title-1",
+      ]
+    }
+
+    Label {
+      label: "A widget that arranges its child widgets into a single row or column";
+      margin-bottom: 18;
+    }
+
+    Box {
+      orientation: vertical;
+      margin-bottom: 24;
+
+      Box {
+        hexpand: true;
+        orientation: vertical;
+        spacing: 12;
+
+        Box {
+          halign: center;
+          spacing: 18;
+          Button button_add{
+            label: "Add Item";
+            styles [
+              "suggested-action",
+              "pill",
+            ]
+          }
+          Button button_remove{
+            label: "Remove Item";
+            styles [
+              "destructive-action",
+              "pill",
+            ]
+          }
+        }
+
+        Box {
+          halign: center;
+          spacing: 18;
+
+          CheckButton highlight {
+            label: "Highlight Box";
+          }
+
+          CheckButton toggle_orient {
+            label: "Toggle Orientation";
+          }
+
+          CheckButton homogeneous {
+            label: "Homogeneous";
+          }
+
+          CheckButton prepend {
+            label: "Prepend Items";
+          }
+        }
+
+        Label {
+          label: "Horizontal Alignment";
+        }
+
+        Scale alignment {
+            round-digits:10;
+            margin-bottom: 18;
+            adjustment: Gtk.Adjustment {
+              lower: 0;
+              upper: 100;
+              value: 0;
+            };
+        }
+      }
+
+      ScrolledWindow {
+        Box interactive_box {
+          spacing: 10;
+          orientation: horizontal;
+          vexpand: true;
+        }
+      }
+    }
+  }
+}

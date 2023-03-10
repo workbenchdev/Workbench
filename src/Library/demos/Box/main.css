@@ -1,0 +1,7 @@
+#card {
+  padding: 24px;
+}
+
+#border {
+  border: 3px solid @accent_color;
+}
