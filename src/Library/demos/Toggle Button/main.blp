@@ -1,0 +1,76 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: "Toggle Button";
+  description: _("Represent active-state visually");
+
+  Box {
+    orientation: vertical;
+
+    Box {
+      orientation: horizontal;
+      halign: center;
+
+      ToggleButton button_first {
+        active: true;
+        icon-name: "audio-volume-muted-symbolic";
+        halign: center;
+        margin-end: 12;
+        margin-bottom: 18;
+      }
+
+      ToggleButton button_second {
+        active: false;
+        icon-name: "audio-volume-high-symbolic";
+        halign: center;
+        group: button_first;
+        margin-bottom: 18;
+      }
+    }
+
+    Box {
+      orientation: horizontal;
+      halign: center;
+
+      ToggleButton button_third {
+        active: false;
+        icon-name: "photo-camera-symbolic";
+        halign: center;
+        margin-end: 12;
+        margin-bottom: 18;
+      }
+
+      ToggleButton button_fourth {
+        active: false;
+        icon-name: "flashlight-symbolic";
+        halign: center;
+        margin-bottom: 18;
+      }
+    }
+
+    ToggleButton disabled {
+        halign:center;
+        width-request: 120;
+        margin-bottom: 18;
+        icon-name: "user-home-symbolic";
+        sensitive: false;
+    }
+
+    LinkButton{
+      label: "Tutorial";
+      uri: "https://developer.gnome.org/documentation/tutorials/beginners/components/toggle.html";
+    }
+
+    LinkButton{
+      label: "API Reference";
+      uri: "https://docs.gtk.org/gtk4/class.ToggleButton.html#description";
+    }
+
+    LinkButton{
+      label: "Human Interface Guidelines";
+      uri: "https://developer.gnome.org/hig/patterns/controls/buttons.html";
+    }
+  }
+}
+
