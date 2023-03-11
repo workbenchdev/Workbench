@@ -9,7 +9,6 @@ Thank you for considering contributing to Workbench. Feel free to [get in touch]
 The following is the recommended setup:
 
 1. Install [GNOME Builder from Flathub](https://flathub.org/apps/details/org.gnome.Builder)
-2. [Enable GNOME Nightly repository](https://wiki.gnome.org/Apps/Nightly#Setting_up_GNOME_nightlies)
 2. Open Builder and select "Clone Repository..."
 3. Clone `https://github.com/sonnyp/Workbench.git` (or your fork)
 4. Press the Run ▶ button
@@ -55,7 +54,7 @@ Some guidelines
 
 Once you're satisfied with the result - you can send a pull request to include it in Workbench. All you need to do is add the files to [`src/Library/demos`](./src/Library/demos).
 
-Make sure it's working by rebuilding Workbench and launching your entry via the Library. If not - double check what you did and compare with other Library entries.
+Make sure it's working by running Workbench and launching your entry via the Library. If not - double check what you did and compare with other Library entries.
 
 ## Submitting a contribution
 
