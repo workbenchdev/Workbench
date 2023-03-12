@@ -1,7 +1,12 @@
 import GObject from "gi://GObject";
 import Gtk from "gi://Gtk";
 import Gio from "gi://Gio";
-import { promiseTask } from "../../troll/src/util.js";
+
+Gio._promisify(
+  Gio.Subprocess.prototype,
+  "wait_check_async",
+  "wait_check_finish",
+);
 
 export function getObjectClass(class_name) {
   const split = class_name.split(/(?=[A-Z])/);
@@ -25,7 +30,5 @@ export async function isBuilderable(str) {
   const flags =
     Gio.SubprocessFlags.STDOUT_SILENCE | Gio.SubprocessFlags.STDERR_SILENCE;
   const proc = Gio.Subprocess.new(["workbench-crasher", str], flags);
-  await promiseTask(proc, "wait_async", "wait_finish", null);
-  if (!proc.get_if_exited()) return false;
-  return proc.get_exit_status() === 0;
+  return proc.wait_check_async(null);
 }

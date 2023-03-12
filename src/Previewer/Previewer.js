@@ -40,10 +40,7 @@ export default function Previewer({
   const dropdown_preview_align = builder.get_object("dropdown_preview_align");
   // TODO: File a bug libadwaita
   // flat does nothing on GtkDropdown or GtkComboBox or GtkComboBoxText
-  dropdown_preview_align
-    .get_first_child()
-    .get_style_context()
-    .add_class("flat");
+  dropdown_preview_align.get_first_child().add_css_class("flat");
 
   const internal = Internal({
     onWindowChange(open) {
