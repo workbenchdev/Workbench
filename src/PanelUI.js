@@ -67,17 +67,7 @@ export default function PanelUI({
     term_console.clear();
     settings.set_boolean("show-console", true);
 
-    let blp;
-
-    try {
-      blp = await blueprint.decompile(buffer_xml.text);
-    } catch (err) {
-      if (err instanceof LSPError) {
-        logBlueprintError(err);
-        return;
-      }
-      throw err;
-    }
+    const blp = await blueprint.decompile(buffer_xml.text);
 
     code_view_blueprint.replaceText(blp);
   }
@@ -144,25 +134,38 @@ export default function PanelUI({
     }
   }
 
+  dropdown_ui_lang.set_selected(settings.get_int("ui-language"));
+  const dropdown_selected_signal = listenProperty(
+    dropdown_ui_lang,
+    "selected",
+    (value) => {
+      onChangeLang(value).catch(logError);
+    },
+  );
+
   async function onChangeLang(value) {
     if (value === 0) {
       try {
         await convertToXML();
       } catch (err) {
         logError(err);
-        dropdown_ui_lang.block();
+        dropdown_selected_signal.block();
         dropdown_ui_lang.set_selected(1);
-        dropdown_ui_lang.unblock();
+        dropdown_selected_signal.unblock();
         return;
       }
     } else if (value === 1) {
       try {
         await convertToBlueprint();
       } catch (err) {
-        logError(err);
-        dropdown_ui_lang.block();
+        if (err instanceof LSPError) {
+          logBlueprintError(err);
+        } else {
+          logError(err);
+        }
+        dropdown_selected_signal.block();
         dropdown_ui_lang.set_selected(0);
-        dropdown_ui_lang.unblock();
+        dropdown_selected_signal.unblock();
         return;
       }
     }
@@ -170,11 +173,6 @@ export default function PanelUI({
     settings.set_int("ui-language", dropdown_ui_lang.selected);
     setupLanguage();
   }
-
-  dropdown_ui_lang.set_selected(settings.get_int("ui-language"));
-  listenProperty(dropdown_ui_lang, "selected", (value) => {
-    onChangeLang(value).catch(logError);
-  });
 
   function setupLanguage() {
     start();
