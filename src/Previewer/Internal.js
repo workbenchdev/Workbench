@@ -1,5 +1,4 @@
 import Gtk from "gi://Gtk";
-import Gdk from "gi://Gdk";
 import * as postcss from "../lib/postcss.js";
 import GLib from "gi://GLib";
 import Graphene from "gi://Graphene";
@@ -50,7 +49,7 @@ export default function Internal({
       }
     }
 
-    object_root.present_with_time(Gdk.CURRENT_TIME);
+    object_root.present();
     onWindowChange(true);
   }
 
@@ -216,7 +215,7 @@ export default function Internal({
       const diagnostic = getCssDiagnostic(section, error);
       builder.get_object("code_view_css").handleDiagnostics([diagnostic]);
     });
-    css_provider.load_from_data(style);
+    css_provider.load_from_data(style, -1);
     Gtk.StyleContext.add_provider_for_display(
       output.get_display(),
       css_provider,

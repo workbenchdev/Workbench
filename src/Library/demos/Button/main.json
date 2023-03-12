@@ -1,0 +1,10 @@
+{
+  "name": "Button",
+  "category": "user_interface",
+  "description": "Allow people to perform actions by clicking",
+  "panels": [
+    "ui",
+    "preview"
+  ],
+  "autorun": true
+}

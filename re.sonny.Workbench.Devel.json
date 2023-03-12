@@ -1,14 +1,14 @@
 {
   "id": "re.sonny.Workbench.Devel",
   "runtime": "org.gnome.Sdk",
-  "runtime-version": "43",
+  "runtime-version": "44beta",
   "sdk": "org.gnome.Sdk",
-  "sdk-extensions" : [
+  "sdk-extensions": [
     "org.freedesktop.Sdk.Extension.vala"
   ],
-  "build-options" : {
-    "append-path" : "/usr/lib/sdk/vala/bin",
-    "append-ld-library-path" : "/usr/lib/sdk/vala/lib"
+  "build-options": {
+    "append-path": "/usr/lib/sdk/vala/bin",
+    "append-ld-library-path": "/usr/lib/sdk/vala/lib"
   },
   "command": "workbench",
   "finish-args": [

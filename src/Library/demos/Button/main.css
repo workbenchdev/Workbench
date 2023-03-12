@@ -1,0 +1,14 @@
+#custom {
+  color: #000000;
+  background-color: #ffa500;
+}
+
+#regular,
+#flat,
+#suggested,
+#destructive,
+#custom,
+#disabled {
+  min-width: 80px;
+}
+

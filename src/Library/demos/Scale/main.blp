@@ -1,0 +1,61 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: "Scale";
+  description: _("Slider control to select a value from a range");
+
+  Box {
+    orientation: vertical;
+    halign: center;
+
+    Box{
+      halign: center;
+
+      Scale one {
+        orientation: horizontal;
+        margin-bottom: 18;
+        width-request: 130;
+        draw-value: true;
+        margin-end: 36;
+        adjustment: Gtk.Adjustment {
+          lower: 0;
+          upper: 100;
+          value: 0;
+        };
+      }
+
+      Scale two {
+        orientation: vertical;
+        margin-bottom: 18;
+        height-request: 140;
+        adjustment: Gtk.Adjustment {
+          lower: 0;
+          upper: 100;
+          value: 0;
+        };
+      }
+    }
+    Scale disabled {
+      orientation: horizontal;
+      sensitive: false;
+      margin-bottom: 18;
+      show-fill-level: true;
+      adjustment: Gtk.Adjustment {
+        lower: 0;
+        upper: 50;
+        value: 25;
+      };
+    }
+
+    LinkButton {
+      label: "API Reference";
+      uri: "https://docs.gtk.org/gtk4/class.Scale.html";
+    }
+
+    LinkButton {
+      label: "Human Interface Guidelines";
+      uri: "https://developer.gnome.org/hig/patterns/controls/sliders.html";
+    }
+  }
+}
