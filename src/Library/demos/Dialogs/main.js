@@ -50,7 +50,7 @@ function createErrorDialog() {
 function createAdvancedDialog() {
   let dialog = new Adw.MessageDialog({
     heading: "Login",
-    body: "A valid password is needed to continue!",
+    body: "A valid password is needed to continue",
     close_response: "cancel",
     modal: true,
     transient_for: window,

@@ -66,7 +66,7 @@ private void _create_advanced_dialog(Gtk.Button button) {
   Adw.MessageDialog dialog = new Adw.MessageDialog (
     window,
     "Login",
-    "A valid password is needed to continue!");
+    "A valid password is needed to continue");
 
   dialog.close_response = "cancel";
   dialog.add_response("cancel", "Cancel");
