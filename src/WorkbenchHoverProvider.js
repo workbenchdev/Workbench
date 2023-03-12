@@ -26,17 +26,15 @@ class WorkbenchHoverProvider extends GObject.Object {
     const container = new Gtk.Box({
       orientation: Gtk.Orientation.VERTICAL,
       spacing: 4,
+      css_classes: ["hoverdisplay", "osd", "frame"],
     });
-    container.add_css_class("hoverdisplay");
-    container.add_css_class("osd");
-    container.add_css_class("frame");
 
     for (const { message } of diagnostics) {
       const label = new Gtk.Label({
         halign: Gtk.Align.START,
         label: `${message}`,
+        css_classes: ["body"],
       });
-      label.add_css_class("body");
       container.append(label);
     }
 

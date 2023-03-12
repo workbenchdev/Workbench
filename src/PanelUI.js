@@ -48,7 +48,7 @@ export default function PanelUI({
   const dropdown_ui_lang = builder.get_object("dropdown_ui_lang");
   // TODO: File a bug libadwaita
   // flat does nothing on GtkDropdown or GtkComboBox or GtkComboBoxText
-  dropdown_ui_lang.get_first_child().get_style_context().add_class("flat");
+  dropdown_ui_lang.get_first_child().add_css_class("flat");
 
   const blueprint = setupBlueprint({
     data_dir,

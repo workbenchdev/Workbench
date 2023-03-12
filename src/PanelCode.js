@@ -20,7 +20,7 @@ export default function PanelCode({
   const dropdown_code_lang = builder.get_object("dropdown_code_lang");
   // TODO: File a bug libadwaita
   // flat does nothing on GtkDropdown or GtkComboBox or GtkComboBoxText
-  dropdown_code_lang.get_first_child().get_style_context().add_class("flat");
+  dropdown_code_lang.get_first_child().add_css_class("flat");
 
   settings.bind(
     "show-code",
