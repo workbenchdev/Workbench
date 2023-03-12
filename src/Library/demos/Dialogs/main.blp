@@ -1,0 +1,40 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: "Dialogs";
+  description: _("Present options, choices or information to users");
+
+  Box {
+    orientation: vertical;
+    halign: center;
+
+    Button button_confirmation {
+      label: "Confirmation Dialog";
+      margin-bottom: 30;
+      styles ["pill"]
+    }
+
+     Button button_error {
+      label: "Error Dialog";
+      margin-bottom: 30;
+      styles ["pill"]
+    }
+
+     Button button_advanced {
+      label: "Advanced Error Dialog";
+      margin-bottom: 30;
+      styles ["pill"]
+    }
+
+    LinkButton {
+      label: "API Reference";
+      uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.2/class.MessageDialog.html";
+    }
+
+     LinkButton {
+      label: "Human Interface Guidelines";
+      uri: "https://developer.gnome.org/hig/patterns/feedback/dialogs.html";
+    }
+  }
+}
