@@ -16,7 +16,7 @@ Adw.Clamp {
     }
 
     Label {
-      label: "A widget that arranges its child widgets into a single row or column";
+      label: _("A widget that arranges its child widgets into a single row or column");
       margin-bottom: 18;
     }
 
@@ -31,68 +31,113 @@ Adw.Clamp {
         Box {
           halign: center;
           spacing: 18;
-          Button button_add{
-            label: "Add Item";
+
+          Button button_append{
+            label: _("Append Item");
             styles [
-              "suggested-action",
               "pill",
             ]
           }
-          Button button_remove{
-            label: "Remove Item";
+
+          Button button_prepend{
+            label: _("Prepend Item");
             styles [
-              "destructive-action",
               "pill",
             ]
+          }
+
+          Button button_remove{
+            label: _("Remove Item");
+            styles [
+              "pill",
+            ]
+          }
+        }
+      }
+
+      Grid {
+        margin-top:12;
+        margin-start:12;
+        row-spacing:18;
+        column-spacing:18;
+
+        Box {
+          orientation: vertical;
+          layout {
+            row:0;
+            column:1;
+            column-span:2;
+          }
+          Label {
+            margin-top:12;
+            margin-bottom:12;
+            label: "halign";
+          }
+          Box {
+            homogeneous: true;
+            halign: center;
+            spacing: 60;
+            ToggleButton halign_toggle_fill{
+              label: "fill";
+            }
+            ToggleButton halign_toggle_start{
+              label: "start";
+            }
+            ToggleButton halign_toggle_center{
+              label: "center";
+            }
+            ToggleButton halign_toggle_end{
+              label: "end";
+            }
           }
         }
 
         Box {
-          halign: center;
-          spacing: 18;
-
-          CheckButton highlight {
-            label: "Highlight Box";
+          layout {
+            row:1;
+            column:0;
+            row-span:2;
           }
-
-          CheckButton toggle_orient {
-            label: "Toggle Orientation";
+          Label {
+            label: "valign";
           }
-
-          CheckButton homogeneous {
-            label: "Homogeneous";
-          }
-
-          CheckButton prepend {
-            label: "Prepend Items";
+          Box {
+            orientation: vertical;
+            spacing: 120;
+            ToggleButton valign_toggle_fill{
+              label: "fill";
+            }
+            ToggleButton valign_toggle_start{
+              label: "start";
+            }
+            ToggleButton valign_toggle_center{
+              label: "center";
+            }
+            ToggleButton valign_toggle_end{
+              label: "end";
+            }
           }
         }
 
-        Label {
-          label: "Horizontal Alignment";
-        }
+        ScrolledWindow {
+          hexpand: true;
+          has-frame: true;
+          layout {
+            row:1;
+            column:1;
+            row-span:2;
+            column-span:2;
+          }
 
-        Scale alignment {
-            margin-bottom: 18;
-            adjustment: Gtk.Adjustment {
-              lower: 0;
-              upper: 100;
-              value: 0;
-            };
-        }
-      }
-
-      ScrolledWindow {
-        Box interactive_box {
-          spacing: 12;
-          orientation: horizontal;
-          vexpand: true;
+          Box interactive_box{
+          }
         }
       }
 
       Box{
         halign: center;
-        margin-bottom: 12;
+        valign: end;
+        vexpand:true;
 
         LinkButton{
           label: "Tutorial";

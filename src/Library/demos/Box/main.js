@@ -4,15 +4,14 @@ const interactive_box = workbench.builder.get_object("interactive_box");
 const button_add = workbench.builder.get_object("button_add");
 const prepend = workbench.builder.get_object("prepend");
 const button_remove = workbench.builder.get_object("button_remove");
-var count = 0;
+let count = 0;
 
 button_add.connect("clicked", () => {
   const label = new Gtk.Label({
     name: "card",
     label: `Item ${count + 1}`,
+    css_classes: ["card"],
   });
-  const style = label.get_style_context();
-  style.add_class("card");
   prepend.active
     ? interactive_box.prepend(label)
     : interactive_box.append(label);
@@ -31,8 +30,8 @@ button_remove.connect("clicked", () => {
 const highlight = workbench.builder.get_object("highlight");
 highlight.connect("toggled", () => {
   highlight.active
-    ? (interactive_box.name = "border")
-    : (interactive_box.name = "");
+    ? interactive_box.add_css_class("border")
+    : interactive_box.remove_css_class("border");
 });
 
 const toggle_orient = workbench.builder.get_object("toggle_orient");
@@ -74,3 +73,4 @@ alignment.connect("value-changed", () => {
   if (!label) return;
   interactive_box.halign = label_to_alignment[label];
 });
+
