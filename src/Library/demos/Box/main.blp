@@ -2,6 +2,8 @@ using Gtk 4.0;
 using Adw 1;
 
 Adw.Clamp {
+  maximum-size: 1024;
+
   Box {
     orientation: vertical;
 
@@ -9,7 +11,6 @@ Adw.Clamp {
       label: "Box";
       margin-top: 12;
       margin-bottom: 12;
-
       styles [
         "title-1",
       ]
@@ -17,7 +18,22 @@ Adw.Clamp {
 
     Label {
       label: _("A widget that arranges its child widgets into a single row or column");
-      margin-bottom: 18;
+    }
+
+    Box{
+      halign: center;
+      valign: end;
+      margin-bottom: 12;
+
+      LinkButton{
+        label: "Tutorial";
+        uri: "https://developer.gnome.org/documentation/tutorials/beginners/components/box.html";
+      }
+
+      LinkButton{
+        label: "API Reference";
+        uri: "https://docs.gtk.org/gtk4/class.Box.html";
+      }
     }
 
     Box {
@@ -27,6 +43,7 @@ Adw.Clamp {
         hexpand: true;
         orientation: vertical;
         spacing: 12;
+        margin-bottom:24;
 
         Box {
           halign: center;
@@ -55,39 +72,73 @@ Adw.Clamp {
         }
       }
 
+        Box {
+          halign:center;
+          spacing:18;
+
+          Box{
+            Label {
+              label: _("orientation");
+            }
+
+            Box {
+              margin-start: 6;
+              homogeneous: true;
+              halign: center;
+
+              ToggleButton toggle_orientation_horizontal {
+                label: _("horizontal");
+                active: true;
+              }
+              ToggleButton toggle_orientation_vertical {
+                label: _("vertical");
+                group: toggle_orientation_horizontal;
+              }
+            }
+          }
+
+          CheckButton highlight{
+            label: _("Highlight Box");
+          }
+      }
+
       Grid {
         margin-top:12;
+        margin-bottom:12;
         margin-start:12;
         row-spacing:18;
-        column-spacing:18;
 
         Box {
           orientation: vertical;
           layout {
             row:0;
-            column:1;
-            column-span:2;
+            column:0;
+            column-span:3;
           }
           Label {
             margin-top:12;
             margin-bottom:12;
-            label: "halign";
+            label: _("halign");
           }
           Box {
             homogeneous: true;
             halign: center;
-            spacing: 60;
+            spacing: 36;
             ToggleButton halign_toggle_fill{
-              label: "fill";
+              label: _("fill");
+              active:true;
             }
             ToggleButton halign_toggle_start{
-              label: "start";
+              label: _("start");
+              group: halign_toggle_fill;
             }
             ToggleButton halign_toggle_center{
-              label: "center";
+              label: _("center");
+              group: halign_toggle_fill;
             }
             ToggleButton halign_toggle_end{
-              label: "end";
+              label: _("end");
+              group: halign_toggle_fill;
             }
           }
         }
@@ -97,56 +148,53 @@ Adw.Clamp {
             row:1;
             column:0;
             row-span:2;
+            column-span:2;
           }
           Label {
-            label: "valign";
+            label: _("valign");
+            styles ["rotate"]
           }
           Box {
+            valign:center;
             orientation: vertical;
-            spacing: 120;
+            spacing: 60;
+
             ToggleButton valign_toggle_fill{
-              label: "fill";
+              label: _("fill");
+              active:true;
+              styles ["rotate"]
             }
             ToggleButton valign_toggle_start{
-              label: "start";
+              label: _("start");
+              group: valign_toggle_fill;
+              styles ["rotate"]
             }
             ToggleButton valign_toggle_center{
-              label: "center";
+              label: _("center");
+              group: valign_toggle_fill;
+              styles ["rotate"]
             }
             ToggleButton valign_toggle_end{
-              label: "end";
+              label: _("end");
+              group: valign_toggle_fill;
+              styles ["rotate"]
             }
           }
         }
 
         ScrolledWindow {
           hexpand: true;
+          vexpand:true;
           has-frame: true;
+          margin-end: 114;
           layout {
             row:1;
             column:1;
             row-span:2;
             column-span:2;
           }
-
           Box interactive_box{
           }
-        }
-      }
-
-      Box{
-        halign: center;
-        valign: end;
-        vexpand:true;
-
-        LinkButton{
-          label: "Tutorial";
-          uri: "https://developer.gnome.org/documentation/tutorials/beginners/components/box.html";
-        }
-
-        LinkButton{
-          label: "API Reference";
-          uri: "https://docs.gtk.org/gtk4/class.Box.html";
         }
       }
     }

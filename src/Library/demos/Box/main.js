@@ -1,30 +1,55 @@
 import Gtk from "gi://Gtk";
 
 const interactive_box = workbench.builder.get_object("interactive_box");
-const button_add = workbench.builder.get_object("button_add");
-const prepend = workbench.builder.get_object("prepend");
+const button_append = workbench.builder.get_object("button_append");
+const button_prepend = workbench.builder.get_object("button_prepend");
 const button_remove = workbench.builder.get_object("button_remove");
 let count = 0;
 
-button_add.connect("clicked", () => {
+button_append.connect("clicked", () => {
   const label = new Gtk.Label({
     name: "card",
     label: `Item ${count + 1}`,
     css_classes: ["card"],
   });
-  prepend.active
-    ? interactive_box.prepend(label)
-    : interactive_box.append(label);
-  count += 1;
+  interactive_box.append(label);
+  count++;
+});
+
+button_prepend.connect("clicked", () => {
+  const label = new Gtk.Label({
+    name: "card",
+    label: `Item ${count + 1}`,
+    css_classes: ["card"],
+  });
+  interactive_box.prepend(label);
+  count++;
 });
 
 button_remove.connect("clicked", () => {
   if (count) {
     interactive_box.remove(interactive_box.get_last_child());
-    count -= 1;
+    count--;
   } else {
     console.log("The box has no child widgets to remove");
   }
+});
+
+const toggle_orientation_horizontal = workbench.builder.get_object(
+  "toggle_orientation_horizontal",
+);
+const toggle_orientation_vertical = workbench.builder.get_object(
+  "toggle_orientation_vertical",
+);
+
+toggle_orientation_horizontal.connect("toggled", () => {
+  if (toggle_orientation_horizontal.active)
+    interactive_box.orientation = Gtk.Orientation.HORIZONTAL;
+});
+
+toggle_orientation_vertical.connect("toggled", () => {
+  if (toggle_orientation_vertical.active)
+    interactive_box.orientation = Gtk.Orientation.VERTICAL;
 });
 
 const highlight = workbench.builder.get_object("highlight");
@@ -34,43 +59,48 @@ highlight.connect("toggled", () => {
     : interactive_box.remove_css_class("border");
 });
 
-const toggle_orient = workbench.builder.get_object("toggle_orient");
-toggle_orient.connect("toggled", () => {
-  interactive_box.orientation === Gtk.Orientation["HORIZONTAL"]
-    ? (interactive_box.orientation = Gtk.Orientation["VERTICAL"])
-    : (interactive_box.orientation = Gtk.Orientation["HORIZONTAL"]);
+const halign_toggle_fill = workbench.builder.get_object("halign_toggle_fill");
+const halign_toggle_start = workbench.builder.get_object("halign_toggle_start");
+const halign_toggle_center = workbench.builder.get_object(
+  "halign_toggle_center",
+);
+const halign_toggle_end = workbench.builder.get_object("halign_toggle_end");
+
+halign_toggle_fill.connect("toggled", () => {
+  if (halign_toggle_fill.active) interactive_box.halign = Gtk.Align.FILL;
 });
 
-const homogeneous = workbench.builder.get_object("homogeneous");
-homogeneous.connect("toggled", () => {
-  interactive_box.homogeneous = homogeneous.active;
+halign_toggle_start.connect("toggled", () => {
+  if (halign_toggle_start.active) interactive_box.halign = Gtk.Align.START;
 });
 
-const alignment = workbench.builder.get_object("alignment");
+halign_toggle_center.connect("toggled", () => {
+  if (halign_toggle_center.active) interactive_box.halign = Gtk.Align.CENTER;
+});
 
-const marks = {
-  0: "Fill",
-  33: "Start",
-  66: "Center",
-  100: "End",
-};
+halign_toggle_end.connect("toggled", () => {
+  if (halign_toggle_end.active) interactive_box.halign = Gtk.Align.END;
+});
 
-const label_to_alignment = {
-  Fill: Gtk.Align.FILL,
-  Start: Gtk.Align.START,
-  Center: Gtk.Align.CENTER,
-  End: Gtk.Align.END,
-};
+const valign_toggle_fill = workbench.builder.get_object("valign_toggle_fill");
+const valign_toggle_start = workbench.builder.get_object("valign_toggle_start");
+const valign_toggle_center = workbench.builder.get_object(
+  "valign_toggle_center",
+);
+const valign_toggle_end = workbench.builder.get_object("valign_toggle_end");
 
-for (const [value, label] of Object.entries(marks)) {
-  alignment.add_mark(value, Gtk.PositionType.RIGHT, label);
-}
-alignment.set_increments(33, 100);
+valign_toggle_fill.connect("toggled", () => {
+  if (valign_toggle_fill.active) interactive_box.valign = Gtk.Align.FILL;
+});
 
-alignment.connect("value-changed", () => {
-  const scale_value = alignment.get_value();
-  const label = marks[scale_value];
-  if (!label) return;
-  interactive_box.halign = label_to_alignment[label];
+valign_toggle_start.connect("toggled", () => {
+  if (valign_toggle_start.active) interactive_box.valign = Gtk.Align.START;
+});
+
+valign_toggle_center.connect("toggled", () => {
+  if (valign_toggle_center.active) interactive_box.valign = Gtk.Align.CENTER;
+});
+valign_toggle_end.connect("toggled", () => {
+  if (valign_toggle_end.active) interactive_box.valign = Gtk.Align.END;
 });
 
