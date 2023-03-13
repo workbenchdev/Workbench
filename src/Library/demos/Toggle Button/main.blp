@@ -22,7 +22,7 @@ Adw.StatusPage {
 
       ToggleButton button_second {
         active: false;
-        icon-name: "audio-volume-high-symbolic";
+        icon-name: "list-compact";
         halign: center;
         group: button_first;
         margin-bottom: 18;
@@ -50,13 +50,17 @@ Adw.StatusPage {
     }
 
     ToggleButton disabled {
-        halign:center;
-        width-request: 120;
-        margin-bottom: 18;
-        icon-name: "user-home-symbolic";
-        sensitive: false;
-    }
+      halign: center;
+      margin-bottom: 18;
+      sensitive: false;
 
+      Adw.ButtonContent {
+        halign: center;
+        valign: center;
+        label: "Console";
+        icon-name: "code-symbolic";
+      }
+    }
     LinkButton{
       label: "Tutorial";
       uri: "https://developer.gnome.org/documentation/tutorials/beginners/components/toggle.html";
@@ -73,4 +77,6 @@ Adw.StatusPage {
     }
   }
 }
+
+
 
