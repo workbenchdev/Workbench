@@ -27,4 +27,3 @@ button.connect("clicked", async () => {
     logError(err);
   }
 });
-

@@ -8,8 +8,8 @@ const subtitle_box = workbench.builder.get_object("subtitle");
 const button = new Gtk.Button({
   label: "Press me",
   margin_top: 6,
+  css_classes: ["suggested-action"],
 });
-button.get_style_context().add_class("suggested-action");
 button.connect("clicked", greet);
 subtitle_box.append(button);
 
