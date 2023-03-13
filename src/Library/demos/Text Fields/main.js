@@ -58,22 +58,14 @@ const completion = new Gtk.EntryCompletion();
 entry_completion.completion = completion;
 
 const list_store = Gtk.ListStore.new([String]);
-var iter;
-const words = [
-"a",
-"app",
-"apple",
-"apples",
-"applets",
-"application"
-];
+const words = ["a", "app", "apple", "apples", "applets", "application"];
 words.forEach((word) => {
-  iter = list_store.append();
-  iter = list_store.set_value(iter, 0, word);
+  const iter = list_store.append();
+  list_store.set_value(iter, 0, word);
 });
 completion.model = list_store;
 
-completion.text_column = 0;
+completion.set_text_column(0);
 completion.inline_completion = true;
 completion.inline_selection = true;
 
@@ -108,4 +100,3 @@ function validate_password(passwd, confirm_passwd) {
     return "Both fields are mandatory!";
   }
 }
-
