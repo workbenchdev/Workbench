@@ -77,6 +77,7 @@ Adw.Clamp {
           spacing:18;
 
           Box{
+            spacing: 18;
             Label {
               label: _("orientation");
             }
@@ -85,6 +86,7 @@ Adw.Clamp {
               margin-start: 6;
               homogeneous: true;
               halign: center;
+              styles ["linked"]
 
               ToggleButton toggle_orientation_horizontal {
                 label: _("horizontal");
@@ -107,13 +109,13 @@ Adw.Clamp {
         margin-bottom:12;
         margin-start:12;
         row-spacing:18;
+        margin-end: 114;
 
         Box {
           orientation: vertical;
           layout {
             row:0;
-            column:0;
-            column-span:3;
+            column:1;
           }
           Label {
             margin-top:12;
@@ -147,8 +149,6 @@ Adw.Clamp {
           layout {
             row:1;
             column:0;
-            row-span:2;
-            column-span:2;
           }
           Label {
             label: _("valign");
@@ -186,12 +186,10 @@ Adw.Clamp {
           hexpand: true;
           vexpand:true;
           has-frame: true;
-          margin-end: 114;
+
           layout {
             row:1;
             column:1;
-            row-span:2;
-            column-span:2;
           }
           Box interactive_box{
           }
@@ -200,3 +198,4 @@ Adw.Clamp {
     }
   }
 }
+
