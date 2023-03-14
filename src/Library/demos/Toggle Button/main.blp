@@ -8,57 +8,64 @@ Adw.StatusPage {
   Box {
     orientation: vertical;
 
-    Box {
+    Box Grouped_Toggle_Buttons {
       orientation: horizontal;
       halign: center;
+      margin-bottom: 12;
+      styles ["linked"]
 
       ToggleButton button_first {
         active: true;
-        icon-name: "audio-volume-muted-symbolic";
-        halign: center;
-        margin-end: 12;
-        margin-bottom: 18;
+        icon-name: "eye-not-looking-symbolic";
       }
 
       ToggleButton button_second {
         active: false;
-        icon-name: "list-compact";
-        halign: center;
+        icon-name: "eye-open-negative-filled-symbolic";
         group: button_first;
-        margin-bottom: 18;
       }
     }
 
-    Box {
+    Label {
+      label: "Grouped Toggle Buttons";
+      justify: center;
+      margin-bottom: 18;
+    }
+
+    Box Ungrouped_Toggle_Buttons {
       orientation: horizontal;
       halign: center;
+      margin-bottom: 12;
 
       ToggleButton button_third {
         active: false;
         icon-name: "photo-camera-symbolic";
         halign: center;
-        margin-end: 12;
-        margin-bottom: 18;
+        margin-end: 6;
       }
 
       ToggleButton button_fourth {
         active: false;
         icon-name: "flashlight-symbolic";
         halign: center;
-        margin-bottom: 18;
       }
     }
 
-    ToggleButton disabled {
+    Label {
+      label: "Ungrouped Toggle Buttons";
+      margin-bottom: 18;
+      justify: center;
+    }
+
+    ToggleButton console {
       halign: center;
       margin-bottom: 18;
-      sensitive: false;
 
       Adw.ButtonContent {
         halign: center;
         valign: center;
         label: "Console";
-        icon-name: "code-symbolic";
+        icon-name: "terminal-symbolic";
       }
     }
     LinkButton{
