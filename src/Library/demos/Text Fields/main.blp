@@ -23,7 +23,7 @@ Adw.Clamp {
     LinkButton{
       label: "Human Interface Guidelines";
       uri: "https://developer.gnome.org/hig/patterns/controls/text-fields.html";
-      margin-bottom:6;
+      margin-bottom: 6;
     }
 
     Label {
@@ -90,9 +90,9 @@ Adw.Clamp {
         Entry entry_icon {
           primary-icon-name: "about-symbolic";
           primary-icon-activatable: true;
-          primary-icon-tooltip-text: "Click on me!";
+          primary-icon-tooltip-text: "Click on me";
           secondary-icon-name: "bell-symbolic";
-          secondary-icon-tooltip-text: "No click on me!";
+          secondary-icon-tooltip-text: "No click on me";
         }
       }
 
@@ -105,7 +105,7 @@ Adw.Clamp {
 
           }
 
-          Entry entry_progress{
+          Entry entry_progress {
             progress-fraction: 0;
             primary-icon-name: "media-playback-start-symbolic";
             primary-icon-tooltip-text: "Play animation";
@@ -235,42 +235,56 @@ Adw.Clamp {
       ]
     }
 
-  FlowBox {
+    Box {
       homogeneous: true;
-      row-spacing: 18;
-      selection-mode: none;
-      margin-bottom:18;
+      margin-bottom: 18;
 
       Entry  {
-        placeholder-text: "Accent";
-        secondary-icon-name: "edit-copy-symbolic";
-        margin-start:6;
-        margin-end:6;
+        placeholder-text: "accent";
+        margin-start: 6;
+        margin-end: 6;
         styles ["accent"]
       }
 
       Entry {
-        placeholder-text: "Warning";
-        secondary-icon-name: "edit-copy-symbolic";
-        margin-start:6;
-        margin-end:6;
+        placeholder-text: "warning";
+        margin-start: 6;
+        margin-end: 6;
         styles ["warning"]
       }
+    }
+
+    Box {
+      homogeneous: true;
+      margin-bottom: 18;
 
       Entry {
-        placeholder-text: "Error";
-        secondary-icon-name: "edit-copy-symbolic";
-        margin-start:6;
-        margin-end:6;
+        placeholder-text: "error";
+        margin-start: 6;
+        margin-end: 6;
         styles ["error"]
       }
 
       Entry {
-        placeholder-text: "Success";
-        secondary-icon-name: "edit-copy-symbolic";
-        margin-start:6;
-        margin-end:6;
+        placeholder-text: "success";
+        margin-start: 6;
+        margin-end: 6;
         styles ["success"]
+      }
+    }
+
+    Box {
+      margin-bottom: 18;
+      styles ["linked"]
+      halign: center;
+      Entry {
+        placeholder-text: "Street name and number";
+      }
+      Entry {
+        placeholder-text: "City";
+      }
+      Entry {
+        placeholder-text: "Country";
       }
     }
   }
