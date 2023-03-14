@@ -40,7 +40,7 @@ Once you understand these 3 things, try creating something new. There are plenty
 
 ## Your first contribution
 
-Your first contribution should be a new example or demo for the Wokbench library.
+Your first contribution should be a new example or demo for the Workbench library.
 
 Library examples and demos have 3 functions
 
