@@ -1,0 +1,8 @@
+{
+    "name": "Slider Demo",
+    "category": "user_interface",
+    "description": "Demonstrates the use of the Gtk.Slider widget.",
+    "panels": ["ui", "preview"],
+    "autorun": true
+  }
+  

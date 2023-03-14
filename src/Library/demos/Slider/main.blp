@@ -1,0 +1,29 @@
+using Gtk 4.0;
+
+Gtk.Window {
+  title: "Slider Demo";
+  default-width: 400;
+  default-height: 200;
+
+  Gtk.Box {
+    orientation: Gtk.Orientation.VERTICAL;
+    margin: 12;
+
+    Gtk.Slider {
+      margin-bottom: 12;
+      value: 50;
+      min-value: 0;
+      max-value: 100;
+      step-increment: 1;
+      hexpand: true;
+      draw-value: true;
+      show-fill-level: true;
+    }
+
+    Gtk.Label {
+      text: "Value: 50";
+      halign: Gtk.Align.CENTER;
+      hexpand: true;
+    }
+  }
+}

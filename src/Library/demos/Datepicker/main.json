@@ -1,9 +1,0 @@
-{
-    "dependencies": {
-      "gtk": "^4.0.0"
-    },
-    "scripts": {
-      "start": "gjs index.js"
-    }
-  }
-  
