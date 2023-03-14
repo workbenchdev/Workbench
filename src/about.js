@@ -55,6 +55,7 @@ ${getBlueprintVersion()}
     "Brage Fuglseth https://bragefuglseth.dev",
     "Hari Rana (TheEvilSkeleton) https://theevilskeleton.gitlab.io",
     "Sriyansh Shivam https://linktr.ee/sonic_here",
+    "Angelo Verlain https://www.vixalien.com",
     // Add yourself as
     // "John Doe",
     // or
