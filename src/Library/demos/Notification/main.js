@@ -24,9 +24,8 @@ const actions = [
   { name: "notification-decline", callback: () => console.log("Decline") },
 ];
 
-for (const { name, callback } of actions) {
+for (const {name, callback} of actions) {
   const action = new Gio.SimpleAction({ name });
   action.connect("activate", callback);
   application.add_action(action);
 }
-application.add_action(action_decline);
