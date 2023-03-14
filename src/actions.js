@@ -135,6 +135,8 @@ export default function Actions({ application }) {
   application.add_action(action_platform_tools);
 
   application.add_action(settings.create_action("color-scheme"));
+  application.add_action(settings.create_action("safe-mode"));
+  application.add_action(settings.create_action("auto-preview"));
 }
 
 const lang_filters = languages.map((language) => {
