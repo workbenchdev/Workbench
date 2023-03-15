@@ -1,0 +1,10 @@
+{
+  "name": "Grid",
+  "category": "user_interface",
+  "description": "Allow people to perform using a grids",
+  "panels": [
+    "ui",
+    "preview"
+  ],
+  "autorun": true
+}

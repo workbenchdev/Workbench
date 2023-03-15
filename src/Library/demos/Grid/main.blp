@@ -1,0 +1,50 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: "Grid";
+  description: _("Allow people to perform using a grids");
+
+  Grid {
+    hexpand: true;
+    vexpand: true;
+    Label {
+        name: "00";
+        label: "row:0,col:0;";
+        layout { row: 0; column: 0; }
+        hexpand: true;
+    }
+    Label {
+        name: "10";
+        label: "row:1,col:0;";
+        layout { row: 1; column: 0; }
+        hexpand: true;
+    }
+    Label {
+        name: "11";
+        label: "row:1,col:1;";
+        layout { row: 1; column: 1; }
+        hexpand: true;
+    }
+    Label {
+        name: "20";
+        label: "row:2,col:0;";
+        layout { row: 2; column: 0; }
+        hexpand: true;
+    }
+    Label {
+        name: "21";
+        label: "row:2,col:1;";
+        layout { row: 2; column: 1; }
+        hexpand: true;
+    }
+    Label {
+        name: "22";
+        label: "row:2,col:2;";
+        layout { row: 2; column: 2; }
+        hexpand: true;
+    }
+  }
+}
+
+
