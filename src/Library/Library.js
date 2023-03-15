@@ -101,7 +101,7 @@ function readDemoFile(demo_name, file_name) {
   try {
     str = decode(file.load_contents(null)[1]);
   } catch (err) {
-    if (err.code !== Gio.IOErrorEnum.NOT_FOUND) {
+    if (err.code !== Gio.IOErrorEnum.NOT_FOUND && file_name !== "main.json") {
       throw err;
     }
     str = "";
