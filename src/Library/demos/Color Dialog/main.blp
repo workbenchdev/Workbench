@@ -1,0 +1,51 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: "Color Dialog";
+  description: "Show a dialog to select a color";
+
+  Box {
+    orientation: vertical;
+    halign: center;
+    spacing:42;
+
+    Box{
+      orientation:vertical;
+
+      ColorDialogButton color_dialog_button {
+        halign: center;
+        margin-bottom:12;
+      }
+      Label {
+        label: "Color Dialog Button";
+        margin-bottom:12 ;
+      }
+
+      LinkButton {
+        label: "API Reference";
+        uri: "https://docs.gtk.org/gtk4/class.ColorDialogButton.html";
+      }
+    }
+
+    Box{
+      orientation: vertical;
+
+      Button custom_button {
+        label: "Select Color…";
+        margin-bottom:12;
+        styles ["pill"]
+      }
+
+      Label {
+        label: "Custom Button";
+        margin-bottom:12 ;
+      }
+
+      LinkButton {
+        label: "API Reference";
+        uri: "https://docs.gtk.org/gtk4/class.ColorDialog.html";
+      }
+    }
+  }
+}
