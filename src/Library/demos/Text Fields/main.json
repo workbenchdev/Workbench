@@ -1,0 +1,10 @@
+{
+  "name": "Text Fields",
+  "category": "user_interface",
+  "description": "Single line widgets to enter text",
+  "panels": [
+    "ui",
+    "preview"
+  ],
+  "autorun": true
+}

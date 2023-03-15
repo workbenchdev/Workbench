@@ -250,7 +250,7 @@ export default function Window({ application }) {
       }
 
       if (language === "JavaScript") {
-        await previewer.update();
+        await previewer.update(true);
 
         // We have to create a new file each time
         // because gjs doesn't appear to use etag for module caching
@@ -271,7 +271,7 @@ export default function Window({ application }) {
         try {
           exports = await import(`file://${file_javascript.get_path()}`);
         } catch (err) {
-          await previewer.update();
+          await previewer.update(true);
           throw err;
         } finally {
           promiseTask(
@@ -317,10 +317,7 @@ export default function Window({ application }) {
     name: "run",
   });
   action_run.connect("activate", () => {
-    // Ensure code does not run if panel is not visible
-    if (panel_code.panel.visible) {
-      runCode().catch(logError);
-    }
+    runCode().catch(logError);
   });
   window.add_action(action_run);
   application.set_accels_for_action("win.run", ["<Control>Return"]);
@@ -400,7 +397,7 @@ export default function Window({ application }) {
       panel_ui.start();
       await panel_ui.update();
       previewer.start();
-      await previewer.update();
+      await previewer.update(true);
     }
 
     documents.forEach((document) => {
