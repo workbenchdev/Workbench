@@ -1,0 +1,10 @@
+{
+  "name": "View Switcher",
+  "category": "user_interface",
+  "description": "why don't you work",
+  "panels": [
+    "code",
+    "preview"
+  ],
+  "autorun": false
+}

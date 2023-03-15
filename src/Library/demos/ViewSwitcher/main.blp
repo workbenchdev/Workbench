@@ -1,0 +1,104 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.Window {
+  modal: true;
+  width-request: 360;
+  title: _("AdwViewSwitcher Demo");
+  content:
+  Box {
+    orientation: vertical;
+
+    Adw.HeaderBar {
+      centering-policy: strict;
+      title-widget:
+      Adw.ViewSwitcherTitle switcher_title {
+        stack: stack;
+      }
+
+      ;
+    }
+
+    Adw.ViewStack stack {
+      vexpand: true;
+
+      Adw.ViewStackPage {
+        name: "page1";
+        title: _("_World");
+        icon-name: "clock-world-symbolic";
+        use-underline: true;
+        child:
+        Label {
+          margin-top: 24;
+          margin-bottom: 24;
+          margin-start: 24;
+          margin-end: 24;
+          label: _("World");
+        }
+
+        ;
+      }
+
+      Adw.ViewStackPage {
+        name: "page2";
+        title: _("_Alarm");
+        icon-name: "clock-alarm-symbolic";
+        use-underline: true;
+        child:
+        Label {
+          margin-top: 24;
+          margin-bottom: 24;
+          margin-start: 24;
+          margin-end: 24;
+          label: _("Alarm");
+        }
+
+        ;
+      }
+
+      Adw.ViewStackPage {
+        name: "page3";
+        title: _("_Stopwatch");
+        icon-name: "clock-stopwatch-symbolic";
+        badge-number: 3;
+        needs-attention: true;
+        use-underline: true;
+        child:
+        Label {
+          margin-top: 24;
+          margin-bottom: 24;
+          margin-start: 24;
+          margin-end: 24;
+          label: _("Stopwatch");
+        }
+
+        ;
+      }
+
+      Adw.ViewStackPage {
+        name: "page4";
+        title: _("Tim_er");
+        icon-name: "clock-timer-symbolic";
+        use-underline: true;
+        child:
+        Label {
+          margin-top: 24;
+          margin-bottom: 24;
+          margin-start: 24;
+          margin-end: 24;
+          label: _("Timer");
+        }
+
+        ;
+      }
+    }
+
+    Adw.ViewSwitcherBar switcher_bar {
+      stack: stack;
+      reveal: bind switcher_title.title-visible;
+    }
+  }
+
+  ;
+}
+
