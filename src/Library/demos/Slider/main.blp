@@ -1,6 +1,7 @@
 using Gtk 4.0;
 
 Gtk.Window {
+  id: window
   title: "Slider Demo";
   default-width: 400;
   default-height: 200;
@@ -10,6 +11,7 @@ Gtk.Window {
     margin: 12;
 
     Gtk.Slider {
+      id: slider
       margin-bottom: 12;
       value: 50;
       min-value: 0;
@@ -21,6 +23,7 @@ Gtk.Window {
     }
 
     Gtk.Label {
+      id: label
       text: "Value: 50";
       halign: Gtk.Align.CENTER;
       hexpand: true;
