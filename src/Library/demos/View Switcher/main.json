@@ -1,0 +1,10 @@
+{
+  "name": "View Switcher",
+  "category": "user_interface",
+  "description": "View Switchers allow users to switch between different predefined pages",
+  "panels": [
+    "ui",
+    "preview"
+  ],
+  "autorun": false
+}
