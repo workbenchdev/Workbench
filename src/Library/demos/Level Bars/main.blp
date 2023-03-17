@@ -1,0 +1,130 @@
+using Gtk 4.0;
+using Adw 1;
+Adw.Clamp{
+  Box {
+    orientation: vertical;
+    margin-top: 24;
+
+    Label {
+      label: "Level Bars";
+      margin-top: 6;
+      margin-bottom: 6;
+
+      styles [
+        "title-1",
+      ]
+    }
+
+    Label {
+      label: _("A bar widget used as a level indicator");
+      margin-top: 6;
+      margin-bottom: 24;
+    }
+
+    Box {
+      orientation: vertical;
+      vexpand: true;
+      spacing: 18;
+      margin-start: 18;
+      margin-end: 18;
+
+      Label {
+        label: _("Continuous Level Bar");
+      }
+
+      Box{
+        spacing:18;
+        halign: start;
+
+        Label {
+          label: _("Current Battery Level");
+        }
+
+        SpinButton spin_button{
+          digits:1;
+          adjustment: Gtk.Adjustment {
+            lower: 0;
+            upper: 100;
+            value:100;
+            step-increment: 5;
+          };
+        }
+      }
+
+      Box {
+        orientation: vertical;
+        spacing:12;
+
+        LevelBar bar_continuous{
+            margin-end:12;
+            margin-start:12;
+            margin-top:24;
+            min-value:0;
+            max-value:100;
+            mode: continuous;
+            value: bind spin_button.value;
+        }
+
+        Box {
+          margin-start:12;
+          margin-end:12;
+          margin-bottom:12;
+          Label{
+            label: _("Battery");
+          }
+          Label percentage_label{
+            label: "100%";
+            hexpand: true;
+            halign: end;
+          }
+        }
+        styles ["card"]
+      }
+    }
+
+    Box {
+      orientation: vertical;
+      vexpand: true;
+      spacing: 18;
+      margin-start: 18;
+      margin-end: 18;
+
+      Label {
+        label: _("Discrete Level Bar");
+      }
+
+      Label {
+        halign: start;
+        label: _("A good password uses uppercase and lowercase letters, special characters, digits and\nis atleast 8 characters long.");
+        styles ["dim-label"]
+      }
+      PasswordEntry entry {
+        placeholder-text: "Enter password";
+        show-peek-icon: true;
+      }
+      LevelBar bar_discrete {
+        min-value: 0;
+        max-value: 6;
+        mode: discrete;
+      }
+      Label label_strength{
+
+      }
+    }
+
+    Box {
+      orientation: vertical;
+      margin-bottom:24;
+
+      LinkButton {
+        label: "Tutorial";
+        uri: "https://developer.gnome.org/documentation/tutorials/beginners/components/level_bar.html";
+      }
+
+      LinkButton {
+        label: "API Reference";
+        uri: "https://docs.gtk.org/gtk4/class.LevelBar.html";
+      }
+    }
+  }
+}
