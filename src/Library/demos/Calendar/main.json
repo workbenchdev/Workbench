@@ -1,0 +1,10 @@
+{
+  "name": "Calendar",
+  "category": "user_interface",
+  "description": "Keep track of current or upcoming events",
+  "panels": [
+    "ui",
+    "preview"
+  ],
+  "autorun": true
+}

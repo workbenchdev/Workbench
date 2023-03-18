@@ -1,0 +1,30 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: "Calendar";
+  description: "Keep track of current or upcoming events";
+
+    Box {
+      orientation: vertical;
+      halign: center;
+
+    Calendar calendar {
+      show-day-names: true;
+      show-week-numbers: true;
+      show-heading: true;
+      margin-bottom: 18;
+    }
+
+    LinkButton {
+      label: "API Refernce";
+      uri: "https://docs.gtk.org/gtk4/class.Calendar.html";
+   }
+  }
+ }
+}
+
+
+
+
+
