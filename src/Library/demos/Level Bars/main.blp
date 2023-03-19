@@ -29,54 +29,28 @@ Adw.Clamp{
       margin-end: 18;
 
       Label {
-        label: _("Continuous Level Bar");
-      }
-
-      Box{
-        spacing:18;
-        halign: start;
-
-        Label {
-          label: _("Current Battery Level");
-        }
-
-        SpinButton spin_button{
-          digits:1;
-          adjustment: Gtk.Adjustment {
-            lower: 0;
-            upper: 100;
-            value:100;
-            step-increment: 5;
-          };
-        }
+        label: _("Continuous");
       }
 
       Box {
         orientation: vertical;
         spacing:12;
 
-        LevelBar bar_continuous{
-            margin-end:12;
-            margin-start:12;
-            margin-top:24;
-            min-value:0;
-            max-value:100;
-            mode: continuous;
-            value: bind spin_button.value;
+        Label {
+          halign: start;
+          margin-start: 12;
+          margin-top:12;
+          label: _("Battery");
         }
 
-        Box {
-          margin-start:12;
-          margin-end:12;
-          margin-bottom:12;
-          Label{
-            label: _("Battery");
-          }
-          Label percentage_label{
-            label: "100%";
-            hexpand: true;
-            halign: end;
-          }
+        LevelBar bar_continuous{
+            mode: continuous;
+            margin-start:12;
+            margin-end:12;
+            margin-bottom: 24;
+            min-value:0;
+            max-value:100;
+            value: 75;
         }
         styles ["card"]
       }
@@ -90,22 +64,17 @@ Adw.Clamp{
       margin-end: 18;
 
       Label {
-        label: _("Discrete Level Bar");
+        label: _("Discrete");
       }
 
-      Label {
-        halign: start;
-        label: _("A good password uses uppercase and lowercase letters, special characters, digits and\nis atleast 8 characters long.");
-        styles ["dim-label"]
-      }
       PasswordEntry entry {
-        placeholder-text: "Enter password";
+        placeholder-text: "Choose a Password";
         show-peek-icon: true;
       }
       LevelBar bar_discrete {
+        mode: discrete;
         min-value: 0;
         max-value: 6;
-        mode: discrete;
       }
       Label label_strength{
 
@@ -128,3 +97,4 @@ Adw.Clamp{
     }
   }
 }
+
