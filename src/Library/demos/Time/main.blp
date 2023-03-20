@@ -1,0 +1,56 @@
+  using Gtk 4.0;
+
+Box welcome {
+  orientation: vertical;
+  valign: center;
+  halign: center;
+
+  Label {
+    label: "Set Time";
+    margin-bottom: 30;
+    styles ["title-1"]
+  }
+
+  Box {
+    valign: center;
+    halign: center;
+
+    Box hour_box {
+      orientation: vertical;
+      halign: center;
+      valign: center;
+      margin-bottom: 30;
+      margin-end: 12;
+      spacing: 16;
+      styles["title-2"]
+    }
+
+    Label {
+      halign: center;
+      margin-bottom: 30;
+      label: ":";
+    }
+
+    Box minute_box {
+      orientation: vertical;
+      halign: start;
+      margin-bottom: 30;
+      margin-start: 12;
+      spacing: 16;
+      styles["title-2"]
+    }
+  }
+
+  Box time_output_box {
+    orientation: vertical;
+    halign: center;
+    valign: center;
+    margin-bottom: 30;
+    styles["title-2"]
+
+    Label time_output_label{
+
+    }
+  }
+
+}
