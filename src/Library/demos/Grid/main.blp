@@ -3,48 +3,69 @@ using Adw 1;
 
 Adw.StatusPage {
   title: "Grid";
-  description: _("Arrange widgets in rows and columns.");
+  description: _("Arrange widgets in rows and columns.\n\n*Tic Tac Toe: just click to the '#' for 'x' and click again for 'o':");
 
   Grid {
     hexpand: true;
     vexpand: true;
-    Label {
-        name: "00";
-        label: "row:0,col:0;";
-        layout { row: 0; column: 0; }
-        hexpand: true;
+    Button button00 {
+      name: "00";
+      layout { row: 0; column: 0; }
+      hexpand: true;
+      label: "#";
     }
-    Label {
-        name: "10";
-        label: "row:1,col:0;";
-        layout { row: 1; column: 0; }
-        hexpand: true;
+    Button button01 {
+      name: "01";
+      layout { row: 0; column: 1; }
+      hexpand: true;
+      label: "#";
     }
-    Label {
-        name: "11";
-        label: "row:1,col:1;";
-        layout { row: 1; column: 1; }
-        hexpand: true;
+    Button button02 {
+      name: "02";
+      layout { row: 0; column: 2; }
+      hexpand: true;
+      label: "#";
     }
-    Label {
-        name: "20";
-        label: "row:2,col:0;";
-        layout { row: 2; column: 0; }
-        hexpand: true;
+    Button button10 {
+      name: "10";
+      layout { row: 1; column: 0; }
+      hexpand: true;
+      label: "#";
     }
-    Label {
-        name: "21";
-        label: "row:2,col:1;";
-        layout { row: 2; column: 1; }
-        hexpand: true;
+    Button button11 {
+      name: "11";
+      layout { row: 1; column: 1; }
+      hexpand: true;
+      label: "#";
     }
-    Label {
-        name: "22";
-        label: "row:2,col:2;";
-        layout { row: 2; column: 2; }
-        hexpand: true;
+    Button button12 {
+      name: "12";
+      layout { row: 1; column: 2; }
+      hexpand: true;
+      label: "#";
+    }
+    Button button20 {
+      name: "20";
+      layout { row: 2; column: 0; }
+      hexpand: true;
+      label: "#";
+    }
+    Button button21 {
+      name: "21";
+      layout { row: 2; column: 1; }
+      hexpand: true;
+      label: "#";
+    }
+    Button button22 {
+      name: "22";
+      layout { row: 2; column: 2; }
+      hexpand: true;
+      label: "#";
     }
   }
 }
+
+
+
 
 
