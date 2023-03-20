@@ -3,43 +3,23 @@ using Adw 1;
 
 Adw.StatusPage {
   title: "Calendar";
-  description: "Widget that helps you keep track of events";
+  description: "Display a Gregorian calendar, one month at a time";
 
-    Box {
-      orientation: vertical;
-      halign: center;
+  Box {
+    orientation: vertical;
+    halign: center;
 
     Calendar calendar {
       show-day-names: true;
-      show-week-numbers: true;
+      show-week-numbers: false;
       show-heading: true;
       margin-bottom: 18;
-    }
-
-    Box {
-      spacing: 6;
-      halign: center;
-      margin-bottom: 12;
-
-      Button mark {
-        icon-name: "plus";
-      }
-
-      Button remove_mark {
-        icon-name: "minus";
-      }
+      day: 1;
     }
 
     LinkButton {
-      label: "API Refernce";
+      label: "API Reference";
       uri: "https://docs.gtk.org/gtk4/class.Calendar.html";
-   }
+    }
   }
- }
-
-
-
-
-
-
-
+}

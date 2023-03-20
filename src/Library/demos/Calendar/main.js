@@ -1,35 +1,22 @@
 const calendar = workbench.builder.get_object("calendar");
-const mark = workbench.builder.get_object("mark");
-const remove_mark = workbench.builder.get_object("remove_mark");
+
+// calendar.get_date() returns a GLib.DateTime object
+// https://docs.gtk.org/glib/struct.DateTime.html
 
 calendar.connect("notify::day", () => {
-  console.log(`Selected Date: ${calendar.get_date().format("%x")}`);
+  console.log(calendar.get_date().format("%e"));
 });
 
 calendar.connect("notify::month", () => {
-  console.log(`Switched to Month: ${calendar.get_date().format("%B")}`);
+  console.log(calendar.get_date().format("%B"));
 });
 
 calendar.connect("notify::year", () => {
-  console.log(`Switched to Year: ${calendar.get_date().format("%Y")}`);
+  console.log(calendar.get_date().format("%Y"));
 });
 
-mark.connect("clicked", () => {
-  const selectedDate = calendar.get_date().format("%d");
-  console.log(
-    calendar.get_day_is_marked(selectedDate)
-      ? "Date already marked"
-      : "Date marked",
-  );
-  calendar.mark_day(selectedDate);
+calendar.connect("day-selected", () => {
+  console.log(calendar.get_date().format_iso8601());
 });
 
-remove_mark.connect("clicked", () => {
-  const selectedDate = calendar.get_date().format("%d");
-  console.log(
-    calendar.get_day_is_marked(selectedDate)
-      ? "Date Unmarked"
-      : "Date not yet marked",
-  );
-  calendar.unmark_day(selectedDate);
-});
+calendar.mark_day(15);

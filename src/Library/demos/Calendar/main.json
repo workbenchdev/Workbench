@@ -1,7 +1,7 @@
 {
   "name": "Calendar",
   "category": "user_interface",
-  "description": "Widget that helps you keep track of events",
+  "description": "Display a Gregorian calendar, one month at a time",
   "panels": [
     "ui",
     "preview"
