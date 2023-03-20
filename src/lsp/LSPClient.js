@@ -3,7 +3,7 @@ import Gio from "gi://Gio";
 
 import { LSPError } from "./LSP.js";
 
-import { getPid, promiseTask, once } from "../../troll/src/util.js";
+import { getPid, once } from "../../troll/src/util.js";
 
 const { addSignalMethods } = imports.signals;
 
@@ -16,6 +16,26 @@ const clientInfo = {
   name: pkg.name,
   version: pkg.version,
 };
+
+Gio._promisify(
+  Gio.InputStream.prototype,
+  "read_bytes_async",
+  "read_bytes_finish",
+);
+Gio._promisify(Gio.InputStream.prototype, "read_all_async", "read_all_finish");
+Gio._promisify(Gio.InputStream.prototype, "close_async", "close_finish");
+Gio._promisify(
+  Gio.DataInputStream.prototype,
+  "read_line_async",
+  "read_line_finish",
+);
+Gio._promisify(Gio.OutputStream.prototype, "close_async", "close_finish");
+Gio._promisify(
+  Gio.OutputStream.prototype,
+  "write_bytes_async",
+  "write_bytes_finish",
+);
+Gio._promisify(Gio.Subprocess.prototype, "wait_async", "wait_finish");
 
 export default class LSPClient {
   constructor(argv, { rootUri, uri, languageId, buffer }) {
@@ -76,8 +96,10 @@ export default class LSPClient {
   }
 
   async stop() {
-    await promiseTask(this.stdin, "close_async", "close_finish", null);
-    await promiseTask(this.stdout, "close_async", "close_finish", null);
+    await Promise.all([
+      this.stdin.close_async(null),
+      this.stdout.close_async(null),
+    ]);
     // this.proc?.force_exit();
     this.proc.send_signal(15);
   }
@@ -134,15 +156,13 @@ export default class LSPClient {
     flags = flags | Gio.SubprocessFlags.STDERR_SILENCE;
 
     this.proc = Gio.Subprocess.new(this.argv, flags);
-    this.proc.wait_async(null, (_self, res) => {
-      try {
-        this.proc.wait_finish(res);
-      } catch (err) {
-        logError(err);
-      }
-      this.emit("exit");
-      // this._start_process();
-    });
+    this.proc
+      .wait_async(null)
+      .then(() => {
+        this.emit("exit");
+        // this._start_process();
+      })
+      .catch(logError);
     this.stdin = this.proc.get_stdin_pipe();
     this.stdout = new Gio.DataInputStream({
       base_stream: this.proc.get_stdout_pipe(),
@@ -156,11 +176,8 @@ export default class LSPClient {
     const headers = Object.create(null);
 
     while (true) {
-      const [bytes] = await promiseTask(
-        this.stdout,
-        "read_line_async",
-        "read_line_finish",
-        0,
+      const [bytes] = await this.stdout.read_line_async(
+        GLib.PRIORITY_DEFAULT,
         null,
       );
       if (!bytes) break;
@@ -177,15 +194,23 @@ export default class LSPClient {
   }
 
   async _read_content(length) {
-    const bytes = await promiseTask(
-      this.stdout,
-      "read_bytes_async",
-      "read_bytes_finish",
-      length,
-      0,
-      null,
-    );
-    const str = decoder_utf8.decode(bytes.toArray());
+    // read_bytes is limited by some underlying max buffer size
+    // see https://github.com/sonnyp/Workbench/issues/240#issuecomment-1475387647
+    // read_all is not supported in GJS so we do this instead
+    // https://gitlab.gnome.org/GNOME/gjs/-/issues/501
+    const uint8 = new Uint8Array(length);
+    let read = 0;
+    while (read < length) {
+      const bytes = await this.stdout.read_bytes_async(
+        length - read,
+        GLib.PRIORITY_DEFAULT,
+        null,
+      );
+      uint8.set(bytes.toArray(), read);
+      read += bytes.get_size();
+    }
+
+    const str = decoder_utf8.decode(uint8);
     try {
       return JSON.parse(str);
     } catch (err) {
@@ -232,14 +257,7 @@ export default class LSPClient {
       this.stdin.flush();
     }
 
-    await promiseTask(
-      this.stdin,
-      "write_bytes_async",
-      "write_bytes_finish",
-      bytes,
-      GLib.PRIORITY_DEFAULT,
-      null,
-    );
+    await this.stdin.write_bytes_async(bytes, GLib.PRIORITY_DEFAULT, null);
 
     this.emit("output", message);
   }
@@ -253,7 +271,7 @@ export default class LSPClient {
     });
     const [result] = await once(this, `result::${id}`, {
       error: `error::${id}`,
-      timeout: 1000,
+      timeout: 5000,
     });
     return result;
   }

@@ -61,8 +61,8 @@
       "sources": [
         {
           "type": "git",
-          "url": "https://gitlab.gnome.org/sonny/blueprint-compiler",
-          "commit": "87a8ef8a3bdfeff5547dc6d6cc1ca41a303ce6fb"
+          "url": "https://gitlab.gnome.org/jwestman/blueprint-compiler.git",
+          "commit": "6f4806bfb3514c3fa01e0880c4bd9d399e058a44"
         }
       ]
     },
