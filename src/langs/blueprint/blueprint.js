@@ -37,13 +37,9 @@ export function setup({ data_dir, document }) {
       return xml;
     },
     async decompile(text) {
-      const { blp } = await lspc.request(
-        "x-blueprint/decompile",
-        {
-          text,
-        },
-        { timeout: 5000 },
-      );
+      const { blp } = await lspc.request("x-blueprint/decompile", {
+        text,
+      });
       return blp;
     },
   };
