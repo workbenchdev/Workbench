@@ -16,8 +16,12 @@ calendar.connect("notify::year", () => {
 
 mark.connect("clicked", () => {
   const selectedDate = calendar.get_date().format("%d");
+  console.log(
+    calendar.get_day_is_marked(selectedDate)
+      ? "Date already marked"
+      : "Date marked",
+  );
   calendar.mark_day(selectedDate);
-  console.log("Date Marked");
 });
 
 remove_mark.connect("clicked", () => {
