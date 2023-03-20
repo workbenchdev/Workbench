@@ -23,21 +23,26 @@ Adw.StatusPage {
         margin-bottom: 24;
       }
 
+      Label progress_tracker {
+        label: "";
+        margin-bottom: 12;
+      }
+
       Button play {
         halign: center;
         margin-bottom: 24;
         icon-name: "media-playback-start-symbolic";
       }
 
-  LinkButton {
-      label: "API Reference";
-      uri: "https://docs.gtk.org/gtk4/class.ProgressBar.html";
-      }
+      LinkButton {
+        label: "API Reference";
+        uri: "https://docs.gtk.org/gtk4/class.ProgressBar.html";
+        }
 
-    LinkButton{
-      label: "Human Interface Guidelines";
-      uri: "https://developer.gnome.org/hig/patterns/feedback/progress-bars.html";
-      }
+      LinkButton{
+        label: "Human Interface Guidelines";
+        uri: "https://developer.gnome.org/hig/patterns/feedback/progress-bars.html";
+        }
     }
   }
-}
+
