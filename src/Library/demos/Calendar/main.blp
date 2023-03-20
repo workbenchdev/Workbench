@@ -3,7 +3,7 @@ using Adw 1;
 
 Adw.StatusPage {
   title: "Calendar";
-  description: "Keep track of current or upcoming events";
+  description: "Widget that helps you keep track of events";
 
     Box {
       orientation: vertical;
@@ -16,13 +16,28 @@ Adw.StatusPage {
       margin-bottom: 18;
     }
 
+    Box {
+      spacing: 6;
+      halign: center;
+      margin-bottom: 12;
+
+      Button mark {
+        icon-name: "plus";
+      }
+
+      Button remove_mark {
+        icon-name: "minus";
+      }
+    }
+
     LinkButton {
       label: "API Refernce";
       uri: "https://docs.gtk.org/gtk4/class.Calendar.html";
    }
   }
  }
-}
+
+
 
 
 

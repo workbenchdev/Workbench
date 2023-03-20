@@ -1,7 +1,7 @@
 {
   "name": "Calendar",
   "category": "user_interface",
-  "description": "Keep track of current or upcoming events",
+  "description": "Widget that helps you keep track of events",
   "panels": [
     "ui",
     "preview"
