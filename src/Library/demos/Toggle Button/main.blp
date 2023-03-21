@@ -14,21 +14,21 @@ Adw.StatusPage {
       margin-bottom: 6;
       styles ["linked"]
 
-      ToggleButton button_first {
+      ToggleButton button_no_look {
         active: true;
         icon-name: "eye-not-looking-symbolic";
       }
 
-      ToggleButton button_second {
+      ToggleButton button_look {
         active: false;
         icon-name: "eye-open-negative-filled-symbolic";
-        group: button_first;
+        group: button_no_look;
       }
     }
 
     Label {
       label: "Grouped";
-      margin-bottom: 12;
+      margin-bottom: 24;
     }
 
     Box  {
@@ -37,13 +37,13 @@ Adw.StatusPage {
       spacing: 6;
       margin-bottom: 6;
 
-      ToggleButton button_third {
+      ToggleButton button_camera {
         active: false;
         icon-name: "photo-camera-symbolic";
         halign: center;
       }
 
-      ToggleButton button_fourth {
+      ToggleButton button_flashlight {
         active: false;
         icon-name: "flashlight-symbolic";
         halign: center;
@@ -52,7 +52,7 @@ Adw.StatusPage {
 
     Label {
       label: "Independent";
-      margin-bottom: 12;
+      margin-bottom: 24;
     }
 
     ToggleButton button_console {
@@ -69,7 +69,7 @@ Adw.StatusPage {
 
     Label {
       label: "With label";
-      margin-bottom: 12;
+      margin-bottom: 24;
     }
 
     LinkButton{
@@ -79,7 +79,7 @@ Adw.StatusPage {
 
     LinkButton{
       label: "API Reference";
-      uri: "https://docs.gtk.org/gtk4/class.ToggleButton.html#description";
+      uri: "https://docs.gtk.org/gtk4/class.ToggleButton.html";
     }
 
     LinkButton{
@@ -88,7 +88,3 @@ Adw.StatusPage {
     }
   }
 }
-
-
-
-

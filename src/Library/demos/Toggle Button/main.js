@@ -1,15 +1,14 @@
-const connectToggleButton = (button, message) =>
-  button.connect("toggled", () =>
-    console.log(`${message} ${button.active ? "On" : "Off"}`),
-  );
-
 const buttons = {
-  Camera: workbench.builder.get_object("button_third"),
-  Flashlight: workbench.builder.get_object("button_fourth"),
-  Console: workbench.builder.get_object("button_console"),
-  Eye: workbench.builder.get_object("button_second"),
+  button_no_look: "Don't look",
+  button_look: "Look",
+  button_camera: "Camera",
+  button_flashlight: "Flashlight",
+  button_console: "Console",
 };
 
-Object.entries(buttons).forEach(([name, button]) =>
-  connectToggleButton(button, name),
-);
+for (const [id, name] of Object.entries(buttons)) {
+  const button = workbench.builder.get_object(id);
+  button.connect("notify::active", () => {
+    console.log(`${name} ${button.active ? "On" : "Off"}`);
+  });
+}
