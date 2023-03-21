@@ -8,7 +8,7 @@ const color_dialog_button = workbench.builder.get_object("color_dialog_button");
 const custom_button = workbench.builder.get_object("custom_button");
 
 const color = new Gdk.RGBA();
-color.parse("white");
+color.parse("red");
 
 const dialog_standard = new Gtk.ColorDialog({
   title: "Select a color",
@@ -34,7 +34,7 @@ const dialog_custom = new Gtk.ColorDialog({
 custom_button.connect("clicked", async () => {
   try {
     const color = await dialog_custom.choose_rgba(workbench.window, null, null);
-    console.log(`Custom Buton: The color selected is ${color.to_string()}`);
+    console.log(`Custom Button: The color selected is ${color.to_string()}`);
   } catch (err) {
     logError(err);
   }
