@@ -1,0 +1,10 @@
+{
+  "name": "Calendar",
+  "category": "user_interface",
+  "description": "Display a Gregorian calendar, one month at a time",
+  "panels": [
+    "ui",
+    "preview"
+  ],
+  "autorun": true
+}

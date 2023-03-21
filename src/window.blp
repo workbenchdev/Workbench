@@ -100,6 +100,18 @@ Gtk.ApplicationWindow window {
       icon-name: "open-menu-symbolic";
       primary: true;
     }
+
+    [end]
+    Button button_run {
+      child: Adw.ButtonContent {
+        icon-name: "media-playback-start-symbolic";
+        label: _("_Run");
+        use-underline: true;
+      };
+      action-name: "win.run";
+      tooltip-text: _("Run (Ctrl+⏎)");
+      styles ["suggested-action"]
+    }
   };
 
   [content]
@@ -145,18 +157,6 @@ Gtk.ApplicationWindow window {
                 };
                 tooltip-text: _("Switch document");
               }
-            }
-
-            [end]
-            Button button_run {
-              child: Adw.ButtonContent {
-                icon-name: "media-playback-start-symbolic";
-                label: _("_Run");
-                use-underline: true;
-              };
-              action-name: "win.run";
-              tooltip-text: _("Run (Ctrl+⏎)");
-              styles ["suggested-action"]
             }
           }
 
@@ -266,10 +266,12 @@ Gtk.ApplicationWindow window {
             styles ["toolbar", "panel_header"]
 
             [start]
-            Label {
-              label: _("<b>Preview</b>");
-              use-markup: true;
-              styles ["dim-label"]
+            MenuButton {
+              halign: center;
+              valign: center;
+              label: _("Preview");
+              styles ["flat"]
+              menu-model: preview_menu;
             }
 
             [center]
@@ -554,4 +556,13 @@ menu menu_app {
       action: "app.about";
     }
   }
+}
+
+menu preview_menu {
+  // FIXME: It's unclear if this is needed or helpful
+  // know issue: if auto-preview is disabled, Workbench shows a blank preview on start
+  item (_("Auto-Update"), "app.auto-preview")
+  // FIXME: This will probably be removed in favor of
+  // automatcally enabling when we detect a crash
+  item (_("Safe Mode"), "app.safe-mode")
 }

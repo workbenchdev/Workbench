@@ -1,23 +1,23 @@
 using Gtk 4.0;
 using Adw 1;
 
-Gtk.Window window {
+Adw.Window window {
   width-request: 800;
   height-request: 600;
   hide-on-close: true;
-  title: _("Icon Library");
+
   Adw.ToastOverlay overlay {
     Box {
       orientation: vertical;
 
-      Adw.Clamp {
-        maximum-size: 800;
+      Adw.HeaderBar {
+        [title]
+        Adw.Clamp {
+          maximum-size: 800;
 
-        Box {
-          styles ["toolbar"]
           SearchEntry search_entry {
             hexpand: true;
-            placeholder-text: _('Search for icons by name, category or tag');
+            placeholder-text: _("Search for icons by name, category or tag");
           }
         }
       }
