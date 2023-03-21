@@ -1,0 +1,89 @@
+using Gtk 4.0;
+using Adw 1;
+
+
+
+Adw.StatusPage {
+  title: "File API";
+  description: "Dispaly info related to a file/folder";
+
+  Box {
+    orientation: vertical;
+    halign: center;
+
+    Box {
+    halign: center;
+
+      Button button {
+        margin-bottom: 6;
+        width-request: 36;
+        height-request: 36;
+        styles ["pill"]
+
+        Adw.ButtonContent {
+          label: "Select File";
+          styles ["body"]
+          icon-name: "paper-symbolic";
+        }
+
+      }
+    }
+
+    Label file_name {
+      label: "No file selected";
+      justify: center;
+      margin-bottom: 12;
+    }
+
+    ListBox {
+      selection-mode: none;
+      margin-bottom: 12;
+      styles ["boxed-list"]
+
+      Adw.ActionRow file_size {
+        title: "File Size";
+        subtitle: "N/A";
+      }
+
+      Adw.ActionRow file_path {
+        title: "File Path";
+        subtitle: "N/A";
+      }
+
+      Adw.ActionRow subfolders {
+        title: "Number of Subfolders in Directory";
+        subtitle: "N/A";
+      }
+
+      Adw.ActionRow subfiles {
+        title: "Number of Subfiles in Directory";
+        subtitle: "N/A";
+      }
+
+      Adw.ActionRow date_created {
+        title: "Date Created";
+        subtitle: "N/A";
+      }
+
+      Adw.ActionRow date_modified {
+        title: "Date Modified";
+        subtitle: "N/A";
+      }
+    }
+
+    LinkButton {
+      label: "Gjs Docs";
+      uri: "https://gjs.guide/guides/gio/file-operations.html#getting-a-file-object";
+    }
+
+    LinkButton {
+      label: "Gio Docs";
+      uri: "https://gjs-docs.gnome.org/gio20~2.0/gio.file";
+    }
+  }
+}
+
+
+
+
+

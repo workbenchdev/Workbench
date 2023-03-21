@@ -1,0 +1,10 @@
+{
+  "name": "File API",
+  "category": "user_interface",
+  "description": "Use it to find info about a File",
+  "panels": [
+    "ui",
+    "preview"
+  ],
+  "autorun": true
+}
