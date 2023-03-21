@@ -1,0 +1,10 @@
+{
+  "name": "Progress Bar",
+  "category": "user_interface",
+  "description": "Display the progress of a long running operation",
+  "panels": [
+    "ui",
+    "preview"
+  ],
+  "autorun": true
+}
