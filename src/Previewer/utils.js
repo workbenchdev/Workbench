@@ -63,7 +63,7 @@ function assertObjectBuildable(el_object, root) {
     if (!GObject.type_is_a(klass, Gtk.Buildable)) {
       if (el_object.getChildren("child").length > 0) {
         throw new Error(
-          `${klass.$gtype.name} is not a GtkBuildable. It cannot have children`,
+          `${klass.$gtype.name} is not a GtkBuildable. It cannot have children.`,
         );
       }
     }
@@ -106,6 +106,14 @@ function assertObjectBuildable(el_object, root) {
     assertObjectBuildable(child_property, false);
   }
 
+  // Iterate over properties
+  for (const el_property of el_object.getChildren("property")) {
+    for (const el of el_property.getChildren("object")) {
+      assertObjectBuildable(el, false);
+    }
+  }
+
+  // Iterate over children
   for (const el_child of el_object.getChildren("child")) {
     for (const el of el_child.getChildren("object")) {
       assertObjectBuildable(el, false);
