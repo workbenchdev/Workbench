@@ -1,0 +1,10 @@
+{
+  "name": "Banner",
+  "category": "user_interface",
+  "description": "Banners is an attention-grabbing notification that is used to communicate important information.",
+  "panels": [
+    "code",
+    "preview"
+  ],
+  "autorun": true
+}
