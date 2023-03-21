@@ -1,13 +1,15 @@
-const camera = workbench.builder.get_object("button_third");
-const flashlight = workbench.builder.get_object("button_fourth");
-const terminal = workbench.builder.get_object("console");
+const connectToggleButton = (button, message) =>
+  button.connect("toggled", () =>
+    console.log(`${message} ${button.active ? "On" : "Off"}`),
+  );
 
-camera.connect("toggled", () => {
-  console.log(camera.get_active() ? "Camera On" : "Camera Off");
-});
-flashlight.connect("toggled", () => {
-  console.log(flashlight.get_active() ? "Flashlight On" : "Flashlight Off");
-});
-terminal.connect("toggled", () => {
-  console.log(terminal.get_active() ? "Entered Console" : "Exited Console");
-});
+const buttons = {
+  Camera: workbench.builder.get_object("button_third"),
+  Flashlight: workbench.builder.get_object("button_fourth"),
+  Console: workbench.builder.get_object("button_console"),
+  Eye: workbench.builder.get_object("button_second"),
+};
+
+Object.entries(buttons).forEach(([name, button]) =>
+  connectToggleButton(button, name),
+);

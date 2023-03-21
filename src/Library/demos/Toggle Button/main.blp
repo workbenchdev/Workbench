@@ -8,10 +8,10 @@ Adw.StatusPage {
   Box {
     orientation: vertical;
 
-    Box Grouped_Toggle_Buttons {
+    Box {
       orientation: horizontal;
       halign: center;
-      margin-bottom: 12;
+      margin-bottom: 6;
       styles ["linked"]
 
       ToggleButton button_first {
@@ -27,21 +27,20 @@ Adw.StatusPage {
     }
 
     Label {
-      label: "Grouped Toggle Buttons";
-      justify: center;
-      margin-bottom: 18;
+      label: "Grouped";
+      margin-bottom: 12;
     }
 
-    Box Ungrouped_Toggle_Buttons {
+    Box  {
       orientation: horizontal;
       halign: center;
-      margin-bottom: 12;
+      spacing: 6;
+      margin-bottom: 6;
 
       ToggleButton button_third {
         active: false;
         icon-name: "photo-camera-symbolic";
         halign: center;
-        margin-end: 6;
       }
 
       ToggleButton button_fourth {
@@ -52,14 +51,13 @@ Adw.StatusPage {
     }
 
     Label {
-      label: "Ungrouped Toggle Buttons";
-      margin-bottom: 18;
-      justify: center;
+      label: "Independent";
+      margin-bottom: 12;
     }
 
-    ToggleButton console {
+    ToggleButton button_console {
       halign: center;
-      margin-bottom: 18;
+      margin-bottom: 6;
 
       Adw.ButtonContent {
         halign: center;
@@ -68,6 +66,12 @@ Adw.StatusPage {
         icon-name: "terminal-symbolic";
       }
     }
+
+    Label {
+      label: "With label";
+      margin-bottom: 12;
+    }
+
     LinkButton{
       label: "Tutorial";
       uri: "https://developer.gnome.org/documentation/tutorials/beginners/components/toggle.html";
@@ -84,6 +88,7 @@ Adw.StatusPage {
     }
   }
 }
+
 
 
 
