@@ -15,13 +15,13 @@ const entry = workbench.builder.get_object("entry");
 const label_strength = workbench.builder.get_object("label_strength");
 
 entry.connect("notify::text", () => {
-  update_password_strength();
+  estimatePasswordStrength();
 });
 
-// This is insecure and only for the purpose of demonstration.
-// Consider using appropriate solutions instead
+// This is not a secure way to estimate password strength
+// Use appropriate solutions instead
 // such as https://github.com/dropbox/zxcvbn
-function update_password_strength() {
+function estimatePasswordStrength() {
   const level = Math.min(Math.ceil(entry.text.length / 2), 6);
 
   switch (level) {

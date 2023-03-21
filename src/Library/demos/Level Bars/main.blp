@@ -8,6 +8,7 @@ Adw.StatusPage {
   Box {
     orientation: vertical;
     margin-top: 24;
+    halign: center;
 
     Box {
       orientation: vertical;
@@ -21,12 +22,12 @@ Adw.StatusPage {
 
       Box {
         orientation: vertical;
-        spacing:12;
+        spacing: 12;
 
         Label {
           halign: start;
           margin-start: 12;
-          margin-top:12;
+          margin-top: 12;
           label: _("Battery");
         }
 
@@ -40,6 +41,7 @@ Adw.StatusPage {
             value: 50;
         }
         styles ["card"]
+        margin-bottom: 24;
       }
 
 
@@ -77,4 +79,3 @@ Adw.StatusPage {
     }
   }
 }
-
