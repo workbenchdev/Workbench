@@ -1,0 +1,10 @@
+{
+  "name": "Level Bars",
+  "category": "user_interface",
+  "description": "A bar widget used as a level indicator",
+  "panels": [
+    "ui",
+    "preview"
+  ],
+  "autorun": true
+}
