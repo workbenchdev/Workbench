@@ -12,7 +12,7 @@ import Internal from "./Internal.js";
 import External from "./External.js";
 import { getClassNameType } from "../overrides.js";
 
-import { isBuilderable, isPreviewable } from "./utils.js";
+import { assertBuildable, detectCrash, isPreviewable } from "./utils.js";
 
 /*
   Always default to in-process preview
@@ -40,10 +40,7 @@ export default function Previewer({
   const dropdown_preview_align = builder.get_object("dropdown_preview_align");
   // TODO: File a bug libadwaita
   // flat does nothing on GtkDropdown or GtkComboBox or GtkComboBoxText
-  dropdown_preview_align
-    .get_first_child()
-    .get_style_context()
-    .add_class("flat");
+  dropdown_preview_align.get_first_child().add_css_class("flat");
 
   const internal = Internal({
     onWindowChange(open) {
@@ -105,10 +102,12 @@ export default function Previewer({
   function start() {
     stop();
     if (handler_id_ui === null) {
-      handler_id_ui = panel_ui.connect("updated", schedule_update);
+      handler_id_ui = panel_ui.connect("updated", () => schedule_update());
     }
     if (handler_id_css === null) {
-      handler_id_css = code_view_css.connect("changed", schedule_update);
+      handler_id_css = code_view_css.connect("changed", () =>
+        schedule_update(),
+      );
     }
   }
 
@@ -117,7 +116,6 @@ export default function Previewer({
       panel_ui.disconnect(handler_id_ui);
       handler_id_ui = null;
     }
-
     if (handler_id_css) {
       code_view_css.disconnect(handler_id_css);
       handler_id_css = null;
@@ -148,8 +146,12 @@ export default function Previewer({
     },
   );
 
+  settings.connect("changed", () => {
+    if (settings.get_boolean("auto-preview")) schedule_update();
+  });
   let symbols = null;
-  async function update() {
+  async function update(force = false) {
+    if (!(force || settings.get_boolean("auto-preview"))) return;
     let text = panel_ui.xml.trim();
     let target_id;
     let tree;
@@ -170,9 +172,18 @@ export default function Previewer({
 
     if (!target_id) return;
 
-    // console.time("builderable");
-    if (!(await isBuilderable(text))) return;
-    // console.timeEnd("builderable");
+    try {
+      assertBuildable(tree);
+    } catch (err) {
+      console.warn(err.message);
+      return;
+    }
+
+    if (settings.get_boolean("safe-mode")) {
+      // console.time("detectCrash");
+      if (await detectCrash(text, target_id)) return;
+      // console.timeEnd("detectCrash");
+    }
 
     const builder = new Gtk.Builder();
     const scope = new BuilderScope();
@@ -217,16 +228,18 @@ export default function Previewer({
   const schedule_update = unstack(update, logError);
 
   async function useExternal() {
-    if (current === external) return;
-    await setPreviewer(external);
+    if (current !== external) {
+      await setPreviewer(external);
+    }
     stack.set_visible_child_name("close_window");
-    await update();
+    await update(true);
   }
 
   async function useInternal() {
-    if (current === internal) return;
-    await setPreviewer(internal);
-    await update();
+    if (current !== internal) {
+      await setPreviewer(internal);
+    }
+    await update(true);
   }
 
   async function setPreviewer(previewer) {

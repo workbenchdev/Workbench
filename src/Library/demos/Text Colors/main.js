@@ -50,4 +50,3 @@ function rainbow_attributes(str) {
   // https://docs.gtk.org/Pango/method.AttrList.to_string.html
   return Pango.attr_list_from_string(attrListString);
 }
-

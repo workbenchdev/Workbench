@@ -1,6 +1,7 @@
 import GLib from "gi://GLib";
 import Gio from "gi://Gio";
 import Xdp from "gi://Xdp";
+import GObject from "gi://GObject";
 
 export const portal = new Xdp.Portal();
 
@@ -113,25 +114,24 @@ export function getLanguageForFile(file) {
   });
 }
 
-export function listenProperty(
-  object,
-  property,
-  fn,
-  { initial = false, equal = true } = {},
-) {
-  let value = object[property];
+export function listenProperty(object, property, fn, { initial = false } = {}) {
   if (initial) {
-    fn(value);
+    fn(object[property]);
   }
-  const signal_spec = object.connect(`notify::${property}`, () => {
-    const new_value = object[property];
-    if (equal && new_value === value) return;
-    value = new_value;
-    fn(value);
+
+  const signal = `notify::${property}`;
+  const handler_id = object.connect(signal, () => {
+    fn(object[property]);
   });
   return {
+    block() {
+      GObject.signal_handler_block(object, handler_id);
+    },
+    unblock() {
+      GObject.signal_handler_unblock(object, handler_id);
+    },
     disconnect() {
-      return signal_spec.disconnect();
+      return object.disconnect(handler_id);
     },
   };
 }

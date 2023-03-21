@@ -20,4 +20,3 @@ for (const id of button_ids) {
 function onClicked(button) {
   console.log(`${button.name} clicked`);
 }
-
