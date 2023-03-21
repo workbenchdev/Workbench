@@ -1,29 +1,16 @@
 using Gtk 4.0;
 using Adw 1;
-Adw.Clamp{
+
+Adw.StatusPage {
+  title: _("Level Bars");
+  description: _("A bar widget used as a level indicator");
+
   Box {
     orientation: vertical;
     margin-top: 24;
 
-    Label {
-      label: "Level Bars";
-      margin-top: 6;
-      margin-bottom: 6;
-
-      styles [
-        "title-1",
-      ]
-    }
-
-    Label {
-      label: _("A bar widget used as a level indicator");
-      margin-top: 6;
-      margin-bottom: 24;
-    }
-
     Box {
       orientation: vertical;
-      vexpand: true;
       spacing: 18;
       margin-start: 18;
       margin-end: 18;
@@ -50,18 +37,11 @@ Adw.Clamp{
             margin-bottom: 24;
             min-value:0;
             max-value:100;
-            value: 75;
+            value: 50;
         }
         styles ["card"]
       }
-    }
 
-    Box {
-      orientation: vertical;
-      vexpand: true;
-      spacing: 18;
-      margin-start: 18;
-      margin-end: 18;
 
       Label {
         label: _("Discrete");
@@ -76,14 +56,14 @@ Adw.Clamp{
         min-value: 0;
         max-value: 6;
       }
-      Label label_strength{
+      Label label_strength {
 
       }
     }
 
     Box {
       orientation: vertical;
-      margin-bottom:24;
+      margin-bottom: 24;
 
       LinkButton {
         label: "Tutorial";

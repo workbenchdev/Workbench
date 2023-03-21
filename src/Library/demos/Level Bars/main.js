@@ -1,7 +1,4 @@
-import Gtk from "gi://Gtk";
-
 const bar_continuous = workbench.builder.get_object("bar_continuous");
-const percentage_label = workbench.builder.get_object("percentage_label");
 
 bar_continuous.add_offset_value("full", 100);
 bar_continuous.add_offset_value("half", 50);
@@ -21,28 +18,35 @@ entry.connect("notify::text", () => {
   update_password_strength();
 });
 
+// This is insecure and only for the purpose of demonstration.
+// Consider using appropriate solutions instead
+// such as https://github.com/dropbox/zxcvbn
 function update_password_strength() {
-  // Check if password only has valid characters
-  if (entry.text && !/[^a-zA-Z\d!@#$&*]/.test(entry.text)) {
-    // Every 2 characters increases strength by 1
-    bar_discrete.value = Math.min(Math.ceil(entry.text.length / 2), 6);
-    if (0 < entry.text.length && entry.text.length <= 2) {
+  const level = Math.min(Math.ceil(entry.text.length / 2), 6);
+
+  switch (level) {
+    case 1:
       label_strength.label = "Very Weak";
       label_strength.css_classes = ["very-weak-label"];
-    } else if (3 <= entry.text.length && entry.text.length <= 4) {
+      break;
+    case 2:
       label_strength.label = "Weak";
       label_strength.css_classes = ["weak-label"];
-    } else if (5 <= entry.text.length && entry.text.length <= 8) {
+      break;
+    case 3:
+    case 4:
       label_strength.label = "Moderate";
       label_strength.css_classes = ["moderate-label"];
-    } else if (9 <= entry.text.length) {
+      break;
+    case 5:
+    case 6:
       label_strength.label = "Strong";
       label_strength.css_classes = ["strong-label"];
-    }
-    return;
+      break;
+    default:
+      label_strength.label = "";
+      label_strength.css_classes = [];
   }
-  bar_discrete.value = 0;
-  label_strength.label = "Invalid Password";
-  label_strength.css_classes = [];
-}
 
+  bar_discrete.value = level;
+}
