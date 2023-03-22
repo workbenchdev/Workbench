@@ -1,7 +1,7 @@
 {
   "id": "re.sonny.Workbench",
   "runtime": "org.gnome.Sdk",
-  "runtime-version": "43",
+  "runtime-version": "44",
   "sdk": "org.gnome.Sdk",
   "sdk-extensions": [
     "org.freedesktop.Sdk.Extension.vala"
@@ -31,10 +31,9 @@
       ],
       "sources": [
         {
-          "type": "git",
-          "url": "https://gitlab.gnome.org/GNOME/vte.git",
-          "commit": "5bf476f1d7283bc805ac8ae6abe94f81ffd7be05",
-          "tag": "0.70.1"
+          "type": "archive",
+          "url": "https://download.gnome.org/sources/vte/0.72/vte-0.72.0.tar.xz",
+          "sha256": "40fe914d6c70db34176c922725b6c6ea15d5f3cb2a9b44c57e200a5f950a6736"
         }
       ]
     },
@@ -62,7 +61,7 @@
         {
           "type": "git",
           "url": "https://gitlab.gnome.org/jwestman/blueprint-compiler.git",
-          "commit": "6f4806bfb3514c3fa01e0880c4bd9d399e058a44"
+          "commit": "bc605c5df86a33ff415f627ab1aa8cca53780c81"
         }
       ]
     },
@@ -71,9 +70,9 @@
       "buildsystem": "meson",
       "sources": [
         {
-          "type": "git",
-          "url": "https://github.com/vala-lang/vala-language-server/",
-          "commit": "bf978c0cda97cff946f355477ec8da08b1cb4e5e"
+          "type": "archive",
+          "url": "https://github.com/vala-lang/vala-language-server/releases/download/0.48.7/vala-language-server-0.48.7.tar.xz",
+          "sha256": "a93e09497738144792466d0c5ccb1347583d84a9987b65b08f6aa5d5a1e3f431"
         }
       ],
       "modules": [
@@ -83,8 +82,8 @@
           "sources": [
             {
               "type": "archive",
-              "url": "https://download.gnome.org/sources/jsonrpc-glib/3.42/jsonrpc-glib-3.42.0.tar.xz",
-              "sha256": "221989a57ca82a12467dc427822cd7651b0cad038140c931027bf1074208276b"
+              "url": "https://download.gnome.org/sources/jsonrpc-glib/3.44/jsonrpc-glib-3.44.0.tar.xz",
+              "sha256": "69406a0250d0cc5175408cae7eca80c0c6bfaefc4ae1830b354c0433bcd5ce06"
             }
           ],
           "cleanup": [
@@ -100,8 +99,8 @@
           "sources": [
             {
               "type": "archive",
-              "url": "https://download.gnome.org/sources/libgee/0.20/libgee-0.20.5.tar.xz",
-              "sha256": "31863a8957d5a727f9067495cabf0a0889fa5d3d44626e54094331188d5c1518"
+              "url": "https://download.gnome.org/sources/libgee/0.20/libgee-0.20.6.tar.xz",
+              "sha256": "1bf834f5e10d60cc6124d74ed3c1dd38da646787fbf7872220b8b4068e476d4d"
             }
           ]
         },
@@ -115,8 +114,8 @@
           "sources": [
             {
               "type": "archive",
-              "url": "https://github.com/uncrustify/uncrustify/archive/uncrustify-0.75.1.tar.gz",
-              "sha256": "fd14acc0a31ed88b33137bdc26d32964327488c835f885696473ef07caf2e182"
+              "url": "https://github.com/uncrustify/uncrustify/archive/uncrustify-0.76.0.tar.gz",
+              "sha256": "32e2f95485a933fc5667880f1a09a964ae83132c235bb606abbb0a659453acb3"
             }
           ]
         }
