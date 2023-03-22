@@ -1,0 +1,10 @@
+{
+  "name": "Font Chooser",
+  "category": "user_interface",
+  "description": "Show a dialog to select a font",
+  "panels": [
+    "ui",
+    "preview"
+  ],
+  "autorun": true
+}

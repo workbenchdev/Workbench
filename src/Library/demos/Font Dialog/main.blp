@@ -1,0 +1,61 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: "Font Dialog";
+  description: _("Show a dialog to select a font");
+
+  Box {
+    orientation: vertical;
+    halign: center;
+    spacing:42;
+
+    Box{
+      orientation:vertical;
+
+      Label {
+        label: _("Dialog Button");
+        margin-bottom:12;
+        styles ["title-4"]
+      }
+
+      FontDialogButton font_dialog_button {
+        halign: center;
+        margin-bottom:12;
+        use-font: true;
+        use-size: true;
+      }
+
+
+      LinkButton {
+        label: "API Reference";
+        uri: "https://docs.gtk.org/gtk4/class.FontDialogButton.html";
+      }
+    }
+
+    Box{
+      orientation: vertical;
+
+      Label {
+        label: _("Dialog with Custom Button");
+        margin-bottom:12;
+        styles ["title-4"]
+      }
+
+      Button custom_button {
+        label: _("Select Font … ");
+        margin-start:42;
+        margin-end:42;
+        margin-bottom:12;
+        styles ["pill"]
+      }
+
+      LinkButton {
+        label: "API Reference";
+        uri: "https://docs.gtk.org/gtk4/class.FontDialog.html";
+      }
+    }
+  }
+}
+
+
