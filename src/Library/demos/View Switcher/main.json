@@ -3,8 +3,10 @@
   "category": "user_interface",
   "description": "View Switchers allow users to switch between different predefined pages",
   "panels": [
+    "code",
     "ui",
     "preview"
   ],
   "autorun": false
 }
+
