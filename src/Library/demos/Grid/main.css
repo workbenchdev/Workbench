@@ -1,0 +1,41 @@
+#button00,
+#button01,
+#button02,
+#button10,
+#button11,
+#button12,
+#button20,
+#button21,
+#button22 {
+  min-width: 110px;
+  min-height: 140px;
+  background-color: #000018;
+  margin: 4px;
+}
+
+#button00:hover,
+#button01:hover,
+#button02:hover,
+#button10:hover,
+#button11:hover,
+#button12:hover,
+#button20:hover,
+#button21:hover,
+#button22:hover {
+  background-color: #9999b8;
+  box-shadow: inset 0px 0px 50px #aa22aa;
+}
+
+#cross {
+  background-color: #aa2222;
+  min-width: 110px;
+  min-height: 140px;
+  margin: 4px;
+}
+#circle {
+  background-color: #2222aa;
+  min-width: 110px;
+  min-height: 140px;
+  margin: 4px;
+}
+

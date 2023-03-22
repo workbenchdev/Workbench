@@ -4,6 +4,7 @@
   "description": "Allow people to perform using a grids",
   "panels": [
     "code",
+    "style",
     "ui",
     "preview"
   ],
