@@ -27,33 +27,24 @@ Adw.Window {
         icon-name: "star-filled-rounded-symbolic";
         use-underline: true;
         child:
-        Box{
-          orientation: vertical;
-          valign: center;
+        Adw.StatusPage{
+          title: bind page1.title;
+          icon-name: bind page1.icon-name;
+          child:
+          
+          Box{
+            orientation: vertical;
+            valign: center;
 
-          Image {
-            margin-top: 30;
-            icon-name: bind page1.icon-name;
-            pixel-size: 128;
-          }
-
-          Label {
-            margin-top: 24;
-            margin-bottom: 24;
-            margin-start: 24;
-            margin-end: 24;
-            label: bind page1.title;
-          }
-
-          LinkButton {
-            label: "API Reference";
-            uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.2/class.ViewSwitcher.html";
-          }
-
-          LinkButton {
-            label: "Human Interface Guidelines";
-            uri: "https://developer.gnome.org/hig/patterns/nav/view-switchers.html";
-          }
+            LinkButton {
+              label: "API Reference";
+              uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.2/class.ViewSwitcher.html";
+            }
+            LinkButton {
+              label: "Human Interface Guidelines";
+              uri: "https://developer.gnome.org/hig/patterns/nav/view-switchers.html";
+            }
+          };
         };
       }
 
@@ -63,50 +54,42 @@ Adw.Window {
         icon-name: "clock-alt-symbolic";
         use-underline: true;
         child:
-        Box{
-         orientation: vertical;
-         valign: center;
+        Adw.StatusPage{
+          title: bind page2.title;
+          icon-name: bind page2.icon-name;
+          child: 
+          
+          Box{
+            orientation: vertical;
+            valign: center;
 
-          Image {
-            margin-top: 30;
-            icon-name: bind page2.icon-name;
-            pixel-size: 128;
-          }
-
-          Label {
-            margin-top: 24;
-            margin-bottom: 24;
-            margin-start: 24;
-            margin-end: 24;
-            label: bind page2.title;
-          }
+            LinkButton {
+              label: "API Reference";
+              uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.2/class.ViewSwitcher.html";
+            }
+            LinkButton {
+              label: "Human Interface Guidelines";
+              uri: "https://developer.gnome.org/hig/patterns/nav/view-switchers.html";
+            }
+          };
         };
       }
+
 
       Adw.ViewStackPage page3 {
         name: "page3";
         title: _("Notifications");
         icon-name: "bell-symbolic";
-        badge-number: 3;
+        badge-number: 5;
         needs-attention: true;
         use-underline: true;
         child:
         Box{
-         orientation: vertical;
+          orientation: vertical;
           valign: center;
-
-          Image {
-            margin-top: 30;
-            icon-name: bind page3.icon-name;
-            pixel-size: 128;
-          }
-
-          Label {
-            margin-top: 24;
-            margin-bottom: 24;
-            margin-start: 24;
-            margin-end: 24;
-            label: bind page3.title;
+          ListBox notification_list{
+            
+            
           }
         };
       }
@@ -117,24 +100,24 @@ Adw.Window {
         icon-name: "person-symbolic";
         use-underline: true;
         child:
-        Box{
-          orientation: vertical;
-          valign: center;
+        Adw.StatusPage{
+          title: bind page4.title;
+          icon-name: bind page4.icon-name;
+          child:
+          
+          Box{
+            orientation: vertical;
+            valign: center;
 
-          Image {
-            margin-top: 30;
-            icon-name: bind page4.icon-name;
-            pixel-size: 128;
-
-          }
-
-          Label {
-            margin-top: 24;
-            margin-bottom: 24;
-            margin-start: 24;
-            margin-end: 24;
-            label: bind page4.title;
-          }
+            LinkButton {
+              label: "API Reference";
+              uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.2/class.ViewSwitcher.html";
+            }
+            LinkButton {
+              label: "Human Interface Guidelines";
+              uri: "https://developer.gnome.org/hig/patterns/nav/view-switchers.html";
+            }
+          };
         };
       }
     }
@@ -145,6 +128,3 @@ Adw.Window {
     }
   };
 }
-
-
-
