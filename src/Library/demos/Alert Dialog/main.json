@@ -1,0 +1,10 @@
+{
+  "name": "Alert Dialog",
+  "category": "user_interface",
+  "description": "Show an alert dialog",
+  "panels": [
+    "ui",
+    "preview"
+  ],
+  "autorun": true
+}

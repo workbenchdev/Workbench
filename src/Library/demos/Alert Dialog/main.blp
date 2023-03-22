@@ -1,0 +1,28 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: "Alert Dialog";
+  description: _("Show an alert dialog");
+
+  Box {
+    orientation: vertical;
+    halign: center;
+
+
+    Box{
+      orientation: vertical;
+      Button custom_button {
+        icon-name: "dialog-warning-symbolic";
+        margin-bottom:18;
+        styles ["pill"]
+      }
+
+      LinkButton {
+        label: "API Reference";
+        uri: "https://docs.gtk.org/gtk4/class.AlertDialog.html";
+      }
+    }
+  }
+}
+
