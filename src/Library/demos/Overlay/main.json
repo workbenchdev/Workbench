@@ -1,0 +1,10 @@
+{
+  "name": "Overlay",
+  "category": "user_interface",
+  "description": "Overlay widgets on top of a main widget",
+  "panels": [
+    "ui",
+    "preview"
+  ],
+  "autorun": true
+}
