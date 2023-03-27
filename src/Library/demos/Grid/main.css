@@ -7,10 +7,10 @@
 #button20,
 #button21,
 #button22 {
-  min-width: 110px;
-  min-height: 140px;
-  background-color: #000018;
-  margin: 4px;
+  min-width: 130px;
+  min-height: 130px;
+  margin: 5px;
+  padding: 5px;
 }
 
 #button00:hover,
@@ -22,20 +22,6 @@
 #button20:hover,
 #button21:hover,
 #button22:hover {
-  background-color: #9999b8;
-  box-shadow: inset 0px 0px 50px #aa22aa;
-}
-
-#cross {
-  background-color: #aa2222;
-  min-width: 110px;
-  min-height: 140px;
-  margin: 4px;
-}
-#circle {
-  background-color: #2222aa;
-  min-width: 110px;
-  min-height: 140px;
-  margin: 4px;
+  box-shadow: inset 0px 0px 65px #ff1493;
 }
 

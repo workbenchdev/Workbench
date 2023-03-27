@@ -5,62 +5,86 @@ Adw.StatusPage {
   title: "Grid";
   description: _("Arrange widgets in rows and columns.");
 
-  Grid {
-    hexpand: true;
-    vexpand: true;
-    Button button00 {
-      name: "button00";
-      layout { row: 0; column: 0; }
-      hexpand: true;
-      icon-name: "edit";
-    }
-    Button button01 {
-      name: "button01";
-      layout { row: 0; column: 1; }
-      hexpand: true;
-      icon-name: "edit";
-    }
-    Button button02 {
-      name: "button02";
-      layout { row: 0; column: 2; }
-      hexpand: true;
-      icon-name: "edit";
-    }
-    Button button10 {
-      name: "button10";
-      layout { row: 1; column: 0; }
-      hexpand: true;
-      icon-name: "edit";
-    }
-    Button button11 {
-      name: "button11";
-      layout { row: 1; column: 1; }
-      hexpand: true;
-      icon-name: "edit";
-    }
-    Button button12 {
-      name: "button12";
-      layout { row: 1; column: 2; }
-      hexpand: true;
-      icon-name: "edit";
-    }
-    Button button20 {
-      name: "button20";
-      layout { row: 2; column: 0; }
-      hexpand: true;
-      icon-name: "edit";
-    }
-    Button button21 {
-      name: "button21";
-      layout { row: 2; column: 1; }
-      hexpand: true;
-      icon-name: "edit";
-    }
-    Button button22 {
-      name: "button22";
-      layout { row: 2; column: 2; }
-      hexpand: true;
-      icon-name: "edit";
+ Box {
+    halign: center;
+    Grid {
+        Button button00 {
+        name: "button00";
+        layout { row: 0; column: 0; }  
+        hexpand: false;
+        Image image00{
+          icon-name: "circle-outline-thick-symbolic";
+          pixel-size: 100;
+        }
+      }
+      
+      Button button01 {
+        name: "button01";
+        layout { row: 0; column: 1; }
+        hexpand: false;
+        Image image01{
+          pixel-size: 100;
+        }
+      }
+      Button button02 {
+        name: "button02";
+        layout { row: 0; column: 2; }
+        hexpand: false;
+        Image image02{
+          pixel-size: 100;
+        }
+      }
+      Button button10 {
+        name: "button10";
+        layout { row: 1; column: 0; }
+        hexpand: false;
+        Image image10{
+          pixel-size: 100;
+        }
+      }
+      Button button11 {
+        name: "button11";
+        layout { row: 1; column: 1; }
+        hexpand: false;
+        Image image11{
+          pixel-size: 100;
+        }
+      }
+      Button button12 {
+        name: "button12";
+        layout { row: 1; column: 2; }
+        hexpand: false;
+        Image image12{
+          pixel-size: 100;
+        }
+      }
+      Button button20 {
+        name: "button20";
+        layout { row: 2; column: 0; }
+        hexpand: false;
+        Image image20{
+          pixel-size: 100;
+        }
+      }
+      Button button21 {
+        name: "button21";
+        layout { row: 2; column: 1; }
+        hexpand: false;
+        Image image21{
+          pixel-size: 100;
+        }
+      }
+      Button button22 {
+        name: "button22";
+        layout { row: 2; column: 2; }
+        hexpand: false;
+        Image image22{
+          pixel-size: 100;
+        }
+      }
     }
   }
 }
+
+
+

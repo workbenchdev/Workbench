@@ -15,13 +15,16 @@ for (const id of button_ids) {
   button.connect("clicked", onClicked);
 }
 
-let step = 0;
+let step = 1;
 function onClicked(button) {
   //check access for user action
-  if (button.icon_name === "edit") {
+  let clicked = button.get_child();
+  if (
+    clicked.icon_name !== "cross-large-symbolic" &&
+    clicked.icon_name !== "circle-outline-thick-symbolic"
+  ) {
     //store and show user action
-    button.icon_name = "cross-large-symbolic";
-    button.name = "cross";
+    clicked.icon_name = "cross-large-symbolic";
     //calculate pc reaction
     let pc_is_thinking = true;
     let pc_is_thinking_row;
@@ -33,9 +36,13 @@ function onClicked(button) {
       let temp = workbench.builder.get_object(
         "button" + pc_is_thinking_row + pc_is_thinking_col,
       );
-      if (temp.name !== "cross" && temp.name !== "circle") {
-        temp.icon_name = "circle-outline-thick-symbolic";
-        temp.name = "circle";
+      let searched = temp.get_child();
+      if (
+        searched.icon_name !== "cross-large-symbolic" &&
+        searched.icon_name !== "circle-outline-thick-symbolic"
+      ) {
+        //store and show pc reaction
+        searched.icon_name = "circle-outline-thick-symbolic";
         pc_is_thinking = false;
         step += 2;
       }
