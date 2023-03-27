@@ -1,19 +1,37 @@
 using Gtk 4.0;
+using Adw 1;
 
-Box welcome {
+Adw.StatusPage {
+  title: "Spin Button";
+  description: _("Display spin button count (0 - 100)");
+
+  Box {
   orientation: vertical;
-  valign: center;
-  halign: center;
+  spacing: 12;
+  width-request: 12;
 
-  Label {
-    label: "Spin Button";
-    margin-bottom: 30;
-    styles ["title-1"]
-  }
+    SpinButton spinbutton{
+      halign: center;
+      value: 0;
+      climb-rate: 1;
+      adjustment: Gtk.Adjustment {
+        lower: 0;
+        page-increment: 1;
+        step-increment: 1;
+        upper: 100;
+        value: 0;
+      };
+    }
 
-  Button open_spinbox{
-    label: "Open";
-    styles["pill"]
+    LinkButton {
+      label: "API Reference";
+      uri: "https://docs.gtk.org/gtk4/class.SpinButton.html";
+    }
+
+    LinkButton {
+      label: "Human Interface Guidelines";
+      uri: "https://developer.gnome.org/hig/patterns/controls/spin-buttons.html";
+    }
   }
 
 }

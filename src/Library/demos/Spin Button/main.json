@@ -1,9 +1,9 @@
 {
   "name": "Spin Button",
   "category": "user_interface",
-  "description": "Spin Button allows users to increment or decrement the displayed value of an attribute. ",
+  "description": "Let users choose a precise numerical value.",
   "panels": [
-    "code",
+    "ui",
     "preview"
   ],
   "autorun": true
