@@ -1,0 +1,11 @@
+{
+  "name": "Drag and Drop",
+  "category": "user_interface",
+  "description": "dnd",
+  "panels": [
+    "code",
+    "ui",
+    "preview"
+  ],
+  "autorun": false
+}
