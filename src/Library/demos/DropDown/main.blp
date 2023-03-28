@@ -1,0 +1,58 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: "DropDown";
+  description: _("Workbench dropdown interface");
+
+  Box{
+    orientation: vertical;
+    halign: center;
+    valign: center;
+    spacing: 12;
+
+    Box gender-box{
+      orientation: horizontal;
+      halign: center;
+      valign: center;
+      margin-bottom: 10;
+
+      Label {
+        label: "Gender:";
+        margin-end: 20;
+      }
+      DropDown {
+        model: StringList {
+          strings ["Male", "Female", "Non-binary"]
+        };
+      }
+    }
+
+    Box social-box{
+      orientation: horizontal;
+      halign: center;
+      valign: center;
+      margin-bottom: 10;
+
+      Label {
+        label: "Social media:";
+        margin-end: 20;
+      }
+      DropDown{
+        model: StringList {
+          strings ["Twitter", "Instagram", "LinkedIn", "Github"]
+        };
+      }
+    }
+
+    LinkButton {
+      label: "API Reference";
+      uri: "https://docs.gtk.org/gtk4/class.DropDown.html";
+    }
+
+    LinkButton {
+      label: "Human Interface Guidelines";
+      uri: "https://developer.gnome.org/hig/patterns/controls/drop-downs.html";
+    }
+  }
+}

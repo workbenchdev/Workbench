@@ -1,0 +1,10 @@
+{
+  "name": "DropDown",
+  "category": "user_interface",
+  "description": "Let user to choose an item from a list of options.",
+  "panels": [
+    "ui",
+    "preview"
+  ],
+  "autorun": true
+}
