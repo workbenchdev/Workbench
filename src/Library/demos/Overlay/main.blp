@@ -1,0 +1,56 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: "Overlay";
+  description: "Overlay widgets on top of a each other";
+
+  Adw.Clamp{
+    Overlay {
+      Picture picture {
+      }
+
+      [overlay]
+      Box toolbar{
+        margin-start: 24;
+        margin-end: 24;
+        margin-bottom:18;
+        valign: end;
+
+        Button {
+          icon-name: "skip-backwards-10-symbolic";
+        }
+
+        Button {
+          icon-name: "play-large-symbolic";
+        }
+
+        Button {
+          icon-name: "skip-forward-10-symbolic";
+        }
+
+        Scale {
+          hexpand: true;
+          orientation: horizontal;
+          show-fill-level: true;
+          adjustment:
+          Adjustment {
+            lower: 0;
+            upper: 100;
+            value:50;
+          };
+        }
+
+        Button {
+          icon-name: "audio-volume-muted-symbolic";
+        }
+
+        styles [
+          "toolbar",
+          "osd",
+          "darken",
+        ]
+      }
+    }
+  }
+}
