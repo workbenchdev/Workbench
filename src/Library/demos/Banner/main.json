@@ -3,7 +3,7 @@
   "category": "user_interface",
   "description": "Banners is an attention-grabbing notification that is used to communicate important information.",
   "panels": [
-    "code",
+    "ui",
     "preview"
   ],
   "autorun": true

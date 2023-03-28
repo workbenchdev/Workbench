@@ -1,24 +1,46 @@
 using Gtk 4.0;
+using Adw 1;
 
-Box welcome {
-  orientation: vertical;
-  valign: center;
-  halign: center;
+Gtk.Window window {
+  default-width: 800;
+  default-height: 600;
+  title: "Banner";
+  titlebar: Gtk.HeaderBar {
+    [end]
+    MenuButton button_menu {
+      icon-name: "open-menu-symbolic";
+      primary: true;
+    }
+  };
 
-  Label {
-    label: "A widget for communicating persistent and important information.";
-    margin-bottom: 20;
+  Adw.ToastOverlay overlay {
+    Adw.StatusPage {
+      title: "Adw Banner";
+      description: "Gnome Banner Test";
+
+      Box {
+        orientation: vertical;
+        halign: center;
+        valign: center;
+
+      Adw.Banner banner{
+        button-label: "Troubleshoot";
+        title: "An error occurred: Could not resolve host.";
+        revealed: true;
+        use-markup: true;
+        margin-bottom: 20;
+      }
+
+        LinkButton {
+          label: "API Reference";
+          uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.3/class.Banner.html";
+        }
+
+        LinkButton {
+          label: "Human Interface Guidelines";
+          uri: "https://developer.gnome.org/hig/patterns/feedback/banners.html";
+        }
+      }
+    }
   }
-
-  Box banner_box {
-    orientation: vertical;
-    valign: center;
-    halign: center;
-
-  Button open_banner{
-    label: "Open Banner";
-  }
-
-  }
-
 }
