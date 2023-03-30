@@ -1,25 +1,63 @@
 using Gtk 4.0;
 using Adw 1;
 
-Adw.StatusPage {
+Adw.StatusPage content {
+
   title: "No Results Found";
   description: _("Try a different Search.");
   icon-name: 'edit-find-symbolic';
 
-  Box {
-  orientation: horizontal;
-  halign: center;
+ FlowBox {
+      homogeneous: true;
+      row-spacing: 18;
+      selection-mode: none;
 
 
-      LinkButton {
-        label: "API Reference";
-        uri: "https://docs.gtk.org/gtk4/class.ProgressBar.html";
+      Box {
+        orientation: vertical;
+
+
+        Label {
+          label: "Enter a search Keyword Here";
+          margin-bottom: 12;
         }
+
+        Entry entry_1{
+          text: '';
+        }
+
+        Button submit_button{
+        name: "submit";
+        label: "Submit";
+        margin-top: 20;
+        }
+      }
+
+
+    Box {
+      halign: center;
+      margin-top: 18;
+      margin-bottom: 18;
 
       LinkButton{
-        label: "Human Interface Guidelines";
-        uri: "https://developer.gnome.org/hig/patterns/feedback/progress-bars.html";
-        }
+        label: "Tutorial";
+        uri: "https://developer.gnome.org/documentation/tutorials/beginners/components/entry.html";
+      }
+
+      LinkButton{
+        label: "Tutorial";
+        uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.0.0-alpha.1/class.StatusPage.html";
+       }
+
+      LinkButton{
+        label: "API Reference";
+        uri: "https://docs.gtk.org/gtk3/class.Statusbar.html";
+       }
+
+      LinkButton{
+        label: "API Reference";
+        uri: "https://docs.gtk.org/gtk4/class.Entry.html";
+      }
     }
   }
-
+}
