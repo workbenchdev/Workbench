@@ -1,7 +1,3 @@
-import Gtk from "gi://Gtk?version=4.0";
-
-Gtk.init();
-
 const content = workbench.builder.get_object("content");
 const entry = workbench.builder.get_object("entry_1");
 const button = workbench.builder.get_object("submit_button");
