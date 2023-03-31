@@ -1,5 +1,5 @@
 {
-  "name": "Font Chooser",
+  "name": "Font Dialog",
   "category": "user_interface",
   "description": "Show a dialog to select a font",
   "panels": [
