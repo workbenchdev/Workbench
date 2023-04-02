@@ -1,0 +1,10 @@
+{
+  "name": "Toggle Button",
+  "category": "user_interface",
+  "description": "Represent active-state visually",
+  "panels": [
+    "ui",
+    "preview"
+  ],
+  "autorun": true
+}

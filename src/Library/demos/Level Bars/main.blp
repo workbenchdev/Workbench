@@ -1,0 +1,81 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: _("Level Bars");
+  description: _("A bar widget used as a level indicator");
+
+  Box {
+    orientation: vertical;
+    margin-top: 24;
+    halign: center;
+
+    Box {
+      orientation: vertical;
+      spacing: 18;
+      margin-start: 18;
+      margin-end: 18;
+
+      Label {
+        label: _("Continuous");
+      }
+
+      Box {
+        orientation: vertical;
+        spacing: 12;
+
+        Label {
+          halign: start;
+          margin-start: 12;
+          margin-top: 12;
+          label: _("Battery");
+        }
+
+        LevelBar bar_continuous{
+            mode: continuous;
+            margin-start:12;
+            margin-end:12;
+            margin-bottom: 24;
+            min-value:0;
+            max-value:100;
+            value: 50;
+        }
+        styles ["card"]
+        margin-bottom: 24;
+      }
+
+
+      Label {
+        label: _("Discrete");
+      }
+
+      PasswordEntry entry {
+        placeholder-text: "Choose a Password";
+        show-peek-icon: true;
+      }
+      LevelBar bar_discrete {
+        mode: discrete;
+        min-value: 0;
+        max-value: 6;
+      }
+      Label label_strength {
+
+      }
+    }
+
+    Box {
+      orientation: vertical;
+      margin-bottom: 24;
+
+      LinkButton {
+        label: "Tutorial";
+        uri: "https://developer.gnome.org/documentation/tutorials/beginners/components/level_bar.html";
+      }
+
+      LinkButton {
+        label: "API Reference";
+        uri: "https://docs.gtk.org/gtk4/class.LevelBar.html";
+      }
+    }
+  }
+}

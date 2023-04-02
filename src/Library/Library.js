@@ -87,6 +87,15 @@ function getDemos() {
       continue;
     }
 
+    if (demo.name !== child.get_name()) {
+      console.warn(
+        `The demo name "${
+          demo.name
+        }" does not match the folder name "${child.get_name()}" and will be ignored.`,
+      );
+      continue;
+    }
+
     demos.push(demo);
   }
 
