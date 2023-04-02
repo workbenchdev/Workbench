@@ -1,12 +1,4 @@
-#button00,
-#button01,
-#button02,
-#button10,
-#button11,
-#button12,
-#button20,
-#button21,
-#button22 {
+.cell {
   min-width: 130px;
   min-height: 130px;
   margin: 5px;
