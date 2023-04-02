@@ -19,11 +19,11 @@ let step = 1;
 function onClicked(button) {
   //check access for user action
   let image = button.get_child();
-  if (clicked.icon_name) {
+  if (image.icon_name) {
     return;
   } else {
     //store and show user action
-    clicked.icon_name = "cross-large-symbolic";
+    image.icon_name = "cross-large-symbolic";
     //calculate pc reaction
     let pc_is_thinking = true;
     let pc_is_thinking_row;
@@ -35,10 +35,10 @@ function onClicked(button) {
       let temp = workbench.builder.get_object(
         "button" + pc_is_thinking_row + pc_is_thinking_col,
       );
-      let searched = temp.get_child();
-      if (!searched.icon_name) {
+      let temp_image = temp.get_child();
+      if (!temp_image.icon_name) {
         //store and show pc reaction
-        searched.icon_name = "circle-outline-thick-symbolic";
+        temp_image.icon_name = "circle-outline-thick-symbolic";
         pc_is_thinking = false;
         step += 2;
       }
