@@ -13,15 +13,4 @@
   padding: 5px;
 }
 
-#button00:hover,
-#button01:hover,
-#button02:hover,
-#button10:hover,
-#button11:hover,
-#button12:hover,
-#button20:hover,
-#button21:hover,
-#button22:hover {
-  box-shadow: inset 0px 0px 65px #ff1493;
-}
 
