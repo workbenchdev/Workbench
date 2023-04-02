@@ -18,7 +18,7 @@ for (const id of button_ids) {
 let step = 1;
 function onClicked(button) {
   //check access for user action
-  let clicked = button.get_child();
+  let image = button.get_child();
   if (clicked.icon_name) {
     return;
   } else {
