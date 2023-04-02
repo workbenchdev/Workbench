@@ -19,10 +19,9 @@ let step = 1;
 function onClicked(button) {
   //check access for user action
   let clicked = button.get_child();
-  if (
-    clicked.icon_name !== "cross-large-symbolic" &&
-    clicked.icon_name !== "circle-outline-thick-symbolic"
-  ) {
+  if (clicked.icon_name) {
+    return;
+  } else {
     //store and show user action
     clicked.icon_name = "cross-large-symbolic";
     //calculate pc reaction
@@ -37,10 +36,7 @@ function onClicked(button) {
         "button" + pc_is_thinking_row + pc_is_thinking_col,
       );
       let searched = temp.get_child();
-      if (
-        searched.icon_name !== "cross-large-symbolic" &&
-        searched.icon_name !== "circle-outline-thick-symbolic"
-      ) {
+      if (!searched.icon_name) {
         //store and show pc reaction
         searched.icon_name = "circle-outline-thick-symbolic";
         pc_is_thinking = false;
