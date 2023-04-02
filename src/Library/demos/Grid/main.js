@@ -26,11 +26,9 @@ function onClicked(button) {
     image.icon_name = "cross-large-symbolic";
     //calculate pc reaction
     let pc_is_thinking = true;
-    let pc_is_thinking_row;
-    let pc_is_thinking_col;
     while (pc_is_thinking) {
-      pc_is_thinking_row = "" + Math.floor(Math.random() * 3);
-      pc_is_thinking_col = "" + Math.floor(Math.random() * 3);
+      let pc_is_thinking_row = "" + Math.floor(Math.random() * 3);
+      let pc_is_thinking_col = "" + Math.floor(Math.random() * 3);
       //make pc reaction if possible
       let temp = workbench.builder.get_object(
         "button" + pc_is_thinking_row + pc_is_thinking_col,
