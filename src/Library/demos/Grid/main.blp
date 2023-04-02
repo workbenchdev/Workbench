@@ -1,0 +1,97 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: "Grid";
+  description: _("Arrange widgets in rows and columns.");
+
+ Box {
+    halign: center;
+    Grid {
+        Button button00 {
+        name: "button00";
+        layout { row: 0; column: 0; }  
+        hexpand: false;
+        Image {
+          icon-name: "circle-outline-thick-symbolic";
+          pixel-size: 100;
+        }
+        styles ['cell']
+      }
+      
+      Button button01 {
+        name: "button01";
+        layout { row: 0; column: 1; }
+        hexpand: false;
+        Image {
+          pixel-size: 100;
+        }
+        styles ['cell']
+      }
+      Button button02 {
+        name: "button02";
+        layout { row: 0; column: 2; }
+        hexpand: false;
+        Image {
+          pixel-size: 100;
+        }
+        styles ['cell']
+      }
+      Button button10 {
+        name: "button10";
+        layout { row: 1; column: 0; }
+        hexpand: false;
+        Image {
+          pixel-size: 100;
+        }
+        styles ['cell']
+      }
+      Button button11 {
+        name: "button11";
+        layout { row: 1; column: 1; }
+        hexpand: false;
+        Image {
+          pixel-size: 100;
+        }
+        styles ['cell']
+      }
+      Button button12 {
+        name: "button12";
+        layout { row: 1; column: 2; }
+        hexpand: false;
+        Image {
+          pixel-size: 100;
+        }
+        styles ['cell']
+      }
+      Button button20 {
+        name: "button20";
+        layout { row: 2; column: 0; }
+        hexpand: false;
+        Image {
+          pixel-size: 100;
+        }
+        styles ['cell']
+      }
+      Button button21 {
+        name: "button21";
+        layout { row: 2; column: 1; }
+        hexpand: false;
+        Image {
+          pixel-size: 100;
+        }
+        styles ['cell']
+      }
+      Button button22 {
+        name: "button22";
+        layout { row: 2; column: 2; }
+        hexpand: false;
+        Image {
+          pixel-size: 100;
+        }
+        styles ['cell']
+      }
+    }
+  }
+}
+

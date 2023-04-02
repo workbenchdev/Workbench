@@ -56,6 +56,7 @@ ${getBlueprintVersion()}
     "Hari Rana (TheEvilSkeleton) https://theevilskeleton.gitlab.io",
     "Sriyansh Shivam https://linktr.ee/sonic_here",
     "Angelo Verlain https://www.vixalien.com",
+    "bazylevnik0 https://github.com/bazylevnik0",
     // Add yourself as
     // "John Doe",
     // or

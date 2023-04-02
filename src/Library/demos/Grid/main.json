@@ -1,0 +1,10 @@
+{
+  "name": "Grid",
+  "category": "user_interface",
+  "description": "Arrange widgets in rows and columns.",
+  "panels": [
+    "ui",
+    "preview"
+  ],
+  "autorun": true
+}
