@@ -3,27 +3,26 @@ using Adw 1;
 
 Adw.StatusPage content {
 
-  title: "No Results Found";
+  title: _("No results found");
   description: _("Try a different Search.");
   icon-name: 'edit-find-symbolic';
 
- FlowBox {
+ Box  {
       homogeneous: true;
-      row-spacing: 18;
-      selection-mode: none;
+      spacing: 18;
 
 
-      Box {
+       Box {
         orientation: vertical;
 
 
         Label {
-          label: "Enter a search Keyword Here";
+          label: "Type to start Searching";
           margin-bottom: 12;
         }
 
         Entry entry_1{
-          text: '';
+          placeholder-text: 'Error,   No results ...';
         }
 
         Button submit_button{
@@ -34,13 +33,13 @@ Adw.StatusPage content {
       }
 
 
-    Box {
+      Box {
       halign: center;
       margin-top: 18;
       margin-bottom: 18;
 
        LinkButton{
-        label: "Status Page Tutorial";
+        label: "API Reference";
         uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.0.0-alpha.1/class.StatusPage.html";
        }
 
@@ -49,10 +48,7 @@ Adw.StatusPage content {
         uri: "https://developer.gnome.org/documentation/tutorials/beginners/components/entry.html";
       }
 
-      LinkButton{
-        label: "API Reference";
-        uri: "https://docs.gtk.org/gtk4/class.Entry.html";
-      }
+
     }
   }
 }
