@@ -22,6 +22,7 @@ Gtk.Window {
     [end]
     MenuButton {
       icon-name: "view-more-symbolic";
+      menu-model: window_menu;
     }
     [end]
     Button {
@@ -46,5 +47,19 @@ Gtk.Window {
           uri: "https://developer.gnome.org/hig/patterns/containers/header-bars.html";
         }
       }
+  }
+}
+
+menu window_menu {
+  section {
+    item {
+      label: _("Keyboard Shortcuts");
+      action: "app.shortcuts";
+    }
+
+    item {
+      label: _("About App");
+      action: "app.about";
+    }
   }
 }
