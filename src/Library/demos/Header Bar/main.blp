@@ -1,0 +1,50 @@
+using Gtk 4.0;
+using Adw 1;
+
+Gtk.Window {
+  default-width: 800;
+  default-height: 600;
+  title: "Window";
+  titlebar: Adw.HeaderBar {
+    centering-policy: strict;
+    show-start-title-buttons: true;
+    show-end-title-buttons: true;
+    decoration-layout: "icon:minimize,close";
+
+    [start]
+    Button {
+      label: _("Open");
+    }
+    [start]
+    Button {
+      icon-name: "tab-new-filled-symbolic";
+    }
+    [end]
+    MenuButton {
+      icon-name: "view-more-symbolic";
+    }
+    [end]
+    Button {
+      icon-name: "loupe-large-symbolic";
+    }
+  };
+
+  Adw.StatusPage {
+      title: "Header Bar";
+      description: _("Custom tilebars for windows");
+
+      Box{
+        orientation:vertical;
+
+        LinkButton {
+          label: "API Reference";
+          uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.3/class.HeaderBar.html";
+        }
+
+        LinkButton {
+          label: "Human Interface Guidelines";
+          uri: "https://developer.gnome.org/hig/patterns/containers/header-bars.html";
+        }
+      }
+  }
+}
