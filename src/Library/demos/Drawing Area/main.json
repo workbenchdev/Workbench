@@ -1,0 +1,10 @@
+{
+  "name": "Drawing Area",
+  "category": "user_interface",
+  "description": "Connection between control and drawing.",
+  "panels": [
+    "ui",
+    "preview"
+  ],
+  "autorun": true
+}

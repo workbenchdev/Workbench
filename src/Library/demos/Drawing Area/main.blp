@@ -1,0 +1,31 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: "Drawing Area";
+  description: _("Connection between control and drawing");
+
+ Box {
+    halign: center;
+    orientation: vertical;
+     DrawingArea draw {
+      content-width: 300;
+      content-height: 300;
+     }
+     Scale rotate {
+        orientation: horizontal;
+        width-request: 300;
+        draw-value: true;
+        adjustment: Gtk.Adjustment {
+          lower: -25;
+          upper: 25;
+          value: 0;
+        };
+      }
+  }
+}
+
+
+
+
+
