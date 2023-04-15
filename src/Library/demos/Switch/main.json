@@ -2,9 +2,6 @@
   "name": "Switch",
   "category": "controls",
   "description": "A simple on/off control",
-  "panels": [
-    "ui",
-    "preview"
-  ],
+  "panels": ["ui", "preview"],
   "autorun": true
 }

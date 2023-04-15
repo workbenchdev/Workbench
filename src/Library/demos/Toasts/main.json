@@ -2,9 +2,6 @@
   "name": "Toasts",
   "category": "feedback",
   "description": "Toasts, or “in-app notifications” are popup banners that contain a label and sometimes a button.",
-  "panels": [
-    "code",
-    "preview"
-  ],
+  "panels": ["code", "preview"],
   "autorun": true
 }

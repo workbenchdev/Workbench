@@ -2,9 +2,6 @@
   "name": "Button",
   "category": "controls",
   "description": "Allow people to perform actions by clicking",
-  "panels": [
-    "ui",
-    "preview"
-  ],
+  "panels": ["ui", "preview"],
   "autorun": true
 }

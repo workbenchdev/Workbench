@@ -15,7 +15,7 @@
     "rollup": "^2.76.0",
     "rollup-plugin-ignore": "^1.0.10",
     "rollup-plugin-node-polyfills": "^0.2.1",
-    "rome": "^11.0.0"
+    "rome": "^12.0.0"
   },
   "type": "module",
   "scripts": {

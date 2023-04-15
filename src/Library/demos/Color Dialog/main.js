@@ -39,4 +39,3 @@ custom_button.connect("clicked", async () => {
     logError(err);
   }
 });
-

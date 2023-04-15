@@ -2,9 +2,6 @@
   "name": "Level Bars",
   "category": "feedback",
   "description": "A bar widget used as a level indicator",
-  "panels": [
-    "ui",
-    "preview"
-  ],
+  "panels": ["ui", "preview"],
   "autorun": true
 }

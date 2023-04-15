@@ -17,7 +17,7 @@ function handleProgress() {
       progress_tracker.label = "";
       console.log("Operation Complete!");
     } else {
-      progress_tracker.label = `${timeLeft} seconds remaining ...`;
+      progress_tracker.label = `${timeLeft} seconds remaining…`;
     }
   }, 1000);
 

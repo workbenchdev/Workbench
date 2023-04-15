@@ -2,9 +2,6 @@
   "name": "Dialogs",
   "category": "user_interface",
   "description": "Present options, choices or information to users",
-  "panels": [
-    "code",
-    "preview"
-  ],
+  "panels": ["code", "preview"],
   "autorun": true
 }
