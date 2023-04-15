@@ -1,6 +1,6 @@
 {
   "name": "Toggle Button",
-  "category": "user_interface",
+  "category": "controls",
   "description": "Represent active-state visually",
   "panels": [
     "ui",

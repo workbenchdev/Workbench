@@ -1,6 +1,6 @@
 {
   "name": "Grid",
-  "category": "user_interface",
+  "category": "layout",
   "description": "Arrange widgets in rows and columns.",
   "panels": [
     "ui",

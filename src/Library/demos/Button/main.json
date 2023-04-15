@@ -1,6 +1,6 @@
 {
   "name": "Button",
-  "category": "user_interface",
+  "category": "controls",
   "description": "Allow people to perform actions by clicking",
   "panels": [
     "ui",

@@ -1,6 +1,6 @@
 {
   "name": "Text Fields",
-  "category": "user_interface",
+  "category": "controls",
   "description": "Single line widgets to enter text",
   "panels": [
     "ui",
