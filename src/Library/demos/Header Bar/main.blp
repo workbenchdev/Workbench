@@ -4,7 +4,7 @@ using Adw 1;
 Gtk.Window {
   default-width: 800;
   default-height: 600;
-  title: "Window";
+  title: _("Header Bar");
   titlebar: Adw.HeaderBar {
     centering-policy: strict;
     show-start-title-buttons: true;
@@ -32,7 +32,7 @@ Gtk.Window {
 
   Adw.StatusPage {
       title: "Header Bar";
-      description: _("Custom tilebars for windows");
+      description: _("Custom titlebars for windows");
 
       Box{
         orientation:vertical;
