@@ -103,4 +103,3 @@ valign_toggle_center.connect("toggled", () => {
 valign_toggle_end.connect("toggled", () => {
   if (valign_toggle_end.active) interactive_box.valign = Gtk.Align.END;
 });
-

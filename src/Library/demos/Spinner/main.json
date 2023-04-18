@@ -1,10 +1,7 @@
 {
   "name": "Spinner",
-  "category": "user_interface",
+  "category": "feedback",
   "description": "Display loading state",
-  "panels": [
-    "ui",
-    "preview"
-  ],
+  "panels": ["ui", "preview"],
   "autorun": true
 }
