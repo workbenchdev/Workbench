@@ -32,6 +32,9 @@ git push origin $V
 cd icon-development-kit-www
 git pull
 cd ..
+rm -r data/icons/hicolor/scalable/actions/ && mkdir data/icons/hicolor/scalable/actions/
 cp -r icon-development-kit-www/img/symbolic/**/*.svg data/icons/hicolor/scalable/actions/
 cat icon-development-kit-www/_data/icons.yaml | python -c 'import sys, yaml, json; print(json.dumps(yaml.safe_load(sys.stdin.read())))' > src/icon-development-kit.json
 ```
+
+The `cp: will not overwrite just-created ...` errors are normal and only concern icons which are present in multiple categories.
