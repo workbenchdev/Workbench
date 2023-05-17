@@ -47,14 +47,14 @@
   </screenshots>
   <content_rating type="oars-1.1" />
   <releases>
-    <release version="44.1" date="2023-05-XX">
+    <release version="44.1" date="2023-05-17">
       <description>
         <ul>
           <li>Update icon-development-kit; adds 143 new icons</li>
-          <li>Update to Rome tools 12.1.1</li>
           <li>Update to Blueprint to 0.8.1</li>
+          <li>Update to VTE 0.72.1</li>
+          <li>Update to Rome tools 12.1.1</li>
         </ul>
-        <p>View Blueprint release notes at https://gitlab.gnome.org/jwestman/blueprint-compiler/-/blob/main/NEWS.md</p>
       </description>
     </release>
     <release version="44.0" date="2023-04-15">
