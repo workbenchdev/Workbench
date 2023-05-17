@@ -65,9 +65,9 @@
       "builddir": true,
       "sources": [
         {
-          "type": "git",
-          "url": "https://gitlab.gnome.org/jwestman/blueprint-compiler.git",
-          "commit": "c95195197d5b9ca603e8335bd0dfdf730bebec4b"
+          "type": "archive",
+          "url": "https://gitlab.gnome.org/jwestman/blueprint-compiler/-/archive/v0.8.1/blueprint-compiler-v0.8.1.tar.gz",
+          "sha512": "33f14741d358372b3953ba2bf6619b3e40df9e2649854897b80e04114031b0084bca2e1994551593438b46657392abb097c68c91f7c5da7eca48bc2992009995"
         }
       ]
     },
