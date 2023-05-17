@@ -2,7 +2,7 @@ import Gio from "gi://Gio";
 
 import { promiseTask } from "../../troll/src/util.js";
 
-import previewer_xml from "./previewer.xml" assert { type: "string" };
+import previewer_xml from "./previewer.xml" with { type: "string" };
 
 const nodeInfo = Gio.DBusNodeInfo.new_for_xml(previewer_xml);
 const interface_info = nodeInfo.interfaces[0];
@@ -81,7 +81,8 @@ const dbus_previewer = {
   onCssParserError: null,
   onWindowOpen: null,
   async getProxy() {
-    return proxy || (proxy = startProcess());
+    proxy ??= startProcess();
+    return proxy;
   },
 
   async stop() {

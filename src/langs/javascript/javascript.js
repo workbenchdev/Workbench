@@ -39,32 +39,34 @@ function createLSPClient({ uri, code_view, data_dir }) {
 
   // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#workspace_configuration
   lspc.connect("request::workspace/configuration", (_self, { id, params }) => {
-    lspc.send({
-      id,
-      result: params.items.map((item) => {
-        return item.section === "rome"
-          ? {
-              formatter: {
-                enabled: true,
-                indentStyle: "space",
-                indentSize: 2,
-              },
-              linter: {
-                enabled: true,
-                rules: {
-                  recommended: true,
-                  correctness: {
-                    noUnusedVariables: "warn",
-                  },
-                  style: {
-                    useBlockStatements: "warn",
+    lspc
+      .send({
+        id,
+        result: params.items.map((item) => {
+          return item.section === "rome"
+            ? {
+                formatter: {
+                  enabled: true,
+                  indentStyle: "space",
+                  indentSize: 2,
+                },
+                linter: {
+                  enabled: true,
+                  rules: {
+                    recommended: true,
+                    correctness: {
+                      noUnusedVariables: "warn",
+                    },
+                    style: {
+                      useBlockStatements: "warn",
+                    },
                   },
                 },
-              },
-            }
-          : undefined;
-      }),
-    });
+              }
+            : undefined;
+        }),
+      })
+      .catch(logError);
   });
 
   // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_publishDiagnostics

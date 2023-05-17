@@ -30,16 +30,14 @@ import ThemeSelector from "../troll/src/widgets/ThemeSelector.js";
 
 import resource from "./window.blp";
 
-import "./icons/re.sonny.Workbench-beaker.svg" assert { type: "icon" };
-import "./icons/re.sonny.Workbench-code-symbolic.svg" assert { type: "icon" };
-import "./icons/re.sonny.Workbench-placeholder-symbolic.svg" assert {
+import "./icons/re.sonny.Workbench-beaker.svg" with { type: "icon" };
+import "./icons/re.sonny.Workbench-code-symbolic.svg" with { type: "icon" };
+import "./icons/re.sonny.Workbench-placeholder-symbolic.svg" with {
   type: "icon",
 };
-import "./icons/re.sonny.Workbench-preview-symbolic.svg" assert {
-  type: "icon",
-};
-import "./icons/re.sonny.Workbench-ui-symbolic.svg" assert { type: "icon" };
-import "./icons/re.sonny.Workbench-screenshot-symbolic.svg" assert {
+import "./icons/re.sonny.Workbench-preview-symbolic.svg" with { type: "icon" };
+import "./icons/re.sonny.Workbench-ui-symbolic.svg" with { type: "icon" };
+import "./icons/re.sonny.Workbench-screenshot-symbolic.svg" with {
   type: "icon",
 };
 

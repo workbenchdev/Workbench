@@ -7,7 +7,7 @@ import Gdk from "gi://Gdk";
 import GLib from "gi://GLib";
 import Adw from "gi://Adw";
 
-import Template from "./CodeView.blp" assert { type: "uri" };
+import Template from "./CodeView.blp" with { type: "uri" };
 
 import WorkbenchHoverProvider from "../WorkbenchHoverProvider.js";
 import { registerClass } from "../overrides.js";

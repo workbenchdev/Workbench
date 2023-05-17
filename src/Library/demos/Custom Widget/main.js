@@ -9,10 +9,6 @@ const AwesomeButton = GObject.registerClass(
     Template: workbench.template,
   },
   class AwesomeButton extends Gtk.Button {
-    constructor(params = {}) {
-      super(params);
-    }
-
     onclicked() {
       console.log("Clicked");
     }

@@ -1,7 +1,7 @@
 import Gtk from "gi://Gtk";
 import GObject from "gi://GObject";
 
-import Template from "./IconWidget.blp" assert { type: "uri" };
+import Template from "./IconWidget.blp" with { type: "uri" };
 import { registerClass } from "../overrides.js";
 
 class IconWidget extends Gtk.FlowBoxChild {

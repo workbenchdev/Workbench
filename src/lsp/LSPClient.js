@@ -211,11 +211,7 @@ export default class LSPClient {
     }
 
     const str = decoder_utf8.decode(uint8);
-    try {
-      return JSON.parse(str);
-    } catch (err) {
-      logError(err);
-    }
+    return JSON.parse(str);
   }
 
   // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#baseProtocol

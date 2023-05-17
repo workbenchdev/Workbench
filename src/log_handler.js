@@ -52,9 +52,9 @@ function get_log_level_name(log_level, domain) {
       return "\x1b[1;31mError\x1b[0m";
     case GLib.LogLevelFlags.LEVEL_WARNING:
       return "\x1b[1;33mWarning\x1b[0m";
-    case GLib.LogLevelFlags.LEVEL_MESSAGE:
-    case GLib.LogLevelFlags.LEVEL_INFO:
-    case GLib.LogLevelFlags.LEVEL_DEBUG:
+    // case GLib.LogLevelFlags.LEVEL_MESSAGE:
+    // case GLib.LogLevelFlags.LEVEL_INFO:
+    // case GLib.LogLevelFlags.LEVEL_DEBUG:
     default:
       return "";
   }

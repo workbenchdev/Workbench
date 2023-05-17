@@ -10,15 +10,33 @@
   },
   "command": "workbench",
   "finish-args": [
-    "--share=ipc", "--socket=fallback-x11", "--socket=wayland", "--device=dri",
+    "--share=ipc",
+    "--socket=fallback-x11",
+    "--socket=wayland",
+    "--device=dri",
     "--share=network"
+  ],
+  "cleanup": [
+    "/include",
+    "/lib/pkgconfig",
+    "/man",
+    "/share/doc",
+    "/share/gtk-doc",
+    "/share/man",
+    "/share/pkgconfig",
+    "/share/installed-tests",
+    "*.la",
+    "*.a"
   ],
   "modules": [
     {
       "name": "vte",
       "buildsystem": "meson",
       "config-opts": [
-        "-Ddocs=false", "-Dgtk3=false", "-Dgtk4=true", "-Dvapi=false",
+        "-Ddocs=false",
+        "-Dgtk3=false",
+        "-Dgtk4=true",
+        "-Dvapi=false",
         "-Dglade=false"
       ],
       "sources": [
@@ -109,14 +127,14 @@
         {
           "type": "archive",
           "only-arches": ["aarch64"],
-          "url": "https://registry.npmjs.org/@rometools/cli-linux-arm64/-/cli-linux-arm64-12.0.0.tgz",
-          "sha512": "9f62c983a78064435470917df708c37aa402affe3422a1942436d7ecdc2253546f0b2f9105936685c99201a28e73aac2a0b51c33d5b9abe1f88df9f86d67c904"
+          "url": "https://registry.npmjs.org/@rometools/cli-linux-arm64/-/cli-linux-arm64-12.1.1.tgz",
+          "sha512": "8ca25e4fa488d5df5b90094c398977750b73bd38bdf1db0903310cf754955cb9793a78e4e7967d406f5fd44e276d2efa2cae1e65a34c70aaacec5da14b255e75"
         },
         {
           "type": "archive",
           "only-arches": ["x86_64"],
-          "url": "https://registry.npmjs.org/@rometools/cli-linux-x64/-/cli-linux-x64-12.0.0.tgz",
-          "sha512": "56e40ee1e3ab2a67eb2eb73c2b331a672a73de2d6b0fd157471c0e164ea16b5e8334757ed7b7514189bb8d1675a7e1eb5dd8c02584d273147f134df218b4e195"
+          "url": "https://registry.npmjs.org/@rometools/cli-linux-x64/-/cli-linux-x64-12.1.1.tgz",
+          "sha512": "0ac2e3658b4b41d2a831cae85d72949997721507e0565ec2f282080dc24dce61d929d57046123533e9caff4be9885b558c2b7a8fe0b0da00d89284128a14edd3"
         }
       ]
     },

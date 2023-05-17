@@ -27,7 +27,8 @@ function handleProgress() {
     counter += 0.1;
     if (counter > 1.0) {
       clearInterval(intervalId_one);
-      first_bar.set_fraction((counter = 0.2));
+      counter = 0.2;
+      first_bar.set_fraction(counter);
     }
   }, 1500);
 
@@ -38,7 +39,8 @@ function handleProgress() {
     counter_two += 0.25;
     if (counter_two > 1.0) {
       clearInterval(intervalId_second);
-      second_bar.set_fraction((counter_two = 0));
+      counter_two = 0;
+      second_bar.set_fraction(counter_two);
     }
   }, 3000);
 }
