@@ -50,7 +50,7 @@
     {
       "name": "libportal",
       "buildsystem": "meson",
-      "config-opts": ["-Ddocs=false", "-Dvapi=false", "-Dbackends=gtk4"],
+      "config-opts": ["-Ddocs=false", "-Dbackends=gtk4"],
       "sources": [
         {
           "type": "archive",

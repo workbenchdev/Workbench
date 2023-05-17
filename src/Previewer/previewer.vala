@@ -6,20 +6,55 @@ namespace Workbench {
       this.notify["ColorScheme"].connect (() => {
         this.style_manager.color_scheme = this.ColorScheme;
       });
+
+      var window = new Gtk.Window () {
+        // Ensure the header bar has the same height as the one on Workbench main window
+        titlebar = new Gtk.HeaderBar () {
+          title_widget = new Gtk.Label ("Preview")
+        },
+        title = "Preview",
+        default_width = 600,
+        default_height = 800
+      };
+      var screenshot_button = new Gtk.Button.from_icon_name ("screenshot-recorded-symbolic");
+      screenshot_button.clicked.connect (() => {
+        var paintable = new Gtk.WidgetPaintable (window.child);
+        int width = window.child.get_allocated_width ();
+        int height = window.child.get_allocated_height ();
+        var snapshot = new Gtk.Snapshot ();
+        paintable.snapshot (snapshot, width, height);
+        Gsk.RenderNode? node = snapshot.to_node ();
+        if (node == null) {
+          debug (@"Could not get node snapshot, width: $width, height: $height");
+          return;
+        }
+        Gsk.Renderer? renderer = window.child.get_native ()?.get_renderer ();
+        var rect = Graphene.Rect () {
+          origin = Graphene.Point.zero (),
+          size = Graphene.Size () {
+            width = width,
+            height = height
+          }
+        };
+        Gdk.Texture texture = renderer.render_texture (node, rect);
+        string path = Path.build_filename (Environment.get_user_data_dir (), "Workbench screenshot.png");
+        texture.save_to_png (path);
+
+        Xdp.Parent parent = Xdp.parent_new_gtk (window);
+        var portal = new Xdp.Portal ();
+        portal.open_uri.begin (parent, @"file://$path", Xdp.OpenUriFlags.NONE, null);
+      });
+      ((Gtk.HeaderBar) window.titlebar).pack_start (screenshot_button);
+      this.cached_window = window;
     }
+
+    private Gtk.Window cached_window;
 
     private void ensure_window() {
       if (this.window != null) {
         return;
       }
-      var window = new Gtk.Window () {
-        // Ensure the header bar has the same height as the one on Workbench main window
-        titlebar = new Gtk.HeaderBar (),
-        title = "Preview",
-        default_width = 600,
-        default_height = 800
-      };
-      this.set_window(window);
+      this.set_window(this.cached_window);
     }
 
     private void set_window(Gtk.Window window) {
