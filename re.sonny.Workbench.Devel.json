@@ -3,19 +3,14 @@
   "runtime": "org.gnome.Sdk",
   "runtime-version": "44",
   "sdk": "org.gnome.Sdk",
-  "sdk-extensions": [
-    "org.freedesktop.Sdk.Extension.vala"
-  ],
+  "sdk-extensions": ["org.freedesktop.Sdk.Extension.vala"],
   "build-options": {
     "append-path": "/usr/lib/sdk/vala/bin",
     "append-ld-library-path": "/usr/lib/sdk/vala/lib"
   },
   "command": "workbench",
   "finish-args": [
-    "--share=ipc",
-    "--socket=fallback-x11",
-    "--socket=wayland",
-    "--device=dri",
+    "--share=ipc", "--socket=fallback-x11", "--socket=wayland", "--device=dri",
     "--share=network"
   ],
   "modules": [
@@ -23,28 +18,21 @@
       "name": "vte",
       "buildsystem": "meson",
       "config-opts": [
-        "-Ddocs=false",
-        "-Dgtk3=false",
-        "-Dgtk4=true",
-        "-Dvapi=false",
+        "-Ddocs=false", "-Dgtk3=false", "-Dgtk4=true", "-Dvapi=false",
         "-Dglade=false"
       ],
       "sources": [
         {
           "type": "archive",
-          "url": "https://download.gnome.org/sources/vte/0.72/vte-0.72.0.tar.xz",
-          "sha256": "40fe914d6c70db34176c922725b6c6ea15d5f3cb2a9b44c57e200a5f950a6736"
+          "url": "https://download.gnome.org/sources/vte/0.72/vte-0.72.1.tar.xz",
+          "sha256": "0554f9f88d56ce2d78398fcc7f69bc00e53bbbc5f694e0ae1dcaf5286f89d7e4"
         }
       ]
     },
     {
       "name": "libportal",
       "buildsystem": "meson",
-      "config-opts": [
-        "-Ddocs=false",
-        "-Dvapi=false",
-        "-Dbackends=gtk4"
-      ],
+      "config-opts": ["-Ddocs=false", "-Dvapi=false", "-Dbackends=gtk4"],
       "sources": [
         {
           "type": "archive",
@@ -85,12 +73,7 @@
               "sha256": "69406a0250d0cc5175408cae7eca80c0c6bfaefc4ae1830b354c0433bcd5ce06"
             }
           ],
-          "cleanup": [
-            "/include",
-            "*.pc",
-            "*.gir",
-            "*.typelib"
-          ]
+          "cleanup": ["/include", "*.pc", "*.gir", "*.typelib"]
         },
         {
           "name": "gee",
@@ -106,9 +89,7 @@
         {
           "name": "uncrustify",
           "buildsystem": "cmake-ninja",
-          "config-opts": [
-            "-DCMAKE_BUILD_TYPE=Release"
-          ],
+          "config-opts": ["-DCMAKE_BUILD_TYPE=Release"],
           "builddir": true,
           "sources": [
             {
@@ -123,24 +104,17 @@
     {
       "name": "rome",
       "buildsystem": "simple",
-      "build-commands": [
-        "chmod +x rome",
-        "cp rome /app/bin/rome"
-      ],
+      "build-commands": ["chmod +x rome", "cp rome /app/bin/rome"],
       "sources": [
         {
           "type": "archive",
-          "only-arches": [
-            "aarch64"
-          ],
+          "only-arches": ["aarch64"],
           "url": "https://registry.npmjs.org/@rometools/cli-linux-arm64/-/cli-linux-arm64-12.0.0.tgz",
           "sha512": "9f62c983a78064435470917df708c37aa402affe3422a1942436d7ecdc2253546f0b2f9105936685c99201a28e73aac2a0b51c33d5b9abe1f88df9f86d67c904"
         },
         {
           "type": "archive",
-          "only-arches": [
-            "x86_64"
-          ],
+          "only-arches": ["x86_64"],
           "url": "https://registry.npmjs.org/@rometools/cli-linux-x64/-/cli-linux-x64-12.0.0.tgz",
           "sha512": "56e40ee1e3ab2a67eb2eb73c2b331a672a73de2d6b0fd157471c0e164ea16b5e8334757ed7b7514189bb8d1675a7e1eb5dd8c02584d273147f134df218b4e195"
         }
@@ -150,9 +124,7 @@
       "name": "Workbench",
       "buildsystem": "meson",
       "builddir": true,
-      "config-opts": [
-        "-Dprofile=development"
-      ],
+      "config-opts": ["-Dprofile=development"],
       "sources": [
         {
           "type": "dir",

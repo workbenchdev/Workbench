@@ -9,10 +9,7 @@ bin_conf.set('pkgdatadir', pkgdatadir)
 bin_conf.set('sourcedir', meson.source_root())
 
 blueprint_compiler = find_program(
-  # Flatpak
   '/app/bin/blueprint-compiler',
-  # local
-  '../blueprint-compiler/blueprint-compiler.py'
 )
 
 install_subdir('Library/demos', install_dir : join_paths(pkgdatadir, 'Library'))

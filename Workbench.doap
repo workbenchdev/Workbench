@@ -12,6 +12,10 @@
   <homepage rdf:resource="https://workbench.sonny.re" />
   <bug-database rdf:resource="https://workbench.sonny.re/feedback" />
   <programming-language>JavaScript</programming-language>
+  <programming-language>Vala</programming-language>
+
+  <platform>GTK 4</platform>
+  <platform>Libadwaita</platform>
 
   <maintainer>
     <foaf:Person>

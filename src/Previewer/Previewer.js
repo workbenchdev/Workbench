@@ -10,7 +10,7 @@ import { encode, settings, unstack } from "../util.js";
 
 import Internal from "./Internal.js";
 import External from "./External.js";
-import { getClassNameType } from "../overrides.js";
+import { getClassNameType, registerClass } from "../overrides.js";
 
 import { assertBuildable, detectCrash, isPreviewable } from "./utils.js";
 
@@ -124,7 +124,7 @@ export default function Previewer({
 
   // Using this custom scope we make sure that previewing UI definitions
   // with signals doesn't fail - in addition, checkout registerSignals
-  const BuilderScope = GObject.registerClass(
+  const BuilderScope = registerClass(
     {
       Implements: [Gtk.BuilderScope],
     },

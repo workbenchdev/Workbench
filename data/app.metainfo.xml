@@ -27,6 +27,7 @@
   <url type="bugtracker">https://workbench.sonny.re/feedback</url>
   <url type="donation">https://workbench.sonny.re/donate</url>
   <url type="translate">https://workbench.sonny.re/translate</url>
+  <url type="vcs-browser">https://workbench.sonny.re/source</url>
   <screenshots>
     <screenshot type="default">
       <image>

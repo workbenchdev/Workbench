@@ -1,10 +1,10 @@
 using Gtk 4.0;
 
-template IconWidget : FlowBoxChild {
+template $IconWidget : FlowBoxChild {
   focusable: false;
   halign: start;
   Button button {
-    clicked => onClicked();
+    clicked => $onClicked();
     width-request: 48;
     height-request: 48;
     Image image {

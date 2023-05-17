@@ -168,13 +168,13 @@ Gtk.ApplicationWindow window {
             hexpand: true;
             StackPage {
               name: 'JavaScript';
-              child: .CodeView code_view_javascript {
+              child: $CodeView code_view_javascript {
                 language_id: 'js';
               };
             }
             StackPage {
               name: 'Vala';
-              child: .CodeView code_view_vala {
+              child: $CodeView code_view_vala {
                 language_id: 'vala';
               };
             }
@@ -199,7 +199,7 @@ Gtk.ApplicationWindow window {
           Separator {
           }
 
-          .CodeView code_view_css {
+          $CodeView code_view_css {
             language_id: 'css';
           }
         }
@@ -247,13 +247,13 @@ Gtk.ApplicationWindow window {
 
             StackPage {
               name: 'blueprint';
-              child: .CodeView code_view_blueprint {
+              child: $CodeView code_view_blueprint {
                 language_id: 'blueprint';
               };
             }
             StackPage {
               name: 'xml';
-              child: .CodeView code_view_xml {
+              child: $CodeView code_view_xml {
                 language_id: 'xml';
               };
             }
@@ -434,7 +434,7 @@ Gtk.ApplicationWindow window {
   }
 }
 
-.Modal modal_blueprint_experimental {
+$Modal modal_blueprint_experimental {
   default-width: 368;
   default-height: 480;
 
