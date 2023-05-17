@@ -72,55 +72,6 @@
       ]
     },
     {
-      "name": "vls",
-      "buildsystem": "meson",
-      "sources": [
-        {
-          "type": "archive",
-          "url": "https://github.com/vala-lang/vala-language-server/releases/download/0.48.7/vala-language-server-0.48.7.tar.xz",
-          "sha256": "a93e09497738144792466d0c5ccb1347583d84a9987b65b08f6aa5d5a1e3f431"
-        }
-      ],
-      "modules": [
-        {
-          "name": "jsonrpc",
-          "buildsystem": "meson",
-          "sources": [
-            {
-              "type": "archive",
-              "url": "https://download.gnome.org/sources/jsonrpc-glib/3.44/jsonrpc-glib-3.44.0.tar.xz",
-              "sha256": "69406a0250d0cc5175408cae7eca80c0c6bfaefc4ae1830b354c0433bcd5ce06"
-            }
-          ],
-          "cleanup": ["/include", "*.pc", "*.gir", "*.typelib"]
-        },
-        {
-          "name": "gee",
-          "buildsystem": "autotools",
-          "sources": [
-            {
-              "type": "archive",
-              "url": "https://download.gnome.org/sources/libgee/0.20/libgee-0.20.6.tar.xz",
-              "sha256": "1bf834f5e10d60cc6124d74ed3c1dd38da646787fbf7872220b8b4068e476d4d"
-            }
-          ]
-        },
-        {
-          "name": "uncrustify",
-          "buildsystem": "cmake-ninja",
-          "config-opts": ["-DCMAKE_BUILD_TYPE=Release"],
-          "builddir": true,
-          "sources": [
-            {
-              "type": "archive",
-              "url": "https://github.com/uncrustify/uncrustify/archive/uncrustify-0.76.0.tar.gz",
-              "sha256": "32e2f95485a933fc5667880f1a09a964ae83132c235bb606abbb0a659453acb3"
-            }
-          ]
-        }
-      ]
-    },
-    {
       "name": "rome",
       "buildsystem": "simple",
       "build-commands": ["chmod +x rome", "cp rome /app/bin/rome"],
@@ -189,6 +140,11 @@
           "type": "dir",
           "path": "."
         }
+      ],
+      "post-install": [
+        "cp -a /usr/lib/sdk/vala/bin/* /app/bin/",
+        "cp -a /usr/lib/sdk/vala/lib/* /app/lib/",
+        "cp -a /usr/lib/sdk/vala/share/* /app/share/"
       ]
     }
   ]
