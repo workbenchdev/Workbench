@@ -14,6 +14,7 @@ export default function About({ application }) {
   const flatpak_info = getFlatpakInfo();
 
   const debug_info = `
+${pkg.name} ${pkg.version}
 ${GLib.get_os_info("ID")} ${GLib.get_os_info("VERSION_ID")}
 
 GJS ${getGjsVersion()}
@@ -76,5 +77,5 @@ function getValaVersion() {
 }
 
 function getBlueprintVersion() {
-  return "Blueprint c9519519";
+  return "Blueprint 0.8.1";
 }

@@ -1,23 +1,13 @@
 {
   "formatter": {
     "enabled": true,
-    "ignore": [
-      "src/icon-development-kit.json",
-      "icon-development-kit-www",
-      "src/lib",
-      "troll"
-    ],
+    "ignore": ["src/lib", "troll"],
     "indentStyle": "space",
     "indentSize": 2
   },
   "linter": {
     "enabled": true,
-    "ignore": [
-      "src/icon-development-kit.json",
-      "icon-development-kit-www",
-      "src/lib",
-      "troll"
-    ],
+    "ignore": ["src/lib", "troll"],
     "rules": {
       "recommended": true,
       "style": {

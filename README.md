@@ -115,4 +115,8 @@ https://mastodon.online/@waimus/108582108701889960
 
 https://fosstodon.org/@TheEvilSkeleton/108598098682948266
 
+> I'm really new to development and workbench its being a fantastic help not just to code itself, but to understand the gtk logic.
+
+https://matrix.to/#/!kDBZrVKCdhrVuWxbGe:matrix.org/$XmIz7FA-UwpoiwHxDyzve1P-J1ecMHkL0x8Br23mUxg
+
 </details>
