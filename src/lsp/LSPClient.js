@@ -17,26 +17,6 @@ const clientInfo = {
   version: pkg.version,
 };
 
-Gio._promisify(
-  Gio.InputStream.prototype,
-  "read_bytes_async",
-  "read_bytes_finish",
-);
-Gio._promisify(Gio.InputStream.prototype, "read_all_async", "read_all_finish");
-Gio._promisify(Gio.InputStream.prototype, "close_async", "close_finish");
-Gio._promisify(
-  Gio.DataInputStream.prototype,
-  "read_line_async",
-  "read_line_finish",
-);
-Gio._promisify(Gio.OutputStream.prototype, "close_async", "close_finish");
-Gio._promisify(
-  Gio.OutputStream.prototype,
-  "write_bytes_async",
-  "write_bytes_finish",
-);
-Gio._promisify(Gio.Subprocess.prototype, "wait_async", "wait_finish");
-
 export default class LSPClient {
   constructor(argv, { rootUri, uri, languageId, buffer }) {
     this.argv = argv;

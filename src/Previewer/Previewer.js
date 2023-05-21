@@ -19,8 +19,6 @@ import { getClassNameType, registerClass } from "../overrides.js";
 
 import { assertBuildable, detectCrash, isPreviewable } from "./utils.js";
 
-Gio._promisify(Xdp.Portal.prototype, "open_uri", "open_uri_finish");
-
 /*
   Always default to in-process preview
   Switch to out-of-process preview when Vala is run

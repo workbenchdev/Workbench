@@ -25,7 +25,6 @@ import prettier_postcss from "./lib/prettier-postcss.js";
 import Library, { readDemo } from "./Library/Library.js";
 import Previewer from "./Previewer/Previewer.js";
 import Compiler from "./langs/vala/Compiler.js";
-import { promiseTask } from "../troll/src/util.js";
 import ThemeSelector from "../troll/src/widgets/ThemeSelector.js";
 
 import resource from "./window.blp";
@@ -255,10 +254,7 @@ export default function Window({ application }) {
         // ?foo=Date.now() also does not work as expected
         // TODO: File a bug
         const [file_javascript] = Gio.File.new_tmp("workbench-XXXXXX.js");
-        await promiseTask(
-          file_javascript,
-          "replace_contents_async",
-          "replace_contents_finish",
+        await file_javascript.replace_contents_async(
           new GLib.Bytes(document_javascript.code_view.buffer.text || " "),
           null,
           false,
@@ -272,13 +268,9 @@ export default function Window({ application }) {
           await previewer.update(true);
           throw err;
         } finally {
-          promiseTask(
-            file_javascript,
-            "delete_async",
-            "delete_finish",
-            GLib.PRIORITY_DEFAULT,
-            null,
-          ).catch(logError);
+          file_javascript
+            .delete_async(GLib.PRIORITY_DEFAULT, null)
+            .catch(logError);
         }
         previewer.setSymbols(exports);
       } else if (language === "Vala") {

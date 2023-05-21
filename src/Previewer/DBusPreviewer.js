@@ -1,7 +1,5 @@
 import Gio from "gi://Gio";
 
-import { promiseTask } from "../../troll/src/util.js";
-
 import previewer_xml from "./previewer.xml" with { type: "string" };
 
 const nodeInfo = Gio.DBusNodeInfo.new_for_xml(previewer_xml);
@@ -53,10 +51,7 @@ async function startProcess() {
     if (error) logError(error);
   });
 
-  proxy = await promiseTask(
-    Gio.DBusProxy,
-    "new",
-    "new_finish",
+  proxy = await Gio.DBusProxy.new(
     connection,
     Gio.DBusProxyFlags.NONE,
     interface_info,
@@ -89,14 +84,14 @@ const dbus_previewer = {
     const connection = proxy?.["g-connection"];
 
     if (connection) {
-      await promiseTask(connection, "close", "close_finish", null);
+      await connection.close(null);
     }
 
     if (sub_process) {
       // The vala process is set to exit when the connection close
       // but let's send a SIGTERM anyway just to be safe
       sub_process.send_signal(15);
-      await promiseTask(sub_process, "wait_async", "wait_finish", null);
+      await sub_process.wait_async(null);
     }
 
     sub_process = null;

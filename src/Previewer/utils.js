@@ -3,12 +3,6 @@ import Gtk from "gi://Gtk";
 import Gio from "gi://Gio";
 import Adw from "gi://Adw";
 
-Gio._promisify(
-  Gio.Subprocess.prototype,
-  "wait_check_async",
-  "wait_check_finish",
-);
-
 export function getObjectClass(class_name) {
   const split = class_name.split(/(?=[A-Z])/);
   if (split.length < 2) return;
