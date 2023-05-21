@@ -3,6 +3,11 @@ import GObject from "gi://GObject";
 import GLib from "gi://GLib";
 import Gio from "gi://Gio";
 
+import Xdp from "gi://Xdp";
+import XdpGtk from "gi://XdpGtk4";
+
+import { portal } from "../util.js";
+
 import * as xml from "../langs/xml/xml.js";
 import * as postcss from "../lib/postcss.js";
 
@@ -13,6 +18,8 @@ import External from "./External.js";
 import { getClassNameType, registerClass } from "../overrides.js";
 
 import { assertBuildable, detectCrash, isPreviewable } from "./utils.js";
+
+Gio._promisify(Xdp.Portal.prototype, "open_uri", "open_uri_finish");
 
 /*
   Always default to in-process preview
@@ -286,8 +293,31 @@ export default function Previewer({
   }
 
   builder.get_object("button_screenshot").connect("clicked", () => {
-    current.screenshot({ window, data_dir });
+    screenshot().catch(logError);
   });
+  async function screenshot() {
+    const path = GLib.build_filenamev([data_dir, "Workbench screenshot.png"]);
+
+    const success = await current.screenshot({ window, path });
+    if (!success) return;
+
+    const parent = XdpGtk.parent_new_gtk(window);
+
+    try {
+      await portal.open_uri(
+        parent,
+        `file://${path}`,
+        Xdp.OpenUriFlags.NONE, // flags
+        null, // cancellable
+      );
+    } catch (err) {
+      if (err.code !== Gio.IOErrorEnum.CANCELLED) {
+        logError(err);
+      } else {
+        throw err;
+      }
+    }
+  }
 
   setPreviewer(internal);
   start();

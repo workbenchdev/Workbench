@@ -34,7 +34,7 @@ namespace Workbench {
       return false;
     }
 
-    public string screenshot () {
+    public bool screenshot (string path) {
       Gtk.Widget to_shoot = this.screenshot_window ? this.window : this.window.child;
       var paintable = new Gtk.WidgetPaintable (to_shoot);
       int width = to_shoot.get_allocated_width ();
@@ -44,7 +44,7 @@ namespace Workbench {
       Gsk.RenderNode? node = snapshot.to_node ();
       if (node == null) {
         debug (@"Could not get node snapshot, width: $width, height: $height");
-        return;
+        return false;
       }
       Gsk.Renderer? renderer = to_shoot.get_native ()?.get_renderer ();
       var rect = Graphene.Rect () {
@@ -55,9 +55,8 @@ namespace Workbench {
         }
       };
       Gdk.Texture texture = renderer.render_texture (node, rect);
-      string path = Path.build_filename (Environment.get_user_data_dir (), "Workbench screenshot.png");
       texture.save_to_png (path);
-      return path;
+      return true;
     }
 
     public void update_ui (string content, string target_id, string original_id = "") {
