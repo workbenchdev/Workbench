@@ -35,10 +35,10 @@ namespace Workbench {
     }
 
     public bool screenshot (string path) {
-      Gtk.Widget to_shoot = this.screenshot_window ? this.window : this.window.child;
-      var paintable = new Gtk.WidgetPaintable (to_shoot);
-      int width = to_shoot.get_allocated_width ();
-      int height = to_shoot.get_allocated_height ();
+      Gtk.Widget widget = this.target;
+      var paintable = new Gtk.WidgetPaintable (widget);
+      int width = widget.get_allocated_width ();
+      int height = widget.get_allocated_height ();
       var snapshot = new Gtk.Snapshot ();
       paintable.snapshot (snapshot, width, height);
       Gsk.RenderNode? node = snapshot.to_node ();
@@ -46,7 +46,7 @@ namespace Workbench {
         debug (@"Could not get node snapshot, width: $width, height: $height");
         return false;
       }
-      Gsk.Renderer? renderer = to_shoot.get_native ()?.get_renderer ();
+      Gsk.Renderer? renderer = widget.get_native ()?.get_renderer ();
       var rect = Graphene.Rect () {
         origin = Graphene.Point.zero (),
         size = Graphene.Size () {
@@ -68,18 +68,18 @@ namespace Workbench {
         return;
       }
 
+      this.target = target;
+
       if (original_id != "") {
         this.builder.expose_object(original_id, target);
       }
 
       // Not a Root/Window
       if (!(target is Gtk.Root)) {
-        this.screenshot_window = false;
         this.ensure_window();
         this.window.child = target;
         return;
       }
-      this.screenshot_window = true;
 
       // Set target as window directly
       if (this.window == null || this.window.get_type () != target.get_type ()) {
@@ -216,7 +216,7 @@ namespace Workbench {
     private delegate void WindowFunction (Gtk.Window window);
 
     private Gtk.Window? window;
-    private bool screenshot_window = false;
+    private Gtk.Widget? target;
     private Gtk.CssProvider? css = null;
     private Module module;
     private Gtk.Builder? builder = null;
