@@ -65,8 +65,9 @@
       "builddir": true,
       "sources": [
         {
-          "type": "dir",
-          "path": "./blueprint-compiler"
+          "type": "archive",
+          "url": "https://gitlab.gnome.org/jwestman/blueprint-compiler/-/archive/v0.8.1/blueprint-compiler-v0.8.1.tar.gz",
+          "sha512": "33f14741d358372b3953ba2bf6619b3e40df9e2649854897b80e04114031b0084bca2e1994551593438b46657392abb097c68c91f7c5da7eca48bc2992009995"
         }
       ]
     },
@@ -135,6 +136,46 @@
           "only-arches": ["x86_64"],
           "url": "https://registry.npmjs.org/@rometools/cli-linux-x64/-/cli-linux-x64-12.1.1.tgz",
           "sha512": "0ac2e3658b4b41d2a831cae85d72949997721507e0565ec2f282080dc24dce61d929d57046123533e9caff4be9885b558c2b7a8fe0b0da00d89284128a14edd3"
+        }
+      ]
+    },
+    {
+      "name": "icon-development-kit",
+      "buildsystem": "simple",
+      "build-commands": [
+        "mkdir -p /app/share/icon-development-kit",
+        "mkdir -p /app/share/icons/hicolor/scalable/actions/",
+        "yq -o=json _data/icons.yaml > /app/share/icon-development-kit/icons.json",
+        "cp -r img/symbolic/**/*.svg /app/share/icons/hicolor/scalable/actions/ || true"
+      ],
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://gitlab.gnome.org/Teams/Design/icon-development-kit-www.git",
+          "commit": "f2ecae16b8303d196577ebbbcb320d7a28ee0c69"
+        }
+      ],
+      "modules": [
+        {
+          "name": "yq",
+          "buildsystem": "simple",
+          "build-commands": ["chmod +x yq", "cp yq /app/bin/yq"],
+          "sources": [
+            {
+              "type": "file",
+              "only-arches": ["x86_64"],
+              "url": "https://github.com/mikefarah/yq/releases/download/v4.33.3/yq_linux_amd64",
+              "sha256": "4ee662847c588c3ef2fec8bfb304e8739e3dbaba87ccb9a608d691c88f5b64dc",
+              "dest-filename": "yq"
+            },
+            {
+              "type": "file",
+              "only-arches": ["aarch64"],
+              "url": "https://github.com/mikefarah/yq/releases/download/v4.33.3/yq_linux_arm64",
+              "sha256": "15925a972d268bcb0a7aa2236c7e5925b7a3ba4b5569bb57e943db7e8c6f834f",
+              "dest-filename": "yq"
+            }
+          ]
         }
       ]
     },
