@@ -142,9 +142,9 @@
         }
       ],
       "post-install": [
-        "cp -a /usr/lib/sdk/vala/bin/* /app/bin/",
-        "cp -a /usr/lib/sdk/vala/lib/* /app/lib/",
-        "cp -a /usr/lib/sdk/vala/share/* /app/share/"
+        "cp -a /usr/lib/sdk/vala/bin/. /app/bin/",
+        "cp -a /usr/lib/sdk/vala/lib/. /app/lib/",
+        "cp -a /usr/lib/sdk/vala/share/. /app/share/"
       ]
     }
   ]
