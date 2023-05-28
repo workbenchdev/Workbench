@@ -1,0 +1,91 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: "Boxed Lists";
+
+  ListBox {
+    halign: center;
+
+      Adw.PreferencesGroup  {
+        title: "Rows can be groupped";
+        Adw.ActionRow {
+          title: "Action row can have a prefix child";
+
+          [prefix]
+          CheckButton checkbox {
+            active: true;
+          }
+        }
+
+      Adw.ActionRow {
+        title: "Action row can have a suffix child";
+        subtitle: "Select checkbox above to show spinner";
+
+        [suffix]
+        Spinner {
+          spinning: bind checkbox.active;
+        }
+      }
+
+      Adw.EntryRow {
+         title: "A row can be an entry";
+      }
+    }
+
+    Adw.PreferencesGroup {
+      title: "Preferences Groups can have a suffix";
+
+      [header-suffix]
+      Button {
+        Adw.ButtonContent {
+          label: "child";
+          icon-name: "sidebar-toggle-right-symbolic";
+        }
+
+      }
+
+      Adw.ComboRow {
+        title: "Choose an item";
+        subtitle: "ComboRow can have a drop down list";
+        model: StringList list {
+          strings ["this", "is", "a", "string", "list"]
+        };
+      }
+
+      Adw.ExpanderRow {
+        title: "Rows can be expandable";
+
+        // remove the line below if you don't want a switch
+        show-enable-switch: true;
+
+        Adw.ActionRow {
+          title: "First row";
+        }
+        Adw.ActionRow {
+          title: "Second row";
+        }
+      }
+
+      Adw.ActionRow {
+        title: "Row can have an interactive button";
+
+        [suffix]
+        Button button {
+          label: "click";
+          valign: center;
+        }
+      }
+    }
+
+    LinkButton {
+      label: "API Reference";
+      uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/main/boxed-lists.html";
+    }
+
+    LinkButton {
+      label: "Human Interface Guidelines";
+      uri: "https://developer.gnome.org/hig/patterns/containers/boxed-lists.html";
+    }
+  }
+}
