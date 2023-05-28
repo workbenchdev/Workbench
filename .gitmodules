@@ -1,9 +1,3 @@
 [submodule "troll"]
 	path = troll
 	url = https://github.com/sonnyp/troll.git
-[submodule "blueprint-compiler"]
-	path = blueprint-compiler
-	url = https://gitlab.gnome.org/jwestman/blueprint-compiler.git
-[submodule "icon-development-kit-www"]
-	path = icon-development-kit-www
-	url = https://gitlab.gnome.org/Teams/Design/icon-development-kit-www.git

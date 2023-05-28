@@ -2,9 +2,6 @@
   "name": "Window",
   "category": "user_interface",
   "description": "A window containing a status page and menu button",
-  "panels": [
-    "ui",
-    "preview"
-  ],
+  "panels": ["ui", "preview"],
   "autorun": false
 }

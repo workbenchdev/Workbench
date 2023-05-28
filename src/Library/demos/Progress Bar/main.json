@@ -1,10 +1,7 @@
 {
   "name": "Progress Bar",
-  "category": "user_interface",
+  "category": "feedback",
   "description": "Display the progress of a long running operation",
-  "panels": [
-    "ui",
-    "preview"
-  ],
+  "panels": ["ui", "preview"],
   "autorun": true
 }

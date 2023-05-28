@@ -1,10 +1,7 @@
 {
   "name": "Scale",
-  "category": "user_interface",
+  "category": "controls",
   "description": "Slider control to select a value from a range",
-  "panels": [
-    "ui",
-    "preview"
-  ],
+  "panels": ["ui", "preview"],
   "autorun": true
 }

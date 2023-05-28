@@ -25,7 +25,7 @@ function rainbow_attributes(str) {
   ];
 
   // Create a color array with the length needed to color all the letters
-  let colorArray = [];
+  const colorArray = [];
   for (let i = 0; i < str.length; i = colorArray.length) {
     colorArray.push(...RAINBOW_COLORS);
   }
@@ -36,10 +36,10 @@ function rainbow_attributes(str) {
   for (let i = 0; i < str.length; i++) {
     // Skip space characters
     if (str[i] !== " ") {
-      let startIdx = i;
-      let endIdx = [i + 1];
+      const startIdx = i;
+      const endIdx = [i + 1];
 
-      let color = colorArray[colorIdx];
+      const color = colorArray[colorIdx];
       colorIdx++;
       // See comment below
       attrListString += `${startIdx} ${endIdx} foreground ${color},`;

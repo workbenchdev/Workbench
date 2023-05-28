@@ -1,10 +1,7 @@
 {
   "name": "Color Dialog",
-  "category": "user_interface",
+  "category": "controls",
   "description": "Show a dialog to select color",
-  "panels": [
-    "ui",
-    "preview"
-  ],
+  "panels": ["ui", "preview"],
   "autorun": true
 }
