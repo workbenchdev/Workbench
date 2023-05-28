@@ -59,6 +59,7 @@ ${getBlueprintVersion()}
     "Angelo Verlain https://www.vixalien.com",
     "bazylevnik0 https://github.com/bazylevnik0",
     "Felipe Kinoshita https://mastodon.social/@fkinoshita",
+    "Nasah Kuma https://www.mantohnasah.com/",
     // Add yourself as
     // "John Doe",
     // or

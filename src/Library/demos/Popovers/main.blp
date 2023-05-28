@@ -14,15 +14,12 @@ Adw.StatusPage {
       spacing: 42;
       halign: center;
 
-      MenuButton popover_button {
-        name: "popover_button";
-        popover: plain_popover;
+      MenuButton {
         label: "Plain Popover";
-        primary: true;
+        popover: plain_popover;
       }
 
-      MenuButton popover_menu_button {
-        name: "popover_menu_button";
+      MenuButton {
         label: "Popover Menu";
         popover: popover_menu;
       }
@@ -49,16 +46,13 @@ Adw.StatusPage {
 Popover plain_popover {
   has-arrow: true;
   name: "plain_popover";
-  child:
-  Box plain-popover-box {
+  child: Box plain-popover-box {
     name: "plain-popover-box";
 
     Label {
       label: "Plain Popover";
     }
-  }
-
-  ;
+  };
 }
 
 PopoverMenu popover_menu {
