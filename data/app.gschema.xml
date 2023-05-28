@@ -31,5 +31,11 @@
     <key name="preview-align" type="i">
       <default>0</default>
     </key>
+    <key name="auto-preview" type="b">
+      <default>true</default>
+    </key>
+    <key name="safe-mode" type="b">
+      <default>false</default>
+    </key>
   </schema>
 </schemalist>

@@ -20,6 +20,10 @@
       <arg type="i" name="width" direction="in"/>
       <arg type="i" name="height" direction="in"/>
     </method>
+    <method name="Screenshot">
+      <arg type="s" name="path" direction="in"/>
+      <arg type="b" name="success" direction="out"/>
+    </method>
     <method name="EnableInspector">
       <arg type="b" name="enabled" direction="in"/>
     </method>

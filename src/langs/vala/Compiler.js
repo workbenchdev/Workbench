@@ -1,7 +1,6 @@
 import Gio from "gi://Gio";
 import GLib from "gi://GLib";
 import dbus_previewer from "../../Previewer/DBusPreviewer.js";
-import { promiseTask } from "../../../troll/src/util.js";
 
 export default function Compiler(data_dir) {
   const code_file = Gio.File.new_for_path(
@@ -20,23 +19,14 @@ export default function Compiler(data_dir) {
       return;
     }
     await Promise.all([
-      promiseTask(
-        code_file,
-        "replace_contents_async",
-        "replace_contents_finish",
+      code_file.replace_contents_async(
         new GLib.Bytes(code || " "),
         null,
         false,
         Gio.FileCreateFlags.NONE,
         null,
       ),
-      promiseTask(
-        module_file,
-        "delete_async",
-        "delete_finish",
-        GLib.PRIORITY_DEFAULT,
-        null,
-      ).catch(() => {}),
+      module_file.delete_async(GLib.PRIORITY_DEFAULT, null).catch(() => {}),
     ]);
 
     const valac_launcher = new Gio.SubprocessLauncher();
@@ -58,7 +48,7 @@ export default function Compiler(data_dir) {
       ...args,
     ]);
 
-    await promiseTask(valac, "wait_async", "wait_finish", null);
+    await valac.wait_async(null);
 
     const result = valac.get_successful();
     valac_launcher.close();

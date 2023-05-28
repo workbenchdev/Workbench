@@ -98,7 +98,20 @@ Gtk.ApplicationWindow window {
     MenuButton button_menu {
       menu-model: menu_app;
       icon-name: "open-menu-symbolic";
+      tooltip-text: _("Main Menu");
       primary: true;
+    }
+
+    [end]
+    Button button_run {
+      child: Adw.ButtonContent {
+        icon-name: "media-playback-start-symbolic";
+        label: _("_Run");
+        use-underline: true;
+      };
+      action-name: "win.run";
+      tooltip-text: _("Run (Ctrl+⏎)");
+      styles ["suggested-action"]
     }
   };
 
@@ -143,20 +156,8 @@ Gtk.ApplicationWindow window {
                     "Vala",
                   ]
                 };
-                tooltip-text: _("Switch document");
+                tooltip-text: _("Switch Document");
               }
-            }
-
-            [end]
-            Button button_run {
-              child: Adw.ButtonContent {
-                icon-name: "media-playback-start-symbolic";
-                label: _("_Run");
-                use-underline: true;
-              };
-              action-name: "win.run";
-              tooltip-text: _("Run (Ctrl+⏎)");
-              styles ["suggested-action"]
             }
           }
 
@@ -167,13 +168,13 @@ Gtk.ApplicationWindow window {
             hexpand: true;
             StackPage {
               name: 'JavaScript';
-              child: .CodeView code_view_javascript {
+              child: $CodeView code_view_javascript {
                 language_id: 'js';
               };
             }
             StackPage {
               name: 'Vala';
-              child: .CodeView code_view_vala {
+              child: $CodeView code_view_vala {
                 language_id: 'vala';
               };
             }
@@ -198,7 +199,7 @@ Gtk.ApplicationWindow window {
           Separator {
           }
 
-          .CodeView code_view_css {
+          $CodeView code_view_css {
             language_id: 'css';
           }
         }
@@ -229,11 +230,11 @@ Gtk.ApplicationWindow window {
                     "Blueprint",
                   ]
                 };
-                tooltip-text: _("Convert and switch syntax");
+                tooltip-text: _("Convert and Switch Syntax");
               }
               Button button_ui_experimental_blueprint {
                 icon-name: "applications-science-symbolic";
-                tooltip-text: _("Information about Blueprint");
+                tooltip-text: _("Information About Blueprint");
               }
             }
           }
@@ -246,13 +247,13 @@ Gtk.ApplicationWindow window {
 
             StackPage {
               name: 'blueprint';
-              child: .CodeView code_view_blueprint {
+              child: $CodeView code_view_blueprint {
                 language_id: 'blueprint';
               };
             }
             StackPage {
               name: 'xml';
-              child: .CodeView code_view_xml {
+              child: $CodeView code_view_xml {
                 language_id: 'xml';
               };
             }
@@ -266,10 +267,12 @@ Gtk.ApplicationWindow window {
             styles ["toolbar", "panel_header"]
 
             [start]
-            Label {
-              label: _("<b>Preview</b>");
-              use-markup: true;
-              styles ["dim-label"]
+            MenuButton {
+              halign: center;
+              valign: center;
+              label: _("Preview");
+              styles ["flat"]
+              menu-model: preview_menu;
             }
 
             [center]
@@ -281,7 +284,7 @@ Gtk.ApplicationWindow window {
                   _("Center"),
                 ]
               };
-              tooltip-text: _("Select Preview mode");
+              tooltip-text: _("Select Preview Mode");
             }
 
             [end]
@@ -386,7 +389,7 @@ Gtk.ApplicationWindow window {
                 use-underline: true;
               };
               action-name: "win.console";
-              tooltip-text: _("Show logs (Ctrl+Shift+K)");
+              tooltip-text: _("Show Logs (Ctrl+Shift+K)");
             }
 
             Button button_inspector {
@@ -410,7 +413,7 @@ Gtk.ApplicationWindow window {
                 use-underline: true;
               };
               action-name: "win.clear";
-              tooltip-text: _("Clear console (Ctrl+K)");
+              tooltip-text: _("Clear Console (Ctrl+K)");
             }
           }
         }
@@ -431,7 +434,7 @@ Gtk.ApplicationWindow window {
   }
 }
 
-.Modal modal_blueprint_experimental {
+$Modal modal_blueprint_experimental {
   default-width: 368;
   default-height: 480;
 
@@ -554,4 +557,13 @@ menu menu_app {
       action: "app.about";
     }
   }
+}
+
+menu preview_menu {
+  // FIXME: It's unclear if this is needed or helpful
+  // know issue: if auto-preview is disabled, Workbench shows a blank preview on start
+  item (_("Auto-Update"), "app.auto-preview")
+  // FIXME: This will probably be removed in favor of
+  // automatcally enabling when we detect a crash
+  item (_("Safe Mode"), "app.safe-mode")
 }

@@ -2,7 +2,8 @@ import GObject from "gi://GObject";
 import Gtk from "gi://Gtk";
 import Adw from "gi://Adw";
 
-import Template from "./Modal.blp" assert { type: "uri" };
+import Template from "./Modal.blp" with { type: "uri" };
+import { registerClass } from "../overrides.js";
 
 const trigger = Gtk.ShortcutTrigger.parse_string("Escape");
 
@@ -37,7 +38,7 @@ class Modal extends Adw.Window {
   };
 }
 
-export default GObject.registerClass(
+export default registerClass(
   {
     GTypeName: "Modal",
     Template,

@@ -1,11 +1,9 @@
 {
   "id": "re.sonny.Workbench.Devel",
   "runtime": "org.gnome.Sdk",
-  "runtime-version": "44beta",
+  "runtime-version": "44",
   "sdk": "org.gnome.Sdk",
-  "sdk-extensions": [
-    "org.freedesktop.Sdk.Extension.vala"
-  ],
+  "sdk-extensions": ["org.freedesktop.Sdk.Extension.vala"],
   "build-options": {
     "append-path": "/usr/lib/sdk/vala/bin",
     "append-ld-library-path": "/usr/lib/sdk/vala/lib"
@@ -17,6 +15,18 @@
     "--socket=wayland",
     "--device=dri",
     "--share=network"
+  ],
+  "cleanup": [
+    "/include",
+    "/lib/pkgconfig",
+    "/man",
+    "/share/doc",
+    "/share/gtk-doc",
+    "/share/man",
+    "/share/pkgconfig",
+    "/share/installed-tests",
+    "*.la",
+    "*.a"
   ],
   "modules": [
     {
@@ -31,21 +41,16 @@
       ],
       "sources": [
         {
-          "type": "git",
-          "url": "https://gitlab.gnome.org/GNOME/vte.git",
-          "commit": "5bf476f1d7283bc805ac8ae6abe94f81ffd7be05",
-          "tag": "0.70.1"
+          "type": "archive",
+          "url": "https://download.gnome.org/sources/vte/0.72/vte-0.72.1.tar.xz",
+          "sha256": "0554f9f88d56ce2d78398fcc7f69bc00e53bbbc5f694e0ae1dcaf5286f89d7e4"
         }
       ]
     },
     {
       "name": "libportal",
       "buildsystem": "meson",
-      "config-opts": [
-        "-Ddocs=false",
-        "-Dvapi=false",
-        "-Dbackends=gtk4"
-      ],
+      "config-opts": ["-Ddocs=false", "-Dvapi=false", "-Dbackends=gtk4"],
       "sources": [
         {
           "type": "archive",
@@ -60,8 +65,9 @@
       "builddir": true,
       "sources": [
         {
-          "type": "dir",
-          "path": "./blueprint-compiler"
+          "type": "archive",
+          "url": "https://gitlab.gnome.org/jwestman/blueprint-compiler/-/archive/v0.8.1/blueprint-compiler-v0.8.1.tar.gz",
+          "sha512": "33f14741d358372b3953ba2bf6619b3e40df9e2649854897b80e04114031b0084bca2e1994551593438b46657392abb097c68c91f7c5da7eca48bc2992009995"
         }
       ]
     },
@@ -70,9 +76,9 @@
       "buildsystem": "meson",
       "sources": [
         {
-          "type": "git",
-          "url": "https://github.com/vala-lang/vala-language-server/",
-          "commit": "bf978c0cda97cff946f355477ec8da08b1cb4e5e"
+          "type": "archive",
+          "url": "https://github.com/vala-lang/vala-language-server/releases/download/0.48.7/vala-language-server-0.48.7.tar.xz",
+          "sha256": "a93e09497738144792466d0c5ccb1347583d84a9987b65b08f6aa5d5a1e3f431"
         }
       ],
       "modules": [
@@ -82,16 +88,11 @@
           "sources": [
             {
               "type": "archive",
-              "url": "https://download.gnome.org/sources/jsonrpc-glib/3.42/jsonrpc-glib-3.42.0.tar.xz",
-              "sha256": "221989a57ca82a12467dc427822cd7651b0cad038140c931027bf1074208276b"
+              "url": "https://download.gnome.org/sources/jsonrpc-glib/3.44/jsonrpc-glib-3.44.0.tar.xz",
+              "sha256": "69406a0250d0cc5175408cae7eca80c0c6bfaefc4ae1830b354c0433bcd5ce06"
             }
           ],
-          "cleanup": [
-            "/include",
-            "*.pc",
-            "*.gir",
-            "*.typelib"
-          ]
+          "cleanup": ["/include", "*.pc", "*.gir", "*.typelib"]
         },
         {
           "name": "gee",
@@ -99,23 +100,21 @@
           "sources": [
             {
               "type": "archive",
-              "url": "https://download.gnome.org/sources/libgee/0.20/libgee-0.20.5.tar.xz",
-              "sha256": "31863a8957d5a727f9067495cabf0a0889fa5d3d44626e54094331188d5c1518"
+              "url": "https://download.gnome.org/sources/libgee/0.20/libgee-0.20.6.tar.xz",
+              "sha256": "1bf834f5e10d60cc6124d74ed3c1dd38da646787fbf7872220b8b4068e476d4d"
             }
           ]
         },
         {
           "name": "uncrustify",
           "buildsystem": "cmake-ninja",
-          "config-opts": [
-            "-DCMAKE_BUILD_TYPE=Release"
-          ],
+          "config-opts": ["-DCMAKE_BUILD_TYPE=Release"],
           "builddir": true,
           "sources": [
             {
               "type": "archive",
-              "url": "https://github.com/uncrustify/uncrustify/archive/uncrustify-0.75.1.tar.gz",
-              "sha256": "fd14acc0a31ed88b33137bdc26d32964327488c835f885696473ef07caf2e182"
+              "url": "https://github.com/uncrustify/uncrustify/archive/uncrustify-0.76.0.tar.gz",
+              "sha256": "32e2f95485a933fc5667880f1a09a964ae83132c235bb606abbb0a659453acb3"
             }
           ]
         }
@@ -124,26 +123,59 @@
     {
       "name": "rome",
       "buildsystem": "simple",
-      "build-commands": [
-        "chmod +x rome",
-        "cp rome /app/bin/rome"
-      ],
+      "build-commands": ["chmod +x rome", "cp rome /app/bin/rome"],
       "sources": [
         {
           "type": "archive",
-          "only-arches": [
-            "aarch64"
-          ],
-          "url": "https://registry.npmjs.org/@rometools/cli-linux-arm64/-/cli-linux-arm64-11.0.0.tgz",
-          "sha512": "764b53249953a66c9c059d93c212417003bcced2bc0dd7af772667145c5d611bed9898138c8b02d9415ac9ffd26ca7b0f01f2ad48848d22b7e0fa8a101e2297a"
+          "only-arches": ["aarch64"],
+          "url": "https://registry.npmjs.org/@rometools/cli-linux-arm64/-/cli-linux-arm64-12.1.1.tgz",
+          "sha512": "8ca25e4fa488d5df5b90094c398977750b73bd38bdf1db0903310cf754955cb9793a78e4e7967d406f5fd44e276d2efa2cae1e65a34c70aaacec5da14b255e75"
         },
         {
           "type": "archive",
-          "only-arches": [
-            "x86_64"
-          ],
-          "url": "https://registry.npmjs.org/@rometools/cli-linux-x64/-/cli-linux-x64-11.0.0.tgz",
-          "sha512": "5957275cf35d586516a34a78354f18ceeb618d847babe6f8bd1723771b4fd43969a616664aca02fd1484f399c4a91033f210a170a51a9ec57338f33c052b2e18"
+          "only-arches": ["x86_64"],
+          "url": "https://registry.npmjs.org/@rometools/cli-linux-x64/-/cli-linux-x64-12.1.1.tgz",
+          "sha512": "0ac2e3658b4b41d2a831cae85d72949997721507e0565ec2f282080dc24dce61d929d57046123533e9caff4be9885b558c2b7a8fe0b0da00d89284128a14edd3"
+        }
+      ]
+    },
+    {
+      "name": "icon-development-kit",
+      "buildsystem": "simple",
+      "build-commands": [
+        "mkdir -p /app/share/icon-development-kit",
+        "mkdir -p /app/share/icons/hicolor/scalable/actions/",
+        "yq -o=json _data/icons.yaml > /app/share/icon-development-kit/icons.json",
+        "cp -r img/symbolic/**/*.svg /app/share/icons/hicolor/scalable/actions/ || true"
+      ],
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://gitlab.gnome.org/Teams/Design/icon-development-kit-www.git",
+          "commit": "f2ecae16b8303d196577ebbbcb320d7a28ee0c69"
+        }
+      ],
+      "modules": [
+        {
+          "name": "yq",
+          "buildsystem": "simple",
+          "build-commands": ["chmod +x yq", "cp yq /app/bin/yq"],
+          "sources": [
+            {
+              "type": "file",
+              "only-arches": ["x86_64"],
+              "url": "https://github.com/mikefarah/yq/releases/download/v4.33.3/yq_linux_amd64",
+              "sha256": "4ee662847c588c3ef2fec8bfb304e8739e3dbaba87ccb9a608d691c88f5b64dc",
+              "dest-filename": "yq"
+            },
+            {
+              "type": "file",
+              "only-arches": ["aarch64"],
+              "url": "https://github.com/mikefarah/yq/releases/download/v4.33.3/yq_linux_arm64",
+              "sha256": "15925a972d268bcb0a7aa2236c7e5925b7a3ba4b5569bb57e943db7e8c6f834f",
+              "dest-filename": "yq"
+            }
+          ]
         }
       ]
     },
@@ -151,9 +183,7 @@
       "name": "Workbench",
       "buildsystem": "meson",
       "builddir": true,
-      "config-opts": [
-        "-Dprofile=development"
-      ],
+      "config-opts": ["-Dprofile=development"],
       "sources": [
         {
           "type": "dir",

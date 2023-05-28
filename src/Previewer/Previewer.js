@@ -3,6 +3,11 @@ import GObject from "gi://GObject";
 import GLib from "gi://GLib";
 import Gio from "gi://Gio";
 
+import Xdp from "gi://Xdp";
+import XdpGtk from "gi://XdpGtk4";
+
+import { portal } from "../util.js";
+
 import * as xml from "../langs/xml/xml.js";
 import * as postcss from "../lib/postcss.js";
 
@@ -10,9 +15,9 @@ import { encode, settings, unstack } from "../util.js";
 
 import Internal from "./Internal.js";
 import External from "./External.js";
-import { getClassNameType } from "../overrides.js";
+import { getClassNameType, registerClass } from "../overrides.js";
 
-import { isBuilderable, isPreviewable } from "./utils.js";
+import { assertBuildable, detectCrash, isPreviewable } from "./utils.js";
 
 /*
   Always default to in-process preview
@@ -102,10 +107,12 @@ export default function Previewer({
   function start() {
     stop();
     if (handler_id_ui === null) {
-      handler_id_ui = panel_ui.connect("updated", schedule_update);
+      handler_id_ui = panel_ui.connect("updated", () => schedule_update());
     }
     if (handler_id_css === null) {
-      handler_id_css = code_view_css.connect("changed", schedule_update);
+      handler_id_css = code_view_css.connect("changed", () =>
+        schedule_update(),
+      );
     }
   }
 
@@ -114,7 +121,6 @@ export default function Previewer({
       panel_ui.disconnect(handler_id_ui);
       handler_id_ui = null;
     }
-
     if (handler_id_css) {
       code_view_css.disconnect(handler_id_css);
       handler_id_css = null;
@@ -123,7 +129,7 @@ export default function Previewer({
 
   // Using this custom scope we make sure that previewing UI definitions
   // with signals doesn't fail - in addition, checkout registerSignals
-  const BuilderScope = GObject.registerClass(
+  const BuilderScope = registerClass(
     {
       Implements: [Gtk.BuilderScope],
     },
@@ -145,8 +151,12 @@ export default function Previewer({
     },
   );
 
+  settings.connect("changed", () => {
+    if (settings.get_boolean("auto-preview")) schedule_update();
+  });
   let symbols = null;
-  async function update() {
+  async function update(force = false) {
+    if (!(force || settings.get_boolean("auto-preview"))) return;
     let text = panel_ui.xml.trim();
     let target_id;
     let tree;
@@ -167,9 +177,18 @@ export default function Previewer({
 
     if (!target_id) return;
 
-    // console.time("builderable");
-    if (!(await isBuilderable(text))) return;
-    // console.timeEnd("builderable");
+    try {
+      assertBuildable(tree);
+    } catch (err) {
+      console.warn(err.message);
+      return;
+    }
+
+    if (settings.get_boolean("safe-mode")) {
+      // console.time("detectCrash");
+      if (await detectCrash(text, target_id)) return;
+      // console.timeEnd("detectCrash");
+    }
 
     const builder = new Gtk.Builder();
     const scope = new BuilderScope();
@@ -214,16 +233,18 @@ export default function Previewer({
   const schedule_update = unstack(update, logError);
 
   async function useExternal() {
-    if (current === external) return;
-    await setPreviewer(external);
+    if (current !== external) {
+      await setPreviewer(external);
+    }
     stack.set_visible_child_name("close_window");
-    await update();
+    await update(true);
   }
 
   async function useInternal() {
-    if (current === internal) return;
-    await setPreviewer(internal);
-    await update();
+    if (current !== internal) {
+      await setPreviewer(internal);
+    }
+    await update(true);
   }
 
   async function setPreviewer(previewer) {
@@ -270,8 +291,31 @@ export default function Previewer({
   }
 
   builder.get_object("button_screenshot").connect("clicked", () => {
-    current.screenshot({ window, data_dir });
+    screenshot().catch(logError);
   });
+  async function screenshot() {
+    const path = GLib.build_filenamev([data_dir, "Workbench screenshot.png"]);
+
+    const success = await current.screenshot({ window, path });
+    if (!success) return;
+
+    const parent = XdpGtk.parent_new_gtk(window);
+
+    try {
+      await portal.open_uri(
+        parent,
+        `file://${path}`,
+        Xdp.OpenUriFlags.NONE, // flags
+        null, // cancellable
+      );
+    } catch (err) {
+      if (err.code !== Gio.IOErrorEnum.CANCELLED) {
+        logError(err);
+      } else {
+        throw err;
+      }
+    }
+  }
 
   setPreviewer(internal);
   start();

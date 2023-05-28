@@ -25,21 +25,18 @@ import prettier_postcss from "./lib/prettier-postcss.js";
 import Library, { readDemo } from "./Library/Library.js";
 import Previewer from "./Previewer/Previewer.js";
 import Compiler from "./langs/vala/Compiler.js";
-import { promiseTask } from "../troll/src/util.js";
 import ThemeSelector from "../troll/src/widgets/ThemeSelector.js";
 
 import resource from "./window.blp";
 
-import "./icons/re.sonny.Workbench-beaker.svg" assert { type: "icon" };
-import "./icons/re.sonny.Workbench-code-symbolic.svg" assert { type: "icon" };
-import "./icons/re.sonny.Workbench-placeholder-symbolic.svg" assert {
+import "./icons/re.sonny.Workbench-beaker.svg" with { type: "icon" };
+import "./icons/re.sonny.Workbench-code-symbolic.svg" with { type: "icon" };
+import "./icons/re.sonny.Workbench-placeholder-symbolic.svg" with {
   type: "icon",
 };
-import "./icons/re.sonny.Workbench-preview-symbolic.svg" assert {
-  type: "icon",
-};
-import "./icons/re.sonny.Workbench-ui-symbolic.svg" assert { type: "icon" };
-import "./icons/re.sonny.Workbench-screenshot-symbolic.svg" assert {
+import "./icons/re.sonny.Workbench-preview-symbolic.svg" with { type: "icon" };
+import "./icons/re.sonny.Workbench-ui-symbolic.svg" with { type: "icon" };
+import "./icons/re.sonny.Workbench-screenshot-symbolic.svg" with {
   type: "icon",
 };
 
@@ -250,17 +247,14 @@ export default function Window({ application }) {
       }
 
       if (language === "JavaScript") {
-        await previewer.update();
+        await previewer.update(true);
 
         // We have to create a new file each time
         // because gjs doesn't appear to use etag for module caching
         // ?foo=Date.now() also does not work as expected
         // TODO: File a bug
         const [file_javascript] = Gio.File.new_tmp("workbench-XXXXXX.js");
-        await promiseTask(
-          file_javascript,
-          "replace_contents_async",
-          "replace_contents_finish",
+        await file_javascript.replace_contents_async(
           new GLib.Bytes(document_javascript.code_view.buffer.text || " "),
           null,
           false,
@@ -271,16 +265,12 @@ export default function Window({ application }) {
         try {
           exports = await import(`file://${file_javascript.get_path()}`);
         } catch (err) {
-          await previewer.update();
+          await previewer.update(true);
           throw err;
         } finally {
-          promiseTask(
-            file_javascript,
-            "delete_async",
-            "delete_finish",
-            GLib.PRIORITY_DEFAULT,
-            null,
-          ).catch(logError);
+          file_javascript
+            .delete_async(GLib.PRIORITY_DEFAULT, null)
+            .catch(logError);
         }
         previewer.setSymbols(exports);
       } else if (language === "Vala") {
@@ -317,10 +307,7 @@ export default function Window({ application }) {
     name: "run",
   });
   action_run.connect("activate", () => {
-    // Ensure code does not run if panel is not visible
-    if (panel_code.panel.visible) {
-      runCode().catch(logError);
-    }
+    runCode().catch(logError);
   });
   window.add_action(action_run);
   application.set_accels_for_action("win.run", ["<Control>Return"]);
@@ -400,7 +387,7 @@ export default function Window({ application }) {
       panel_ui.start();
       await panel_ui.update();
       previewer.start();
-      await previewer.update();
+      await previewer.update(true);
     }
 
     documents.forEach((document) => {

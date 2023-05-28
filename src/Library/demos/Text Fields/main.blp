@@ -1,0 +1,291 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.Clamp {
+  Box {
+    orientation: vertical;
+
+    Label {
+      label: "Text Fields";
+      margin-top: 12;
+      margin-bottom: 12;
+
+      styles [
+        "title-1",
+      ]
+    }
+
+    Label {
+      label: "Single line widgets to enter text";
+      margin-bottom: 12;
+    }
+
+    LinkButton{
+      label: "Human Interface Guidelines";
+      uri: "https://developer.gnome.org/hig/patterns/controls/text-fields.html";
+      margin-bottom: 6;
+    }
+
+    Label {
+      label: "Entry";
+      margin-top: 12;
+      halign: start;
+
+      styles [
+        "heading",
+      ]
+    }
+
+    Label {
+      label: "A simple but versatile widget that allows single line text entry and editing.";
+      margin-top: 12;
+      margin-bottom: 12;
+      halign: start;
+
+      styles [
+        "dim-label",
+      ]
+    }
+
+    FlowBox {
+      homogeneous: true;
+      row-spacing: 18;
+      selection-mode: none;
+
+      Box {
+        orientation: vertical;
+
+        Label {
+          label: "Regular";
+          margin-bottom: 12;
+        }
+
+        Entry entry {
+          input-purpose: free_form;
+          input-hints: no_spellcheck;
+        }
+      }
+
+      Box {
+        orientation: vertical;
+
+        Label {
+          label: "Placeholder Text";
+          margin-bottom: 12;
+        }
+
+        Entry entry_placeholder{
+          placeholder-text: "Enter text here";
+        }
+      }
+
+      Box {
+        orientation: vertical;
+
+        Label {
+          label: "Icons";
+          margin-bottom: 12;
+        }
+
+        Entry entry_icon {
+          primary-icon-name: "about-symbolic";
+          primary-icon-activatable: true;
+          primary-icon-tooltip-text: "Click on Me";
+          secondary-icon-name: "bell-symbolic";
+          secondary-icon-tooltip-text: "No Click on Me";
+        }
+      }
+
+      Box {
+          orientation: vertical;
+
+          Label {
+            label: "Progress Bar";
+            margin-bottom: 12;
+
+          }
+
+          Entry entry_progress {
+            progress-fraction: 0;
+            primary-icon-name: "media-playback-start-symbolic";
+            primary-icon-tooltip-text: "Play Animation";
+          }
+        }
+      }
+
+    Box {
+      halign: center;
+      margin-top: 18;
+      margin-bottom: 18;
+
+      LinkButton{
+        label: "Tutorial";
+        uri: "https://developer.gnome.org/documentation/tutorials/beginners/components/entry.html";
+      }
+
+      LinkButton{
+        label: "API Reference";
+        uri: "https://docs.gtk.org/gtk4/class.Entry.html";
+      }
+    }
+
+    Separator {
+      margin-bottom: 18;
+    }
+
+    Label {
+      label: "Completion Entry";
+      halign: start;
+
+      styles [
+        "heading",
+      ]
+    }
+
+    Label {
+      label: "An entry widget with support for completion.";
+      margin-top: 12;
+      margin-bottom: 12;
+      halign: start;
+
+      styles [
+        "dim-label",
+      ]
+    }
+
+
+    Entry entry_completion {
+      margin-bottom: 12;
+      placeholder-text: "Try typing 'apple'";
+    }
+
+    LinkButton {
+      label: "API Reference";
+      uri: "https://docs.gtk.org/gtk4/class.EntryCompletion.html";
+      margin-top: 18;
+      margin-bottom: 18;
+    }
+
+    Separator {
+      margin-bottom: 18;
+    }
+
+    Label {
+      label: "Password Entry";
+      halign: start;
+
+      styles [
+        "heading",
+      ]
+    }
+
+    Label {
+      label: "An entry with dedicated control for entering secrets and passwords.";
+      margin-top: 12;
+      margin-bottom: 12;
+      halign: start;
+
+      styles [
+        "dim-label",
+      ]
+    }
+
+    PasswordEntry entry_password{
+      show-peek-icon: true;
+      placeholder-text: "Enter password";
+      margin-bottom: 12;
+    }
+
+    PasswordEntry entry_confirm_password{
+      show-peek-icon: true;
+      placeholder-text: "Confirm password";
+      margin-bottom: 12;
+    }
+
+    Label label_password {
+    }
+
+    Box {
+      halign: center;
+      margin-top: 6;
+      margin-bottom: 18;
+
+      LinkButton{
+        label: "Tutorial";
+        uri: "https://developer.gnome.org/documentation/tutorials/beginners/components/password_entry.html";
+      }
+
+      LinkButton{
+        label: "API Reference";
+        uri: "https://docs.gtk.org/gtk4/class.PasswordEntry.html";
+      }
+    }
+
+    Separator {
+      margin-bottom: 18;
+    }
+
+    Label {
+      label: "Style Classes";
+      margin-bottom: 12;
+      halign: start;
+
+      styles [
+        "heading",
+      ]
+    }
+
+    Box {
+      homogeneous: true;
+      margin-bottom: 18;
+
+      Entry  {
+        placeholder-text: "accent";
+        margin-start: 6;
+        margin-end: 6;
+        styles ["accent"]
+      }
+
+      Entry {
+        placeholder-text: "warning";
+        margin-start: 6;
+        margin-end: 6;
+        styles ["warning"]
+      }
+    }
+
+    Box {
+      homogeneous: true;
+      margin-bottom: 18;
+
+      Entry {
+        placeholder-text: "error";
+        margin-start: 6;
+        margin-end: 6;
+        styles ["error"]
+      }
+
+      Entry {
+        placeholder-text: "success";
+        margin-start: 6;
+        margin-end: 6;
+        styles ["success"]
+      }
+    }
+
+    Box {
+      margin-bottom: 18;
+      styles ["linked"]
+      halign: center;
+      Entry {
+        placeholder-text: "Street name and number";
+      }
+      Entry {
+        placeholder-text: "City";
+      }
+      Entry {
+        placeholder-text: "Country";
+      }
+    }
+  }
+}
