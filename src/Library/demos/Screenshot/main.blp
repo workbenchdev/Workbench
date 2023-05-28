@@ -3,29 +3,31 @@ using Adw 1;
 
 Adw.StatusPage {
   title: "Screenshot";
-  description: _("Keep a snapshot of your current screen");
+  description: _("Take a picture of the screen");
+  margin-top: 48;
 
   Box {
     orientation: vertical;
     halign: center;
 
     Picture picture {
+      margin-bottom: 12;
+      valign: center;
     }
 
-    Button Screenshot {
-      icon-name: "camera";
-      margin-bottom: 40;
+    Button button {
+      icon-name: "screenshooter-symbolic";
+      margin-bottom: 42;
+      width-request: 18;
+      height-request: 18;
     }
 
     LinkButton {
       label: "API Reference";
-      uri: "https://libportal.org/";
-    }
-
-    LinkButton {
-      label: "Source Code";
-      uri: "https://developer.gnome.org/hig/patterns/controls/sliders.html";
+      uri: "https://libportal.org/method.Portal.take_screenshot.html";
     }
   }
 }
+
+
 

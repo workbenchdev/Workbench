@@ -1,9 +1,9 @@
 {
   "name": "Screenshot",
-  "category": "portal",
-  "description": "Keep a snapshot of your current screen",
+  "category": "platform",
+  "description": "Take a picture of the screen",
   "panels": [
-    "ui",
+    "code",
     "preview"
   ],
   "autorun": true
