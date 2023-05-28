@@ -1,0 +1,76 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: "Popovers";
+  description: _("Display content in a container anchored to another widget");
+
+  Box {
+    orientation: vertical;
+
+    Box {
+      margin-bottom: 78;
+      margin-top: 42;
+      spacing: 42;
+      halign: center;
+
+      MenuButton {
+        label: "Plain Popover";
+        popover: plain_popover;
+      }
+
+      MenuButton {
+        label: "Popover Menu";
+        popover: popover_menu;
+      }
+    }
+
+    LinkButton {
+      label: "Popover";
+      uri: "https://docs.gtk.org/gtk4/class.Popover.html";
+    }
+
+    LinkButton {
+      label: "Popover Menu";
+      uri: "https://docs.gtk.org/gtk4/class.PopoverMenu.html";
+    }
+
+    LinkButton {
+      margin-top: 24;
+      label: "Human Interface Guidelines";
+      uri: "https://developer.gnome.org/hig/patterns/containers/popovers.html";
+    }
+  }
+}
+
+Popover plain_popover {
+  has-arrow: true;
+  name: "plain_popover";
+  child: Box plain-popover-box {
+    name: "plain-popover-box";
+
+    Label {
+      label: "Plain Popover";
+    }
+  };
+}
+
+PopoverMenu popover_menu {
+  name: "popover_menu";
+  menu-model: menu_app;
+}
+
+menu menu_app {
+  section {
+    item {
+      label: _("Keyboard Shortcuts");
+      action: "app.shortcuts";
+    }
+
+    item {
+      label: _("About WorkBench");
+      action: "app.about";
+    }
+  }
+}
+
