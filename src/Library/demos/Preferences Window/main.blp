@@ -8,7 +8,7 @@ Adw.PreferencesWindow pref_window {
 
   Adw.PreferencesPage appearance_page {
     title:"Appearance";
-    icon-name:"system-run-symbolic";
+    icon-name:"brush-monitor-symbolic";
 
     Adw.PreferencesGroup{
       title:"Color Settings";
@@ -28,26 +28,14 @@ Adw.PreferencesWindow pref_window {
         }
       }
     }
-
-    Adw.PreferencesGroup{
-      title:"Window Settings";
-
-      Gtk.ListBox{
-        styles["boxed-list"]
-        Adw.ActionRow{
-          title: "Maximize on Start-up";
-           selectable: false;
-        }
-      }
-    }
   }
 
   Adw.PreferencesPage behavior_page {
-    title:"Behavior";
+    title:_("Behavior");
     icon-name:"settings-symbolic";
 
     Adw.PreferencesGroup{
-      title:"Interaction Settings";
+      title:_("Interaction Settings");
       description:"Change how the app behaves during user interaction.";
 
       Gtk.ListBox{
