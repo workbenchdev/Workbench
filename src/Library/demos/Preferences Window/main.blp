@@ -14,17 +14,15 @@ Adw.PreferencesWindow pref_window {
       title:"Color Settings";
       description:"Change the color-scheme of the application.";
 
-      Gtk.ListBox{
-        styles["boxed-list"]
-        Adw.ActionRow{
-          title: "Use Dark Mode";
-          selectable: false;
+      styles["boxed-list"]
+      Adw.ActionRow{
+        title: "Use Dark Mode";
+        selectable: false;
 
-          [suffix]
-          Switch cs_switch{
+        [suffix]
+        Switch cs_switch{
           halign: center;
           valign: center;
-          }
         }
       }
     }
@@ -38,12 +36,10 @@ Adw.PreferencesWindow pref_window {
       title:_("Interaction Settings");
       description:"Change how the app behaves during user interaction.";
 
-      Gtk.ListBox{
-        styles["boxed-list"]
-        Adw.ActionRow{
-          title: "Enable Gestures";
-          selectable: false;
-        }
+      styles["boxed-list"]
+      Adw.ActionRow{
+        title: "Enable Gestures";
+        selectable: false;
       }
     }
 
@@ -51,17 +47,15 @@ Adw.PreferencesWindow pref_window {
       title:"Data Settings";
       description:"Manage user data related settings.";
 
-      Gtk.ListBox{
-        styles["boxed-list"]
-        Adw.ActionRow{
-          title: "Enable Telementry";
-          selectable: false;
-        }
+      styles["boxed-list"]
+      Adw.ActionRow{
+        title: "Enable Telementry";
+        selectable: false;
+      }
 
-         Adw.ActionRow{
-          title: "Enable Auto-Updates";
+      Adw.ActionRow{
+        title: "Enable Auto-Updates";
           selectable: false;
-        }
       }
     }
   }
