@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<gresources>
-  <gresource prefix="/re/sonny/Workbench">
-    <file>style.css</file>
-    <file>language-specs/blueprint.lang</file>
-  </gresource>
-</gresources>
