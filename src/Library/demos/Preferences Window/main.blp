@@ -1,0 +1,81 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.PreferencesWindow pref_window {
+  default-width: 800;
+  default-height: 600;
+  title: "My App Preferences";
+
+  Adw.PreferencesPage appearance_page {
+    title:"Appearance";
+    icon-name:"system-run-symbolic";
+
+    Adw.PreferencesGroup{
+      title:"Color Settings";
+      description:"Change the color-scheme of the application.";
+
+      Gtk.ListBox{
+        styles["boxed-list"]
+        Adw.ActionRow{
+          title: "Use Dark Mode";
+          selectable: false;
+
+          [suffix]
+          Switch cs_switch{
+          halign: center;
+          valign: center;
+          }
+        }
+      }
+    }
+
+    Adw.PreferencesGroup{
+      title:"Window Settings";
+
+      Gtk.ListBox{
+        styles["boxed-list"]
+        Adw.ActionRow{
+          title: "Maximize on Start-up";
+           selectable: false;
+        }
+      }
+    }
+  }
+
+  Adw.PreferencesPage behavior_page {
+    title:"Behavior";
+    icon-name:"settings-symbolic";
+
+    Adw.PreferencesGroup{
+      title:"Interaction Settings";
+      description:"Change how the app behaves during user interaction.";
+
+      Gtk.ListBox{
+        styles["boxed-list"]
+        Adw.ActionRow{
+          title: "Enable Gestures";
+          selectable: false;
+        }
+      }
+    }
+
+    Adw.PreferencesGroup{
+      title:"Data Settings";
+      description:"Manage user data related settings.";
+
+      Gtk.ListBox{
+        styles["boxed-list"]
+        Adw.ActionRow{
+          title: "Enable Telementry";
+          selectable: false;
+        }
+
+         Adw.ActionRow{
+          title: "Enable Auto-Updates";
+          selectable: false;
+        }
+      }
+    }
+  }
+}
+
