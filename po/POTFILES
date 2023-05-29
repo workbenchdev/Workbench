@@ -41,3 +41,18 @@ src/Library/Library.blp
 
 troll/src/widgets/ThemeSelector.blp
 troll/src/widgets/ThemeSelector.js
+
+src/init.js
+src/langs/xml/xml.js
+src/langs/blueprint/blueprint.js
+src/langs/vala/vala.js
+src/langs/javascript/javascript.js
+src/langs/vala/Compiler.js
+src/widgets/Modal.blp
+src/widgets/Modal.js
+src/widgets/CodeView.blp
+src/widgets/CodeView.js
+src/IconLibrary/IconWidget.blp
+src/IconLibrary/IconWidget.js
+src/IconLibrary/main.blp
+src/IconLibrary/main.js

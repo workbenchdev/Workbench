@@ -29,13 +29,6 @@ custom_target('blueprints',
   ],
 )
 
-gnome.compile_resources(app_id,
-  'app.gresource.xml',
-  gresource_bundle: true,
-  install: true,
-  install_dir: pkgdatadir,
-)
-
 configure_file(
   input: 'bin.js',
   output: app_id,
@@ -63,7 +56,8 @@ gresource = custom_target('gjspack',
     gjspack,
     '--appid=' + app_id,
     '--prefix', '/re/sonny/Workbench',
-    '--resource-root', meson.project_source_root(),
+    '--project-root', meson.source_root(),
+    '--resource-root', meson.project_source_root() / 'src',
     '--blueprint-compiler', blueprint_compiler,
     '--no-executable',
     '@INPUT0@',
