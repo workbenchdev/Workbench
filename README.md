@@ -6,14 +6,14 @@ Learn and prototype with GNOME technologies
 
 ![](data/workbench.gif)
 
-<a href='https://beta.flathub.org/apps/details/re.sonny.Workbench'><img width='180' height='60' alt='Download on Flathub' src='https://flathub.org/assets/badges/flathub-badge-en.svg'/></a>
+<a href='https://flathub.org/apps/re.sonny.Workbench'><img width='240' height='80' alt='Download on Flathub' src='https://dl.flathub.org/assets/badges/flathub-badge-en.svg'/></a>
 
 Workbench goal is to let you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a GTK user interface.
 
 Among other things, Workbench comes with
 
 - realtime GTK/CSS preview
-- library of examples
+- library of examples and demos
 - JavaScript and Vala support
 - XML and Blueprint for describing user interface
 - syntax highlighting, undo/redo, autosave, session restore
@@ -32,12 +32,12 @@ Among other things, Workbench comes with
 <details>
   <summary>Disable code formatting</summary>
 
-Workbench uses the [prettier](https://prettier.io/) code formatter. If you need to exclude some code you can use special comments.
+Workbench uses [Rome](https://rome.tools/) and [Prettier](https://prettier.io/) code formatters. If you need to exclude some code you can use special comments.
 
 [JavaScript](https://prettier.io/docs/en/ignore.html#javascript)
 
 ```js
-// prettier-ignore
+// rome-ignore format
 matrix(
   1, 0, 0,
   0, 1, 0,

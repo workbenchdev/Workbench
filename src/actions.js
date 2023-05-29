@@ -48,26 +48,23 @@ export default function Actions({ application }) {
   });
   action_open_file.connect("activate", () => {
     const parent = XdpGtk.parent_new_gtk(application.get_active_window());
-    portal.open_file(
-      parent,
-      _("Import File"),
-      filters,
-      null, // current_filter
-      null, // choices
-      Xdp.OpenFileFlags.NONE,
-      null, // cancellable,
-      (_self, res) => {
-        let uri;
-        try {
-          const results = portal.open_file_finish(res);
-          [uri] = results.recursiveUnpack().uris;
-        } catch {
-          return;
-        }
-
+    portal
+      .open_file(
+        parent,
+        _("Import File"),
+        filters,
+        null, // current_filter
+        null, // choices
+        Xdp.OpenFileFlags.NONE,
+        null, // cancellable,
+      )
+      .then((results) => {
+        const [uri] = results.recursiveUnpack().uris;
         application.open([Gio.File.new_for_uri(uri)], "open");
-      },
-    );
+      })
+      .catch((err) => {
+        logError(err);
+      });
   });
   application.add_action(action_open_file);
   application.set_accels_for_action("app.open", ["<Control>O"]);
@@ -94,22 +91,16 @@ export default function Actions({ application }) {
       target.unpack(),
       Gdk.CURRENT_TIME,
     );
-    // an other option is to use libportal:
+    //  an other option is to use libportal:
     // const parent = XdpGtk.parent_new_gtk(application.get_active_window());
-    // portal.open_uri(
-    //   parent,
-    //   target.unpack(),
-    //   Xdp.OpenUriFlags.NONE,
-    //   null, // cancellable
-    //   (self, res) => {
-    //     try {
-    //       portal.open_uri_finish(res);
-    //     } catch (err) {
-    //       logError(err);
-    //       return;
-    //     }
-    //   }
-    // );
+    // portal
+    //   .open_uri(
+    //     parent,
+    //     target.unpack(),
+    //     Xdp.OpenUriFlags.NONE,
+    //     null, // cancellable
+    //   )
+    //   .catch(logError);
   });
   application.add_action(action_open_uri);
 

@@ -8,7 +8,7 @@ Type=Application
 Categories=WebDevelopment;Development;IDE;GNOME;GTK;
 Icon=@app_id@
 # TRANSLATORS: Don't translate
-Keywords=CSS;JavaScript;GJS;Blueprint;builder;Vala;
+Keywords=CSS;JavaScript;GJS;Blueprint;builder;Vala;GTK;libadwaita;
 DBusActivatable=true
 StartupNotify=true
 MimeType=text/javascript;application/javascript;application/x-gtk-builder;text/css;text/x-vala;
