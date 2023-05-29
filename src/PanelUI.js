@@ -15,7 +15,6 @@ const { addSignalMethods } = imports.signals;
 export default function PanelUI({
   application,
   builder,
-  data_dir,
   term_console,
   document_xml,
   document_blueprint,
@@ -51,7 +50,6 @@ export default function PanelUI({
   dropdown_ui_lang.get_first_child().add_css_class("flat");
 
   const blueprint = setupBlueprint({
-    data_dir,
     document: document_blueprint,
   });
 

@@ -7,12 +7,7 @@ import Vte from "gi://Vte";
 import { gettext as _ } from "gettext";
 
 import * as xml from "./langs/xml/xml.js";
-import {
-  settings,
-  createDataDir,
-  getLanguageForFile,
-  languages,
-} from "./util.js";
+import { settings, getLanguageForFile, languages } from "./util.js";
 import Document from "./Document.js";
 import PanelUI from "./PanelUI.js";
 import PanelCode from "./PanelCode.js";
@@ -47,10 +42,8 @@ const style_manager = Adw.StyleManager.get_default();
 
 const langs = Object.fromEntries(languages.map((lang) => [lang.id, lang]));
 
-export default function Window({ application }) {
+export default function Window({ application, data_dir, file }) {
   Vte.Terminal.new();
-
-  const data_dir = createDataDir();
 
   const builder = Gtk.Builder.new_from_resource(resource);
 
@@ -81,35 +74,35 @@ export default function Window({ application }) {
   const document_javascript = Document({
     code_view: builder.get_object("code_view_javascript"),
     placeholder: placeholders.javascript,
-    file: Gio.File.new_for_path(GLib.build_filenamev([data_dir, "state.js"])),
+    file: file.get_child("state.js"),
   });
   langs.javascript.document = document_javascript;
 
   const document_vala = Document({
     code_view: builder.get_object("code_view_vala"),
     placeholder: placeholders.vala,
-    file: Gio.File.new_for_path(GLib.build_filenamev([data_dir, "state.vala"])),
+    file: file.get_child("state.vala"),
   });
   langs.vala.document = document_vala;
 
   const document_blueprint = Document({
     code_view: builder.get_object("code_view_blueprint"),
     placeholder: placeholders.blueprint,
-    file: Gio.File.new_for_path(GLib.build_filenamev([data_dir, "state.blp"])),
+    file: file.get_child("state.blp"),
   });
   langs.blueprint.document = document_blueprint;
 
   const document_xml = Document({
     code_view: builder.get_object("code_view_xml"),
     placeholder: placeholders.xml,
-    file: Gio.File.new_for_path(GLib.build_filenamev([data_dir, "state.xml"])),
+    file: file.get_child("state.xml"),
   });
   langs.xml.document = document_xml;
 
   const document_css = Document({
     code_view: builder.get_object("code_view_css"),
     placeholder: placeholders.css,
-    file: Gio.File.new_for_path(GLib.build_filenamev([data_dir, "state.css"])),
+    file: file.get_child("state.css"),
   });
   langs.css.document = document_css;
 
@@ -117,7 +110,6 @@ export default function Window({ application }) {
     application,
     builder,
     langs,
-    data_dir,
     term_console,
     document_xml,
     document_blueprint,
@@ -138,7 +130,6 @@ export default function Window({ application }) {
   const panel_code = PanelCode({
     builder,
     previewer,
-    data_dir,
     document_vala,
     document_javascript,
   });

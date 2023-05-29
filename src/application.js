@@ -3,7 +3,7 @@ import Adw from "gi://Adw";
 
 import Window from "./window.js";
 import Actions from "./actions.js";
-import { settings } from "./util.js";
+import { settings, createDataDir } from "./util.js";
 import { overrides } from "./overrides.js";
 
 const application = new Adw.Application({
@@ -25,8 +25,12 @@ application.connect("open", (_self, files, _hint) => {
 
 application.connect("activate", () => {
   if (!window) {
+    const data_dir = createDataDir();
+
     window = Window({
       application,
+      data_dir,
+      file: Gio.File.new_for_path(data_dir),
     });
   }
   window.window.present();

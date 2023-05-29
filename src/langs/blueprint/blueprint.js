@@ -3,13 +3,12 @@ import GLib from "gi://GLib";
 
 import LSPClient from "../../lsp/LSPClient.js";
 
-export function setup({ data_dir, document }) {
+export function setup({ document }) {
   const { file, code_view } = document;
 
   const lspc = createLSPClient({
     code_view,
-    uri: file.get_uri(),
-    data_dir,
+    file,
   });
 
   lspc.start().catch(logError);
@@ -61,15 +60,16 @@ export function logBlueprintInfo(info) {
   });
 }
 
-function createLSPClient({ code_view, data_dir, uri }) {
+function createLSPClient({ code_view, file }) {
   const bin = "/app/bin/blueprint-compiler";
+  const uri = file.get_uri();
   // const bin = GLib.build_filenamev([
   //   pkg.sourcedir,
   //   "blueprint-compiler/blueprint-compiler.py",
   // ]);
 
   const lspc = new LSPClient([bin, "lsp"], {
-    rootUri: Gio.File.new_for_path(data_dir).get_uri(),
+    rootUri: file.get_parent().get_uri(),
     uri,
     languageId: "blueprint",
     buffer: code_view.buffer,

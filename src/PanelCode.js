@@ -9,7 +9,6 @@ import { setup as setupJavaScript } from "./langs/javascript/javascript.js";
 export default function PanelCode({
   builder,
   previewer,
-  data_dir,
   document_vala,
   document_javascript,
 }) {
@@ -47,8 +46,8 @@ export default function PanelCode({
     panel: panel_code,
   };
 
-  setupVala({ data_dir, document: document_vala });
-  setupJavaScript({ data_dir, document: document_javascript });
+  setupVala({ document: document_vala });
+  setupJavaScript({ document: document_javascript });
 
   function switchLanguage() {
     panel.language = dropdown_code_lang.selected_item.string;
