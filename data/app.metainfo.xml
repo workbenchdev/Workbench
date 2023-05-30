@@ -27,6 +27,7 @@
   <url type="bugtracker">https://workbench.sonny.re/feedback</url>
   <url type="donation">https://workbench.sonny.re/donate</url>
   <url type="translate">https://workbench.sonny.re/translate</url>
+  <url type="vcs-browser">https://workbench.sonny.re/source</url>
   <screenshots>
     <screenshot type="default">
       <image>
@@ -46,6 +47,31 @@
   </screenshots>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="44.1" date="2023-05-17">
+      <description>
+        <ul>
+          <li>Update icon-development-kit; adds 143 new icons</li>
+          <li>Update to Blueprint to 0.8.1</li>
+          <li>Update to VTE 0.72.1</li>
+          <li>Update to Rome tools 12.1.1</li>
+        </ul>
+      </description>
+    </release>
+    <release version="44.0" date="2023-04-15">
+      <description>
+        <ul>
+          <li>GNOME 44</li>
+          <li>Workbench is now fully sandboxed and will be considered safe</li>
+          <li>18 new Library entries</li>
+          <li>Add a setting to disable Auto-Update of Preview</li>
+          <li>Improve previewer and add a Safe Mode</li>
+          <li>Update Blueprint, vte, vls and Rome</li>
+          <li>The library window is now independant</li>
+          <li>Improve feedback</li>
+          <li>Fix preview of large Blueprint</li>
+        </ul>
+      </description>
+    </release>
     <release version="43.3" date="2023-01-23">
       <description>
         <ul>

@@ -3,6 +3,7 @@ import Gtk from "gi://Gtk";
 import Source from "gi://GtkSource";
 
 import { rangeEquals } from "./lsp/LSP.js";
+import { registerClass } from "./overrides.js";
 
 class WorkbenchHoverProvider extends GObject.Object {
   constructor() {
@@ -77,7 +78,7 @@ export function isDiagnosticInRange(diagnostic, { line, character }) {
   );
 }
 
-export default GObject.registerClass(
+export default registerClass(
   {
     GTypeName: "WorkbenchHoverProvider",
     Implements: [Source.HoverProvider],

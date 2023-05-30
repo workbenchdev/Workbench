@@ -16,3 +16,5 @@ test: lint
 	find po/ -type f -name "*po" -print0 | xargs -0 -n1 msgfmt -o /dev/null --check
 	flatpak run --command=flatpak-builder-lint org.flatpak.Builder --exceptions re.sonny.Workbench.json
 	flatpak run org.flathub.flatpak-external-data-checker re.sonny.Workbench.json
+# as used by Flathub
+# flatpak run --env=G_DEBUG=fatal-criticals --command=appstream-util org.flatpak.Builder validate data/app.metainfo.xml

@@ -14,6 +14,7 @@ export default function About({ application }) {
   const flatpak_info = getFlatpakInfo();
 
   const debug_info = `
+${pkg.name} ${pkg.version}
 ${GLib.get_os_info("ID")} ${GLib.get_os_info("VERSION_ID")}
 
 GJS ${getGjsVersion()}
@@ -56,6 +57,9 @@ ${getBlueprintVersion()}
     "Hari Rana (TheEvilSkeleton) https://theevilskeleton.gitlab.io",
     "Sriyansh Shivam https://linktr.ee/sonic_here",
     "Angelo Verlain https://www.vixalien.com",
+    "bazylevnik0 https://github.com/bazylevnik0",
+    "Felipe Kinoshita https://mastodon.social/@fkinoshita",
+    "Nasah Kuma https://www.mantohnasah.com/",
     // Add yourself as
     // "John Doe",
     // or
@@ -74,5 +78,5 @@ function getValaVersion() {
 }
 
 function getBlueprintVersion() {
-  return "Blueprint 402677f6";
+  return "Blueprint 0.8.1";
 }

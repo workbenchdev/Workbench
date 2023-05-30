@@ -3,7 +3,6 @@
 import { exit, programArgs } from "system";
 import GLib from "gi://GLib";
 import { setConsoleLogDomain } from "console";
-import Gio from "gi://Gio";
 import Xdp from "gi://Xdp";
 
 imports.package.init({
@@ -23,14 +22,11 @@ if (!Xdp.Portal.running_under_flatpak()) {
   exit(1);
 }
 
-const resource = Gio.resource_load("@pkgdatadir@/@app_id@.gresource");
-Gio.resources_register(resource);
-
 globalThis.__DEV__ = pkg.name.endsWith(".Devel");
 if (__DEV__) {
   pkg.sourcedir = "@sourcedir@";
 }
 
-const module = await import("resource:///re/sonny/Workbench/src/main.js");
+const module = await import("resource:///re/sonny/Workbench/main.js");
 const exit_code = await module.main(programArgs);
 exit(exit_code);

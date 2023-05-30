@@ -9,7 +9,5 @@ install
 .eslintcache
 *~
 *.compiled
-Workbench.flatpak
-
-/subprojects/blueprint-compiler
+*.flatpak
 .fenv

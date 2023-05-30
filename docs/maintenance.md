@@ -25,13 +25,3 @@ git tag '$V'
 git push
 git push origin $V
 ```
-
-## Update icons
-
-```sh
-cd icon-development-kit-www
-git pull
-cd ..
-cp -r icon-development-kit-www/img/symbolic/**/*.svg data/icons/hicolor/scalable/actions/
-cat icon-development-kit-www/_data/icons.yaml | python -c 'import sys, yaml, json; print(json.dumps(yaml.safe_load(sys.stdin.read())))' > src/icon-development-kit.json
-```

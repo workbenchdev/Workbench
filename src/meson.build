@@ -9,10 +9,7 @@ bin_conf.set('pkgdatadir', pkgdatadir)
 bin_conf.set('sourcedir', meson.source_root())
 
 blueprint_compiler = find_program(
-  # Flatpak
   '/app/bin/blueprint-compiler',
-  # local
-  '../blueprint-compiler/blueprint-compiler.py'
 )
 
 install_subdir('Library/demos', install_dir : join_paths(pkgdatadir, 'Library'))
@@ -30,13 +27,6 @@ custom_target('blueprints',
     blueprint_compiler,
     'batch-compile', '@OUTPUT@', '@CURRENT_SOURCE_DIR@', '@INPUT@'
   ],
-)
-
-gnome.compile_resources(app_id,
-  'app.gresource.xml',
-  gresource_bundle: true,
-  install: true,
-  install_dir: pkgdatadir,
 )
 
 configure_file(
@@ -66,7 +56,8 @@ gresource = custom_target('gjspack',
     gjspack,
     '--appid=' + app_id,
     '--prefix', '/re/sonny/Workbench',
-    '--resource-root', meson.project_source_root(),
+    '--project-root', meson.source_root(),
+    '--resource-root', meson.project_source_root() / 'src',
     '--blueprint-compiler', blueprint_compiler,
     '--no-executable',
     '@INPUT0@',

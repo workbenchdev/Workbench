@@ -1,16 +1,10 @@
 import Gtk from "gi://Gtk";
 import * as postcss from "../lib/postcss.js";
-import GLib from "gi://GLib";
 import Graphene from "gi://Graphene";
-import Xdp from "gi://Xdp";
-import XdpGtk from "gi://XdpGtk4";
 import GObject from "gi://GObject";
 import Adw from "gi://Adw";
-import Gio from "gi://Gio";
 
 import { once } from "../../troll/src/util.js";
-
-import { portal } from "../util.js";
 
 const { addSignalMethods } = imports.signals;
 
@@ -30,10 +24,6 @@ export default function Internal({
 
   let css_provider = null;
   let object_root = null;
-
-  function start() {
-    builder.get_object("button_screenshot").visible = true;
-  }
 
   async function open() {
     // The flow for internal preview is complicated after the window has been destroyed (on close)
@@ -223,10 +213,8 @@ export default function Internal({
     );
   }
 
-  start();
-
   return {
-    start,
+    async start() {},
     open,
     close,
     stop,
@@ -238,8 +226,8 @@ export default function Internal({
     async closeInspector() {
       Gtk.Window.set_interactive_debugging(false);
     },
-    screenshot({ window, data_dir }) {
-      screenshot({ widget: object_root || output, window, data_dir });
+    async screenshot({ path }) {
+      return screenshot({ widget: object_root || output, path });
     },
   };
 }
@@ -270,7 +258,7 @@ export function scopeStylesheet(style, id) {
   return str;
 }
 
-function screenshot({ widget, window, data_dir }) {
+function screenshot({ widget, path }) {
   const paintable = new Gtk.WidgetPaintable({ widget });
   const width = widget.get_allocated_width();
   const height = widget.get_allocated_height();
@@ -282,6 +270,7 @@ function screenshot({ widget, window, data_dir }) {
 
   if (!node) {
     console.log("Could not get node snapshot", { width, height });
+    return false;
   }
 
   const renderer = widget.get_native().get_renderer();
@@ -291,26 +280,9 @@ function screenshot({ widget, window, data_dir }) {
   });
   const texture = renderer.render_texture(node, rect);
 
-  const path = GLib.build_filenamev([data_dir, "Workbench screenshot.png"]);
   texture.save_to_png(path);
 
-  const parent = XdpGtk.parent_new_gtk(window);
-
-  portal.open_uri(
-    parent,
-    `file://${path}`,
-    Xdp.OpenUriFlags.NONE, // flags
-    null, // cancellable
-    (_self, result) => {
-      try {
-        portal.open_uri_finish(result);
-      } catch (err) {
-        if (err.code !== Gio.IOErrorEnum.CANCELLED) {
-          logError(err);
-        }
-      }
-    },
-  );
+  return true;
 }
 
 // Converts a Gtk.CssSection and Gtk.CssError to an LSP diagnostic object

@@ -1,7 +1,6 @@
 import Source from "gi://GtkSource";
 import Gio from "gi://Gio";
 import GLib from "gi://GLib";
-import { promiseTask } from "../troll/src/util.js";
 
 export default function Document({ code_view, placeholder, file }) {
   const { buffer } = code_view;
@@ -45,10 +44,7 @@ async function saveSourceBuffer({ file, buffer }) {
     buffer,
     file,
   });
-  const success = await promiseTask(
-    file_saver,
-    "save_async",
-    "save_finish",
+  const success = await file_saver.save_async(
     GLib.PRIORITY_DEFAULT,
     null,
     null,
@@ -65,14 +61,7 @@ async function loadSourceBuffer({ file, buffer }) {
   });
   let success;
   try {
-    success = await promiseTask(
-      file_loader,
-      "load_async",
-      "load_finish",
-      GLib.PRIORITY_DEFAULT,
-      null,
-      null,
-    );
+    success = await file_loader.load_async(GLib.PRIORITY_DEFAULT, null, null);
   } catch (err) {
     if (err.code !== Gio.IOErrorEnum.NOT_FOUND) {
       throw err;
