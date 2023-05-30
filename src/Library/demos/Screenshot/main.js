@@ -11,12 +11,6 @@ const parent = XdpGtk.parent_new_gtk(workbench.window);
 const picture = workbench.builder.get_object("picture");
 const window = button.get_ancestor(Gtk.Window);
 
-Gio._promisify(
-  Xdp.Portal.prototype,
-  "take_screenshot",
-  "take_screenshot_finish",
-);
-
 function createErrorDialog() {
   const dialog = new Adw.MessageDialog({
     heading: "Permission Error",
