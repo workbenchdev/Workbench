@@ -15,7 +15,7 @@ Gtk.ApplicationWindow window {
         label: _("_Library");
         use-underline: true;
       };
-      action-name: "win.library";
+      action-name: "app.library";
       tooltip-text: _("Open Library of Demos and Examples (Ctrl+Shift+O)");
     }
 
@@ -459,6 +459,10 @@ menu menu_app {
   }
 
   section {
+    item {
+      label: _("Open a Project…");
+      action: "app.open_folder";
+    }
     item {
       label: _("Import File…");
       action: "app.open";

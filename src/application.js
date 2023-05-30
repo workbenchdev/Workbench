@@ -5,6 +5,9 @@ import Window from "./window.js";
 import Actions from "./actions.js";
 import { settings, createDataDir } from "./util.js";
 import { overrides } from "./overrides.js";
+import Library from "./Library/Library.js";
+
+const data_dir = createDataDir();
 
 const application = new Adw.Application({
   application_id: pkg.name,
@@ -25,15 +28,19 @@ application.connect("open", (_self, files, _hint) => {
 
 application.connect("activate", () => {
   if (!window) {
-    const data_dir = createDataDir();
-
     window = Window({
       application,
       data_dir,
       file: Gio.File.new_for_path(data_dir),
     });
+
+    Library({
+      // openDemo,
+      // window,
+      application,
+      data_dir,
+    });
   }
-  window.window.present();
 });
 
 application.set_option_context_description("<https://workbench.sonny.re>");
@@ -41,7 +48,7 @@ application.set_option_context_parameter_string("[files…]");
 // TODO: Add examples
 application.set_option_context_summary("");
 
-Actions({ application });
+Actions({ application, data_dir });
 
 overrides();
 

@@ -133,7 +133,7 @@ export default function Previewer({
     {
       Implements: [Gtk.BuilderScope],
     },
-    class BuilderScope extends GObject.Object {
+    class extends GObject.Object {
       noop() {}
       // https://docs.gtk.org/gtk4/vfunc.BuilderScope.create_closure.html
       vfunc_create_closure(_builder, function_name, flags, _object) {

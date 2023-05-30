@@ -5,12 +5,19 @@ import "gi://Vte?version=3.91";
 import "gi://Soup?version=3.0";
 import "gi://WebKit?version=6.0";
 
+import Gtk from "gi://Gtk";
 import Gio from "gi://Gio";
 import Xdp from "gi://Xdp";
 import Source from "gi://GtkSource";
 
 Gio._promisify(Xdp.Portal.prototype, "open_uri", "open_uri_finish");
 Gio._promisify(Xdp.Portal.prototype, "open_file", "open_file_finish");
+// Gio._promisify(Xdp.Portal.prototype, "open_directory", "open_directory_finish");
+Gio._promisify(
+  Gtk.FileDialog.prototype,
+  "select_folder",
+  "select_folder_finish",
+);
 
 Gio._promisify(
   Gio.InputStream.prototype,

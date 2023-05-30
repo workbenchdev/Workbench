@@ -11,8 +11,9 @@ import shortcutsWindow from "./shortcutsWindow.js";
 import { portal, languages, settings } from "./util.js";
 
 import IconLibrary from "./IconLibrary/main.js";
+import Window from "./window.js";
 
-export default function Actions({ application }) {
+export default function Actions({ application, data_dir }) {
   const quit = new Gio.SimpleAction({
     name: "quit",
     parameter_type: null,
@@ -68,6 +69,22 @@ export default function Actions({ application }) {
   });
   application.add_action(action_open_file);
   application.set_accels_for_action("app.open", ["<Control>O"]);
+
+  const action_open_folder = new Gio.SimpleAction({
+    name: "open_folder",
+    parameter_type: null,
+  });
+  action_open_folder.connect("activate", () => {
+    const dialog = new Gtk.FileDialog();
+
+    dialog
+      .select_folder(application.get_active_window(), null)
+      .then((file) => {
+        Window({ application, data_dir, file });
+      })
+      .catch(logError);
+  });
+  application.add_action(action_open_folder);
 
   const action_icon_library = new Gio.SimpleAction({
     name: "icon_library",

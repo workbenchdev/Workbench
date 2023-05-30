@@ -172,3 +172,39 @@ export function unstack(fn, onError = console.error) {
     });
   };
 }
+
+export const demo_dir = Gio.File.new_for_path(
+  GLib.build_filenamev([pkg.pkgdatadir, "Library/demos"]),
+);
+
+export function readDemo(demo_name) {
+  const javascript = readDemoFile(demo_name, "main.js");
+  const css = readDemoFile(demo_name, "main.css");
+  const xml = readDemoFile(demo_name, "main.ui");
+  const blueprint = readDemoFile(demo_name, "main.blp");
+  const vala = readDemoFile(demo_name, "main.vala");
+  const json = JSON.parse(readDemoFile(demo_name, "main.json"));
+
+  return { ...json, javascript, css, xml, blueprint, vala };
+}
+
+export function readDemoFile(demo_name, file_name) {
+  const file = demo_dir.resolve_relative_path(`${demo_name}/${file_name}`);
+
+  let str;
+
+  try {
+    str = decode(file.load_contents(null)[1]);
+  } catch (err) {
+    if (err.code !== Gio.IOErrorEnum.NOT_FOUND) {
+      throw err;
+    }
+    str = "";
+  }
+
+  return str;
+}
+
+export function getFormattedNow() {
+  return new GLib.DateTime().format("%Y-%m-%d %H-%M-%S");
+}
