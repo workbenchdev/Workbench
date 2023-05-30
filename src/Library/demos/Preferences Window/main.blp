@@ -17,13 +17,23 @@ Adw.PreferencesWindow pref_window {
       styles["boxed-list"]
       Adw.ActionRow{
         title: "Use Dark Mode";
-        selectable: false;
+        activatable-widget: dm_switch;
 
         [suffix]
-        Switch cs_switch{
+        Switch dm_switch{
           halign: center;
           valign: center;
         }
+      }
+
+      LinkButton {
+        label: "API Reference";
+        uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.3/class.ViewSwitcher.html";
+      }
+
+      LinkButton {
+        label: "Human Interface Guidelines";
+        uri: "https://developer.gnome.org/hig/patterns/nav/view-switchers.html";
       }
     }
   }
@@ -38,8 +48,14 @@ Adw.PreferencesWindow pref_window {
 
       styles["boxed-list"]
       Adw.ActionRow{
-        title: "Enable Gestures";
-        selectable: false;
+        title: "Run on Startup";
+        activatable-widget: startup_switch;
+
+        [suffix]
+        Switch startup_switch{
+          halign: center;
+          valign: center;
+        }
       }
     }
 
@@ -49,13 +65,25 @@ Adw.PreferencesWindow pref_window {
 
       styles["boxed-list"]
       Adw.ActionRow{
-        title: "Enable Telementry";
-        selectable: false;
+        title: "Enable Telemetry";
+        activatable-widget: telemetry_switch;
+
+        [suffix]
+        Switch telemetry_switch{
+          halign: center;
+          valign: center;
+        }
       }
 
       Adw.ActionRow{
         title: "Enable Auto-Updates";
-          selectable: false;
+        activatable-widget: update_switch;
+
+        [suffix]
+        Switch update_switch{
+          halign: center;
+          valign: center;
+        }
       }
     }
   }
