@@ -30,26 +30,22 @@ function createErrorDialog() {
   dialog.present();
 }
 
-button.connect("clicked", async () => {
-  try {
-    const flags = Xdp.ScreenshotFlags.NONE;
-    const result = await new Promise((resolve, reject) => {
-      portal.take_screenshot(parent, flags, null, (portal, result) => {
-        resolve(result);
-      });
-    });
-
-    const uri = await portal.take_screenshot_finish(result);
-    const file = Gio.File.new_for_uri(uri);
-    picture.width_request = 180;
-    picture.height_request = 180;
-    picture.set_file(file);
-    console.log("Screenshot Captured");
-  } catch (error) {
-    if (error instanceof Gio.IOErrorEnum) {
-      createErrorDialog();
-    } else {
-      logError(error);
+button.connect("clicked", () => {
+  const flags = Xdp.ScreenshotFlags.NONE;
+  portal.take_screenshot(parent, flags, null, (portal, result) => {
+    try {
+      const uri = portal.take_screenshot_finish(result);
+      const file = Gio.File.new_for_uri(uri);
+      picture.width_request = 180;
+      picture.height_request = 180;
+      picture.set_file(file);
+      console.log("Screenshot Captured");
+    } catch (error) {
+      if (error instanceof Gio.IOErrorEnum) {
+        createErrorDialog();
+      } else {
+        logError(error);
+      }
     }
-  }
+  });
 });
