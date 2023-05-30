@@ -14,7 +14,7 @@ Adw.PreferencesWindow pref_window {
       title:"Color Settings";
       description:"Change the color-scheme of the application.";
 
-      styles["boxed-list"]
+
       Adw.ActionRow{
         title: "Use Dark Mode";
         activatable-widget: dm_switch;
@@ -23,6 +23,40 @@ Adw.PreferencesWindow pref_window {
         Switch dm_switch{
           halign: center;
           valign: center;
+        }
+      }
+    }
+
+    Adw.PreferencesGroup {
+      title: "Text Settings";
+      description: "Customize the appearance of text in the application.";
+      //
+
+      Adw.ActionRow {
+        title: "Font Size";
+
+        [suffix]
+        Gtk.SpinButton{
+          halign: center;
+          valign: center;
+          adjustment:
+          Gtk.Adjustment size_adj {
+            lower: 5;
+            upper: 999;
+            step-increment: 1;
+            value: 11;
+          };
+        }
+      }
+
+      Adw.ActionRow {
+        title: "Font Color";
+
+        [suffix]
+        Gtk.ColorDialogButton{
+          halign: center;
+          valign: center;
+          dialog: ColorDialog {};
         }
       }
 
@@ -37,11 +71,19 @@ Adw.PreferencesWindow pref_window {
     title:_("Behavior");
     icon-name:"settings-symbolic";
 
+
     Adw.PreferencesGroup{
       title:_("Interaction Settings");
       description:"Change how the app behaves during user interaction.";
 
-      styles["boxed-list"]
+      //Adw.PreferencesGroup can have suffix widgets like Adw.ActionRows
+      [header-suffix]
+      Button{
+        halign: center;
+        valign: center;
+        icon-name: "settings-symbolic";
+      }
+
       Adw.ActionRow{
         title: "Run on Startup";
         activatable-widget: startup_switch;
@@ -52,13 +94,25 @@ Adw.PreferencesWindow pref_window {
           valign: center;
         }
       }
+      Adw.ActionRow{
+        title: "Show Toast";
+        activatable-widget: toast_button;
+
+        [suffix]
+        Button toast_button{
+          halign: center;
+          valign: center;
+          label: "show toast";
+          icon-name: "bread-symbolic";
+        }
+      }
     }
 
     Adw.PreferencesGroup{
       title:"Data Settings";
       description:"Manage user data related settings.";
 
-      styles["boxed-list"]
+
       Adw.ActionRow{
         title: "Enable Telemetry";
         activatable-widget: telemetry_switch;
@@ -80,7 +134,27 @@ Adw.PreferencesWindow pref_window {
           valign: center;
         }
       }
+
+      Adw.ActionRow subpage_row{
+        title: "Additional Preferences";
+        activatable: true;
+
+        [suffix]
+        Gtk.Image{
+          icon-name: "arrow1-right-symbolic";
+        }
+      }
     }
   }
 }
 
+Adw.StatusPage subpage {
+  title: "Preferences windows can have subpages like this one";
+
+  Gtk.Button subpage_button{
+    label: "Go back";
+    halign: center;
+    valign: center;
+    styles ["suggested-action", "pill"]
+  }
+}
