@@ -6,14 +6,11 @@ Gtk.Window {
   default-height: 600;
   title: _("Header Bar");
   titlebar: Adw.HeaderBar {
-    centering-policy: strict;
-    show-start-title-buttons: true;
-    show-end-title-buttons: true;
-    decoration-layout: "icon:minimize,close";
 
     [start]
-    Button {
+    MenuButton{
       label: _("Open");
+      menu-model: open_menu;
     }
     [start]
     Button {
@@ -21,7 +18,9 @@ Gtk.Window {
     }
     [end]
     MenuButton {
-      icon-name: "view-more-symbolic";
+      icon-name: "open-menu-symbolic";
+      tooltip-text: _("Main Menu");
+      primary: true;
       menu-model: window_menu;
     }
     [end]
@@ -63,3 +62,19 @@ menu window_menu {
     }
   }
 }
+
+menu open_menu {
+  section {
+    item {
+      label: _("Item 1");
+    }
+    item {
+      label: _("Item 2");
+    }
+    item {
+      label: _("Item 3");
+    }
+  }
+}
+
+
