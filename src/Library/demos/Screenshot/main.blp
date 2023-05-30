@@ -10,15 +10,18 @@ Adw.StatusPage {
     orientation: vertical;
     halign: center;
 
-    Picture picture {
+    Box {
+      Picture picture {}
       margin-bottom: 12;
+      width-request: 256;
+      height-request: 256;
     }
 
     Button button {
-      icon-name: "screenshooter-symbolic";
+      label: _("Take Screenshot");
       margin-bottom: 42;
-      width-request: 6;
-      height-request: 48;
+      halign: center;
+      styles ["suggested-action"]
     }
 
     LinkButton {
@@ -27,7 +30,3 @@ Adw.StatusPage {
     }
   }
 }
-
-
-
-
