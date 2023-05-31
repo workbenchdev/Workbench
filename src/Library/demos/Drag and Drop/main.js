@@ -30,7 +30,7 @@ for (let i = 0; i < list_length; i++) {
 
     allocation = row.get_allocation();
     let value = new GObject.Value();
-    value.init(GObject.TYPE_OBJECT);
+    value.init(Gtk.ListBoxRow);
     value.set_object(row);
     return Gdk.ContentProvider.new_for_value(value);
   });
