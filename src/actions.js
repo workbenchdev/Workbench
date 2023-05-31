@@ -48,24 +48,7 @@ export default function Actions({ application, data_dir }) {
     parameter_type: null,
   });
   action_open_file.connect("activate", () => {
-    const parent = XdpGtk.parent_new_gtk(application.get_active_window());
-    portal
-      .open_file(
-        parent,
-        _("Import File"),
-        filters,
-        null, // current_filter
-        null, // choices
-        Xdp.OpenFileFlags.NONE,
-        null, // cancellable,
-      )
-      .then((results) => {
-        const [uri] = results.recursiveUnpack().uris;
-        application.open([Gio.File.new_for_uri(uri)], "open");
-      })
-      .catch((err) => {
-        logError(err);
-      });
+    openFile({ application }).catch(logError);
   });
   application.add_action(action_open_file);
   application.set_accels_for_action("app.open", ["<Control>O"]);
@@ -145,6 +128,16 @@ export default function Actions({ application, data_dir }) {
   application.add_action(settings.create_action("color-scheme"));
   application.add_action(settings.create_action("safe-mode"));
   application.add_action(settings.create_action("auto-preview"));
+
+  const action_show_screenshot = new Gio.SimpleAction({
+    name: "show-screenshot",
+    parameter_type: new GLib.VariantType("s"),
+  });
+  action_show_screenshot.connect("activate", (_self, target) => {
+    const uri = target.unpack();
+    showScreenshot({ application, uri }).catch(logError);
+  });
+  application.add_action(action_show_screenshot);
 }
 
 const lang_filters = languages.map((language) => {
@@ -157,3 +150,36 @@ const filters = new GLib.Variant("a(sa(us))", [
   [_("All supported"), lang_filters.flatMap(([, types]) => types)],
   ...lang_filters,
 ]);
+
+async function openFile({ application }) {
+  const parent = XdpGtk.parent_new_gtk(application.get_active_window());
+
+  let uri;
+
+  try {
+    const results = await portal.open_file(
+      parent,
+      _("Import File"),
+      filters,
+      null, // current_filter
+      null, // choices
+      Xdp.OpenFileFlags.NONE,
+      null, // cancellable
+    );
+    [uri] = results.recursiveUnpack().uris;
+  } catch (err) {
+    if (err.code !== Gio.IOErrorEnum.CANCELLED) throw err;
+  }
+
+  application.open([Gio.File.new_for_uri(uri)], "open");
+}
+
+async function showScreenshot({ application, uri }) {
+  const parent = XdpGtk.parent_new_gtk(application.get_active_window());
+  await portal.open_directory(
+    parent,
+    uri,
+    Xdp.OpenUriFlags.NONE,
+    null, // cancellable
+  );
+}

@@ -3,11 +3,6 @@ import GObject from "gi://GObject";
 import GLib from "gi://GLib";
 import Gio from "gi://Gio";
 
-import Xdp from "gi://Xdp";
-import XdpGtk from "gi://XdpGtk4";
-
-import { portal } from "../util.js";
-
 import * as xml from "../langs/xml/xml.js";
 import * as postcss from "../lib/postcss.js";
 
@@ -291,31 +286,8 @@ export default function Previewer({
   }
 
   builder.get_object("button_screenshot").connect("clicked", () => {
-    screenshot().catch(logError);
+    screenshot({ application, window, data_dir, current }).catch(logError);
   });
-  async function screenshot() {
-    const path = GLib.build_filenamev([data_dir, "Workbench screenshot.png"]);
-
-    const success = await current.screenshot({ window, path });
-    if (!success) return;
-
-    const parent = XdpGtk.parent_new_gtk(window);
-
-    try {
-      await portal.open_uri(
-        parent,
-        `file://${path}`,
-        Xdp.OpenUriFlags.NONE, // flags
-        null, // cancellable
-      );
-    } catch (err) {
-      if (err.code !== Gio.IOErrorEnum.CANCELLED) {
-        logError(err);
-      } else {
-        throw err;
-      }
-    }
-  }
 
   setPreviewer(internal);
   start();
@@ -488,4 +460,33 @@ function makeWorkbenchTargetId() {
 }
 function isWorkbenchTargetId(id) {
   return id.startsWith(target_id_prefix);
+}
+
+async function screenshot({ application, window, data_dir, current }) {
+  const date = new GLib.DateTime().format("%Y-%m-%d %H-%M-%S");
+  // FIXME: GJS does not have Gio.File.new_build_filename
+  const file = Gio.File.new_for_path(
+    GLib.build_filenamev([data_dir, "screenshots", `${date}.png`]),
+  );
+
+  try {
+    file.get_parent().make_directory_with_parents(null);
+  } catch (err) {
+    if (err.code !== Gio.IOErrorEnum.EXISTS) throw err;
+  }
+
+  const success = await current.screenshot({ window, path: file.get_path() });
+  if (!success) return;
+
+  const notification = new Gio.Notification();
+  const action = Gio.Action.print_detailed_name(
+    "app.show-screenshot",
+    new GLib.Variant("s", file.get_uri()),
+  );
+  notification.set_icon(new Gio.ThemedIcon({ name: "re.sonny.Workbench" }));
+  notification.set_title("Workbench");
+  notification.set_body(_("Screenshot of preview captured"));
+  notification.set_default_action(action);
+  notification.add_button(_("Show in Files"), action);
+  application.send_notification(null, notification);
 }

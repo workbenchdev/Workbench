@@ -1,0 +1,10 @@
+{
+  "name": "Header Bar",
+  "category": "user_interface",
+  "description": "Custom titlebars for windows",
+  "panels": [
+    "ui",
+    "preview"
+  ],
+  "autorun": true
+}
