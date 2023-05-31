@@ -11,16 +11,16 @@ const style_manager = Adw.StyleManager.get_default();
 
 dm_switch.active = style_manager.dark;
 
-dm_switch.connect("state-set", (widget, state) => {
+dm_switch.connect("notify::active", () => {
   // When the Switch is toggled, set the color scheme
-  if (state) {
+  if (dm_switch.active) {
     style_manager.color_scheme = Adw.ColorScheme.FORCE_DARK;
   } else {
     style_manager.color_scheme = Adw.ColorScheme.FORCE_LIGHT;
   }
 });
 
-//Preferences windows can display subpages
+// Preferences windows can display subpages
 subpage_row.connect("activated", () => {
   pref_window.present_subpage(subpage);
 });
