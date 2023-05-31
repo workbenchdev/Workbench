@@ -43,7 +43,6 @@ for (let i = 0; i < list_length; i++) {
     drag_widget.add_css_class("boxed-list");
 
     let drag_row = new Adw.ActionRow({ title: row.title });
-    drag_row.add_css_class("boxed-list");
 
     drag_widget.append(drag_row);
     drag_widget.drag_highlight_row(drag_row);
