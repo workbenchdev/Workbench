@@ -6,7 +6,14 @@ import Gio from "gi://Gio";
 import * as xml from "../langs/xml/xml.js";
 import * as postcss from "../lib/postcss.js";
 
-import { encode, settings, unstack } from "../util.js";
+import {
+  encode,
+  settings,
+  unstack,
+  data_dir,
+  getNowForFilename,
+  ensureDir,
+} from "../util.js";
 
 import Internal from "./Internal.js";
 import External from "./External.js";
@@ -30,7 +37,6 @@ export default function Previewer({
   panel_ui,
   window,
   application,
-  data_dir,
   term_console,
 }) {
   let panel_code;
@@ -286,7 +292,7 @@ export default function Previewer({
   }
 
   builder.get_object("button_screenshot").connect("clicked", () => {
-    screenshot({ application, window, data_dir, current }).catch(logError);
+    screenshot({ application, window, current }).catch(logError);
   });
 
   setPreviewer(internal);
@@ -462,18 +468,12 @@ function isWorkbenchTargetId(id) {
   return id.startsWith(target_id_prefix);
 }
 
-async function screenshot({ application, window, data_dir, current }) {
-  const date = new GLib.DateTime().format("%Y-%m-%d %H-%M-%S");
-  // FIXME: GJS does not have Gio.File.new_build_filename
-  const file = Gio.File.new_for_path(
-    GLib.build_filenamev([data_dir, "screenshots", `${date}.png`]),
-  );
+async function screenshot({ application, window, current }) {
+  const file = data_dir
+    .get_child("screenshots")
+    .get_child(`${getNowForFilename()}.png`);
 
-  try {
-    file.get_parent().make_directory_with_parents(null);
-  } catch (err) {
-    if (err.code !== Gio.IOErrorEnum.EXISTS) throw err;
-  }
+  ensureDir(file.get_parent());
 
   const success = await current.screenshot({ window, path: file.get_path() });
   if (!success) return;

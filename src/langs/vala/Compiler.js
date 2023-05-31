@@ -2,13 +2,11 @@ import Gio from "gi://Gio";
 import GLib from "gi://GLib";
 import dbus_previewer from "../../Previewer/DBusPreviewer.js";
 
-export default function Compiler(data_dir) {
-  const code_file = Gio.File.new_for_path(
-    GLib.build_filenamev([data_dir, "code.vala"]),
-  );
-  const module_file = Gio.File.new_for_path(
-    GLib.build_filenamev([data_dir, "libworkbenchcode.so"]),
-  );
+import { data_dir } from "../../util.js";
+
+export default function Compiler() {
+  const code_file = data_dir.get_child("code.vala");
+  const module_file = data_dir.get_child("libworkbenchcode.so");
 
   async function compile(code) {
     let args;
@@ -30,7 +28,7 @@ export default function Compiler(data_dir) {
     ]);
 
     const valac_launcher = new Gio.SubprocessLauncher();
-    valac_launcher.set_cwd(data_dir);
+    valac_launcher.set_cwd(data_dir.get_path());
     const valac = valac_launcher.spawnv([
       "valac",
       code_file.get_path(),

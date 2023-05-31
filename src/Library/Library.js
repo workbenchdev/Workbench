@@ -2,12 +2,13 @@ import Gio from "gi://Gio";
 import Adw from "gi://Adw";
 import Gtk from "gi://Gtk";
 
-import { demo_dir, readDemoFile, getFormattedNow } from "../util.js";
+import { demos_dir, readDemoFile } from "../util.js";
 import Window from "../window.js";
 
 import resource from "./Library.blp";
+import { createSession, createSessionFromDemo } from "../sessions.js";
 
-export default function Library({ application, data_dir }) {
+export default function Library({ application }) {
   const builder = Gtk.Builder.new_from_resource(resource);
   const window = builder.get_object("library");
 
@@ -29,12 +30,9 @@ export default function Library({ application, data_dir }) {
     widget.connect("activated", () => {
       last_selected = widget;
 
-      const file = Gio.File.new_for_path(data_dir).resolve_relative_path(
-        `sessions/${getFormattedNow()}`,
-      );
-      file.make_directory_with_parents(null);
+      const file = createSessionFromDemo(demo.name);
 
-      Window({ application, data_dir, file });
+      Window({ application, file });
     });
 
     builder.get_object(`library_${demo.category}`).add(widget);
@@ -55,7 +53,7 @@ export default function Library({ application, data_dir }) {
 function getDemos() {
   const demos = [];
 
-  for (const child of demo_dir.enumerate_children(
+  for (const child of demos_dir.enumerate_children(
     "",
     Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
     null,

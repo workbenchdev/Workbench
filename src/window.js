@@ -42,7 +42,7 @@ const style_manager = Adw.StyleManager.get_default();
 
 const langs = Object.fromEntries(languages.map((lang) => [lang.id, lang]));
 
-export default function Window({ application, data_dir, file }) {
+export default function Window({ application, file }) {
   Vte.Terminal.new();
 
   const builder = Gtk.Builder.new_from_resource(resource);
@@ -74,35 +74,35 @@ export default function Window({ application, data_dir, file }) {
   const document_javascript = Document({
     code_view: builder.get_object("code_view_javascript"),
     placeholder: placeholders.javascript,
-    file: file.get_child("state.js"),
+    file: file.get_child("main.js"),
   });
   langs.javascript.document = document_javascript;
 
   const document_vala = Document({
     code_view: builder.get_object("code_view_vala"),
     placeholder: placeholders.vala,
-    file: file.get_child("state.vala"),
+    file: file.get_child("main.vala"),
   });
   langs.vala.document = document_vala;
 
   const document_blueprint = Document({
     code_view: builder.get_object("code_view_blueprint"),
     placeholder: placeholders.blueprint,
-    file: file.get_child("state.blp"),
+    file: file.get_child("main.blp"),
   });
   langs.blueprint.document = document_blueprint;
 
   const document_xml = Document({
     code_view: builder.get_object("code_view_xml"),
     placeholder: placeholders.xml,
-    file: file.get_child("state.xml"),
+    file: file.get_child("main.xml"),
   });
   langs.xml.document = document_xml;
 
   const document_css = Document({
     code_view: builder.get_object("code_view_css"),
     placeholder: placeholders.css,
-    file: file.get_child("state.css"),
+    file: file.get_child("main.css"),
   });
   langs.css.document = document_css;
 
@@ -122,7 +122,6 @@ export default function Window({ application, data_dir, file }) {
     builder,
     window,
     application,
-    data_dir,
     panel_ui,
     term_console,
   });
@@ -265,7 +264,7 @@ export default function Window({ application, data_dir, file }) {
         }
         previewer.setSymbols(exports);
       } else if (language === "Vala") {
-        compiler = compiler || Compiler(data_dir);
+        compiler = compiler || Compiler();
         const success = await compiler.compile(
           langs.vala.document.code_view.buffer.text,
         );

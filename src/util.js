@@ -10,18 +10,18 @@ export const settings = new Gio.Settings({
   path: "/re/sonny/Workbench/",
 });
 
-export function createDataDir() {
-  const data_dir = GLib.build_filenamev([GLib.get_user_data_dir(), pkg.name]);
+export const data_dir = Gio.File.new_for_path(
+  GLib.build_filenamev([GLib.get_user_data_dir(), pkg.name]),
+);
 
+export function ensureDir(file) {
   try {
-    Gio.File.new_for_path(data_dir).make_directory(null);
+    file.make_directory_with_parents(null);
   } catch (err) {
     if (err.code !== Gio.IOErrorEnum.EXISTS) {
       throw err;
     }
   }
-
-  return data_dir;
 }
 
 export function getFlatpakInfo() {
@@ -173,7 +173,7 @@ export function unstack(fn, onError = console.error) {
   };
 }
 
-export const demo_dir = Gio.File.new_for_path(
+export const demos_dir = Gio.File.new_for_path(
   GLib.build_filenamev([pkg.pkgdatadir, "Library/demos"]),
 );
 
@@ -189,7 +189,7 @@ export function readDemo(demo_name) {
 }
 
 export function readDemoFile(demo_name, file_name) {
-  const file = demo_dir.resolve_relative_path(`${demo_name}/${file_name}`);
+  const file = demos_dir.resolve_relative_path(`${demo_name}/${file_name}`);
 
   let str;
 
@@ -205,6 +205,6 @@ export function readDemoFile(demo_name, file_name) {
   return str;
 }
 
-export function getFormattedNow() {
+export function getNowForFilename() {
   return new GLib.DateTime().format("%Y-%m-%d %H-%M-%S");
 }

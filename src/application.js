@@ -3,11 +3,11 @@ import Adw from "gi://Adw";
 
 import Window from "./window.js";
 import Actions from "./actions.js";
-import { settings, createDataDir } from "./util.js";
+import { settings, data_dir, ensureDir } from "./util.js";
 import { overrides } from "./overrides.js";
 import Library from "./Library/Library.js";
 
-const data_dir = createDataDir();
+ensureDir(data_dir);
 
 const application = new Adw.Application({
   application_id: pkg.name,
@@ -30,15 +30,13 @@ application.connect("activate", () => {
   if (!window) {
     window = Window({
       application,
-      data_dir,
-      file: Gio.File.new_for_path(data_dir),
+      file: data_dir,
     });
 
     Library({
       // openDemo,
       // window,
       application,
-      data_dir,
     });
   }
 });
