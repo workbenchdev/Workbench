@@ -42,8 +42,7 @@ for (let i = 0; i < list_length; i++) {
     drag_widget.set_size_request(allocation.width, allocation.height);
     drag_widget.add_css_class("boxed-list");
 
-    let drag_row = new Adw.ActionRow();
-    drag_row.title = row.title;
+    let drag_row = new Adw.ActionRow({ title: row.title });
     drag_row.add_css_class("boxed-list");
 
     drag_widget.append(drag_row);
