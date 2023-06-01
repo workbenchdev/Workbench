@@ -22,9 +22,6 @@
     <key name="code-language" type="i">
       <default>0</default>
     </key>
-    <key name="selected-demo" type="s">
-      <default>"Welcome"</default>
-    </key>
     <key name="ui-language" type="i">
       <default>0</default>
     </key>

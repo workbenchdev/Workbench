@@ -6,7 +6,7 @@ import { demos_dir, readDemoFile } from "../util.js";
 import Window from "../window.js";
 
 import resource from "./Library.blp";
-import { createSession, createSessionFromDemo } from "../sessions.js";
+import { createSessionFromDemo } from "../sessions.js";
 
 export default function Library({ application }) {
   const builder = Gtk.Builder.new_from_resource(resource);
@@ -30,9 +30,7 @@ export default function Library({ application }) {
     widget.connect("activated", () => {
       last_selected = widget;
 
-      const file = createSessionFromDemo(demo.name);
-
-      Window({ application, file });
+      openDemo({ application, demo_name: demo.name }).catch(logError);
     });
 
     builder.get_object(`library_${demo.category}`).add(widget);
@@ -81,4 +79,9 @@ function getDemos() {
   }
 
   return demos;
+}
+
+async function openDemo({ application, demo_name }) {
+  const file = await createSessionFromDemo(demo_name);
+  Window({ application, file });
 }

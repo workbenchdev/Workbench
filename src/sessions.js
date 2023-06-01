@@ -9,14 +9,14 @@ export function getSessions() {
 
   ensureDir(sessions_dir);
 
-  for (const child of sessions_dir.enumerate_children(
+  for (const file_info of sessions_dir.enumerate_children(
     "",
     Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
     null,
   )) {
-    if (child.get_file_type() !== Gio.FileType.DIRECTORY) continue;
+    if (file_info.get_file_type() !== Gio.FileType.DIRECTORY) continue;
 
-    sessions.push(child);
+    sessions.push(sessions_dir.get_child(file_info.get_name()));
   }
 
   return sessions;
@@ -50,4 +50,11 @@ export function createSessionFromDemo(demo_name) {
   }
 
   return file;
+}
+
+export async function deleteSession(file) {
+  // There is no method to recursively delete a folder so we trash instead
+  // https://github.com/flatpak/xdg-desktop-portal/issues/630 :/
+  // portal.trash_file(file.get_path(), null).catch(logError);
+  file.trash(null);
 }

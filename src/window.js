@@ -7,7 +7,7 @@ import Vte from "gi://Vte";
 import { gettext as _ } from "gettext";
 
 import * as xml from "./langs/xml/xml.js";
-import { settings, getLanguageForFile, languages } from "./util.js";
+import { settings, getLanguageForFile, languages, portal } from "./util.js";
 import Document from "./Document.js";
 import PanelUI from "./PanelUI.js";
 import PanelCode from "./PanelCode.js";
@@ -37,6 +37,7 @@ import "./icons/re.sonny.Workbench-screenshot-symbolic.svg" with {
 
 import "./widgets/Modal.js";
 import "./widgets/CodeView.js";
+import { deleteSession } from "./sessions.js";
 
 const style_manager = Adw.StyleManager.get_default();
 
@@ -333,6 +334,7 @@ export default function Window({ application, file }) {
   });
   window.add_action(undo_action);
 
+  // Still needed?
   async function openDemo(demo_name) {
     const documents = languages.map((language) => language.document);
 
@@ -348,8 +350,6 @@ export default function Window({ application, file }) {
     panel_ui.stop();
     previewer.stop();
     documents.forEach((document) => document.stop());
-
-    settings.set_string("selected-demo", demo_name);
 
     document_javascript.code_view.replaceText(javascript);
     document_vala.code_view.replaceText(vala);
@@ -476,6 +476,10 @@ export default function Window({ application, file }) {
       }),
     );
   }
+
+  window.connect("close-request", () => {
+    deleteSession(file).catch(logError);
+  });
 
   window.present();
 

@@ -10,6 +10,7 @@ import Gio from "gi://Gio";
 import Xdp from "gi://Xdp";
 import Source from "gi://GtkSource";
 
+Gio._promisify(Xdp.Portal.prototype, "trash_file", "trash_file_finish");
 Gio._promisify(Xdp.Portal.prototype, "open_uri", "open_uri_finish");
 Gio._promisify(Xdp.Portal.prototype, "open_file", "open_file_finish");
 Gio._promisify(Xdp.Portal.prototype, "open_directory", "open_directory_finish");
