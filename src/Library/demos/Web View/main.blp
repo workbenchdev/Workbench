@@ -1,0 +1,40 @@
+using Gtk 4.0;
+using Adw 1;
+using WebKit 6.0;
+
+Window window{
+  default-width:1000;
+  default-height:800;
+
+  [titlebar]
+  Adw.HeaderBar {
+    title-widget:
+    Entry url_bar{
+      input-purpose: url;
+      hexpand:true;
+      margin-start: 54;
+      margin-end: 54;
+    };
+
+    [start]
+    Box {
+      spacing:6;
+      Button button_back{
+        icon-name: "arrow1-left-symbolic";
+        tooltip-text: _("Back");
+      }
+      Button button_forward{
+        icon-name: "arrow1-right-symbolic";
+        tooltip-text: _("Forward");
+      }
+      Button button_reload{
+        icon-name:"refresh-symbolic";
+        tooltip-text: _("Reload");
+      }
+      Button button_stop {
+        icon-name:"stop-sign-symbolic";
+        tooltip-text: _("Stop");
+      }
+    }
+  }
+}
