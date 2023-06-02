@@ -1,17 +1,17 @@
-import Adw from "gi://Adw";
 import WebKit from "gi://WebKit?version=6.0";
 const GObject = imports.gi.GObject;
 const { Uri } = imports.gi.GLib;
 
-const window = workbench.builder.get_object("window");
+const container = workbench.builder.get_object("container");
 const button_back = workbench.builder.get_object("button_back");
 const button_forward = workbench.builder.get_object("button_forward");
 const button_reload = workbench.builder.get_object("button_reload");
 const button_stop = workbench.builder.get_object("button_stop");
 const url_bar = workbench.builder.get_object("url_bar");
-const web_view = new WebKit.WebView();
-
-window.child = web_view;
+const web_view = new WebKit.WebView({
+  zoom_level: 0.8,
+});
+container.child = web_view;
 
 // URL bar displays the current loaded page
 web_view.bind_property(
@@ -20,6 +20,8 @@ web_view.bind_property(
   "text",
   GObject.BindingFlags.DEFAULT,
 );
+
+// URL bar displays the current loaded page
 web_view.load_uri("https://www.gnome.org/");
 
 url_bar.connect("activate", () => {
