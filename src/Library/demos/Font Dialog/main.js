@@ -39,12 +39,11 @@ async function getFamily() {
     let result;
     try {
       result = await dialog_custom.choose_family(parent, null, null);
-      // Assign the chosen family to the variable
     } catch (err) {
       logError(err);
       return;
     }
-    console.log(result);
+    console.log(result.get_name());
   }
 
 custom_button.connect("clicked", () => {
