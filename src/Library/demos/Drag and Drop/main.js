@@ -11,7 +11,10 @@ for (const row of list) {
   let _drag_x;
   let _drag_y;
 
-  const drag_source = new Gtk.DragSource();
+  const drag_source = new Gtk.DragSource({
+    actions: Gdk.DragAction.MOVE,
+  });
+
   const drop_target = Gtk.DropTarget.new(
     row.constructor.$gtype,
     Gdk.DragAction.MOVE,
@@ -55,7 +58,7 @@ for (const row of list) {
 
   // Drop controller
   drop_target.connect("drop", (drop, value, _x, _y) => {
-    const value_row = value.get_object();
+    const value_row = value;
     const target_index = list.get_row_at_y(_y).get_index() - 1;
 
     list.remove(value_row);
