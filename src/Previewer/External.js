@@ -16,8 +16,6 @@ export default function External({ output, builder, onWindowChange }) {
   };
 
   async function start() {
-    builder.get_object("button_screenshot").visible = false;
-
     try {
       dbus_proxy = await dbus_previewer.getProxy();
     } catch (err) {
@@ -105,7 +103,9 @@ export default function External({ output, builder, onWindowChange }) {
         console.debug(err);
       }
     },
-    screenshot() {},
+    async screenshot({ path }) {
+      return dbus_proxy.ScreenshotAsync(path);
+    },
   };
 }
 

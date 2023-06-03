@@ -7,9 +7,10 @@ import Gdk from "gi://Gdk";
 import GLib from "gi://GLib";
 import Adw from "gi://Adw";
 
-import Template from "./CodeView.blp" assert { type: "uri" };
+import Template from "./CodeView.blp" with { type: "uri" };
 
 import WorkbenchHoverProvider from "../WorkbenchHoverProvider.js";
+import { registerClass } from "../overrides.js";
 
 Source.init();
 
@@ -141,7 +142,7 @@ class CodeView extends Gtk.Widget {
   };
 }
 
-export default GObject.registerClass(
+export default registerClass(
   {
     GTypeName: "CodeView",
     Template,
@@ -208,7 +209,6 @@ function connect_signals(target, signals) {
   });
 }
 
-// rome-ignore lint/correctness/noUnusedVariables: could be useful
 function disconnect_signals(target, handler_ids) {
   handler_ids.forEach((handler_id) => target.disconnect(handler_id));
 }

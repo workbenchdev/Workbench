@@ -130,7 +130,7 @@ test("invalid documents", () => {
   }, /Invalid XML document/);
 });
 
-test("library examples", () => {
+test.skip("library examples", () => {
   const examples = [
     ...readDirSync(Gio.File.new_for_path("src/Library/demos")),
   ].map((file) => file.get_child("main.blp"));

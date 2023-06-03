@@ -1,7 +1,7 @@
 using Gtk 4.0;
 
-template AwesomeButton: Button {
-  clicked => onclicked();
+template $AwesomeButton : Button {
+  clicked => $onclicked();
   Image {
     halign: center;
     icon-name: "penguin-alt-symbolic";

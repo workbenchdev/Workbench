@@ -10,7 +10,7 @@ import { encode, settings, unstack } from "../util.js";
 
 import Internal from "./Internal.js";
 import External from "./External.js";
-import { getClassNameType } from "../overrides.js";
+import { getClassNameType, registerClass } from "../overrides.js";
 
 import { assertBuildable, detectCrash, isPreviewable } from "./utils.js";
 
@@ -124,7 +124,7 @@ export default function Previewer({
 
   // Using this custom scope we make sure that previewing UI definitions
   // with signals doesn't fail - in addition, checkout registerSignals
-  const BuilderScope = GObject.registerClass(
+  const BuilderScope = registerClass(
     {
       Implements: [Gtk.BuilderScope],
     },
@@ -286,7 +286,7 @@ export default function Previewer({
   }
 
   builder.get_object("button_screenshot").connect("clicked", () => {
-    current.screenshot({ window, data_dir });
+    screenshot({ application, window, data_dir, current }).catch(logError);
   });
 
   setPreviewer(internal);
@@ -460,4 +460,33 @@ function makeWorkbenchTargetId() {
 }
 function isWorkbenchTargetId(id) {
   return id.startsWith(target_id_prefix);
+}
+
+async function screenshot({ application, window, data_dir, current }) {
+  const date = new GLib.DateTime().format("%Y-%m-%d %H-%M-%S");
+  // FIXME: GJS does not have Gio.File.new_build_filename
+  const file = Gio.File.new_for_path(
+    GLib.build_filenamev([data_dir, "screenshots", `${date}.png`]),
+  );
+
+  try {
+    file.get_parent().make_directory_with_parents(null);
+  } catch (err) {
+    if (err.code !== Gio.IOErrorEnum.EXISTS) throw err;
+  }
+
+  const success = await current.screenshot({ window, path: file.get_path() });
+  if (!success) return;
+
+  const notification = new Gio.Notification();
+  const action = Gio.Action.print_detailed_name(
+    "app.show-screenshot",
+    new GLib.Variant("s", file.get_uri()),
+  );
+  notification.set_icon(new Gio.ThemedIcon({ name: "re.sonny.Workbench" }));
+  notification.set_title("Workbench");
+  notification.set_body(_("Screenshot of preview captured"));
+  notification.set_default_action(action);
+  notification.add_button(_("Show in Files"), action);
+  application.send_notification(null, notification);
 }

@@ -1,0 +1,80 @@
+using Gtk 4.0;
+using Adw 1;
+
+Gtk.Window {
+  default-width: 800;
+  default-height: 600;
+  title: _("Header Bar");
+  titlebar: Adw.HeaderBar {
+
+    [start]
+    MenuButton{
+      label: _("Open");
+      menu-model: open_menu;
+    }
+    [start]
+    Button {
+      icon-name: "tab-new-filled-symbolic";
+    }
+    [end]
+    MenuButton {
+      icon-name: "open-menu-symbolic";
+      tooltip-text: _("Main Menu");
+      primary: true;
+      menu-model: window_menu;
+    }
+    [end]
+    Button {
+      icon-name: "loupe-large-symbolic";
+    }
+  };
+
+  Adw.StatusPage {
+      title: "Header Bar";
+      description: _("Custom titlebars for windows");
+
+      Box{
+        orientation:vertical;
+
+        LinkButton {
+          label: "API Reference";
+          uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.3/class.HeaderBar.html";
+        }
+
+        LinkButton {
+          label: "Human Interface Guidelines";
+          uri: "https://developer.gnome.org/hig/patterns/containers/header-bars.html";
+        }
+      }
+  }
+}
+
+menu window_menu {
+  section {
+    item {
+      label: _("Keyboard Shortcuts");
+      action: "app.shortcuts";
+    }
+
+    item {
+      label: _("About App");
+      action: "app.about";
+    }
+  }
+}
+
+menu open_menu {
+  section {
+    item {
+      label: _("Item 1");
+    }
+    item {
+      label: _("Item 2");
+    }
+    item {
+      label: _("Item 3");
+    }
+  }
+}
+
+

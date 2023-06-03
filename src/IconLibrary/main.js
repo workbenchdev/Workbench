@@ -95,10 +95,10 @@ function onToastDismissed(toast) {
 function getDevKitIcons() {
   const icons = Object.create(null);
 
-  const bytes = Gio.resources_lookup_data(
-    "/re/sonny/Workbench/icon-development-kit.json",
-    Gio.ResourceLookupFlags.NONE,
-  );
+  const [bytes] = Gio.File.new_for_path(
+    "/app/share/icon-development-kit/icons.json",
+  ).load_bytes(null);
+
   const icons_dev_kit = JSON.parse(new TextDecoder().decode(bytes.get_data()));
   for (const icon of icons_dev_kit) {
     // https://gitlab.gnome.org/Teams/Design/icon-development-kit/-/issues/62
