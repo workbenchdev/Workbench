@@ -1,0 +1,10 @@
+{
+  "name": "Boxed Lists",
+  "category": "user_interface",
+  "description": "List to present both controls and information",
+  "panels": [
+    "preview",
+    "ui"
+  ],
+  "autorun": true
+}
