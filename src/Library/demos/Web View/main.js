@@ -1,6 +1,6 @@
 import WebKit from "gi://WebKit?version=6.0";
-const GObject = imports.gi.GObject;
-const { Uri } = imports.gi.GLib;
+import GObject from "gi://GObject";
+import GLib from "gi://GLib";
 
 const container = workbench.builder.get_object("container");
 const button_back = workbench.builder.get_object("button_back");
@@ -25,7 +25,7 @@ web_view.load_uri("https://www.gnome.org/");
 
 url_bar.connect("activate", () => {
   let url = url_bar.buffer.text;
-  const scheme = Uri.peek_scheme(url);
+  const scheme = GLib.Uri.peek_scheme(url);
   if (scheme == null) {
     url = `http://${url}`;
   }
