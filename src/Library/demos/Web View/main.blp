@@ -1,0 +1,70 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.Clamp {
+  maximum-size: 700;
+
+  Box {
+    orientation: vertical;
+
+    Box {
+      orientation: vertical;
+      margin-top: 12;
+      margin-bottom: 12;
+      spacing: 6;
+
+      Label {
+        label: "Web View";
+
+        styles ["title-1"]
+      }
+
+      Label {
+        label: "Load and display webpages and HTML";
+      }
+    }
+
+    Box controls {
+      spacing: 6;
+
+      Button button_back {
+        icon-name: "arrow1-left-symbolic";
+        tooltip-text: _("Back");
+      }
+
+      Button button_forward {
+        icon-name: "arrow1-right-symbolic";
+        tooltip-text: _("Forward");
+      }
+
+      Entry url_bar {
+        input-purpose: url;
+        hexpand: true;
+      }
+
+      Button button_reload {
+        icon-name: "refresh-symbolic";
+        tooltip-text: _("Reload");
+      }
+
+      Button button_stop {
+        icon-name: "stop-sign-symbolic";
+        tooltip-text: _("Stop");
+      }
+    }
+
+    Adw.Bin container {
+      margin-top: 18;
+      margin-bottom: 18;
+      vexpand: true;
+      hexpand: true;
+      styles ["view"]
+    }
+
+    LinkButton {
+      margin-bottom: 12;
+      label: "API Reference";
+      uri: "https://webkitgtk.org/reference/webkit2gtk/stable/class.WebView.html";
+    }
+  }
+}
