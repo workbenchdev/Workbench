@@ -21,14 +21,13 @@ web_view.bind_property(
   GObject.BindingFlags.DEFAULT,
 );
 
-// URL bar displays the current loaded page
 web_view.load_uri("https://www.gnome.org/");
 
 url_bar.connect("activate", () => {
   let url = url_bar.buffer.text;
   const scheme = Uri.peek_scheme(url);
   if (scheme == null) {
-    url = `https://${url}`;
+    url = `http://${url}`;
   }
   web_view.load_uri(url);
 });
@@ -51,10 +50,10 @@ button_stop.connect("clicked", () => {
 
 web_view.connect("load-changed", (view, load_event) => {
   switch (load_event) {
-    case WebKit.LoadEvent["STARTED"]:
+    case WebKit.LoadEvent.STARTED:
       console.log("Page loading started");
       break;
-    case WebKit.LoadEvent["FINISHED"]:
+    case WebKit.LoadEvent.FINISHED:
       console.log("Page loading has finished ");
       break;
   }
@@ -62,7 +61,7 @@ web_view.connect("load-changed", (view, load_event) => {
 
 web_view.connect("load-failed", (view, load_event, fail_url, error) => {
   // Dont display error page if it is caused by stop_loading()
-  if (error.code !== 302) {
+  if (error.code !== WebKit.NetworkError.CANCELLED) {
     web_view.load_alternate_html(
       error_page(fail_url, error.message),
       fail_url,
