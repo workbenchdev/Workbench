@@ -12,7 +12,7 @@ Adw.PreferencesWindow pref_window {
 
     Adw.PreferencesGroup {
       title: _("Color Settings");
-      description: "Change the color-scheme of the application.";
+      description: _("Change the color-scheme of the application.");
 
       Adw.ActionRow {
         title: _("Use Dark Mode");
@@ -28,7 +28,7 @@ Adw.PreferencesWindow pref_window {
 
     Adw.PreferencesGroup {
       title: _("Text Settings");
-      description: "Customize the appearance of text in the application.";
+      description: _("Customize the appearance of text in the application.");
 
       Adw.ActionRow {
         title: _("Font Size");
@@ -58,30 +58,31 @@ Adw.PreferencesWindow pref_window {
         }
       }
     }
-      Adw.PreferencesGroup {
-        title: _("API References");
 
-        Box {
-          orientation: horizontal;
-          margin-top: 12;
+    Adw.PreferencesGroup {
+      title: _("API References");
+
+      Box {
+        orientation: horizontal;
+        margin-top: 12;
 
         LinkButton {
-          label: "PreferencesWindow";
+          label: _("PreferencesWindow");
           uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.3/class.PreferencesWindow.html";
         }
 
         LinkButton {
-          label: "PreferencesPage";
+          label: _("PreferencesPage");
           uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.3/class.PreferencesPage.html";
         }
 
         LinkButton {
-          label: "PreferencesGroup";
+          label: _("PreferencesGroup");
           uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.3/class.PreferencesGroup.html";
         }
 
         LinkButton {
-          label: "PreferencesRow";
+          label: _("PreferencesRow");
           uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.3/class.PreferencesRow.html";
         }
       }
@@ -94,7 +95,7 @@ Adw.PreferencesWindow pref_window {
 
     Adw.PreferencesGroup {
       title: _("Interaction Settings");
-      description: "Change how the app behaves during user interaction.";
+      description: _("Change how the app behaves during user interaction.");
 
       // Adw.PreferencesGroup can have suffix widgets like Adw.ActionRows
       [header-suffix]
@@ -131,7 +132,7 @@ Adw.PreferencesWindow pref_window {
 
     Adw.PreferencesGroup {
       title: _("Data Settings");
-      description: "Manage user data related settings.";
+      description: _("Manage user data related settings.");
 
       Adw.ActionRow {
         title: _("Enable Telemetry");

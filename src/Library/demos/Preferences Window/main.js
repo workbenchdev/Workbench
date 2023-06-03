@@ -1,5 +1,4 @@
 import Adw from "gi://Adw";
-import Gtk from "gi://Gtk";
 
 const pref_window = workbench.builder.get_object("pref_window");
 const dm_switch = workbench.builder.get_object("dm_switch");
