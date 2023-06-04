@@ -1,0 +1,7 @@
+{
+  "name": "Web View",
+  "category": "network",
+  "description": "Load and display webpages and HTML",
+  "panels": ["code", "preview"],
+  "autorun": true
+}
