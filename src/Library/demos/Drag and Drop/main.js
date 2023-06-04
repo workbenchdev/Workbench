@@ -4,6 +4,9 @@ import Gdk from "gi://Gdk";
 import GObject from "gi://GObject";
 
 const list = workbench.builder.get_object("list");
+const drop_target = Gtk.DropTarget.new(Gtk.ListBoxRow, Gdk.DragAction.MOVE);
+
+list.add_controller(drop_target);
 
 // Iterate over ListBox children
 for (const row of list) {
@@ -15,13 +18,7 @@ for (const row of list) {
     actions: Gdk.DragAction.MOVE,
   });
 
-  const drop_target = Gtk.DropTarget.new(
-    row.constructor.$gtype,
-    Gdk.DragAction.MOVE,
-  );
-
   row.add_controller(drag_source);
-  row.add_controller(drop_target);
 
   // Drag controller
   drag_source.connect("prepare", (source, _x, _y) => {
@@ -55,13 +52,13 @@ for (const row of list) {
 
     drag.set_hotspot(_drag_x, _drag_y);
   });
-
-  // Drop controller
-  drop_target.connect("drop", (drop, value, _x, _y) => {
-    const value_row = value;
-    const target_index = list.get_row_at_y(_y).get_index() - 1;
-
-    list.remove(value_row);
-    list.insert(value_row, target_index);
-  });
 }
+
+// Drop controller
+drop_target.connect("drop", (drop, value, _x, _y) => {
+  const value_row = value;
+  const target_index = list.get_row_at_y(_y).get_index() - 1;
+
+  list.remove(value_row);
+  list.insert(value_row, target_index);
+});
