@@ -37,7 +37,6 @@ drawingArea.set_draw_func((area, cr, width, height) => {
 });
 
 scaleRotate.connect("value-changed", () => {
-  const scale_value = scaleRotate.get_value();
   //Recalculate value of points of triangle
   for (let i = 0; i < 3; i++) {
     //calculate original angle
@@ -73,7 +72,7 @@ scaleRotate.connect("value-changed", () => {
       }
     }
     //add to original angle scale_value
-    angle += (scale_value * Math.PI) / 180;
+    angle += (scaleRotate.get_value() * Math.PI) / 180;
     //set new value to triangle
     let radius = Math.sqrt(x * x + y * y);
 
