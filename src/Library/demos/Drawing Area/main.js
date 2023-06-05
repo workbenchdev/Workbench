@@ -71,7 +71,7 @@ scaleRotate.connect("value-changed", () => {
         angle = M_PI;
       }
     }
-    //add to original angle scale_value
+    // Add to original angle scale value
     angle += (scaleRotate.get_value() * Math.PI) / 180;
     // Set new value to triangle
     let radius = Math.sqrt(x * x + y * y);
