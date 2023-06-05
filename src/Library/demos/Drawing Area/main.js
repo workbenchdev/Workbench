@@ -82,4 +82,3 @@ scaleRotate.connect("value-changed", () => {
   // Redraw drawing_area
   drawingArea.queue_draw();
 });
-
