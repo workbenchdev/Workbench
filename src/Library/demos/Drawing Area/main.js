@@ -2,19 +2,19 @@ import Cairo from "cairo";
 import Gtk from "gi://Gtk?version=4.0";
 Gtk.init();
 
-const drawingArea = workbench.builder.get_object("draw");
-const scaleRotate = workbench.builder.get_object("rotate");
+const drawingArea = workbench.builder.get_object("drawing_area");
+const scaleRotate = workbench.builder.get_object("scale");
 
-let triangle = [3];
-triangle[0] = [2];
+let triangle   = [3];
+triangle[0]    = [2];
 triangle[0][0] = 100;
 triangle[0][1] = 100;
-triangle[1] = [2];
+triangle[1]    = [2];
 triangle[1][0] = 0;
 triangle[1][1] = -100;
-triangle[2] = [2];
+triangle[2]    = [2];
 triangle[2][0] = -100;
-triangle[2][1] = 100;
+triangle[2][1] =  100;
 let triangle_original = [3];
 for (let i = 0; i < 3; i++) {
   let temp = [2];
