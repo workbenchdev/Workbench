@@ -4,7 +4,7 @@
   "description": "Programmatically draw onto a surface.",
   "panels": [
     "ui",
-    "preview"
+    "code"
   ],
   "autorun": true
 }
