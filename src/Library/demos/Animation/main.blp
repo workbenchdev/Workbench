@@ -1,0 +1,37 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: "Animation";
+  description: "Create timed or spring based animations";
+
+  Box {
+    hexpand: true;
+    vexpand: true;
+    spacing: 54;
+    orientation: vertical;
+
+    Button button {
+      halign: center;
+
+      Adw.ButtonContent {
+        label: "Play Animation";
+        icon-name: "play-large-symbolic";
+      }
+
+      styles [
+        "pill",
+      ]
+    }
+
+    Box container{
+      vexpand: true;
+      hexpand: true;
+      //Adw.Bin ball {
+      //  styles [
+      //   "ball",
+        //]
+      //}
+    }
+  }
+}
