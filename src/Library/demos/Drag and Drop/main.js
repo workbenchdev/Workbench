@@ -10,7 +10,7 @@ list.add_controller(drop_target);
 
 // Iterate over ListBox children
 for (const row of list) {
-  row.selectable = false;
+  //row.selectable = false;
   let _drag_x;
   let _drag_y;
 
@@ -71,7 +71,6 @@ drop_target.connect("drop", (drop, value, _x, _y) => {
   const target_index = list.get_row_at_y(_y).get_index();
   const target_row = list.get_row_at_index(target_index);
 
-  target_row.remove_css_class("drop-enter");
   list.remove(value_row);
   list.insert(value_row, target_index);
   target_row.set_state_flags(Gtk.StateFlags.NORMAL, true);
