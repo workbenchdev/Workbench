@@ -4,7 +4,7 @@ using Adw 1;
 Adw.Window {
   default-height: 600;
   default-width: 800;
-  title: "Tab View Demo";
+  title: _("Tab View Demo");
   Adw.TabOverview overview{
     enable-new-tab: true;
     view: tab_view;
@@ -23,19 +23,19 @@ Adw.Window {
       }
       Adw.TabView tab_view{
         Adw.TabPage main_tab_page{
-          title: "Main Page";
+          title: _("Main Page");
           child:
           Adw.StatusPage {
             hexpand: true;
             vexpand: true;
-            title: "Tab View";
-            description: "A dynamic tabbed container";
+            title: _("Tab View");
+            description: _("A dynamic tabbed container");
 
             Box {
               spacing: 6;
               orientation: vertical;
               Label {
-                label: "API References";
+                label: _("API References");
               }
               Box{
                 halign: center;
