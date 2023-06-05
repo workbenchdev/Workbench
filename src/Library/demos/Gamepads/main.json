@@ -2,6 +2,6 @@
   "name": "Gamepads",
   "category": "controls",
   "description": "Libmanette provides access to video game controllers",
-  "panels": ["Code", "preview"],
+  "panels": ["code", "preview"],
   "autorun": true
 }
