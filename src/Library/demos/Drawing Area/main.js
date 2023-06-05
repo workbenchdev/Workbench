@@ -39,7 +39,7 @@ drawingArea.set_draw_func((area, cr, width, height) => {
 scaleRotate.connect("value-changed", () => {
   // Recalculate value of points of triangle
   for (let i = 0; i < 3; i++) {
-    //calculate original angle
+    // Calculate original angle
     let x = triangle_original[i][0];
     let y = triangle_original[i][1];
     let angle = Math.atan(Math.abs(y) / Math.abs(x));
