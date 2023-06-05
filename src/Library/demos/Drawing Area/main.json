@@ -1,7 +1,7 @@
 {
   "name": "Drawing Area",
   "category": "user_interface",
-  "description": "Connection between control and drawing.",
+  "description": "Programmatically draw onto a surface.",
   "panels": [
     "ui",
     "preview"
