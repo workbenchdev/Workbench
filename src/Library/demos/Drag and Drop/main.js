@@ -10,7 +10,6 @@ list.add_controller(drop_target);
 
 // Iterate over ListBox children
 for (const row of list) {
-  //row.selectable = false;
   let _drag_x;
   let _drag_y;
 
