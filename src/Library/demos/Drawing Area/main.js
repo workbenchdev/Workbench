@@ -79,7 +79,7 @@ scaleRotate.connect("value-changed", () => {
     triangle[i][0] = radius * Math.cos(angle);
     triangle[i][1] = radius * Math.sin(angle);
   }
-  //Redraw drawingArea
+  // Redraw drawing_area
   drawingArea.queue_draw();
 });
 
