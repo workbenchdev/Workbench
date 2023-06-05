@@ -8,22 +8,25 @@ Adw.StatusPage {
  Box {
     halign: center;
     orientation: vertical;
-     DrawingArea draw {
+
+    DrawingArea drawing_area {
       content-width: 300;
       content-height: 300;
-     }
-     Scale rotate {
-        orientation: horizontal;
-        width-request: 300;
-        draw-value: true;
-        adjustment: Gtk.Adjustment {
-          lower: -25;
-          upper: 25;
-          value: 0;
-        };
-      }
+    }
+
+    Scale scale {
+      orientation: horizontal;
+      width-request: 300;
+      draw-value: true;
+      adjustment: Gtk.Adjustment {
+        lower: -25;
+        upper: 25;
+        value: 0;
+      };
+    }
   }
 }
+
 
 
 
