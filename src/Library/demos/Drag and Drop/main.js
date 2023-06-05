@@ -14,13 +14,16 @@ for (const row of list) {
   let _drag_x;
   let _drag_y;
 
+  const drop_controller = new Gtk.DropControllerMotion();
+
   const drag_source = new Gtk.DragSource({
     actions: Gdk.DragAction.MOVE,
   });
 
   row.add_controller(drag_source);
+  row.add_controller(drop_controller);
 
-  // Drag controller
+  // Drag handling
   drag_source.connect("prepare", (source, _x, _y) => {
     _drag_x = _x;
     _drag_y = _y;
@@ -52,13 +55,24 @@ for (const row of list) {
 
     drag.set_hotspot(_drag_x, _drag_y);
   });
+
+  drop_controller.connect("enter", (_x, _y) => {
+    row.set_state_flags(Gtk.StateFlags.DROP_ACTIVE, false);
+  });
+
+  drop_controller.connect("leave", (_x, _y) => {
+    row.set_state_flags(Gtk.StateFlags.NORMAL, true);
+  });
 }
 
-// Drop controller
+// Drop Handling
 drop_target.connect("drop", (drop, value, _x, _y) => {
   const value_row = value;
   const target_index = list.get_row_at_y(_y).get_index();
+  const target_row = list.get_row_at_index(target_index);
 
+  target_row.remove_css_class("drop-enter");
   list.remove(value_row);
   list.insert(value_row, target_index);
+  target_row.set_state_flags(Gtk.StateFlags.NORMAL, true);
 });
