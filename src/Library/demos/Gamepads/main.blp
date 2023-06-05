@@ -1,0 +1,19 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: _("Gamepads");
+  description: _("A controller is needed for this demo");
+  icon-name: "gamepad-symbolic";
+
+  Box {
+    orientation: vertical;
+
+    LinkButton {
+      label: "API Reference";
+      uri: "";
+      margin-top: 24;
+    }
+  }
+}
+
