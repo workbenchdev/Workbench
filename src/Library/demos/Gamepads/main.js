@@ -3,10 +3,19 @@ import Manette from "gi://Manette";
 
 const monitor = Manette.Monitor.new();
 
-monitor.connect("device-connected", (monitor, connected_device) => {
-  console.log(connected_device.get_name());
+monitor.connect("device-connected", (monitor, device) => {
+  console.log("A new device is connected:", device);
 });
 
-monitor.connect("device-disconnected", (monitor, disconnected_device) => {
-  console.log(disconnected_device.get_name());
+monitor.connect("device-disconnected", (monitor, device) => {
+  console.log("A device is disconnected:", device);
 });
+
+const monitorIter = monitor.iterate();
+
+// Iterate over the devices and log their details
+let [has_next, device] = monitorIter.next();
+while (device !== null) {
+  console.log("Device:", device);
+  [has_next, device] = monitorIter.next();
+}
