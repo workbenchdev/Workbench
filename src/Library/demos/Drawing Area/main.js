@@ -73,7 +73,7 @@ scaleRotate.connect("value-changed", () => {
     }
     //add to original angle scale_value
     angle += (scaleRotate.get_value() * Math.PI) / 180;
-    //set new value to triangle
+    // Set new value to triangle
     let radius = Math.sqrt(x * x + y * y);
 
     triangle[i][0] = radius * Math.cos(angle);
