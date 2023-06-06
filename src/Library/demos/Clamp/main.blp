@@ -10,20 +10,16 @@ Adw.StatusPage {
     halign: center;
 
     Adw.Clamp clamp {
-      maximum-size: 600;
-      tightening-threshold: 400;
+      maximum-size: 400;
+      tightening-threshold: 200;
       margin-bottom: 24;
 
-          TextView {
-            height-request: 180;
-            width-request: 60;
-            editable: true;
-            bottom-margin: 12;
-            wrap-mode: char;
-            buffer: Gtk.TextBuffer {
-              text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
-            }
-          }
+       Label label {
+        wrap: true;
+        label: _("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ");
+
+      }
+
     }
 
     FlowBox {
@@ -45,7 +41,9 @@ Adw.StatusPage {
 
     LinkButton {
       label: "API Reference";
-      uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/main/class.Clamp.html";
+      uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/main/index.html";
     }
   }
 }
+
+

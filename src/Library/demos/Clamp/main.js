@@ -1,7 +1,3 @@
-import Gtk from "gi://Gtk";
-import Gio from "gi://Gio";
-import Adw from "gi://Adw";
-
 const increase = workbench.builder.get_object("increase");
 const decrease = workbench.builder.get_object("decrease");
 const clamp = workbench.builder.get_object("clamp");
