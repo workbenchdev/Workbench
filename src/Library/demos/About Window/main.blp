@@ -1,0 +1,25 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: "About Window";
+  description: _("A window showing information about the application.");
+
+  Box {
+    orientation: vertical;
+    halign: center;
+
+    Button button {
+      label: _("About");
+      margin-bottom: 12;
+      styles ['pill']
+    }
+
+    LinkButton {
+      label: "API Reference";
+      uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/main/class.AboutWindow.html";
+    }
+  }
+}
+
+
