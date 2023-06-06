@@ -43,7 +43,10 @@ for (const row of list) {
 
     const drag_row = new Adw.ActionRow({ title: row.title });
     drag_row.add_prefix(
-      new Gtk.Image({ icon_name: "list-drag-handle-symbolic" }),
+      new Gtk.Image({
+        icon_name: "list-drag-handle-symbolic",
+        css_classes: "dim-label",
+      }),
     );
 
     drag_widget.append(drag_row);
@@ -55,6 +58,7 @@ for (const row of list) {
     drag.set_hotspot(_drag_x, _drag_y);
   });
 
+  // Update row visuals during DnD operation
   drop_controller.connect("enter", (_x, _y) => {
     row.set_state_flags(Gtk.StateFlags.DROP_ACTIVE, false);
   });
