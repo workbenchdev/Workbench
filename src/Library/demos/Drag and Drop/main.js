@@ -70,7 +70,15 @@ drop_target.connect("drop", (drop, value, _x, _y) => {
   const target_index = list.get_row_at_y(_y).get_index();
   const target_row = list.get_row_at_index(target_index);
 
+  // If value or the target row is null, do not accept the drop
+  if (!value || !target_row) {
+    return false;
+  }
+
   list.remove(value_row);
   list.insert(value_row, target_index);
   target_row.set_state_flags(Gtk.StateFlags.NORMAL, true);
+
+  // If everything is successful, return true to accept the drop
+  return true;
 });
