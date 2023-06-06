@@ -4,11 +4,11 @@ import Manette from "gi://Manette";
 const monitor = Manette.Monitor.new();
 
 monitor.connect("device-connected", (monitor, device) => {
-  console.log("Device added: " + device.get_name());
+  console.log(`Device added: ${device.get_name()}`);
 });
 
 monitor.connect("device-disconnected", (monitor, device) => {
-  console.log("Device removed: " + device.get_name());
+  console.log(`Device removed: ${device.get_name()}`);
 });
 
 const monitorIter = monitor.iterate();
