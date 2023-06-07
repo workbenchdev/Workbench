@@ -78,13 +78,9 @@ drop_target.connect("drop", (_drop, value, _x, y) => {
     return false;
   }
 
-  try {
-    list.remove(value);
-    list.insert(value, target_index);
-    target_row.set_state_flags(Gtk.StateFlags.NORMAL, true);
-  } catch (error) {
-    return false;
-  }
+  list.remove(value);
+  list.insert(value, target_index);
+  target_row.set_state_flags(Gtk.StateFlags.NORMAL, true);
 
   // If everything is successful, return true to accept the drop
   return true;
