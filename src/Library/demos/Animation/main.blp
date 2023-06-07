@@ -1,37 +1,113 @@
 using Gtk 4.0;
 using Adw 1;
 
-Adw.StatusPage {
-  title: "Animation";
-  description: "Create timed or spring based animations";
-
+Adw.Clamp {
   Box {
-    hexpand: true;
-    vexpand: true;
-    spacing: 54;
+    spacing: 24;
+    margin-top: 36;
+    margin-bottom: 24;
     orientation: vertical;
-
-    Button button {
-      halign: center;
-
-      Adw.ButtonContent {
-        label: "Play Animation";
-        icon-name: "play-large-symbolic";
+    Box {
+      spacing: 6;
+      orientation: vertical;
+      Label {
+        label: _("Animation");
+        styles ["title-1"]
       }
-
-      styles [
-        "pill",
-      ]
+      Label {
+        label: _("Create timed or spring based animations");
+      }
     }
 
-    Box container{
-      vexpand: true;
-      hexpand: true;
-      //Adw.Bin ball {
-      //  styles [
-      //   "ball",
-        //]
-      //}
+    Box {
+      margin-top: 54;
+      orientation: vertical;
+      homogeneous: true;
+
+      Box target_container{
+        vexpand: true;
+        spacing: 12;
+        orientation: vertical;
+
+        Box {
+          Box {
+            homogeneous: true;
+            orientation: vertical;
+
+            Label {
+              halign: start;
+              label: _("Animation Target");
+
+              styles ["title-4"]
+            }
+
+            Label {
+              halign: start;
+              label: _("Animate a widget property");
+
+              styles ["dim-label"]
+            }
+          }
+
+          Button button_timed {
+            hexpand: true;
+            halign: end;
+            icon-name: "play-large-symbolic";
+
+            styles ["circular"]
+          }
+        }
+
+        Box {
+          margin-top: 12;
+          hexpand: true;
+          ProgressBar progress_bar{
+            hexpand: true;
+          }
+        }
+      }
+
+      Box callback_target_container{
+        spacing: 12;
+        orientation: vertical;
+
+        Box {
+          Box {
+            homogeneous: true;
+            orientation: vertical;
+
+            Label {
+              halign: start;
+              label: _("Callback Animation Target");
+
+              styles ["title-4"]
+            }
+
+            Label {
+              halign: start;
+              label: _("Use callbacks to animate a custom property");
+
+              styles ["dim-label"]
+            }
+          }
+
+          Button button_spring {
+            hexpand: true;
+            halign: end;
+            icon-name: "play-large-symbolic";
+
+            styles ["circular"]
+          }
+        }
+
+        Box {
+          margin-top: 12;
+          hexpand: true;
+          Adw.Bin ball {
+            styles ["ball"]
+          }
+        }
+      }
     }
   }
 }

@@ -2,6 +2,9 @@
   min-height: 50px;
   min-width: 50px;
   border-radius: 24px;
-  background-image: linear-gradient(rgb(87, 227, 137), rgb(38, 162, 105));
+  background-image: linear-gradient(@green_2, @green_5);
 }
 
+.circular {
+  padding: 6px;
+}

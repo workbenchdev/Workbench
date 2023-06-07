@@ -1,61 +1,64 @@
-import GObject from "gi://GObject";
-import Gtk from "gi://Gtk";
 import Adw from "gi://Adw";
 import Gsk from "gi://Gsk";
+import Graphene from "gi://Graphene";
 
-const button = workbench.builder.get_object("button");
-const container = workbench.builder.get_object("container");
+const button_timed = workbench.builder.get_object("button_timed");
+const progress_bar = workbench.builder.get_object("progress_bar");
+const target_timed = Adw.PropertyAnimationTarget.new(progress_bar, "fraction");
 
-const BallWidget = GObject.registerClass(
-  {
-    GTypeName: "BallWidget",
-  },
-  class BallWidget extends Adw.Bin {
-    constructor() {
-      super();
-      this.layout_manager = null;
-      this.css_classes = ["ball"];
-    }
-  },
-);
-const ball = new BallWidget();
-container.append(ball);
-
-const target = Adw.CallbackAnimationTarget.new(animation_cb);
-const params = Adw.SpringParams.new(0.5, 1.0, 100.0);
-const animation = Adw.SpringAnimation.new(ball, 0.0, 1.0, params, target);
-
-animation.initial_velocity = 5.0;
-
-button.connect("clicked", () => {
-  animation.play();
+const animation_timed = new Adw.TimedAnimation({
+  widget: progress_bar,
+  value_from: 0,
+  value_to: 1,
+  duration: 1500,
+  easing: Adw.Easing["EASE_IN_OUT_CUBIC"],
+  target: target_timed,
 });
 
-const manager = Gtk.CustomLayout.new(
-  null,
-  animation_measure,
-  animation_allocate,
+button_timed.connect("clicked", () => {
+  animation_timed.play();
+});
+
+animation_timed.connect("done", () => {
+  animation_timed.reset();
+});
+
+const button_spring = workbench.builder.get_object("button_spring");
+const ball = workbench.builder.get_object("ball");
+
+const target_spring = Adw.CallbackAnimationTarget.new(animation_cb);
+const params = Adw.SpringParams.new(
+  // Damping Ratio
+  0.5,
+  // Mass
+  1.0,
+  // Stiffness
+  50.0,
 );
-// Dangerous Code Here
-// ball.layout_manager = manager;
-function animation_measure(orientation, for_size) {
-  [minimum, natural, minimum_baseline, natural_baseline] = ball.measure(
-    orientation,
-    for_size,
-  );
-  return [minimum, natural, minimum_baseline, natural_baseline];
+const animation_spring = new Adw.SpringAnimation({
+  widget: ball,
+  value_from: 0,
+  value_to: 8.5,
+  spring_params: params,
+  target: target_spring,
+});
+animation_spring.initial_velocity = 1.0;
+// If amplitude of oscillation < epsilon, animation stops
+animation_spring.epsilon = 0.001;
+animation_spring.clamp = false;
+
+button_spring.connect("clicked", () => {
+  animation_spring.play();
+});
+
+function animation_cb(value) {
+  const x = Adw.lerp(0, 60, value);
+  move_widget(ball, x, 0);
 }
 
-function animation_cb() {
-  ball.queue_allocate();
-}
-
-function animation_allocate(width, height, baseline) {
-  let child_width;
-  const progress = animation.value;
-  [child_width, , ,] = ball.measure(Gtk.Orientation.HORIZONTAL, -1);
-  const offset = (width - child_width) * (progress - 0.5);
+function move_widget(widget, x, y) {
   let transform = new Gsk.Transform();
-  transform = transform.translate([offset, 0]);
-  ball.allocate(width, height, baseline, transform);
+  const p = new Graphene.Point({ x: x, y: y });
+  transform = transform.translate(p);
+  widget.allocate(widget.get_width(), widget.get_height(), -1, transform);
 }
