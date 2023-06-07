@@ -8,6 +8,13 @@ Adw.StatusPage {
 
   Box {
     orientation: vertical;
+    halign: center;
+
+    Button continue_button {
+      styles ["pill"]
+      label: _("Continue");
+      sensitive: false;
+    }
 
     LinkButton {
       label: "API Reference";
