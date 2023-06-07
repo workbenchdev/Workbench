@@ -12,7 +12,7 @@ function handleClick() {
     license_type: Gtk.License.GPL_3_0_ONLY,
     version: "1.2.3",
     website: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.3",
-    application_icon: "application-x-sharedlib-symbolic",
+    application_icon: "application-x-executable",
     issue_url: "https://gitlab.gnome.org/GNOME/libadwaita/-/issues",
     developers: ["Sriyansh Shivam https://linkfree.io/SoNiC-HeRE"],
   });
