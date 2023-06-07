@@ -10,8 +10,8 @@ list.add_controller(drop_target);
 
 // Iterate over ListBox children
 for (const row of list) {
-  let _drag_x;
-  let _drag_y;
+  let drag_x;
+  let drag_y;
 
   const drop_controller = new Gtk.DropControllerMotion();
 
@@ -23,9 +23,9 @@ for (const row of list) {
   row.add_controller(drop_controller);
 
   // Drag handling
-  drag_source.connect("prepare", (source, _x, _y) => {
-    _drag_x = _x;
-    _drag_y = _y;
+  drag_source.connect("prepare", (_source, x, y) => {
+    drag_x = x;
+    drag_y = y;
 
     const value = new GObject.Value();
     value.init(Gtk.ListBoxRow);
@@ -34,7 +34,7 @@ for (const row of list) {
     return Gdk.ContentProvider.new_for_value(value);
   });
 
-  drag_source.connect("drag-begin", (_drag_source, drag) => {
+  drag_source.connect("drag-begin", (_source, drag) => {
     const allocation = row.get_allocation();
     const drag_widget = new Gtk.ListBox();
 
@@ -55,33 +55,36 @@ for (const row of list) {
     const icon = Gtk.DragIcon.get_for_drag(drag);
     icon.child = drag_widget;
 
-    drag.set_hotspot(_drag_x, _drag_y);
+    drag.set_hotspot(drag_x, drag_y);
   });
 
   // Update row visuals during DnD operation
-  drop_controller.connect("enter", (_x, _y) => {
-    row.set_state_flags(Gtk.StateFlags.DROP_ACTIVE, false);
+  drop_controller.connect("enter", () => {
+    list.drag_highlight_row(row);
   });
 
-  drop_controller.connect("leave", (_x, _y) => {
-    row.set_state_flags(Gtk.StateFlags.NORMAL, true);
+  drop_controller.connect("leave", () => {
+    list.drag_unhighlight_row();
   });
 }
 
 // Drop Handling
-drop_target.connect("drop", (drop, value, _x, _y) => {
-  const value_row = value;
-  const target_index = list.get_row_at_y(_y).get_index();
-  const target_row = list.get_row_at_index(target_index);
+drop_target.connect("drop", (_drop, value, _x, y) => {
+  const target_row = list.get_row_at_y(y);
+  const target_index = target_row.get_index();
 
   // If value or the target row is null, do not accept the drop
   if (!value || !target_row) {
     return false;
   }
 
-  list.remove(value_row);
-  list.insert(value_row, target_index);
-  target_row.set_state_flags(Gtk.StateFlags.NORMAL, true);
+  try {
+    list.remove(value);
+    list.insert(value, target_index);
+    target_row.set_state_flags(Gtk.StateFlags.NORMAL, true);
+  } catch (error) {
+    return false;
+  }
 
   // If everything is successful, return true to accept the drop
   return true;
