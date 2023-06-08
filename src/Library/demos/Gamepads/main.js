@@ -1,4 +1,4 @@
-/*To use USB devices in your app you will need to set the --device=all permission.
+/* IMPORTANT: To use USB devices in your app you will need to set the --device=all permission.
  Workbench doesn't have such permission by default so to run this example you have to run the command
  flatpak override re.sonny.Workbench --device=all */
 
@@ -28,17 +28,16 @@ while (device !== null) {
 
   // D-pads
   device.connect("hat-axis-event", (device, event) => {
-    let [, hat_axis, hat_value] = event.get_hat();
-
+    const [, hat_axis, hat_value] = event.get_hat();
     console.log(
       `Device: ${device.get_name()} moved axis ${hat_axis} to ${hat_value}`,
     );
   });
 
-  // Analog Axis
+  // Analog Axis - Triggers and Joysticks
   device.connect("absolute-axis-event", (device, event) => {
-    let [, axis, value] = event.get_absolute();
-    if (Math.abs(value) > 0.03)
+    const [, axis, value] = event.get_absolute();
+    if (Math.abs(value) > 0.2)
       console.log(
         `Device: ${device.get_name()} moved axis ${axis} to ${value}`,
       );
