@@ -72,6 +72,18 @@
       ]
     },
     {
+      "name": "libmanette",
+      "buildsystem": "meson",
+      "config-opts": ["-Dgudev=disabled"],
+      "builddir": true,
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://gitlab.gnome.org/GNOME/libmanette.git"
+        }
+      ]
+    },
+    {
       "name": "vls",
       "buildsystem": "meson",
       "sources": [
