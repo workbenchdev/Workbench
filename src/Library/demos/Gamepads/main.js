@@ -35,5 +35,14 @@ while (device !== null) {
     );
   });
 
+  // Analog Axis
+  device.connect("absolute-axis-event", (device, event) => {
+    let [, axis, value] = event.get_absolute();
+    if (Math.abs(value) > 0.03)
+      console.log(
+        `Device: ${device.get_name()} moved axis ${axis} to ${value}`,
+      );
+  });
+
   [has_next, device] = monitor_iter.next();
 }
