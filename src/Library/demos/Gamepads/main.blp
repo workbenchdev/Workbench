@@ -1,26 +1,28 @@
 using Gtk 4.0;
 using Adw 1;
 
-Adw.StatusPage {
-  title: _("Gamepads");
-  description: _("A controller is needed for this demo");
-  icon-name: "gamepad-symbolic";
+Stack stack {
+  visible-child: status_page;
 
-  Box {
-    orientation: vertical;
-    halign: center;
+  Adw.StatusPage status_page {
+    title: _("Please connect a gamepad");
+    description: _("A controller is needed for this demo");
+    icon-name: "gamepad-symbolic";
 
-    Button continue_button {
-      styles ["pill"]
-      label: _("Continue");
-      sensitive: false;
-    }
+    Box {
+      orientation: vertical;
+      halign: center;
 
-    LinkButton {
-      label: "API Reference";
-      uri: "";
-      margin-top: 24;
+      Gtk.Image indicator {
+        styles ["pill"]
+        icon-name: "sentiment-dissatisfied-symbolic";
+      }
+
+      LinkButton {
+        label: "API Reference";
+        uri: "";
+        margin-top: 24;
+      }
     }
   }
 }
-
