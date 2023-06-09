@@ -24,6 +24,10 @@ while (device !== null) {
     console.log(
       `Device: ${device.get_name()} pressed ${event.get_hardware_code()}`,
     );
+
+    if (device.has_rumble()) {
+      device.rumble(1000, 1500, 200);
+    }
   });
 
   // D-pads
