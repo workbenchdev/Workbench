@@ -1,0 +1,208 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: _("Advanced Buttons");
+  description: _("Complex buttons with menus and icons");
+
+  Box {
+    orientation: vertical;
+    halign: center;
+    spacing: 6;
+
+    Box {
+      spacing: 6;
+      halign: center;
+      orientation: vertical;
+
+      Label {
+        label: _("Split Button");
+
+        styles ["title-4"]
+      }
+
+      Label {
+        label: _("A combined button and dropdown widget");
+      }
+
+      Box {
+        halign: center;
+        margin-top: 12;
+        homogeneous: true;
+        spacing: 18;
+
+        Box {
+          margin-top: 6;
+          margin-bottom: 6;
+          orientation: vertical;
+          spacing: 6;
+
+          Adw.SplitButton {
+            halign: center;
+            icon-name: "execute-from-symbolic";
+            menu-model: button_run_menu;
+          }
+
+          Label {
+            label: _("Menu Model");
+          }
+        }
+
+        Box {
+          margin-top: 6;
+          margin-bottom: 6;
+          orientation: vertical;
+          spacing: 6;
+
+          Adw.SplitButton {
+            label: _("Open");
+            popover: button_popover;
+          }
+
+          Label {
+            label: _("Popover");
+          }
+        }
+      }
+    }
+
+    LinkButton {
+      margin-bottom: 36;
+      label: "API Reference";
+      uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.3/class.SplitButton.html";
+    }
+
+    Box {
+      spacing: 6;
+      halign: center;
+      orientation: vertical;
+
+      Label {
+        label: _("Button Content");
+
+        styles ["title-4"]
+      }
+
+      Label {
+        label: _("A helper widget to create buttons with icons and labels");
+      }
+
+      Box {
+        halign: center;
+        margin-top: 12;
+        homogeneous: true;
+        spacing: 18;
+
+        Box {
+          margin-top: 6;
+          margin-bottom: 6;
+          orientation: vertical;
+          spacing: 6;
+
+          Button {
+            Adw.ButtonContent {
+              label: _("Edit");
+              icon-name: "document-edit-symbolic";
+            }
+          }
+
+          Label {
+            label: _("Button");
+          }
+        }
+
+        Box {
+          margin-top: 6;
+          margin-bottom: 6;
+          orientation: vertical;
+          spacing: 6;
+
+          MenuButton {
+            menu-model: button_new_menu;
+
+            Adw.ButtonContent {
+              label: _("New");
+              icon-name: "plus-symbolic";
+            }
+          }
+
+          Label {
+            label: _("Menu Button");
+          }
+        }
+
+        Box {
+          margin-top: 6;
+          margin-bottom: 6;
+          orientation: vertical;
+          spacing: 6;
+
+          ToggleButton {
+            Adw.ButtonContent {
+              label: _("Alerts");
+              icon-name: "bell-symbolic";
+            }
+          }
+
+          Label {
+            label: _("Toggle Button");
+          }
+        }
+      }
+    }
+
+    LinkButton {
+      label: "API Reference";
+      uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.3/class.ButtonContent.html";
+    }
+  }
+}
+
+Popover button_popover {
+  Box {
+    orientation: vertical;
+    SearchEntry {
+      placeholder-text: _("Search documents");
+    }
+
+    Adw.StatusPage {
+      name: "popover_page";
+      title: _("No Recent Documents");
+      icon-name: "clock-symbolic";
+      width-request: 300;
+      height-request: 300;
+      styles [
+        "compact",
+        "dim-label",
+      ]
+    }
+  }
+}
+
+menu button_new_menu {
+  item ("New File")
+  item ("New Folder")
+  item ("New Window")
+}
+
+menu button_run_menu {
+  section {
+    item ("Run")
+    item ("Run with Leak Detector")
+    item ("Run with Debugger")
+  }
+
+  section {
+    label: _("Settings");
+    submenu {
+      label: _("Accessibility");
+      item ("High Contrast")
+
+      section {
+        label: _("Text Direction");
+        item ("Left-to-Right")
+        item ("Right-to-Left")
+      }
+    }
+  }
+}
