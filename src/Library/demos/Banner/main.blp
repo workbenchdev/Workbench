@@ -1,0 +1,48 @@
+using Gtk 4.0;
+using Adw 1;
+
+Box {
+  orientation: vertical;
+
+  Adw.Banner banner {
+    button-label: "Troubleshoot";
+    title: "An error occurred: Could not resolve host";
+    revealed: true;
+  }
+
+  Adw.ToastOverlay overlay {
+    Adw.StatusPage {
+      title: "Banner";
+      description: "An attention-grabbing notification that is used to communicate important information";
+      vexpand: true;
+
+      Box {
+        orientation: vertical;
+        halign: center;
+
+        Button button_show_banner {
+          halign: center;
+          label: "Show Banner";
+
+          styles ["pill"]
+        }
+
+        Box {
+          margin-top: 24;
+          margin-bottom: 24;
+          orientation: vertical;
+
+          LinkButton {
+            label: "API Reference";
+            uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.3/class.Banner.html";
+          }
+
+          LinkButton {
+            label: "Human Interface Guidelines";
+            uri: "https://developer.gnome.org/hig/patterns/feedback/banners.html";
+          }
+        }
+      }
+    }
+  }
+}
