@@ -8,3 +8,15 @@
   font-weight: bold;
   text-decoration: underline;
 }
+
+#linked_box > :hover:first-child {
+  background-color: @destructive_bg_color;
+}
+
+#linked_box > :hover:nth-child(2) {
+  background-color: @success_bg_color;
+}
+
+#linked_box > :hover:last-child {
+  background-color: @accent_bg_color;
+}
