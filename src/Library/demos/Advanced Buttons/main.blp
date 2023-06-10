@@ -102,7 +102,7 @@ Adw.StatusPage {
           Button {
             Adw.ButtonContent {
               label: _("Edit");
-              icon-name: "edit-symbolic";
+              icon-name: "document-edit-symbolic";
             }
           }
 
@@ -140,7 +140,7 @@ Adw.StatusPage {
           ToggleButton {
             Adw.ButtonContent {
               label: _("Alerts");
-              icon-name: "bell-large-symbolic";
+              icon-name: "bell-symbolic";
             }
           }
 
@@ -162,15 +162,15 @@ Popover button_popover {
   Box {
     orientation: vertical;
     SearchEntry {
-      margin-bottom: 6;
       placeholder-text: _("Search documents");
     }
-    Separator {}
+
     Adw.StatusPage {
       name: "popover_page";
       title: _("No Recent Documents");
       icon-name: "clock-symbolic";
-
+      width-request: 300;
+      height-request: 300;
       styles [
         "compact",
         "dim-label",
