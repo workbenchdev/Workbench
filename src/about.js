@@ -61,6 +61,7 @@ ${getBlueprintVersion()}
     "Felipe Kinoshita https://mastodon.social/@fkinoshita",
     "Karol Lademan https://github.com/karl0d",
     "Nasah Kuma https://www.mantohnasah.com/",
+    "Jose Hunter https://github.com/halfmexican/",
     // Add yourself as
     // "John Doe",
     // or
