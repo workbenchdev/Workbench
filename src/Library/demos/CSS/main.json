@@ -1,0 +1,7 @@
+{
+  "name": "CSS",
+  "category": "user_interface",
+  "description": "GTK uses CSS for Styling.",
+  "panels": ["code", "ui", "preview"],
+  "autorun": false
+}
