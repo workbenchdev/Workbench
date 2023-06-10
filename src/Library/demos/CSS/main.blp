@@ -2,19 +2,56 @@ using Gtk 4.0;
 using Adw 1;
 
 Adw.StatusPage {
-  title: "CSS";
-  description: _("CSS usage in GTK");
-
   Box {
     orientation: vertical;
     halign: center;
 
-
-    LinkButton {
-      label: "CSS Overview";
-      uri: "https://docs.gtk.org/gtk4/css-overview.html";
+    Label {
+      label:_("Text");
+      margin-bottom: 24;
+      // Here, the styles block defines CSS Classes to be added
+      // to this label widget
+      styles["title-1"]
     }
 
+    Label {
+      // We set the name property to style it with css
+      name: "css_text";
+      label: _("CSS can be used to edit the appearance of an application");
+       margin-bottom: 12;
+    }
+
+    Label basic_label {
+      label: _("CSS classes can be applied via code");
+       margin-bottom: 12;
+    }
+
+    Label {
+      label:_("Widgets");
+      margin-top: 24;
+      styles["title-1"]
+    }
+
+    Box {
+      orientation: horizontal;
+      halign: center;
+      margin-top: 24;
+
+      LinkButton {
+        label: "CSS Overview";
+        uri: "https://docs.gtk.org/gtk4/css-overview.html";
+      }
+
+      LinkButton {
+        label: "Adwaita Style Classes";
+        uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.3/style-classes.html";
+      }
+
+      LinkButton {
+        label: "Named Colors";
+        uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.3/named-colors.html";
+      }
+    }
   }
 }
 
