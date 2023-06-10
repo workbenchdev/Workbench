@@ -1,0 +1,10 @@
+#css_text {
+  color: @blue_1; /* Adwaita Named Color */
+}
+
+.my_custom_class {
+  color: @red_1;
+  font-size: x-large;
+  font-weight: bold;
+  text-decoration: underline;
+}
