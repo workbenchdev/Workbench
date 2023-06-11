@@ -1,0 +1,44 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+
+  title: _("No results found");
+  description: _("Try a different Search.");
+  icon-name: 'edit-find-symbolic';
+
+  Box {
+    orientation: vertical;
+    homogeneous: true;
+
+    Box {
+      orientation: horizontal;
+      halign: center;
+      spacing: 12;
+      margin-bottom: 18;
+
+      Entry {
+        placeholder-text: _("Type to search… (keywords: Error, No results)");
+        }
+
+      Button submit_button{
+        label: "Submit";
+        }
+      }
+
+      Box {
+        orientation: horizontal;
+        halign: center;
+
+        LinkButton {
+          label: "API Reference";
+          uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.0.0-alpha.1/class.StatusPage.html";
+        }
+
+        LinkButton {
+          label: "API Reference (Entry)";
+          uri: "https://docs.gtk.org/gtk4/class.Entry.html";
+        }
+      }
+    }
+  }

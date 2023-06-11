@@ -1,0 +1,7 @@
+{
+  "name": "StatusPage",
+  "category": "user_interface",
+  "description": "A page used for empty/error states and similar use-cases.",
+  "panels": ["ui", "preview"],
+  "autorun": true
+}
