@@ -4,7 +4,6 @@
 
 .my_custom_class {
   color: @red_1;
-  font-size: x-large;
   font-weight: bold;
   text-decoration: underline;
 }
