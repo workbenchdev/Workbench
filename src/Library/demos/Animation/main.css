@@ -1,7 +1,7 @@
 .ball {
   min-height: 50px;
   min-width: 50px;
-  border-radius: 24px;
+  border-radius: 50%;
   background-image: linear-gradient(@green_2, @green_5);
 }
 
