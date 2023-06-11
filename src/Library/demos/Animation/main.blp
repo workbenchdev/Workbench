@@ -29,6 +29,8 @@ Adw.Clamp {
         orientation: vertical;
 
         Box {
+          spacing:24;
+
           Box {
             homogeneous: true;
             orientation: vertical;
@@ -58,7 +60,6 @@ Adw.Clamp {
         }
 
         Box {
-          margin-top: 12;
           hexpand: true;
           ProgressBar progress_bar{
             hexpand: true;
@@ -71,6 +72,8 @@ Adw.Clamp {
         orientation: vertical;
 
         Box {
+          spacing:24;
+
           Box {
             homogeneous: true;
             orientation: vertical;
@@ -100,7 +103,6 @@ Adw.Clamp {
         }
 
         Box {
-          margin-top: 12;
           hexpand: true;
           Adw.Bin ball {
             styles ["ball"]
@@ -112,6 +114,9 @@ Adw.Clamp {
     Box {
       orientation: vertical;
 
+      Label {
+        label: "Tools";
+      }
       LinkButton {
         margin-bottom:12;
         label: "Elastic";
@@ -121,13 +126,14 @@ Adw.Clamp {
         label: "API References";
       }
       LinkButton {
-        label: "TimedAnimation";
+        label: "Timed Animation";
         uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.3/class.TimedAnimation.html";
       }
       LinkButton {
-        label: "SpringAnimation";
+        label: "Spring Animation";
         uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.3/class.SpringAnimation.html";
       }
     }
   }
 }
+
