@@ -1,3 +1,4 @@
+import Gtk from "gi://Gtk";
 const hours = workbench.builder.get_object("hours");
 const minutes = workbench.builder.get_object("minutes");
 
@@ -24,6 +25,10 @@ minutes.connect("output", () => {
 
 minutes.connect("value-changed", () => {
   console.log(tellTime(hours, minutes));
+});
+
+minutes.connect("wrapped", () => {
+  hours.spin(Gtk.SpinType["SPIN_STEP_FORWARD"], 1);
 });
 
 function tellTime(hours, minutes) {
