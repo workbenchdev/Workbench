@@ -2,6 +2,6 @@
   "name": "Drop Down",
   "category": "user_interface",
   "description": "A widget to choose an item from a list of options",
-  "panels": ["ui", "preview"],
+  "panels": ["ui", "code", "preview"],
   "autorun": true
 }
