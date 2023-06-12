@@ -17,10 +17,19 @@ Box root_box {
 			title: _("Carousel");
 			description: _("Swipe or Scroll to Navigate");
 			icon-name: "carousel-symbolic";
+
+      LinkButton {
+        label: "API Reference";
+        uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.3/class.Carousel.html";
+        margin-top: 12;
+      }
+
 		}
 
     Adw.Clamp {
       maximum-size: 700;
+      halign: center;
+      valign: center;
 
 			Adw.PreferencesGroup {
 				styles ["boxed-list"]
