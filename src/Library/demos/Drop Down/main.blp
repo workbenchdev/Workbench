@@ -1,0 +1,43 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: _("Drop Down");
+
+  Box {
+    orientation: vertical;
+    halign: center;
+    valign: center;
+
+    Grid  {
+      orientation: horizontal;
+      halign: center;
+      valign: center;
+      column-spacing: 10;
+
+      Label {
+        halign: start;
+        label: _("Selection:");
+      }
+
+      DropDown drop_down {
+        halign: end;
+        model: StringList {
+          strings ["Item 1", "Item 2", "Item 3", "Item 4"]
+        };
+      }
+    }
+
+    LinkButton {
+      label: "API Reference";
+      uri: "https://docs.gtk.org/gtk4/class.DropDown.html";
+      margin-top: 12;
+    }
+
+    LinkButton {
+      label: "Human Interface Guidelines";
+      uri: "https://developer.gnome.org/hig/patterns/controls/drop-downs.html";
+        margin-top: 12;
+    }
+  }
+}
