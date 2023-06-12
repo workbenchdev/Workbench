@@ -1,0 +1,61 @@
+using Gtk 4.0;
+using Adw 1;
+
+Box {
+  orientation: vertical;
+	valign: center; 
+	
+
+	Adw.Carousel carousel {
+		halign: center;
+		Adw.StatusPage {
+			title: _("Carousel");
+			icon-name: "carousel-symbolic";
+		}
+    
+    Adw.Clamp {
+      maximum-size: 700;
+
+			Adw.PreferencesGroup {
+				styles ["boxed-list"]
+
+				Adw.ComboRow {
+					title: _("Orientation");
+			 		model: StringList {
+          	strings [_("Horizontal"), _("Vertical")]
+      	  };
+				}
+
+				Adw.ComboRow {
+					title: _("Page Indicators");
+					model: StringList {
+          	strings [_("Dots"), _("Lines")]
+      	  };
+				}
+
+				Adw.ActionRow {
+					title: _("Scroll Wheel");
+					activatable-widget: sw_switch;
+					
+					Gtk.Switch sw_switch {
+						valign: center;
+					}
+				}
+
+				Adw.ActionRow {
+					title: _("Long Swipes");
+					activatable-widget: ls_switch;
+				
+					Gtk.Switch ls_switch {
+						valign: center;
+					}
+				}
+			}
+		}
+
+		Adw.StatusPage {
+			title: _("Last Page");
+			description: _("You've reached the end of the carousel.");
+		}
+	}
+}
