@@ -1,48 +1,61 @@
+import Adw from "gi://Adw";
+
 const first_bar = workbench.builder.get_object("first");
 const second_bar = workbench.builder.get_object("second");
 const play = workbench.builder.get_object("play");
 const progress_tracker = workbench.builder.get_object("progress_tracker");
 
-function handleProgress() {
-  //Counters for respective progress bars and for progress tracker label
-  let counter = 0.3;
-  let counter_two = 0.25;
-  let timeLeft = 12;
+const target = Adw.PropertyAnimationTarget.new(first_bar, "fraction");
 
-  //Display a Countdown
-  const countdownInterval = setInterval(() => {
-    timeLeft--;
-    if (timeLeft === 0) {
-      clearInterval(countdownInterval);
-      progress_tracker.label = "";
-      console.log("Operation Complete!");
-    } else {
-      progress_tracker.label = `${timeLeft} seconds remaining…`;
+const animation = new Adw.TimedAnimation({
+  widget: first_bar,
+  value_from: 0.2,
+  value_to: 1,
+  duration: 11000,
+  easing: Adw.Easing["LINEAR"],
+  target: target,
+});
+
+animation.connect("done", () => {
+  animation.reset();
+});
+
+play.connect("clicked", () => {
+  animation.play();
+  updateTracker();
+  pulseProgress();
+});
+
+function pulseProgress() {
+  let counter = 0;
+  // Time after which progress bar is pulsed
+  const pulse_period = 500;
+  // Duration of animation
+  const duration = 10000;
+  const increment = pulse_period / duration;
+  const interval = setInterval(() => {
+    if (counter >= 1.0) {
+      clearInterval(interval);
+      counter = 0;
+      return;
     }
-  }, 1000);
 
-  //Advance the first progress bar by 0.1 value every 1.5 seconds
-  const intervalId_one = setInterval(() => {
-    first_bar.set_fraction(counter);
-    counter += 0.1;
-    if (counter > 1.0) {
-      clearInterval(intervalId_one);
-      counter = 0.2;
-      first_bar.set_fraction(counter);
-    }
-  }, 1500);
-
-  //Advance the second progress bar by 0.25 value every 3 seconds
-  const intervalId_second = setInterval(() => {
     second_bar.pulse();
-    second_bar.set_fraction(counter_two);
-    counter_two += 0.25;
-    if (counter_two > 1.0) {
-      clearInterval(intervalId_second);
-      counter_two = 0;
-      second_bar.set_fraction(counter_two);
-    }
-  }, 3000);
+    counter += increment;
+  }, pulse_period);
 }
 
-play.connect("clicked", handleProgress);
+function updateTracker() {
+  let time = 10;
+  const interval = setInterval(() => {
+    if (time === 0) {
+      progress_tracker.label = "";
+      clearInterval(interval);
+      console.log("Operation complete!");
+      return;
+    }
+
+    progress_tracker.label = `${time} seconds remaining…`;
+    time -= 1;
+  }, 1000);
+}
