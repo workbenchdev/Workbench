@@ -17,6 +17,10 @@ function handleClick() {
     developers: ["Sriyansh Shivam https://linkfree.io/SoNiC-HeRE"],
   });
 
+  dialog.add_acknowledgement_section(_("Support Workbench"), [
+    "GitHub https://github.com/sonnyp/Workbench",
+  ]);
+
   dialog.present();
 }
 
