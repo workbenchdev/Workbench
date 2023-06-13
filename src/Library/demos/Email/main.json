@@ -1,0 +1,7 @@
+{
+  "name": "Email",
+  "category": "platform",
+  "description": "Compose an email message",
+  "panels": ["code", "preview"],
+  "autorun": true
+}
