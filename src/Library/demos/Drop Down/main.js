@@ -1,6 +1,5 @@
-const Gtk = imports.gi.Gtk;
-const GObject = imports.gi.GObject;
-const { Gio, GLib } = imports.gi;
+import Gtk from "gi://Gtk";
+import GObject from "gi://GObject";
 
 const drop_down = workbench.builder.get_object("drop_down");
 const advanced_drop_down = workbench.builder.get_object("advanced_drop_down");
