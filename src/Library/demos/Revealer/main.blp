@@ -1,0 +1,60 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: _("Revealer");
+  description: _("Animates the transition of its child from invisible to visible");
+
+  Box {
+    orientation: vertical;
+    spacing: 24;
+
+    ToggleButton button {
+      halign: center;
+      label: _("Show");
+
+      styles ["pill"]
+    }
+
+    Box {
+      spacing: 12;
+      orientation: vertical;
+
+      Adw.Clamp {
+        maximum-size: 400;
+
+        Revealer revealer {
+          transition-duration: 300;
+          transition-type: slide_up;
+
+          ListBox {
+            Label {
+              margin-top: 12;
+              margin-bottom: 12;
+              label: _("Item 1");
+            }
+
+            Label {
+              margin-top: 12;
+              margin-bottom: 12;
+              label: _("Item 2");
+            }
+
+            Label {
+              margin-top: 12;
+              margin-bottom: 12;
+              label: _("Item 3");
+            }
+
+            styles ["boxed-list"]
+          }
+        }
+      }
+
+      LinkButton {
+        label: "API Reference";
+        uri: "https://docs.gtk.org/gtk4/class.Revealer.html";
+      }
+    }
+  }
+}
