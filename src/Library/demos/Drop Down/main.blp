@@ -3,6 +3,7 @@ using Adw 1;
 
 Adw.StatusPage {
   title: _("Drop Down");
+  description:_("choose an item from a list of options") ;
 
   Box {
     orientation: vertical;
@@ -13,7 +14,7 @@ Adw.StatusPage {
       orientation: horizontal;
       halign: center;
       valign: center;
-      column-spacing: 10;
+      column-spacing: 12;
 
       Label {
         halign: start;
@@ -30,7 +31,7 @@ Adw.StatusPage {
 
     Label {
         halign: start;
-        label: _("Advanced Drop Down");
+        label: _("Drop Down with Search");
         margin-top: 24;
         margin-bottom: 24;
         styles["title-1"]
