@@ -27,6 +27,8 @@ minutes.connect("value-changed", () => {
   console.log(tellTime(hours, minutes));
 });
 
+// This only works for one direction
+// Add any extra logic to account for wrapping in both directions
 minutes.connect("wrapped", () => {
   hours.spin(Gtk.SpinType["SPIN_STEP_FORWARD"], 1);
 });
