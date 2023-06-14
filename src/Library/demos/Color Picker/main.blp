@@ -1,0 +1,25 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: "Color Picker";
+  description: _("Pick color from anywhere on-screen");
+  margin-top: 48;
+
+  Box {
+    orientation: vertical;
+    halign: center;
+
+    Button button {
+      label: _("Select Color");
+      margin-bottom: 42;
+      halign: center;
+      styles ["suggested-action"]
+    }
+
+    LinkButton {
+      label: "API Reference";
+      uri: "https://libportal.org/method.Portal.pick_color.html";
+    }
+  }
+})
