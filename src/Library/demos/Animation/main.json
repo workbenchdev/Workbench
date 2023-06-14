@@ -2,6 +2,6 @@
   "name": "Animation",
   "category": "user_interface",
   "description": "Create timed or spring based animations",
-  "panels": ["code","preview"],
+  "panels": ["code", "preview"],
   "autorun": true
 }

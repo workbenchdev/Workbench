@@ -2,7 +2,7 @@ using Gtk 4.0;
 using Adw 1;
 
 Adw.StatusPage {
-  title: "TextView";
+  title: "Text View";
   description: _("A widget that enables text-editing");
 
   Box {
@@ -35,17 +35,17 @@ Adw.StatusPage {
       halign: center;
       spacing: 18;
 
-        Button copy {
-          label: _("Copy");
-        }
+      Button copy {
+        label: _("Copy");
+      }
 
-        Button paste {
-          label: _("Paste");
-        }
+      Button paste {
+        label: _("Paste");
+      }
 
-        Button cut {
-          label: _("Cut");
-        }
+      Button cut {
+        label: _("Cut");
+      }
     }
 
     Box {
@@ -54,15 +54,15 @@ Adw.StatusPage {
       spacing: 18;
       margin-bottom: 18;
 
-        Button select {
-          halign: center;
-          label: _("Select all");
-        }
+      Button select {
+        halign: center;
+        label: _("Select all");
+      }
 
-        Button clear {
-          halign: center;
-          label: _("Clear all");
-        }
+      Button clear {
+        halign: center;
+        label: _("Clear all");
+      }
     }
 
     LinkButton{
