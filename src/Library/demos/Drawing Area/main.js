@@ -1,6 +1,4 @@
 import Cairo from "cairo";
-import Gtk from "gi://Gtk?version=4.0";
-Gtk.init();
 
 const drawingArea = workbench.builder.get_object("drawing_area");
 const scaleRotate = workbench.builder.get_object("scale");
