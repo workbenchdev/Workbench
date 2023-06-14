@@ -1,7 +1,0 @@
-{
-  "name": "CSS",
-  "category": "user_interface",
-  "description": "Styling GTK with CSS.",
-  "panels": ["code", "ui", "style", "preview"],
-  "autorun": true
-}

@@ -2,6 +2,10 @@
   color: @blue_1; /* Adwaita Named Color */
 }
 
+.css_text {
+  color: @green_1; /* Adwaita Named Color */
+}
+
 .my_custom_class {
   color: @red_1;
   font-weight: bold;
