@@ -1,0 +1,10 @@
+{
+  "name": "Banner",
+  "category": "feedback",
+  "description": "A bar with contextual information",
+  "panels": [
+    "ui",
+    "preview"
+  ],
+  "autorun": true
+}
