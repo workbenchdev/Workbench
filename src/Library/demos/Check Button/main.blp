@@ -1,0 +1,90 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: _("Check Button");
+  description: _("Allow users to control a binary operation or make a selection from a set of options");
+
+  Box{
+    orientation: vertical;
+    spacing:12;
+
+    Box {
+      halign: center;
+      spacing: 60;
+      Box {
+        orientation: vertical;
+        spacing: 12;
+        Label {
+          label: _("Checkboxes");
+          styles ["title-4"]
+        }
+        Box {
+          orientation: vertical;
+          halign: center;
+          spacing:12;
+
+          CheckButton check_button1{
+            label: _("Show Notifications");
+            active: true;
+          }
+
+          CheckButton check_button2{
+            label: _("Auto-save changes");
+          }
+
+          CheckButton check_button3{
+            label: _("Mark as Done");
+            inconsistent: true;
+          }
+        }
+
+        LinkButton {
+          margin-top:12;
+          label: "Human Interface Guidelines";
+          uri: "https://developer.gnome.org/hig/patterns/controls/checkboxes.html";
+        }
+      }
+
+      Box {
+        orientation: vertical;
+        spacing: 12;
+        Label {
+          label: _("Radio Buttons");
+          styles ["title-4"]
+        }
+        Box {
+          orientation: vertical;
+          halign: center;
+          spacing:12;
+
+          CheckButton radio_button1{
+            label: _("Force System Style");
+          }
+
+          CheckButton radio_button2{
+            label: _("Force Light Mode");
+            group: radio_button1;
+          }
+
+          CheckButton radio_button3{
+            label: _("Force Dark Mode");
+            group: radio_button1;
+          }
+        }
+
+        LinkButton {
+          margin-top:12;
+          label: "Human Interface Guidelines";
+          uri: "https://developer.gnome.org/hig/patterns/controls/radio-buttons.html";
+        }
+      }
+
+    }
+
+    LinkButton {
+    label: "API Reference";
+    uri: "https://docs.gtk.org/gtk4/class.CheckButton.html";
+    }
+  }
+}
