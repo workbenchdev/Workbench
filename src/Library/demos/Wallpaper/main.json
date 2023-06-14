@@ -1,0 +1,7 @@
+{
+  "name": "Wallpaper",
+  "category": "platform",
+  "description": "Set wallpaper of your own choice",
+  "panels": ["code", "preview"],
+  "autorun": true
+}

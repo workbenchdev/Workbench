@@ -1,0 +1,25 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: "Wallpaper";
+  description: _("Set wallpaper of your own choice");
+  margin-top: 48;
+
+  Box {
+    orientation: vertical;
+    halign: center;
+
+    Button button {
+      label: _("Select Wallpaper");
+      margin-bottom: 42;
+      halign: center;
+      styles ["suggested-action"]
+    }
+
+    LinkButton {
+      label: "API Reference";
+      uri: "https://libportal.org/method.Portal.set_wallpaper.html";
+    }
+  }
+}
