@@ -5,15 +5,15 @@ Box {
   orientation: vertical;
 
   Adw.Banner banner {
-    button-label: "Troubleshoot";
-    title: "An error occurred: Could not resolve host";
+    button-label: _("Troubleshoot");
+    title: _("An error occurred: Could not resolve host");
     revealed: true;
   }
 
   Adw.ToastOverlay overlay {
     Adw.StatusPage {
-      title: "Banner";
-      description: "An attention-grabbing notification that is used to communicate important information";
+      title: _("Banner");
+      description: _("A bar with contextual information");
       vexpand: true;
 
       Box {
@@ -22,7 +22,7 @@ Box {
 
         Button button_show_banner {
           halign: center;
-          label: "Show Banner";
+          label: _("Show Banner");
 
           styles ["pill"]
         }
