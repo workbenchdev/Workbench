@@ -1,0 +1,139 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.Clamp {
+  Box {
+    margin-top: 30;
+    margin-bottom: 12;
+    orientation: vertical;
+    Box {
+      spacing: 6;
+      orientation: vertical;
+      Label {
+        label: _("Animation");
+        styles ["title-1"]
+      }
+      Label {
+        label: _("Create timed or spring based animations");
+      }
+    }
+
+    Box {
+      margin-top: 54;
+      orientation: vertical;
+      homogeneous: true;
+
+      Box target_container{
+        vexpand: true;
+        spacing: 12;
+        orientation: vertical;
+
+        Box {
+          spacing:24;
+
+          Box {
+            homogeneous: true;
+            orientation: vertical;
+
+            Label {
+              halign: start;
+              label: _("Animation Target");
+
+              styles ["title-4"]
+            }
+
+            Label {
+              halign: start;
+              label: _("Animate a widget property");
+
+              styles ["dim-label"]
+            }
+          }
+
+          Button button_timed {
+            hexpand: true;
+            halign: end;
+            icon-name: "play-large-symbolic";
+
+            styles ["circular"]
+          }
+        }
+
+        Box {
+          hexpand: true;
+          ProgressBar progress_bar{
+            hexpand: true;
+          }
+        }
+      }
+
+      Box callback_target_container{
+        spacing: 12;
+        orientation: vertical;
+
+        Box {
+          spacing:24;
+
+          Box {
+            homogeneous: true;
+            orientation: vertical;
+
+            Label {
+              halign: start;
+              label: _("Callback Animation Target");
+
+              styles ["title-4"]
+            }
+
+            Label {
+              halign: start;
+              label: _("Use callbacks to animate a custom property");
+
+              styles ["dim-label"]
+            }
+          }
+
+          Button button_spring {
+            hexpand: true;
+            halign: end;
+            icon-name: "play-large-symbolic";
+
+            styles ["circular"]
+          }
+        }
+
+        Box {
+          hexpand: true;
+          Adw.Bin ball {
+            styles ["ball"]
+          }
+        }
+      }
+    }
+
+    Box {
+      orientation: vertical;
+
+      Label {
+        label: "Tools";
+      }
+      LinkButton {
+        margin-bottom:12;
+        label: "Elastic";
+        uri: "https://apps.gnome.org/app/app.drey.Elastic/";
+      }
+      Label {
+        label: "API References";
+      }
+      LinkButton {
+        label: "Timed Animation";
+        uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.3/class.TimedAnimation.html";
+      }
+      LinkButton {
+        label: "Spring Animation";
+        uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.3/class.SpringAnimation.html";
+      }
+    }
+  }
+}
+
