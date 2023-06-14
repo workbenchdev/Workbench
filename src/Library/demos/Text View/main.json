@@ -1,0 +1,7 @@
+{
+  "name": "Text View",
+  "category": "controls",
+  "description": "A widget that enables text-editing",
+  "panels": ["code", "preview"],
+  "autorun": true
+}
