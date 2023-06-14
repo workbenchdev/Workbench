@@ -22,26 +22,19 @@ const dialog = new Gtk.FileDialog({
 });
 
 async function setWallpaper() {
+  const flags = Xdp.WallpaperFlags.PREVIEW;
   try {
     const file = await dialog.open(workbench.window, null);
     const path = file.get_path();
     const uri = "file:///" + path;
-    portal.set_wallpaper(
-      parent,
-      uri,
-      Xdp.WallpaperFlags.NONE || Xdp.WallpaperFlags.PREVIEW,
-      null,
-      (portal, result) => {
-        try {
-          portal.set_wallpaper_finish(result);
-          console.log("Wallpaper set successfully");
-        } catch (e) {
-          logError(e);
-        }
-      },
-    );
+    const result = await portal.set_wallpaper(parent, uri, flags, null);
+
+    if (result) {
+      console.log("Wallpaper set successfully");
+    }
   } catch (err) {
     logError(err);
+    return;
   }
 }
 
