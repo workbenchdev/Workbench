@@ -4,24 +4,43 @@ import Gtk from "gi://Gtk";
 const parent = workbench.window;
 const button = workbench.builder.get_object("button");
 
-function handleClick() {
+function openAboutWindow() {
   const dialog = new Adw.AboutWindow({
     transient_for: parent,
-    application_name: "Application",
-    developer_name: "Developer Name",
-    license_type: Gtk.License.GPL_3_0_ONLY,
-    version: "1.2.3",
-    website: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.3",
     application_icon: "application-x-executable",
-    issue_url: "https://gitlab.gnome.org/GNOME/libadwaita/-/issues",
-    developers: ["Sriyansh Shivam https://linkfree.io/SoNiC-HeRE"],
+    application_name: "Typeset",
+    developer_name: "Angela Avery",
+    version: "1.2.3",
+    comments: _(
+      "Typeset is an app that doesn’t exist and is used as an example content for About Window.",
+    ),
+    website: "https://example.org",
+    issue_url: "https://example.org",
+    support_url: "https://example.org",
+    copyright: "© 2023 Angela Avery",
+    license_type: Gtk.License.GPL_3_0_ONLY,
+    developers: ["Angela Avery <angela@example.org>"],
+    artists: ["GNOME Design Team"],
+    translator_credits: _("translator-credits"),
   });
 
-  dialog.add_acknowledgement_section(_("Support Workbench"), [
-    "GitHub https://github.com/sonnyp/Workbench",
-  ]);
+  dialog.add_link(
+    _("Documentation"),
+    "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/main/class.AboutWindow.html",
+  );
+
+  dialog.add_legal_section(
+    _("Fonts"),
+    null,
+    Gtk.License.CUSTOM,
+    _(
+      "This application uses font data from <a href='https://example.org'>somewhere</a>.",
+    ),
+  );
+
+  dialog.add_acknowledgement_section(_("Special thanks to"), [_("My cat")]);
 
   dialog.present();
 }
 
-button.connect("clicked", handleClick);
+button.connect("clicked", openAboutWindow);

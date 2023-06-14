@@ -53,6 +53,7 @@ Adw.Clamp {
           Button button_timed {
             hexpand: true;
             halign: end;
+            valign: center;
             icon-name: "play-large-symbolic";
 
             styles ["circular"]
@@ -96,6 +97,7 @@ Adw.Clamp {
           Button button_spring {
             hexpand: true;
             halign: end;
+            valign: center;
             icon-name: "play-large-symbolic";
 
             styles ["circular"]
@@ -116,14 +118,17 @@ Adw.Clamp {
 
       Label {
         label: "Tools";
+        styles ["title-2"]
       }
       LinkButton {
-        margin-bottom:12;
+        margin-bottom: 12;
         label: "Elastic";
         uri: "https://apps.gnome.org/app/app.drey.Elastic/";
       }
       Label {
         label: "API References";
+        margin-top: 12;
+        styles ["title-2"]
       }
       LinkButton {
         label: "Timed Animation";
@@ -136,4 +141,3 @@ Adw.Clamp {
     }
   }
 }
-
