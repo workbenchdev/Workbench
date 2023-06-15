@@ -3,37 +3,29 @@
 public void main () {
 	  Gtk.init ();
 
-	  var main = workbench.builder.get_object ("welcome") as Gtk.Box;
+	  var box = workbench.builder.get_object ("subtitle") as Gtk.Box;
 
   	// https://valadoc.org/gtk4/Gtk.Button.html
   	var button = new Gtk.Button () {
   	    label = "Press me",
-	      margin_top = 24
+	      margin_top = 6,
+	      css_classes = {"suggested-action"}
 	  };
 	  button.clicked.connect (greet);
-	  main.append (button);
+	  box.append (button);
 
 	  stdout.printf ("Welcome to Workbench!\n");
 }
 
 public void greet () {
-    // https://valadoc.org/gtk4/Gtk.MessageDialog.html
-    var dialog = new Gtk.MessageDialog (
-        workbench.window,
-        Gtk.DialogFlags.MODAL,
-        Gtk.MessageType.INFO,
-        // https://valadoc.org/gtk4/Gtk.ButtonsType.html
-        Gtk.ButtonsType.OK,
-        "Hello World!"
+    // https://valadoc.org/libadwaita-1/Adw.MessageDialog.html
+    var dialog = new Adw.MessageDialog (
+        workbench.window, null, "Hello World!"
     );
 
-    /*
-     * Gtk.MessageDialog inherits from Gtk.Dialog
-     * which possess a "response" signal
-     * https://valadoc.org/gtk4/Gtk.Dialog.response.html
-     */
-    dialog.response.connect (() => {
-        dialog.close ();
+    dialog.add_response ("ok", "OK");
+    dialog.response.connect ((self, response) => {
+        stdout.printf ("%s\n", response);
     });
 
     dialog.present ();
