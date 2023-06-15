@@ -17,14 +17,15 @@ carousel.connect("page-changed", () => {
 sw_switch.active = carousel.allow_scroll_wheel;
 
 sw_switch.connect("notify::active", () => {
-  carousel.allow_scroll_wheel = sw_switch.active ? true : false;
+  carousel.allow_scroll_wheel = sw_switch.active;
 });
 
 // Long Swipe Switch
 ls_switch.active = carousel.allow_long_swipes;
 
 ls_switch.connect("notify::active", () => {
-  carousel.allow_long_swipes = ls_switch.active ? true : false;
+  carousel.allow_long_swipes = ls_switch.active;
+``
 });
 
 if (indicator_row.get_selected() === 0) {
