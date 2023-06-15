@@ -1,0 +1,10 @@
+{
+  "name": "Spin Button",
+  "category": "controls",
+  "description": "Let users choose a precise numerical value",
+  "panels": [
+    "ui",
+    "preview"
+  ],
+  "autorun": true
+}
