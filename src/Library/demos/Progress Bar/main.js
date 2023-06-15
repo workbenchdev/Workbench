@@ -37,6 +37,7 @@ function pulseProgress() {
     if (counter >= 1.0) {
       clearInterval(interval);
       counter = 0;
+      second_bar.fraction = 0;
       return;
     }
 
