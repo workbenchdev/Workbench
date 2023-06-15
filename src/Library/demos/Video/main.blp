@@ -1,0 +1,36 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage page {
+  title: "Video";
+  description: _("");
+
+  Box {
+    orientation: vertical;
+    halign: center;
+
+    Video video {
+      width-request: 640;
+      height-request: 480;
+    }
+
+    Button file_button {
+      halign: center;
+      label: _("Load Video File");
+      margin-top: 12;
+    }
+
+    LinkButton {
+      label: "API Reference";
+      uri: "";
+      margin-top: 12;
+    }
+
+     LinkButton {
+      label: "Human Interface Guidelines";
+      uri: "";
+      margin-top: 12;
+    }
+  }
+}
+

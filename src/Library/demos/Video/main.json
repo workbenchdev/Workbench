@@ -1,0 +1,7 @@
+{
+  "name": "Video",
+  "category": "user_interface",
+  "description": "",
+  "panels": ["ui", "preview"],
+  "autorun": false
+}
