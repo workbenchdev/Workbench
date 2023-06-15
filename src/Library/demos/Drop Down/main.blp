@@ -3,18 +3,18 @@ using Adw 1;
 
 Adw.StatusPage {
   title: _("Drop Down");
-  description:_("choose an item from a list of options") ;
+  description:_("choose an item from a list of options");
 
   Box {
     orientation: vertical;
     halign: center;
     valign: center;
 
-    Grid  {
+    Box  {
       orientation: horizontal;
       halign: center;
       valign: center;
-      column-spacing: 12;
+      spacing: 12;
 
       Label {
         halign: start;
@@ -23,6 +23,7 @@ Adw.StatusPage {
 
       DropDown drop_down {
         halign: end;
+        width-request: 100;
         model: StringList {
           strings ["Item 1", "Item 2", "Item 3", "Item 4"]
         };
@@ -31,45 +32,17 @@ Adw.StatusPage {
 
     Label {
         halign: start;
-        label: _("Drop Down with Search");
+        label: _("Searchable Drop Down with Custom Model");
         margin-top: 24;
         margin-bottom: 24;
         styles["title-1"]
     }
 
-     Grid  {
+    Box  {
       orientation: horizontal;
       halign: center;
       valign: center;
-      column-spacing: 12;
-
-      Label {
-        halign: start;
-        label: _("Selection:");
-      }
-
-      DropDown searchable_drop_down {
-        halign: end;
-        enable-search: true;
-        model: StringList {
-          strings ["Windows 7", "Windows 10", "Windows 11", "Ubuntu", "Fedora", "Debian", "Mint", "Arch Linux", "Pop!_OS", "OpenSUSE", "Gentoo", "FreeBSD", "macOS", "iOS", "Android"]
-        };
-      }
-    }
-
-    Label {
-        halign: start;
-        label: _("Drop Down with Custom Model");
-        margin-top: 24;
-        margin-bottom: 24;
-        styles["title-1"]
-    }
-
-    Grid  {
-      orientation: horizontal;
-      halign: center;
-      valign: center;
-      column-spacing: 12;
+      spacing: 12;
 
       Label {
         halign: start;
@@ -78,8 +51,8 @@ Adw.StatusPage {
 
       DropDown advanced_drop_down {
         halign: end;
+        width-request: 125;
         enable-search: true;
-
       }
     }
 
