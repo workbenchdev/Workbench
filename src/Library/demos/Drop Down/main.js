@@ -10,13 +10,13 @@ drop_down.connect("notify::selected-item", () => {
   console.log(selected_item);
 });
 
-const key_value_pair = GObject.registerClass(
+const KeyValuePair = GObject.registerClass(
   {
     Properties: {
       key: GObject.ParamSpec.string(
         "key",
-        "Key",
-        "Key",
+        null,
+        null,
         GObject.ParamFlags.READWRITE,
         "",
       ),
