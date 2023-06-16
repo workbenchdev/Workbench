@@ -3,5 +3,5 @@
   "category": "user_interface",
   "description": "Widget that displays video with media controls",
   "panels": ["ui", "preview"],
-  "autorun": false
+  "autorun": true
 }
