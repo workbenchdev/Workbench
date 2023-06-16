@@ -4,6 +4,7 @@ import Gtk from "gi://Gtk";
 const page = workbench.builder.get_object("page");
 const video = workbench.builder.get_object("video");
 const file_button = workbench.builder.get_object("file_button");
+
 let file;
 video.set_autoplay(true);
 
@@ -13,10 +14,10 @@ file_button.connect("clicked", () => {
     modal: true,
   });
 
-  dialog.open(page.get_root(), null, fileDialogCallback);
+  dialog.open(page.get_root(), null, file_callback);
 });
 
-function fileDialogCallback(dialog, res) {
+function file_callback(dialog, res) {
   try {
     file = dialog.open_finish(res);
     if (file) {
