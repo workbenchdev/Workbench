@@ -2,7 +2,7 @@ using Gtk 4.0;
 using Adw 1;
 
 Adw.StatusPage {
-  title: "Color Picker";
+  title: _("Color Picker");
   description: _("Pick color from anywhere on-screen");
   margin-top: 48;
 
@@ -14,7 +14,7 @@ Adw.StatusPage {
       label: _("Select Color");
       margin-bottom: 42;
       halign: center;
-      styles ["suggested-action"]
+      styles ["suggested-action", "pill"]
     }
 
     LinkButton {
