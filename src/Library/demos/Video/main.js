@@ -1,4 +1,3 @@
-import Adw from "gi://Adw";
 import Gtk from "gi://Gtk";
 
 const page = workbench.builder.get_object("page");
