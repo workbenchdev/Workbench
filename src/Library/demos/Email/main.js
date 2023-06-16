@@ -16,7 +16,7 @@ function isValidEmail(email) {
   return emailRegex.test(email);
 }
 
-async function sendEmail() {
+async function onClicked() {
   const email = entry.get_text();
   if (isValidEmail(email)) {
     const success = await portal.compose_email(
@@ -43,5 +43,5 @@ async function sendEmail() {
 }
 
 button.connect("clicked", () => {
-  sendEmail().catch(logError);
+  onClicked().catch(logError);
 });
