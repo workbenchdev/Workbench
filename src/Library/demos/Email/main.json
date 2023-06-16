@@ -1,7 +1,7 @@
 {
   "name": "Email",
   "category": "platform",
-  "description": "Compose an email message",
+  "description": "Trigger an email",
   "panels": ["code", "preview"],
   "autorun": true
 }

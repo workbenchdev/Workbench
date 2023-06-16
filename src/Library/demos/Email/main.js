@@ -1,36 +1,47 @@
 import Xdp from "gi://Xdp";
 import XdpGtk from "gi://XdpGtk4";
 import Gio from "gi://Gio";
-import Adw from "gi://Adw";
 
 const portal = new Xdp.Portal();
 const parent = XdpGtk.parent_new_gtk(workbench.window);
 
 const button = workbench.builder.get_object("button");
-const picture = workbench.builder.get_object("picture");
+const entry = workbench.builder.get_object("entry");
 
 Gio._promisify(Xdp.Portal.prototype, "compose_email", "compose_email_finish");
 
+//E-Mail Validator
+function isValidEmail(email) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
 async function sendEmail() {
-  try {
-    const result = await portal.compose_email(
+  const email = entry.get_text();
+  if (isValidEmail(email)) {
+    const success = await portal.compose_email(
       parent,
-      ["sonicworks05@gmail.com"],
-      ["test@gmail.com"],
-      null,
-      "Demo Message",
-      "Demo Content",
-      null,
+      [email], //address
+      null, //cc
+      null, //bcc
+      "Email from Workbench", //subject
+      "Hello World!", //message
+      null, //attachments
       Xdp.EmailFlags.NONE,
       null,
     );
 
-    if (result) {
-      console.log("Email app opened");
+    if (success) {
+      console.log("Success");
+    } else {
+      console.log("Failure, verify that you have a email application.");
     }
-  } catch (err) {
-    logError(err);
+  } else {
+    console.log("Invalid email address");
+    return;
   }
 }
 
-button.connect("clicked", sendEmail);
+button.connect("clicked", () => {
+  sendEmail().catch(logError);
+});
