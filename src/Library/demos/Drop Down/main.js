@@ -10,6 +10,14 @@ drop_down.connect("notify::selected-item", () => {
   console.log(selected_item);
 });
 
+const expression = new Gtk.ClosureExpression(
+  GObject.TYPE_STRING,
+  (obj) => obj.string,
+  null,
+);
+
+drop_down.expression = expression;
+
 const KeyValuePair = GObject.registerClass(
   {
     Properties: {
@@ -52,14 +60,13 @@ model.splice(0, 0, [
   new KeyValuePair({ key: "dolphin", value: "Dolphin" }),
 ]);
 
-
-const expression = Gtk.PropertyExpression.new(
+const list_store_expression = Gtk.PropertyExpression.new(
   KeyValuePair,
   null,
   "value",
 );
 
-advanced_drop_down.expression = expression;
+advanced_drop_down.expression = list_store_expression;
 advanced_drop_down.model = model;
 
 advanced_drop_down.connect("notify::selected-item", () => {
