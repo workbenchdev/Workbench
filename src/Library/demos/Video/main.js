@@ -5,7 +5,7 @@ const video = workbench.builder.get_object("video");
 const file_button = workbench.builder.get_object("file_button");
 
 let file;
-video.set_autoplay(true);
+video.autoplay = true;
 
 file_button.connect("clicked", () => {
   const dialog = new Gtk.FileDialog({
