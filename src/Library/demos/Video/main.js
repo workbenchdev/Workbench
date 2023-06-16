@@ -16,9 +16,9 @@ file_button.connect("clicked", () => {
   dialog.open(page.get_root(), null, file_callback);
 });
 
-function file_callback(dialog, res) {
+function file_callback(dialog, response) {
   try {
-    file = dialog.open_finish(res);
+    file = dialog.open_finish(response);
     if (file) {
       console.log(`Selected file: ${file.get_path()}`);
       video.file = file;
