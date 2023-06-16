@@ -14,20 +14,22 @@ Adw.StatusPage {
       halign: center;
       spacing: 18;
       margin-bottom: 18;
-      homogeneous: true;
+      homogeneous: false;
 
-      Label {
-        wrap: true;
-        wrap-mode: char;
-        label: _("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Aliquam purus sit amet luctus venenatis lectus magna fringilla urna. Elit scelerisque mauris pellentesque pulvinar pellentesque. Luctus venenatis lectus magna fringilla urna. Mattis aliquam faucibus purus in massa tempor nec. Turpis massa sed elementum tempus egestas sed sed risus. Odio ut sem nulla pharetra diam sit. Risus viverra adipiscing at in tellus integer feugiat scelerisque. Eu augue ut lectus arcu bibendum. Elementum pulvinar etiam non quam lacus suspendisse faucibus. Tellus pellentesque eu tincidunt tortor.");
+      Picture without_frame {
+        width-request: 180;
+        height-request: 180;
+      }
+
+      Separator {
+        margin-start: 6;
+        margin-end: 6;
       }
 
       Frame {
-
-        Label {
-          wrap: true;
-          wrap-mode: char;
-          label: _("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Aliquam purus sit amet luctus venenatis lectus magna fringilla urna. Elit scelerisque mauris pellentesque pulvinar pellentesque. Luctus venenatis lectus magna fringilla urna. Mattis aliquam faucibus purus in massa tempor nec. Turpis massa sed elementum tempus egestas sed sed risus. Odio ut sem nulla pharetra diam sit. Risus viverra adipiscing at in tellus integer feugiat scelerisque. Eu augue ut lectus arcu bibendum. Elementum pulvinar etiam non quam lacus suspendisse faucibus. Tellus pellentesque eu tincidunt tortor.");
+        Picture with_frame {
+          width-request: 180;
+          height-request: 180;
         }
       }
     }
@@ -48,9 +50,135 @@ Adw.StatusPage {
       }
     }
 
+    Separator {
+      margin-bottom: 24;
+    }
+
+    Label {
+      label: _("Without Frame");
+      margin-bottom: 12;
+      halign: start;
+      styles ["title-4"]
+    }
+
+    Box {
+      margin-bottom: 18;
+      halign: center;
+      styles ["toolbar"]
+
+      Button {
+        icon-name: "plus";
+      }
+
+      Button {
+        icon-name: "minus";
+      }
+
+      Button {
+        icon-name: "bell";
+      }
+    }
+
+    Label {
+      halign: start;
+      label: _("With Frame");
+      margin-bottom: 12;
+      styles ["title-4"]
+    }
+
+
+    Frame {
+      margin-bottom: 24;
+      Box {
+        halign: center;
+        styles ["toolbar"]
+
+        Button {
+          icon-name: "plus";
+        }
+
+        Button {
+          icon-name: "minus";
+        }
+
+        Button {
+          icon-name: "bell";
+        }
+      }
+    }
+
+    Separator {
+      margin-bottom: 24;
+    }
+
+    Box {
+      orientation: horizontal;
+      halign: center;
+      spacing: 18;
+      margin-bottom: 18;
+      homogeneous: false;
+
+      ScrolledWindow {
+        height-request: 240;
+        width-request: 240;
+
+      TextView textview_with_frame {
+        bottom-margin: 12;
+        left-margin: 12;
+        right-margin: 12;
+        top-margin: 12;
+        margin-bottom: 12;
+        editable: false;
+        wrap-mode: char;
+        }
+      }
+
+      Separator {
+        margin-start: 6;
+        margin-end: 6;
+      }
+
+      Frame {
+        ScrolledWindow {
+          height-request: 240;
+          width-request: 240;
+
+        TextView textview_without_frame {
+          bottom-margin: 12;
+          left-margin: 12;
+          right-margin: 12;
+          top-margin: 12;
+          margin-bottom: 12;
+          editable: false;
+          wrap-mode: char;
+          }
+        }
+      }
+    }
+
+    Box {
+      orientation: horizontal;
+      homogeneous: true;
+      margin-bottom: 24;
+
+      Label {
+        label: _("Without Frame");
+        styles ["title-4"]
+      }
+
+      Label {
+        label: _("With Frame");
+        styles ["title-4"]
+      }
+    }
+
+
     LinkButton {
       label: "API Reference";
       uri: "https://docs.gtk.org/gtk4/class.Frame.html";
     }
   }
 }
+
+
+
