@@ -10,50 +10,29 @@ Adw.StatusPage {
     halign: center;
     valign: center;
 
-    Box  {
-      orientation: horizontal;
-      halign: center;
-      valign: center;
-      spacing: 12;
+    Label {
+      label: _("From a StringList model");
+      margin-top: 24;
+      margin-bottom: 24;
+      styles["heading"]
+    }
 
-      Label {
-        halign: start;
-        label: _("Selection:");
-      }
-
-      DropDown drop_down {
-        halign: end;
-        width-request: 100;
-        model: StringList {
-          strings ["Item 1", "Item 2", "Item 3", "Item 4"]
-        };
-      }
+    DropDown drop_down {
+      enable-search: true;
+      model: StringList {
+        strings ["Grapes", "Apples", "Bananas", "Tomatoes"]
+      };
     }
 
     Label {
-        halign: start;
-        label: _("Searchable Drop Down with Custom Model");
-        margin-top: 24;
-        margin-bottom: 24;
-        styles["heading"]
+      label: _("From a ListStore model");
+      margin-top: 24;
+      margin-bottom: 24;
+      styles["heading"]
     }
 
-    Box  {
-      orientation: horizontal;
-      halign: center;
-      valign: center;
-      spacing: 12;
-
-      Label {
-        halign: start;
-        label: _("Selection:");
-      }
-
-      DropDown advanced_drop_down {
-        halign: end;
-        width-request: 125;
-        enable-search: true;
-      }
+    DropDown advanced_drop_down {
+      enable-search: true;
     }
 
     LinkButton {
