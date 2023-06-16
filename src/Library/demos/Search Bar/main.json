@@ -1,0 +1,10 @@
+{
+  "name": "Search Bar",
+  "category": "navigation",
+  "description": "Allow content items to be located by filtering",
+  "panels": [
+    "ui",
+    "preview"
+  ],
+  "autorun": true
+}
