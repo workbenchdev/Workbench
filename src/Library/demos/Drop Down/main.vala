@@ -31,21 +31,23 @@ public void main() {
   // Create the model
   var model = new GLib.ListStore(typeof(KeyValuePair));
 
-  model.append(new KeyValuePair("win7", "Windows 7"));
-  model.append(new KeyValuePair("win10", "Windows 10"));
-  model.append(new KeyValuePair("win11", "Windows 11"));
-  model.append(new KeyValuePair("ubuntu", "Ubuntu"));
-  model.append(new KeyValuePair("fedora", "Fedora"));
-  model.append(new KeyValuePair("debian", "Debian"));
-  model.append(new KeyValuePair("mint", "Mint"));
-  model.append(new KeyValuePair("arch", "Arch Linux"));
-  model.append(new KeyValuePair("popos", "Pop!_OS"));
-  model.append(new KeyValuePair("opensuse", "OpenSUSE"));
-  model.append(new KeyValuePair("gentoo", "Gentoo"));
-  model.append(new KeyValuePair("freebsd", "FreeBSD"));
-  model.append(new KeyValuePair("macos", "macOS"));
-  model.append(new KeyValuePair("ios", "iOS"));
-  model.append(new KeyValuePair("android", "Android"));
+  model.splice(0, 0,
+    new KeyValuePair("lion", "Lion"),
+    new KeyValuePair("tiger", "Tiger"),
+    new KeyValuePair("leopard", "Leopard"),
+    new KeyValuePair("elephant", "Elephant"),
+    new KeyValuePair("giraffe", "Giraffe"),
+    new KeyValuePair("cheetah", "Cheetah"),
+    new KeyValuePair("zebra", "Zebra"),
+    new KeyValuePair("panda", "Panda"),
+    new KeyValuePair("koala", "Koala"),
+    new KeyValuePair("crocodile", "Crocodile"),
+    new KeyValuePair("hippo", "Hippopotamus"),
+    new KeyValuePair("monkey", "Monkey"),
+    new KeyValuePair("rhino", "Rhinoceros"),
+    new KeyValuePair("kangaroo", "Kangaroo"),
+    new KeyValuePair("dolphin", "Dolphin")
+  );
 
   // Create expression for displaying the value in the advanced drop-down
   var expression = new Gtk.PropertyExpression(typeof(KeyValuePair), null, "value");
