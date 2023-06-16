@@ -2,8 +2,8 @@ using Gtk 4.0;
 using Adw 1;
 
 Adw.StatusPage {
-  title: "Wallpaper";
-  description: _("Set wallpaper of your own choice");
+  title: _("Wallpaper");
+  description: _("Request to set the user desktop background image");
   margin-top: 48;
 
   Box {
@@ -14,7 +14,7 @@ Adw.StatusPage {
       label: _("Select Wallpaper");
       margin-bottom: 42;
       halign: center;
-      styles ["suggested-action"]
+      styles ["suggested-action", "pill"]
     }
 
     LinkButton {

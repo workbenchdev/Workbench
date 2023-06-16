@@ -1,7 +1,7 @@
 {
   "name": "Wallpaper",
   "category": "platform",
-  "description": "Set wallpaper of your own choice",
+  "description": "Request to set the user desktop background image",
   "panels": ["code", "preview"],
   "autorun": true
 }
