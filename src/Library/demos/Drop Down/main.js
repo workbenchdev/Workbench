@@ -32,27 +32,29 @@ const KeyValuePair = GObject.registerClass(
   class KeyValuePair extends GObject.Object {},
 );
 
-const model = new Gio.ListStore();
+const model = new Gio.ListStore({ item_type: KeyValuePair });
 
-model.append(new key_value_pair({ key: "win7", value: "Windows 7" }));
-model.append(new key_value_pair({ key: "win10", value: "Windows 10" }));
-model.append(new key_value_pair({ key: "win11", value: "Windows 11" }));
-model.append(new key_value_pair({ key: "ubuntu", value: "Ubuntu" }));
-model.append(new key_value_pair({ key: "fedora", value: "Fedora" }));
-model.append(new key_value_pair({ key: "debian", value: "Debian" }));
-model.append(new key_value_pair({ key: "mint", value: "Mint" }));
-model.append(new key_value_pair({ key: "arch", value: "Arch Linux" }));
-model.append(new key_value_pair({ key: "popos", value: "Pop!_OS" }));
-model.append(new key_value_pair({ key: "opensuse", value: "OpenSUSE" }));
-model.append(new key_value_pair({ key: "gentoo", value: "Gentoo" }));
-model.append(new key_value_pair({ key: "freebsd", value: "FreeBSD" }));
-model.append(new key_value_pair({ key: "macos", value: "macOS" }));
-model.append(new key_value_pair({ key: "ios", value: "iOS" }));
-model.append(new key_value_pair({ key: "android", value: "Android" }));
+model.splice(0, 0, [
+  new KeyValuePair({ key: "win7", value: "Windows 7" }),
+  new KeyValuePair({ key: "win10", value: "Windows 10" }),
+  new KeyValuePair({ key: "win11", value: "Windows 11" }),
+  new KeyValuePair({ key: "ubuntu", value: "Ubuntu" }),
+  new KeyValuePair({ key: "fedora", value: "Fedora" }),
+  new KeyValuePair({ key: "debian", value: "Debian" }),
+  new KeyValuePair({ key: "mint", value: "Mint" }),
+  new KeyValuePair({ key: "arch", value: "Arch Linux" }),
+  new KeyValuePair({ key: "popos", value: "Pop!_OS" }),
+  new KeyValuePair({ key: "opensuse", value: "OpenSUSE" }),
+  new KeyValuePair({ key: "gentoo", value: "Gentoo" }),
+  new KeyValuePair({ key: "freebsd", value: "FreeBSD" }),
+  new KeyValuePair({ key: "macos", value: "macOS" }),
+  new KeyValuePair({ key: "ios", value: "iOS" }),
+  new KeyValuePair({ key: "android", value: "Android" }),
+]);
 
 
 const expression = Gtk.PropertyExpression.new(
-  key_value_pair.$gtype,
+  KeyValuePair,
   null,
   "value",
 );
