@@ -35,21 +35,21 @@ const KeyValuePair = GObject.registerClass(
 const model = new Gio.ListStore({ item_type: KeyValuePair });
 
 model.splice(0, 0, [
-  new KeyValuePair({ key: "win7", value: "Windows 7" }),
-  new KeyValuePair({ key: "win10", value: "Windows 10" }),
-  new KeyValuePair({ key: "win11", value: "Windows 11" }),
-  new KeyValuePair({ key: "ubuntu", value: "Ubuntu" }),
-  new KeyValuePair({ key: "fedora", value: "Fedora" }),
-  new KeyValuePair({ key: "debian", value: "Debian" }),
-  new KeyValuePair({ key: "mint", value: "Mint" }),
-  new KeyValuePair({ key: "arch", value: "Arch Linux" }),
-  new KeyValuePair({ key: "popos", value: "Pop!_OS" }),
-  new KeyValuePair({ key: "opensuse", value: "OpenSUSE" }),
-  new KeyValuePair({ key: "gentoo", value: "Gentoo" }),
-  new KeyValuePair({ key: "freebsd", value: "FreeBSD" }),
-  new KeyValuePair({ key: "macos", value: "macOS" }),
-  new KeyValuePair({ key: "ios", value: "iOS" }),
-  new KeyValuePair({ key: "android", value: "Android" }),
+  new KeyValuePair({ key: "lion", value: "Lion" }),
+  new KeyValuePair({ key: "tiger", value: "Tiger" }),
+  new KeyValuePair({ key: "leopard", value: "Leopard" }),
+  new KeyValuePair({ key: "elephant", value: "Elephant" }),
+  new KeyValuePair({ key: "giraffe", value: "Giraffe" }),
+  new KeyValuePair({ key: "cheetah", value: "Cheetah" }),
+  new KeyValuePair({ key: "zebra", value: "Zebra" }),
+  new KeyValuePair({ key: "panda", value: "Panda" }),
+  new KeyValuePair({ key: "koala", value: "Koala" }),
+  new KeyValuePair({ key: "crocodile", value: "Crocodile" }),
+  new KeyValuePair({ key: "hippo", value: "Hippopotamus" }),
+  new KeyValuePair({ key: "monkey", value: "Monkey" }),
+  new KeyValuePair({ key: "rhino", value: "Rhinoceros" }),
+  new KeyValuePair({ key: "kangaroo", value: "Kangaroo" }),
+  new KeyValuePair({ key: "dolphin", value: "Dolphin" }),
 ]);
 
 
