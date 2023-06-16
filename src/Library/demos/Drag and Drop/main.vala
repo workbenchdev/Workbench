@@ -47,7 +47,7 @@ public void main() {
       drag_row.add_prefix(
         new Gtk.Image() {
           icon_name = "list-drag-handle-symbolic",
-          //css_classes = {"dim-label"}
+          css_classes = {"dim-label"}
         }
       );
 
