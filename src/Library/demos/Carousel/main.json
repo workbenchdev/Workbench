@@ -1,0 +1,8 @@
+{
+    "name": "Carousel",
+    "category": "user_interface",
+    "description": "A paginated scrolling widget",
+    "panels": ["code", "ui", "preview"],
+    "autorun": false
+  }
+  

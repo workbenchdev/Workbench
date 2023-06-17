@@ -4,6 +4,7 @@ import "gi://Adw?version=1";
 import "gi://Vte?version=3.91";
 import "gi://Soup?version=3.0";
 import "gi://WebKit?version=6.0";
+import "gi://Pango?version=1.0";
 
 import Gio from "gi://Gio";
 import Xdp from "gi://Xdp";

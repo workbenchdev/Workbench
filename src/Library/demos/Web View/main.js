@@ -1,4 +1,4 @@
-import WebKit from "gi://WebKit?version=6.0";
+import WebKit from "gi://WebKit";
 import GObject from "gi://GObject";
 import GLib from "gi://GLib";
 

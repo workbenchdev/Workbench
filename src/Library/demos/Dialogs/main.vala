@@ -13,7 +13,7 @@ public void main() {
 private void _create_confirmation_dialog (Gtk.Button button) {
   // Get the parent window
   var window_type = GLib.Type.from_name("GtkWindow");
-  Gtk.Window window = button.get_ancestor(window_type) as Gtk.Window;
+  Gtk.Window window = workbench.window;
 
   Adw.MessageDialog dialog = new Adw.MessageDialog
     (window,
@@ -32,8 +32,7 @@ private void _create_confirmation_dialog (Gtk.Button button) {
     message("Selected \"%s\" response.\n", response);
   });
 
-dialog.present();
-
+  dialog.present();
 }
 
 private void _create_error_dialog (Gtk.Button button) {
@@ -54,8 +53,7 @@ private void _create_error_dialog (Gtk.Button button) {
     message("Selected \"%s\" response.\n", response);
   });
 
-dialog.present();
-
+  dialog.present();
 }
 
 private void _create_advanced_dialog(Gtk.Button button) {
