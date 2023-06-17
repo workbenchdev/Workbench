@@ -5,10 +5,6 @@ Box root_box {
   orientation: vertical;
   halign: fill;
 
-  StackSwitcher {
-    stack: stack;
-  }
-
   Stack stack {
 
     StackPage page1 {
@@ -16,6 +12,33 @@ Box root_box {
       child: Adw.StatusPage {
         title: _("Stacks");
         description: _("only shows one of its children at a time");
+
+        Label {
+          label: _("Documentation");
+          margin-top: 24;
+          styles ["title-2"]
+        }
+
+        Box {
+          orientation: horizontal;
+          halign: center;
+          margin-top: 24;
+
+          LinkButton {
+            label: _("Stack");
+            uri: "https://docs.gtk.org/gtk4/class.Stack.html";
+          }
+
+          LinkButton {
+            label: _("Stack Sidebar");
+            uri: "https://docs.gtk.org/gtk4/class.StackSidebar.html";
+          }
+
+          LinkButton {
+            label: _("Stack Switcher");
+            uri: "https://docs.gtk.org/gtk4/class.StackSwitcher.html";
+          }
+        }
       };
     }
 
@@ -60,33 +83,6 @@ Box root_box {
           }
         }
       };
-    }
-  }
-
-  Label {
-    label: _("Documentation");
-    margin-top: 24;
-    styles ["title-2"]
-  }
-
-  Box {
-    orientation: horizontal;
-    halign: center;
-    margin-top: 24;
-
-    LinkButton {
-      label: _("Stack");
-      uri: "https://docs.gtk.org/gtk4/class.Stack.html";
-    }
-
-    LinkButton {
-      label: _("Stack Sidebar");
-      uri: "https://docs.gtk.org/gtk4/class.StackSidebar.html";
-    }
-
-    LinkButton {
-      label: _("Stack Switcher");
-      uri: "https://docs.gtk.org/gtk4/class.StackSwitcher.html";
     }
   }
 }
