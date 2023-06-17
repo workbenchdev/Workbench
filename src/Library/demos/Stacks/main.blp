@@ -1,14 +1,20 @@
 using Gtk 4.0;
 using Adw 1;
 
-Adw.StatusPage {
-  title: "Stacks";
-  description: _("");
-
-  Box {
+  Box root_box {
     orientation: vertical;
     halign: center;
 
+    Stack {
+      visible-child: test;
+
+      Adw.StatusPage test {
+        title: "Stacks";
+        description: _("A container which only shows one of its children at a time.");
+      }
+
+
+    }
 
     Label {
       label: _("Documentation");
@@ -37,4 +43,4 @@ Adw.StatusPage {
       }
     }
   }
-}
+
