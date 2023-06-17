@@ -1,46 +1,92 @@
 using Gtk 4.0;
 using Adw 1;
 
-  Box root_box {
-    orientation: vertical;
-    halign: center;
+Box root_box {
+  orientation: vertical;
+  halign: fill;
 
-    Stack {
-      visible-child: test;
+  StackSwitcher {
+    stack: stack;
+  }
 
-      Adw.StatusPage test {
-        title: "Stacks";
-        description: _("A container which only shows one of its children at a time.");
-      }
+  Stack stack {
 
-
+    StackPage page1 {
+      title: _("Page 1");
+      child: Adw.StatusPage {
+        title: _("Stacks");
+        description: _("only shows one of its children at a time");
+      };
     }
 
-    Label {
-      label: _("Documentation");
-      margin-top: 24;
-      styles ["title-2"]
-    }
+    StackPage page2 {
+      title: "Page 2";
+      child: Adw.StatusPage {
+        Adw.PreferencesGroup {
+          styles ["boxed-list"]
+          halign: center;
 
-    Box {
-      orientation: horizontal;
-      halign: center;
-      margin-top: 24;
+          Adw.ComboRow navigation_row {
+            title: _("Navigation Widget");
+            model: StringList {
+              strings [_("Switch"), _("Sidebar")]
+            };
+          }
 
-      LinkButton {
-        label: _("Stack");
-        uri: "https://docs.gtk.org/gtk4/class.Stack.html";
-      }
+          Adw.ComboRow transition_row {
+            title: _("Transition Type");
+            model: StringList {
+              strings []
+            };
+          }
 
-      LinkButton {
-        label: _("Stack Sidebar");
-        uri: "https://docs.gtk.org/gtk4/class.StackSidebar.html";
-      }
+          Adw.ActionRow {
+            title: _("Interpolate Size");
+            activatable-widget: interpolate_switch;
 
-      LinkButton {
-        label: _("Stack Switcher");
-        uri: "https://docs.gtk.org/gtk4/class.StackSwitcher.html";
-      }
+            Gtk.Switch interpolate_switch {
+              valign: center;
+            }
+          }
+
+          Adw.ActionRow {
+            title: _("Transition Duration");
+            activatable-widget: transition_spin_button;
+
+            Gtk.SpinButton transition_spin_button {
+              halign: center;
+              valign: center;
+            }
+          }
+        }
+      };
     }
   }
 
+  Label {
+    label: _("Documentation");
+    margin-top: 24;
+    styles ["title-2"]
+  }
+
+  Box {
+    orientation: horizontal;
+    halign: center;
+    margin-top: 24;
+
+    LinkButton {
+      label: _("Stack");
+      uri: "https://docs.gtk.org/gtk4/class.Stack.html";
+    }
+
+    LinkButton {
+      label: _("Stack Sidebar");
+      uri: "https://docs.gtk.org/gtk4/class.StackSidebar.html";
+    }
+
+    LinkButton {
+      label: _("Stack Switcher");
+      uri: "https://docs.gtk.org/gtk4/class.StackSwitcher.html";
+    }
+  }
+}
