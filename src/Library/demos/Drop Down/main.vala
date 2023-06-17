@@ -31,7 +31,7 @@ public void main() {
   // Create the model
   var model = new GLib.ListStore(typeof(KeyValuePair));
 
-  model.splice(0, 0,
+  model.splice(0, 0, {
     new KeyValuePair("lion", "Lion"),
     new KeyValuePair("tiger", "Tiger"),
     new KeyValuePair("leopard", "Leopard"),
@@ -47,7 +47,7 @@ public void main() {
     new KeyValuePair("rhino", "Rhinoceros"),
     new KeyValuePair("kangaroo", "Kangaroo"),
     new KeyValuePair("dolphin", "Dolphin")
-  );
+  });
 
   // Create expression for displaying the value in the advanced drop-down
   var expression = new Gtk.PropertyExpression(typeof(KeyValuePair), null, "value");
