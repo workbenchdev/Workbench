@@ -6,34 +6,9 @@ const button_prepend = workbench.builder.get_object("button_prepend");
 const button_remove = workbench.builder.get_object("button_remove");
 let count = 0;
 
-button_append.connect("clicked", () => {
-  const label = new Gtk.Label({
-    name: "card",
-    label: `Item ${count + 1}`,
-    css_classes: ["card"],
-  });
-  interactive_box.append(label);
-  count++;
-});
-
-button_prepend.connect("clicked", () => {
-  const label = new Gtk.Label({
-    name: "card",
-    label: `Item ${count + 1}`,
-    css_classes: ["card"],
-  });
-  interactive_box.prepend(label);
-  count++;
-});
-
-button_remove.connect("clicked", () => {
-  if (count) {
-    interactive_box.remove(interactive_box.get_last_child());
-    count--;
-  } else {
-    console.log("The box has no child widgets to remove");
-  }
-});
+button_append.connect("clicked", append);
+button_prepend.connect("clicked", prepend);
+button_remove.connect("clicked", remove);
 
 const toggle_orientation_horizontal = workbench.builder.get_object(
   "toggle_orientation_horizontal",
@@ -103,3 +78,34 @@ valign_toggle_center.connect("toggled", () => {
 valign_toggle_end.connect("toggled", () => {
   if (valign_toggle_end.active) interactive_box.valign = Gtk.Align.END;
 });
+
+function append() {
+  const label = new Gtk.Label({
+    name: "card",
+    label: `Item ${count + 1}`,
+    css_classes: ["card"],
+  });
+  interactive_box.append(label);
+  count++;
+}
+
+function prepend() {
+  const label = new Gtk.Label({
+    name: "card",
+    label: `Item ${count + 1}`,
+    css_classes: ["card"],
+  });
+  interactive_box.prepend(label);
+  count++;
+}
+
+function remove() {
+  if (count) {
+    interactive_box.remove(interactive_box.get_last_child());
+    count--;
+  } else {
+    console.log("The box has no child widget to remove");
+  }
+}
+
+append();

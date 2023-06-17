@@ -1,4 +1,4 @@
-import Soup from "gi://Soup?version=3.0";
+import Soup from "gi://Soup";
 import GLib from "gi://GLib";
 import Gio from "gi://Gio";
 
@@ -55,32 +55,8 @@ function send(message) {
   console.log("sent:", message);
 }
 
-button_connect.connect("clicked", async () => {
-  const session = new Soup.Session();
-  const message = new Soup.Message({
-    method: "GET",
-    uri: GLib.Uri.parse(entry_url.get_text(), GLib.UriFlags.NONE),
-  });
-
-  try {
-    // https://gjs-docs.gnome.org/soup30/soup.session#method-websocket_connect_async
-    connection = await session.websocket_connect_async(
-      message,
-      null,
-      [],
-      null,
-      null,
-    );
-  } catch (err) {
-    logError(err);
-    return;
-  }
-
-  connection.connect("closed", onClosed);
-  connection.connect("error", onError);
-  connection.connect("message", onMessage);
-
-  onOpen();
+button_connect.connect("clicked", () => {
+  connect().catch(logError);
 });
 
 button_disconnect.connect("clicked", () => {
@@ -91,3 +67,26 @@ button_send.connect("clicked", () => {
   const message = entry_message.get_text();
   send(message);
 });
+
+async function connect() {
+  const session = new Soup.Session();
+  const message = new Soup.Message({
+    method: "GET",
+    uri: GLib.Uri.parse(entry_url.get_text(), GLib.UriFlags.NONE),
+  });
+
+  // https://gjs-docs.gnome.org/soup30/soup.session#method-websocket_connect_async
+  connection = await session.websocket_connect_async(
+    message,
+    null,
+    [],
+    null,
+    null,
+  );
+
+  connection.connect("closed", onClosed);
+  connection.connect("error", onError);
+  connection.connect("message", onMessage);
+
+  onOpen();
+}
