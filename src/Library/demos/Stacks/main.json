@@ -1,0 +1,7 @@
+{
+  "name": "Stacks",
+  "category": "navigation",
+  "description": "",
+  "panels": ["ui", "preview"],
+  "autorun": true
+}
