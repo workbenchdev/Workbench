@@ -10,14 +10,31 @@ Adw.StatusPage {
     halign: center;
 
 
-    LinkButton {
-      label: "API Reference";
-      uri: "";
+    Label {
+      label: _("Documentation");
+      margin-top: 24;
+      styles ["title-2"]
     }
 
-    LinkButton {
-      label: "Human Interface Guidelines";
-      uri: "";
+    Box {
+      orientation: horizontal;
+      halign: center;
+      margin-top: 24;
+
+      LinkButton {
+        label: _("Stack");
+        uri: "https://docs.gtk.org/gtk4/class.Stack.html";
+      }
+
+      LinkButton {
+        label: _("Stack Sidebar");
+        uri: "https://docs.gtk.org/gtk4/class.StackSidebar.html";
+      }
+
+      LinkButton {
+        label: _("Stack Switcher");
+        uri: "https://docs.gtk.org/gtk4/class.StackSwitcher.html";
+      }
     }
   }
 }
