@@ -1,0 +1,25 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: _("Wallpaper");
+  description: _("Request to set the user desktop background image");
+  margin-top: 48;
+
+  Box {
+    orientation: vertical;
+    halign: center;
+
+    Button button {
+      label: _("Set Wallpaper");
+      margin-bottom: 42;
+      halign: center;
+      styles ["suggested-action", "pill"]
+    }
+
+    LinkButton {
+      label: "API Reference";
+      uri: "https://libportal.org/method.Portal.set_wallpaper.html";
+    }
+  }
+}
