@@ -11,7 +11,7 @@ const textview_without_frame = workbench.builder.get_object(
 );
 
 const file = Gio.File.new_for_path(pkg.pkgdatadir).resolve_relative_path(
-  "Library/demos/Frame/image.jpg",
+  "Library/demos/Frame/image.png",
 );
 
 const buffer = new Gtk.TextBuffer();
