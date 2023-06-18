@@ -1,35 +1,78 @@
-const checkbutton1 = workbench.builder.get_object("check_button1");
-const checkbutton2 = workbench.builder.get_object("check_button2");
-const checkbutton3 = workbench.builder.get_object("check_button3");
-let state = 0;
-checkbutton1.connect("toggled", () => {
-  console.log(checkbutton1.active ? "Notifications: On" : "Notifications: Off");
-});
+const checkbox1 = workbench.builder.get_object("checkbox1");
+const checkbox2 = workbench.builder.get_object("checkbox2");
+const checkbox3 = workbench.builder.get_object("checkbox3");
 
-checkbutton2.connect("toggled", () => {
-  console.log(checkbutton2.active ? "Auto-save: On" : "Auto-save: Off");
-});
+const state = {
+  checkbox1: 0.5,
+  checkbox2: false,
+  checkbox3: true,
+};
 
-checkbutton3.connect("toggled", () => {
-  switch (state) {
-    case 0:
-      checkbutton3.inconsistent = false;
-      checkbutton3.active = true;
-      console.log("Mark as Done: On");
-      state = 1;
+checkbox1.connect("toggled", () => {
+  switch (state.checkbox1) {
+    case 0.5:
+      checkbox1.inconsistent = false;
+      state.checkbox1 = 1;
+      checkbox1.active = true;
+      checkbox2.active = true;
+      checkbox3.active = true;
       break;
     case 1:
-      checkbutton3.inconsistent = false;
-      console.log("Mark as Done: Off");
-      state = 2;
+      checkbox1.inconsistent = false;
+      state.checkbox1 = 0;
+      checkbox1.active = false;
+      checkbox2.active = false;
+      checkbox3.active = false;
       break;
-    case 2:
-      checkbutton3.inconsistent = true;
-      console.log("Mark as Done: Inconsistent");
-      state = 0;
+    case 0:
+      checkbox1.inconsistent = true;
+      state.checkbox1 = 0.5;
+      checkbox1.active = true;
+      checkbox2.active = state.checkbox2;
+      checkbox3.active = state.checkbox3;
       break;
   }
 });
+/*
+1. Make the parent from inconsistent to true/false when
+   all children are set to either true or false
+
+2. Make the parent inconsistent if all checkbuttons have
+   different states and overwrite the state of the child
+   checkbox being toggled.
+
+
+checkbox2.connect("toggled", () => {
+  if (checkbox1.inconsistent) {
+    if (checkbox2.active === state.checkbox3) {
+      state.checkbox1 = 0.5;
+      checkbox1.inconsistent = false;
+      checkbox1.active = state.checkbox2;
+    } else {
+      state.checkbox2 = checkbox2.active;
+    }
+  } else if (checkbox2.active !== checkbox3.active) {
+    checkbox1.inconsistent = true;
+    state.checkbox1 = 0.5;
+    state.checkbox2 = checkbox2.active;
+  }
+});
+
+checkbox3.connect("toggled", () => {
+  if (checkbox1.inconsistent) {
+    if (checkbox3.active === state.checkbox2) {
+      state.checkbox1 = 0.5;
+      checkbox1.inconsistent = false;
+      checkbox1.active = state.checkbox3;
+    } else {
+      state.checkbox3 = checkbox3.active;
+    }
+  } else if (checkbox2.active !== checkbox3.active) {
+    checkbox1.inconsistent = true;
+    state.checkbox1 = 0.5;
+    state.checkbox3 = checkbox3.active;
+  }
+});*/
 
 const radiobutton1 = workbench.builder.get_object("radio_button1");
 const radiobutton2 = workbench.builder.get_object("radio_button2");
