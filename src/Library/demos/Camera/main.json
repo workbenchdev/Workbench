@@ -1,0 +1,10 @@
+{
+  "name": "Camera",
+  "category": "platform",
+  "description": "Access your Camera",
+  "panels": [
+    "code",
+    "preview"
+  ],
+  "autorun": true
+}
