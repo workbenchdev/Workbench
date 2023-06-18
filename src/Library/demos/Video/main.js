@@ -1,3 +1,4 @@
+import Gtk from "gi://Gtk";
 import Gio from "gi://Gio";
 
 const video = workbench.builder.get_object("video");
