@@ -47,7 +47,10 @@ ${getBlueprintVersion()}
       "Sonny Piers https://sonny.re",
       "Tobias Bernard <tbernard@gnome.org>",
     ],
-    artists: ["Tobias Bernard <tbernard@gnome.org>"],
+    artists: [
+      "Tobias Bernard <tbernard@gnome.org>",
+      "Jakub Steiner https://jimmac.eu",
+    ],
   });
 
   dialog.add_credit_section(_("Contributors"), [
