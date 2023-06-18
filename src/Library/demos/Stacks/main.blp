@@ -84,6 +84,12 @@ Box root_box {
             Gtk.SpinButton transition_spin_button {
               halign: center;
               valign: center;
+              adjustment: Adjustment {
+                step-increment: 10;
+                lower: 100;
+                upper: 1000;
+                value: 200;
+              };
             }
           }
         }
