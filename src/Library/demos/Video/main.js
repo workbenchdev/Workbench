@@ -7,7 +7,6 @@ video.file = Gio.File.new_for_path(pkg.pkgdatadir).resolve_relative_path(
   "Library/demos/Video/workbench-video.mp4",
 );
 
-
 const click_gesture = new Gtk.GestureClick();
 
 click_gesture.connect("pressed", () => {
