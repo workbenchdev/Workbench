@@ -1,29 +1,21 @@
-import Gtk from "gi://Gtk";
+import Gio from "gi://Gio";
 
-const page = workbench.builder.get_object("page");
 const video = workbench.builder.get_object("video");
-const file_button = workbench.builder.get_object("file_button");
 
-let file;
-video.autoplay = true;
+video.file = Gio.File.new_for_path(pkg.pkgdatadir).resolve_relative_path(
+  "Library/demos/Video/workbench-video.mp4",
+);
 
-file_button.connect("clicked", () => {
-  const dialog = new Gtk.FileDialog({
-    title: "Select a Video File",
-    modal: true,
-  });
 
-  dialog.open(page.get_root(), null, file_callback);
+const click_gesture = new Gtk.GestureClick();
+
+click_gesture.connect("pressed", () => {
+  const media_stream = video.media_stream;
+  if (media_stream.playing) {
+    media_stream.pause();
+  } else {
+    media_stream.play();
+  }
 });
 
-function file_callback(dialog, response) {
-  try {
-    file = dialog.open_finish(response);
-    if (file) {
-      console.log(`Selected file: ${file.get_path()}`);
-      video.file = file;
-    }
-  } catch (e) {
-    console.logError(e);
-  }
-}
+video.add_controller(click_gesture);
