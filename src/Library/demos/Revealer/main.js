@@ -1,13 +1,14 @@
 const button = workbench.builder.get_object("button");
 const revealer = workbench.builder.get_object("revealer");
 
-button.connect("clicked", () => {
-  revealer.reveal_child = !revealer.reveal_child;
-  switch (button.label) {
-    case "Show":
+button.connect("toggled", () => {
+  revealer.reveal_child = button.active;
+  revealer_crossfade.reveal_child = button.active;
+  switch (button.active) {
+    case true:
       button.label = "Hide";
       return;
-    case "Hide":
+    case false:
       button.label = "Show";
       return;
   }

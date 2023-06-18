@@ -13,12 +13,15 @@ Adw.StatusPage {
       halign: center;
       label: _("Show");
 
-      styles ["pill"]
+      styles [
+        "pill",
+      ]
     }
 
     Box {
-      spacing: 12;
       orientation: vertical;
+      spacing: 12;
+
 
       Adw.Clamp {
         maximum-size: 400;
@@ -27,34 +30,33 @@ Adw.StatusPage {
           transition-duration: 300;
           transition-type: slide_up;
 
+
           ListBox {
-            Label {
-              margin-top: 12;
-              margin-bottom: 12;
-              label: _("Item 1");
+            selection-mode: none;
+
+            Adw.ActionRow {
+              title: _("Item 1");
             }
 
-            Label {
-              margin-top: 12;
-              margin-bottom: 12;
-              label: _("Item 2");
+            Adw.ActionRow {
+              title: _("Item 2");
             }
 
-            Label {
-              margin-top: 12;
-              margin-bottom: 12;
-              label: _("Item 3");
+            Adw.ActionRow {
+              title: _("Item 3");
             }
 
-            styles ["boxed-list"]
+            styles [
+              "boxed-list",
+            ]
           }
         }
       }
+    }
 
-      LinkButton {
-        label: "API Reference";
-        uri: "https://docs.gtk.org/gtk4/class.Revealer.html";
-      }
+    LinkButton {
+      label: "API Reference";
+      uri: "https://docs.gtk.org/gtk4/class.Revealer.html";
     }
   }
 }
