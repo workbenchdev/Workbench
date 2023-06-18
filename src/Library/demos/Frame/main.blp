@@ -2,7 +2,7 @@ using Gtk 4.0;
 using Adw 1;
 
 Adw.StatusPage {
-  title: "Frame";
+  title: _("Frame");
   description: _("A widget that surrounds its child with a decorative frame");
 
   Box {
@@ -89,6 +89,7 @@ Adw.StatusPage {
 
     Frame {
       margin-bottom: 24;
+
       Box {
         halign: center;
         styles ["toolbar"]
@@ -122,14 +123,14 @@ Adw.StatusPage {
         height-request: 240;
         width-request: 240;
 
-      TextView textview_with_frame {
-        bottom-margin: 12;
-        left-margin: 12;
-        right-margin: 12;
-        top-margin: 12;
-        margin-bottom: 12;
-        editable: false;
-        wrap-mode: char;
+        TextView textview_without_frame {
+          bottom-margin: 12;
+          left-margin: 12;
+          right-margin: 12;
+          top-margin: 12;
+          margin-bottom: 12;
+          editable: false;
+          wrap-mode: char;
         }
       }
 
@@ -139,16 +140,17 @@ Adw.StatusPage {
       }
 
       Frame {
+        label: _("Label that handles Accessible setup");
+
         ScrolledWindow {
           height-request: 240;
           width-request: 240;
 
-        TextView textview_without_frame {
+        TextView textview_with_frame {
           bottom-margin: 12;
           left-margin: 12;
           right-margin: 12;
           top-margin: 12;
-          margin-bottom: 12;
           editable: false;
           wrap-mode: char;
           }
@@ -179,6 +181,3 @@ Adw.StatusPage {
     }
   }
 }
-
-
-
