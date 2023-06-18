@@ -3,8 +3,8 @@ using Adw 1;
 
 Box root_box {
   orientation: vertical;
-  halign: fill;
-
+  halign: center;
+  valign: center;
   Stack stack {
 
     StackPage page1 {
@@ -59,7 +59,12 @@ Box root_box {
           Adw.ComboRow transition_row {
             title: _("Transition Type");
             model: StringList {
-              strings []
+              strings [
+                "None", "Cross-fade", "Slide Right", "Slide Left", "Slide Up",
+                "Slide Down", "Slide Left-Right", "Slide Up-Down", "Over Up", "Over Down",
+                "Over Left", "Over Right", "Under Up", "Under Down", "Under Left", "Under Right",
+                "Over Up-Down", "Over Left-Right", "Over Right-Left", "Rotate Left", "Rotate Right", "Rotate Left-Right"
+                ]
             };
           }
 
