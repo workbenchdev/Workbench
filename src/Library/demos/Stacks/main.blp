@@ -43,7 +43,7 @@ Box root_box {
     }
 
     StackPage page2 {
-      title: "Page 2";
+      title: _("Page 2");
       child: Adw.StatusPage {
         Adw.PreferencesGroup {
           styles ["boxed-list"]
@@ -87,6 +87,15 @@ Box root_box {
             }
           }
         }
+      };
+    }
+
+    StackPage {
+      title: _("Page 3");
+      child:
+
+      Adw.StatusPage {
+        title: _("Last Page");
       };
     }
   }
