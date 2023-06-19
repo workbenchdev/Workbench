@@ -13,6 +13,35 @@ Adw.StatusPage {
 
 		}
 
+    Label {
+      margin-top: 12;
+      label: _("Audio Playback Buttons");
+    }
+
+    Box {
+      margin-top: 12;
+      orientation: horizontal;
+      halign: center;
+      styles ["linked"]
+
+      Button{
+        icon-name: "cat-symbolic";
+      }
+
+      Button{
+        icon-name: "cow-symbolic";
+      }
+
+      Button{
+         icon-name: "dog-symbolic";
+      }
+
+      Button{
+         icon-name: "bear-symbolic";
+      }
+
+    }
+
     LinkButton {
       label: "API Reference";
       uri: "";
