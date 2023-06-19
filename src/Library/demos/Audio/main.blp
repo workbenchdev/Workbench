@@ -1,0 +1,23 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: "Audio";
+  description: _("Play Audio with media controls");
+
+  Box {
+    orientation: vertical;
+    halign: fill;
+
+		MediaControls controls {
+
+		}
+
+    LinkButton {
+      label: "API Reference";
+      uri: "";
+      margin-top: 12;
+    }
+  }
+}
+
