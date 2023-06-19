@@ -29,13 +29,14 @@ export function overrides() {
   // https://gitlab.gnome.org/GNOME/glib/-/issues/282#note_662735
   // https://gitlab.gnome.org/GNOME/glib/-/issues/2336
   // https://gitlab.gnome.org/GNOME/glib/-/issues/667
-  GObject.registerClass = function registerWorkbenchClass(klass, ...args) {
-    const { GTypeName } = klass;
+  GObject.registerClass = function registerWorkbenchClass(...args) {
+    const klass = args[0];
+    const GTypeName = klass.GTypeName || args[1]?.name;
     if (GTypeName) {
       types[GTypeName] = increment(GTypeName);
       klass.GTypeName = GTypeName + types[GTypeName];
     }
-    return registerClass(klass, ...args);
+    return registerClass(...args);
   };
   // This is used to tweak `workbench.template` in order to set the
   //  <template class="?"/> to something that will work next time

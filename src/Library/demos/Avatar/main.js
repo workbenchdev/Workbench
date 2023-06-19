@@ -18,12 +18,12 @@ const dialog = new Gtk.FileDialog({
   default_filter: filter,
 });
 
-button.connect("clicked", async () => {
-  try {
-    const file = await dialog.open(workbench.window, null);
-    const texture = Gdk.Texture.new_from_file(file);
-    avatar_image.set_custom_image(texture);
-  } catch (err) {
-    logError(err);
-  }
+button.connect("clicked", () => {
+  onClicked().catch(logError);
 });
+
+async function onClicked() {
+  const file = await dialog.open(workbench.window, null);
+  const texture = Gdk.Texture.new_from_file(file);
+  avatar_image.set_custom_image(texture);
+}

@@ -1,0 +1,71 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: _("Spin Button");
+  description: _("Let users choose a precise numerical value");
+
+  Box {
+    orientation: vertical;
+    spacing: 12;
+
+    Label {
+      label: _("Select Time");
+      styles ["title-4"]
+    }
+    Box{
+      halign: center;
+      spacing: 6;
+
+      SpinButton hours {
+        halign: center;
+        orientation: vertical;
+        wrap: true;
+        value: 0;
+        climb-rate: 1;
+        adjustment:
+        Adjustment {
+          lower: 0;
+          upper: 23;
+          step-increment: 1;
+          value: 0;
+        };
+      }
+      Label {
+        label: ":";
+      }
+      SpinButton minutes {
+        halign: center;
+        orientation: vertical;
+        wrap: true;
+        climb-rate: 1;
+        adjustment:
+        Adjustment {
+          lower: 0;
+          upper: 59;
+          step-increment: 1;
+          value: 0;
+        };
+      }
+    }
+
+    Box {
+      orientation: vertical;
+
+      LinkButton {
+        label: "Tutorial";
+        uri: "https://developer.gnome.org/documentation/tutorials/beginners/components/spin_button.html";
+      }
+
+      LinkButton {
+        label: "API Reference";
+        uri: "https://docs.gtk.org/gtk4/class.SpinButton.html";
+      }
+
+      LinkButton {
+        label: "Human Interface Guidelines";
+        uri: "https://developer.gnome.org/hig/patterns/controls/spin-buttons.html";
+      }
+    }
+  }
+}
