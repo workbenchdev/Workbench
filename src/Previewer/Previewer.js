@@ -494,7 +494,7 @@ async function screenshot({ application, window, data_dir, current }) {
     new GLib.Variant("s", file.get_uri()),
   );
   notification.set_icon(new Gio.ThemedIcon({ name: "re.sonny.Workbench" }));
-  notification.set_title("Workbench Screenshot captured");
+  notification.set_title(_("Workbench Screenshot captured"));
   notification.set_body(_("You can paste the image from the clipboard."));
   notification.set_default_action(action);
   notification.add_button(_("Show in Files"), action);
