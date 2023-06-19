@@ -6,8 +6,7 @@ public void main() {
 
   list.add_controller(drop_target);
 
-  int i = 0;
-  while (list.get_row_at_index(i) != null) {
+  for (int i = 0; list.get_row_at_index(i) != null; i++) {
     var row = list.get_row_at_index(i) as Adw.ActionRow;
 
     double drag_x = 0.0;
@@ -45,8 +44,7 @@ public void main() {
       };
 
       drag_row.add_prefix(
-        new Gtk.Image() {
-          icon_name = "list-drag-handle-symbolic",
+        new Gtk.Image.from_icon_name("list-drag-handle-symbolic") {
           css_classes = {"dim-label"}
         }
       );
