@@ -1,0 +1,7 @@
+{
+  "name": "Video",
+  "category": "user_interface",
+  "description": "Display video with media controls",
+  "panels": ["code", "ui", "preview"],
+  "autorun": true
+}
