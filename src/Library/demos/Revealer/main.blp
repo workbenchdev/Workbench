@@ -9,27 +9,28 @@ Adw.StatusPage {
     orientation: vertical;
     spacing: 24;
 
-    ToggleButton button {
-      halign: center;
-      label: _("Show");
-
-      styles [
-        "pill",
-      ]
-    }
-
     Box {
-      orientation: vertical;
-      spacing: 12;
+      homogeneous: true;
 
+      Box {
+        margin-start: 24;
+        margin-end: 24;
+        orientation: vertical;
+        spacing: 12;
 
-      Adw.Clamp {
-        maximum-size: 400;
+        ToggleButton button_slide {
+          halign: center;
+          label: _("Slide");
 
-        Revealer revealer {
+          styles [
+            "pill",
+          ]
+        }
+
+        Revealer revealer_slide {
           transition-duration: 300;
+          // https://docs.gtk.org/gtk4/enum.RevealerTransitionType.html
           transition-type: slide_up;
-
 
           ListBox {
             selection-mode: none;
@@ -46,9 +47,39 @@ Adw.StatusPage {
               title: _("Item 3");
             }
 
-            styles [
-              "boxed-list",
-            ]
+            Adw.ActionRow {
+              title: _("Item 4");
+            }
+
+            styles ["boxed-list"]
+          }
+        }
+      }
+
+      Box {
+        margin-start: 24;
+        margin-end: 24;
+        orientation: vertical;
+        spacing: 12;
+
+        ToggleButton button_crossfade {
+          halign: center;
+          label: _("Crossfade");
+
+          styles ["pill"]
+        }
+
+        Overlay {
+          Picture image1 {
+          }
+
+          [overlay]
+          Revealer revealer_crossfade {
+            transition-duration: 800;
+            transition-type: crossfade;
+
+            Picture image2 {
+            }
           }
         }
       }
