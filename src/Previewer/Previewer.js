@@ -1,4 +1,5 @@
 import Gtk from "gi://Gtk";
+import Gdk from "gi://Gdk";
 import GObject from "gi://GObject";
 import GLib from "gi://GLib";
 import Gio from "gi://Gio";
@@ -478,14 +479,23 @@ async function screenshot({ application, window, data_dir, current }) {
   const success = await current.screenshot({ window, path: file.get_path() });
   if (!success) return;
 
+  const texture = Gdk.Texture.new_from_file(file);
+  const clipboard = Gdk.Display.get_default().get_clipboard();
+
+  const value = new GObject.Value();
+  value.init(Gdk.Texture);
+  value.set_object(texture);
+
+  clipboard.set(value);
+
   const notification = new Gio.Notification();
   const action = Gio.Action.print_detailed_name(
     "app.show-screenshot",
     new GLib.Variant("s", file.get_uri()),
   );
   notification.set_icon(new Gio.ThemedIcon({ name: "re.sonny.Workbench" }));
-  notification.set_title("Workbench");
-  notification.set_body(_("Screenshot of preview captured"));
+  notification.set_title("Workbench Screenshot captured");
+  notification.set_body(_("You can paste the image from the clipboard."));
   notification.set_default_action(action);
   notification.add_button(_("Show in Files"), action);
   application.send_notification(null, notification);
