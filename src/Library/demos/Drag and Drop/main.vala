@@ -71,15 +71,15 @@ public void main() {
   }
 
   // Drop Handling
-  drop_target.drop.connect((_drop, value, _x, y) => {
-    var target_row = list.get_row_at_y((int)y);
-    var target_index = target_row.get_index();
+  drop_target.drop.connect((drop, value, x, y) => {
     var value_row = value.get_object() as Adw.ActionRow?;
-
+    Gtk.ListBoxRow? target_row = list.get_row_at_y((int)y);
     // If value or the target row is null, do not accept the drop
     if (value_row == null || target_row == null) {
       return false;
     }
+
+    int target_index = target_row.get_index();
 
     list.remove(value_row);
     list.insert(value_row, target_index);
