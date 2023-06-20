@@ -1,40 +1,35 @@
 using Gtk 4.0;
 using Adw 1;
 
-Adw.StatusPage content {
+Box  {
+margin-top: 10;
+margin-start: 100;
+vexpand:true;
 
-  title: _("No results found");
-  description: _("Try a different Search.");
-  icon-name: 'edit-find-symbolic';
-
- Box  {
-      homogeneous: true;
-      spacing: 18;
-
-
-       Box {
-        orientation: vertical;
-
-
-        Label {
-          label: "Type to start Searching";
-          margin-bottom: 12;
-        }
-
+      Box{
+      orientation: vertical;
         Entry entry_1{
-          placeholder-text: 'Error,   No results ...';
+          placeholder-text: ' Type to Start Searching ...(Keywords Error,No results)';
         }
+      }
+
+        Box {
+        orientation: vertical;
 
         Button submit_button{
         name: "submit";
         label: "Submit";
-        margin-top: 20;
         }
       }
 
+Adw.StatusPage content {
+  title: _("No results found");
+  description: _("Try a different Search.");
+  icon-name: 'edit-find-symbolic';
+
+
 
       Box {
-      halign: center;
       margin-top: 18;
       margin-bottom: 18;
 
