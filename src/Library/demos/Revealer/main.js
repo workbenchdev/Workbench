@@ -26,16 +26,9 @@ button_crossfade.connect("toggled", () => {
 });
 
 revealer_slide.connect("notify::child-revealed", () => {
-  switch (revealer_slide.child_revealed) {
-    case true:
-      console.log("Slide Revealer Shown");
-      break;
-    case false:
-      console.log("Slide Revealer Hidden");
-      break;
+  if (revealer_slide.child_revealed) {
+    console.log("Slide Revealer Shown");
+  } else {
+    console.log("Slide Revealer Hidden");
   }
-});
-
-revealer_crossfade.connect("notify::child-revealed", () => {
-  console.log("Crossfade Revealer Toggled");
 });

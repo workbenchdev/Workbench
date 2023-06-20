@@ -11,6 +11,7 @@ Adw.StatusPage {
 
     Box {
       homogeneous: true;
+      orientation: vertical;
 
       Box {
         margin-start: 24;
@@ -27,31 +28,33 @@ Adw.StatusPage {
           ]
         }
 
-        Revealer revealer_slide {
-          transition-duration: 300;
-          // https://docs.gtk.org/gtk4/enum.RevealerTransitionType.html
-          transition-type: slide_up;
+        Adw.Clamp {
+          Revealer revealer_slide {
+            transition-duration: 300;
+            // https://docs.gtk.org/gtk4/enum.RevealerTransitionType.html
+            transition-type: slide_up;
 
-          ListBox {
-            selection-mode: none;
+            ListBox {
+              selection-mode: none;
 
-            Adw.ActionRow {
-              title: _("Item 1");
+              Adw.ActionRow {
+                title: _("Item 1");
+              }
+
+              Adw.ActionRow {
+                title: _("Item 2");
+              }
+
+              Adw.ActionRow {
+                title: _("Item 3");
+              }
+
+              Adw.ActionRow {
+                title: _("Item 4");
+              }
+
+              styles ["boxed-list"]
             }
-
-            Adw.ActionRow {
-              title: _("Item 2");
-            }
-
-            Adw.ActionRow {
-              title: _("Item 3");
-            }
-
-            Adw.ActionRow {
-              title: _("Item 4");
-            }
-
-            styles ["boxed-list"]
           }
         }
       }
@@ -70,16 +73,14 @@ Adw.StatusPage {
         }
 
         Overlay {
-          Picture image1 {
-          }
+          Picture image1 {}
 
           [overlay]
           Revealer revealer_crossfade {
             transition-duration: 800;
             transition-type: crossfade;
 
-            Picture image2 {
-            }
+            Picture image2 {}
           }
         }
       }
