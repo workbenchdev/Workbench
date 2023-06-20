@@ -24,10 +24,10 @@ async function onClicked() {
   const result = await portal.get_user_information(parent, reason, null, null);
 
   /*
-  result in the form of a GVariant dictionary containing the following fields:
+  result is a GVariant dictionary containing the following fields
   id (s): the user ID
   name (s): the users real name
-  image (s): the uri of an image file for the users avatar picture.
+  image (s): the uri of an image file for the users avatar picture
   */
 
   const user_info = result.deepUnpack();
