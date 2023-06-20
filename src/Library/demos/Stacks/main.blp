@@ -6,6 +6,8 @@ Box root_box {
   halign: center;
   valign: center;
   Stack stack {
+    interpolate-size: bind interpolate_switch.active;
+    transition-duration: bind transition_adjustment.value;
 
     StackPage page1 {
       title: _("Page 1");
@@ -51,7 +53,7 @@ Box root_box {
           Adw.ComboRow navigation_row {
             title: _("Navigation Widget");
             model: StringList {
-              strings [_("Switch"), _("Sidebar")]
+              strings [_("Switcher"), _("Sidebar")]
             };
           }
 
@@ -65,7 +67,7 @@ Box root_box {
                 "Under Up", "Under Down", "Under Left", "Under Right",
                 "Over Up-Down", "Over Down-Up" , "Over Left-Right", "Over Right-Left",
                 "Rotate Left", "Rotate Right", "Rotate Left-Right"
-                ]
+              ]
             };
           }
 
@@ -85,7 +87,7 @@ Box root_box {
             Gtk.SpinButton transition_spin_button {
               halign: center;
               valign: center;
-              adjustment: Adjustment {
+              adjustment: Adjustment transition_adjustment {
                 step-increment: 10;
                 lower: 100;
                 upper: 1000;
