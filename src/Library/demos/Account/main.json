@@ -1,7 +1,10 @@
 {
-  "name": "User Info",
+  "name": "Account",
   "category": "platform",
   "description": "Request information about the user",
-  "panels": ["code", "preview"],
+  "panels": [
+    "code",
+    "preview"
+  ],
   "autorun": true
 }
