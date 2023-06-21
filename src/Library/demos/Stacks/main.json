@@ -1,7 +1,7 @@
 {
-  "name": "Stacks",
+  "name": "Stack",
   "category": "navigation",
-  "description": "only shows one of its children at a time",
+  "description": "A container which only shows one of its children at a time",
   "panels": ["ui", "preview"],
   "autorun": true
 }
