@@ -72,6 +72,21 @@
       ]
     },
     {
+        "name" : "libshumate",
+        "buildsystem": "meson",
+        "config-opts": [
+            "-Dgtk_doc=false",
+            "-Dlibsoup3=true"
+        ],
+        "sources" : [
+            {
+                "type" : "git",
+                "url" : "https://gitlab.gnome.org/GNOME/libshumate.git",
+                "branch" : "main"
+            }
+        ]
+    },
+    {
       "name": "vls",
       "buildsystem": "meson",
       "sources": [

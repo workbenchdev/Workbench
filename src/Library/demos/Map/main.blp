@@ -1,0 +1,63 @@
+using Gtk 4.0;
+using Adw 1;
+using Shumate 1.0;
+
+Adw.StatusPage {
+  title: _("Map");
+  description: _("Display an interactive map widget");
+
+  Adw.Clamp {
+    Box {
+      orientation: vertical;
+
+      Box controls {
+        halign: center;
+        spacing: 12;
+
+        Box {
+          spacing: 12;
+
+          Label {
+            label: _("Go To");
+          }
+
+          Box {
+            Entry entry_latitude {
+              input-purpose: digits;
+              placeholder-text: _("Latitude");
+            }
+
+            Entry entry_longitude {
+              input-purpose: digits;
+              placeholder-text: _("Longitude");
+            }
+
+            styles ["linked"]
+          }
+        }
+
+        ToggleButton button_move {
+          icon-name: "map-marker-symbolic";
+          tooltip-text: _("Move Marker");
+        }
+      }
+
+      Shumate.SimpleMap map_widget {
+        height-request: 375;
+        show-zoom-buttons: false;
+      }
+
+      LinkButton {
+        label: "API Reference";
+        uri: "https://gnome.pages.gitlab.gnome.org/libshumate/index.html";
+      }
+    }
+  }
+}
+
+Shumate.Marker marker {
+  Image {
+    icon-name: "map-marker-symbolic";
+    styles ["map-marker"]
+  }
+}
