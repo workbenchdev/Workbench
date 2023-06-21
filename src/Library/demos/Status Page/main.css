@@ -1,6 +1,0 @@
-box {
-  background-color: @success_fg_color;
-  box-shadow: 2px 2px 5px @warning_fg_color;
-  padding: 40px;
-}
-
