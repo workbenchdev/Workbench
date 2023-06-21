@@ -1,0 +1,7 @@
+{
+  "name": "Event Controllers",
+  "category": "controls",
+  "description": "",
+  "panels": ["code", "preview"],
+  "autorun": true
+}
