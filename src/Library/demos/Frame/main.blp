@@ -16,9 +16,21 @@ Adw.StatusPage {
       margin-bottom: 18;
       homogeneous: false;
 
-      Picture without_frame {
-        width-request: 180;
-        height-request: 180;
+      Box {
+        orientation: vertical;
+        halign: center;
+        spacing: 12;
+
+        Picture without_frame {
+          width-request: 180;
+          height-request: 180;
+        }
+
+        Label {
+          label: _("Without Frame");
+          styles ["title-4"]
+        }
+
       }
 
       Separator {
@@ -26,29 +38,23 @@ Adw.StatusPage {
         margin-end: 6;
       }
 
-      Frame {
+      Box {
+        orientation: vertical;
+        halign: center;
+        spacing: 12;
 
-        Picture with_frame {
-          width-request: 180;
-          height-request: 180;
+        Frame {
+
+          Picture with_frame {
+            width-request: 180;
+            height-request: 180;
+          }
         }
-      }
-    }
 
-    Box {
-      homogeneous: true;
-      margin-bottom: 24;
-      halign: center;
-      spacing: 108;
-
-      Label {
-        label: _("Without Frame");
-        styles ["title-4"]
-      }
-
-      Label {
-        label: _("With Frame");
-        styles ["title-4"]
+        Label {
+          label: _("With Frame");
+          styles ["title-4"]
+        }
       }
     }
 
@@ -122,18 +128,29 @@ Adw.StatusPage {
       margin-bottom: 18;
       homogeneous: false;
 
-      ScrolledWindow {
-        height-request: 240;
-        width-request: 240;
+      Box {
+        orientation: vertical;
+        halign: center;
+        spacing: 12;
 
-        TextView textview_without_frame {
-          bottom-margin: 12;
-          left-margin: 12;
-          right-margin: 12;
-          top-margin: 12;
-          margin-bottom: 12;
-          editable: false;
-          wrap-mode: char;
+        ScrolledWindow {
+          height-request: 240;
+          width-request: 240;
+
+          TextView textview_without_frame {
+            bottom-margin: 12;
+            left-margin: 12;
+            right-margin: 12;
+            top-margin: 12;
+            margin-bottom: 12;
+            editable: false;
+            wrap-mode: char;
+          }
+        }
+
+        Label {
+          label: _("Without Frame");
+          styles ["title-4"]
         }
       }
 
@@ -142,42 +159,34 @@ Adw.StatusPage {
         margin-end: 6;
       }
 
-      Frame {
+      Box {
+        orientation: vertical;
+        halign: center;
+        spacing: 12;
 
-        ScrolledWindow {
-          height-request: 240;
-          width-request: 240;
+        Frame {
 
-        TextView textview_with_frame {
-          bottom-margin: 12;
-          left-margin: 12;
-          right-margin: 12;
-          top-margin: 12;
-          editable: false;
-          wrap-mode: char;
+          ScrolledWindow {
+            height-request: 240;
+            width-request: 240;
+
+          TextView textview_with_frame {
+            bottom-margin: 12;
+            left-margin: 12;
+            right-margin: 12;
+            top-margin: 12;
+            editable: false;
+            wrap-mode: char;
+            }
           }
+        }
+
+        Label {
+          label: _("With Frame");
+          styles ["title-4"]
         }
       }
     }
-
-    Box {
-      orientation: horizontal;
-      homogeneous: true;
-      margin-bottom: 24;
-      halign: center;
-      spacing: 174;
-
-      Label {
-        label: _("Without Frame");
-        styles ["title-4"]
-      }
-
-      Label {
-        label: _("With Frame");
-        styles ["title-4"]
-      }
-    }
-
 
     LinkButton {
       label: "API Reference";
@@ -185,4 +194,5 @@ Adw.StatusPage {
     }
   }
 }
+
 
