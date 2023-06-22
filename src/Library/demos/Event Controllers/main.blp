@@ -5,11 +5,32 @@ Adw.StatusPage page {
   title: _("Event Controllers");
   description: _("Ancillary Objects which responds to events");
 
-  Gtk.Button button {
-    label: _("Ctrl+Click me!");
-    halign: center;
+  child: Box {
+    orientation: vertical;
+    margin-top: 12;
 
+    Label {
+      label: "EventControllerKey Example";
+      styles ["heading"]
+    }
 
-  }
+    Gtk.Button ctrl_button {
+      margin-top: 12;
+      label: _("Ctrl+Click me!");
+      halign: center;
+    }
+
+    Label {
+      margin-top: 12;
+      label: "GestureClick Example";
+      styles ["heading"]
+    }
+
+    Gtk.Button click_button {
+      margin-top: 12;
+      label: _("Right Click me!");
+      halign: center;
+    }
+  };
 
 }
