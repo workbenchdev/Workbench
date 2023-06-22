@@ -1,44 +1,24 @@
 using Gtk 4.0;
 using Adw 1;
 
-Box {
+Adw.StatusPage status_page {
+  title: _("Status Page");
+  description: _("A page used for empty/error states and similar use-cases.");
+  icon-name: "loupe-symbolic";
+  child: child;
+}
+
+Box child {
+  margin-top: 18;
   orientation: vertical;
-  margin-top: 10;
-  vexpand:true;
+  halign: center;
 
-    Box {
-      spacing: 12;
-      orientation:horizontal;
-      halign:center;
-
-        Entry entry_1 {
-          placeholder-text: _("Type to Start Searching… (Keywords: Error, No results)");
-        }
-
-        Button submit_button {
-          name: "submit";
-          label: _("Submit");
-        }
-      }
-
-    Adw.StatusPage content {
-      title: _("No results found");
-      description: _("Try a different Search.");
-      icon-name: 'edit-find-symbolic';
-
-      Box {
-        margin-top: 18;
-        orientation:horizontal;
-        halign:center;
-
-          LinkButton {
-            label: "API Reference";
-            uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.0.0-alpha.1/class.StatusPage.html";
-          }
-          LinkButton {
-            label: " Entry Tutorial";
-            uri: "https://developer.gnome.org/documentation/tutorials/beginners/components/entry.html";
-          }
-      }
-    }
+  LinkButton {
+    label: "API Reference";
+    uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.3/class.StatusPage.html";
+  }
+  LinkButton {
+    label: "Human Interface Guidelines";
+    uri: "https://developer.gnome.org/hig/patterns/feedback/placeholders.html";
+  }
 }
