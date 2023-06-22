@@ -41,6 +41,10 @@ export default function DocumentationViewer({
 }
 
 async function disableDocSidebar(webview){
-  const script = `window.document.querySelector("nav").style.display = "none"`;
-  await webview.evaluate_javascript(script, -1, null, null, null);
+  try{
+    const script = `window.document.querySelector("nav").style.display = "none"`;
+    await webview.evaluate_javascript(script, -1, null, null, null);
+  } catch(e) {
+    logError(e);
+  }
 } 
