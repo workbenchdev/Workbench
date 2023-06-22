@@ -21,7 +21,7 @@ export default function DocumentationViewer({
   const webview = new WebKit.WebView();
   container.child = webview;
 
-  webview.load_uri("file:///usr/share/doc/gtk4/class.Widget.html");
+  webview.load_uri("file:///app/share/doc/gtk4/class.Widget.html");
 
   webview.connect("load-changed", (view, load_event) => {
     if (load_event === WebKit.LoadEvent.FINISHED){
