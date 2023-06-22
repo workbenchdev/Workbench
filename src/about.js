@@ -47,7 +47,10 @@ ${getBlueprintVersion()}
       "Sonny Piers https://sonny.re",
       "Tobias Bernard <tbernard@gnome.org>",
     ],
-    artists: ["Tobias Bernard <tbernard@gnome.org>"],
+    artists: [
+      "Tobias Bernard <tbernard@gnome.org>",
+      "Jakub Steiner https://jimmac.eu",
+    ],
   });
 
   dialog.add_credit_section(_("Contributors"), [
@@ -62,6 +65,7 @@ ${getBlueprintVersion()}
     "Karol Lademan https://github.com/karl0d",
     "Nasah Kuma https://www.mantohnasah.com/",
     "Jose Hunter https://github.com/halfmexican/",
+    "Akunne Pascal https://github.com/Kodecheff",
     // Add yourself as
     // "John Doe",
     // or

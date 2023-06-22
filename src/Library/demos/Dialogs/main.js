@@ -4,12 +4,12 @@ import Gtk from "gi://Gtk";
 const button_confirmation = workbench.builder.get_object("button_confirmation");
 const button_error = workbench.builder.get_object("button_error");
 const button_advanced = workbench.builder.get_object("button_advanced");
-const window = button_confirmation.get_ancestor(Gtk.Window);
+const window = workbench.window;
 
 function createConfirmationDialog() {
   const dialog = new Adw.MessageDialog({
     heading: "Replace File?",
-    body: 'A file named "example.png" already exists. Do you want to replace it?',
+    body: "A file named `example.png` already exists. Do you want to replace it?",
     close_response: "cancel",
     modal: true,
     transient_for: window,
