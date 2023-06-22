@@ -1,0 +1,52 @@
+using Gtk 4.0;
+using Adw 1;
+
+Window documentation_viewer{
+  title: "Documentation";
+  default-width: 1000;
+  default-height: 600;
+  hide-on-close: true;
+  titlebar:
+  Adw.HeaderBar {
+      Button {
+        icon-name: "arrow1-left-symbolic";
+        tooltip-text: "Back";
+        styles ["flat"]
+      }
+      Button {
+        icon-name: "arrow1-right-symbolic";
+        tooltip-text: "Forward";
+        styles ["flat"]
+      }
+      ToggleButton sidebar_button{
+        active: true;
+        icon-name: "dock-left-symbolic";
+        tooltip-text: "Toggle Sidepanel";
+      }
+  };
+
+
+  Paned documentation_paned{
+    position: 350;
+
+    [end]
+    Adw.Bin webview_container{
+
+    }
+
+    [start]
+    Box sidebar{
+      visible: bind sidebar_button.active;
+      orientation: vertical;
+      vexpand: true;
+
+      SearchBar {
+        key-capture-widget: sidebar;
+        search-mode-enabled: true;
+        SearchEntry {
+          hexpand: true;
+        }
+      }
+    }
+  }
+}

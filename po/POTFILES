@@ -56,3 +56,5 @@ src/IconLibrary/IconWidget.blp
 src/IconLibrary/IconWidget.js
 src/IconLibrary/main.blp
 src/IconLibrary/main.js
+src/DocumentationViewer.blp
+src/DocumentationViewer.js

@@ -23,6 +23,7 @@ import prettier from "./lib/prettier.js";
 import prettier_babel from "./lib/prettier-babel.js";
 import prettier_postcss from "./lib/prettier-postcss.js";
 import Library, { readDemo } from "./Library/Library.js";
+import DocumentationViewer from "./DocumentationViewer.js"
 import Previewer from "./Previewer/Previewer.js";
 import Compiler from "./langs/vala/Compiler.js";
 import ThemeSelector from "../troll/src/widgets/ThemeSelector.js";
@@ -77,6 +78,8 @@ export default function Window({ application }) {
   let compiler = null;
 
   const placeholders = readDemo("Welcome");
+
+  const documentation_viewer = DocumentationViewer({window,application})
 
   const document_javascript = Document({
     code_view: builder.get_object("code_view_javascript"),
