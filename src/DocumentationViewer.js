@@ -72,7 +72,7 @@ export default function DocumentationViewer({
   });
 
   factory.connect("bind", (_, item) => {
-    item.child.label = item.item.string;
+    item.child.label = item.item.namespace;
   });
 
   const listview = builder.get_object("listview");
