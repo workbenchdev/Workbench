@@ -13,9 +13,7 @@ public void main() {
     double drag_y = 0.0;
 
     var drop_controller = new Gtk.DropControllerMotion();
-    var drag_source = new Gtk.DragSource() {
-      actions = Gdk.DragAction.MOVE
-    };
+    var drag_source = new Gtk.DragSource() { actions = Gdk.DragAction.MOVE };
 
     row.add_controller(drag_source);
     row.add_controller(drop_controller);
@@ -32,21 +30,17 @@ public void main() {
     });
 
     drag_source.drag_begin.connect((drag) => {
-      var allocation = Gtk.Allocation();
+      Gtk.Allocation allocation;
       row.get_allocation(out allocation);
       var drag_widget = new Gtk.ListBox();
 
       drag_widget.set_size_request(allocation.width, allocation.height);
       drag_widget.add_css_class("boxed-list");
 
-      var drag_row = new Adw.ActionRow() {
-        title = row.get_title(),
-      };
+      var drag_row = new Adw.ActionRow() {title = row.get_title()};
 
-      drag_row.add_prefix(
-        new Gtk.Image.from_icon_name("list-drag-handle-symbolic") {
-          css_classes = {"dim-label"}
-        }
+      drag_row.add_prefix (
+        new Gtk.Image.from_icon_name("list-drag-handle-symbolic") {css_classes = {"dim-label"}}
       );
 
       drag_widget.append(drag_row);
@@ -59,15 +53,8 @@ public void main() {
     });
 
     // Update row visuals during DnD operation
-    drop_controller.enter.connect(() => {
-      list.drag_highlight_row(row);
-    });
-
-    drop_controller.leave.connect(() => {
-      list.drag_unhighlight_row();
-    });
-
-    i++;
+    drop_controller.enter.connect(() => list.drag_highlight_row(row));
+    drop_controller.leave.connect(() => list.drag_unhighlight_row());
   }
 
   // Drop Handling
