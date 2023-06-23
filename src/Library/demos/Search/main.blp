@@ -4,7 +4,7 @@ using Adw 1;
 Adw.Window {
   default-width: 800;
   default-height: 600;
-  title: _("Search Bar Demo");
+  title: _("Search Demo");
 
   Box container {
     orientation: vertical;
@@ -29,9 +29,35 @@ Adw.Window {
       transition-type: crossfade;
 
       Adw.StatusPage main_page {
-        title: _("Search Bar");
-        description: _("Allow content items to be located by filtering");
+        title: _("Search");
+        description: _("Allow items to be located by filtering");
         vexpand: true;
+
+
+        Box{
+          orientation: vertical;
+          spacing: 6;
+          Label {
+            label: "API References";
+          }
+          Box{
+            halign: center;
+            LinkButton {
+              label: "Search Entry";
+              uri: "https://docs.gtk.org/gtk4/class.SearchEntry.html";
+            }
+            LinkButton {
+              label: "Search Bar";
+              uri: "https://docs.gtk.org/gtk4/class.SearchBar";
+            }
+          }
+
+          LinkButton {
+            margin-top:6;
+            label: "Human Interface Guidelines";
+            uri: "https://developer.gnome.org/hig/patterns/nav/search.html";
+          }
+        }
       }
 
       ScrolledWindow search_page {
@@ -58,5 +84,7 @@ Adw.Window {
         vexpand: true;
       }
     }
+
+
   }
 }

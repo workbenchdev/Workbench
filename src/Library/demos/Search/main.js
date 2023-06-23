@@ -16,17 +16,14 @@ button.connect("clicked", () => {
 });
 
 searchbar.connect("notify::search-mode-enabled", () => {
-  switch (searchbar.search_mode_enabled) {
-    case true:
-      stack.visible_child = search_page;
-      break;
-    case false:
-      stack.visible_child = main_page;
-      break;
+  if (searchbar.search_mode_enabled) {
+    stack.visible_child = search_page;
+  } else {
+    stack.visible_child = main_page;
   }
 });
 
-const words = [
+const fruits = [
   "Apple 🍎️",
   "Orange 🍊️",
   "Pear 🍐️",
@@ -44,20 +41,27 @@ const words = [
   "Bell Pepper 🫑️",
 ];
 
-words.forEach((name) => {
+fruits.forEach((name) => {
   const row = new Adw.ActionRow({
     title: name,
   });
   listbox.append(row);
 });
 
-const filter = (row) => {
+let results_count;
+
+function filter(row) {
   const re = new RegExp(searchentry.text, "i");
-  return re.test(row.title);
-};
+  const match = re.test(row.title);
+  if (match) results_count++;
+  return match;
+}
 
 listbox.set_filter_func(filter);
 
 searchentry.connect("search-changed", () => {
+  results_count = -1;
   listbox.invalidate_filter();
+  if (results_count === -1) stack.visible_child = status_page;
+  else if (searchbar.search_mode_enabled) stack.visible_child = search_page;
 });

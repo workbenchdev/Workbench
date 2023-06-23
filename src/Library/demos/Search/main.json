@@ -1,7 +1,7 @@
 {
-  "name": "Search Bar",
+  "name": "Search",
   "category": "navigation",
-  "description": "Allow content items to be located by filtering",
+  "description": "Allow items to be located by filtering",
   "panels": [
     "ui",
     "preview"
