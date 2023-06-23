@@ -80,9 +80,9 @@
         ],
         "sources" : [
             {
-                "type" : "git",
-                "url" : "https://gitlab.gnome.org/GNOME/libshumate.git",
-                "branch" : "main"
+                "type" : "archive",
+                "url" : "https://download.gnome.org/sources/libshumate/1.0/libshumate-1.0.3.tar.xz",
+                "sha256" : "77a192f0dfec082b8de20b1939f3adf03eed41114d49fdaae2bbb2729ceb015a"
             }
         ]
     },

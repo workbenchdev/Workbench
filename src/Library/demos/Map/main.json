@@ -1,7 +1,7 @@
 {
   "name": "Map",
   "category": "user_interface",
-  "description": "Display an interactive map widget",
+  "description": "Display an interactive map",
   "panels": ["ui", "preview"],
   "autorun": true
 }

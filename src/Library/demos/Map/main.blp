@@ -4,23 +4,17 @@ using Shumate 1.0;
 
 Adw.StatusPage {
   title: _("Map");
-  description: _("Display an interactive map widget");
+  description: _("Display an interactive map");
 
   Adw.Clamp {
     Box {
       orientation: vertical;
 
       Box controls {
+        spacing:6;
         halign: center;
-        spacing: 12;
 
         Box {
-          spacing: 12;
-
-          Label {
-            label: _("Go To");
-          }
-
           Box {
             Entry entry_latitude {
               input-purpose: digits;
@@ -32,19 +26,38 @@ Adw.StatusPage {
               placeholder-text: _("Longitude");
             }
 
+            Button button_go{
+              label: _("Go");
+            }
+
             styles ["linked"]
           }
         }
 
-        ToggleButton button_move {
-          icon-name: "map-marker-symbolic";
-          tooltip-text: _("Move Marker");
+        Separator {
         }
+
+        Box {
+          ToggleButton button_move {
+            active: true;
+            icon-name: "move-tool-symbolic";
+            tooltip-text: _("Move Map");
+          }
+
+          ToggleButton button_marker {
+            group: button_move;
+            icon-name: "map-marker-symbolic";
+            tooltip-text: _("Place Marker");
+          }
+
+          styles ["linked"]
+        }
+        styles ["toolbar"]
       }
 
       Shumate.SimpleMap map_widget {
-        height-request: 375;
-        show-zoom-buttons: false;
+        height-request: 360;
+        show-zoom-buttons: true;
       }
 
       LinkButton {

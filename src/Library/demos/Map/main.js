@@ -28,18 +28,23 @@ map_widget.map.add_layer(marker_layer);
 const gesture = new Gtk.GestureClick();
 map_widget.add_controller(gesture);
 
-const button_move = workbench.builder.get_object("button_move");
+const button_marker = workbench.builder.get_object("button_marker");
 
 gesture.connect("pressed", (_, n_press, x, y) => {
-  if (button_move.active) {
+  if (button_marker.active) {
     const location = viewport.widget_coords_to_location(map_widget, x, y);
-    console.log(`Marker placed at ${location[0]}, ${location[1]}`);
     marker.set_location(location[0], location[1]);
+    console.log(`Marker placed at ${location[0]}, ${location[1]}`);
   }
 });
 
 const entry_latitude = workbench.builder.get_object("entry_latitude");
 const entry_longitude = workbench.builder.get_object("entry_longitude");
+const button_go = workbench.builder.get_object("button_go");
+
+button_go.connect("clicked", () => {
+  go_to_location();
+});
 
 entry_latitude.connect("activate", () => {
   go_to_location();
@@ -52,19 +57,22 @@ entry_longitude.connect("activate", () => {
 function go_to_location() {
   const latitude = entry_latitude.text;
   const longitude = entry_longitude.text;
-  if (!(isNaN(latitude) || isNaN(longitude))) {
-    if (latitude > Shumate.MAX_LATITUDE || latitude < Shumate.MIN_LATITUDE)
-      console.log(
-        `Latitudes must be between ${Shumate.MIN_LATITUDE} and ${Shumate.MAX_LATITUDE}`,
-      );
-    else if (longitude > Shumate.MAX_LONGITUDE || longitude < Shumate.MIN_LONGITUDE) {
-      console.log(
-        `Longitudes must be between ${Shumate.MIN_LONGITUDE} and ${Shumate.MAX_LONGITUDE}`,
-      );
-    } else {
-      map_widget.map.go_to(latitude, longitude);
-    }
-  } else {
+  if (isNaN(latitude) || isNaN(longitude)) {
     console.log("Please enter valid coordinates");
+    return;
   }
+  if (latitude > Shumate.MAX_LATITUDE || latitude < Shumate.MIN_LATITUDE) {
+    console.log(
+      `Latitudes must be between ${Shumate.MIN_LATITUDE} and ${Shumate.MAX_LATITUDE}`,
+    );
+    return;
+  }
+  if (longitude > Shumate.MAX_LONGITUDE || longitude < Shumate.MIN_LONGITUDE) {
+    console.log(
+      `Longitudes must be between ${Shumate.MIN_LONGITUDE} and ${Shumate.MAX_LONGITUDE}`,
+    );
+    return;
+  }
+  viewport.zoom_level = 5;
+  map_widget.map.go_to(latitude, longitude);
 }
