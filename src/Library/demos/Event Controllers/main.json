@@ -1,7 +1,7 @@
 {
   "name": "Event Controllers",
   "category": "controls",
-  "description": "",
+  "description": "Ancillary Objects which responds to events",
   "panels": ["code", "preview"],
   "autorun": true
 }
