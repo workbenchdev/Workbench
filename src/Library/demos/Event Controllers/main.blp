@@ -7,7 +7,7 @@ Adw.StatusPage page {
 
   child: Box {
     orientation: vertical;
-    margin-top: 12;
+    halign:center;
 
     Label {
       label: "EventControllerKey Example";
@@ -17,6 +17,7 @@ Adw.StatusPage page {
     Gtk.Button ctrl_button {
       margin-top: 12;
       label: _("Ctrl+Click me!");
+      width-request: 200;
       halign: center;
     }
 
@@ -29,8 +30,66 @@ Adw.StatusPage page {
     Gtk.Button click_button {
       margin-top: 12;
       label: _("Right Click me!");
+      width-request: 200;
       halign: center;
     }
-  };
 
+     Label {
+      margin-top: 12;
+      label: "GestureSwipe Example";
+      styles ["heading"]
+    }
+
+
+    Gtk.Stack stack {
+      transition-type: slide_left_right;
+      valign:center;
+      halign:center;
+      margin-top: 12;
+      Gtk.StackPage{
+        title: "pic1";
+        name: "pic1";
+        child: Picture pic1 {
+          can-shrink: true;
+          content-fit: scale_down;
+        };
+      }
+
+      Gtk.StackPage{
+        title: "pic2";
+        name: "pic2";
+        child: Picture pic2 {
+          can-shrink: true;
+          content-fit: scale_down;
+        };
+      }
+    }
+
+    Label {
+      margin-top: 12;
+      label: _("Swipe");
+    }
+
+    Box {
+      orientation: horizontal;
+      halign: center;
+      valign:center;
+      margin-top: 24;
+
+      LinkButton {
+        label: "EventControllerKey";
+        uri: "https://docs.gtk.org/gtk4/class.EventControllerKey.html";
+      }
+
+      LinkButton {
+        label: "GestureClick";
+        uri: "https://docs.gtk.org/gtk4/class.GestureClick.html";
+      }
+
+      LinkButton {
+        label: "GestureSwipe";
+        uri: "https://docs.gtk.org/gtk4/class.GestureSwipe.html";
+      }
+    }
+  };
 }
