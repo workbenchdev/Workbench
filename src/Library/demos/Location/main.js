@@ -60,6 +60,8 @@ accuracy_button.connect("notify::selected-item", () => {
 });
 
 async function startSession() {
+  start.sensitive = false;
+  close.sensitive = true;
   const result = await portal.location_monitor_start(
     parent,
     distanceThreshold,
@@ -108,6 +110,8 @@ start.connect("clicked", () => {
 });
 
 close.connect("clicked", () => {
+  start.sensitive = true;
+  close.sensitive = false;
   portal.location_monitor_stop();
   revealer.reveal_child = false;
   console.log("Session closed");
