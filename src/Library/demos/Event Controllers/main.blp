@@ -27,11 +27,32 @@ Adw.StatusPage page {
       styles ["heading"]
     }
 
-    Gtk.Button click_button {
-      margin-top: 12;
-      label: _("Right Click me!");
-      width-request: 200;
-      halign: center;
+   Frame gesture_frame {
+     halign: center;
+     margin-top: 12;
+
+      Box {
+        halign:center;
+        styles ["linked"]
+
+        Button primary_button {
+          label: _("Left");
+          width-request: 150;
+          height-request: 50;
+        }
+
+        Button middle_button {
+          label: _("Middle");
+          width-request: 150;
+          height-request: 50;
+        }
+
+        Button secondary_button {
+          label: _("Right");
+          width-request: 150;
+          height-request: 50;
+        }
+      }
     }
 
      Label {
@@ -55,7 +76,7 @@ Adw.StatusPage page {
         };
       }
 
-      Gtk.StackPage{
+      Gtk.StackPage {
         title: "pic2";
         name: "pic2";
         child: Picture pic2 {
