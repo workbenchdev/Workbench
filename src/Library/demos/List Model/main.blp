@@ -1,0 +1,111 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: "GList Model";
+  description: _("List models are a simple interface for ordered lists of GObject instances");
+
+  Box {
+    orientation: vertical;
+
+    Box {
+      orientation: horizontal;
+      halign: center;
+      margin-bottom: 24;
+      styles ["linked"]
+
+      ToggleButton toggle_list_box {
+        active: true;
+        label: _("ListBox");
+      }
+
+      ToggleButton toggle_flow_box {
+        active: false;
+        label: _("FlowBox");
+        group: toggle_list_box;
+      }
+    }
+
+    Revealer reveal_list_box {
+      transition-duration: 300;
+      transition-type: slide_up;
+      margin-bottom: 24;
+      reveal-child: true;
+
+      Box {
+        halign: center;
+
+        ListBox list_box {
+          activate-on-single-click: true;
+          selection-mode: none;
+          width-request: 360;
+
+          styles ["boxed-list"]
+
+          Adw.ActionRow {
+            title: _("Item 1");
+          }
+
+          Adw.ActionRow {
+            title: _("Item 2");
+          }
+
+          Adw.ActionRow {
+            title: _("Item 3");
+          }
+        }
+      }
+    }
+
+    Revealer reveal_flow_box {
+      transition-duration: 300;
+      transition-type: slide_up;
+      margin-bottom: 24;
+
+      Box {
+        halign: center;
+
+        FlowBox flow_box {
+          width-request: 360;
+          activate-on-single-click: true;
+          orientation: horizontal;
+          selection-mode: none;
+          styles ["card"]
+
+          Adw.ActionRow {
+            title: _("Item 1");
+          }
+
+          Adw.ActionRow {
+            title: _("Item 2");
+          }
+
+          Adw.ActionRow {
+            title: _("Item 3");
+          }
+        }
+      }
+    }
+
+    Box {
+      styles ["linked"]
+      halign: center;
+      margin-bottom: 18;
+
+      Button add {
+        label: _("Add Items");
+      }
+      Button remove {
+        label: _("Remove Items");
+      }
+    }
+
+    LinkButton{
+      label: "Documentation";
+      uri: "https://gjs.guide/guides/gio/list-models.html";
+    }
+  }
+}
+
+
+
