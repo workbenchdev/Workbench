@@ -1,0 +1,49 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: _("Picture");
+  description: _("A widget that displays images at their natural sizes");
+
+  child: Box {
+    orientation: vertical;
+
+    Picture picture {
+      halign:center;
+      valign:center;
+      can-shrink: bind can_shrink_switch.active;
+    }
+
+    Adw.Clamp {
+      maximum-size: 500;
+
+      Adw.PreferencesGroup {
+        title: _("Picture Properties");
+        margin-top : 12;
+
+        Adw.ComboRow content_fit_row {
+          title: _("Content Fit");
+          model: StringList {
+            strings ["Fill", "Contain", "Cover", "Scale Down"]
+          };
+        }
+
+        Adw.ActionRow {
+          title: _("Can Shrink");
+          activatable-widget: can_shrink_switch;
+
+          Switch can_shrink_switch {
+            valign: center;
+            active: true;
+          }
+        }
+
+        LinkButton {
+          label: _("API Reference");
+          uri: "https://docs.gtk.org/gtk4/class.Picture.html";
+          margin-top : 12;
+        }
+      }
+    }
+  };
+}
