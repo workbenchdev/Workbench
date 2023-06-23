@@ -6,7 +6,8 @@ Window documentation_viewer{
   default-width: 1000;
   default-height: 600;
   hide-on-close: true;
-  titlebar: Adw.HeaderBar {
+  titlebar:
+  Adw.HeaderBar {
       Button {
         icon-name: "arrow1-left-symbolic";
         tooltip-text: "Back";
@@ -29,9 +30,7 @@ Window documentation_viewer{
     position: 350;
 
     [end]
-    Adw.Bin webview_container{
-
-    }
+    Adw.Bin webview_container{}
 
     [start]
     Box sidebar{
@@ -39,11 +38,19 @@ Window documentation_viewer{
       orientation: vertical;
       vexpand: true;
 
+
       SearchBar {
         key-capture-widget: sidebar;
         search-mode-enabled: true;
         SearchEntry {
+         hexpand: true;
+        }
+      }
+
+      ScrolledWindow{
+        ListView listview {
           hexpand: true;
+          vexpand: true;
         }
       }
     }
