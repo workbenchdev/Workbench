@@ -27,25 +27,58 @@ toggle_flow_box.connect("toggled", () => {
   reveal_flow_box.reveal_child = isActive;
   if (isActive) {
     console.log("FlowBox view toggled on");
+    add.connect("clicked", addRowFlowBox);
+    remove.connect("clicked", removeRowFlowBox);
   } else {
     console.log("FlowBox view toggled off");
   }
 });
 
-const model = new Gio.ListStore();
-list_box.bind_model(model, addRows);
+let listitemNumber = 1;
+let rowIndex = 0;
+const rows = []; // Array to store references to the added rows
 
-function addRows(model) {
-  const rows = [];
+let flowitemNumber = 1;
+let flowIndex = 0;
+const rows_for_flow = [];
 
-  for (let i = 4; i < 10; i++) {
-    const row = new Adw.ActionRow();
-    rows.push(row);
+function addRowFlowBox() {
+  const flowRow = new Adw.ActionRow({
+    selectable: false,
+  });
 
-    // Add the row to the model
-    model.append(row[i]);
-  }
-  return rows;
+  const label = `Item ${flowitemNumber}`;
+  flowRow.title = label;
+  flow_box.append(flowRow);
+  rows_for_flow.push(flowRow);
+  flowitemNumber++;
 }
 
-add.connect("clicked", addRows);
+function removeRowFlowBox() {
+  if (flowIndex < rows_for_flow.length) {
+    flow_box.remove(rows_for_flow[flowIndex]);
+    flowIndex++;
+  }
+}
+
+function addRowListBox() {
+  const listRow = new Adw.ActionRow({
+    selectable: false,
+  });
+
+  const label = `Item ${listitemNumber}`;
+  listRow.title = label;
+  list_box.append(listRow);
+  rows.push(listRow); // Store the reference to the added row
+  listitemNumber++;
+}
+
+function removeRowListBox() {
+  if (rowIndex < rows.length) {
+    list_box.remove(rows[rowIndex]);
+    rowIndex++;
+  }
+}
+
+add.connect("clicked", addRowListBox);
+remove.connect("clicked", removeRowListBox);
