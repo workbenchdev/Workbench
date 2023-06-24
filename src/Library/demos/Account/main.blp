@@ -1,0 +1,78 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: _("Account");
+  description: _("Request information about the user");
+  margin-top: 48;
+
+  Adw.Clamp {
+    maximum-size: 340;
+
+    Box {
+      orientation: vertical;
+
+      Box {
+        orientation: vertical;
+        margin-bottom: 30;
+        spacing: 18;
+
+
+        Adw.EntryRow entry {
+          title: _("Reason");
+          styles ["card"]
+          halign: fill;
+        }
+
+        Button button {
+          label: _("Request");
+          halign: center;
+          styles ["suggested-action", "pill"]
+        }
+      }
+
+      Revealer revealer {
+        transition-duration: 300;
+        transition-type: slide_up;
+
+        ListBox {
+          selection-mode: none;
+          margin-bottom: 18;
+
+          styles ["boxed-list"]
+
+          Gtk.ListBoxRow {
+            activatable: false;
+            Adw.Avatar avatar {
+              hexpand: true;
+              size: 80;
+              margin-bottom: 18;
+              margin-top: 18;
+            }
+          }
+
+          Adw.ActionRow {
+            title: _("ID :");
+
+            Label username {
+              label: _("N/A");
+            }
+          }
+
+          Adw.ActionRow {
+            title: _("Name :");
+
+            Label name {
+              label: _("N/A");
+            }
+          }
+        }
+      }
+
+      LinkButton {
+        label: "API Reference";
+        uri: "https://libportal.org/method.Portal.get_user_information.html";
+      }
+    }
+  }
+}

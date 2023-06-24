@@ -1,0 +1,76 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: "Text View";
+  description: _("A widget that enables text-editing");
+
+  Box {
+    orientation: vertical;
+    halign: center;
+
+    Frame {
+      margin-bottom: 12;
+
+      ScrolledWindow {
+        height-request: 180;
+        width-request: 600;
+
+        TextView textview {
+          bottom-margin: 12;
+          left-margin: 12;
+          right-margin: 12;
+          top-margin: 12;
+          editable: true;
+          cursor-visible: true;
+          wrap-mode: char;
+        }
+      }
+    }
+
+    Box {
+      orientation: horizontal;
+      margin-top: 12;
+      margin-bottom: 12;
+      halign: center;
+      spacing: 18;
+
+      Button copy {
+        label: _("Copy");
+      }
+
+      Button paste {
+        label: _("Paste");
+      }
+
+      Button cut {
+        label: _("Cut");
+      }
+    }
+
+    Box {
+      orientation: horizontal;
+      halign: center;
+      spacing: 18;
+      margin-bottom: 18;
+
+      Button select {
+        halign: center;
+        label: _("Select all");
+      }
+
+      Button clear {
+        halign: center;
+        label: _("Clear all");
+      }
+    }
+
+    LinkButton{
+      label: "API Reference";
+      uri: "https://docs.gtk.org/gtk4/class.TextView.html";
+    }
+  }
+}
+
+
+

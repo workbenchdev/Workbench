@@ -1,0 +1,111 @@
+using Gtk 4.0;
+using Adw 1;
+
+Box root_box {
+  orientation: vertical;
+  halign: center;
+  valign: center;
+  Stack stack {
+    interpolate-size: bind interpolate_switch.active;
+    transition-duration: bind transition_adjustment.value;
+
+    StackPage page1 {
+      title: _("Page 1");
+      child: Adw.StatusPage {
+        title: _("Stack");
+        description: _("A container which only shows one of its children at a time");
+
+        Label {
+          label: _("Documentation");
+          margin-top: 24;
+          styles ["title-2"]
+        }
+
+        Box {
+          orientation: horizontal;
+          halign: center;
+          margin-top: 24;
+
+          LinkButton {
+            label: _("Stack");
+            uri: "https://docs.gtk.org/gtk4/class.Stack.html";
+          }
+
+          LinkButton {
+            label: _("Stack Sidebar");
+            uri: "https://docs.gtk.org/gtk4/class.StackSidebar.html";
+          }
+
+          LinkButton {
+            label: _("Stack Switcher");
+            uri: "https://docs.gtk.org/gtk4/class.StackSwitcher.html";
+          }
+        }
+      };
+    }
+
+    StackPage page2 {
+      title: _("Page 2");
+      child: Adw.StatusPage {
+        Adw.PreferencesGroup {
+          styles ["boxed-list"]
+
+          Adw.ComboRow navigation_row {
+            title: _("Navigation Widget");
+            model: StringList {
+              strings [_("Switcher"), _("Sidebar")]
+            };
+          }
+
+          Adw.ComboRow transition_row {
+            title: _("Transition Type");
+            model: StringList {
+              strings [
+                "None", "Cross-fade",
+                "Slide Right", "Slide Left", "Slide Up", "Slide Down", "Slide Left-Right", "Slide Up-Down",
+                "Over Up", "Over Down", "Over Left", "Over Right",
+                "Under Up", "Under Down", "Under Left", "Under Right",
+                "Over Up-Down", "Over Down-Up" , "Over Left-Right", "Over Right-Left",
+                "Rotate Left", "Rotate Right", "Rotate Left-Right"
+              ]
+            };
+          }
+
+          Adw.ActionRow {
+            title: _("Interpolate Size");
+            activatable-widget: interpolate_switch;
+
+            Gtk.Switch interpolate_switch {
+              valign: center;
+            }
+          }
+
+          Adw.ActionRow {
+            title: _("Transition Duration");
+            activatable-widget: transition_spin_button;
+
+            Gtk.SpinButton transition_spin_button {
+              halign: center;
+              valign: center;
+              adjustment: Adjustment transition_adjustment {
+                step-increment: 10;
+                lower: 100;
+                upper: 1000;
+                value: 200;
+              };
+            }
+          }
+        }
+      };
+    }
+
+    StackPage {
+      title: _("Page 3");
+      child:
+
+      Adw.StatusPage {
+        title: _("Last Page");
+      };
+    }
+  }
+}

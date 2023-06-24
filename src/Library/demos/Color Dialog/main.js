@@ -31,11 +31,11 @@ const dialog_custom = new Gtk.ColorDialog({
   with_alpha: false,
 });
 
-custom_button.connect("clicked", async () => {
-  try {
-    const color = await dialog_custom.choose_rgba(workbench.window, null, null);
-    console.log(`Custom Button: The color selected is ${color.to_string()}`);
-  } catch (err) {
-    logError(err);
-  }
+custom_button.connect("clicked", () => {
+  onClicked().catch(logError);
 });
+
+async function onClicked() {
+  const color = await dialog_custom.choose_rgba(workbench.window, null, null);
+  console.log(`Custom Button: The color selected is ${color.to_string()}`);
+}

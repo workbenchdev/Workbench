@@ -1,0 +1,7 @@
+{
+  "name": "Color Picker",
+  "category": "platform",
+  "description": "Pick color from anywhere on-screen",
+  "panels": ["code", "preview"],
+  "autorun": true
+}

@@ -1,0 +1,66 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.Window {
+  default-height: 600;
+  default-width: 800;
+  title: _("Tab View Demo");
+  Adw.TabOverview overview{
+    enable-new-tab: true;
+    view: tab_view;
+    Box {
+      orientation: vertical;
+      Adw.HeaderBar {
+        Button button_new_tab{
+          icon-name: "tab-new-filled-symbolic";
+        }
+        Button button_overview {
+          icon-name: "grid-filled-symbolic";
+        }
+      }
+      Adw.TabBar {
+        view: tab_view;
+      }
+      Adw.TabView tab_view{
+        Adw.TabPage main_tab_page{
+          title: _("Main Page");
+          child:
+          Adw.StatusPage {
+            hexpand: true;
+            vexpand: true;
+            title: _("Tab View");
+            description: _("A dynamic tabbed container");
+
+            Box {
+              spacing: 6;
+              orientation: vertical;
+              Label {
+                label: _("API References");
+              }
+              Box{
+                halign: center;
+                LinkButton {
+                  label: "Tab View";
+                  uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.3/class.TabView.html";
+                }
+                LinkButton {
+                  label: "Tab Bar";
+                  uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.3/class.TabBar.html";
+                }
+                LinkButton {
+                  label: "Tab Overview";
+                  uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.3/class.TabOverview.html";
+                }
+              }
+              LinkButton {
+                label: "Human Interface Guidelines";
+                uri: "https://developer.gnome.org/hig/patterns/nav/tabs.html";
+              }
+            }
+          };
+        }
+      }
+    }
+  }
+}
+

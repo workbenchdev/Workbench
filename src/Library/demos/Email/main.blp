@@ -1,0 +1,30 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: _("Email");
+  description: _("Trigger an email");
+  margin-top: 48;
+
+  Box {
+    orientation: vertical;
+    halign: center;
+
+    Entry entry {
+      placeholder-text: _("Enter your email address");
+      margin-bottom: 18;
+    }
+
+    Button button {
+      label: _("Send Email");
+      margin-bottom: 42;
+      halign: center;
+      styles ["suggested-action", "pill"]
+    }
+
+    LinkButton {
+      label: "API Reference";
+      uri: "https://libportal.org/method.Portal.compose_email.html";
+    }
+  }
+}
