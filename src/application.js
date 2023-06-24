@@ -1,4 +1,5 @@
 import Adw from "gi://Adw";
+import Gio from "gi://Gio";
 
 import Window from "./window.js";
 import Actions from "./actions.js";
@@ -11,6 +12,7 @@ ensureDir(data_dir);
 
 const application = new Adw.Application({
   application_id: pkg.name,
+  flags: Gio.ApplicationFlags.NON_UNIQUE,
   // Defaults to /re/sonny/Workbench/Devel
   // if pkg.name is re.sonny.Workbench.Devel
   resource_base_path: "/re/sonny/Workbench",
