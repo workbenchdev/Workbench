@@ -86,34 +86,6 @@ export function getLanguage(id) {
   );
 }
 
-export function getLanguageForFile(file) {
-  let content_type;
-
-  try {
-    const info = file.query_info(
-      "standard::content-type",
-      Gio.FileQueryInfoFlags.NONE,
-      null,
-    );
-    content_type = info.get_content_type();
-  } catch (err) {
-    logError(err);
-  }
-
-  if (!content_type) {
-    return;
-  }
-
-  const name = file.get_basename();
-
-  return languages.find(({ extensions, types }) => {
-    return (
-      types.includes(content_type) ||
-      extensions.some((ext) => name.endsWith(ext))
-    );
-  });
-}
-
 export function listenProperty(object, property, fn, { initial = false } = {}) {
   if (initial) {
     fn(object[property]);

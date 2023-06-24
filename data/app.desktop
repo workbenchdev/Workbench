@@ -11,4 +11,3 @@ Icon=@app_id@
 Keywords=CSS;JavaScript;GJS;Blueprint;builder;Vala;GTK;libadwaita;
 DBusActivatable=true
 StartupNotify=true
-# MimeType=text/javascript;application/javascript;application/x-gtk-builder;text/css;text/x-vala;

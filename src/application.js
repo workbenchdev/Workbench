@@ -1,4 +1,3 @@
-// import Gio from "gi://Gio";
 import Adw from "gi://Adw";
 
 import Window from "./window.js";
@@ -12,24 +11,12 @@ ensureDir(data_dir);
 
 const application = new Adw.Application({
   application_id: pkg.name,
-  // flags: Gio.ApplicationFlags.HANDLES_OPEN,
   // Defaults to /re/sonny/Workbench/Devel
   // if pkg.name is re.sonny.Workbench.Devel
   resource_base_path: "/re/sonny/Workbench",
 });
 
-// let window;
-// application.connect("open", (_self, files, _hint) => {
-//   if (!window) return;
-
-//   for (const file of files) {
-//     window.openFile(file).catch(logError);
-//   }
-// });
-
 application.connect("startup", () => {
-  log("startup");
-
   Library({
     application,
   });
@@ -38,8 +25,6 @@ application.connect("startup", () => {
 });
 
 application.connect("activate", () => {
-  log("activate");
-
   if (application.is_remote) {
     newWindow();
   }

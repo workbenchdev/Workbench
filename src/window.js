@@ -7,7 +7,7 @@ import Vte from "gi://Vte";
 import { gettext as _ } from "gettext";
 
 import * as xml from "./langs/xml/xml.js";
-import { settings, getLanguageForFile, languages, portal } from "./util.js";
+import { settings, languages } from "./util.js";
 import Document from "./Document.js";
 import PanelUI from "./PanelUI.js";
 import PanelCode from "./PanelCode.js";
@@ -334,156 +334,13 @@ export default function Window({ application, file }) {
   });
   window.add_action(undo_action);
 
-  // Still needed?
-  async function openDemo(demo_name) {
-    const documents = languages.map((language) => language.document);
-
-    const demo = readDemo(demo_name);
-    const { javascript, css, xml, blueprint, panels, autorun } = demo;
-    let { vala } = demo;
-
-    if (!!javascript && !vala) {
-      settings.set_int("code-language", 0);
-      vala = "// Sorry, this demo is not available in Vala yet.";
-    }
-
-    panel_ui.stop();
-    previewer.stop();
-    documents.forEach((document) => document.stop());
-
-    document_javascript.code_view.replaceText(javascript);
-    document_vala.code_view.replaceText(vala);
-    settings.set_boolean("show-code", panels.includes("code"));
-
-    document_css.code_view.replaceText(css);
-    settings.set_boolean("show-style", panels.includes("style"));
-
-    document_blueprint.code_view.replaceText(blueprint);
-    document_xml.code_view.replaceText(xml);
-    settings.set_boolean("show-ui", panels.includes("ui"));
-    settings.set_boolean("show-preview", panels.includes("preview"));
-
-    // Until we have proper inline errors
-    // let's always show the console
-    // in the future we may let each demo decide
-    settings.set_boolean("show-console", true);
-
-    await previewer.useInternal();
-
-    if (panel_code.language === "JavaScript" && autorun === true) {
-      await runCode(false);
-    } else {
-      term_console.clear();
-      panel_ui.start();
-      await panel_ui.update();
-      previewer.start();
-      await previewer.update(true);
-    }
-
-    documents.forEach((document) => {
-      document.save();
-      document.start();
-    });
-
-    term_console.scrollToEnd();
-
-    toast_overlay.add_toast(
-      new Adw.Toast({
-        title: _("The demo has been loaded"),
-        button_label: _("Undo"),
-        action_name: "win.workbench_undo",
-        action_target: GLib.Variant.new_string(
-          JSON.stringify({
-            updated: ["javascript", "css", "xml", "blueprint", "vala"],
-            panels: [
-              settings.get_boolean("show-code"),
-              settings.get_boolean("show-style"),
-              settings.get_boolean("show-ui"),
-              settings.get_boolean("show-preview"),
-            ],
-            langs: [
-              settings.get_int("code-language"),
-              settings.get_int("ui-language"),
-            ],
-          }),
-        ),
-      }),
-    );
-  }
-
-  const text_decoder = new TextDecoder();
-  async function openFile(file) {
-    const language = getLanguageForFile(file);
-    if (!language) {
-      const toast = new Adw.Toast({
-        title: _("This file cannot be loaded"),
-      });
-      toast_overlay.add_toast(toast);
-      return;
-    }
-
-    let data;
-
-    try {
-      [, data] = file.load_contents(null);
-      data = text_decoder.decode(data);
-    } catch (err) {
-      logError(err);
-      return;
-    }
-
-    const {
-      document: { code_view },
-    } = language;
-    code_view.replaceText(data);
-
-    settings.set_boolean(`show-${language.panel}`, true);
-
-    if (language.id === "xml") {
-      settings.set_int("ui-language", 0);
-    } else if (language.id === "blueprint") {
-      settings.set_int("ui-language", 1);
-    } else if (language.id === "javascript") {
-      settings.set_int("code-language", 0);
-    } else if (language.id === "vala") {
-      settings.set_int("code-language", 1);
-    }
-
-    if (language.panel === "ui") {
-      settings.set_boolean("show-preview", true);
-    }
-
-    toast_overlay.add_toast(
-      new Adw.Toast({
-        title: _("The file has been loaded"),
-        button_label: _("Undo"),
-        action_name: "win.workbench_undo",
-        action_target: GLib.Variant.new_string(
-          JSON.stringify({
-            updated: [language.id],
-            panels: [
-              settings.get_boolean("show-code"),
-              settings.get_boolean("show-style"),
-              settings.get_boolean("show-ui"),
-              settings.get_boolean("show-preview"),
-            ],
-            langs: [
-              settings.get_int("code-language"),
-              settings.get_int("ui-language"),
-            ],
-          }),
-        ),
-      }),
-    );
-  }
-
   window.connect("close-request", () => {
     deleteSession(file).catch(logError);
   });
 
   window.present();
 
-  return { window, openFile };
+  return { window };
 }
 
 async function setGtk4PreferDark(dark) {

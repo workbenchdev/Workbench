@@ -8,10 +8,9 @@ import { gettext as _ } from "gettext";
 
 import About from "./about.js";
 import shortcutsWindow from "./shortcutsWindow.js";
-import { portal, languages, settings } from "./util.js";
+import { portal, settings } from "./util.js";
 
 import IconLibrary from "./IconLibrary/main.js";
-import Window from "./window.js";
 
 export default function Actions({ application, data_dir }) {
   const quit = new Gio.SimpleAction({
@@ -43,32 +42,6 @@ export default function Actions({ application, data_dir }) {
   application.add_action(showShortCutsWindow);
   application.set_accels_for_action("app.shortcuts", ["<Control>question"]);
 
-  const action_open_file = new Gio.SimpleAction({
-    name: "open",
-    parameter_type: null,
-  });
-  action_open_file.connect("activate", () => {
-    openFile({ application }).catch(logError);
-  });
-  application.add_action(action_open_file);
-  application.set_accels_for_action("app.open", ["<Control>O"]);
-
-  const action_open_folder = new Gio.SimpleAction({
-    name: "open_folder",
-    parameter_type: null,
-  });
-  action_open_folder.connect("activate", () => {
-    const dialog = new Gtk.FileDialog();
-
-    dialog
-      .select_folder(application.get_active_window(), null)
-      .then((file) => {
-        Window({ application, data_dir, file });
-      })
-      .catch(logError);
-  });
-  application.add_action(action_open_folder);
-
   const action_icon_library = new Gio.SimpleAction({
     name: "icon_library",
   });
@@ -91,7 +64,7 @@ export default function Actions({ application, data_dir }) {
       target.unpack(),
       Gdk.CURRENT_TIME,
     );
-    //  an other option is to use libportal:
+    // an other option is to use libportal:
     // const parent = XdpGtk.parent_new_gtk(application.get_active_window());
     // portal
     //   .open_uri(
@@ -138,40 +111,6 @@ export default function Actions({ application, data_dir }) {
     showScreenshot({ application, uri }).catch(logError);
   });
   application.add_action(action_show_screenshot);
-}
-
-const lang_filters = languages.map((language) => {
-  const globs = language.extensions.map((extension) => [0, `*${extension}`]);
-  const mimetypes = language.types.map((type) => [1, type]);
-  return [language.name, [...globs, ...mimetypes]];
-});
-
-const filters = new GLib.Variant("a(sa(us))", [
-  [_("All supported"), lang_filters.flatMap(([, types]) => types)],
-  ...lang_filters,
-]);
-
-async function openFile({ application }) {
-  const parent = XdpGtk.parent_new_gtk(application.get_active_window());
-
-  let uri;
-
-  try {
-    const results = await portal.open_file(
-      parent,
-      _("Import File"),
-      filters,
-      null, // current_filter
-      null, // choices
-      Xdp.OpenFileFlags.NONE,
-      null, // cancellable
-    );
-    [uri] = results.recursiveUnpack().uris;
-  } catch (err) {
-    if (err.code !== Gio.IOErrorEnum.CANCELLED) throw err;
-  }
-
-  application.open([Gio.File.new_for_uri(uri)], "open");
 }
 
 async function showScreenshot({ application, uri }) {

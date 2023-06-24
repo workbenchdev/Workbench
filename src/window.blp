@@ -459,94 +459,85 @@ menu menu_app {
   }
 
   section {
-    item {
-      label: _("Open a Project…");
-      action: "app.open_folder";
-    }
-    item {
-      label: _("Import File…");
-      action: "app.open";
-    }
-  }
+    submenu {
+      label: _("Bookmarks");
+      section {
+        label: _("Learn");
 
-  submenu {
-    label: _("Bookmarks");
-    section {
-      label: _("Learn");
+        item {
+          label: _("Developer Documentation");
+          action: "app.open_uri";
+          target: "https://developer.gnome.org/documentation/index.html";
+        }
 
-      item {
-        label: _("Developer Documentation");
-        action: "app.open_uri";
-        target: "https://developer.gnome.org/documentation/index.html";
+
+        item {
+          label: _("Human Interface Guidelines");
+          action: "app.open_uri";
+          target: "https://developer.gnome.org/hig/";
+        }
+
+        item {
+          label: _("JavaScript");
+          action: "app.open_uri";
+          target: "https://gjs.guide";
+        }
+
+        item {
+          label: _("Vala");
+          action: "app.open_uri";
+          target: "https://wiki.gnome.org/Projects/Vala";
+        }
+
+        item {
+          label: _("Blueprint");
+          action: "app.open_uri";
+          target: "https://gitlab.gnome.org/jwestman/blueprint-compiler";
+        }
       }
 
+      section {
+        label: _("Get help");
 
-      item {
-        label: _("Human Interface Guidelines");
-        action: "app.open_uri";
-        target: "https://developer.gnome.org/hig/";
+        item {
+          label: _("Discourse");
+          action: "app.open_uri";
+          target: "https://discourse.gnome.org/c/platform/5";
+        }
+
+        item {
+          label: _("Matrix");
+          action: "app.open_uri";
+          target: "https://matrix.to/#/#workbench:gnome.org";
+        }
       }
-
-      item {
-        label: _("JavaScript");
-        action: "app.open_uri";
-        target: "https://gjs.guide";
-      }
-
-      item {
-        label: _("Vala");
-        action: "app.open_uri";
-        target: "https://wiki.gnome.org/Projects/Vala";
-      }
-
-      item {
-        label: _("Blueprint");
-        action: "app.open_uri";
-        target: "https://gitlab.gnome.org/jwestman/blueprint-compiler";
-      }
-    }
-
-    section {
-      label: _("Get help");
-
-      item {
-        label: _("Discourse");
-        action: "app.open_uri";
-        target: "https://discourse.gnome.org/c/platform/5";
-      }
-
-      item {
-        label: _("Matrix");
-        action: "app.open_uri";
-        target: "https://matrix.to/#/#workbench:gnome.org";
-      }
-    }
-  }
-
-  item {
-    label: _("Icon Library");
-    action: "app.icon_library";
-  }
-
-  submenu {
-    label: _("Platform Tools");
-
-    item {
-      label: _("Adwaita Demo");
-      action: "app.platform_tools";
-      target: "adwaita-1-demo";
     }
 
     item {
-      label: _("GTK Demo");
-      action: "app.platform_tools";
-      target: "gtk4-demo";
+      label: _("Icon Library");
+      action: "app.icon_library";
     }
 
-    item {
-      label: _("GTK Widget Factory");
-      action: "app.platform_tools";
-      target: "gtk4-widget-factory";
+    submenu {
+      label: _("Platform Tools");
+
+      item {
+        label: _("Adwaita Demo");
+        action: "app.platform_tools";
+        target: "adwaita-1-demo";
+      }
+
+      item {
+        label: _("GTK Demo");
+        action: "app.platform_tools";
+        target: "gtk4-demo";
+      }
+
+      item {
+        label: _("GTK Widget Factory");
+        action: "app.platform_tools";
+        target: "gtk4-widget-factory";
+      }
     }
   }
 
