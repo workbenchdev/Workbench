@@ -66,8 +66,6 @@ export default function Window({ application, file }) {
 
   const { term_console } = Devtools({ application, window, builder });
 
-  const toast_overlay = builder.get_object("toast_overlay");
-
   let compiler = null;
 
   const placeholders = readDemo("Welcome");
@@ -340,7 +338,7 @@ export default function Window({ application, file }) {
 
   window.present();
 
-  return { window };
+  return { runCode };
 }
 
 async function setGtk4PreferDark(dark) {

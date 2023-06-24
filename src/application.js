@@ -31,11 +31,8 @@ application.connect("activate", () => {
 });
 
 application.set_option_context_description("<https://workbench.sonny.re>");
-application.set_option_context_parameter_string("[files…]");
-// TODO: Add examples
-application.set_option_context_summary("");
 
-Actions({ application, data_dir });
+Actions({ application });
 
 overrides();
 
@@ -46,8 +43,6 @@ function setColorScheme() {
 }
 setColorScheme();
 settings.connect("changed::color-scheme", setColorScheme);
-
-export default application;
 
 // We are not using async otherwise the app segfaults
 // does not like opening a window in a promise
@@ -74,3 +69,5 @@ function newWindow() {
     file,
   });
 }
+
+export default application;

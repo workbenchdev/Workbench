@@ -83,5 +83,6 @@ function getDemos() {
 
 async function openDemo({ application, demo_name }) {
   const file = await createSessionFromDemo(demo_name);
-  Window({ application, file });
+  const { runCode } = Window({ application, file });
+  runCode();
 }

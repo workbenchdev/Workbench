@@ -12,7 +12,7 @@ import { portal, settings } from "./util.js";
 
 import IconLibrary from "./IconLibrary/main.js";
 
-export default function Actions({ application, data_dir }) {
+export default function Actions({ application }) {
   const quit = new Gio.SimpleAction({
     name: "quit",
     parameter_type: null,
