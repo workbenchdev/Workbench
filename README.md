@@ -119,4 +119,8 @@ https://fosstodon.org/@TheEvilSkeleton/108598098682948266
 
 https://matrix.to/#/!kDBZrVKCdhrVuWxbGe:matrix.org/$XmIz7FA-UwpoiwHxDyzve1P-J1ecMHkL0x8Br23mUxg
 
+> Installed this (again) a short while ago this is for sure the most fun I've had with a development tool
+
+https://floss.social/@agavi@hachyderm.io/110594674482784960
+
 </details>
