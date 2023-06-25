@@ -147,7 +147,7 @@ export default function Previewer({
     },
   );
 
-  settings.connect("changed", () => {
+  settings.connect("changed::auto-preview", () => {
     if (settings.get_boolean("auto-preview")) schedule_update();
   });
   let symbols = null;
