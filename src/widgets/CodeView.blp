@@ -4,6 +4,18 @@ using GtkSource 5;
 template $CodeView : Gtk.Widget {
   layout-manager: BinLayout {};
   vexpand: true;
+  Box {
+    orientation: horizontal;
+    vexpand: false;
+    SearchBar {
+      search-mode-enabled: true;
+      show-close-button: true;
+
+      SearchEntry {
+        placeholder-text: _("Start typing");
+      }
+    }
+  }
   ScrolledWindow scrolled_window {
     vexpand: true;
     GtkSource.View source_view {
