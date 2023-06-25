@@ -7,7 +7,7 @@ import Vte from "gi://Vte";
 import { gettext as _ } from "gettext";
 
 import * as xml from "./langs/xml/xml.js";
-import { settings, languages } from "./util.js";
+import { languages } from "./util.js";
 import Document from "./Document.js";
 import PanelUI from "./PanelUI.js";
 import PanelCode from "./PanelCode.js";
@@ -43,7 +43,9 @@ const style_manager = Adw.StyleManager.get_default();
 
 const langs = Object.fromEntries(languages.map((lang) => [lang.id, lang]));
 
-export default function Window({ application, file }) {
+export default function Window({ application, session }) {
+  const { file, settings } = session;
+
   Vte.Terminal.new();
 
   const builder = Gtk.Builder.new_from_resource(resource);
@@ -64,7 +66,7 @@ export default function Window({ application, file }) {
   const panel_preview = builder.get_object("panel_preview");
   const panel_placeholder = builder.get_object("panel_placeholder");
 
-  const { term_console } = Devtools({ application, window, builder });
+  const { term_console } = Devtools({ application, window, builder, settings });
 
   let compiler = null;
 
@@ -112,9 +114,10 @@ export default function Window({ application, file }) {
     term_console,
     document_xml,
     document_blueprint,
+    settings,
   });
 
-  PanelStyle({ builder, document_css });
+  PanelStyle({ builder, document_css, settings });
 
   const previewer = Previewer({
     output,
@@ -123,6 +126,7 @@ export default function Window({ application, file }) {
     application,
     panel_ui,
     term_console,
+    settings,
   });
 
   const panel_code = PanelCode({
@@ -130,6 +134,7 @@ export default function Window({ application, file }) {
     previewer,
     document_vala,
     document_javascript,
+    settings,
   });
 
   previewer.setPanelCode(panel_code);
@@ -333,8 +338,11 @@ export default function Window({ application, file }) {
   window.add_action(undo_action);
 
   window.connect("close-request", () => {
-    deleteSession(file).catch(logError);
+    deleteSession(session).catch(logError);
   });
+
+  window.add_action(settings.create_action("safe-mode"));
+  window.add_action(settings.create_action("auto-preview"));
 
   window.present();
 

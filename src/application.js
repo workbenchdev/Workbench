@@ -55,20 +55,20 @@ function restoreSessions() {
   if (sessions.length < 1) {
     newWindow();
   } else {
-    sessions.forEach((file) => {
+    sessions.forEach((session) => {
       Window({
         application,
-        file,
+        session,
       });
     });
   }
 }
 
 function newWindow() {
-  const file = createSessionFromDemo("Welcome");
+  const session = createSessionFromDemo("Welcome");
   Window({
     application,
-    file,
+    session,
   });
 }
 

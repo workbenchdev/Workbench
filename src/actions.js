@@ -99,8 +99,8 @@ export default function Actions({ application }) {
   application.add_action(action_platform_tools);
 
   application.add_action(settings.create_action("color-scheme"));
-  application.add_action(settings.create_action("safe-mode"));
-  application.add_action(settings.create_action("auto-preview"));
+  // application.add_action(settings.create_action("safe-mode"));
+  // application.add_action(settings.create_action("auto-preview"));
 
   const action_show_screenshot = new Gio.SimpleAction({
     name: "show-screenshot",

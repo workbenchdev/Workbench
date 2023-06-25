@@ -9,7 +9,6 @@ import * as postcss from "../lib/postcss.js";
 
 import {
   encode,
-  settings,
   unstack,
   data_dir,
   getNowForFilename,
@@ -39,6 +38,7 @@ export default function Previewer({
   window,
   application,
   term_console,
+  settings,
 }) {
   let panel_code;
 

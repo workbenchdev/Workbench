@@ -15,21 +15,21 @@ export function getSessions() {
     null,
   )) {
     if (file_info.get_file_type() !== Gio.FileType.DIRECTORY) continue;
-
-    sessions.push(sessions_dir.get_child(file_info.get_name()));
+    sessions.push(new Session(file_info.get_name()));
   }
 
   return sessions;
 }
 
 export function createSession() {
-  const file = sessions_dir.get_child(getNowForFilename());
-  ensureDir(file);
-  return file;
+  const name = getNowForFilename();
+  const session = new Session(name);
+  ensureDir(session.file);
+  return session;
 }
 
 export function createSessionFromDemo(demo_name) {
-  const file = createSession();
+  const session = createSession();
 
   const demo_dir = demos_dir.get_child(demo_name);
   // There is no copy directory function
@@ -42,19 +42,38 @@ export function createSessionFromDemo(demo_name) {
 
     const child = demo_dir.get_child(file_info.get_name());
     child.copy(
-      file.get_child(child.get_basename()),
+      session.file.get_child(child.get_basename()),
       Gio.FileCopyFlags.NONE,
       null,
       null,
     );
   }
 
-  return file;
+  return session;
 }
 
-export async function deleteSession(file) {
+export async function deleteSession(session) {
   // There is no method to recursively delete a folder so we trash instead
   // https://github.com/flatpak/xdg-desktop-portal/issues/630 :/
   // portal.trash_file(file.get_path(), null).catch(logError);
-  file.trash(null);
+  session.file.trash(null);
+}
+
+class Session {
+  settings = null;
+  file = null;
+
+  constructor(name) {
+    this.file = sessions_dir.get_child(name);
+    const backend = Gio.keyfile_settings_backend_new(
+      this.file.get_child("settings").get_path(),
+      "/",
+      null,
+    );
+    this.settings = new Gio.Settings({
+      backend,
+      schema_id: pkg.name,
+      path: "/re/sonny/Workbench/",
+    });
+  }
 }

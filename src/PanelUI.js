@@ -3,7 +3,7 @@ import GObject from "gi://GObject";
 import Gtk from "gi://Gtk";
 
 import { LSPError } from "./lsp/LSP.js";
-import { getLanguage, settings, unstack, listenProperty } from "./util.js";
+import { getLanguage, unstack, listenProperty } from "./util.js";
 
 import {
   setup as setupBlueprint,
@@ -18,6 +18,7 @@ export default function PanelUI({
   term_console,
   document_xml,
   document_blueprint,
+  settings,
 }) {
   let lang;
 

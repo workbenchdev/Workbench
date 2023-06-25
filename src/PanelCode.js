@@ -1,8 +1,6 @@
 import Gio from "gi://Gio";
 import GObject from "gi://GObject";
 
-import { settings } from "./util.js";
-
 import { setup as setupVala } from "./langs/vala/vala.js";
 import { setup as setupJavaScript } from "./langs/javascript/javascript.js";
 
@@ -11,6 +9,7 @@ export default function PanelCode({
   previewer,
   document_vala,
   document_javascript,
+  settings,
 }) {
   const panel_code = builder.get_object("panel_code");
   const button_code = builder.get_object("button_code");
