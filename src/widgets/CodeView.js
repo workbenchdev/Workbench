@@ -20,6 +20,9 @@ const style_manager = Adw.StyleManager.get_default();
 class CodeView extends Gtk.Widget {
   constructor({ language_id, ...params } = {}) {
     super(params);
+
+    this.search_entry = this._search_entry;
+    this.search_bar = this._search_bar;
     this.source_view = this._source_view;
     this.buffer = this._source_view.buffer;
 
@@ -30,6 +33,7 @@ class CodeView extends Gtk.Widget {
       this.#prepareHoverProvider();
       this.#prepareSignals();
       this.#updateStyle();
+      this.setupSearch();
     } catch (err) {
       logError(err);
       throw err;
@@ -140,6 +144,19 @@ class CodeView extends Gtk.Widget {
     );
     this.buffer.set_style_scheme(scheme);
   };
+
+  setupSearch() {
+    this.search_entry.connect("search-changed", () => {
+      const searchSettings = new Source.SearchSettings();
+      const search_text = this.search_entry.get_text();
+      searchSettings.set_search_text(search_text);
+      searchSettings.set_case_sensitive(false);
+      let searchContext = new Source.SearchContext(this.buffer, searchSettings);
+      searchContext.set_highlight(true);
+
+      search_context.search();
+    });
+  }
 }
 
 export default registerClass(

@@ -5,18 +5,19 @@ template $CodeView : Gtk.Widget {
   layout-manager: BinLayout {};
   vexpand: true;
   Box {
-    orientation: horizontal;
-    vexpand: false;
-    SearchBar {
-      search-mode-enabled: true;
-      show-close-button: true;
+    orientation: vertical;
 
-      SearchEntry {
-        placeholder-text: _("Start typing");
+    SearchBar search_bar {
+      show-close-button: true;
+      key-capture-widget: source_view;
+      search-mode-enabled: true;
+
+      SearchEntry search_entry {
+        placeholder-text: _("Start searching");
       }
     }
-  }
-  ScrolledWindow scrolled_window {
+
+    ScrolledWindow scrolled_window {
     vexpand: true;
     GtkSource.View source_view {
       buffer: GtkSource.Buffer {};
@@ -31,5 +32,6 @@ template $CodeView : Gtk.Widget {
       smart-backspace: true;
       tab-width: 2;
     }
+  }
   }
 }
