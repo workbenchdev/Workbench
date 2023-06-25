@@ -42,6 +42,7 @@ ${getBlueprintVersion()}
     developers: [
       "Sonny Piers https://sonny.re",
       "Lorenz Wildberg https://gitlab.gnome.org/lwildberg",
+      "Andy Holmes https://gitlab.gnome.org/andyholmes",
     ],
     designers: [
       "Sonny Piers https://sonny.re",
