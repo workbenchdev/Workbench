@@ -72,7 +72,7 @@ class Session {
     );
     this.settings = new Gio.Settings({
       backend,
-      schema_id: pkg.name,
+      schema_id: `${pkg.name}.Session`,
       path: "/re/sonny/Workbench/",
     });
   }

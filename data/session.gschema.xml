@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <schemalist gettext-domain="@app_id@">
-  <schema id="@app_id@" path="/re/sonny/Workbench/">
-    <key name="color-scheme" type="i">
-      <default>0</default>
-    </key>
-  </schema>
   <schema id="@app_id@.Session" path="/re/sonny/Workbench/">
     <key name="show-code" type="b">
       <default>false</default>
