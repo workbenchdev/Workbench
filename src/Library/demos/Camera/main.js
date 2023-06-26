@@ -14,26 +14,28 @@ const video = workbench.builder.get_object("video");
 const button = workbench.builder.get_object("button");
 
 button.connect("clicked", () => {
-  portal.access_camera(
-    parent,
-    Xdp.CameraFlags.NONE,
-    null,
-    async (portal, result) => {
-      try {
-        if (portal.access_camera_finish(result)) {
-          try {
-            await on_clicked();
-          } catch (error) {
-            console.error("Error in on_clicked:", error);
+  if (portal.is_camera_present) {
+    portal.access_camera(
+      parent,
+      Xdp.CameraFlags.NONE,
+      null,
+      async (portal, result) => {
+        try {
+          if (portal.access_camera_finish(result)) {
+            try {
+              await on_clicked();
+            } catch (error) {
+              console.error("Error in on_clicked:", error);
+            }
+          } else {
+            console.log("Permission denied");
           }
-        } else {
-          console.log("Permission denied");
+        } catch (error) {
+          console.error("Failed to request camera access:", error);
         }
-      } catch (error) {
-        console.error("Failed to request camera access:", error);
-      }
-    },
-  );
+      },
+    );
+  }
 });
 
 async function on_clicked() {
@@ -55,7 +57,7 @@ async function on_clicked() {
   );
 
   // Set properties
-  source.set_property("path", pwRemote); // pwRemote is the pipewiresrc obtained from libportal
+  source.set_property("fd", pwRemote); // pwRemote is the pipewiresrc obtained from libportal
 
   // Create the sink
   const paintable_sink = Gst.ElementFactory.make(
@@ -84,6 +86,29 @@ async function on_clicked() {
   // Handle cleanup on application exit
   video.connect("destroy", () => {
     pipeline.set_statez(Gst.State.NULL);
+  });
+
+  // Set up the bus
+  const bus = pipeline.get_bus();
+  bus.add_signal_watch();
+  bus.connect("message", (bus, message) => {
+    // Check the message type
+    const messageType = message.type;
+
+    // Handle different message types
+    switch (messageType) {
+      case Gst.MessageType.ERROR: {
+        // Error message
+        const errorMessage = message.parse_error();
+        console.error(errorMessage);
+        break;
+      }
+      case Gst.MessageType.EOS: {
+        // End of stream message
+        console.log("End of stream");
+        break;
+      }
+    }
   });
 }
 
