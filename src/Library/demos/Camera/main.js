@@ -11,7 +11,6 @@ import GstGL from "gi://GstGL";
 const portal = new Xdp.Portal();
 const parent = XdpGtk.parent_new_gtk(workbench.window);
 const video = workbench.builder.get_object("video");
-
 const button = workbench.builder.get_object("button");
 
 button.connect("clicked", () => {
@@ -23,9 +22,9 @@ button.connect("clicked", () => {
       try {
         if (portal.access_camera_finish(result)) {
           try {
-            await onClicked();
+            await on_clicked();
           } catch (error) {
-            console.error("Error in onClicked:", error);
+            console.error("Error in on_clicked:", error);
           }
         } else {
           console.log("Permission denied");
@@ -37,7 +36,7 @@ button.connect("clicked", () => {
   );
 });
 
-async function onClicked() {
+async function on_clicked() {
   const pwRemote = await portal.open_pipewire_remote_for_camera();
   print("Pipewire remote opened for camera");
   console.log(pwRemote);
@@ -50,7 +49,10 @@ async function onClicked() {
   // Create elements
   const source = Gst.ElementFactory.make("pipewiresrc", "source");
   const queue = Gst.ElementFactory.make("queue", "queue"); // add a queue element
-  const video_convert = Gst.ElementFactory.make("videoconvert", "video_convert");
+  const video_convert = Gst.ElementFactory.make(
+    "videoconvert",
+    "video_convert",
+  );
 
   // Set properties
   source.set_property("path", pwRemote); // pwRemote is the pipewiresrc obtained from libportal
