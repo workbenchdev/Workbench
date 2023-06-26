@@ -40,7 +40,7 @@ button.connect("clicked", () => {
 async function onClicked() {
   const pwRemote = await portal.open_pipewire_remote_for_camera();
   print("Pipewire remote opened for camera");
-  GLib.setenv("GST_DEBUG", "5", true);
+  GLib.setenv("GST_DEBUG", "3", true);
   Gst.init(null);
 
   // Create the pipeline
@@ -48,10 +48,8 @@ async function onClicked() {
 
   // Create elements
   const source = Gst.ElementFactory.make("pipewiresrc", "source");
-  const video_convert = Gst.ElementFactory.make(
-    "videoconvert",
-    "video_convert",
-  );
+  const queue = Gst.ElementFactory.make("queue", "queue"); // add a queue element
+  const video_convert = Gst.ElementFactory.make("videoconvert","video_convert",);
 
   // Set properties
   source.set_property("path", pwRemote); // pwRemote is the pipewiresrc obtained from libportal
@@ -62,12 +60,17 @@ async function onClicked() {
     "paintable_sink",
   );
 
-  video_convert.link(paintable_sink);
-
   // Add elements to the pipeline
   pipeline.add(source);
+  pipeline.add(queue);
   pipeline.add(video_convert);
   pipeline.add(paintable_sink);
+
+ // Link the elements
+  source.link(queue);
+  source.link(video_convert);// link source to the queue
+  queue.link(video_convert); // link queue to the video_convert
+  video_convert.link(paintable_sink);
 
   const paintable = new GObject.Value();
   paintable_sink.get_property("paintable", paintable);
