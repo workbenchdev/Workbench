@@ -5,72 +5,75 @@ import Gio from "gi://Gio";
 import GObject from "gi://GObject";
 import GLib from "gi://GLib";
 import Gst from "gi://Gst";
+import Gdk from "gi://Gdk";
+import GstGL from "gi://GstGL";
 
 const portal = new Xdp.Portal();
 const parent = XdpGtk.parent_new_gtk(workbench.window);
 const video = workbench.builder.get_object("video");
 
 const button = workbench.builder.get_object("button");
-async function onClicked() {
-  if (portal.is_camera_present) {
-    const pwRemote = await portal.open_pipewire_remote_for_camera();
-    print("Pipewire remote opened for camera");
-    Gst.init(null);
-
-    // Create the pipeline
-    const pipeline = new Gst.Pipeline();
-
-    // Create elements
-    const source = Gst.ElementFactory.make("pipewiresrc", "source");
-    const videoConvert = Gst.ElementFactory.make(
-      "videoconvert",
-      "videoConvert",
-    );
-    const videoSink = Gst.ElementFactory.make("gtksink", "videoSink");
-
-    // Set properties
-    source.set_property("path", pwRemote); // pwRemote is the pipewiresrc obtained from libportal
-
-    // Create the bin
-    const bin = new Gst.Bin();
-    bin.add(source);
-    bin.add(videoConvert);
-    pipeline.add(bin);
-    pipeline.add(videoSink);
-
-    // Link elements
-    source.link(videoConvert);
-    videoConvert.link(videoSink);
-
-    // Set up the bus
-    const bus = pipeline.get_bus();
-    bus.add_signal_watch();
-    bus.connect("message", (bus, message) => {
-      if (message.type === Gst.MessageType.EOS) {
-        // End of stream, handle accordingly
-      }
-    });
-
-    // Set the video stream on the GtkVideo widget
-    video.set_media_stream(videoSink);
-
-    // Handle cleanup on application exit
-    video.connect("destroy", () => {
-      pipeline.set_statez(Gst.State.NULL);
-      Gtk.main_quit();
-    });
-
-    // Show the video widget and start the pipeline
-    video.show_all();
-    pipeline.set_state(Gst.State.PLAYING);
-
-    // Run the Gtk main loop
-    Gtk.main();
-  } else {
-    console.log("No camera found");
-  }
-}
 
 button.connect("clicked", () => {
-  onClicked().catch(logError);
+  portal.access_camera(
+    parent,
+    Xdp.CameraFlags.NONE,
+    null,
+    async (portal, result) => {
+      try {
+        if (portal.access_camera_finish(result)) {
+          try {
+            await onClicked();
+          } catch (error) {
+            console.error("Error in onClicked:", error);
+          }
+        } else {
+          console.log("Permission denied");
+        }
+      } catch (error) {
+        console.error("Failed to request camera access:", error);
+      }
+    },
+  );
 });
+
+async function onClicked() {
+  const pwRemote = await portal.open_pipewire_remote_for_camera();
+  print("Pipewire remote opened for camera");
+  GLib.setenv("GST_DEBUG", "5", true);
+  Gst.init(null);
+
+  // Create the pipeline
+  const pipeline = new Gst.Pipeline();
+
+  // Create elements
+  const source = Gst.ElementFactory.make("pipewiresrc", "source");
+  const video_convert = Gst.ElementFactory.make(
+    "videoconvert",
+    "video_convert",
+  );
+
+  // Set properties
+  source.set_property("path", pwRemote); // pwRemote is the pipewiresrc obtained from libportal
+
+  // Create the sink
+  const paintable_sink = Gst.ElementFactory.make(
+    "gtk4paintablesink",
+    "paintable_sink",
+  );
+
+  video_convert.link(paintable_sink);
+
+  // Add elements to the pipeline
+  pipeline.add(source);
+  pipeline.add(video_convert);
+  pipeline.add(paintable_sink);
+
+  const paintable = new GObject.Value();
+  paintable_sink.get_property("paintable", paintable);
+  video.paintable = paintable.get_object();
+
+  // Start the pipeline
+  pipeline.set_state(Gst.State.PLAYING);
+}
+
