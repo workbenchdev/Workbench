@@ -146,15 +146,9 @@ class CodeView extends Gtk.Widget {
   };
 
   setupSearch() {
+    const { buffer } = this;
     this.search_entry.connect("search-changed", () => {
-      const searchSettings = new Source.SearchSettings();
-      const search_text = this.search_entry.get_text();
-      searchSettings.set_search_text(search_text);
-      searchSettings.set_case_sensitive(false);
-      let searchContext = new Source.SearchContext(this.buffer, searchSettings);
-      searchContext.set_highlight(true);
-
-      search_context.search();
+      const searchContext = new Source.SearchContext(buffer);
     });
   }
 }
@@ -175,7 +169,7 @@ export default registerClass(
     Signals: {
       changed: {},
     },
-    InternalChildren: ["source_view"],
+    InternalChildren: ["source_view", "search_bar", "search_entry"],
   },
   CodeView,
 );
