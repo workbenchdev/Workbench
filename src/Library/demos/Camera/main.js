@@ -52,7 +52,7 @@ async function on_clicked() {
   // Create elements
   const source = Gst.ElementFactory.make("pipewiresrc", "source");
   const queue = Gst.ElementFactory.make("queue", "queue"); // add a queue element
-  const video_convert = Gst.ElementFactory.make("videoconvert", "videoconvert");
+  const video_convert = Gst.ElementFactory.make("videoconvert", "video_convert");
 
   // Set properties
   source.set_property("fd", pwRemote); // pwRemote is the pipewiresrc obtained from libportal
