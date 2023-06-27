@@ -42,7 +42,8 @@ async function on_clicked() {
   const pwRemote = await portal.open_pipewire_remote_for_camera();
   print("Pipewire remote opened for camera");
   console.log(pwRemote);
-  GLib.setenv("GST_DEBUG", "3", true);
+  GLib.setenv("GST_DEBUG", "3,pipewire*:6", true);
+  //GLib.setenv("GST_DEBUG_FILE", "/home/josehunter/gst.log", true);
   Gst.init(null);
 
   // Create the pipeline
@@ -51,14 +52,11 @@ async function on_clicked() {
   // Create elements
   const source = Gst.ElementFactory.make("pipewiresrc", "source");
   const queue = Gst.ElementFactory.make("queue", "queue"); // add a queue element
-  const video_convert = Gst.ElementFactory.make(
-    "videoconvert",
-    "video_convert",
-  );
+  const video_convert = Gst.ElementFactory.make("videoconvert", "videoconvert");
 
   // Set properties
   source.set_property("fd", pwRemote); // pwRemote is the pipewiresrc obtained from libportal
-
+  //ource.set_property("path", "/dev/video0");
   // Create the sink
   const paintable_sink = Gst.ElementFactory.make(
     "gtk4paintablesink",
@@ -100,7 +98,7 @@ async function on_clicked() {
       case Gst.MessageType.ERROR: {
         // Error message
         const errorMessage = message.parse_error();
-        console.error(errorMessage);
+        console.error(errorMessage[0].toString()); // Accessing the actual error message
         break;
       }
       case Gst.MessageType.EOS: {
