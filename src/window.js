@@ -17,7 +17,6 @@ import Devtools from "./Devtools.js";
 import prettier from "./lib/prettier.js";
 import prettier_babel from "./lib/prettier-babel.js";
 import prettier_postcss from "./lib/prettier-postcss.js";
-import { readDemo } from "./util.js";
 import Previewer from "./Previewer/Previewer.js";
 import Compiler from "./langs/vala/Compiler.js";
 import ThemeSelector from "../troll/src/widgets/ThemeSelector.js";
@@ -70,39 +69,32 @@ export default function Window({ application, session }) {
 
   let compiler = null;
 
-  const placeholders = readDemo("Welcome");
-
   const document_javascript = Document({
     code_view: builder.get_object("code_view_javascript"),
-    placeholder: placeholders.javascript,
     file: file.get_child("main.js"),
   });
   langs.javascript.document = document_javascript;
 
   const document_vala = Document({
     code_view: builder.get_object("code_view_vala"),
-    placeholder: placeholders.vala,
     file: file.get_child("main.vala"),
   });
   langs.vala.document = document_vala;
 
   const document_blueprint = Document({
     code_view: builder.get_object("code_view_blueprint"),
-    placeholder: placeholders.blueprint,
     file: file.get_child("main.blp"),
   });
   langs.blueprint.document = document_blueprint;
 
   const document_xml = Document({
     code_view: builder.get_object("code_view_xml"),
-    placeholder: placeholders.xml,
     file: file.get_child("main.xml"),
   });
   langs.xml.document = document_xml;
 
   const document_css = Document({
     code_view: builder.get_object("code_view_css"),
-    placeholder: placeholders.css,
     file: file.get_child("main.css"),
   });
   langs.css.document = document_css;

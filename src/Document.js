@@ -2,7 +2,7 @@ import Source from "gi://GtkSource";
 import Gio from "gi://Gio";
 import GLib from "gi://GLib";
 
-export default function Document({ code_view, placeholder, file }) {
+export default function Document({ code_view, file }) {
   const { buffer } = code_view;
   let handler_id = null;
 
@@ -10,11 +10,7 @@ export default function Document({ code_view, placeholder, file }) {
     location: file,
   });
 
-  loadSourceBuffer({ file: source_file, buffer })
-    .then((success) => {
-      if (!success) code_view.replaceText(placeholder, true);
-    })
-    .catch(logError);
+  loadSourceBuffer({ file: source_file, buffer }).catch(logError);
   start();
 
   function save() {
