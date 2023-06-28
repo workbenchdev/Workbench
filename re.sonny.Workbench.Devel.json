@@ -75,6 +75,18 @@
       ]
     },
     {
+      "name": "libshumate",
+      "buildsystem": "meson",
+      "config-opts": ["-Dgtk_doc=false", "-Dlibsoup3=true"],
+      "sources": [
+        {
+          "type": "archive",
+          "url": "https://download.gnome.org/sources/libshumate/1.0/libshumate-1.0.3.tar.xz",
+          "sha256": "77a192f0dfec082b8de20b1939f3adf03eed41114d49fdaae2bbb2729ceb015a"
+        }
+      ]
+    },
+    {
       "name": "rome",
       "buildsystem": "simple",
       "build-commands": ["chmod +x rome", "cp rome /app/bin/rome"],
