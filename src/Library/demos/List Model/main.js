@@ -34,51 +34,34 @@ toggle_flow_box.connect("toggled", () => {
   }
 });
 
-let listitemNumber = 1;
-let rowIndex = 0;
-const rows = []; // Array to store references to the added rows
+const model = new Gtk.StringList();
+const rows = []; // Array to store the created rows
+let item = 1;
 
-let flowitemNumber = 1;
-let flowIndex = 0;
-const rows_for_flow = [];
-
-function addRowFlowBox() {
-  const flowRow = new Adw.ActionRow({
-    selectable: false,
-  });
-
-  const label = `Item ${flowitemNumber}`;
-  flowRow.title = label;
-  flow_box.append(flowRow);
-  rows_for_flow.push(flowRow);
-  flowitemNumber++;
-}
-
-function removeRowFlowBox() {
-  if (flowIndex < rows_for_flow.length) {
-    flow_box.remove(rows_for_flow[flowIndex]);
-    flowIndex++;
-  }
-}
-
-function addRowListBox() {
+function createRow(listItem) {
   const listRow = new Adw.ActionRow({
-    selectable: false,
+    title: listItem.string,
   });
-
-  const label = `Item ${listitemNumber}`;
-  listRow.title = label;
-  list_box.append(listRow);
-  rows.push(listRow); // Store the reference to the added row
-  listitemNumber++;
+  rows.push(listRow); // Add the created row to the array
+  item++;
+  return listRow;
 }
 
-function removeRowListBox() {
-  if (rowIndex < rows.length) {
-    list_box.remove(rows[rowIndex]);
-    rowIndex++;
+list_box.bind_model(model, createRow);
+
+add.connect("clicked", () => {
+  const newItem = `Item ${item}`;
+  model.append(newItem); // Append the new item as an array to the model
+});
+
+remove.connect("clicked", () => {
+  const arrayLength = rows.length;
+
+  if (arrayLength > 0) {
+    const lastElementIndex = arrayLength - 1;
+    const lastElement = rows[lastElementIndex];
+
+    model.remove(rows[lastElement]);
   }
-}
+});
 
-add.connect("clicked", addRowListBox);
-remove.connect("clicked", removeRowListBox);
