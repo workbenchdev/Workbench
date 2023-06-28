@@ -1,0 +1,90 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.Window {
+  default-width: 800;
+  default-height: 600;
+  title: _("Search Demo");
+
+  Box container {
+    orientation: vertical;
+
+    HeaderBar header {
+      ToggleButton button_search {
+        icon-name: "loupe-large-symbolic";
+      }
+    }
+
+    SearchBar searchbar {
+      key-capture-widget: container;
+
+      SearchEntry searchentry{
+        search-delay: 100;
+        placeholder-text: _("Search for fruits");
+        width-request: 400;
+      }
+    }
+
+    Stack stack {
+      transition-type: crossfade;
+
+      Adw.StatusPage main_page {
+        title: _("Search");
+        description: _("Allow items to be located by filtering");
+        vexpand: true;
+
+
+        Box{
+          orientation: vertical;
+          spacing: 6;
+          Label {
+            label: "API References";
+          }
+          Box{
+            halign: center;
+            LinkButton {
+              label: "Search Entry";
+              uri: "https://docs.gtk.org/gtk4/class.SearchEntry.html";
+            }
+            LinkButton {
+              label: "Search Bar";
+              uri: "https://docs.gtk.org/gtk4/class.SearchBar";
+            }
+          }
+
+          LinkButton {
+            margin-top:6;
+            label: "Human Interface Guidelines";
+            uri: "https://developer.gnome.org/hig/patterns/nav/search.html";
+          }
+        }
+      }
+
+      ScrolledWindow search_page {
+        Adw.Clamp {
+          margin-top: 24;
+          margin-bottom: 24;
+          ListBox listbox {
+            valign: start;
+            hexpand: true;
+            selection-mode: none;
+
+            styles [
+              "boxed-list",
+            ]
+          }
+
+        }
+      }
+
+      Adw.StatusPage status_page {
+        title: _("No results founds");
+        description: _("Try a different search");
+        icon-name: "edit-find-symbolic";
+        vexpand: true;
+      }
+    }
+
+
+  }
+}
