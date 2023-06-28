@@ -68,3 +68,5 @@ gresource = custom_target('gjspack',
   install_dir: pkgdatadir,
   build_always_stale: true,
 )
+
+subdir('libworkbench')
