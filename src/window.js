@@ -338,7 +338,7 @@ export default function Window({ application, session }) {
 
   window.present();
 
-  return { runCode };
+  return { runCode, term_console };
 }
 
 async function setGtk4PreferDark(dark) {

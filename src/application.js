@@ -65,7 +65,8 @@ function restoreSessions() {
 }
 
 function newWindow() {
-  const session = createSessionFromDemo("Welcome");
+  const demo = JSON.parse(readDemoFile("Welcome", "main.json"));
+  const session = createSessionFromDemo(demo);
   Window({
     application,
     session,

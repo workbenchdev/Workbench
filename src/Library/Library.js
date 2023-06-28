@@ -82,7 +82,14 @@ function getDemos() {
 }
 
 async function openDemo({ application, demo_name }) {
-  const session = await createSessionFromDemo(demo_name);
-  const { runCode } = Window({ application, session });
-  runCode();
+  const demo = JSON.parse(readDemoFile(demo_name, "main.json"));
+  const session = await createSessionFromDemo(demo);
+
+  const { runCode, term_console } = Window({ application, session });
+  if (demo.autorun) {
+    // FIXME: only js
+    runCode();
+  }
+
+  term_console.scrollToEnd();
 }
