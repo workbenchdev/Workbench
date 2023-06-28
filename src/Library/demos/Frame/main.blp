@@ -1,0 +1,198 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: _("Frame");
+  description: _("A widget that surrounds its child with a decorative frame");
+
+  Box {
+    orientation: vertical;
+    halign: center;
+
+    Box {
+      orientation: horizontal;
+      halign: center;
+      spacing: 18;
+      margin-bottom: 18;
+      homogeneous: false;
+
+      Box {
+        orientation: vertical;
+        halign: center;
+        spacing: 12;
+
+        Picture without_frame {
+          width-request: 180;
+          height-request: 180;
+        }
+
+        Label {
+          label: _("Without Frame");
+          styles ["title-4"]
+        }
+
+      }
+
+      Separator {
+        margin-start: 6;
+        margin-end: 6;
+      }
+
+      Box {
+        orientation: vertical;
+        halign: center;
+        spacing: 12;
+
+        Frame {
+
+          Picture with_frame {
+            width-request: 180;
+            height-request: 180;
+          }
+        }
+
+        Label {
+          label: _("With Frame");
+          styles ["title-4"]
+        }
+      }
+    }
+
+    Separator {
+      margin-bottom: 24;
+    }
+
+    Label {
+      label: _("Without Frame");
+      margin-bottom: 12;
+      halign: start;
+      styles ["title-4"]
+    }
+
+    Box {
+      margin-bottom: 18;
+      halign: center;
+      styles ["toolbar"]
+
+      Button {
+        icon-name: "plus";
+      }
+
+      Button {
+        icon-name: "minus";
+      }
+
+      Button {
+        icon-name: "bell";
+      }
+    }
+
+    Label {
+      halign: start;
+      label: _("With Frame");
+      margin-bottom: 12;
+      styles ["title-4"]
+    }
+
+
+    Frame {
+      label: _("Frame can have an optional label");
+      margin-bottom: 24;
+
+      Box {
+        halign: center;
+        styles ["toolbar"]
+
+        Button {
+          icon-name: "plus";
+        }
+
+        Button {
+          icon-name: "minus";
+        }
+
+        Button {
+          icon-name: "bell";
+        }
+      }
+    }
+
+    Separator {
+      margin-bottom: 24;
+    }
+
+    Box {
+      orientation: horizontal;
+      halign: center;
+      spacing: 18;
+      margin-bottom: 18;
+      homogeneous: false;
+
+      Box {
+        orientation: vertical;
+        halign: center;
+        spacing: 12;
+
+        ScrolledWindow {
+          height-request: 240;
+          width-request: 240;
+
+          TextView textview_without_frame {
+            bottom-margin: 12;
+            left-margin: 12;
+            right-margin: 12;
+            top-margin: 12;
+            margin-bottom: 12;
+            editable: false;
+            wrap-mode: char;
+          }
+        }
+
+        Label {
+          label: _("Without Frame");
+          styles ["title-4"]
+        }
+      }
+
+      Separator {
+        margin-start: 6;
+        margin-end: 6;
+      }
+
+      Box {
+        orientation: vertical;
+        halign: center;
+        spacing: 12;
+
+        Frame {
+
+          ScrolledWindow {
+            height-request: 240;
+            width-request: 240;
+
+          TextView textview_with_frame {
+            bottom-margin: 12;
+            left-margin: 12;
+            right-margin: 12;
+            top-margin: 12;
+            editable: false;
+            wrap-mode: char;
+            }
+          }
+        }
+
+        Label {
+          label: _("With Frame");
+          styles ["title-4"]
+        }
+      }
+    }
+
+    LinkButton {
+      label: "API Reference";
+      uri: "https://docs.gtk.org/gtk4/class.Frame.html";
+    }
+  }
+}
+
+
