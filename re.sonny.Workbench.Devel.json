@@ -51,7 +51,7 @@
     {
       "name": "libportal",
       "buildsystem": "meson",
-      "config-opts": ["-Ddocs=false", "-Dvapi=false", "-Dbackends=gtk4"],
+      "config-opts": ["-Ddocs=true", "-Dbackends=gtk4"],
       "sources": [
         {
           "type": "archive",
@@ -75,7 +75,7 @@
     {
       "name": "libshumate",
       "buildsystem": "meson",
-      "config-opts": ["-Dgtk_doc=false", "-Dlibsoup3=true"],
+      "config-opts": ["-Dgtk_doc=true", "-Dlibsoup3=true"],
       "sources": [
         {
           "type": "archive",
