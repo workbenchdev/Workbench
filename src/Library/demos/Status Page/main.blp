@@ -1,0 +1,24 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage status_page {
+  title: _("Status Page");
+  description: _("A page used for empty/error states and similar use-cases.");
+  icon-name: "loupe-symbolic";
+  child: child;
+}
+
+Box child {
+  margin-top: 18;
+  orientation: vertical;
+  halign: center;
+
+  LinkButton {
+    label: "API Reference";
+    uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.3/class.StatusPage.html";
+  }
+  LinkButton {
+    label: "Human Interface Guidelines";
+    uri: "https://developer.gnome.org/hig/patterns/feedback/placeholders.html";
+  }
+}
