@@ -7,6 +7,10 @@ const test = tst("previewer");
 
 test("getObjectClass", () => {
   assert.equal(getObjectClass("WebKitWebView"), imports.gi.WebKit.WebView);
+  assert.equal(
+    getObjectClass("GtkSourceCompletionProvider"),
+    imports.gi.GtkSource.CompletionProvider,
+  );
 });
 
 export default test;

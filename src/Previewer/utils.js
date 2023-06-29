@@ -5,7 +5,9 @@ import Adw from "gi://Adw";
 import GIRepository from "gi://GIRepository";
 // const repository = GIRepository.Repository.get_default();
 
-const namespaces = getNamespaces();
+// sort and reverse to make sure GtkSource is before Gtk
+// and so that GtkSourceCompletionProvider matches GtkSource and not Gtk
+const namespaces = getNamespaces().sort().reverse();
 export function getObjectClass(class_name) {
   const namespace = namespaces.find((namespace) =>
     class_name.startsWith(namespace),
