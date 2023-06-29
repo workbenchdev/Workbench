@@ -1,20 +1,17 @@
 import Gtk from "gi://Gtk";
 import Xdp from "gi://Xdp";
 import XdpGtk from "gi://XdpGtk4";
-import Gio from "gi://Gio";
 import GObject from "gi://GObject";
-import GLib from "gi://GLib";
 import Gst from "gi://Gst";
-import Gdk from "gi://Gdk";
-import GstGL from "gi://GstGL";
 
 const portal = new Xdp.Portal();
 const parent = XdpGtk.parent_new_gtk(workbench.window);
-const video = workbench.builder.get_object("video");
+const output = workbench.builder.get_object("video");
 const button = workbench.builder.get_object("button");
 
 button.connect("clicked", () => {
   if (portal.is_camera_present) {
+    button.sensitive = true;
     portal.access_camera(
       parent,
       Xdp.CameraFlags.NONE,
@@ -35,68 +32,48 @@ button.connect("clicked", () => {
         }
       },
     );
+  } else {
+    console.log("No Camera detected");
+    button.sensitive = false;
   }
 });
 
 async function on_clicked() {
   const pwRemote = await portal.open_pipewire_remote_for_camera();
-  print("Pipewire remote opened for camera");
-  console.log(pwRemote);
-  GLib.setenv("GST_DEBUG", "3,pipewire*:6", true);
-  //GLib.setenv("GST_DEBUG_FILE", "/home/josehunter/gst.log", true);
-  Gst.init(null);
+  console.log("Pipewire remote opened for camera");
 
-  // Create the pipeline
-  const pipeline = new Gst.Pipeline();
+  Gst.init(null);
 
   // Create elements
   const source = Gst.ElementFactory.make("pipewiresrc", "source");
-  const queue = Gst.ElementFactory.make("queue", "queue"); // add a queue element
+  const queue = Gst.ElementFactory.make("queue", "queue");
   const paintable_sink = Gst.ElementFactory.make(
     "gtk4paintablesink",
     "paintable_sink",
   );
-
-  let video_convert;
-  let glsinkbin;
-
+  const glsinkbin = Gst.ElementFactory.make("glsinkbin", "glsinkbin");
   const paintable = new GObject.Value();
-  if (true) {
-    const gltestsrc = Gst.ElementFactory.make("gltestsrc", "gltestsrc");
-    glsinkbin = Gst.ElementFactory.make("glsinkbin", "glsinkbin");
-    glsinkbin.set_property("sink", paintable_sink);
 
-    pipeline.add(gltestsrc);
-    pipeline.add(queue);
-    pipeline.add(glsinkbin);
-    gltestsrc.link(queue);
-    queue.link(glsinkbin);
+  // Create and link our pipeline
 
-    paintable_sink.get_property("paintable", paintable);
-  } else {
-    const videotestsrc = Gst.ElementFactory.make(
-      "videotestsrc",
-      "videotestsrc",
-    );
-    video_convert = Gst.ElementFactory.make("videoconvert", "video_convert");
-    pipeline.add(videotestsrc);
-    pipeline.add(queue);
-    pipeline.add(video_convert);
-    pipeline.add(paintable_sink);
-    videotestsrc.link(queue);
-    queue.link(video_convert);
-    video_convert.link(paintable_sink);
+  glsinkbin.set_property("sink", paintable_sink);
+  source.set_property("fd", pwRemote);
 
-    paintable_sink.get_property("paintable", paintable);
-  }
+  pipeline.add(source);
+  pipeline.add(queue);
+  pipeline.add(glsinkbin);
+  source.link(queue);
+  queue.link(glsinkbin);
 
-  video.paintable = paintable.get_object();
+  paintable_sink.get_property("paintable", paintable);
+
+  output.paintable = paintable.get_object();
 
   // Start the pipeline
   pipeline.set_state(Gst.State.PLAYING);
 
   // Handle cleanup on application exit
-  video.connect("destroy", () => {
+  workbench.window.connect("destroy", () => {
     pipeline.set_state(Gst.State.NULL);
   });
 
@@ -110,13 +87,11 @@ async function on_clicked() {
     // Handle different message types
     switch (messageType) {
       case Gst.MessageType.ERROR: {
-        // Error message
         const errorMessage = message.parse_error();
-        console.error(errorMessage[0].toString()); // Accessing the actual error message
+        console.error(errorMessage[0].toString());
         break;
       }
       case Gst.MessageType.EOS: {
-        // End of stream message
         console.log("End of stream");
         break;
       }
