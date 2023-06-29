@@ -7,33 +7,37 @@ template $CodeView : Gtk.Widget {
   Box {
     orientation: vertical;
 
-    SearchBar search_bar {
-      show-close-button: true;
-      //key-capture-widget: source_view;
-      search-mode-enabled: true;
+    Revealer revealer {
+      SearchBar search_bar {
+        show-close-button: true;
+        //key-capture-widget: source_view;
+        search-mode-enabled: true;
 
-      SearchEntry search_entry {
-        placeholder-text: _("Start searching");
-        search-delay: 300;
+        SearchEntry search_entry {
+          placeholder-text: _("Start searching");
+          search-delay: 300;
+        }
       }
     }
 
-    ScrolledWindow scrolled_window {
-    vexpand: true;
-    GtkSource.View source_view {
-      buffer: GtkSource.Buffer {};
-      monospace: true;
-      auto-indent: true;
-      highlight-current-line: true;
-      indent-on-tab: true;
-      indent-width: 2;
-      insert-spaces-instead-of-tabs: true;
-      show-line-marks: true;
-      show-line-numbers: true;
-      smart-backspace: true;
-      tab-width: 2;
+    Overlay overlay {
+      ScrolledWindow scrolled_window {
+      vexpand: true;
+      GtkSource.View source_view {
+        buffer: GtkSource.Buffer {};
+        monospace: true;
+        auto-indent: true;
+        highlight-current-line: true;
+        indent-on-tab: true;
+        indent-width: 2;
+        insert-spaces-instead-of-tabs: true;
+        show-line-marks: true;
+        show-line-numbers: true;
+        smart-backspace: true;
+        tab-width: 2;
+      }
+      }
     }
-  }
   }
 }
 

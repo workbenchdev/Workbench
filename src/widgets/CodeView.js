@@ -21,8 +21,10 @@ class CodeView extends Gtk.Widget {
   constructor({ language_id, ...params } = {}) {
     super(params);
 
+    this.overlay = this._overlay;
     this.search_entry = this._search_entry;
     this.search_bar = this._search_bar;
+    this.revealer = this._revealer;
     this.source_view = this._source_view;
     this.buffer = this._source_view.buffer;
 
@@ -33,7 +35,8 @@ class CodeView extends Gtk.Widget {
       this.#prepareHoverProvider();
       this.#prepareSignals();
       this.#updateStyle();
-      this.setupSearch();
+      this.revealSearch();
+      this.handleSearch();
     } catch (err) {
       logError(err);
       throw err;
@@ -145,7 +148,24 @@ class CodeView extends Gtk.Widget {
     this.buffer.set_style_scheme(scheme);
   };
 
-  setupSearch() {
+  revealSearch() {
+    const controller_key = new Gtk.EventControllerKey();
+    this.source_view.add_controller(controller_key);
+    controller_key.connect(
+      "key-pressed",
+      (controller, keyval, keycode, state) => {
+        if (
+          (state & Gdk.ModifierType.CONTROL_MASK && keyval === Gdk.KEY_f) ||
+          (state & Gdk.ModifierType.CONTROL_MASK && keyval === Gdk.KEY_F)
+        ) {
+          this.revealer.reveal_child = true;
+          this.search_bar.search_mode_enabled = true;
+        }
+      },
+    );
+  }
+
+  handleSearch() {
     const { buffer } = this;
     const settings = new Source.SearchSettings();
     settings.case_sensitive = true;
@@ -173,7 +193,13 @@ export default registerClass(
     Signals: {
       changed: {},
     },
-    InternalChildren: ["source_view", "search_bar", "search_entry"],
+    InternalChildren: [
+      "source_view",
+      "search_bar",
+      "search_entry",
+      "revealer",
+      "overlay",
+    ],
   },
   CodeView,
 );
