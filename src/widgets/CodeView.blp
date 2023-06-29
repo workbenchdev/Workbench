@@ -23,19 +23,19 @@ template $CodeView : Gtk.Widget {
     Overlay overlay {
       ScrolledWindow scrolled_window {
       vexpand: true;
-      GtkSource.View source_view {
-        buffer: GtkSource.Buffer {};
-        monospace: true;
-        auto-indent: true;
-        highlight-current-line: true;
-        indent-on-tab: true;
-        indent-width: 2;
-        insert-spaces-instead-of-tabs: true;
-        show-line-marks: true;
-        show-line-numbers: true;
-        smart-backspace: true;
-        tab-width: 2;
-      }
+        GtkSource.View source_view {
+          buffer: GtkSource.Buffer {};
+          monospace: true;
+          auto-indent: true;
+          highlight-current-line: true;
+          indent-on-tab: true;
+          indent-width: 2;
+          insert-spaces-instead-of-tabs: true;
+          show-line-marks: true;
+          show-line-numbers: true;
+          smart-backspace: true;
+          tab-width: 2;
+        }
       }
     }
   }
