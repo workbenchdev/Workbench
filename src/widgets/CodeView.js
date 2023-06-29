@@ -147,12 +147,12 @@ class CodeView extends Gtk.Widget {
 
   setupSearch() {
     const { buffer } = this;
+    const settings = new Source.SearchSettings();
+    settings.case_sensitive = true;
     this.search_entry.connect("search-changed", () => {
-      const settings = new Source.SearchSettings();
       settings.search_text = this.search_entry.get_text();
-      console.log(this.search_entry.get_text());
-      settings.case_sensitive = true;
-      const searchContext = new Source.SearchContext({ buffer });
+      const searchContext = new Source.SearchContext({ buffer, settings });
+      searchContext.highlight = true;
     });
   }
 }

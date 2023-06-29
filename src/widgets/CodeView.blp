@@ -9,11 +9,12 @@ template $CodeView : Gtk.Widget {
 
     SearchBar search_bar {
       show-close-button: true;
-      key-capture-widget: source_view;
+      //key-capture-widget: source_view;
       search-mode-enabled: true;
 
       SearchEntry search_entry {
         placeholder-text: _("Start searching");
+        search-delay: 300;
       }
     }
 
@@ -35,3 +36,4 @@ template $CodeView : Gtk.Widget {
   }
   }
 }
+
