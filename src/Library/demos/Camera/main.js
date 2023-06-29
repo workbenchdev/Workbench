@@ -52,30 +52,44 @@ async function on_clicked() {
   // Create elements
   const source = Gst.ElementFactory.make("pipewiresrc", "source");
   const queue = Gst.ElementFactory.make("queue", "queue"); // add a queue element
-  const video_convert = Gst.ElementFactory.make("videoconvert", "video_convert");
-
-  // Set properties
-  source.set_property("fd", pwRemote); // pwRemote is the pipewiresrc obtained from libportal
-  //ource.set_property("path", "/dev/video0");
-  // Create the sink
   const paintable_sink = Gst.ElementFactory.make(
     "gtk4paintablesink",
     "paintable_sink",
   );
 
-  // Add elements to the pipeline
-  pipeline.add(source);
-  pipeline.add(queue);
-  pipeline.add(video_convert);
-  pipeline.add(paintable_sink);
-
-  // Link the elements
-  source.link(queue);
-  queue.link(video_convert); // link queue to the video_convert
-  video_convert.link(paintable_sink);
+  let video_convert;
+  let glsinkbin;
 
   const paintable = new GObject.Value();
-  paintable_sink.get_property("paintable", paintable);
+  if (true) {
+    const gltestsrc = Gst.ElementFactory.make("gltestsrc", "gltestsrc");
+    glsinkbin = Gst.ElementFactory.make("glsinkbin", "glsinkbin");
+    glsinkbin.set_property("sink", paintable_sink);
+
+    pipeline.add(gltestsrc);
+    pipeline.add(queue);
+    pipeline.add(glsinkbin);
+    gltestsrc.link(queue);
+    queue.link(glsinkbin);
+
+    paintable_sink.get_property("paintable", paintable);
+  } else {
+    const videotestsrc = Gst.ElementFactory.make(
+      "videotestsrc",
+      "videotestsrc",
+    );
+    video_convert = Gst.ElementFactory.make("videoconvert", "video_convert");
+    pipeline.add(videotestsrc);
+    pipeline.add(queue);
+    pipeline.add(video_convert);
+    pipeline.add(paintable_sink);
+    videotestsrc.link(queue);
+    queue.link(video_convert);
+    video_convert.link(paintable_sink);
+
+    paintable_sink.get_property("paintable", paintable);
+  }
+
   video.paintable = paintable.get_object();
 
   // Start the pipeline
@@ -83,7 +97,7 @@ async function on_clicked() {
 
   // Handle cleanup on application exit
   video.connect("destroy", () => {
-    pipeline.set_statez(Gst.State.NULL);
+    pipeline.set_state(Gst.State.NULL);
   });
 
   // Set up the bus
