@@ -1,7 +1,7 @@
 {
   "id": "re.sonny.Workbench.Devel",
   "runtime": "org.gnome.Sdk",
-  "runtime-version": "44",
+  "runtime-version": "master",
   "sdk": "org.gnome.Sdk",
   "sdk-extensions": [
     "org.freedesktop.Sdk.Extension.vala",
@@ -53,13 +53,13 @@
         {
           "type": "git",
           "url": "https://gitlab.freedesktop.org/gstreamer/gst-plugins-rs",
-          "branch": "0.10"
+          "branch": "main"
         }
       ],
       "build-options": {
         "build-args": ["--share=network"]
       },
-      "build-commands": ["cargo cinstall -p gst-plugin-gtk4 --prefix=/app"]
+      "build-commands": ["cargo cinstall --features wayland,x11glx,x11egl -p gst-plugin-gtk4 --prefix=/app"]
     },
 
     {
