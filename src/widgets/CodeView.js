@@ -21,7 +21,7 @@ class CodeView extends Gtk.Widget {
   constructor({ language_id, ...params } = {}) {
     super(params);
 
-    this.previous_match = this._previous_entry;
+    this.previous_match = this._previous_match;
     this.next_match = this._next_match;
     this.overlay = this._overlay;
     this.search_entry = this._search_entry;
@@ -176,6 +176,14 @@ class CodeView extends Gtk.Widget {
       settings.search_text = this.search_entry.get_text();
       const searchContext = new Source.SearchContext({ buffer, settings });
       searchContext.highlight = true;
+    });
+    this.previous_match.connect("clicked", () => {
+      settings.search_text = this.search_entry.get_text();
+      const searchContext = new Source.SearchContext({ buffer, settings });
+    });
+    this.next_match.connect("clicked", () => {
+      settings.search_text = this.search_entry.get_text();
+      const searchContext = new Source.SearchContext({ buffer, settings });
     });
   }
 }
