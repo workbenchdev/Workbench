@@ -80,7 +80,12 @@ remove.connect("clicked", () => {
 submit.connect("clicked", () => {
   const searchString = query_for_filter.get_text();
   filter.search = searchString;
-  filter.match(searchString);
+  const res = filter.match(searchString);
+  if(res){
+    console.log("Item exists");
+  } else  {
+    console.log("Item does not exist");
+  }
 });
 
 // View
