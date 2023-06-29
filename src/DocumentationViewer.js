@@ -1,39 +1,34 @@
-import GObject from "gi://GObject"
+import GObject from "gi://GObject";
 import Gtk from "gi://Gtk";
-import Gio from "gi://Gio"
+import Gio from "gi://Gio";
 import GLib from "gi://GLib";
 import Adw from "gi://Adw";
-import WebKit from "gi://WebKit"
+import WebKit from "gi://WebKit";
 
-import {decode} from "./util.js"
+import { decode } from "./util.js";
 import resource from "./DocumentationViewer.blp";
 
-export default function DocumentationViewer({
-  window: application_window,
-  application
-  }) {
+export default function DocumentationViewer({ application }) {
   const builder = Gtk.Builder.new_from_resource(resource);
+
   const window = builder.get_object("documentation_viewer");
-
-  const container = builder.get_object("webview_container");
-  const webview = new WebKit.WebView();
+  const webview = builder.get_object("webview");
   const listbox = builder.get_object("listbox");
-
+  const search_bar = builder.get_object("search_bar");
   const button_sidebar = builder.get_object("button_sidebar");
   const button_search = builder.get_object("button_search");
   const search_entry = builder.get_object("search_entry");
-  const search_bar = builder.get_object("search_bar");
-  const back = builder.get_object("button_back");
-  const forward = builder.get_object("button_forward");
+  const button_back = builder.get_object("button_back");
+  const button_forward = builder.get_object("button_forward");
 
-  const base_path = Gio.File.new_for_path('/app/share/doc');
-  webview.load_uri(base_path.resolve_relative_path('gtk4/index.html').get_uri());
-  container.child = webview;
+  const base_path = Gio.File.new_for_path("/app/share/doc");
+  webview.load_uri(
+    base_path.resolve_relative_path("gtk4/index.html").get_uri(),
+  );
   let loaded = false;
 
-  webview.connect("load-changed", (view, load_event) => {
-    back.sensitive = webview.can_go_back();
-    forward.sensitive = webview.can_go_forward();
+  webview.connect("load-changed", (self, load_event) => {
+    updateButtons();
 
     if (load_event === WebKit.LoadEvent.FINISHED) {
       loaded = true;
@@ -43,11 +38,20 @@ export default function DocumentationViewer({
     }
   });
 
-  back.connect("clicked", () => {
+  webview.get_back_forward_list().connect("changed", () => {
+    updateButtons();
+  });
+
+  function updateButtons() {
+    button_back.sensitive = webview.can_go_back();
+    button_forward.sensitive = webview.can_go_forward();
+  }
+
+  button_back.connect("clicked", () => {
     webview.go_back();
   });
 
-  forward.connect("clicked", () => {
+  button_forward.connect("clicked", () => {
     webview.go_forward();
   });
 
@@ -96,11 +100,8 @@ export default function DocumentationViewer({
       listbox.connect("row-selected", (self, row) => {
         webview.load_uri(row.uri);
       });
-      return docs;
     })
-    .catch(logError)
-
-
+    .catch(logError);
 
   function sort(row1, row2) {
     return row1.title > row2.title;
@@ -132,7 +133,7 @@ async function getDocs(base_path) {
       docs.push({
         title: namespace,
         uri: uri,
-      })
+      });
     } catch (e) {
       // Ignore the error if the dir does not contain index.json
       if (!e.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.NOT_FOUND)) logError(e);
@@ -143,7 +144,7 @@ async function getDocs(base_path) {
 }
 
 async function readDocIndex(base_path, dir) {
-  const file = base_path.get_child(dir).get_child("index.json")
+  const file = base_path.get_child(dir).get_child("index.json");
   const [json] = await file.load_contents_async(null);
   return JSON.parse(decode(json));
 }
@@ -163,20 +164,20 @@ async function list(dir) {
   return files;
 }
 
-async function disableDocSidebar(webview){
-  try{
+async function disableDocSidebar(webview) {
+  try {
     const script = `window.document.querySelector("nav").style.display = "none"`;
     await webview.evaluate_javascript(script, -1, null, null, null);
-  } catch(e) {
+  } catch (e) {
     logError(e);
   }
 }
 
 async function enableDocSidebar(webview) {
-  try{
+  try {
     const script = `window.document.querySelector("nav").style.display = "block"`;
     await webview.evaluate_javascript(script, -1, null, null, null);
-  } catch(e) {
+  } catch (e) {
     logError(e);
   }
 }

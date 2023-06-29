@@ -57,19 +57,13 @@ Gio._promisify(Gio.DBusConnection.prototype, "close", "close_finish");
 Gio._promisify(
   WebKit.WebView.prototype,
   "evaluate_javascript",
-  "evaluate_javascript_finish"
+  "evaluate_javascript_finish",
 );
 
 Gio._promisify(
   Gio.File.prototype,
   "enumerate_children_async",
   "enumerate_children_finish",
-);
-
-Gio._promisify(
-  Gio.FileEnumerator.prototype,
-  "next_files_async",
-  "next_files_finish",
 );
 
 Gio._promisify(

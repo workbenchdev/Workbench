@@ -1,33 +1,33 @@
 using Gtk 4.0;
 using Adw 1;
 using GObject 2.0;
+using WebKit 6.0;
 
 Window documentation_viewer{
   title: _("Documentation");
   default-width: 1200;
   default-height: 800;
   hide-on-close: true;
-  titlebar:
-  Adw.HeaderBar {
-      Button button_back{
-        icon-name: "go-previous-symbolic";
-        tooltip-text: _("Back");
-        styles ["flat"]
-      }
-      Button button_forward{
-        icon-name: "go-next-symbolic";
-        tooltip-text: _("Forward");
-        styles ["flat"]
-      }
-      ToggleButton button_sidebar{
-        active: false;
-        icon-name: "dock-left-symbolic";
-        tooltip-text: _("Toggle Sidepanel");
-      }
-      ToggleButton button_search {
-        icon-name: "loupe-large-symbolic";
-        tooltip-text: _("Search");
-      }
+  titlebar: Adw.HeaderBar {
+    Button button_back{
+      icon-name: "go-previous-symbolic";
+      tooltip-text: _("Back");
+      styles ["flat"]
+    }
+    Button button_forward{
+      icon-name: "go-next-symbolic";
+      tooltip-text: _("Forward");
+      styles ["flat"]
+    }
+    ToggleButton button_sidebar{
+      active: false;
+      icon-name: "dock-left-symbolic";
+      tooltip-text: _("Toggle Sidepanel");
+    }
+    ToggleButton button_search {
+      icon-name: "loupe-large-symbolic";
+      tooltip-text: _("Search");
+    }
   };
 
 
@@ -35,7 +35,13 @@ Window documentation_viewer{
     position: 400;
 
     [end]
-    Adw.Bin webview_container{}
+    WebKit.WebView webview {
+      settings: WebKit.Settings {
+        enable-back-forward-navigation-gestures: true;
+        enable-developer-extras: true;
+        enable-smooth-scrolling: true;
+      };
+    }
 
     [start]
     Box sidebar{
@@ -53,10 +59,10 @@ Window documentation_viewer{
 
       ScrolledWindow{
         ListBox listbox {
-          margin-top:12;
-          margin-bottom:12;
-          margin-start:12;
-          margin-end:12;
+          margin-top: 12;
+          margin-bottom: 12;
+          margin-start: 12;
+          margin-end: 12;
           hexpand: true;
           vexpand: true;
           valign: start;
