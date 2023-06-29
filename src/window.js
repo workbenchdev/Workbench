@@ -79,8 +79,6 @@ export default function Window({ application }) {
 
   const placeholders = readDemo("Welcome");
 
-  const documentation_viewer = DocumentationViewer({window,application})
-
   const document_javascript = Document({
     code_view: builder.get_object("code_view_javascript"),
     placeholder: placeholders.javascript,
@@ -429,6 +427,8 @@ export default function Window({ application }) {
     window,
     application,
   });
+
+  DocumentationViewer({window, application})
 
   const text_decoder = new TextDecoder();
   async function openFile(file) {

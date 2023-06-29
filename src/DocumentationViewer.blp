@@ -3,35 +3,35 @@ using Adw 1;
 using GObject 2.0;
 
 Window documentation_viewer{
-  title: "Documentation";
+  title: _("Documentation");
   default-width: 1200;
   default-height: 800;
   hide-on-close: true;
   titlebar:
   Adw.HeaderBar {
-      Button back{
-        icon-name: "arrow1-left-symbolic";
-        tooltip-text: "Back";
+      Button button_back{
+        icon-name: "go-previous-symbolic";
+        tooltip-text: _("Back");
         styles ["flat"]
       }
-      Button forward{
-        icon-name: "arrow1-right-symbolic";
-        tooltip-text: "Forward";
+      Button button_forward{
+        icon-name: "go-next-symbolic";
+        tooltip-text: _("Forward");
         styles ["flat"]
       }
-      ToggleButton sidebar_button{
+      ToggleButton button_sidebar{
         active: false;
         icon-name: "dock-left-symbolic";
-        tooltip-text: "Toggle Sidepanel";
+        tooltip-text: _("Toggle Sidepanel");
       }
-      ToggleButton search_button {
+      ToggleButton button_search {
         icon-name: "loupe-large-symbolic";
-        tooltip-text: "Search";
+        tooltip-text: _("Search");
       }
   };
 
 
-  Paned documentation_paned{
+  Paned documentation_paned {
     position: 400;
 
     [end]
@@ -39,7 +39,7 @@ Window documentation_viewer{
 
     [start]
     Box sidebar{
-      visible: bind sidebar_button.active;
+      visible: bind button_sidebar.active;
       orientation: vertical;
       vexpand: true;
 

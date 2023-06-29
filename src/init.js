@@ -9,6 +9,7 @@ import "gi://Pango?version=1.0";
 import Gio from "gi://Gio";
 import Xdp from "gi://Xdp";
 import Source from "gi://GtkSource";
+import WebKit from "gi://WebKit";
 
 Gio._promisify(Xdp.Portal.prototype, "open_file", "open_file_finish");
 Gio._promisify(Xdp.Portal.prototype, "open_directory", "open_directory_finish");
@@ -52,3 +53,27 @@ Gio._promisify(Source.FileLoader.prototype, "load_async", "load_finish");
 
 Gio._promisify(Gio.DBusProxy, "new", "new_finish");
 Gio._promisify(Gio.DBusConnection.prototype, "close", "close_finish");
+
+Gio._promisify(
+  WebKit.WebView.prototype,
+  "evaluate_javascript",
+  "evaluate_javascript_finish"
+);
+
+Gio._promisify(
+  Gio.File.prototype,
+  "enumerate_children_async",
+  "enumerate_children_finish",
+);
+
+Gio._promisify(
+  Gio.FileEnumerator.prototype,
+  "next_files_async",
+  "next_files_finish",
+);
+
+Gio._promisify(
+  Gio.File.prototype,
+  "load_contents_async",
+  "load_contents_finish",
+);

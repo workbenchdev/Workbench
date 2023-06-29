@@ -5,34 +5,11 @@ import GLib from "gi://GLib";
 import Adw from "gi://Adw";
 import WebKit from "gi://WebKit"
 
+import {decode} from "./util.js"
 import resource from "./DocumentationViewer.blp";
 
-Gio._promisify(
-  WebKit.WebView.prototype,
-  "evaluate_javascript",
-  "evaluate_javascript_finish"
-);
-
-Gio._promisify(
-  Gio.File.prototype,
-  "enumerate_children_async",
-  "enumerate_children_finish",
-);
-
-Gio._promisify(
-  Gio.FileEnumerator.prototype,
-  "next_files_async",
-  "next_files_finish",
-);
-
-Gio._promisify(
-  Gio.File.prototype,
-  "load_contents_async",
-  "load_contents_finish",
-);
-
 export default function DocumentationViewer({
-  window:application_window,
+  window: application_window,
   application
   }) {
   const builder = Gtk.Builder.new_from_resource(resource);
@@ -42,12 +19,12 @@ export default function DocumentationViewer({
   const webview = new WebKit.WebView();
   const listbox = builder.get_object("listbox");
 
-  const sidebar_button = builder.get_object("sidebar_button");
-  const search_button = builder.get_object("search_button");
+  const button_sidebar = builder.get_object("button_sidebar");
+  const button_search = builder.get_object("button_search");
   const search_entry = builder.get_object("search_entry");
   const search_bar = builder.get_object("search_bar");
-  const back = builder.get_object("back");
-  const forward = builder.get_object("forward");
+  const back = builder.get_object("button_back");
+  const forward = builder.get_object("button_forward");
 
   const base_path = "/app/share/doc";
 
@@ -56,9 +33,12 @@ export default function DocumentationViewer({
   let loaded = false;
 
   webview.connect("load-changed", (view, load_event) => {
+    back.sensitive = webview.can_go_back();
+    forward.sensitive = webview.can_go_forward();
+
     if (load_event === WebKit.LoadEvent.FINISHED) {
       loaded = true;
-      sidebar_button.active = false;
+      button_sidebar.active = false;
     } else {
       loaded = false;
     }
@@ -72,16 +52,16 @@ export default function DocumentationViewer({
     webview.go_forward();
   });
 
-  sidebar_button.connect("toggled", () => {
+  button_sidebar.connect("toggled", () => {
     if (loaded) {
-      if (sidebar_button.active) disableDocSidebar(webview);
+      if (button_sidebar.active) disableDocSidebar(webview);
       else enableDocSidebar(webview);
     }
   });
 
-  sidebar_button.connect("toggled", () => {
+  button_sidebar.connect("toggled", () => {
     if (loaded) {
-      if (sidebar_button.active) disableDocSidebar(webview);
+      if (button_sidebar.active) disableDocSidebar(webview);
       else enableDocSidebar(webview);
     }
   });
@@ -92,13 +72,13 @@ export default function DocumentationViewer({
 
   search_bar.bind_property(
     "search-mode-enabled",
-    search_button,
+    button_search,
     "active",
     GObject.BindingFlags.BIDIRECTIONAL,
   );
 
-  search_button.connect("toggled", () => {
-    if (search_button.active) sidebar_button.active = true;
+  button_search.connect("toggled", () => {
+    if (button_search.active) button_sidebar.active = true;
   });
 
   listbox.set_sort_func(sort);
@@ -114,7 +94,7 @@ export default function DocumentationViewer({
         row.add_suffix(new Gtk.Image({ icon_name: "go-next-symbolic" }));
         listbox.append(row);
       }
-      listbox.connect("row-selected", (_, row) => {
+      listbox.connect("row-selected", (self, row) => {
         webview.load_uri(docs[row.title]);
       });
       return docs;
@@ -140,64 +120,47 @@ export default function DocumentationViewer({
     window.present();
   });
   application.add_action(action_documentation);
-  application.set_accels_for_action("app.documentation", ["<Control><Shift>D"]);
 }
 
 async function getDocs(base_path) {
-  try {
-    const docs = {};
-    const dirs = await list(base_path);
+  const docs = [];
+  const dirs = await list(base_path);
 
-    for (const dir of dirs) {
-      try {
-        const index = await readDocIndex(base_path, dir);
-        const namespace = `${index["meta"]["ns"]}-${index["meta"]["version"]}`;
-        const path = `file://${base_path}/${dir}/index.html`;
-        docs[namespace] = path;
-      } catch (e) {
-        // Ignore the error if the dir does not contain index.json
-        if (!e.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.NOT_FOUND)) logError(e);
-      }
+  for (const dir of dirs) {
+    try {
+      const index = await readDocIndex(base_path, dir);
+      const namespace = `${index["meta"]["ns"]}-${index["meta"]["version"]}`;
+      const uri = `file://${base_path}/${dir}/index.html`;
+      docs[namespace] = uri;
+    } catch (e) {
+      // Ignore the error if the dir does not contain index.json
+      if (!e.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.NOT_FOUND)) logError(e);
     }
-
-    return docs;
-  } catch (e) {
-    logError(e);
   }
+
+  return docs;
 }
 
 async function readDocIndex(base_path, dir) {
   const file = Gio.File.new_for_path(`${base_path}/${dir}/index.json`);
-  const [json, _] = await file.load_contents_async(null);
-  return JSON.parse(new TextDecoder().decode(json));
+  const [json] = await file.load_contents_async(null);
+  return JSON.parse(decode(json));
 }
 
 async function list(dir_path) {
   // List all files in dir_path
-  try {
-    const dir = Gio.File.new_for_path(dir_path);
-    const files = [];
-    const enumerator = await dir.enumerate_children_async(
-      "standard::name",
-      Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
-      GLib.PRIORITY_DEFAULT,
-      null,
-    );
-    while (true) {
-      const infos = await enumerator.next_files_async(
-        10,
-        GLib.PRIORITY_DEFAULT,
-        null,
-      );
-      if (infos.length === 0) break;
-      for (const info of infos) {
-        files.push(info.get_name());
-      }
-    }
-    return files;
-  } catch (e) {
-    logError(e);
+  const dir = Gio.File.new_for_path(dir_path);
+  const files = [];
+  const enumerator = await dir.enumerate_children_async(
+    "standard::name",
+    Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
+    GLib.PRIORITY_DEFAULT,
+    null,
+  );
+  for await (const info of enumerator) {
+    files.push(info.get_name());
   }
+  return files;
 }
 
 async function disableDocSidebar(webview){
