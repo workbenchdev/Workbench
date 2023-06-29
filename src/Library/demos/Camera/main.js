@@ -6,12 +6,11 @@ import Gst from "gi://Gst";
 
 const portal = new Xdp.Portal();
 const parent = XdpGtk.parent_new_gtk(workbench.window);
-const output = workbench.builder.get_object("video");
+const output = workbench.builder.get_object("output");
 const button = workbench.builder.get_object("button");
 
 button.connect("clicked", () => {
   if (portal.is_camera_present) {
-    button.sensitive = true;
     portal.access_camera(
       parent,
       Xdp.CameraFlags.NONE,
@@ -34,7 +33,6 @@ button.connect("clicked", () => {
     );
   } else {
     console.log("No Camera detected");
-    button.sensitive = false;
   }
 });
 
@@ -44,20 +42,22 @@ async function on_clicked() {
 
   Gst.init(null);
 
+  // Create the pipeline
+  const pipeline = new Gst.Pipeline();
+
   // Create elements
   const source = Gst.ElementFactory.make("pipewiresrc", "source");
-  const queue = Gst.ElementFactory.make("queue", "queue");
+  const queue = Gst.ElementFactory.make("queue", "queue"); // add a queue element
   const paintable_sink = Gst.ElementFactory.make(
     "gtk4paintablesink",
     "paintable_sink",
   );
   const glsinkbin = Gst.ElementFactory.make("glsinkbin", "glsinkbin");
-  const paintable = new GObject.Value();
 
-  // Create and link our pipeline
+  // Set up and Link Pipeline
 
+  source.set_property("fd", pwRemote); // pwRemote is the file descriptor obtained from libportal
   glsinkbin.set_property("sink", paintable_sink);
-  source.set_property("fd", pwRemote);
 
   pipeline.add(source);
   pipeline.add(queue);
@@ -65,15 +65,15 @@ async function on_clicked() {
   source.link(queue);
   queue.link(glsinkbin);
 
+  const paintable = new GObject.Value();
   paintable_sink.get_property("paintable", paintable);
-
   output.paintable = paintable.get_object();
 
   // Start the pipeline
   pipeline.set_state(Gst.State.PLAYING);
 
   // Handle cleanup on application exit
-  workbench.window.connect("destroy", () => {
+  output.connect("destroy", () => {
     pipeline.set_state(Gst.State.NULL);
   });
 
@@ -98,4 +98,5 @@ async function on_clicked() {
     }
   });
 }
+
 
