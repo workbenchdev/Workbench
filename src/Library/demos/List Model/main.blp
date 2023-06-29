@@ -2,64 +2,52 @@ using Gtk 4.0;
 using Adw 1;
 
 Adw.StatusPage {
-  title: "List Model";
+  title: "GList Model";
   description: _("List models are a simple interface for ordered lists of GObject instances");
 
   Box {
     orientation: vertical;
+    spacing: 24;
 
-    Box {
-      orientation: horizontal;
+    Gtk.StackSwitcher {
+      stack: stack;
       halign: center;
-      margin-bottom: 24;
-      styles ["linked"]
-
-      ToggleButton toggle_list_box {
-        active: true;
-        label: _("ListBox");
-      }
-
-      ToggleButton toggle_flow_box {
-        active: false;
-        label: _("FlowBox");
-        group: toggle_list_box;
-      }
     }
 
-    Revealer reveal_list_box {
+    Gtk.Stack stack {
       transition-duration: 300;
-      transition-type: slide_up;
-      margin-bottom: 24;
-      reveal-child: true;
+      transition-type: crossfade;
+      vexpand: true;
 
-      Box {
-        halign: center;
-
-        ListBox list_box {
-          activate-on-single-click: true;
-          selection-mode: none;
-          width-request: 360;
-
-          styles ["boxed-list"]
-        }
+      Gtk.StackPage {
+        name: "listbox";
+        title: _("List Box");
+        child:
+          Box {
+            halign: center;
+            ListBox list_box {
+              activate-on-single-click: true;
+              selection-mode: none;
+              width-request: 360;
+              styles ["boxed-list"]
+            }
+          };
       }
-    }
 
-    Revealer reveal_flow_box {
-      transition-duration: 300;
-      transition-type: slide_up;
-      margin-bottom: 24;
-
-      Box {
-        halign: center;
-
-        FlowBox flow_box {
-          width-request: 360;
-          activate-on-single-click: true;
-          orientation: horizontal;
-          selection-mode: none;
-          styles ["card"]
-        }
+      Gtk.StackPage {
+        name: "flowbox";
+        title: _("Flow Box");
+        child:
+          Box {
+            halign: center;
+            FlowBox flow_box {
+              width-request: 360;
+              activate-on-single-click: true;
+              orientation: horizontal;
+              selection-mode: none;
+              styles ["card"]
+            }
+          };
       }
     }
 
