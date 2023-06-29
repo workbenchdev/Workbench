@@ -3,7 +3,10 @@
   "runtime": "org.gnome.Sdk",
   "runtime-version": "44",
   "sdk": "org.gnome.Sdk",
-  "sdk-extensions": ["org.freedesktop.Sdk.Extension.vala"],
+  "sdk-extensions": [
+    "org.freedesktop.Sdk.Extension.vala",
+    "org.gnome.Sdk.Docs"
+  ],
   "build-options": {
     "append-path": "/usr/lib/sdk/vala/bin",
     "append-ld-library-path": "/usr/lib/sdk/vala/lib"
@@ -193,6 +196,7 @@
         }
       ],
       "post-install": [
+        "cp -a /usr/share/doc/. /app/share/doc/",
         "cp -a /usr/lib/sdk/vala/bin/. /app/bin/",
         "cp -a /usr/lib/sdk/vala/lib/. /app/lib/",
         "cp -a /usr/lib/sdk/vala/share/. /app/share/"
