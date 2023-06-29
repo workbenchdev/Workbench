@@ -17,11 +17,11 @@ const submit = workbench.builder.get_object("submit");
 const model = new Gtk.StringList();
 let item = 1;
 
-//Filter-Model
 const filter = new Gtk.StringFilter({
   ignore_case: true,
-  match_mode: Gtk.StringFilterMatchMode.SUBSTRING,
+  match_mode: Gtk.StringFilterMatchMode.EXACT,
 });
+
 const filter_model = new Gtk.FilterListModel({
   model: model,
   filter: filter,
@@ -54,6 +54,9 @@ flow_box.bind_model(model, createItemForFlowBox);
 list_box_editable.bind_model(filter_model, createItemForFilterModel);
 
 // Controller
+filter.connect("changed", () => {
+  console.log("Changed");
+});
 
 model.connect("items-changed", (list, position, removed, added) => {
   console.log(
@@ -77,8 +80,9 @@ remove.connect("clicked", () => {
 submit.connect("clicked", () => {
   const searchString = query_for_filter.get_text();
   filter.search = searchString;
-  log(filter_model);
+  filter.match(searchString);
 });
+
 // View
 stack.connect("notify::visible-child", () => {
   if (stack.visible_child === list_box) {
@@ -87,3 +91,5 @@ stack.connect("notify::visible-child", () => {
     console.log("View: Flow Box");
   }
 });
+
+console.log(filter.get_strictness());
