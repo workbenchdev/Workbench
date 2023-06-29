@@ -7,22 +7,10 @@ template $CodeView : Gtk.Widget {
   Box {
     orientation: vertical;
 
-    Revealer revealer {
-      SearchBar search_bar {
-        show-close-button: true;
-        //key-capture-widget: source_view;
-        search-mode-enabled: true;
-
-        SearchEntry search_entry {
-          placeholder-text: _("Start searching");
-          search-delay: 300;
-        }
-      }
-    }
-
-    Overlay overlay {
+    Overlay overlay {  // Add an Overlay container
       ScrolledWindow scrolled_window {
-      vexpand: true;
+        vexpand: true;
+
         GtkSource.View source_view {
           buffer: GtkSource.Buffer {};
           monospace: true;
@@ -37,7 +25,39 @@ template $CodeView : Gtk.Widget {
           tab-width: 2;
         }
       }
+      [overlay]
+      Box {
+        halign: end;
+        valign: start;
+        Revealer revealer {
+          Box {
+            orientation: horizontal;
+
+            SearchBar search_bar {
+              show-close-button: true;
+              search-mode-enabled: true;
+
+              Box {
+                SearchEntry search_entry {
+                  placeholder-text: _("Start searching");
+                  search-delay: 300;
+                  margin-end: 18;
+                }
+                Box {
+                  valign: center;
+                  styles ["linked"]
+                  Button previous_match {
+                    icon-name: "up";
+                  }
+                  Button next_match {
+                    icon-name: "down";
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
-

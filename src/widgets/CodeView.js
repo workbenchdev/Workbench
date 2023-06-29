@@ -21,6 +21,8 @@ class CodeView extends Gtk.Widget {
   constructor({ language_id, ...params } = {}) {
     super(params);
 
+    this.previous_match = this._previous_entry;
+    this.next_match = this._next_match;
     this.overlay = this._overlay;
     this.search_entry = this._search_entry;
     this.search_bar = this._search_bar;
@@ -166,9 +168,10 @@ class CodeView extends Gtk.Widget {
   }
 
   handleSearch() {
+    this.search_bar.connect_entry(this.search_entry);
     const { buffer } = this;
     const settings = new Source.SearchSettings();
-    settings.case_sensitive = true;
+    settings.case_sensitive = false;
     this.search_entry.connect("search-changed", () => {
       settings.search_text = this.search_entry.get_text();
       const searchContext = new Source.SearchContext({ buffer, settings });
@@ -199,6 +202,8 @@ export default registerClass(
       "search_entry",
       "revealer",
       "overlay",
+      "previous_match",
+      "next_match",
     ],
   },
   CodeView,
