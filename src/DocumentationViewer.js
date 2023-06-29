@@ -26,9 +26,8 @@ export default function DocumentationViewer({
   const back = builder.get_object("button_back");
   const forward = builder.get_object("button_forward");
 
-  const base_path = "/app/share/doc";
-
-  webview.load_uri(`file://${base_path}/gtk4/index.html`);
+  const base_path = Gio.File.new_for_path('/app/share/doc');
+  webview.load_uri(base_path.resolve_relative_path('gtk4/index.html').get_uri());
   container.child = webview;
   let loaded = false;
 
@@ -84,18 +83,18 @@ export default function DocumentationViewer({
   listbox.set_sort_func(sort);
   listbox.invalidate_sort();
   listbox.set_filter_func(filter);
-
   getDocs(base_path)
     .then((docs) => {
-      for (const doc in docs) {
+      for (const doc of docs) {
         const row = new Adw.ActionRow({
-          title: doc,
+          title: doc.title,
         });
+        row.uri = doc.uri;
         row.add_suffix(new Gtk.Image({ icon_name: "go-next-symbolic" }));
         listbox.append(row);
       }
       listbox.connect("row-selected", (self, row) => {
-        webview.load_uri(docs[row.title]);
+        webview.load_uri(row.uri);
       });
       return docs;
     })
@@ -125,13 +124,15 @@ export default function DocumentationViewer({
 async function getDocs(base_path) {
   const docs = [];
   const dirs = await list(base_path);
-
   for (const dir of dirs) {
     try {
       const index = await readDocIndex(base_path, dir);
       const namespace = `${index["meta"]["ns"]}-${index["meta"]["version"]}`;
-      const uri = `file://${base_path}/${dir}/index.html`;
-      docs[namespace] = uri;
+      const uri = base_path.get_child(dir).get_child("index.html").get_uri();
+      docs.push({
+        title: namespace,
+        uri: uri,
+      })
     } catch (e) {
       // Ignore the error if the dir does not contain index.json
       if (!e.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.NOT_FOUND)) logError(e);
@@ -142,14 +143,13 @@ async function getDocs(base_path) {
 }
 
 async function readDocIndex(base_path, dir) {
-  const file = Gio.File.new_for_path(`${base_path}/${dir}/index.json`);
+  const file = base_path.get_child(dir).get_child("index.json")
   const [json] = await file.load_contents_async(null);
   return JSON.parse(decode(json));
 }
 
-async function list(dir_path) {
-  // List all files in dir_path
-  const dir = Gio.File.new_for_path(dir_path);
+async function list(dir) {
+  // List all files in dir
   const files = [];
   const enumerator = await dir.enumerate_children_async(
     "standard::name",
