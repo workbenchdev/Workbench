@@ -65,14 +65,9 @@ Adw.StatusPage {
               selection-mode: none;
               styles ["card"]
             }
-            Entry query_for_filter {
+            SearchEntry search_entry {
               halign: center;
               placeholder-text: _("Start searching");
-            }
-            Button submit {
-              halign: center;
-              label: _("Search");
-              styles ["suggested-action"]
             }
           };
       }
@@ -97,6 +92,7 @@ Adw.StatusPage {
     }
   }
 }
+
 
 
 

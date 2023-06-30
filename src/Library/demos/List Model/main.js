@@ -10,18 +10,23 @@ const flow_box = workbench.builder.get_object("flow_box");
 const add = workbench.builder.get_object("add");
 const remove = workbench.builder.get_object("remove");
 const list_box_editable = workbench.builder.get_object("list_box_editable");
-const query_for_filter = workbench.builder.get_object("query_for_filter");
-const submit = workbench.builder.get_object("submit");
+const search_entry = workbench.builder.get_object("search_entry");
 
 //Model
 const model = new Gtk.StringList();
 let item = 1;
 
+//Filter-Model
+const search_expression = Gtk.PropertyExpression.new(
+  Gtk.StringObject,
+  null,
+  "string",
+);
 const filter = new Gtk.StringFilter({
+  expression: search_expression,
   ignore_case: true,
-  match_mode: Gtk.StringFilterMatchMode.EXACT,
+  match_mode: Gtk.StringFilterMatchMode.SUBSTRING,
 });
-
 const filter_model = new Gtk.FilterListModel({
   model: model,
   filter: filter,
@@ -54,9 +59,6 @@ flow_box.bind_model(model, createItemForFlowBox);
 list_box_editable.bind_model(filter_model, createItemForFilterModel);
 
 // Controller
-filter.connect("changed", () => {
-  console.log("Changed");
-});
 
 model.connect("items-changed", (list, position, removed, added) => {
   console.log(
@@ -75,17 +77,15 @@ remove.connect("clicked", () => {
   const n_items = model.get_n_items();
   model.remove(n_items - 1);
 });
+search_entry.connect("search-changed", () => {
+  console.log("Search terms changed");
 
-// Removes all widgets if searchString does'nt exist and shows only the searchString if it matches filter;
-submit.connect("clicked", () => {
-  const searchString = query_for_filter.get_text();
-  filter.search = searchString;
-  const res = filter.match(searchString);
-  if(res){
-    console.log("Item exists");
-  } else  {
-    console.log("Item does not exist");
-  }
+  filter.search = search_entry.get_text();
+
+  /*  This will not work, because you are passing a string
+   where a GObject is expected. Calling this function is
+   also what the filter does for you, so there's no need
+   search_filter.match(editable.get_text()); */
 });
 
 // View
@@ -96,5 +96,3 @@ stack.connect("notify::visible-child", () => {
     console.log("View: Flow Box");
   }
 });
-
-console.log(filter.get_strictness());
