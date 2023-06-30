@@ -83,10 +83,10 @@ async function on_clicked() {
   bus.add_signal_watch();
   bus.connect("message", (bus, message) => {
     // Check the message type
-    const messageType = message.type;
+    const message_type = message.type;
 
     // Handle different message types
-    switch (messageType) {
+    switch (message_type) {
       case Gst.MessageType.ERROR: {
         const errorMessage = message.parse_error();
         console.error(errorMessage[0].toString());
