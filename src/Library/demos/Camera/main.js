@@ -1,3 +1,5 @@
+// This demo requires the "--device=all" permission
+
 import Gtk from "gi://Gtk";
 import Xdp from "gi://Xdp";
 import XdpGtk from "gi://XdpGtk4";
@@ -55,7 +57,6 @@ async function on_clicked() {
   const glsinkbin = Gst.ElementFactory.make("glsinkbin", "glsinkbin");
 
   // Set up and Link Pipeline
-
   source.set_property("fd", pwRemote); // pwRemote is the file descriptor obtained from libportal
   glsinkbin.set_property("sink", paintable_sink);
 
