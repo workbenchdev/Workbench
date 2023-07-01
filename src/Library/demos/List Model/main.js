@@ -41,10 +41,10 @@ function createItemForListBox(listItem) {
 }
 
 function createItemForFlowBox(listItem) {
-  const listRow = new Adw.ActionRow({
+  const listBox = new Adw.ActionRow({
     title: listItem.string,
   });
-  return listRow;
+  return listBox;
 }
 
 function createItemForFilterModel(listItem) {
@@ -73,26 +73,17 @@ add.connect("clicked", () => {
   model.append(new_item);
   item++;
 });
+
 remove.connect("clicked", () => {
   const n_items = model.get_n_items();
   model.remove(n_items - 1);
 });
+
 search_entry.connect("search-changed", () => {
-  console.log("Search terms changed");
-
   filter.search = search_entry.get_text();
-
-  /*  This will not work, because you are passing a string
-   where a GObject is expected. Calling this function is
-   also what the filter does for you, so there's no need
-   search_filter.match(editable.get_text()); */
 });
 
 // View
 stack.connect("notify::visible-child", () => {
-  if (stack.visible_child === list_box) {
-    console.log("View: List Box");
-  } else {
-    console.log("View: Flow Box");
-  }
+  console.log("View changed");
 });

@@ -2,7 +2,7 @@ using Gtk 4.0;
 using Adw 1;
 
 Adw.StatusPage {
-  title: "GList Model";
+  title: "List Model";
   description: _("List models are a simple interface for ordered lists of GObject instances");
 
   Box {
@@ -26,9 +26,8 @@ Adw.StatusPage {
           Box {
             halign: center;
             ListBox list_box {
-              activate-on-single-click: true;
               selection-mode: none;
-              width-request: 360;
+              width-request: 240;
               styles ["boxed-list"]
             }
           };
@@ -41,8 +40,7 @@ Adw.StatusPage {
           Box {
             halign: center;
             FlowBox flow_box {
-              width-request: 360;
-              activate-on-single-click: true;
+              width-request: 240;
               orientation: horizontal;
               selection-mode: none;
               styles ["card"]
@@ -57,17 +55,19 @@ Adw.StatusPage {
         child:
           Box {
             orientation: vertical;
-            spacing: 24;
+            spacing: 12;
             halign: center;
-            ListBox list_box_editable {
-              width-request: 360;
-              activate-on-single-click: true;
-              selection-mode: none;
-              styles ["card"]
-            }
+
             SearchEntry search_entry {
               halign: center;
               placeholder-text: _("Start searching");
+            }
+
+            ListBox list_box_editable {
+              width-request: 240;
+              activate-on-single-click: true;
+              selection-mode: none;
+              styles ["card"]
             }
           };
       }
@@ -92,9 +92,3 @@ Adw.StatusPage {
     }
   }
 }
-
-
-
-
-
-
