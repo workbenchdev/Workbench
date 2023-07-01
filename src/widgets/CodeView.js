@@ -153,15 +153,18 @@ class CodeView extends Gtk.Widget {
   revealSearch() {
     const controller_key = new Gtk.EventControllerKey();
     this.source_view.add_controller(controller_key);
-    controller_key.connect("key-pressed", (controller, keyval, keycode) => {
-      if (
-        (Gdk.ModifierType.CONTROL_MASK && keyval === Gdk.KEY_f) ||
-        (Gdk.ModifierType.CONTROL_MASK && keyval === Gdk.KEY_F)
-      ) {
-        this.revealer.reveal_child = true;
-        this.search_bar.search_mode_enabled = true;
-      }
-    });
+    controller_key.connect(
+      "key-pressed",
+      (controller, keyval, keycode, state) => {
+        if (
+          (state & Gdk.ModifierType.CONTROL_MASK && keyval === Gdk.KEY_f) ||
+          (state & Gdk.ModifierType.CONTROL_MASK && keyval === Gdk.KEY_F)
+        ) {
+          this.revealer.reveal_child = true;
+          this.search_bar.search_mode_enabled = true;
+        }
+      },
+    );
   }
 
   handleSearch() {
