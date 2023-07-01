@@ -20,7 +20,7 @@ buttons.forEach((button_name) => {
 
   button.connect("clicked", () => {
     if (controls.media_stream) {
-      controls.media_stream.stream_ended();
+      controls.media_stream.playing = false;
     }
     controls.media_stream = Gtk.MediaFile.new_for_file(file);
     controls.media_stream.play();
