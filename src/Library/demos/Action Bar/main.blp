@@ -1,0 +1,29 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: _("Action Bar");
+  description: _("A widget designed to present contextual actions.");
+
+  Box {
+    orientation: vertical;
+
+    ActionBar action_bar {
+      halign: center;
+      revealed: false;
+    }
+
+    Button show_content {
+      halign: center;
+      margin-bottom: 18;
+      margin-top: 24;
+      label: _("Show");
+      styles ["suggested-action", "pill"]
+    }
+
+    LinkButton {
+      label: _("API Reference");
+      uri: _("https://docs.gtk.org/gtk4/class.ActionBar.html");
+    }
+  }
+}
