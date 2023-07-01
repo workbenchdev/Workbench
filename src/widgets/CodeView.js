@@ -180,7 +180,23 @@ class CodeView extends Gtk.Widget {
     this.previous_match.connect("clicked", () => {
       settings.search_text = this.search_entry.get_text();
       const searchContext = new Source.SearchContext({ buffer, settings });
+
+      const currentIter = this.buffer.get_iter_at_mark(
+        this.buffer.get_insert(),
+      );
+
+      const [found, iter] = searchContext.forward(currentIter);
+      if (found) {
+        // Scroll to the previous match
+        this.buffer.place_cursor(iter);
+        this.buffer.move_mark_by_name("insert", iter);
+        // this.source_view.scroll_mark_onscreen(iter);
+      } else {
+        // Handle no previous match found
+        console.log("No previous match found.");
+      }
     });
+
     this.next_match.connect("clicked", () => {
       settings.search_text = this.search_entry.get_text();
       const searchContext = new Source.SearchContext({ buffer, settings });
