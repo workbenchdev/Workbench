@@ -5,11 +5,16 @@
   "sdk": "org.gnome.Sdk",
   "sdk-extensions": [
     "org.freedesktop.Sdk.Extension.vala",
-    "org.gnome.Sdk.Docs"
+    "org.gnome.Sdk.Docs",
+    "org.freedesktop.Sdk.Extension.rust-stable"
   ],
   "build-options": {
     "append-path": "/usr/lib/sdk/vala/bin",
-    "append-ld-library-path": "/usr/lib/sdk/vala/lib"
+    "append-ld-library-path": "/usr/lib/sdk/vala/lib",
+    "env": {
+      "CARGO_HOME": "/run/build/cargo-c/cargo"
+    },
+    "append-path": "/usr/lib/sdk/rust-stable/bin"
   },
   "command": "workbench",
   "finish-args": [
@@ -69,6 +74,32 @@
           "url": "https://files.pythonhosted.org/packages/c1/53/aa5175b30b36e0095caeb2ea89a677d6aca9df1836b528df1682ca02fd98/gi_docgen-2022.1-py2.py3-none-any.whl",
           "sha256": "25a13fcbe0e644e9738d583e0014b7819c5a8cecfba63d399a294a07ce290531"
         }
+      ]
+    },
+    {
+      "name": "cargo-c",
+      "buildsystem": "simple",
+      "build-commands": ["cargo install cargo-c --root /app"],
+      "build-options": {
+        "build-args": ["--share=network"]
+      },
+      "cleanup": ["*"]
+    },
+    {
+      "name": "gst-plugins-rs",
+      "buildsystem": "simple",
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://gitlab.freedesktop.org/gstreamer/gst-plugins-rs",
+          "branch": "main"
+        }
+      ],
+      "build-options": {
+        "build-args": ["--share=network"]
+      },
+      "build-commands": [
+        "cargo cinstall --features wayland,x11glx,x11egl -p gst-plugin-gtk4 --prefix=/app"
       ]
     },
     {
