@@ -1,7 +1,7 @@
 {
   "name": "Picture",
   "category": "user_interface",
-  "description": "A widget that displays images at their natural sizes",
-  "panels": ["code", "preview"],
+  "description": "Display images at their natural sizes",
+  "panels": ["code", "ui", "preview"],
   "autorun": true
 }
