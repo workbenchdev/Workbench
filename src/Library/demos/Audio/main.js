@@ -3,12 +3,9 @@ import Gio from "gi://Gio";
 
 const controls = workbench.builder.get_object("controls");
 
-const buttons = ["dog", "cat", "cow", "bear", "music"];
+const buttons = ["dog", "music"];
 const audio_files = {
   dog: "Library/demos/Audio/Dog.ogg",
-  cat: "Library/demos/Audio/Cat.ogg",
-  cow: "Library/demos/Audio/Cow.ogg",
-  bear: "Library/demos/Audio/Bear.ogg",
   music: "Library/demos/Audio/Chopin-nocturne-op-9-no-2.ogg",
 };
 
