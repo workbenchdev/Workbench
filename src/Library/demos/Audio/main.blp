@@ -9,11 +9,9 @@ Adw.StatusPage {
     orientation: vertical;
     halign: fill;
 
-		MediaControls controls {}
-
-    Label {
-      margin-top: 12;
-      label: _("Audio Playback Buttons");
+    Adw.Clamp {
+      maximum-size: 400;
+      MediaControls controls {}
     }
 
     Box {
@@ -22,24 +20,12 @@ Adw.StatusPage {
       halign: center;
       styles ["linked"]
 
-      Button cat_button {
-        icon-name: "cat-symbolic";
-      }
-
-      Button cow_button {
-        icon-name: "cow-symbolic";
-      }
-
       Button dog_button {
-        icon-name: "dog-symbolic";
-      }
-
-      Button bear_button {
-        icon-name: "bear-symbolic";
+        label: _("play sound");
       }
 
        Button music_button {
-        icon-name: "music-note-symbolic";
+        label: _("play music");
       }
 
     }
