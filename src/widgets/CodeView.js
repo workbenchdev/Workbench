@@ -169,37 +169,40 @@ class CodeView extends Gtk.Widget {
 
   handleSearch() {
     this.search_bar.connect_entry(this.search_entry);
-    const { buffer } = this;
-    const settings = new Source.SearchSettings();
-    settings.case_sensitive = false;
-    this.search_entry.connect("search-changed", () => {
-      settings.search_text = this.search_entry.get_text();
-      const searchContext = new Source.SearchContext({ buffer, settings });
-      searchContext.highlight = true;
+    const { buffer, source_view } = this;
+    const search_settings = new Source.SearchSettings({
+      case_sensitive: false,
     });
+
+    const search_context = new Source.SearchContext({
+      buffer,
+      settings: search_settings,
+      highlight: true,
+    });
+
+    function selectSearchOccurence(match_start, match_end) {
+      buffer.select_range(match_start, match_end);
+      source_view.scroll_mark_onscreen(buffer.get_insert());
+    }
+
+    this.search_entry.connect("search-changed", () => {
+      search_settings.search_text = this.search_entry.get_text();
+    });
+
     this.previous_match.connect("clicked", () => {
-      settings.search_text = this.search_entry.get_text();
-      const searchContext = new Source.SearchContext({ buffer, settings });
-
-      const currentIter = this.buffer.get_iter_at_mark(
-        this.buffer.get_insert(),
-      );
-
-      const [found, iter] = searchContext.forward(currentIter);
-      if (found) {
-        // Scroll to the previous match
-        this.buffer.place_cursor(iter);
-        this.buffer.move_mark_by_name("insert", iter);
-        // this.source_view.scroll_mark_onscreen(iter);
-      } else {
-        // Handle no previous match found
-        console.log("No previous match found.");
-      }
+      const [, iter] = buffer.get_selection_bounds();
+      const [found, match_start, match_end] = search_context.backward(iter);
+      if (!found) return;
+      // log(iter.get_offset(), match_start.get_offset(), match_end.get_offset());
+      selectSearchOccurence(match_start, match_end);
     });
 
     this.next_match.connect("clicked", () => {
-      settings.search_text = this.search_entry.get_text();
-      const searchContext = new Source.SearchContext({ buffer, settings });
+      const [, , iter] = buffer.get_selection_bounds();
+      const [found, match_start, match_end] = search_context.forward(iter);
+      if (!found) return;
+      // log(iter.get_offset(), match_start.get_offset(), match_end.get_offset());
+      selectSearchOccurence(match_start, match_end);
     });
   }
 }
