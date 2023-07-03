@@ -85,6 +85,11 @@ remove.connect("clicked", () => {
   const selectedRow = list_box_editable.get_selected_row();
   const index = selectedRow.get_index();
   model.remove(index);
+
+  const items = model.get_n_items();
+  if (items === 0) {
+    remove.sensitive = false;
+  }
 });
 
 search_entry.connect("search-changed", () => {
@@ -95,4 +100,8 @@ search_entry.connect("search-changed", () => {
 // View
 stack.connect("notify::visible-child", () => {
   console.log("View changed");
+});
+
+list_box_editable.connect("row-selected", () => {
+  remove.sensitive = true;
 });
