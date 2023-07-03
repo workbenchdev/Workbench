@@ -98,6 +98,10 @@ async function handleCamera() {
         console.log("End of stream");
         break;
       }
+      default: {
+        console.log(`Unhandled message type: ${message_type}`);
+        break;
+      }
     }
   });
 }
