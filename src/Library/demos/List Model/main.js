@@ -16,6 +16,14 @@ const search_entry = workbench.builder.get_object("search_entry");
 const model = new Gtk.StringList();
 let item = 1;
 
+model.connect("items-changed", (list, position, removed, added) => {
+  console.log(
+    `position: ${position}, Item removed? ${Boolean(
+      removed,
+    )}, Item added? ${Boolean(added)}`,
+  );
+});
+
 //Filter-Model
 const search_expression = Gtk.PropertyExpression.new(
   Gtk.StringObject,
@@ -41,8 +49,16 @@ function createItemForListBox(listItem) {
 }
 
 function createItemForFlowBox(listItem) {
-  const listBox = new Adw.ActionRow({
-    title: listItem.string,
+  const listBox = new Adw.Bin({
+    width_request: 96,
+    height_request: 96,
+    css_classes: ["card"],
+    child: new Gtk.Label({
+      label: listItem.string,
+      halign: Gtk.Align.CENTER,
+      hexpand: true,
+      valign: Gtk.Align.CENTER,
+    }),
   });
   return listBox;
 }
@@ -59,15 +75,6 @@ flow_box.bind_model(model, createItemForFlowBox);
 list_box_editable.bind_model(filter_model, createItemForFilterModel);
 
 // Controller
-
-model.connect("items-changed", (list, position, removed, added) => {
-  console.log(
-    `position: ${position}, Item removed? ${Boolean(
-      removed,
-    )}, Item added? ${Boolean(added)}`,
-  );
-});
-
 add.connect("clicked", () => {
   const new_item = `Item ${item}`;
   model.append(new_item);
