@@ -43,7 +43,7 @@ button.connect("clicked", () => {
 });
 
 async function handleCamera() {
-  const pw_remote = await portal.open_pipewire_remote_for_camera();
+  const fd_pipewire_remote = await portal.open_pipewire_remote_for_camera();
   console.log("Pipewire remote opened for camera");
 
   // Create the pipeline
@@ -59,7 +59,7 @@ async function handleCamera() {
   const glsinkbin = Gst.ElementFactory.make("glsinkbin", "glsinkbin");
 
   // Set up and Link Pipeline
-  source.set_property("fd", pw_remote); // pw_remote is the file descriptor obtained from libportal
+  source.set_property("fd", fd_pipewire_remote); // fd_pipewire_remote is the file descriptor obtained from libportal
   glsinkbin.set_property("sink", paintable_sink);
 
   pipeline.add(source);
