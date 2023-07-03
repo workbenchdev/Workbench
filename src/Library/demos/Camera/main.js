@@ -1,10 +1,12 @@
-// This demo requires the "--device=all" permission
-
 import Gtk from "gi://Gtk";
+import Gio from "gi://Gio";
 import Xdp from "gi://Xdp";
 import XdpGtk from "gi://XdpGtk4";
 import GObject from "gi://GObject";
 import Gst from "gi://Gst";
+Gst.init(null);
+
+Gio._promisify(Xdp.Portal.prototype, "access_camera", "access_camera_finish");
 
 const portal = new Xdp.Portal();
 const parent = XdpGtk.parent_new_gtk(workbench.window);
@@ -12,37 +14,37 @@ const output = workbench.builder.get_object("output");
 const button = workbench.builder.get_object("button");
 
 button.connect("clicked", () => {
-  if (portal.is_camera_present) {
-    portal.access_camera(
-      parent,
-      Xdp.CameraFlags.NONE,
-      null,
-      async (portal, result) => {
-        try {
-          if (portal.access_camera_finish(result)) {
-            try {
-              await on_clicked();
-            } catch (error) {
-              console.error("Error in on_clicked:", error);
-            }
-          } else {
-            console.log("Permission denied");
-          }
-        } catch (error) {
-          console.error("Failed to request camera access:", error);
-        }
-      },
-    );
-  } else {
+  if (!portal.is_camera_present()) {
     console.log("No Camera detected");
+    return;
   }
+
+  portal.access_camera(
+    parent,
+    Xdp.CameraFlags.NONE,
+    null,
+    async (portal, result) => {
+      try {
+        if (!portal.access_camera_finish(result)) {
+          console.log("Permission denied");
+          return;
+        }
+
+        try {
+          await handleCamera();
+        } catch (error) {
+          console.error("Error in handleCamera:", error);
+        }
+      } catch (error) {
+        console.error("Failed to request camera access:", error);
+      }
+    },
+  );
 });
 
-async function handleCamera () {
+async function handleCamera() {
   const pw_remote = await portal.open_pipewire_remote_for_camera();
   console.log("Pipewire remote opened for camera");
-
-  Gst.init(null);
 
   // Create the pipeline
   const pipeline = new Gst.Pipeline();
@@ -99,5 +101,4 @@ async function handleCamera () {
     }
   });
 }
-
 
