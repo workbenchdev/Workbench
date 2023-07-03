@@ -82,12 +82,14 @@ add.connect("clicked", () => {
 });
 
 remove.connect("clicked", () => {
-  const n_items = model.get_n_items();
-  model.remove(n_items - 1);
+  const selectedRow = list_box_editable.get_selected_row();
+  const index = selectedRow.get_index();
+  model.remove(index);
 });
 
 search_entry.connect("search-changed", () => {
-  filter.search = search_entry.get_text();
+  const searchText = search_entry.get_text();
+  filter.search = searchText;
 });
 
 // View
