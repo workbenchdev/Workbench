@@ -38,7 +38,7 @@ button.connect("clicked", () => {
   }
 });
 
-async function on_clicked() {
+async function handleCamera () {
   const pw_remote = await portal.open_pipewire_remote_for_camera();
   console.log("Pipewire remote opened for camera");
 

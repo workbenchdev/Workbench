@@ -1,7 +1,7 @@
 {
   "name": "Camera",
   "category": "platform",
-  "description": "Access your Camera",
+  "description": "Access the Camera",
   "panels": [
     "code",
     "preview"
