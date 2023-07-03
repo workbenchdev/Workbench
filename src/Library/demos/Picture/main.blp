@@ -8,18 +8,19 @@ Adw.StatusPage {
   child: Box {
     orientation: vertical;
 
-    Picture picture {
-      halign:center;
-      valign:center;
-      can-shrink: bind can_shrink_switch.active;
+    LinkButton {
+      label: _("API Reference");
+      uri: "https://docs.gtk.org/gtk4/class.Picture.html";
+      margin-bottom : 12;
     }
 
     Adw.Clamp {
       maximum-size: 500;
 
-      Adw.PreferencesGroup {
-        title: _("Picture Properties");
+      ListBox {
+        styles ["boxed-list"]
         margin-top : 12;
+        margin-bottom : 12;
 
         Adw.ComboRow content_fit_row {
           title: _("Content Fit");
@@ -37,13 +38,14 @@ Adw.StatusPage {
             active: true;
           }
         }
-
-        LinkButton {
-          label: _("API Reference");
-          uri: "https://docs.gtk.org/gtk4/class.Picture.html";
-          margin-top : 12;
-        }
       }
+    }
+
+     Picture picture {
+      halign:center;
+      valign:center;
+      can-shrink: bind can_shrink_switch.active;
+      content-fit: bind content_fit_row.selected;
     }
   };
 }

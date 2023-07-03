@@ -11,6 +11,3 @@ const file = Gio.File.new_for_path(pkg.pkgdatadir).resolve_relative_path(
 picture.file = file;
 picture.content_fit = content_fit_row.selected;
 
-content_fit_row.connect("notify::selected", () => {
-  picture.content_fit = content_fit_row.selected;
-});
