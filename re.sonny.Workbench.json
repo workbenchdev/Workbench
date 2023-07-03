@@ -92,7 +92,7 @@
         {
           "type": "git",
           "url": "https://gitlab.freedesktop.org/gstreamer/gst-plugins-rs",
-          "branch": "main"
+          "branch": "0.10"
         }
       ],
       "build-options": {
