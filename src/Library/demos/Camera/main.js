@@ -43,7 +43,7 @@ button.connect("clicked", () => {
 });
 
 async function handleCamera() {
-  const fd_pipewire_remote = await portal.open_pipewire_remote_for_camera();
+  const fd_pipewire_remote = portal.open_pipewire_remote_for_camera();
   console.log("Pipewire remote opened for camera");
 
   // Create the pipeline
