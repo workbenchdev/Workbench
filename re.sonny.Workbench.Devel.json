@@ -22,7 +22,6 @@
     "--socket=fallback-x11",
     "--socket=wayland",
     "--device=dri",
-    "--device=all",
     "--share=network"
   ],
   "cleanup": [
@@ -93,14 +92,14 @@
         {
           "type": "git",
           "url": "https://gitlab.freedesktop.org/gstreamer/gst-plugins-rs",
-          "branch": "main"
+          "branch": "0.10"
         }
       ],
       "build-options": {
         "build-args": ["--share=network"]
       },
       "build-commands": [
-        "cargo cinstall --features wayland,x11glx,x11egl -p gst-plugin-gtk4 --prefix=/app"
+        "cargo cinstall --features wayland,x11egl -p gst-plugin-gtk4 --prefix=/app"
       ]
     },
     {
