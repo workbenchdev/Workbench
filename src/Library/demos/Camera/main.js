@@ -99,7 +99,6 @@ async function handleCamera() {
         break;
       }
       default: {
-        console.log(`Unhandled message type: ${message_type}`);
         break;
       }
     }
