@@ -87,11 +87,11 @@ gesture_click.connect("released", (gesture, n_press, x, y) => {
   }
 });
 
-const single = new Gtk.GestureSwipe();
+const gesture_swipe = new Gtk.GestureSwipe();
 
-stack.add_controller(single);
+stack.add_controller(gesture_swipe);
 
-single.connect("swipe", (controller, vel_x, vel_y) => {
+gesture_swipe.connect("swipe", (controller, vel_x, vel_y) => {
   if (vel_x > 0) {
     stack.set_visible_child_name("pic1");
   } else {
