@@ -1,29 +1,50 @@
 using Gtk 4.0;
 using Adw 1;
 
-Adw.StatusPage {
+Gtk.Window {
+  default-width: 720;
+  default-height: 360;
   title: _("Action Bar");
-  description: _("A widget designed to present contextual actions.");
 
-  Box {
-    orientation: vertical;
+  Adw.StatusPage {
+    title: "Action Bar";
+    description: _("ActionBar is designed to present contextual actions.");
 
-    ActionBar action_bar {
-      halign: center;
-      revealed: false;
-    }
+    Box {
+      orientation: vertical;
+      spacing: 18;
 
-    Button show_content {
-      halign: center;
-      margin-bottom: 18;
-      margin-top: 24;
-      label: _("Show");
-      styles ["suggested-action", "pill"]
-    }
+      Button show_content {
+        halign: center;
+        label: _("Show Action Bar");
+        styles ["pill", "suggested-action"]
+      }
 
-    LinkButton {
-      label: _("API Reference");
-      uri: _("https://docs.gtk.org/gtk4/class.ActionBar.html");
+      ActionBar action_bar {
+        revealed: false;
+        margin-top: 24;
+
+          [start]
+          Button start_widget {
+            icon-name: "check-round-outline-whole-symbolic";
+          }
+
+          [center]
+          DropDown {
+            model: StringList {
+              strings ["Center Widget","I", "am", "center", "widget"]
+            };
+          }
+
+          [end]
+          Button end_widget {
+            icon-name: "cross-filled-symbolic";
+          }
+      }
+      LinkButton {
+        label: _("API Reference");
+        uri: "https://docs.gtk.org/gtk4/class.ActionBar.html";
+      }
     }
   }
 }
