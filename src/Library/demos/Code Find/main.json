@@ -1,0 +1,7 @@
+{
+  "name": "Code Find",
+  "category": "platform",
+  "description": "Implement a codefind feature",
+  "panels": ["code", "preview"],
+  "autorun": true
+}

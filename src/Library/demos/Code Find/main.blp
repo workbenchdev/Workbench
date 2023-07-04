@@ -1,0 +1,54 @@
+using Gtk 4.0;
+using GtkSource 5;
+using Adw 1;
+
+Adw.StatusPage {
+  title: "About Window";
+  description: _("A window showing information about the application.");
+
+  Box {
+    orientation: vertical;
+
+    Overlay overlay {
+      ScrolledWindow scroll_view {
+        height-request: 360;
+      }
+      [overlay]
+      Box {
+        halign:end;
+        valign: start;
+
+        Revealer revealer {
+          Box {
+            orientation: horizontal;
+
+            SearchBar search_bar {
+              show-close-button: true;
+              search-mode-enabled: false;
+
+              Box {
+                SearchEntry search_entry {
+                  placeholder-text: _("Start searching");
+                  search-delay: 300;
+                  margin-end: 18;
+                }
+                Box {
+                  valign: center;
+                  styles ["linked"]
+                  Button previous_match {
+                    icon-name: "up";
+                  }
+                  Button next_match {
+                    icon-name: "down";
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
