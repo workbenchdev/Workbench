@@ -1,10 +1,14 @@
 using Gtk 4.0;
 using Adw 1;
 
-Gtk.Window {
-  default-width: 720;
-  default-height: 360;
-  title: _("Action Bar");
+Box {
+  height-request: 72;
+  width-request: 36;
+  halign: center;
+  margin-top: 48;
+  margin-bottom: 48;
+  orientation: vertical;
+  styles ["card"]
 
   Adw.StatusPage {
     title: "Action Bar";
@@ -13,40 +17,39 @@ Gtk.Window {
     Box {
       orientation: vertical;
       spacing: 18;
+      vexpand:true;
 
       Button show_content {
         halign: center;
         label: _("Show Action Bar");
         styles ["pill", "suggested-action"]
       }
-
       LinkButton {
         label: _("API Reference");
         uri: "https://docs.gtk.org/gtk4/class.ActionBar.html";
       }
-
-      ActionBar action_bar {
-        revealed: false;
-        margin-top: 12;
-
-          [start]
-          Button start_widget {
-            icon-name: "check-round-outline-whole-symbolic";
-          }
-
-          [center]
-          DropDown {
-            model: StringList {
-              strings ["Center Widget","I", "am", "center", "widget"]
-            };
-          }
-
-          [end]
-          Button end_widget {
-            icon-name: "cross-filled-symbolic";
-          }
-      }
     }
   }
+  ActionBar action_bar {
+    revealed: false;
+    valign: end;
+
+    [start]
+    Button start_widget {
+      icon-name: "check-round-outline-whole-symbolic";
+    }
+
+    [center]
+    DropDown {
+      model: StringList {
+        strings ["Center Widget","I", "am", "center", "widget"]
+        };
+    }
+
+    [end]
+    Button end_widget {
+      icon-name: "cross-filled-symbolic";
+      }
+    }
 }
 
