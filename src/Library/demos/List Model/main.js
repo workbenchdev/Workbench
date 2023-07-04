@@ -13,7 +13,9 @@ const list_box_editable = workbench.builder.get_object("list_box_editable");
 const search_entry = workbench.builder.get_object("search_entry");
 
 //Model
-const model = new Gtk.StringList();
+const model = new Gtk.StringList({
+  strings: ["Default Item 1", "Default Item 2", "Default Item 3"],
+});
 let item = 1;
 
 model.connect("items-changed", (list, position, removed, added) => {
@@ -50,9 +52,10 @@ function createItemForListBox(listItem) {
 
 function createItemForFlowBox(listItem) {
   const listBox = new Adw.Bin({
-    width_request: 96,
-    height_request: 96,
+    width_request: 144,
+    height_request: 144,
     css_classes: ["card"],
+    valign: Gtk.Align.START,
     child: new Gtk.Label({
       label: listItem.string,
       halign: Gtk.Align.CENTER,
@@ -76,7 +79,7 @@ list_box_editable.bind_model(filter_model, createItemForFilterModel);
 
 // Controller
 add.connect("clicked", () => {
-  const new_item = `Item ${item}`;
+  const new_item = `New Item ${item}`;
   model.append(new_item);
   item++;
 });
@@ -85,11 +88,6 @@ remove.connect("clicked", () => {
   const selectedRow = list_box_editable.get_selected_row();
   const index = selectedRow.get_index();
   model.remove(index);
-
-  const items = model.get_n_items();
-  if (items === 0) {
-    remove.sensitive = false;
-  }
 });
 
 search_entry.connect("search-changed", () => {
@@ -103,5 +101,5 @@ stack.connect("notify::visible-child", () => {
 });
 
 list_box_editable.connect("row-selected", () => {
-  remove.sensitive = true;
+  remove.sensitive = list_box_editable.get_selected_row() !== null;
 });
