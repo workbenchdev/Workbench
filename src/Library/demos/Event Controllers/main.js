@@ -41,9 +41,6 @@ key_controller.connect("key-released", (controller, keyval, keycode, state) => {
   }
 });
 
-// Gesture controller to detect when the button is clicked
-const gesture_primary_click = new Gtk.GestureClick();
-
 ctrl_button.connect("clicked", () => {
   if (ctrl_pressed) {
     ctrl_button.label = _("Ctrl+Click detected");
