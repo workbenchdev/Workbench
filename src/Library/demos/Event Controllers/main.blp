@@ -59,14 +59,19 @@ Adw.StatusPage page {
       styles ["heading"]
     }
 
+    Gtk.StackSwitcher {
+      stack: stack;
+
+    }
 
     Gtk.Stack stack {
       transition-type: slide_left_right;
       valign:center;
       halign:center;
       margin-top: 12;
-      Gtk.StackPage{
-        title: _("pic1");
+
+      Gtk.StackPage {
+        title: _("Picture 1");
         name: "pic1";
         child: Picture pic1 {
           can-shrink: true;
@@ -75,7 +80,7 @@ Adw.StatusPage page {
       }
 
       Gtk.StackPage {
-        title: _("pic2");
+        title: _("Picture 2");
         name: "pic2";
         child: Picture pic2 {
           can-shrink: true;
