@@ -8,6 +8,7 @@ Adw.StatusPage page {
   child: Box {
     orientation: vertical;
     halign:center;
+    spacing: 12;
 
     Label {
       label: _("EventControllerKey Example");
@@ -15,21 +16,18 @@ Adw.StatusPage page {
     }
 
     Gtk.Button ctrl_button {
-      margin-top: 12;
       label: _("Ctrl+Click me!");
       width-request: 200;
       halign: center;
     }
 
     Label {
-      margin-top: 12;
       label: _("GestureClick Example");
       styles ["heading"]
     }
 
    Frame gesture_frame {
      halign: center;
-     margin-top: 12;
 
       Box {
         halign:center;
@@ -68,7 +66,7 @@ Adw.StatusPage page {
       halign:center;
       margin-top: 12;
       Gtk.StackPage{
-        title: "pic1";
+        title: _("pic1");
         name: "pic1";
         child: Picture pic1 {
           can-shrink: true;
@@ -77,7 +75,7 @@ Adw.StatusPage page {
       }
 
       Gtk.StackPage {
-        title: "pic2";
+        title: _("pic2");
         name: "pic2";
         child: Picture pic2 {
           can-shrink: true;
