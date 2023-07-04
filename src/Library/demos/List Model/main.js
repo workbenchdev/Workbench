@@ -52,8 +52,8 @@ function createItemForListBox(listItem) {
 
 function createItemForFlowBox(listItem) {
   const listBox = new Adw.Bin({
-    width_request: 144,
-    height_request: 144,
+    width_request: 160,
+    height_request: 160,
     css_classes: ["card"],
     valign: Gtk.Align.START,
     child: new Gtk.Label({
