@@ -61,16 +61,15 @@ Adw.StatusPage page {
 
     Gtk.StackSwitcher {
       stack: stack;
-
     }
 
-    Gtk.Stack stack {
+    Stack stack {
       transition-type: slide_left_right;
       valign:center;
       halign:center;
       margin-top: 12;
 
-      Gtk.StackPage {
+      StackPage {
         title: _("Picture 1");
         name: "pic1";
         child: Picture pic1 {
@@ -79,7 +78,7 @@ Adw.StatusPage page {
         };
       }
 
-      Gtk.StackPage {
+      StackPage {
         title: _("Picture 2");
         name: "pic2";
         child: Picture pic2 {
