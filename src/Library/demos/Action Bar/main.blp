@@ -20,9 +20,14 @@ Gtk.Window {
         styles ["pill", "suggested-action"]
       }
 
+      LinkButton {
+        label: _("API Reference");
+        uri: "https://docs.gtk.org/gtk4/class.ActionBar.html";
+      }
+
       ActionBar action_bar {
         revealed: false;
-        margin-top: 24;
+        margin-top: 12;
 
           [start]
           Button start_widget {
@@ -41,10 +46,7 @@ Gtk.Window {
             icon-name: "cross-filled-symbolic";
           }
       }
-      LinkButton {
-        label: _("API Reference");
-        uri: "https://docs.gtk.org/gtk4/class.ActionBar.html";
-      }
     }
   }
 }
+
