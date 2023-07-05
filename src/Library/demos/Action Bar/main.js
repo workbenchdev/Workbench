@@ -4,7 +4,7 @@ const start_widget = workbench.builder.get_object("start_widget");
 const end_widget = workbench.builder.get_object("end_widget");
 
 button.connect("notify::active", () => {
-  console.log(`ActionBar toggled ${button.active ? "Off" : "On"}`);
+  console.log(`ActionBar ${button.active ? "concealed" : "revealed"}`);
   action_bar.revealed = !button.active;
 });
 
