@@ -16,7 +16,7 @@ Adw.StatusPage page {
     }
 
     Gtk.Button ctrl_button {
-      label: _("Ctrl+Click me!");
+      label: _("Ctrl + Click to Activate");
       width-request: 200;
       halign: center;
     }
@@ -66,7 +66,9 @@ Adw.StatusPage page {
     Stack stack {
       transition-type: slide_left_right;
       valign:center;
-      halign:center;
+      halign: center;
+      height-request: 128;
+      width-request: 128;
       margin-top: 12;
 
       StackPage {

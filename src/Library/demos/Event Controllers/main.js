@@ -8,7 +8,6 @@ const click_button = workbench.builder.get_object("click_button");
 const stack = workbench.builder.get_object("stack");
 const pic1 = workbench.builder.get_object("pic1");
 const pic2 = workbench.builder.get_object("pic2");
-const gesture_frame = workbench.builder.get_object("gesture_frame");
 const primary_button = workbench.builder.get_object("primary_button");
 const middle_button = workbench.builder.get_object("middle_button");
 const secondary_button = workbench.builder.get_object("secondary_button");
@@ -43,14 +42,15 @@ key_controller.connect("key-released", (controller, keyval, keycode, state) => {
 
 ctrl_button.connect("clicked", () => {
   if (ctrl_pressed) {
-    ctrl_button.label = _("Ctrl+Click detected");
+    ctrl_button.label = _("Click to Deactivate");
     ctrl_button.add_css_class("suggested-action");
   } else {
-    ctrl_button.label = _("Click detected");
+    ctrl_button.label = _("Ctrl + Click to Activate");
     ctrl_button.remove_css_class("suggested-action");
   }
 });
 
+// Detect pointer button press and release events
 const gesture_click = new Gtk.GestureClick({ button: 0 });
 
 window.add_controller(gesture_click);
