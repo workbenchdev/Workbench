@@ -7,92 +7,105 @@ Adw.StatusPage page {
 
   child: Box {
     orientation: vertical;
-    halign:center;
-    spacing: 12;
+    halign: center;
+    spacing: 18;
 
-    Label {
-      label: _("EventControllerKey Example");
-      styles ["heading"]
+    Box {
+      orientation: vertical;
+      spacing: 12;
+
+      Label {
+        label: _("EventControllerKey Example");
+        styles ["heading"]
+      }
+
+      Gtk.Button ctrl_button {
+        label: _("Ctrl + Click to Activate");
+        width-request: 200;
+        halign: center;
+      }
     }
 
-    Gtk.Button ctrl_button {
-      label: _("Ctrl + Click to Activate");
-      width-request: 200;
-      halign: center;
-    }
+    Box {
+      orientation: vertical;
+      spacing: 12;
 
-    Label {
-      label: _("GestureClick Example");
-      styles ["heading"]
-    }
+      Label {
+        label: _("GestureClick Example");
+        styles ["heading"]
+      }
 
-   Frame gesture_frame {
-     halign: center;
+      Frame gesture_frame {
+        halign: center;
 
-      Box {
-        halign:center;
-        styles ["linked"]
+        Box {
+          halign: center;
+          styles ["linked"]
 
-        Button primary_button {
-          label: _("Left");
-          width-request: 150;
-          height-request: 50;
-        }
+          Button primary_button {
+            label: _("Left");
+            width-request: 150;
+            height-request: 50;
+          }
 
-        Button middle_button {
-          label: _("Middle");
-          width-request: 150;
-          height-request: 50;
-        }
+          Button middle_button {
+            label: _("Middle");
+            width-request: 150;
+            height-request: 50;
+          }
 
-        Button secondary_button {
-          label: _("Right");
-          width-request: 150;
-          height-request: 50;
+          Button secondary_button {
+            label: _("Right");
+            width-request: 150;
+            height-request: 50;
+          }
         }
       }
     }
 
-     Label {
-      margin-top: 12;
-      label: _("GestureSwipe Example");
-      styles ["heading"]
-    }
+    Box {
+      orientation: vertical;
+      spacing: 12;
 
-    Gtk.StackSwitcher {
-      stack: stack;
-    }
-
-    Stack stack {
-      transition-type: slide_left_right;
-      valign:center;
-      halign: center;
-      height-request: 128;
-      width-request: 128;
-      margin-top: 12;
-
-      StackPage {
-        title: _("Start");
-        name: "pic1";
-        child: Picture pic1 {
-          can-shrink: true;
-          content-fit: scale_down;
-        };
+      Label {
+        label: _("GestureSwipe Example");
+        styles ["heading"]
       }
 
-      StackPage {
-        title: _("Finish");
-        name: "pic2";
-        child: Picture pic2 {
-          can-shrink: true;
-          content-fit: scale_down;
-        };
+      Gtk.StackSwitcher {
+        stack: stack;
       }
-    }
 
-    Label {
-      margin-top: 12;
-      label: _("Swipe");
+      Stack stack {
+        transition-type: slide_left_right;
+        valign:center;
+        halign: center;
+        height-request: 128;
+        width-request: 128;
+
+        StackPage {
+          title: _("Start");
+          name: "pic1";
+          child: Picture pic1 {
+            can-shrink: true;
+            content-fit: scale_down;
+          };
+        }
+
+        StackPage {
+          title: _("Finish");
+          name: "pic2";
+          child: Picture pic2 {
+            can-shrink: true;
+            content-fit: scale_down;
+          };
+        }
+      }
+
+      Label {
+        margin-top: 12;
+        label: _("Swipe");
+      }
     }
 
     Box {
