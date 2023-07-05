@@ -23,6 +23,7 @@ import prettier from "./lib/prettier.js";
 import prettier_babel from "./lib/prettier-babel.js";
 import prettier_postcss from "./lib/prettier-postcss.js";
 import Library, { readDemo } from "./Library/Library.js";
+import DocumentationViewer from "./DocumentationViewer.js";
 import Previewer from "./Previewer/Previewer.js";
 import Compiler from "./langs/vala/Compiler.js";
 import ThemeSelector from "../troll/src/widgets/ThemeSelector.js";
@@ -426,6 +427,8 @@ export default function Window({ application }) {
     window,
     application,
   });
+
+  DocumentationViewer({ application });
 
   const text_decoder = new TextDecoder();
   async function openFile(file) {

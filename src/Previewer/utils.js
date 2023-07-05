@@ -2,13 +2,25 @@ import GObject from "gi://GObject";
 import Gtk from "gi://Gtk";
 import Gio from "gi://Gio";
 import Adw from "gi://Adw";
+import GIRepository from "gi://GIRepository";
+// const repository = GIRepository.Repository.get_default();
 
+// sort and reverse to make sure GtkSource is before Gtk
+// and so that GtkSourceCompletionProvider matches GtkSource and not Gtk
+const namespaces = getNamespaces().sort().reverse();
 export function getObjectClass(class_name) {
-  const split = class_name.split(/(?=[A-Z])/);
-  if (split.length < 2) return;
+  const namespace = namespaces.find((namespace) =>
+    class_name.startsWith(namespace),
+  );
+  if (!namespace) return null;
 
-  const [ns, ...rest] = split;
-  return imports.gi[ns]?.[rest.join("")];
+  const namespace_repository = imports.gi[namespace];
+  if (!namespace_repository) return null;
+
+  const [, name] = class_name.split(namespace);
+  if (!name) return null;
+
+  return namespace_repository[name];
 }
 
 export function isPreviewable(class_name) {
@@ -131,4 +143,35 @@ export async function detectCrash(str, object_id) {
 
   const success = await proc.wait_check_async(null).catch((_err) => false);
   return !success;
+}
+
+function getNamespaces() {
+  const search_paths = GIRepository.Repository.get_search_path();
+
+  const namespaces = [];
+  for (const search_path of search_paths) {
+    try {
+      namespaces.push(...getSearchPathNamespaces(search_path));
+    } catch {}
+  }
+  return namespaces;
+}
+
+function getSearchPathNamespaces(search_path) {
+  const enumerator = Gio.File.new_for_path(search_path).enumerate_children(
+    "standard::name",
+    Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
+    null,
+  );
+
+  const namespaces = [];
+
+  for (const file_info of enumerator) {
+    const name = file_info.get_name();
+    if (!name.endsWith(".typelib")) continue;
+    const [namespace] = name.split("-");
+    namespaces.push(namespace);
+  }
+
+  return namespaces;
 }
