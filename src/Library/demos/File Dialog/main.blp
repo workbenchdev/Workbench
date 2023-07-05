@@ -8,11 +8,22 @@ Adw.StatusPage {
   Box {
     orientation: vertical;
     spacing: 18;
-    vexpand:true;
+
+    Label {
+      label: _("Modes :");
+      styles ["title-3"]
+    }
+
+    DropDown select_mode {
+      halign: center;
+      model: StringList {
+        strings ["Select File", "Select File (Folder pre-defined)", "Select Multiple Files", "Select Folder", "Select Multiple Folders", "Save File"]
+      };
+    }
 
     Button button {
       halign: center;
-      label: _("Select a file");
+      label: _("Trigger");
       styles ["pill", "suggested-action"]
     }
     LinkButton {
@@ -21,3 +32,4 @@ Adw.StatusPage {
     }
   }
 }
+
