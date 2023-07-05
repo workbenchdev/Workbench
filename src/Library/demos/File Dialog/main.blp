@@ -1,0 +1,23 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: "File Dialog";
+  description: _("It collects the arguments that are needed to present a file chooser dialog to the user");
+
+  Box {
+    orientation: vertical;
+    spacing: 18;
+    vexpand:true;
+
+    Button button {
+      halign: center;
+      label: _("Select a file");
+      styles ["pill", "suggested-action"]
+    }
+    LinkButton {
+      label: _("API Reference");
+      uri: "https://docs.gtk.org/gtk4/class.FileDialog.html";
+    }
+  }
+}

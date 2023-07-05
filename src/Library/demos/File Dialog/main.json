@@ -1,0 +1,7 @@
+{
+  "name": "File Dialog",
+  "category": "user_interface",
+  "description": "It collects the arguments that are needed to present a file chooser dialog to the user",
+  "panels": ["code", "preview"],
+  "autorun": true
+}
