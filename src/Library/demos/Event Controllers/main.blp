@@ -76,29 +76,33 @@ Adw.StatusPage page {
         stack: stack;
       }
 
-      Stack stack {
-        transition-type: slide_left_right;
-        valign:center;
+      Frame {
         halign: center;
-        height-request: 128;
-        width-request: 128;
 
-        StackPage {
-          title: _("Start");
-          name: "pic1";
-          child: Picture pic1 {
-            can-shrink: true;
-            content-fit: scale_down;
-          };
-        }
+        Stack stack {
+          transition-type: slide_left_right;
+          valign: center;
+          halign: center;
+          height-request: 128;
+          width-request: 128;
 
-        StackPage {
-          title: _("Finish");
-          name: "pic2";
-          child: Picture pic2 {
-            can-shrink: true;
-            content-fit: scale_down;
-          };
+          StackPage {
+            title: _("Start");
+            name: "pic1";
+            child: Picture pic1 {
+              can-shrink: true;
+              content-fit: scale_down;
+            };
+          }
+
+          StackPage {
+            title: _("Finish");
+            name: "pic2";
+            child: Picture pic2 {
+              can-shrink: true;
+              content-fit: scale_down;
+            };
+          }
         }
       }
 
@@ -111,7 +115,7 @@ Adw.StatusPage page {
     Box {
       orientation: horizontal;
       halign: center;
-      valign:center;
+      valign: center;
       margin-top: 24;
 
       LinkButton {
