@@ -1,7 +1,7 @@
 {
   "name": "Action Bar",
   "category": "user_interface",
-  "description": "A widget designed to present contextual actions.",
+  "description": "Toolbar for contextual actions.",
   "panels": ["ui", "preview"],
   "autorun": true
 }

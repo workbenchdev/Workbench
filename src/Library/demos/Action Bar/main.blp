@@ -2,8 +2,8 @@ using Gtk 4.0;
 using Adw 1;
 
 Box {
-  height-request: 72;
-  width-request: 36;
+  height-request: 720;
+  width-request: 360;
   halign: center;
   margin-top: 48;
   margin-bottom: 48;
@@ -11,17 +11,18 @@ Box {
   styles ["card"]
 
   Adw.StatusPage {
-    title: "Action Bar";
-    description: _("ActionBar is designed to present contextual actions.");
+    title: _("Action Bar");
+    description: _("Toolbar for contextual actions.");
 
     Box {
       orientation: vertical;
       spacing: 18;
       vexpand:true;
 
-      Button show_content {
+      ToggleButton button {
         halign: center;
-        label: _("Show Action Bar");
+        active: false;
+        label: _("Reveal");
         styles ["pill", "suggested-action"]
       }
       LinkButton {
@@ -31,25 +32,26 @@ Box {
     }
   }
   ActionBar action_bar {
-    revealed: false;
+    revealed: true;
     valign: end;
 
     [start]
     Button start_widget {
-      icon-name: "check-round-outline-whole-symbolic";
+      icon-name: "call-start-symbolic";
     }
 
     [center]
     DropDown {
       model: StringList {
-        strings ["Center Widget","I", "am", "center", "widget"]
+        strings ["Center Widget","👁️", "❤️", "💼", "🪑"]
         };
     }
 
     [end]
     Button end_widget {
-      icon-name: "cross-filled-symbolic";
+      icon-name: "padlock2-symbolic";
       }
     }
 }
+
 
