@@ -1,5 +1,6 @@
 using Gtk 4.0;
 using Adw 1;
+using WebKit 6.0;
 
 Adw.Clamp {
   maximum-size: 700;
@@ -53,7 +54,8 @@ Adw.Clamp {
       }
     }
 
-    Adw.Bin container {
+    WebKit.WebView web_view {
+      zoom-level: 0.8;
       margin-top: 18;
       margin-bottom: 18;
       vexpand: true;
