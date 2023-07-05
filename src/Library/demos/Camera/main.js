@@ -1,46 +1,36 @@
-import Gtk from "gi://Gtk";
 import Gio from "gi://Gio";
 import Xdp from "gi://Xdp";
 import XdpGtk from "gi://XdpGtk4";
 import GObject from "gi://GObject";
 import Gst from "gi://Gst";
-Gst.init(null);
 
+Gst.init(null);
 Gio._promisify(Xdp.Portal.prototype, "access_camera", "access_camera_finish");
 
 const portal = new Xdp.Portal();
 const parent = XdpGtk.parent_new_gtk(workbench.window);
+
 const output = workbench.builder.get_object("output");
 const button = workbench.builder.get_object("button");
 
 button.connect("clicked", () => {
+  accessCamera().catch(logError);
+});
+
+async function accessCamera() {
   if (!portal.is_camera_present()) {
     console.log("No Camera detected");
     return;
   }
 
-  portal.access_camera(
-    parent,
-    Xdp.CameraFlags.NONE,
-    null,
-    async (portal, result) => {
-      try {
-        if (!portal.access_camera_finish(result)) {
-          console.log("Permission denied");
-          return;
-        }
+  const success = portal.access_camera(parent, Xdp.CameraFlags.NONE, null);
+  if (!success) {
+    console.log("Permission denied");
+    return;
+  }
 
-        try {
-          await handleCamera();
-        } catch (error) {
-          console.error("Error in handleCamera:", error);
-        }
-      } catch (error) {
-        console.error("Failed to request camera access:", error);
-      }
-    },
-  );
-});
+  await handleCamera();
+}
 
 async function handleCamera() {
   const fd_pipewire_remote = portal.open_pipewire_remote_for_camera();
@@ -83,7 +73,7 @@ async function handleCamera() {
   // Set up the bus
   const bus = pipeline.get_bus();
   bus.add_signal_watch();
-  bus.connect("message", (bus, message) => {
+  bus.connect("message", (self, message) => {
     // Check the message type
     const message_type = message.type;
 
@@ -98,10 +88,6 @@ async function handleCamera() {
         console.log("End of stream");
         break;
       }
-      default: {
-        break;
-      }
     }
   });
 }
-

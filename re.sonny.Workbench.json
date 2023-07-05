@@ -90,9 +90,9 @@
       "buildsystem": "simple",
       "sources": [
         {
-          "type": "git",
-          "url": "https://gitlab.freedesktop.org/gstreamer/gst-plugins-rs",
-          "branch": "0.10"
+          "type": "archive",
+          "url": "https://gitlab.freedesktop.org/gstreamer/gst-plugins-rs/-/archive/0.10.9/gst-plugins-rs-0.10.9.tar.gz",
+          "sha512": "81140948e2be6a339d619d867e9b757c56e490aba81373c1df9bbeabe3103081d949718a8977f484dda159322d943c13ca5904a34282d1ce2cc25ed25c0a3994"
         }
       ],
       "build-options": {
