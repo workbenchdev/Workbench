@@ -2,7 +2,7 @@ using Gtk 4.0;
 using Adw 1;
 
 Adw.StatusPage {
-  title: "Audio";
+  title: _("Audio");
   description: _("Play Audio with media controls");
 
   Box {
@@ -20,20 +20,29 @@ Adw.StatusPage {
       halign: center;
       styles ["linked"]
 
-      Button dog_button {
+      Button button_sound {
         label: _("Play sound");
       }
 
-       Button music_button {
+      Button button_music {
         label: _("Play music");
       }
-
     }
 
-    LinkButton {
-      label: "API Reference";
-      uri: "https://docs.gtk.org/gtk4/class.MediaControls.html";
-      margin-top: 12;
+    Box {
+      margin-top: 48;
+      spacing: 6;
+      orientation: vertical;
+
+      LinkButton {
+        label: "MediaControls API Reference";
+        uri: "https://docs.gtk.org/gtk4/class.MediaControls.html";
+      }
+
+      LinkButton {
+        label: "MediaFile API Reference";
+        uri: "https://docs.gtk.org/gtk4/class.MediaFile.html";
+      }
     }
   }
 }
