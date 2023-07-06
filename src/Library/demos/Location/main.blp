@@ -1,0 +1,177 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: _("Location");
+  description: _("Request the user location");
+  margin-top: 48;
+
+  Adw.Clamp {
+    maximum-size: 480;
+
+    Box {
+      orientation: vertical;
+      halign: center;
+
+      ListBox {
+        selection-mode: none;
+        margin-bottom: 18;
+
+        styles ["boxed-list"]
+
+        Adw.ActionRow {
+          title: _("Distance Threshold");
+          subtitle: _("In meters");
+
+          SpinButton distance_threshold {
+            valign: center;
+            wrap: true;
+            value: 0;
+            climb-rate: 1;
+            adjustment: Adjustment {
+              lower: 0;
+              upper: 100;
+              step-increment: 1;
+              value: 0;
+            };
+          }
+        }
+
+        Adw.ActionRow {
+          title: _("Time Threshold");
+          subtitle: _("In meters");
+
+          SpinButton time_threshold {
+            valign: center;
+            wrap: true;
+            value: 0;
+            climb-rate: 1;
+            adjustment: Adjustment {
+                          lower: 0;
+                          upper: 100;
+                          step-increment: 1;
+                          value: 0;
+                        };
+          }
+        }
+
+        Adw.ComboRow accuracy_button {
+          title: _("Accuracy");
+          model: Gtk.StringList {
+            strings [C_("Accuracy", "Exact"), C_("Accuracy", "Street"), C_("Accuracy", "Neighborhood"), C_("Accuracy", "City"), C_("Accuracy", "Country"), C_("Accuracy", "None")]
+          };
+        }
+      }
+
+      Box {
+        halign: center;
+        spacing: 30;
+        margin-bottom: 24;
+
+        Button start {
+          label: _("Start Session");
+          halign: center;
+          styles ["suggested-action", "pill"]
+        }
+
+        Button close {
+          label: _("Close Session");
+          halign: center;
+          sensitive: false;
+          styles ["destructive-action", "pill"]
+        }
+      }
+
+      Revealer revealer {
+        transition-duration: 300;
+        transition-type: slide_up;
+
+        ListBox {
+          selection-mode: none;
+          margin-bottom: 18;
+
+          styles ["boxed-list"]
+
+          Adw.ActionRow {
+            title: _("Latitude");
+            subtitle: _("In degrees");
+
+            Label latitude {
+              label: _("N/A");
+            }
+          }
+
+          Adw.ActionRow {
+            title: _("Longitude");
+            subtitle: _("In degrees");
+
+            Label longitude {
+              label: _("N/A");
+            }
+          }
+
+          Adw.ActionRow {
+            title: _("Accuracy");
+            subtitle: _("In meters");
+
+            Label accuracy {
+              label: _("N/A");
+            }
+          }
+
+          Adw.ActionRow {
+            title: _("Altitude");
+            subtitle: _("In meters");
+
+            Label altitude {
+              label: _("N/A");
+            }
+          }
+
+          Adw.ActionRow {
+            title: _("Speed");
+            subtitle: _("In meters per second");
+
+            Label speed {
+              label: _("N/A");
+            }
+          }
+
+          Adw.ActionRow {
+            title: _("Heading");
+            subtitle: _("In degrees, clockwise");
+
+            Label heading {
+              label: _("N/A");
+            }
+          }
+
+          Adw.ActionRow {
+            title: _("Description");
+
+            Label description {
+              label: _("N/A");
+            }
+          }
+
+          Adw.ActionRow {
+            title: _("Timestamp");
+
+            Label timestamp {
+              label: _("N/A");
+            }
+          }
+        }
+      }
+
+      LinkButton {
+        label: "API Reference";
+        uri: "https://libportal.org/method.Portal.location_monitor_start.html";
+      }
+    }
+  }
+}
+
+
+
+
