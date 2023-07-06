@@ -11,6 +11,7 @@ const overlay = workbench.builder.get_object("overlay");
 const revealer = workbench.builder.get_object("revealer");
 const search_entry = workbench.builder.get_object("search_entry");
 const search_bar = workbench.builder.get_object("search_bar");
+const close_button = workbench.builder.get_object("close_button");
 //const source_view = workbench.builder.get_object("source_view");
 const scroll_view = workbench.builder.get_object("scroll_view");
 const source_view = new Source.View({
@@ -115,8 +116,7 @@ scroll_view.set_child(source_view);
 let searchTerm = search_entry.get_text();
 
 //Functions
-previous_match.set_tooltip_text("Move to previous match (Ctrl+Shift+G)");
-next_match.set_tooltip_text("Move to next match (Ctrl+G)");
+
 //reveal_search
 const controller_key = new Gtk.EventControllerKey();
 source_view.add_controller(controller_key);
@@ -229,6 +229,10 @@ next_match.connect("clicked", () => {
   if (!found) return;
   // log(iter.get_offset(), match_start.get_offset(), match_end.get_offset());
   selectSearchOccurence(match_start, match_end);
+});
+
+close_button.connect("clicked", () => {
+  revealer.reveal_child = false;
 });
 
 //color

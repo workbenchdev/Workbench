@@ -3,8 +3,8 @@ using GtkSource 5;
 using Adw 1;
 
 Adw.StatusPage {
-  title: "Code Find Feature";
-  description: _("To implement codefind feature in Workbench");
+  title: "About Window";
+  description: _("A window showing information about the application.");
 
   Box {
     orientation: vertical;
@@ -17,30 +17,39 @@ Adw.StatusPage {
       Box {
         halign:end;
         valign: start;
+        margin-end: 18;
 
         Revealer revealer {
           Box {
             orientation: horizontal;
 
             SearchBar search_bar {
-              show-close-button: true;
               search-mode-enabled: false;
 
               Box {
+                spacing: 18;
                 SearchEntry search_entry {
                   placeholder-text: _("Start searching");
                   search-delay: 300;
-                  margin-end: 18;
                 }
                 Box {
                   valign: center;
                   styles ["linked"]
                   Button previous_match {
                     icon-name: "up";
+                    tooltip-text: "Move to previous match (Ctrl+Shift+G)";
                   }
                   Button next_match {
                     icon-name: "down";
+                    tooltip-text: "Move to next match (Ctrl+G)";
                   }
+                }
+                Button close_button {
+                  halign: center;
+                  valign: center;
+                  margin-end: 6;
+                  tooltip-text: "Close search";
+                  icon-name: "window-close-symbolic";
                 }
               }
             }
