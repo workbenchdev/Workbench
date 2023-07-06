@@ -112,9 +112,11 @@ console.log("Prime Numbers:", primeNumbers);
 
 buffer.set_text(sampleCode, -1);
 scroll_view.set_child(source_view);
+let searchTerm = search_entry.get_text();
 
 //Functions
-
+previous_match.set_tooltip_text("Move to previous match (Ctrl+Shift+G)");
+next_match.set_tooltip_text("Move to next match (Ctrl+G)");
 //reveal_search
 const controller_key = new Gtk.EventControllerKey();
 source_view.add_controller(controller_key);
@@ -125,8 +127,64 @@ controller_key.connect("key-pressed", (controller, keyval, keycode, state) => {
   ) {
     revealer.reveal_child = true;
     search_bar.search_mode_enabled = true;
+  } else if (keyval === Gdk.KEY_Escape) {
+    revealer.reveal_child = false;
+  } else if (
+    (state & Gdk.ModifierType.CONTROL_MASK &&
+      state & Gdk.ModifierType.SHIFT_MASK &&
+      keyval === Gdk.KEY_g) ||
+    (state & Gdk.ModifierType.CONTROL_MASK &&
+      state & Gdk.ModifierType.SHIFT_MASK &&
+      keyval === Gdk.KEY_G)
+  ) {
+    const [, iter] = buffer.get_selection_bounds();
+    const [found, match_start, match_end] = search_context.backward(iter);
+    if (!found) return;
+    // log(iter.get_offset(), match_start.get_offset(), match_end.get_offset());
+    selectSearchOccurence(match_start, match_end);
+  } else if (
+    (state & Gdk.ModifierType.CONTROL_MASK && keyval === Gdk.KEY_g) ||
+    (state & Gdk.ModifierType.CONTROL_MASK && keyval === Gdk.KEY_G)
+  ) {
+    const [, , iter] = buffer.get_selection_bounds();
+    const [found, match_start, match_end] = search_context.forward(iter);
+    if (!found) return;
+    // log(iter.get_offset(), match_start.get_offset(), match_end.get_offset());
+    selectSearchOccurence(match_start, match_end);
   }
 });
+
+const controller_for_search = new Gtk.EventControllerKey();
+search_entry.add_controller(controller_for_search);
+
+controller_for_search.connect(
+  "key-pressed",
+  (controller, keyval, keycode, state) => {
+    if (
+      (state & Gdk.ModifierType.CONTROL_MASK &&
+        state & Gdk.ModifierType.SHIFT_MASK &&
+        keyval === Gdk.KEY_g) ||
+      (state & Gdk.ModifierType.CONTROL_MASK &&
+        state & Gdk.ModifierType.SHIFT_MASK &&
+        keyval === Gdk.KEY_G)
+    ) {
+      const [, iter] = buffer.get_selection_bounds();
+      const [found, match_start, match_end] = search_context.backward(iter);
+      if (!found) return;
+      // log(iter.get_offset(), match_start.get_offset(), match_end.get_offset());
+      selectSearchOccurence(match_start, match_end);
+    } else if (
+      (state & Gdk.ModifierType.CONTROL_MASK && keyval === Gdk.KEY_g) ||
+      (state & Gdk.ModifierType.CONTROL_MASK && keyval === Gdk.KEY_G)
+    ) {
+      const [, , iter] = buffer.get_selection_bounds();
+      const [found, match_start, match_end] = search_context.forward(iter);
+      if (!found) return;
+      // log(iter.get_offset(), match_start.get_offset(), match_end.get_offset());
+      selectSearchOccurence(match_start, match_end);
+    }
+  },
+);
 
 //handleSearch
 search_bar.connect_entry(search_entry);
@@ -146,7 +204,15 @@ function selectSearchOccurence(match_start, match_end) {
 }
 
 search_entry.connect("search-changed", () => {
-  search_settings.search_text = search_entry.get_text();
+  searchTerm = search_entry.get_text();
+  search_settings.search_text = searchTerm;
+  if (searchTerm === "") {
+    previous_match.sensitive = false;
+    next_match.sensitive = false;
+  } else {
+    previous_match.sensitive = true;
+    next_match.sensitive = true;
+  }
 });
 
 previous_match.connect("clicked", () => {
@@ -164,3 +230,17 @@ next_match.connect("clicked", () => {
   // log(iter.get_offset(), match_start.get_offset(), match_end.get_offset());
   selectSearchOccurence(match_start, match_end);
 });
+
+//color
+const scheme_manager = Source.StyleSchemeManager.get_default();
+const style_manager = Adw.StyleManager.get_default();
+
+function updateScheme() {
+  const scheme = scheme_manager.get_scheme(
+    style_manager.dark ? "Adwaita-dark" : "Adwaita",
+  );
+  buffer.set_style_scheme(scheme);
+}
+
+updateScheme();
+style_manager.connect("notify::dark", updateScheme);
