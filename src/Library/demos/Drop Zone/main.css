@@ -1,0 +1,4 @@
+.overlay-drag-area {
+  box-shadow: none;
+  background-color: alpha(@accent_color, 0.35);
+}
