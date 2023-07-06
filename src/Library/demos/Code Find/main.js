@@ -12,6 +12,7 @@ const revealer = workbench.builder.get_object("revealer");
 const search_entry = workbench.builder.get_object("search_entry");
 const search_bar = workbench.builder.get_object("search_bar");
 const close_button = workbench.builder.get_object("close_button");
+const occurence_counter = workbench.builder.get_object("occurence_counter");
 //const source_view = workbench.builder.get_object("source_view");
 const scroll_view = workbench.builder.get_object("scroll_view");
 const source_view = new Source.View({
@@ -114,7 +115,6 @@ console.log("Prime Numbers:", primeNumbers);
 buffer.set_text(sampleCode, -1);
 scroll_view.set_child(source_view);
 let searchTerm = search_entry.get_text();
-
 //Functions
 
 //reveal_search
@@ -142,6 +142,7 @@ controller_key.connect("key-pressed", (controller, keyval, keycode, state) => {
     if (!found) return;
     // log(iter.get_offset(), match_start.get_offset(), match_end.get_offset());
     selectSearchOccurence(match_start, match_end);
+    updateLabel(iter, match_start, match_end);
   } else if (
     (state & Gdk.ModifierType.CONTROL_MASK && keyval === Gdk.KEY_g) ||
     (state & Gdk.ModifierType.CONTROL_MASK && keyval === Gdk.KEY_G)
@@ -151,6 +152,7 @@ controller_key.connect("key-pressed", (controller, keyval, keycode, state) => {
     if (!found) return;
     // log(iter.get_offset(), match_start.get_offset(), match_end.get_offset());
     selectSearchOccurence(match_start, match_end);
+    updateLabel(iter, match_start, match_end);
   }
 });
 
@@ -209,6 +211,7 @@ search_entry.connect("search-changed", () => {
   if (searchTerm === "") {
     previous_match.sensitive = false;
     next_match.sensitive = false;
+    occurence_counter.set_text("");
   } else {
     previous_match.sensitive = true;
     next_match.sensitive = true;
@@ -221,6 +224,7 @@ previous_match.connect("clicked", () => {
   if (!found) return;
   // log(iter.get_offset(), match_start.get_offset(), match_end.get_offset());
   selectSearchOccurence(match_start, match_end);
+  updateLabel(iter, match_start, match_end);
 });
 
 next_match.connect("clicked", () => {
@@ -229,6 +233,7 @@ next_match.connect("clicked", () => {
   if (!found) return;
   // log(iter.get_offset(), match_start.get_offset(), match_end.get_offset());
   selectSearchOccurence(match_start, match_end);
+  updateLabel(iter, match_start, match_end);
 });
 
 close_button.connect("clicked", () => {
@@ -248,3 +253,22 @@ function updateScheme() {
 
 updateScheme();
 style_manager.connect("notify::dark", updateScheme);
+
+//update Label
+function updateLabel(iter, match_start, match_end) {
+  let text;
+  const occ_count = search_context.get_occurrences_count();
+  const occ_pos = search_context.get_occurrence_position(
+    match_start,
+    match_end,
+  );
+
+  if (occ_count === -1) {
+    text = "";
+  } else if (occ_pos === -1) {
+    text = `${occ_count} occurences`;
+  } else {
+    text = `${occ_pos} of ${occ_count}`;
+  }
+  occurence_counter.label = text;
+}

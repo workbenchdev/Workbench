@@ -31,6 +31,10 @@ Adw.StatusPage {
                 SearchEntry search_entry {
                   placeholder-text: _("Start searching");
                   search-delay: 300;
+
+                  Label occurence_counter {
+                    label: _("");
+                  }
                 }
                 Box {
                   valign: center;
@@ -38,10 +42,12 @@ Adw.StatusPage {
                   Button previous_match {
                     icon-name: "up";
                     tooltip-text: "Move to previous match (Ctrl+Shift+G)";
+                    sensitive: false;
                   }
                   Button next_match {
                     icon-name: "down";
                     tooltip-text: "Move to next match (Ctrl+G)";
+                    sensitive: false;
                   }
                 }
                 Button close_button {
@@ -59,6 +65,7 @@ Adw.StatusPage {
     }
   }
 }
+
 
 
 
