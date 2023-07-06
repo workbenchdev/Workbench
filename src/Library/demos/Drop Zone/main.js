@@ -5,27 +5,81 @@ import Gdk from "gi://Gdk";
 import GObject from "gi://GObject";
 
 const bin = workbench.builder.get_object("bin");
-const drop_target = Gtk.DropTarget.new(Gio.File, Gdk.DragAction.MOVE);
 
-bin.add_controller(drop_target);
+// Universal drop target for any String data
+const string_drop_target = Gtk.DropTarget.new(
+  GObject.TYPE_STRING,
+  Gdk.DragAction.COPY,
+);
 
-drop_target.connect("drop", (self, value, x, y) => {
-  if (!(value instanceof Gio.File)) return false;
+bin.add_controller(string_drop_target);
 
-  try {
-    bin.child = createFileWidget(value);
-  } catch (error) {
-    console.log(`Unable to create file widget: ${error}`);
-  }
+string_drop_target.connect("drop", (self, value, x, y) => {
+  bin.child = createTextWidget(value);
+  bin.get_style_context().remove_class("overlay-drag-area");
 });
 
+// Drop Target for Files
+const file_drop_target = Gtk.DropTarget.new(Gio.File, Gdk.DragAction.MOVE);
+bin.add_controller(file_drop_target);
+
+file_drop_target.connect("drop", (self, value, x, y) => {
+  if (!(value instanceof Gio.File)) return false;
+
+  const file_info = value.query_info("standard::content-type", 0, null);
+  const content_type = file_info.get_content_type();
+
+  if (content_type.startsWith("image/")) {
+    try {
+      bin.child = createImageWidget(value);
+    } catch (error) {
+      console.log(`Unable to load image: ${error}`);
+    }
+  } else if (content_type.startsWith("video/")) {
+    try {
+      bin.child = createVideoWidget(value);
+    } catch (error) {
+      console.log(`Unable to load video: ${error}`);
+    }
+  } else {
+    try {
+      bin.child = createFileWidget(value);
+    } catch (error) {
+      console.log(`Unable to create file widget: ${error}`);
+    }
+  }
+
+  bin.get_style_context().remove_class("overlay-drag-area");
+});
+
+function createImageWidget(value) {
+  const widget = createBoxWidget();
+
+  const picture = Gtk.Picture.new_for_file(value);
+  picture.can_shrink = true;
+  picture.content_fit = Gtk.ContentFit.SCALE_DOWN;
+  widget.append(picture);
+  return widget;
+}
+
+function createTextWidget(text) {
+  const widget = createBoxWidget();
+
+  const label = new Gtk.Label({ label: text, wrap: true });
+  widget.append(label);
+  return widget;
+}
+
+function createVideoWidget(file) {
+  const widget = createBoxWidget();
+
+  const video = new Gtk.Video({ file: file });
+  widget.append(video);
+  return widget;
+}
+
 function createFileWidget(file) {
-  const widget = new Gtk.Box({
-    orientation: Gtk.Orientation.VERTICAL,
-    halign: Gtk.Align.CENTER,
-    valign: Gtk.Align.CENTER,
-    spacing: 6,
-  });
+  const widget = createBoxWidget();
 
   const file_info = file.query_info("standard::icon", 0, null);
   const icon = Gtk.Image.new_from_gicon(file_info.get_icon());
@@ -37,3 +91,34 @@ function createFileWidget(file) {
 
   return widget;
 }
+
+function createBoxWidget() {
+  return new Gtk.Box({
+    orientation: Gtk.Orientation.VERTICAL,
+    halign: Gtk.Align.CENTER,
+    valign: Gtk.Align.CENTER,
+    spacing: 6,
+    margin_top: 12,
+    margin_bottom: 12,
+    margin_start: 12,
+    margin_end: 12,
+  });
+}
+
+// Drop Hover Effect
+
+file_drop_target.connect("enter", () => {
+  bin.get_style_context().add_class("overlay-drag-area");
+});
+
+file_drop_target.connect("leave", () => {
+  bin.get_style_context().remove_class("overlay-drag-area");
+});
+
+string_drop_target.connect("enter", () => {
+  bin.get_style_context().add_class("overlay-drag-area");
+});
+
+string_drop_target.connect("leave", () => {
+  bin.get_style_context().remove_class("overlay-drag-area");
+});
