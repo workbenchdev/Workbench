@@ -81,7 +81,6 @@ private Widget createTextWidget(string text) {
   var widget = createBoxWidget();
 
   var label = new Label(text) {wrap = true};
-  //label.wrap = true;
   widget.append(label);
 
   return widget;
