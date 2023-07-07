@@ -175,6 +175,9 @@ controller_for_search.connect(
       if (!found) return;
       // log(iter.get_offset(), match_start.get_offset(), match_end.get_offset());
       selectSearchOccurence(match_start, match_end);
+      updateLabel(iter, match_start, match_end);
+      // log(iter.get_offset(), match_start.get_offset(), match_end.get_offset());
+      selectSearchOccurence(match_start, match_end);
     } else if (
       (state & Gdk.ModifierType.CONTROL_MASK && keyval === Gdk.KEY_g) ||
       (state & Gdk.ModifierType.CONTROL_MASK && keyval === Gdk.KEY_G)
@@ -184,6 +187,7 @@ controller_for_search.connect(
       if (!found) return;
       // log(iter.get_offset(), match_start.get_offset(), match_end.get_offset());
       selectSearchOccurence(match_start, match_end);
+      updateLabel(iter, match_start, match_end);
     }
   },
 );
