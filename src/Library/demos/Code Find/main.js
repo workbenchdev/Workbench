@@ -242,6 +242,7 @@ next_match.connect("clicked", () => {
 
 close_button.connect("clicked", () => {
   revealer.reveal_child = false;
+  search_entry.set_text("");
 });
 
 //color
