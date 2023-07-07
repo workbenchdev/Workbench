@@ -30,17 +30,17 @@ select_mode.connect("notify::selected-item", () => {
 });
 
 const dialog_for_file = new Gtk.FileDialog({
-  title: "Select File(s)",
+  title: _("Select File(s)"),
   modal: true,
 });
 
 const dialog_for_folder = new Gtk.FileDialog({
-  title: "Select Folder(s)",
+  title: _("Select Folder(s)"),
   modal: true,
 });
 
 const dialog_for_save = new Gtk.FileDialog({
-  title: "Select location to save",
+  title: _("Save File"),
   modal: true,
 });
 
@@ -81,9 +81,10 @@ async function open_file() {
 
 async function open_file_folder() {
   const folder = Gio.File.new_for_path(pkg.pkgdatadir).resolve_relative_path(
-    "Library/demos/File Dialog",
+    "Library/demos/File Dialog/main.blp",
   );
-  dialog_for_file.initial_folder = folder;
+  const parent_folder = folder.get_parent();
+  dialog_for_file.initial_folder = parent_folder;
   const file = await dialog_for_file.open(workbench.window, null);
   const info = file.query_info(
     "standard::*",
@@ -94,35 +95,31 @@ async function open_file_folder() {
 }
 
 async function open_multiple_files() {
-  const file = await dialog_for_file.open_multiple(
-    workbench.window,
-    null,
-    null,
-  );
+  const files = await dialog_for_file.open_multiple(workbench.window, null);
+  const selected_items_count = files.get_n_items();
+  console.log(`No of selected files: ${selected_items_count}`);
 }
 
 async function select_folder() {
-  const folder = await dialog_for_folder.select_folder(
-    workbench.window,
-    null,
-    null,
-  );
+  const folder = await dialog_for_folder.select_folder(workbench.window, null);
   const info = folder.query_info(
     "standard::*",
     Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
     null,
   );
-  console.log(`Selected File: ${info.get_name()}`);
+  console.log(`Selected Folder: ${info.get_name()}`);
 }
 
 async function select_multiple_folders() {
   const folders = await dialog_for_folder.select_multiple_folders(
     workbench.window,
     null,
-    null,
   );
+  const selected_items_count = folders.get_n_items();
+  console.log(`No of selected folders: ${selected_items_count}`);
 }
 
 async function save_file() {
-  const file = await dialog_for_save.save(workbench.window, null, null);
+  const file = await dialog_for_save.save(workbench.window, null);
+  console.log("Operation complete");
 }
