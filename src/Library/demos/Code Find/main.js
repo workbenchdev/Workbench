@@ -220,6 +220,12 @@ search_entry.connect("search-changed", () => {
     previous_match.sensitive = true;
     next_match.sensitive = true;
   }
+  const [, iter] = buffer.get_selection_bounds();
+  const [found, match_start, match_end] = search_context.backward(iter);
+  if (!found) {
+    previous_match.sensitive = false;
+    next_match.sensitive = false;
+  }
 });
 
 previous_match.connect("clicked", () => {
