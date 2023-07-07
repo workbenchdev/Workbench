@@ -117,7 +117,7 @@ scroll_view.set_child(source_view);
 let searchTerm = search_entry.get_text();
 //Functions
 
-//reveal_search
+//Event-Controller for SourceView
 const controller_key = new Gtk.EventControllerKey();
 source_view.add_controller(controller_key);
 controller_key.connect("key-pressed", (controller, keyval, keycode, state) => {
@@ -137,25 +137,16 @@ controller_key.connect("key-pressed", (controller, keyval, keycode, state) => {
       state & Gdk.ModifierType.SHIFT_MASK &&
       keyval === Gdk.KEY_G)
   ) {
-    const [, iter] = buffer.get_selection_bounds();
-    const [found, match_start, match_end] = search_context.backward(iter);
-    if (!found) return;
-    // log(iter.get_offset(), match_start.get_offset(), match_end.get_offset());
-    selectSearchOccurence(match_start, match_end);
-    updateLabel(iter, match_start, match_end);
+    backward_search();
   } else if (
     (state & Gdk.ModifierType.CONTROL_MASK && keyval === Gdk.KEY_g) ||
     (state & Gdk.ModifierType.CONTROL_MASK && keyval === Gdk.KEY_G)
   ) {
-    const [, , iter] = buffer.get_selection_bounds();
-    const [found, match_start, match_end] = search_context.forward(iter);
-    if (!found) return;
-    // log(iter.get_offset(), match_start.get_offset(), match_end.get_offset());
-    selectSearchOccurence(match_start, match_end);
-    updateLabel(iter, match_start, match_end);
+    forward_search();
   }
 });
 
+//Event-Controller for SearchEntry
 const controller_for_search = new Gtk.EventControllerKey();
 search_entry.add_controller(controller_for_search);
 
@@ -170,45 +161,56 @@ controller_for_search.connect(
         state & Gdk.ModifierType.SHIFT_MASK &&
         keyval === Gdk.KEY_G)
     ) {
-      const [, iter] = buffer.get_selection_bounds();
-      const [found, match_start, match_end] = search_context.backward(iter);
-      if (!found) return;
-      // log(iter.get_offset(), match_start.get_offset(), match_end.get_offset());
-      selectSearchOccurence(match_start, match_end);
-      updateLabel(iter, match_start, match_end);
-      // log(iter.get_offset(), match_start.get_offset(), match_end.get_offset());
-      selectSearchOccurence(match_start, match_end);
+      backward_search();
     } else if (
       (state & Gdk.ModifierType.CONTROL_MASK && keyval === Gdk.KEY_g) ||
       (state & Gdk.ModifierType.CONTROL_MASK && keyval === Gdk.KEY_G)
     ) {
-      const [, , iter] = buffer.get_selection_bounds();
-      const [found, match_start, match_end] = search_context.forward(iter);
-      if (!found) return;
-      // log(iter.get_offset(), match_start.get_offset(), match_end.get_offset());
-      selectSearchOccurence(match_start, match_end);
-      updateLabel(iter, match_start, match_end);
+      forward_search();
     }
   },
 );
 
-//handleSearch
+//Setup SearchBar
 search_bar.connect_entry(search_entry);
 const search_settings = new Source.SearchSettings({
   case_sensitive: false,
 });
 
+//Setup SearchContext
 const search_context = new Source.SearchContext({
   buffer,
   settings: search_settings,
   highlight: true,
 });
 
+//Select Highlights
 function selectSearchOccurence(match_start, match_end) {
   buffer.select_range(match_start, match_end);
   source_view.scroll_mark_onscreen(buffer.get_insert());
 }
 
+//Forward Search
+function forward_search() {
+  const [, , iter] = buffer.get_selection_bounds();
+  const [found, match_start, match_end] = search_context.forward(iter);
+  if (!found) return;
+  // log(iter.get_offset(), match_start.get_offset(), match_end.get_offset());
+  selectSearchOccurence(match_start, match_end);
+  updateLabel(iter, match_start, match_end);
+}
+
+//Backward Search
+function backward_search() {
+  const [, iter] = buffer.get_selection_bounds();
+  const [found, match_start, match_end] = search_context.backward(iter);
+  if (!found) return;
+  // log(iter.get_offset(), match_start.get_offset(), match_end.get_offset());
+  selectSearchOccurence(match_start, match_end);
+  updateLabel(iter, match_start, match_end);
+}
+
+//Search Entry Handler
 search_entry.connect("search-changed", () => {
   searchTerm = search_entry.get_text();
   search_settings.search_text = searchTerm;
@@ -220,38 +222,31 @@ search_entry.connect("search-changed", () => {
     previous_match.sensitive = true;
     next_match.sensitive = true;
   }
-  const [, iter] = buffer.get_selection_bounds();
-  const [found, match_start, match_end] = search_context.backward(iter);
+  const [, , iter] = buffer.get_selection_bounds();
+  const [found, match_start, match_end] = search_context.forward(iter);
   if (!found) {
     previous_match.sensitive = false;
     next_match.sensitive = false;
   }
 });
 
+//Previous Button Handler
 previous_match.connect("clicked", () => {
-  const [, iter] = buffer.get_selection_bounds();
-  const [found, match_start, match_end] = search_context.backward(iter);
-  if (!found) return;
-  // log(iter.get_offset(), match_start.get_offset(), match_end.get_offset());
-  selectSearchOccurence(match_start, match_end);
-  updateLabel(iter, match_start, match_end);
+  backward_search();
 });
 
+//Next Button Handler
 next_match.connect("clicked", () => {
-  const [, , iter] = buffer.get_selection_bounds();
-  const [found, match_start, match_end] = search_context.forward(iter);
-  if (!found) return;
-  // log(iter.get_offset(), match_start.get_offset(), match_end.get_offset());
-  selectSearchOccurence(match_start, match_end);
-  updateLabel(iter, match_start, match_end);
+  forward_search();
 });
 
+//Close-button Handler
 close_button.connect("clicked", () => {
   revealer.reveal_child = false;
   search_entry.set_text("");
 });
 
-//color
+//Color for Source-View
 const scheme_manager = Source.StyleSchemeManager.get_default();
 const style_manager = Adw.StyleManager.get_default();
 
@@ -265,7 +260,7 @@ function updateScheme() {
 updateScheme();
 style_manager.connect("notify::dark", updateScheme);
 
-//update Label
+//Label Updation
 function updateLabel(iter, match_start, match_end) {
   let text;
   const occ_count = search_context.get_occurrences_count();
