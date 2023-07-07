@@ -20,7 +20,7 @@ string_drop_target.connect("drop", (self, value, x, y) => {
 });
 
 // Drop Target for Files
-const file_drop_target = Gtk.DropTarget.new(Gio.File, Gdk.DragAction.MOVE);
+const file_drop_target = Gtk.DropTarget.new(Gio.File, Gdk.DragAction.COPY);
 bin.add_controller(file_drop_target);
 
 file_drop_target.connect("drop", (self, value, x, y) => {
@@ -108,17 +108,17 @@ function createBoxWidget() {
 // Drop Hover Effect
 
 file_drop_target.connect("enter", () => {
-  bin.get_style_context().add_class("overlay-drag-area");
+  bin.add_css_class("overlay-drag-area");
 });
 
 file_drop_target.connect("leave", () => {
-  bin.get_style_context().remove_class("overlay-drag-area");
+  bin.remove_css_class("overlay-drag-area");
 });
 
 string_drop_target.connect("enter", () => {
-  bin.get_style_context().add_class("overlay-drag-area");
+  bin.add_css_class("overlay-drag-area");
 });
 
 string_drop_target.connect("leave", () => {
-  bin.get_style_context().remove_class("overlay-drag-area");
+  bin.remove_css_class("overlay-drag-area");
 });
