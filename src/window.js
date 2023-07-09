@@ -124,7 +124,7 @@ export default function Window({ application }) {
     document_blueprint,
   });
 
-  PanelStyle({ builder, document_css });
+  PanelStyle({ builder, data_dir, document: document_css });
 
   const previewer = Previewer({
     output,

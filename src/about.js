@@ -67,6 +67,7 @@ ${getBlueprintVersion()}
     "Nasah Kuma https://www.mantohnasah.com/",
     "Jose Hunter https://github.com/halfmexican/",
     "Akunne Pascal https://github.com/Kodecheff",
+    "JCWasmx86 https://github.com/JCWasmx86",
     // Add yourself as
     // "John Doe",
     // or
