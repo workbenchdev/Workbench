@@ -185,6 +185,33 @@
       ]
     },
     {
+      "name" : "jsonrpc-glib",
+      "config-opts" : [
+        "--buildtype=debugoptimized",
+        "-Denable_tests=false"
+      ],
+      "buildsystem" : "meson",
+      "builddir" : true,
+      "sources" : [
+            {
+              "type" : "git",
+              "url" : "https://gitlab.gnome.org/GNOME/jsonrpc-glib.git",
+              "branch" : "main"
+            }
+      ]
+    },
+    {
+      "name": "GTKCssLanguageServer",
+      "buildsystem": "meson",
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://github.com/JCWasmx86/GTKCssLanguageServer",
+          "branch": "main"
+        }
+      ]
+    },
+    {
       "name": "Workbench",
       "buildsystem": "meson",
       "builddir": true,
