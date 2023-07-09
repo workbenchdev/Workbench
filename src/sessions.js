@@ -1,12 +1,6 @@
 import Gio from "gi://Gio";
 
-import {
-  data_dir,
-  ensureDir,
-  getNowForFilename,
-  demos_dir,
-  readDemoFile,
-} from "./util.js";
+import { data_dir, ensureDir, getNowForFilename, demos_dir } from "./util.js";
 
 export const sessions_dir = data_dir.get_child("sessions");
 
@@ -61,11 +55,6 @@ export function createSessionFromDemo(demo) {
   settings.set_boolean("show-style", panels.includes("style"));
   settings.set_boolean("show-ui", panels.includes("ui"));
   settings.set_boolean("show-preview", panels.includes("preview"));
-
-  // Until we have proper inline errors
-  // let's always show the console
-  // in the future we may let each demo decide
-  settings.set_boolean("show-console", true);
 
   return session;
 }

@@ -3,9 +3,10 @@ import Gio from "gi://Gio";
 
 import Window from "./window.js";
 import Actions from "./actions.js";
-import { settings, data_dir, ensureDir } from "./util.js";
+import { settings, data_dir, ensureDir, readDemoFile } from "./util.js";
 import { overrides } from "./overrides.js";
 import Library from "./Library/Library.js";
+import DocumentationViewer from "./DocumentationViewer.js";
 import { createSessionFromDemo, getSessions } from "./sessions.js";
 
 ensureDir(data_dir);
@@ -20,6 +21,10 @@ const application = new Adw.Application({
 
 application.connect("startup", () => {
   Library({
+    application,
+  });
+
+  DocumentationViewer({
     application,
   });
 

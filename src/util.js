@@ -149,17 +149,6 @@ export const demos_dir = Gio.File.new_for_path(
   GLib.build_filenamev([pkg.pkgdatadir, "Library/demos"]),
 );
 
-// export function readDemo(demo_name) {
-//   const javascript = readDemoFile(demo_name, "main.js");
-//   const css = readDemoFile(demo_name, "main.css");
-//   const xml = readDemoFile(demo_name, "main.ui");
-//   const blueprint = readDemoFile(demo_name, "main.blp");
-//   const vala = readDemoFile(demo_name, "main.vala");
-//   const json = JSON.parse(readDemoFile(demo_name, "main.json"));
-
-//   return { ...json, javascript, css, xml, blueprint, vala };
-// }
-
 export function readDemoFile(demo_name, file_name) {
   const file = demos_dir.resolve_relative_path(`${demo_name}/${file_name}`);
 

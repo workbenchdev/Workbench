@@ -17,8 +17,6 @@ import Devtools from "./Devtools.js";
 import prettier from "./lib/prettier.js";
 import prettier_babel from "./lib/prettier-babel.js";
 import prettier_postcss from "./lib/prettier-postcss.js";
-import Library, { readDemo } from "./Library/Library.js";
-import DocumentationViewer from "./DocumentationViewer.js";
 import Previewer from "./Previewer/Previewer.js";
 import Compiler from "./langs/vala/Compiler.js";
 import ThemeSelector from "../troll/src/widgets/ThemeSelector.js";
@@ -91,7 +89,7 @@ export default function Window({ application, session }) {
 
   const document_xml = Document({
     code_view: builder.get_object("code_view_xml"),
-    file: file.get_child("main.xml"),
+    file: file.get_child("main.ui"),
   });
   langs.xml.document = document_xml;
 
@@ -235,6 +233,9 @@ export default function Window({ application, session }) {
       }
 
       if (language === "JavaScript") {
+        // FIXME: useInternal already calls update
+        // but we need to force the update
+        await previewer.useInternal();
         await previewer.update(true);
 
         // We have to create a new file each time
@@ -337,7 +338,6 @@ export default function Window({ application, session }) {
 
   window.add_action(settings.create_action("safe-mode"));
   window.add_action(settings.create_action("auto-preview"));
-  DocumentationViewer({ application });
 
   window.present();
 
