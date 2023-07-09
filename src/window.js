@@ -6,7 +6,6 @@ import Adw from "gi://Adw";
 import Vte from "gi://Vte";
 import { gettext as _ } from "gettext";
 
-import { setup as setupCSS } from "./langs/css/css.js";
 import * as xml from "./langs/xml/xml.js";
 import {
   settings,
@@ -114,7 +113,6 @@ export default function Window({ application }) {
     file: Gio.File.new_for_path(GLib.build_filenamev([data_dir, "state.css"])),
   });
   langs.css.document = document_css;
-  setupCSS({ data_dir, document: document_css });
 
   const panel_ui = PanelUI({
     application,
@@ -126,7 +124,7 @@ export default function Window({ application }) {
     document_blueprint,
   });
 
-  PanelStyle({ builder, document_css });
+  PanelStyle({ builder, data_dir, document: document_css });
 
   const previewer = Previewer({
     output,
