@@ -125,10 +125,11 @@ controller_key.connect("key-pressed", (controller, keyval, keycode, state) => {
     (state & Gdk.ModifierType.CONTROL_MASK && keyval === Gdk.KEY_f) ||
     (state & Gdk.ModifierType.CONTROL_MASK && keyval === Gdk.KEY_F)
   ) {
-    revealer.reveal_child = true;
     search_bar.search_mode_enabled = true;
+    search_bar.grab_focus();
   } else if (keyval === Gdk.KEY_Escape) {
-    revealer.reveal_child = false;
+    search_bar.search_mode_enabled = false;
+    source_view.grab_focus();
   } else if (
     (state & Gdk.ModifierType.CONTROL_MASK &&
       state & Gdk.ModifierType.SHIFT_MASK &&
@@ -167,6 +168,9 @@ controller_for_search.connect(
       (state & Gdk.ModifierType.CONTROL_MASK && keyval === Gdk.KEY_G)
     ) {
       forward_search();
+    } else if (keyval === Gdk.KEY_Escape) {
+      search_bar.search_mode_enabled = false;
+      source_view.grab_focus();
     }
   },
 );
@@ -242,8 +246,7 @@ next_match.connect("clicked", () => {
 
 //Close-button Handler
 close_button.connect("clicked", () => {
-  revealer.reveal_child = false;
-  search_entry.set_text("");
+  search_bar.search_mode_enabled = false;
 });
 
 //Color for Source-View

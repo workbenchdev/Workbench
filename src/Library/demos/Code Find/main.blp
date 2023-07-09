@@ -3,8 +3,8 @@ using GtkSource 5;
 using Adw 1;
 
 Adw.StatusPage {
-  title: "Code Find";
-  description: _("Code Find feature for Workbench");
+  title: "About Window";
+  description: _("A window showing information about the application.");
 
   Box {
     orientation: vertical;
@@ -15,49 +15,42 @@ Adw.StatusPage {
       }
       [overlay]
       Box {
+        name: "search_bar_overlay";
         halign:end;
         valign: start;
         margin-end: 18;
 
-        Revealer revealer {
+        SearchBar search_bar {
+          search-mode-enabled: false;
+
           Box {
-            orientation: horizontal;
+            spacing: 6;
+            SearchEntry search_entry {
+              search-delay: 300;
 
-            SearchBar search_bar {
-              search-mode-enabled: false;
-
-              Box {
-                spacing: 18;
-                SearchEntry search_entry {
-                  placeholder-text: _("Start searching");
-                  search-delay: 300;
-
-                  Label occurence_counter {
-                    label: _("");
-                  }
-                }
-                Box {
-                  valign: center;
-                  styles ["linked"]
-                  Button previous_match {
-                    icon-name: "up";
-                    tooltip-text: "Move to previous match (Ctrl+Shift+G)";
-                    sensitive: false;
-                  }
-                  Button next_match {
-                    icon-name: "down";
-                    tooltip-text: "Move to next match (Ctrl+G)";
-                    sensitive: false;
-                  }
-                }
-                Button close_button {
-                  halign: center;
-                  valign: center;
-                  margin-end: 6;
-                  tooltip-text: "Close search";
-                  icon-name: "window-close-symbolic";
-                }
+              Label occurence_counter {
+                label: _("");
               }
+            }
+            Box {
+              valign: center;
+              styles ["linked"]
+              Button previous_match {
+                icon-name: "up";
+                tooltip-text: "Move to previous match (Ctrl+Shift+G)";
+                sensitive: false;
+              }
+              Button next_match {
+                icon-name: "down";
+                tooltip-text: "Move to next match (Ctrl+G)";
+                sensitive: false;
+              }
+            }
+            Button close_button {
+              styles["circular"]
+              margin-end: 6;
+              tooltip-text: "Close search";
+              icon-name: "window-close-symbolic";
             }
           }
         }
@@ -65,6 +58,8 @@ Adw.StatusPage {
     }
   }
 }
+
+
 
 
 
