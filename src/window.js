@@ -17,6 +17,8 @@ import Devtools from "./Devtools.js";
 import prettier from "./lib/prettier.js";
 import prettier_babel from "./lib/prettier-babel.js";
 import prettier_postcss from "./lib/prettier-postcss.js";
+import Library, { readDemo } from "./Library/Library.js";
+import DocumentationViewer from "./DocumentationViewer.js";
 import Previewer from "./Previewer/Previewer.js";
 import Compiler from "./langs/vala/Compiler.js";
 import ThemeSelector from "../troll/src/widgets/ThemeSelector.js";
@@ -335,6 +337,7 @@ export default function Window({ application, session }) {
 
   window.add_action(settings.create_action("safe-mode"));
   window.add_action(settings.create_action("auto-preview"));
+  DocumentationViewer({ application });
 
   window.present();
 

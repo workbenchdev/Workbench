@@ -10,6 +10,7 @@ import Gtk from "gi://Gtk";
 import Gio from "gi://Gio";
 import Xdp from "gi://Xdp";
 import Source from "gi://GtkSource";
+import WebKit from "gi://WebKit";
 
 Gio._promisify(Xdp.Portal.prototype, "trash_file", "trash_file_finish");
 Gio._promisify(Xdp.Portal.prototype, "open_uri", "open_uri_finish");
@@ -60,3 +61,21 @@ Gio._promisify(Source.FileLoader.prototype, "load_async", "load_finish");
 
 Gio._promisify(Gio.DBusProxy, "new", "new_finish");
 Gio._promisify(Gio.DBusConnection.prototype, "close", "close_finish");
+
+Gio._promisify(
+  WebKit.WebView.prototype,
+  "evaluate_javascript",
+  "evaluate_javascript_finish",
+);
+
+Gio._promisify(
+  Gio.File.prototype,
+  "enumerate_children_async",
+  "enumerate_children_finish",
+);
+
+Gio._promisify(
+  Gio.File.prototype,
+  "load_contents_async",
+  "load_contents_finish",
+);

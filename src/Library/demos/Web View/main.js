@@ -8,10 +8,7 @@ const button_forward = workbench.builder.get_object("button_forward");
 const button_reload = workbench.builder.get_object("button_reload");
 const button_stop = workbench.builder.get_object("button_stop");
 const url_bar = workbench.builder.get_object("url_bar");
-const web_view = new WebKit.WebView({
-  zoom_level: 0.8,
-});
-container.child = web_view;
+const web_view = workbench.builder.get_object("web_view");
 
 // URL bar displays the current loaded page
 web_view.bind_property(

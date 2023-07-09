@@ -57,3 +57,5 @@ src/IconLibrary/IconWidget.js
 src/IconLibrary/main.blp
 src/IconLibrary/main.js
 src/sessions.js
+src/DocumentationViewer.blp
+src/DocumentationViewer.js

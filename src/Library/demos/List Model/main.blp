@@ -1,0 +1,103 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: "List Model";
+  description: _("List models are a simple interface for ordered lists of GObject instances");
+  valign: start;
+
+  Adw.Clamp {
+    maximum-size: 640;
+    Box {
+      orientation: vertical;
+      spacing: 24;
+
+      LinkButton {
+        label: "Documentation";
+        uri: "https://gjs.guide/guides/gio/list-models.html";
+      }
+
+      Gtk.StackSwitcher {
+        stack: stack;
+        halign: center;
+      }
+
+      Gtk.Stack stack {
+        transition-type: crossfade;
+        vexpand: true;
+
+        Gtk.StackPage {
+          name: "listbox";
+          title: _("List Box");
+          child:
+            Box {
+              ListBox list_box {
+                hexpand: true;
+                valign: start;
+                selection-mode: none;
+                styles ["boxed-list"]
+              }
+            };
+        }
+
+        Gtk.StackPage {
+          name: "flowbox";
+          title: _("Flow Box");
+          child:
+            Frame {
+              hexpand: true;
+              valign: start;
+              FlowBox flow_box {
+                orientation: horizontal;
+                selection-mode: none;
+              }
+            };
+        }
+
+
+        Gtk.StackPage {
+          name: "Filter";
+          title: _("Edit");
+          child:
+            Box {
+              orientation: vertical;
+              spacing: 12;
+
+              Box {
+                halign: center;
+                styles ["linked"]
+
+                SearchEntry search_entry {
+                  placeholder-text: _("Start searching");
+                }
+
+                Button add {
+                  icon-name: "list-add-symbolic";
+                  tooltip-text: _("Add Item");
+                }
+
+                Button remove {
+                  icon-name: "list-remove-symbolic";
+                  tooltip-text: _("Remove Item");
+                  sensitive: false;
+                }
+              }
+
+              ListBox list_box_editable {
+                hexpand: true;
+                valign: start;
+                activate-on-single-click: true;
+                selection-mode: single;
+                styles ["boxed-list"]
+              }
+            };
+        }
+      }
+    }
+  }
+}
+
+
+
+
+
