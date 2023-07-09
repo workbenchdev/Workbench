@@ -2,8 +2,8 @@ using Gtk 4.0;
 using Adw 1;
 
 Adw.StatusPage {
-  title: "File Dialog";
-  description: _("It collects the arguments that are needed to present a file chooser dialog to the user");
+  title: _("File Dialog");
+  description: _("Present a dialog to open and save files");
 
   Box {
     orientation: vertical;
@@ -17,7 +17,7 @@ Adw.StatusPage {
     DropDown select_mode {
       halign: center;
       model: StringList {
-        strings ["Select File", "Select File (Folder pre-defined)", "Select Multiple Files", "Select Folder", "Select Multiple Folders", "Save File"]
+        strings ["Select File","Select Multiple Files", "Select Folder", "Select Multiple Folders", "Save File"]
       };
     }
 
@@ -32,4 +32,6 @@ Adw.StatusPage {
     }
   }
 }
+
+
 
