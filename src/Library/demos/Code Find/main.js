@@ -130,9 +130,24 @@ controller_key.connect("key-pressed", (controller, keyval, keycode, state) => {
   } else if (keyval === Gdk.KEY_Escape) {
     search_bar.search_mode_enabled = false;
     source_view.grab_focus();
+  } else if (
+    (state & Gdk.ModifierType.CONTROL_MASK &&
+      state & Gdk.ModifierType.SHIFT_MASK &&
+      keyval === Gdk.KEY_g) ||
+    (state & Gdk.ModifierType.CONTROL_MASK &&
+      state & Gdk.ModifierType.SHIFT_MASK &&
+      keyval === Gdk.KEY_G)
+  ) {
+    backward_search();
   } else if (state & Gdk.ModifierType.SHIFT_MASK && keyval === Gdk.KEY_Return) {
     backward_search();
-  } else if (state & (keyval === Gdk.KEY_Return)) {
+  } else if (
+    (state & Gdk.ModifierType.CONTROL_MASK && keyval === Gdk.KEY_g) ||
+    (state & Gdk.ModifierType.CONTROL_MASK && keyval === Gdk.KEY_G)
+  ) {
+    forward_search();
+  } else if (keyval === Gdk.KEY_Return) {
+    source_view.grab_focus_without_selecting();
     forward_search();
   }
 });
@@ -144,9 +159,27 @@ search_entry.add_controller(controller_for_search);
 controller_for_search.connect(
   "key-pressed",
   (controller, keyval, keycode, state) => {
-    if (state & Gdk.ModifierType.SHIFT_MASK && keyval === Gdk.KEY_Return) {
+    if (
+      (state & Gdk.ModifierType.CONTROL_MASK &&
+        state & Gdk.ModifierType.SHIFT_MASK &&
+        keyval === Gdk.KEY_g) ||
+      (state & Gdk.ModifierType.CONTROL_MASK &&
+        state & Gdk.ModifierType.SHIFT_MASK &&
+        keyval === Gdk.KEY_G)
+    ) {
       backward_search();
-    } else if (state & (keyval === Gdk.KEY_Return)) {
+    } else if (
+      state & Gdk.ModifierType.SHIFT_MASK &&
+      keyval === Gdk.KEY_Return
+    ) {
+      backward_search();
+    } else if (
+      (state & Gdk.ModifierType.CONTROL_MASK && keyval === Gdk.KEY_g) ||
+      (state & Gdk.ModifierType.CONTROL_MASK && keyval === Gdk.KEY_G)
+    ) {
+      forward_search();
+    } else if (keyval === Gdk.KEY_Return) {
+      source_view.grab_focus_without_selecting();
       forward_search();
     } else if (keyval === Gdk.KEY_Escape) {
       search_bar.search_mode_enabled = false;
