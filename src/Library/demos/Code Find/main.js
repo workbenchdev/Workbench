@@ -115,6 +115,7 @@ console.log("Prime Numbers:", primeNumbers);
 buffer.set_text(sampleCode, -1);
 scroll_view.set_child(source_view);
 let searchTerm = search_entry.get_text();
+let last_search_term = "";
 //Functions
 
 //Event-Controller for SourceView
@@ -127,9 +128,11 @@ controller_key.connect("key-pressed", (controller, keyval, keycode, state) => {
   ) {
     search_bar.search_mode_enabled = true;
     search_bar.grab_focus();
+    search_entry.set_text(last_search_term);
   } else if (keyval === Gdk.KEY_Escape) {
     search_bar.search_mode_enabled = false;
     source_view.grab_focus();
+    last_search_term = search_entry.get_text();
   } else if (
     (state & Gdk.ModifierType.CONTROL_MASK &&
       state & Gdk.ModifierType.SHIFT_MASK &&
@@ -147,7 +150,7 @@ controller_key.connect("key-pressed", (controller, keyval, keycode, state) => {
   ) {
     forward_search();
   } else if (keyval === Gdk.KEY_Return) {
-    source_view.grab_focus_without_selecting();
+    source_view.grab_focus;
     forward_search();
   }
 });
@@ -182,6 +185,7 @@ controller_for_search.connect(
       source_view.grab_focus_without_selecting();
       forward_search();
     } else if (keyval === Gdk.KEY_Escape) {
+      last_search_term = search_entry.get_text();
       search_bar.search_mode_enabled = false;
       source_view.grab_focus();
     }
@@ -232,6 +236,8 @@ function backward_search() {
 search_entry.connect("search-changed", () => {
   searchTerm = search_entry.get_text();
   search_settings.search_text = searchTerm;
+  const occ_count = search_context.get_occurrences_count();
+  occurence_counter.label = `0 of ${occ_count}`;
   if (searchTerm === "") {
     previous_match.sensitive = false;
     next_match.sensitive = false;
@@ -251,11 +257,13 @@ search_entry.connect("search-changed", () => {
 //Previous Button Handler
 previous_match.connect("clicked", () => {
   backward_search();
+  search_entry.grab_focus();
 });
 
 //Next Button Handler
 next_match.connect("clicked", () => {
   forward_search();
+  search_entry.grab_focus();
 });
 
 //Close-button Handler
