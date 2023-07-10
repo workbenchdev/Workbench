@@ -8,13 +8,20 @@ Adw.StatusPage {
   Box {
     orientation: vertical;
     halign: center;
+
     Box {
       orientation: horizontal;
       spacing: 6;
 
-      EditableLabel { }
+      EditableLabel edit_label {
+        text: _("Lorem ipsum dolor sit amet, consectetur adipiscing elit");
 
-      Button { icon-name: "document-edit-symbolic";}
+      }
+
+      Button {
+        icon-name: "document-edit-symbolic";
+        styles["flat"]
+      }
 
     }
 
