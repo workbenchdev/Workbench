@@ -192,6 +192,7 @@ controller_for_search.connect(
 search_bar.connect_entry(search_entry);
 const search_settings = new Source.SearchSettings({
   case_sensitive: false,
+  wrap_around: true,
 });
 
 //Setup SearchContext
