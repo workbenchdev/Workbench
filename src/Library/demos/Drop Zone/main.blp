@@ -21,10 +21,19 @@ Adw.StatusPage {
       }
     }
 
-    LinkButton {
-      label: "API Reference";
-      uri: "https://docs.gtk.org/gtk4/drag-and-drop.html";
+    Box {
       margin-top: 24;
+      orientation: vertical;
+
+      LinkButton {
+        label: "Drag-and-Drop in GTK";
+        uri: "https://docs.gtk.org/gtk4/drag-and-drop.html#drop-targets";
+      }
+
+      LinkButton {
+        label: "DropTarget API Reference";
+        uri: "https://docs.gtk.org/gtk4/class.DropTarget.html";
+      }
     }
   }
 }
