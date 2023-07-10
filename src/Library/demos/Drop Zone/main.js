@@ -16,7 +16,7 @@ bin.add_controller(string_drop_target);
 
 string_drop_target.connect("drop", (self, value, x, y) => {
   bin.child = createTextWidget(value);
-  bin.get_style_context().remove_class("overlay-drag-area");
+  bin.remove_css_class("overlay-drag-area");
 });
 
 // Drop Target for Files
@@ -33,23 +33,23 @@ file_drop_target.connect("drop", (self, value, x, y) => {
     try {
       bin.child = createImageWidget(value);
     } catch (error) {
-      console.log(`Unable to load image: ${error}`);
+      console.logError(`Unable to load image: ${error}`);
     }
   } else if (content_type.startsWith("video/")) {
     try {
       bin.child = createVideoWidget(value);
     } catch (error) {
-      console.log(`Unable to load video: ${error}`);
+      console.logError(`Unable to load video: ${error}`);
     }
   } else {
     try {
       bin.child = createFileWidget(value);
     } catch (error) {
-      console.log(`Unable to create file widget: ${error}`);
+      console.logError(`Unable to create file widget: ${error}`);
     }
   }
 
-  bin.get_style_context().remove_class("overlay-drag-area");
+  bin.remove_css_class("overlay-drag-area");
 });
 
 function createImageWidget(value) {
