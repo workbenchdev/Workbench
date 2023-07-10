@@ -1,0 +1,33 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: _("Editable Label");
+  description: _("A text widget with an editing mode");
+
+  Box {
+    orientation: vertical;
+    halign: center;
+    Box {
+      orientation: horizontal;
+      spacing: 6;
+
+      EditableLabel { }
+
+      Button { icon-name: "document-edit-symbolic";}
+
+    }
+
+    LinkButton {
+      label: "API Reference";
+      uri: "";
+      margin-top: 12;
+    }
+
+    LinkButton {
+      label: "Human Interface Guidelines";
+      uri: "";
+      margin-top: 12;
+    }
+  }
+}
