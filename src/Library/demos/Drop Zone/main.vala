@@ -13,7 +13,7 @@ void main() {
   bin.add_controller(string_drop_target);
 
   string_drop_target.drop.connect((self, value, x, y) => {
-    bin.child = createTextWidget(value.get_string());
+    bin.child = createTextPreview(value.get_string());
     bin.remove_css_class("overlay-drag-area");
     return true;
   });
@@ -32,11 +32,11 @@ void main() {
       var file_info = file.query_info("standard::content-type", 0, null);
       string content_type = file_info.get_content_type();
       if (content_type.has_prefix("image/")) {
-        bin.child = createImageWidget(file);
+        bin.child = createImagePreview(file);
       } else if (content_type.has_prefix("video/")) {
-        bin.child = createVideoWidget(file);
+        bin.child = createVideoPreview(file);
       } else {
-        bin.child = createFileWidget(file);
+        bin.child = createFilePreview(file);
       }
     } catch (GLib.Error e) {
       message("Failed to retrieve file info: \"%s\"", e.message);
@@ -68,7 +68,7 @@ void main() {
   });
 }
 
-private Widget createImageWidget(GLib.File file) {
+private Widget createImagePreview(GLib.File file) {
   var widget = createBoxWidget();
 
   var picture = new Picture() {file = file, can_shrink = true, content_fit = Gtk.ContentFit.SCALE_DOWN  };
@@ -77,7 +77,7 @@ private Widget createImageWidget(GLib.File file) {
   return widget;
 }
 
-private Widget createTextWidget(string text) {
+private Widget createTextPreview(string text) {
   var widget = createBoxWidget();
 
   var label = new Label(text) {wrap = true};
@@ -86,7 +86,7 @@ private Widget createTextWidget(string text) {
   return widget;
 }
 
-private Widget createVideoWidget(GLib.File file) {
+private Widget createVideoPreview(GLib.File file) {
   var widget = createBoxWidget();
 
   var video = new Video.for_file(file);
@@ -95,7 +95,7 @@ private Widget createVideoWidget(GLib.File file) {
   return widget;
 }
 
-private Widget createFileWidget(GLib.File file) {
+private Widget createFilePreview(GLib.File file) {
   var widget = createBoxWidget();
 
   try {
