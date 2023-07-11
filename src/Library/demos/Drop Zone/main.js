@@ -15,7 +15,7 @@ const string_drop_target = Gtk.DropTarget.new(
 bin.add_controller(string_drop_target);
 
 string_drop_target.connect("drop", (self, value, x, y) => {
-  bin.child = createTextWidget(value);
+  bin.child = createTextPreview(value);
   bin.remove_css_class("overlay-drag-area");
 });
 
@@ -26,7 +26,7 @@ file_drop_target.connect("drop", (self, value, x, y) => {
   try {
     bin.child = onDrop(value);
   } catch (err) {
-    console.logError(`Unable to load content: ${err}`);
+    logError(err, "Unable to load preview");
   }
   bin.remove_css_class("overlay-drag-area");
 });
@@ -66,7 +66,6 @@ function createTextPreview(text) {
 
 function createVideoPreview(file) {
   const widget = createBoxWidget();
-
   const video = new Gtk.Video({ file: file });
   widget.append(video);
   return widget;
