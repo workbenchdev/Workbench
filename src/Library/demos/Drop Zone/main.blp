@@ -11,12 +11,17 @@ Adw.StatusPage {
     Adw.Clamp {
       maximum-size: 500;
 
-      Adw.Bin bin {
+      Box {
+        orientation: vertical;
         styles ["card"]
-        height-request: 150;
 
-        Label {
-          label: _("Drop files or text here");
+        Adw.Bin bin {
+
+          height-request: 150;
+
+          Label {
+            label: _("Drop files or text here");
+          }
         }
       }
     }
