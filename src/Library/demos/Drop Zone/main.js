@@ -22,37 +22,31 @@ string_drop_target.connect("drop", (self, value, x, y) => {
 // Drop Target for Files
 const file_drop_target = Gtk.DropTarget.new(Gio.File, Gdk.DragAction.COPY);
 bin.add_controller(file_drop_target);
-
 file_drop_target.connect("drop", (self, value, x, y) => {
+  try {
+    bin.child = onDrop(value);
+  } catch (err) {
+    console.logError(`Unable to load content: ${err}`);
+  }
+  bin.remove_css_class("overlay-drag-area");
+});
+
+function onDrop(value) {
   if (!(value instanceof Gio.File)) return false;
 
   const file_info = value.query_info("standard::content-type", 0, null);
   const content_type = file_info.get_content_type();
 
   if (content_type.startsWith("image/")) {
-    try {
-      bin.child = createImageWidget(value);
-    } catch (error) {
-      console.logError(`Unable to load image: ${error}`);
-    }
+    return createImagePreview(value);
   } else if (content_type.startsWith("video/")) {
-    try {
-      bin.child = createVideoWidget(value);
-    } catch (error) {
-      console.logError(`Unable to load video: ${error}`);
-    }
+    return createVideoPreview(value);
   } else {
-    try {
-      bin.child = createFileWidget(value);
-    } catch (error) {
-      console.logError(`Unable to create file widget: ${error}`);
-    }
+    return createFilePreview(value);
   }
+}
 
-  bin.remove_css_class("overlay-drag-area");
-});
-
-function createImageWidget(value) {
+function createImagePreview(value) {
   const widget = createBoxWidget();
 
   const picture = Gtk.Picture.new_for_file(value);
@@ -62,7 +56,7 @@ function createImageWidget(value) {
   return widget;
 }
 
-function createTextWidget(text) {
+function createTextPreview(text) {
   const widget = createBoxWidget();
 
   const label = new Gtk.Label({ label: text, wrap: true });
@@ -70,7 +64,7 @@ function createTextWidget(text) {
   return widget;
 }
 
-function createVideoWidget(file) {
+function createVideoPreview(file) {
   const widget = createBoxWidget();
 
   const video = new Gtk.Video({ file: file });
@@ -78,7 +72,7 @@ function createVideoWidget(file) {
   return widget;
 }
 
-function createFileWidget(file) {
+function createFilePreview(file) {
   const widget = createBoxWidget();
 
   const file_info = file.query_info("standard::icon", 0, null);
