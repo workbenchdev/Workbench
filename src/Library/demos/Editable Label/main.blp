@@ -12,11 +12,12 @@ Adw.StatusPage {
 
     EditableLabel edit_label {
       text: _("Lorem ipsum dolor sit amet, consectetur adipiscing elit");
-      editing: bind edit_switch.state;
+      editing: bind edit_switch.active;
     }
 
     Switch edit_switch {
       halign: center;
+      active: bind edit_label.editing;
     }
 
     LinkButton {
