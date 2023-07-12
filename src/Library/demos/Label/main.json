@@ -1,0 +1,7 @@
+{
+  "name": "Label",
+  "category": "layout",
+  "description": "Multipurpose text widget",
+  "panels": ["code", "preview"],
+  "autorun": true
+}
