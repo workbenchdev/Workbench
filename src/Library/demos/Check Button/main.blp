@@ -7,14 +7,16 @@ Adw.StatusPage {
 
   Box{
     orientation: vertical;
-    spacing:12;
+    spacing: 12;
 
     Box {
-      halign: center;
-      spacing: 60;
+      homogeneous: true;
+      margin-start: 102;
+      margin-end: 102;
       Box {
         orientation: vertical;
         spacing: 12;
+
         Label {
           label: _("Checkboxes");
           styles ["title-4"]
@@ -22,21 +24,18 @@ Adw.StatusPage {
         Box {
           orientation: vertical;
           halign: center;
-          spacing:12;
-          CheckButton checkbox1{
-            label: _("Additions");
-          }
+          spacing: 12;
 
-          CheckButton checkbox2{
-            label: "Tomato";
+          CheckButton checkbox1{
+            active: true;
+            label: _("Enable Notifications");
           }
-          CheckButton checkbox3{
-            label: "Pickles";
+          CheckButton checkbox2{
+            label: _("Auto-save changes");
           }
         }
 
         LinkButton {
-          margin-top:12;
           label: "Human Interface Guidelines";
           uri: "https://developer.gnome.org/hig/patterns/controls/checkboxes.html";
         }
@@ -45,6 +44,7 @@ Adw.StatusPage {
       Box {
         orientation: vertical;
         spacing: 12;
+
         Label {
           label: _("Radio Buttons");
           styles ["title-4"]
@@ -52,30 +52,24 @@ Adw.StatusPage {
         Box {
           orientation: vertical;
           halign: center;
-          spacing:12;
+          spacing: 12;
 
           CheckButton radio_button1{
-            label: _("Force System Style");
+            active: true;
+            label: _("Force Light Mode");
           }
 
           CheckButton radio_button2{
             label: _("Force Light Mode");
             group: radio_button1;
           }
-
-          CheckButton radio_button3{
-            label: _("Force Dark Mode");
-            group: radio_button1;
-          }
         }
 
         LinkButton {
-          margin-top:12;
           label: "Human Interface Guidelines";
           uri: "https://developer.gnome.org/hig/patterns/controls/radio-buttons.html";
         }
       }
-
     }
 
     LinkButton {
