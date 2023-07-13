@@ -5,14 +5,14 @@ Adw.StatusPage {
   title: _("Check Button");
   description: _("Allow users to control a binary operation or make a selection from a set of options");
 
-  Box{
+  Box {
     orientation: vertical;
     spacing: 12;
 
     Box {
       homogeneous: true;
-      margin-start: 102;
-      margin-end: 102;
+      halign: true;
+
       Box {
         orientation: vertical;
         spacing: 12;
@@ -21,6 +21,7 @@ Adw.StatusPage {
           label: _("Checkboxes");
           styles ["title-4"]
         }
+
         Box {
           orientation: vertical;
           halign: center;
@@ -30,6 +31,7 @@ Adw.StatusPage {
             active: true;
             label: _("Enable Notifications");
           }
+
           CheckButton checkbox2{
             label: _("Auto-save changes");
           }
@@ -49,6 +51,7 @@ Adw.StatusPage {
           label: _("Radio Buttons");
           styles ["title-4"]
         }
+
         Box {
           orientation: vertical;
           halign: center;
@@ -59,7 +62,7 @@ Adw.StatusPage {
             label: _("Force Light Mode");
           }
 
-          CheckButton radio_button2{
+          CheckButton radio_button2 {
             label: _("Force Light Mode");
             group: radio_button1;
           }
