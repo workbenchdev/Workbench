@@ -45,7 +45,6 @@ Adw.StatusPage {
           title: _("Grid View");
           child:
             Frame {
-              hexpand: true;
               valign: start;
               GridView grid_view {
                 orientation: horizontal;
@@ -64,30 +63,19 @@ Adw.StatusPage {
               spacing: 12;
 
               Box {
+                orientation: vertical;
                 halign: center;
-                styles ["linked"]
-
-                SearchEntry search_entry {
-                  placeholder-text: _("Start searching");
-                }
+                spacing: 18;
 
                 Button add {
-                  icon-name: "list-add-symbolic";
+                  label: _("Add Item");
                   tooltip-text: _("Add Item");
                 }
 
                 Button remove {
-                  icon-name: "list-remove-symbolic";
+                  label:_("Remove Item");
                   tooltip-text: _("Remove Item");
-                  sensitive: true;
                 }
-              }
-
-              ListView list_view_editable {
-                hexpand: true;
-                valign: start;
-                enable-rubberband: true;
-                styles ["boxed-list"]
               }
             };
         }
@@ -95,6 +83,7 @@ Adw.StatusPage {
     }
   }
 }
+
 
 
 

@@ -52,54 +52,10 @@ selection_model.model.connect(
   },
 );
 
-/*//Filter-Model
-const search_expression = Gtk.PropertyExpression.new(
-  Gtk.StringObject,
-  null,
-  "string",
-);
-const filter = new Gtk.StringFilter({
-  expression: search_expression,
-  ignore_case: true,
-  match_mode: Gtk.StringFilterMatchMode.SUBSTRING,
-});
-const filter_model = new Gtk.FilterListModel({
-  model: model,
-  filter: filter,
-  incremental: true,
-});*/
-
-/*function createItemForFlowBox(listItem) {
-  const listBox = new Adw.Bin({
-    width_request: 160,
-    height_request: 160,
-    css_classes: ["card"],
-    valign: Gtk.Align.START,
-    child: new Gtk.Label({
-      label: listItem.string,
-      halign: Gtk.Align.CENTER,
-      hexpand: true,
-      valign: Gtk.Align.CENTER,
-    }),
-  });
-  return listBox;
-}
-
-function createItemForFilterModel(listItem) {
-  const listRow = new Adw.ActionRow({
-    title: listItem.string,
-  });
-  return listRow;
-}*/
-
 list_view.model = selection_model;
 list_view.factory = factory_for_list_view;
 grid_view.model = selection_model;
 grid_view.factory = factory_for_grid_view;
-
-//list_view.bind_model(model, createItemForListBox);
-//flow_box.bind_model(model, createItemForFlowBox);
-//list_box_editable.bind_model(filter_model, createItemForFilterModel);
 
 // Controller
 add.connect("clicked", () => {
@@ -112,17 +68,8 @@ remove.connect("clicked", () => {
   selection_model.model.remove(2);
 });
 
-/*search_entry.connect("search-changed", () => {
-  const searchText = search_entry.get_text();
-  filter.search = searchText;
-});
-
 // View
 stack.connect("notify::visible-child", () => {
   console.log("View changed");
 });
-
-list_box_editable.connect("row-selected", () => {
-  remove.sensitive = list_box_editable.get_selected_row() !== null;
-});*/
 
