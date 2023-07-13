@@ -13,60 +13,30 @@ private Adw.PropertyAnimationTarget target;
 private Adw.TimedAnimation animation;
 
 public void main () {
-  entry = workbench.builder.get_object ("entry") as Gtk.Entry;
-  entry_placeholder = workbench.builder.get_object ("entry_placeholder") as Gtk.Entry;
-  entry_icon = workbench.builder.get_object ("entry_icon") as Gtk.Entry;
-  entry_progress = workbench.builder.get_object ("entry_progress") as Gtk.Entry;
-  entry_completion = workbench.builder.get_object ("entry_completion") as Gtk.Entry;
-  entry_password = workbench.builder.get_object ("entry_password") as Gtk.PasswordEntry;
-  entry_confirm_password = workbench.builder.get_object ("entry_confirm_password") as Gtk.PasswordEntry;
-  label_password = workbench.builder.get_object ("label_password") as Gtk.Label;
+  entry = (Gtk.Entry) workbench.builder.get_object ("entry");
+  entry_placeholder = (Gtk.Entry) workbench.builder.get_object ("entry_placeholder");
+  entry_icon = (Gtk.Entry) workbench.builder.get_object ("entry_icon");
+  entry_progress = (Gtk.Entry) workbench.builder.get_object ("entry_progress");
+  entry_completion = (Gtk.Entry) workbench.builder.get_object ("entry_completion");
+  entry_password = (Gtk.PasswordEntry) workbench.builder.get_object ("entry_password");
+  entry_confirm_password = (Gtk.PasswordEntry) workbench.builder.get_object ("entry_confirm_password");
+  label_password = (Gtk.Label) workbench.builder.get_object ("label_password");
 
-  entry.activate.connect(() => {
-    stdout.printf ("Regular Entry: \"" + entry.text + "\" entered\n");
-  });
+  entry.activate.connect(() => stdout.printf (@"Regular Entry: \"$(entry.text)\" entered\n"));
+  entry_placeholder.activate.connect(() => stdout.printf (@"Placeholder Entry: \"$(entry_placeholder.text)\" entered\n"));
+  entry_icon.activate.connect(() => stdout.printf (@"Icon Entry: \"$(entry_icon.text)\" entered\n"));
+  entry_icon.icon_press.connect(() => stdout.printf ("Icon Pressed!\n"));
+  entry_icon.icon_release.connect(() => stdout.printf ("Icon Released!\n"));
+  entry_progress.activate.connect(() => stdout.printf (@"Progress Bar Entry: \"$(entry_progress.text)\" entered\n"));
+  entry_progress.icon_press.connect(() => animation.play());
 
-  entry_placeholder.activate.connect(() => {
-    stdout.printf ("Placeholder Entry: \"" + entry_placeholder.text + "\" entered\n");
-  });
+  target = new Adw.PropertyAnimationTarget(entry_progress, "progress-fraction");
 
-  entry_icon.activate.connect(() => {
-    stdout.printf ("Icon Entry: \"" + entry_icon.text + "\" entered\n");
-  });
-
-  entry_icon.icon_press.connect(() => {
-    stdout.printf ("Icon Pressed!\n");
-  });
-
-  entry_icon.icon_release.connect(() => {
-    stdout.printf ("Icon Released!\n");
-  });
-
-  entry_progress.activate.connect(() => {
-    stdout.printf ("Progress Bar Entry: \"" + entry_progress.text + "\" entered\n");
-  });
-
-  entry_progress.icon_press.connect(() => {
-    animation.play();
-  });
-
-  target = new Adw.PropertyAnimationTarget(
-    entry_progress, "progress-fraction"
-  );
-
-  animation = new Adw.TimedAnimation(
-    entry_progress,
-    0,
-    1,
-    2000,
-    target
-  ) {
+  animation = new Adw.TimedAnimation(entry_progress, 0, 1, 2000, target) {
     easing = Adw.Easing.LINEAR
   };
 
-  animation.done.connect(() => {
-    animation.reset();
-  });
+  animation.done.connect(() => animation.reset());
 
   var completion = new Gtk.EntryCompletion();
   entry_completion.completion = completion;
@@ -85,26 +55,22 @@ public void main () {
   completion.inline_selection = true;
 
   entry_password.activate.connect(() => {
-    label_password.label = validate_password(
-      entry_password.text,
-      entry_confirm_password.text
-    );
+    label_password.label = validate_password(entry_password.text, entry_confirm_password.text);
   });
 
   entry_confirm_password.activate.connect(() => {
-    label_password.label = validate_password(
-      entry_password.text,
-      entry_confirm_password.text
-    );
+    label_password.label = validate_password(entry_password.text, entry_confirm_password.text);
   });
 }
 
-string validate_password(string password, string confirm_password) {
-  if (password == "" && confirm_password == "")
+private string validate_password(string password, string confirm_password) {
+  if (password == "" && confirm_password == "") {
     return "Both fields are mandatory!";
+  }
 
-  if (password == confirm_password)
+  if (password == confirm_password) {
     return "Password made successfully!";
-  else
+  } else {
     return "Both fields should be matching!";
+  }
 }
