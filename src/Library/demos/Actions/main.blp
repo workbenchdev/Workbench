@@ -1,0 +1,233 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage demo {
+  title: "Actions";
+  description: _("A high-level interface used to describe a piece of functionality");
+
+  Adw.Clamp {
+    Box {
+      orientation: vertical;
+
+      Box links{
+        halign: center;
+
+        LinkButton {
+          label: "GJS Guide";
+          uri: "https://gjs.guide/guides/gio/actions-and-menus.html#stateful-actions";
+        }
+
+        LinkButton {
+          label: "GTK Documentation";
+          uri: "https://docs.gtk.org/gtk4/actions.html";
+        }
+      }
+
+      Box actions{
+        orientation: vertical;
+        homogeneous: true;
+        spacing: 24;
+
+        Box {
+          orientation: vertical;
+          spacing: 6;
+
+          Label {
+            halign: start;
+            label: _("Activatable Actions");
+
+            styles ["title-4"]
+          }
+
+          Label {
+            halign: start;
+            label: _("Stateless actions that optionally take parameters");
+
+            styles ["dim-label"]
+          }
+
+          Box {
+            margin-top: 6;
+            margin-bottom: 6;
+            hexpand: true;
+            homogeneous: true;
+
+            Button button {
+              halign: center;
+              action-name: "demo.simple";
+              label: _("Simple Action");
+
+              styles ["pill"]
+            }
+
+            MenuButton menu_button {
+              halign: center;
+              menu-model: bookmarks_menu;
+              label: _("Bookmarks");
+
+              styles ["pill"]
+            }
+          }
+        }
+
+        Box {
+          orientation: vertical;
+          spacing: 6;
+
+          Label {
+            halign: start;
+            label: _("Stateful Actions");
+
+            styles ["title-4"]
+          }
+
+          Label {
+            halign: start;
+            label: _("Actions with a closely-associated state");
+
+            styles ["dim-label"]
+          }
+
+          Box {
+            margin-top: 6;
+            margin-bottom: 6;
+            hexpand: true;
+            homogeneous: true;
+
+            Box {
+              valign: center;
+              orientation: vertical;
+              spacing: 6;
+
+              Label {
+                label: _("Toggle Action");
+
+                styles ["heading"]
+              }
+
+              Switch switch {
+                halign: center;
+                valign: center;
+                action-name: "demo.toggle";
+              }
+            }
+
+            Box {
+              orientation: vertical;
+              spacing: 6;
+
+              Label {
+                label: _("Scale");
+
+                styles ["heading"]
+              }
+
+              Box {
+                halign: center;
+                valign: center;
+
+                ToggleButton {
+                  action-name: "demo.scale";
+                  action-target: "'100%'";
+                  label: _("100%");
+                }
+
+                ToggleButton {
+                  action-name: "demo.scale";
+                  action-target: "'150%'";
+                  label: _("150%");
+                }
+
+                ToggleButton {
+                  action-name: "demo.scale";
+                  action-target: "'200%'";
+                  label: _("200%");
+                }
+
+                styles ["linked"]
+              }
+            }
+          }
+        }
+
+        Box {
+          orientation: vertical;
+          spacing: 6;
+
+          Label {
+            halign: start;
+            label: _("Specialized Actions");
+
+            styles ["title-4"]
+          }
+
+          Label {
+            halign: start;
+            label: _("A stateful action which is bound to a GObject property");
+
+            styles ["dim-label"]
+          }
+
+          Box {
+            orientation: vertical;
+            halign: center;
+            margin-top: 6;
+            margin-bottom: 6;
+            homogeneous: true;
+
+
+            Label text {
+              label: _("Text Justify");
+              halign: center;
+
+              styles ["heading"]
+            }
+
+            Box {
+              halign: center;
+              spacing: 6;
+
+              CheckButton {
+                label: _("Start");
+                action-name: "demo.text-justify";
+                action-target: "'start'";
+              }
+
+              CheckButton {
+                label: _("Center");
+                action-name: "demo.text-justify";
+                action-target: "'center'";
+              }
+
+              CheckButton {
+                label: _("End");
+                action-name: "demo.text-justify";
+                action-target: "'end'";
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+menu bookmarks_menu {
+  item {
+    label: _("Developer Documentation");
+    action: "demo.open-bookmarks";
+    target: _("Developer Documentation");
+  }
+
+  item {
+    label: _("Human Interface Guidelines");
+    action: "demo.open-bookmarks";
+    target: _("Human Interface Guidelines");
+  }
+
+  item {
+    label: _("GNOME Javascript");
+    action: "demo.open-bookmarks";
+    target: _("GNOME Javascript");
+  }
+}
