@@ -1,7 +1,0 @@
-{
-  "name": "Check Button",
-  "category": "controls",
-  "description": "Allow users to control a binary operation or make a selection from a set of options",
-  "panels": ["ui", "preview"],
-  "autorun": true
-}
