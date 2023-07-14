@@ -9,23 +9,10 @@ Adw.StatusPage demo {
     Box {
       orientation: vertical;
 
-      Box links{
-        halign: center;
-
-        LinkButton {
-          label: "GJS Guide";
-          uri: "https://gjs.guide/guides/gio/actions-and-menus.html#stateful-actions";
-        }
-
-        LinkButton {
-          label: "GTK Documentation";
-          uri: "https://docs.gtk.org/gtk4/actions.html";
-        }
-      }
-
       Box actions{
         orientation: vertical;
         homogeneous: true;
+        vexpand: true;
         spacing: 24;
 
         Box {
@@ -172,7 +159,7 @@ Adw.StatusPage demo {
             orientation: vertical;
             halign: center;
             margin-top: 6;
-            margin-bottom: 6;
+            margin-bottom: 12;
             homogeneous: true;
 
 
@@ -206,6 +193,19 @@ Adw.StatusPage demo {
               }
             }
           }
+        }
+      }
+
+      Box links{
+        halign: center;
+        LinkButton {
+          label: "GJS Guide";
+          uri: "https://gjs.guide/guides/gio/actions-and-menus.html";
+        }
+
+        LinkButton {
+          label: "GTK Documentation";
+          uri: "https://docs.gtk.org/gtk4/actions.html";
         }
       }
     }
