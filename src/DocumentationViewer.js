@@ -87,6 +87,10 @@ export default function DocumentationViewer({ application }) {
   listbox.set_sort_func(sort);
   listbox.invalidate_sort();
   listbox.set_filter_func(filter);
+  listbox.connect("row-selected", (self, row) => {
+    webview.load_uri(row.uri);
+  });
+
   getDocs(base_path)
     .then((docs) => {
       for (const doc of docs) {
@@ -97,14 +101,11 @@ export default function DocumentationViewer({ application }) {
         row.add_suffix(new Gtk.Image({ icon_name: "go-next-symbolic" }));
         listbox.append(row);
       }
-      listbox.connect("row-selected", (self, row) => {
-        webview.load_uri(row.uri);
-      });
     })
     .catch(logError);
 
-  function sort(row1, row2) {
-    return row1.title > row2.title;
+  function sort(a, b) {
+    return a.title.localeCompare(b.title);
   }
 
   function filter(row) {
@@ -125,25 +126,22 @@ export default function DocumentationViewer({ application }) {
 async function getDocs(base_path) {
   const docs = [];
   const dirs = await list(base_path);
+
   for (const dir of dirs) {
-    try {
-      const results = await Promise.allSettled([
-        readDocIndexJSON(base_path, dir),
-        readDocIndexHTML(base_path, dir),
-      ]);
+    const results = await Promise.allSettled([
+      readDocIndexJSON(base_path, dir),
+      readDocIndexHTML(base_path, dir),
+    ]);
 
-      let namespace = results.filter((result) => result.status === "fulfilled");
-      if (namespace.length) namespace = namespace[0].value;
-      else continue;
+    const fulfilled = results.find((result) => result.status === "fulfilled");
+    if (!fulfilled) continue;
 
-      const uri = base_path.get_child(dir).get_child("index.html").get_uri();
-      docs.push({
-        title: namespace,
-        uri: uri,
-      });
-    } catch (e) {
-      logError(e);
-    }
+    const title = fulfilled.value;
+    const uri = base_path.get_child(dir).get_child("index.html").get_uri();
+    docs.push({
+      title,
+      uri,
+    });
   }
 
   return docs;
@@ -183,11 +181,12 @@ async function disableDocSidebar(webview) {
   try {
     const script = `window.document.querySelector("nav").style.display = "none"`;
     await webview.evaluate_javascript(script, -1, null, null, null);
-  } catch (e) {
+  } catch (err) {
     if (
-      !e.matches(WebKit.JavascriptError, WebKit.JavascriptError.SCRIPT_FAILED)
-    )
-      logError(e);
+      !err.matches(WebKit.JavascriptError, WebKit.JavascriptError.SCRIPT_FAILED)
+    ) {
+      logError(err);
+    }
   }
 }
 
@@ -195,10 +194,11 @@ async function enableDocSidebar(webview) {
   try {
     const script = `window.document.querySelector("nav").style.display = "block"`;
     await webview.evaluate_javascript(script, -1, null, null, null);
-  } catch (e) {
+  } catch (err) {
     if (
-      !e.matches(WebKit.JavascriptError, WebKit.JavascriptError.SCRIPT_FAILED)
-    )
-      logError(e);
+      !err.matches(WebKit.JavascriptError, WebKit.JavascriptError.SCRIPT_FAILED)
+    ) {
+      logError(err);
+    }
   }
 }
