@@ -9,39 +9,40 @@ const list_view = workbench.builder.get_object("list_view");
 const grid_view = workbench.builder.get_object("grid_view");
 const add = workbench.builder.get_object("add");
 const remove = workbench.builder.get_object("remove");
-const list_box_editable = workbench.builder.get_object("list_box_editable");
-const search_entry = workbench.builder.get_object("search_entry");
+const model_for_listview = workbench.builder.get_object("model_for_listview");
 
 //Model
+let item = 1;
 const string_model = new Gtk.StringList({
   strings: ["Default Item 1", "Default Item 2", "Default Item 3"],
 });
 
-const selection_model = new Gtk.SingleSelection({ model: string_model });
-
-let item = 1;
-
-const factory_for_list_view = new Gtk.SignalListItemFactory();
-factory_for_list_view.connect("setup", (factory, listItem) => {
-  const listRow = new Adw.ActionRow();
-  listItem.set_child(listRow);
-});
-factory_for_list_view.connect("bind", (factory, listItem) => {
-  const listRow = listItem.get_child();
-  listRow.title = "Demo";
-});
+const model_for_grid_view = new Gtk.SingleSelection({ model: string_model });
 
 const factory_for_grid_view = new Gtk.SignalListItemFactory();
 factory_for_grid_view.connect("setup", (factory, listItem) => {
-  const listRow = new Adw.ActionRow();
-  listItem.set_child(listRow);
+  const listBox = new Gtk.Box({
+    width_request: 160,
+    height_request: 160,
+    css_classes: ["card"],
+  });
+  const label = new Gtk.Label({
+    halign: Gtk.Align.CENTER,
+    hexpand: true,
+    valign: Gtk.Align.CENTER,
+  });
+  listBox.append(label);
+  listItem.set_child(listBox);
 });
 factory_for_grid_view.connect("bind", (factory, listItem) => {
-  const listRow = listItem.get_child();
-  listRow.title = "Demo";
+  const listBox = listItem.get_child();
+  const modelItem = listItem.get_item();
+  const labelWidget = listBox.get_last_child();
+
+  labelWidget.label = modelItem.string;
 });
 
-selection_model.model.connect(
+/*model_for_grid_view.model.connect(
   "items-changed",
   (list, position, removed, added) => {
     console.log(
@@ -50,26 +51,47 @@ selection_model.model.connect(
       )}, Item added? ${Boolean(added)}`,
     );
   },
-);
+);*/
 
-list_view.model = selection_model;
-list_view.factory = factory_for_list_view;
-grid_view.model = selection_model;
+model_for_listview.connect("selection-changed", () => {
+  const list_view_selected_item = model_for_listview.get_selected();
+  console.log(
+    `Selected item from ListView: ${model_for_listview.model.get_string(
+      list_view_selected_item,
+    )}`,
+  );
+});
+
+model_for_grid_view.connect("selection-changed", () => {
+  const grid_view_selected_item = model_for_grid_view.get_selected();
+  console.log(
+    `Selected item from GridView: ${model_for_grid_view.model.get_string(
+      grid_view_selected_item,
+    )}`,
+  );
+});
+
+grid_view.model = model_for_grid_view;
 grid_view.factory = factory_for_grid_view;
 
 // Controller
 add.connect("clicked", () => {
-  const new_item = `New Item ${item}`;
-  selection_model.model.append(new_item);
+  const new_item = `New item ${item}`;
+  model_for_listview.model.append(new_item);
+  model_for_grid_view.model.append(new_item);
   item++;
 });
 
 remove.connect("clicked", () => {
-  selection_model.model.remove(2);
+  const list_view_selected_item = model_for_listview.get_selected();
+  const grid_view_selected_item = model_for_grid_view.get_selected();
+  model_for_listview.model.remove(list_view_selected_item);
+  model_for_grid_view.model.remove(grid_view_selected_item);
 });
 
+/*
 // View
 stack.connect("notify::visible-child", () => {
   console.log("View changed");
 });
-
+*/

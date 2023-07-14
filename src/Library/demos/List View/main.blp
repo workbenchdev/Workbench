@@ -35,7 +35,18 @@ Adw.StatusPage {
                 hexpand: true;
                 valign: start;
                 enable-rubberband: true;
-                styles ["boxed-list"]
+                factory: BuilderListItemFactory {
+                  template ListItem {
+                    child: Label {
+                      label: bind template.item as <StringObject>.string;
+                    };
+                  }
+                };
+                model: SingleSelection model_for_listview {
+                  model: StringList  stringlist_for_list_view {
+                    strings ["Default Item 1", "Default Item2", "Default Item 3"]
+                  };
+                };
               }
             };
         }
@@ -83,6 +94,7 @@ Adw.StatusPage {
     }
   }
 }
+
 
 
 
