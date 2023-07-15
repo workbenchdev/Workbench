@@ -1,6 +1,13 @@
 import Gio from "gi://Gio";
+import GLib from "gi://GLib";
 
-import { data_dir, ensureDir, getNowForFilename, demos_dir } from "./util.js";
+import {
+  data_dir,
+  ensureDir,
+  getNowForFilename,
+  demos_dir,
+  settings,
+} from "./util.js";
 
 export const sessions_dir = data_dir.get_child("sessions");
 
@@ -9,20 +16,24 @@ export function getSessions() {
 
   ensureDir(sessions_dir);
 
-  for (const file_info of sessions_dir.enumerate_children(
-    "",
-    Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
-    null,
-  )) {
-    if (file_info.get_file_type() !== Gio.FileType.DIRECTORY) continue;
-    sessions.push(new Session(file_info.get_name()));
+  const session = migrateStateToSession();
+  if (session) {
+    sessions.push(session);
+  } else {
+    for (const file_info of sessions_dir.enumerate_children(
+      "",
+      Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
+      null,
+    )) {
+      if (file_info.get_file_type() !== Gio.FileType.DIRECTORY) continue;
+      sessions.push(new Session(file_info.get_name()));
+    }
   }
 
   return sessions;
 }
 
-export function createSession() {
-  const name = getNowForFilename();
+export function createSession(name = getNowForFilename()) {
   const session = new Session(name);
   ensureDir(session.file);
   return session;
@@ -83,4 +94,44 @@ class Session {
       path: "/re/sonny/Workbench/",
     });
   }
+}
+
+function migrateStateToSession() {
+  if (settings.get_boolean("migrated")) return;
+
+  const state_files = [
+    ["state.blp", "main.blp"],
+    ["state.css", "main.css"],
+    ["state.js", "main.js"],
+    ["state.vala", "main.vala"],
+    ["state.xml", "main.ui"],
+  ];
+
+  const found = state_files.find(([file]) =>
+    data_dir.get_child(file).query_exists(null),
+  );
+  if (!found) {
+    settings.set_boolean("migrated", true);
+    return;
+  }
+
+  const session = createSession(`${getNowForFilename()} state`);
+  for (const state_file of state_files) {
+    try {
+      data_dir.get_child(state_file[0]).move(
+        session.file.get_child(state_file[1]), // destination
+        Gio.FileCopyFlags.BACKUP, // flags
+        null, // cancellable
+        null, // progress_callback
+      );
+    } catch (err) {
+      if (err.code !== GLib.FileError.NOENT) {
+        throw err;
+      }
+    }
+  }
+
+  settings.set_boolean("migrated", true);
+
+  return session;
 }
