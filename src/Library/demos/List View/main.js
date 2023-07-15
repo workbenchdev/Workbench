@@ -17,7 +17,7 @@ const string_model = new Gtk.StringList({
   strings: ["Default Item 1", "Default Item 2", "Default Item 3"],
 });
 
-const model_for_grid_view = new Gtk.SingleSelection({ model: string_model });
+const model = new Gtk.SingleSelection({ model: string_model });
 
 const factory_for_grid_view = new Gtk.SignalListItemFactory();
 factory_for_grid_view.connect("setup", (factory, listItem) => {
@@ -53,40 +53,35 @@ factory_for_grid_view.connect("bind", (factory, listItem) => {
   },
 );*/
 
-model_for_listview.connect("selection-changed", () => {
-  const list_view_selected_item = model_for_listview.get_selected();
+model.connect("selection-changed", () => {
+  const list_view_selected_item = model.get_selected();
+  const grid_view_selected_item = model.get_selected();
   console.log(
-    `Selected item from ListView: ${model_for_listview.model.get_string(
+    `Selected item from ListView: ${model.model.get_string(
       list_view_selected_item,
     )}`,
   );
-});
-
-model_for_grid_view.connect("selection-changed", () => {
-  const grid_view_selected_item = model_for_grid_view.get_selected();
   console.log(
-    `Selected item from GridView: ${model_for_grid_view.model.get_string(
+    `Selected item from GridView: ${model.model.get_string(
       grid_view_selected_item,
     )}`,
   );
 });
 
-grid_view.model = model_for_grid_view;
+list_view.model = model;
+grid_view.model = model;
 grid_view.factory = factory_for_grid_view;
 
 // Controller
 add.connect("clicked", () => {
   const new_item = `New item ${item}`;
-  model_for_listview.model.append(new_item);
-  model_for_grid_view.model.append(new_item);
+  model.model.append(new_item);
   item++;
 });
 
 remove.connect("clicked", () => {
-  const list_view_selected_item = model_for_listview.get_selected();
-  const grid_view_selected_item = model_for_grid_view.get_selected();
-  model_for_listview.model.remove(list_view_selected_item);
-  model_for_grid_view.model.remove(grid_view_selected_item);
+  const selected_item = model.get_selected();
+  model.model.remove(selected_item);
 });
 
 /*

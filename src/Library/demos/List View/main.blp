@@ -7,7 +7,7 @@ Adw.StatusPage {
   valign: start;
 
   Adw.Clamp {
-    maximum-size: 640;
+    maximum-size: 240;
     Box {
       orientation: vertical;
       spacing: 24;
@@ -15,6 +15,20 @@ Adw.StatusPage {
       LinkButton {
         label: "Documentation";
         uri: "https://gjs.guide/guides/gio/list-models.html";
+      }
+
+      Box {
+        halign: center;
+        styles ["linked"]
+        Button add {
+          label: _("Add Item");
+          tooltip-text: _("Add Item");
+        }
+
+        Button remove {
+          label: _("Remove Item");
+          tooltip-text: _("Remove Item");
+          }
       }
 
       Gtk.StackSwitcher {
@@ -29,71 +43,40 @@ Adw.StatusPage {
         Gtk.StackPage {
           name: "listview";
           title: _("List View");
-          child:
-            Box {
-              ListView list_view {
-                hexpand: true;
-                valign: start;
-                enable-rubberband: true;
-                factory: BuilderListItemFactory {
-                  template ListItem {
-                    child: Label {
-                      label: bind template.item as <StringObject>.string;
-                    };
-                  }
-                };
-                model: SingleSelection model_for_listview {
-                  model: StringList  stringlist_for_list_view {
-                    strings ["Default Item 1", "Default Item2", "Default Item 3"]
+          child:  Frame {
+            valign: start;
+            ListView list_view {
+              enable-rubberband: true;
+              factory: BuilderListItemFactory {
+                template ListItem {
+                  child: Adw.ActionRow {
+                    title: bind template.item as <StringObject>.string;
                   };
-                };
-              }
-            };
+                }
+              };
+            }
+          };
         }
 
         Gtk.StackPage {
           name: "gridview";
           title: _("Grid View");
-          child:
-            Frame {
-              valign: start;
-              GridView grid_view {
-                orientation: horizontal;
-                enable-rubberband: true;
-              }
-            };
-        }
-
-
-        Gtk.StackPage {
-          name: "Filter";
-          title: _("Edit");
-          child:
-            Box {
-              orientation: vertical;
-              spacing: 12;
-
-              Box {
-                orientation: vertical;
-                halign: center;
-                spacing: 18;
-
-                Button add {
-                  label: _("Add Item");
-                  tooltip-text: _("Add Item");
-                }
-
-                Button remove {
-                  label:_("Remove Item");
-                  tooltip-text: _("Remove Item");
-                }
-              }
-            };
+          child:  Frame {
+            valign: start;
+            GridView grid_view {
+              orientation: horizontal;
+              max-columns: 8;
+              enable-rubberband: true;
+            }
+          };
         }
       }
     }
   }
 }
+
+
+
 
 
 
