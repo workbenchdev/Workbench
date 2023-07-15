@@ -1,4 +1,3 @@
-import Gio from "gi://Gio";
 import GLib from "gi://GLib";
 
 import LSPClient from "../../lsp/LSPClient.js";

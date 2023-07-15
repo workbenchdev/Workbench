@@ -59,3 +59,4 @@ src/IconLibrary/main.js
 src/sessions.js
 src/DocumentationViewer.blp
 src/DocumentationViewer.js
+src/langs/css/css.js
