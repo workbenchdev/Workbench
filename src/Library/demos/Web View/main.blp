@@ -54,13 +54,15 @@ Adw.Clamp {
       }
     }
 
-    WebKit.WebView web_view {
-      zoom-level: 0.8;
+    Frame {
       margin-top: 18;
       margin-bottom: 18;
-      vexpand: true;
-      hexpand: true;
-      styles ["view"]
+      WebKit.WebView web_view {
+        zoom-level: 0.8;
+        vexpand: true;
+        hexpand: true;
+        styles ["view"]
+      }
     }
 
     LinkButton {

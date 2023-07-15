@@ -217,7 +217,7 @@ export default function Window({ application, session }) {
     }
   }
 
-  async function runCode(prettify = true) {
+  async function runCode({ format }) {
     button_run.set_sensitive(false);
 
     term_console.clear();
@@ -228,14 +228,11 @@ export default function Window({ application, session }) {
     try {
       await panel_ui.update();
 
-      if (prettify) {
+      if (format) {
         formatCode();
       }
 
       if (language === "JavaScript") {
-        // FIXME: useInternal already calls update
-        // but we need to force the update
-        await previewer.useInternal();
         await previewer.update(true);
 
         // We have to create a new file each time
@@ -296,7 +293,7 @@ export default function Window({ application, session }) {
     name: "run",
   });
   action_run.connect("activate", () => {
-    runCode().catch(logError);
+    runCode({ format: true }).catch(logError);
   });
   window.add_action(action_run);
   application.set_accels_for_action("win.run", ["<Control>Return"]);
@@ -341,7 +338,40 @@ export default function Window({ application, session }) {
 
   window.present();
 
-  return { runCode, term_console };
+  const documents = languages.map((language) => language.document);
+  async function load({ run }) {
+    panel_ui.stop();
+    previewer.stop();
+    documents.forEach((document) => document.stop());
+
+    await Promise.all([
+      document_javascript.load(),
+      document_vala.load(),
+      document_blueprint.load(),
+      document_xml.load(),
+      document_css.load(),
+    ]);
+
+    await previewer.useInternal();
+
+    if (run) {
+      await runCode({ format: false });
+    } else {
+      term_console.clear();
+      panel_ui.start();
+      await panel_ui.update();
+      previewer.start();
+      await previewer.update(true);
+    }
+
+    documents.forEach((document) => {
+      document.start();
+    });
+
+    term_console.scrollToEnd();
+  }
+
+  return { load };
 }
 
 async function setGtk4PreferDark(dark) {

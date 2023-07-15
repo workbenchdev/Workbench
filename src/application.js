@@ -61,10 +61,11 @@ function restoreSessions() {
     newWindow();
   } else {
     sessions.forEach((session) => {
-      Window({
+      const { load } = Window({
         application,
         session,
       });
+      load({ run: false }).catch(logError);
     });
   }
 }
@@ -72,10 +73,11 @@ function restoreSessions() {
 function newWindow() {
   const demo = JSON.parse(readDemoFile("Welcome", "main.json"));
   const session = createSessionFromDemo(demo);
-  Window({
+  const { load } = Window({
     application,
     session,
   });
+  load({ run: false }).catch(logError);
 }
 
 export default application;

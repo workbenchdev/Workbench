@@ -85,16 +85,8 @@ async function openDemo({ application, demo_name }) {
   const demo = JSON.parse(readDemoFile(demo_name, "main.json"));
   const session = await createSessionFromDemo(demo);
 
-  const { runCode, term_console } = Window({ application, session });
-
-  // FIXME: remove
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-
   const is_js = session.file.get_child("main.js").query_exists(null);
-  // FIXME
-  if (demo.autorun && is_js) {
-    await runCode(false);
-  } else {
-    term_console.clear();
-  }
+
+  const { load } = Window({ application, session });
+  await load({ run: demo.autorun && is_js });
 }
