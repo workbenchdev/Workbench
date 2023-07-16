@@ -7,13 +7,12 @@
     <key name="migrated" type="b">
       <default>false</default>
     </key>
-    <!-- TODO -->
-    <!-- <key name="preferred-code-language" type="i">
+    <key name="recent-code-language" type="i">
       <default>0</default>
     </key>
-    <key name="preferred-ui-language" type="i">
+    <key name="recent-ui-language" type="i">
       <default>0</default>
-    </key> -->
+    </key>
   </schema>
   <schema id="@app_id@.Session" path="/re/sonny/Workbench/">
     <key name="show-code" type="b">

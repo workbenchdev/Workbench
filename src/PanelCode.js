@@ -3,6 +3,7 @@ import GObject from "gi://GObject";
 
 import { setup as setupVala } from "./langs/vala/vala.js";
 import { setup as setupJavaScript } from "./langs/javascript/javascript.js";
+import { settings as global_settings } from "./util.js";
 
 export default function PanelCode({
   builder,
@@ -40,6 +41,13 @@ export default function PanelCode({
     Gio.SettingsBindFlags.DEFAULT,
   );
   dropdown_code_lang.connect("notify::selected-item", switchLanguage);
+
+  settings.connect("changed::code-language", () => {
+    global_settings.set_int(
+      "recent-code-language",
+      settings.get_int("code-language"),
+    );
+  });
 
   const panel = {
     panel: panel_code,

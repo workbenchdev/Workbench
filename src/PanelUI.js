@@ -3,7 +3,12 @@ import GObject from "gi://GObject";
 import Gtk from "gi://Gtk";
 
 import { LSPError } from "./lsp/LSP.js";
-import { getLanguage, unstack, listenProperty } from "./util.js";
+import {
+  getLanguage,
+  unstack,
+  listenProperty,
+  settings as global_settings,
+} from "./util.js";
 
 import {
   setup as setupBlueprint,
@@ -141,6 +146,13 @@ export default function PanelUI({
       onChangeLang(value).catch(logError);
     },
   );
+
+  settings.connect("changed::ui-language", () => {
+    global_settings.set_int(
+      "recent-ui-language",
+      settings.get_int("ui-language"),
+    );
+  });
 
   async function onChangeLang(value) {
     if (value === 0) {

@@ -307,28 +307,6 @@ export default function Window({ application, session }) {
   window.add_action(action_format);
   application.set_accels_for_action("win.format", ["<Control><Shift>Return"]);
 
-  const undo_action = new Gio.SimpleAction({
-    name: "workbench_undo",
-    parameter_type: new GLib.VariantType("s"),
-  });
-  undo_action.connect("activate", (_self, target) => {
-    const updated = JSON.parse(target.unpack()).updated;
-    languages.forEach(({ id, document }) => {
-      if (updated.includes(id)) document.code_view.buffer.undo();
-    });
-
-    const panels = JSON.parse(target.unpack()).panels;
-    settings.set_boolean("show-code", panels[0]);
-    settings.set_boolean("show-style", panels[1]);
-    settings.set_boolean("show-ui", panels[2]);
-    settings.set_boolean("show-preview", panels[3]);
-
-    const langs = JSON.parse(target.unpack()).langs;
-    settings.set_int("code-language", langs[0]);
-    settings.set_int("ui-language", langs[1]);
-  });
-  window.add_action(undo_action);
-
   window.connect("close-request", () => {
     deleteSession(session).catch(logError);
   });

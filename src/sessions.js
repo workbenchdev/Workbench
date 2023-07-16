@@ -6,7 +6,7 @@ import {
   ensureDir,
   getNowForFilename,
   demos_dir,
-  settings,
+  settings as global_settings,
 } from "./util.js";
 
 export const sessions_dir = data_dir.get_child("sessions");
@@ -66,6 +66,14 @@ export function createSessionFromDemo(demo) {
   settings.set_boolean("show-style", panels.includes("style"));
   settings.set_boolean("show-ui", panels.includes("ui"));
   settings.set_boolean("show-preview", panels.includes("preview"));
+  settings.set_int(
+    "code-language",
+    global_settings.get_int("recent-code-language"),
+  );
+  settings.set_int(
+    "ui-language",
+    global_settings.get_int("recent-ui-language"),
+  );
 
   return session;
 }
@@ -97,7 +105,7 @@ class Session {
 }
 
 function migrateStateToSession() {
-  if (settings.get_boolean("migrated")) return;
+  if (global_settings.get_boolean("migrated")) return;
 
   const state_files = [
     ["state.blp", "main.blp"],
@@ -111,7 +119,7 @@ function migrateStateToSession() {
     data_dir.get_child(file).query_exists(null),
   );
   if (!found) {
-    settings.set_boolean("migrated", true);
+    global_settings.set_boolean("migrated", true);
     return;
   }
 
@@ -131,7 +139,7 @@ function migrateStateToSession() {
     }
   }
 
-  settings.set_boolean("migrated", true);
+  global_settings.set_boolean("migrated", true);
 
   return session;
 }
