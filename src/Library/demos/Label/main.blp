@@ -8,14 +8,39 @@ Adw.StatusPage {
   Box {
     orientation: vertical;
     spacing: 12;
-    halign: center;
 
     ListBox {
       styles ["boxed-list"]
 
-      Adw.ComboRow {title: _("Style Class");}
-      Adw.ActionRow {title: _("Justification");}
-      Adw.ActionRow {title: _("Xalign");}
+      Adw.ComboRow {
+        title: _("Style Class");
+        model: StringList {
+          strings [_("S"), _("S")]
+        };
+      }
+
+      Adw.ComboRow justification_row {
+        title: _("Justification");
+         model: StringList {
+          strings [_("Left"), _("Right"), _("Center"), _("Fill")]
+        };
+
+      }
+
+      Adw.ActionRow {
+        title: _("Xalign");
+        activatable-widget: xalign_spin_button;
+
+        SpinButton xalign_spin_button {
+          adjustment: Adjustment {
+            value: 0.5;
+            step-increment: 0.1;
+            lower: 0.0;
+            upper: 1.0;
+          };
+
+        }
+      }
 
     }
 
