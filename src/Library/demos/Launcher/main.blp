@@ -1,0 +1,94 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: "Launcher";
+  description: _("Present a dialog of apps required to open a File/Uri");
+
+  Adw.Clamp {
+    maximum-size: 640;
+    Box {
+      orientation: vertical;
+      spacing: 24;
+
+      Gtk.StackSwitcher {
+        stack: stack;
+        halign: center;
+      }
+
+      Gtk.Stack stack {
+        transition-type: crossfade;
+        vexpand: true;
+
+        Gtk.StackPage {
+          name: "file_launcher";
+          title: _("File Launcher");
+          child:
+            Box {
+              orientation: vertical;
+              halign: center;
+              spacing: 24;
+              Box {
+                halign: center;
+                Button launch_file {
+                  label: _("Launch");
+                  styles ["suggested-action", "pill"]
+                }
+              }
+
+              Box {
+                styles ["linked"]
+
+                Button file_details {
+                  label: _("File Details");
+                }
+                Button file_location {
+                  label: _("File Location");
+                }
+              }
+
+              Button change_file {
+                label: _("Choose another file");
+              }
+
+              LinkButton {
+                label: _("API Reference");
+                uri : "https://docs.gtk.org/gtk4/class.FileLauncher.html";
+              }
+          };
+        }
+
+        Gtk.StackPage {
+          name: "uri_launcher";
+          title: _("Uri Launcher");
+          child:
+            Box {
+              orientation: vertical;
+              halign: center;
+              spacing: 24;
+              Box {
+                halign: center;
+                Button uri_launch {
+                  label: _("Launch");
+                  styles ["suggested-action", "pill"]
+                }
+              }
+
+              Button uri_details {
+                label: _("Uri Details");
+              }
+
+              LinkButton {
+                label: _("API Reference");
+                uri : "https://docs.gtk.org/gtk4/class.UriLauncher.html";
+              }
+          };
+        }
+      }
+    }
+  }
+}
+
+
+
+

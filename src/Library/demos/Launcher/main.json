@@ -1,0 +1,7 @@
+{
+  "name": "Launcher",
+  "category": "controls",
+  "description": "Present a dialog of apps required to open a file/uri",
+  "panels": ["code", "preview"],
+  "autorun": true
+}
