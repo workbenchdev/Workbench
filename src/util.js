@@ -77,6 +77,7 @@ export const languages = [
     extensions: [".vala"],
     types: ["text/x-vala"],
     document: null,
+    placeholder: "// Sorry, this demo is not available in Vala yet.",
   },
 ];
 

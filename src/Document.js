@@ -2,7 +2,7 @@ import Source from "gi://GtkSource";
 import Gio from "gi://Gio";
 import GLib from "gi://GLib";
 
-export default function Document({ code_view, file }) {
+export default function Document({ code_view, file, lang }) {
   const { buffer } = code_view;
   let handler_id = null;
 
@@ -32,7 +32,7 @@ export default function Document({ code_view, file }) {
   }
 
   function load() {
-    return loadSourceBuffer({ source_file, buffer });
+    return loadSourceBuffer({ source_file, buffer, lang });
   }
 
   return { start, stop, save, code_view, file, load };
@@ -52,11 +52,9 @@ async function saveSourceBuffer({ source_file, buffer }) {
   if (success) {
     buffer.set_modified(false);
   }
-
-  return success;
 }
 
-async function loadSourceBuffer({ source_file, buffer }) {
+async function loadSourceBuffer({ source_file, buffer, lang }) {
   const file_loader = new Source.FileLoader({
     buffer,
     file: source_file,
@@ -65,7 +63,12 @@ async function loadSourceBuffer({ source_file, buffer }) {
   try {
     success = await file_loader.load_async(GLib.PRIORITY_DEFAULT, null, null);
   } catch (err) {
-    if (err.code !== Gio.IOErrorEnum.NOT_FOUND) {
+    if (err.code === Gio.IOErrorEnum.NOT_FOUND) {
+      if (lang.placeholder) {
+        buffer.set_text(lang.placeholder, -1);
+      }
+      success = true;
+    } else {
       throw err;
     }
   }
@@ -73,6 +76,4 @@ async function loadSourceBuffer({ source_file, buffer }) {
   if (success) {
     buffer.set_modified(false);
   }
-
-  return success;
 }

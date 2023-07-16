@@ -40,9 +40,11 @@ import { deleteSession } from "./sessions.js";
 
 const style_manager = Adw.StyleManager.get_default();
 
-const langs = Object.fromEntries(languages.map((lang) => [lang.id, lang]));
-
 export default function Window({ application, session }) {
+  const langs = Object.fromEntries(
+    languages.map((lang) => [lang.id, { ...lang }]),
+  );
+
   const { file, settings } = session;
 
   Vte.Terminal.new();
@@ -72,30 +74,35 @@ export default function Window({ application, session }) {
   const document_javascript = Document({
     code_view: builder.get_object("code_view_javascript"),
     file: file.get_child("main.js"),
+    lang: langs.javascript,
   });
   langs.javascript.document = document_javascript;
 
   const document_vala = Document({
     code_view: builder.get_object("code_view_vala"),
     file: file.get_child("main.vala"),
+    lang: langs.vala,
   });
   langs.vala.document = document_vala;
 
   const document_blueprint = Document({
     code_view: builder.get_object("code_view_blueprint"),
     file: file.get_child("main.blp"),
+    lang: langs.blueprint,
   });
   langs.blueprint.document = document_blueprint;
 
   const document_xml = Document({
     code_view: builder.get_object("code_view_xml"),
     file: file.get_child("main.ui"),
+    lang: langs.xml,
   });
   langs.xml.document = document_xml;
 
   const document_css = Document({
     code_view: builder.get_object("code_view_css"),
     file: file.get_child("main.css"),
+    lang: langs.css,
   });
   langs.css.document = document_css;
 
@@ -314,7 +321,7 @@ export default function Window({ application, session }) {
 
   window.present();
 
-  const documents = languages.map((language) => language.document);
+  const documents = Object.values(langs).map((lang) => lang.document);
   async function load({ run }) {
     panel_ui.stop();
     previewer.stop();
