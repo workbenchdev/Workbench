@@ -3,7 +3,12 @@ import GObject from "gi://GObject";
 import Gtk from "gi://Gtk";
 
 import { LSPError } from "./lsp/LSP.js";
-import { getLanguage, settings, unstack, listenProperty } from "./util.js";
+import {
+  getLanguage,
+  unstack,
+  listenProperty,
+  settings as global_settings,
+} from "./util.js";
 
 import {
   setup as setupBlueprint,
@@ -15,10 +20,10 @@ const { addSignalMethods } = imports.signals;
 export default function PanelUI({
   application,
   builder,
-  data_dir,
   term_console,
   document_xml,
   document_blueprint,
+  settings,
 }) {
   let lang;
 
@@ -51,7 +56,6 @@ export default function PanelUI({
   dropdown_ui_lang.get_first_child().add_css_class("flat");
 
   const blueprint = setupBlueprint({
-    data_dir,
     document: document_blueprint,
   });
 
@@ -142,6 +146,13 @@ export default function PanelUI({
       onChangeLang(value).catch(logError);
     },
   );
+
+  settings.connect("changed::ui-language", () => {
+    global_settings.set_int(
+      "recent-ui-language",
+      settings.get_int("ui-language"),
+    );
+  });
 
   async function onChangeLang(value) {
     if (value === 0) {

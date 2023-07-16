@@ -10,18 +10,18 @@ export const settings = new Gio.Settings({
   path: "/re/sonny/Workbench/",
 });
 
-export function createDataDir() {
-  const data_dir = GLib.build_filenamev([GLib.get_user_data_dir(), pkg.name]);
+export const data_dir = Gio.File.new_for_path(
+  GLib.build_filenamev([GLib.get_user_data_dir(), pkg.name]),
+);
 
+export function ensureDir(file) {
   try {
-    Gio.File.new_for_path(data_dir).make_directory(null);
+    file.make_directory_with_parents(null);
   } catch (err) {
     if (err.code !== Gio.IOErrorEnum.EXISTS) {
       throw err;
     }
   }
-
-  return data_dir;
 }
 
 export function getFlatpakInfo() {
@@ -77,6 +77,7 @@ export const languages = [
     extensions: [".vala"],
     types: ["text/x-vala"],
     document: null,
+    placeholder: "// Sorry, this demo is not available in Vala yet.",
   },
 ];
 
@@ -84,34 +85,6 @@ export function getLanguage(id) {
   return languages.find(
     (language) => language.id.toLowerCase() === id.toLowerCase(),
   );
-}
-
-export function getLanguageForFile(file) {
-  let content_type;
-
-  try {
-    const info = file.query_info(
-      "standard::content-type",
-      Gio.FileQueryInfoFlags.NONE,
-      null,
-    );
-    content_type = info.get_content_type();
-  } catch (err) {
-    logError(err);
-  }
-
-  if (!content_type) {
-    return;
-  }
-
-  const name = file.get_basename();
-
-  return languages.find(({ extensions, types }) => {
-    return (
-      types.includes(content_type) ||
-      extensions.some((ext) => name.endsWith(ext))
-    );
-  });
 }
 
 export function listenProperty(object, property, fn, { initial = false } = {}) {
@@ -171,4 +144,29 @@ export function unstack(fn, onError = console.error) {
       latest_promise = fn(...latest_arguments).catch(onError);
     });
   };
+}
+
+export const demos_dir = Gio.File.new_for_path(
+  GLib.build_filenamev([pkg.pkgdatadir, "Library/demos"]),
+);
+
+export function readDemoFile(demo_name, file_name) {
+  const file = demos_dir.resolve_relative_path(`${demo_name}/${file_name}`);
+
+  let str;
+
+  try {
+    str = decode(file.load_contents(null)[1]);
+  } catch (err) {
+    if (err.code !== Gio.IOErrorEnum.NOT_FOUND) {
+      throw err;
+    }
+    str = "";
+  }
+
+  return str;
+}
+
+export function getNowForFilename() {
+  return new GLib.DateTime().format("%Y-%m-%d %H-%M-%S");
 }

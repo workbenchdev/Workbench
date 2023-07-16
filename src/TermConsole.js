@@ -4,8 +4,6 @@ import Gio from "gi://Gio";
 import Gdk from "gi://Gdk";
 import Adw from "gi://Adw";
 
-import { settings } from "./util.js";
-
 // https://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797
 const ERASE_ENTIRE_SCREEN = "\u001b[2J";
 const ERASE_SAVED_LINES = "\u001b[3J";
@@ -14,7 +12,12 @@ const MAKE_CURSOR_INVISIBLE = "\u001b[?25l";
 
 const style_manager = Adw.StyleManager.get_default();
 
-export default function TermConsole({ builder, window, application }) {
+export default function TermConsole({
+  builder,
+  window,
+  application,
+  settings,
+}) {
   const terminal = builder.get_object("terminal");
 
   terminal.feed(MAKE_CURSOR_INVISIBLE);

@@ -1,19 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <schemalist gettext-domain="@app_id@">
-  <schema id="@app_id@" path="/re/sonny/Workbench/">
-    <key name="color-scheme" type="i">
-      <default>0</default>
-    </key>
-    <key name="migrated" type="b">
-      <default>false</default>
-    </key>
-    <key name="recent-code-language" type="i">
-      <default>0</default>
-    </key>
-    <key name="recent-ui-language" type="i">
-      <default>0</default>
-    </key>
-  </schema>
   <schema id="@app_id@.Session" path="/re/sonny/Workbench/">
     <key name="show-code" type="b">
       <default>false</default>
