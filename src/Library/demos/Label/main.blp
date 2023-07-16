@@ -1,0 +1,27 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: _("Label");
+  description: _("A text widget");
+
+  Box {
+    orientation: vertical;
+    spacing: 12;
+    halign: center;
+
+    ListBox {
+      styles ["boxed-list"]
+
+      Adw.ComboRow {title: _("Style Class");}
+      Adw.ActionRow {title: _("Justification");}
+      Adw.ActionRow {title: _("Xalign");}
+
+    }
+
+    Label label {
+      label: _("label");
+
+    }
+  }
+}
