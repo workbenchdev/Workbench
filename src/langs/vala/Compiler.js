@@ -1,37 +1,33 @@
 import Gio from "gi://Gio";
 import GLib from "gi://GLib";
 import dbus_previewer from "../../Previewer/DBusPreviewer.js";
+import { decode } from "../../util.js";
 
-import { data_dir } from "../../util.js";
+export default function Compiler({ session }) {
+  const { file } = session;
 
-export default function Compiler() {
-  const code_file = data_dir.get_child("code.vala");
-  const module_file = data_dir.get_child("libworkbenchcode.so");
+  const module_file = file.get_child("libworkbenchcode.so");
+  const file_vala = file.get_child("main.vala");
 
-  async function compile(code) {
+  async function compile() {
     let args;
+
     try {
+      const [contents] = await file_vala.load_contents_async(null);
+      const code = decode(contents);
       args = getValaCompilerArguments(code);
     } catch (error) {
       console.debug(error);
       return;
     }
-    await Promise.all([
-      code_file.replace_contents_async(
-        new GLib.Bytes(code || " "),
-        null,
-        false,
-        Gio.FileCreateFlags.NONE,
-        null,
-      ),
-      module_file.delete_async(GLib.PRIORITY_DEFAULT, null).catch(() => {}),
-    ]);
+
+    await module_file.delete_async(GLib.PRIORITY_DEFAULT, null).catch(() => {});
 
     const valac_launcher = new Gio.SubprocessLauncher();
-    valac_launcher.set_cwd(data_dir.get_path());
+    valac_launcher.set_cwd(file.get_path());
     const valac = valac_launcher.spawnv([
       "valac",
-      code_file.get_path(),
+      file_vala.get_path(),
       "--hide-internal",
       "-X",
       "-shared",

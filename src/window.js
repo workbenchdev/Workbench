@@ -260,10 +260,8 @@ export default function Window({ application, session }) {
         }
         previewer.setSymbols(exports);
       } else if (language === "Vala") {
-        compiler = compiler || Compiler();
-        const success = await compiler.compile(
-          langs.vala.document.code_view.buffer.text,
-        );
+        compiler = compiler || Compiler({ session });
+        const success = await compiler.compile();
         if (success) {
           await previewer.useExternal();
           if (await compiler.run()) {
