@@ -7,46 +7,62 @@ Adw.StatusPage {
 
   Box {
     orientation: vertical;
-    spacing: 12;
+    spacing: 18;
 
-    ListBox {
-      styles ["boxed-list"]
+    Adw.Clamp {
+      maximum-size: 450;
 
-      Adw.ComboRow {
-        title: _("Style Class");
-        model: StringList {
-          strings [_("S"), _("S")]
-        };
-      }
+      ListBox {
+        styles ["boxed-list"]
+        selection-mode: none;
 
-      Adw.ComboRow justification_row {
-        title: _("Justification");
-         model: StringList {
-          strings [_("Left"), _("Right"), _("Center"), _("Fill")]
-        };
-
-      }
-
-      Adw.ActionRow {
-        title: _("Xalign");
-        activatable-widget: xalign_spin_button;
-
-        SpinButton xalign_spin_button {
-          adjustment: Adjustment {
-            value: 0.5;
-            step-increment: 0.1;
-            lower: 0.0;
-            upper: 1.0;
+        Adw.ComboRow style_row {
+          title: _("Style Class");
+          model: StringList {
+            strings ["None", "Title 1", "Title 2", "Title 3", "Title 4",
+            "Monospace", "Accent", "Success", "Warning", "Error",
+            "Heading", "Body", "Caption Heading", "Caption"]
           };
+        }
 
+        Adw.ComboRow justification_row {
+          title: _("Justification");
+          model: StringList {
+            strings [_("Left"), _("Right"), _("Center"), _("Fill")]
+          };
+        }
+
+        Adw.ActionRow {
+          title: _("X Align");
+          activatable-widget: xalign_spin_button;
+
+          SpinButton xalign_spin_button {
+            valign: center;
+            value: 0.5;
+            digits: 1;
+            adjustment: Adjustment {
+              value: 0.5;
+              step-increment: 0.1;
+              lower: 0;
+              upper: 1;
+            };
+          }
+        }
+        Adw.ActionRow {
+          title: _("Wrap");
+          activatable-widget: wrap_switch;
+
+          Switch wrap_switch {
+            valign: center;
+            active: bind label.wrap;
+          }
         }
       }
-
     }
 
-    Label label {
-      label: _("label");
+    Separator {}
 
-    }
+    Label label {}
   }
 }
+
