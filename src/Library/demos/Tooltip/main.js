@@ -1,7 +1,14 @@
+import Gtk from "gi://Gtk";
+
 const button = workbench.builder.get_object("button");
-const custom_tooltip = workbench.builder.get_object("custom_tooltip");
 
 button.connect("query-tooltip", (button, x, y, mode, tooltip) => {
+  const custom_tooltip = new Gtk.Box({ spacing: 6 });
+  const label = new Gtk.Label({ label: "This is a custom tooltip" });
+  const icon = new Gtk.Image({ icon_name: "penguin-alt-symbolic" });
+  custom_tooltip.append(label);
+  custom_tooltip.append(icon);
+
   tooltip.set_custom(custom_tooltip);
   return true;
 });
