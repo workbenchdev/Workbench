@@ -1,0 +1,7 @@
+{
+  "name": "HTTP Server",
+  "category": "network",
+  "description": "Create a simple HTTP server",
+  "panels": ["code", "preview"],
+  "autorun": true
+}

@@ -1,0 +1,13 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: "HTTP Server";
+  description: _("Create a simple HTTP server");
+
+  Button button{
+    halign: center;
+    label: _("Start Server");
+    styles ["pill"]
+  }
+}
