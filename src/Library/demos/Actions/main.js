@@ -59,10 +59,10 @@ demo_group.add_action(scale_action);
 
 const text = workbench.builder.get_object("text");
 
-const justify_action = new Gio.PropertyAction({
-  name: "text-justify",
+const alignment_action = new Gio.PropertyAction({
+  name: "text-align",
   object: text,
   property_name: "halign",
 });
 
-demo_group.add_action(justify_action);
+demo_group.add_action(alignment_action);

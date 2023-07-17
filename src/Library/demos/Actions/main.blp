@@ -15,23 +15,9 @@ Adw.StatusPage demo {
         vexpand: true;
         spacing: 24;
 
-        Box {
-          orientation: vertical;
-          spacing: 6;
-
-          Label {
-            halign: start;
-            label: _("Activatable Actions");
-
-            styles ["title-4"]
-          }
-
-          Label {
-            halign: start;
-            label: _("Stateless actions that optionally take parameters");
-
-            styles ["dim-label"]
-          }
+        Adw.PreferencesGroup {
+          title: _("Activatable Actions");
+          description: _("Stateless actions that optionally take parameters");
 
           Box {
             margin-top: 6;
@@ -57,23 +43,9 @@ Adw.StatusPage demo {
           }
         }
 
-        Box {
-          orientation: vertical;
-          spacing: 6;
-
-          Label {
-            halign: start;
-            label: _("Stateful Actions");
-
-            styles ["title-4"]
-          }
-
-          Label {
-            halign: start;
-            label: _("Actions with a closely-associated state");
-
-            styles ["dim-label"]
-          }
+        Adw.PreferencesGroup {
+          title: _("Stateful Actions");
+          description: _("Actions with a closely-associated state");
 
           Box {
             margin-top: 6;
@@ -137,23 +109,9 @@ Adw.StatusPage demo {
           }
         }
 
-        Box {
-          orientation: vertical;
-          spacing: 6;
-
-          Label {
-            halign: start;
-            label: _("Specialized Actions");
-
-            styles ["title-4"]
-          }
-
-          Label {
-            halign: start;
-            label: _("A stateful action which is bound to a GObject property");
-
-            styles ["dim-label"]
-          }
+        Adw.PreferencesGroup {
+          title: _("Specialized Actions");
+          description: _("A stateful action which is bound to a GObject property");
 
           Box {
             orientation: vertical;
@@ -164,7 +122,7 @@ Adw.StatusPage demo {
 
 
             Label text {
-              label: _("Text Justify");
+              label: _("Text Align");
               halign: center;
 
               styles ["heading"]
@@ -176,19 +134,19 @@ Adw.StatusPage demo {
 
               CheckButton {
                 label: _("Start");
-                action-name: "demo.text-justify";
+                action-name: "demo.text-align";
                 action-target: "'start'";
               }
 
               CheckButton {
                 label: _("Center");
-                action-name: "demo.text-justify";
+                action-name: "demo.text-align";
                 action-target: "'center'";
               }
 
               CheckButton {
                 label: _("End");
-                action-name: "demo.text-justify";
+                action-name: "demo.text-align";
                 action-target: "'end'";
               }
             }
