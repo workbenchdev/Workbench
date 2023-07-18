@@ -25,7 +25,7 @@ public void main () {
   });
 
   scale_two.value_changed.connect(() => {
-    var scale_value = scale_two.get_value ();
+    double scale_value = scale_two.get_value ();
     scale_value /= 50;
     if (scale_value.to_string().contains(".")) return;
 
