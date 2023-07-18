@@ -26,8 +26,10 @@ public void main () {
 
   scale_two.value_changed.connect(() => {
     double scale_value = scale_two.get_value ();
+
+    // Check if indicator is on mark
     scale_value /= 50;
-    if (scale_value.to_string().contains(".")) return;
+    if (scale_value % 1 != 0) return;
 
     var label = marks[(int) scale_value];
     if (label == null) return;
