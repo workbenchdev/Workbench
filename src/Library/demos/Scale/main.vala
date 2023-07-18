@@ -18,9 +18,9 @@ public void main () {
   scale_one.value_changed.connect(() => {
     var scale_value = scale_one.get_value ();
     if (scale_value == scale_one.adjustment.upper) {
-      stdout.printf ("Maximum value reached");
+      message ("Maximum value reached");
     } else if (scale_value == scale_one.adjustment.lower) {
-      stdout.printf ("Minimum value reached");
+      message ("Minimum value reached");
     }
   });
 
