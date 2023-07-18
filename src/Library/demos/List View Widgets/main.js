@@ -1,6 +1,3 @@
-import Gio from "gi://Gio";
-import Gdk from "gi://Gdk";
-import GObject from "gi://GObject";
 import Gtk from "gi://Gtk";
 import Adw from "gi://Adw";
 
@@ -42,29 +39,19 @@ factory_for_grid_view.connect("bind", (factory, listItem) => {
   labelWidget.label = modelItem.string;
 });
 
-/*model_for_grid_view.model.connect(
-  "items-changed",
-  (list, position, removed, added) => {
-    console.log(
-      `position: ${position}, Item removed? ${Boolean(
-        removed,
-      )}, Item added? ${Boolean(added)}`,
-    );
-  },
-);*/
+//View
+model.model.connect("items-changed", (list, position, removed, added) => {
+  console.log(
+    `position: ${position}, Item removed? ${Boolean(
+      removed,
+    )}, Item added? ${Boolean(added)}`,
+  );
+});
 
 model.connect("selection-changed", () => {
-  const list_view_selected_item = model.get_selected();
-  const grid_view_selected_item = model.get_selected();
+  const selected_item = model.get_selected();
   console.log(
-    `Selected item from ListView: ${model.model.get_string(
-      list_view_selected_item,
-    )}`,
-  );
-  console.log(
-    `Selected item from GridView: ${model.model.get_string(
-      grid_view_selected_item,
-    )}`,
+    `Model item selected from view: ${model.model.get_string(selected_item)}`,
   );
 });
 
@@ -83,10 +70,3 @@ remove.connect("clicked", () => {
   const selected_item = model.get_selected();
   model.model.remove(selected_item);
 });
-
-/*
-// View
-stack.connect("notify::visible-child", () => {
-  console.log("View changed");
-});
-*/

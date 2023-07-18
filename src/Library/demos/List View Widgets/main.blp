@@ -2,19 +2,32 @@ using Gtk 4.0;
 using Adw 1;
 
 Adw.StatusPage {
-  title: "List Model";
-  description: _("List models are a simple interface for ordered lists of GObject instances");
+  title: "List View Widgets";
+  description: _("List and Grid views present a large dynamic list of model items");
   valign: start;
 
   Adw.Clamp {
     maximum-size: 240;
     Box {
       orientation: vertical;
-      spacing: 24;
+      spacing: 18;
 
       LinkButton {
-        label: "Documentation";
-        uri: "https://gjs.guide/guides/gio/list-models.html";
+        label: _("Documentation");
+        uri: "https://docs.gtk.org/gtk4/section-list-widget.html";
+      }
+
+      Box {
+        orientation: horizontal;
+        halign: center;
+        LinkButton {
+          label: _("List View");
+          uri: "https://docs.gtk.org/gtk4/class.ListView.html";
+        }
+        LinkButton {
+          label: _("Grid View");
+          uri: "https://docs.gtk.org/gtk4/class.GridView.html";
+        }
       }
 
       Box {
@@ -49,8 +62,13 @@ Adw.StatusPage {
               enable-rubberband: true;
               factory: BuilderListItemFactory {
                 template ListItem {
-                  child: Adw.ActionRow {
-                    title: bind template.item as <StringObject>.string;
+                  child: Gtk.Box {
+                    Gtk.Label {
+                      label: bind template.item as <StringObject>.string;
+                      height-request: 50;
+                      margin-start: 12;
+                      margin-end: 12;
+                    }
                   };
                 }
               };
@@ -64,8 +82,9 @@ Adw.StatusPage {
           child:  Frame {
             valign: start;
             GridView grid_view {
-              orientation: horizontal;
-              max-columns: 8;
+              orientation: vertical;
+              max-columns: 4;
+              min-columns: 4;
               enable-rubberband: true;
             }
           };
@@ -74,7 +93,6 @@ Adw.StatusPage {
     }
   }
 }
-
 
 
 
