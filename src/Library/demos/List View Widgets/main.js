@@ -1,12 +1,10 @@
 import Gtk from "gi://Gtk";
-import Adw from "gi://Adw";
 
 const stack = workbench.builder.get_object("stack");
 const list_view = workbench.builder.get_object("list_view");
 const grid_view = workbench.builder.get_object("grid_view");
 const add = workbench.builder.get_object("add");
 const remove = workbench.builder.get_object("remove");
-const model_for_listview = workbench.builder.get_object("model_for_listview");
 
 //Model
 let item = 1;
