@@ -3,7 +3,7 @@ using Adw 1;
 
 Adw.StatusPage {
   title: _("Label");
-  description: _("A text widget");
+  description: _("Multipurpose text widget for a small amount of text");
 
   Box {
     orientation: vertical;
@@ -54,15 +54,22 @@ Adw.StatusPage {
 
           Switch wrap_switch {
             valign: center;
-            active: bind label.wrap;
           }
         }
       }
     }
 
+
+    LinkButton {
+      label: "API Reference";
+      uri: "https://docs.gtk.org/gtk4/class.Label.html";
+    }
+
     Separator {}
 
-    Label label {}
+    Label label {
+      wrap: bind wrap_switch.active;
+    }
   }
 }
 
