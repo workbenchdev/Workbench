@@ -22,7 +22,7 @@ public void main () {
 
   color_dialog_button.notify["rgba"].connect (() => {
     Gdk.RGBA chosen_color = color_dialog_button.get_rgba ();
-    message ("Color Dialog Button: The color selected is %s", chosen_color.to_string ());
+    message (@"Color Dialog Button: The color selected is $chosen_color");
   });
 
   dialog_custom = new Gtk.ColorDialog () {
@@ -37,9 +37,8 @@ public void main () {
 private async void on_button_clicked () {
   try {
     Gdk.RGBA color = yield dialog_custom.choose_rgba (workbench.window, null, null);
-    message ("Custom Button: The color selected is %s", color.to_string ());
-  }
-  catch (Error e) {
+    message (@"Custom Button: The color selected is $color");
+  } catch (Error e) {
     critical (e.message);
   }
 }

@@ -13,8 +13,7 @@ public async void main () {
 
     var picture = (Gtk.Picture) workbench.builder.get_object ("picture");
     picture.set_pixbuf (pixbuf);
-  }
-  catch (Error e) {
+  } catch (Error e) {
     critical (e.message);
   }
 }
@@ -29,7 +28,7 @@ private async InputStream? get_input_stream (string url) throws Error {
   string reason = message.reason_phrase;
 
   if (status_code != 200) {
-    throw new MessageError.FAILED ("Got %ud: %s", status_code, reason);
+    throw new MessageError.FAILED (@"Got $status_code: $reason");
   }
 
   return input_stream;
