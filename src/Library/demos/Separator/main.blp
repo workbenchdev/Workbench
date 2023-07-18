@@ -1,0 +1,73 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: _("Separator");
+  description: _("Separates one widget from another");
+
+  Box {
+    orientation: vertical;
+    halign: center;
+    spacing: 18;
+
+    Box {
+      orientation: horizontal;
+      halign: center;
+      spacing: 18;
+
+      Picture picture_one {
+        width-request: 180;
+        height-request: 180;
+      }
+
+      Separator {
+      }
+
+      Picture picture_two {
+        width-request: 180;
+        height-request: 180;
+      }
+    }
+
+    Separator {
+    }
+
+    Label {
+      label:_("Separator with toolbar class");
+      styles ["title-4"]
+    }
+
+    Box {
+      halign: center;
+      margin-bottom: 24;
+      spacing: 12;
+      styles ["toolbar"]
+
+      Label {
+        label: _("Welcome to Workbench");
+      }
+      Button {
+        icon-name: "window-minimize-symbolic";
+      }
+
+      Separator {
+      }
+
+      Button {
+        icon-name: "window-maximize-symbolic";
+      }
+
+      Separator {
+      }
+
+      Button {
+        icon-name: "window-close-symbolic";
+      }
+    }
+
+    LinkButton {
+      label: "API Reference";
+      uri: "https://docs.gtk.org/gtk4/class.Separator.html";
+    }
+  }
+}
