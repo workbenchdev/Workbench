@@ -13,24 +13,24 @@ public void main() {
 
   Gtk.Separator? separator = null;
   Gtk.StackSwitcher? stack_switcher = null;
-  Gtk.StackSidebar? stackSidebar = null;
+  Gtk.StackSidebar? stack_sidebar = null;
 
   if (navigation_row.selected == 0) {
     stack_switcher = new Gtk.StackSwitcher();
     stack_switcher.stack = stack;
     root_box.prepend(stack_switcher);
   } else {
-    stackSidebar = new Gtk.StackSidebar();
+    stack_sidebar = new Gtk.StackSidebar();
     separator = new Separator(Gtk.Orientation.HORIZONTAL);
-    stackSidebar.stack = stack;
+    stack_sidebar.stack = stack;
     root_box.prepend(separator);
-    root_box.prepend(stackSidebar);
+    root_box.prepend(stack_sidebar);
   }
 
   navigation_row.notify["selected"].connect(() => {
     if (navigation_row.selected == 0) {
-      if (stackSidebar != null) {
-        root_box.remove(stackSidebar);
+      if (stack_sidebar != null) {
+        root_box.remove(stack_sidebar);
         root_box.remove(separator);
       }
 
@@ -44,10 +44,10 @@ public void main() {
       }
 
       separator = new Separator(Gtk.Orientation.HORIZONTAL);
-      stackSidebar = new StackSidebar();
-      stackSidebar.stack = stack;
+      stack_sidebar = new StackSidebar();
+      stack_sidebar.stack = stack;
       root_box.prepend(separator);
-      root_box.prepend(stackSidebar);
+      root_box.prepend(stack_sidebar);
       root_box.set_orientation(Gtk.Orientation.HORIZONTAL);
     }
   });
