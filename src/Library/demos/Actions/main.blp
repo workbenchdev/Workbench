@@ -189,4 +189,20 @@ menu bookmarks_menu {
     action: "demo.open-bookmarks";
     target: _("GNOME Javascript");
   }
+
+  section {
+    label: "Actions Documentation";
+
+    item {
+      label: "GJS Guide";
+      action: "app.open_uri";
+      target: "https://gjs.guide/guides/gio/actions-and-menus.html";
+    }
+
+    item {
+      label: "GTK Documentation";
+      action: "app.open_uri";
+      target: "https://docs.gtk.org/gtk4/actions.html";
+    }
+  }
 }
