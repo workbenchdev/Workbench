@@ -1,5 +1,4 @@
 import Gio from "gi://Gio";
-import Gtk from "gi://Gtk";
 
 const icon1 = workbench.builder.get_object("icon1");
 const icon2 = workbench.builder.get_object("icon2");
