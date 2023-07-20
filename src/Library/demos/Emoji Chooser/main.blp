@@ -5,17 +5,16 @@ Adw.StatusPage {
   title: _("Emoji Chooser");
   description: _("Display a popover to select emojis");
 
-
-  Box{
+  Box {
     spacing: 24;
     orientation: vertical;
 
-    MenuButton button{
+    MenuButton button {
       halign: center;
       label: "😀️";
-      popover: EmojiChooser emoji_chooser{};
+      popover: EmojiChooser emoji_chooser {};
 
-      styles ["pill","emoji"]
+      styles ["pill", "emoji"]
     }
 
     LinkButton {
