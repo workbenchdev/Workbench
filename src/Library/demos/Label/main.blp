@@ -27,12 +27,19 @@ Adw.StatusPage {
         }
 
         Adw.ActionRow {
-          title: _("Wrap");
-          activatable-widget: wrap_switch;
+          title: _("Use Markup");
+          activatable-widget: markup_switch;
 
-          Switch wrap_switch {
+          Switch markup_switch {
             valign: center;
           }
+        }
+
+        Adw.ComboRow wrap_row {
+          title: _("Wrap Mode");
+          model: StringList {
+            strings ["None", "Character", "Word", "Word & Character"]
+          };
         }
 
         Adw.ComboRow ellipsize_row {
@@ -78,7 +85,6 @@ Adw.StatusPage {
       }
     }
 
-
     LinkButton {
       label: "API Reference";
       uri: "https://docs.gtk.org/gtk4/class.Label.html";
@@ -87,9 +93,10 @@ Adw.StatusPage {
     Separator {}
 
     Label label {
-      wrap: bind wrap_switch.active;
+      wrap: bind wrap_row.selected;
       xalign: bind xalign_spin_button.value;
       ellipsize: bind ellipsize_row.selected;
+      use-markup: bind markup_switch.active;
     }
   }
 }
