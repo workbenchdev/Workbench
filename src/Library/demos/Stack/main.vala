@@ -20,7 +20,17 @@ public void main() {
 }
 
 public void on_navigation_row_changed() {
-  if (navigation_row.selected == 0) {
+  var selected_item = navigation_row.get_selected_item();
+
+  // Ensure selected_item is not null
+  if (selected_item == null) {
+    return;
+  }
+
+  // Cast selected_item to Gtk.StringObject and get the string
+  var item_string = ((Gtk.StringObject) selected_item).get_string();
+
+  if (item_string == "Switcher") {
     if (stack_sidebar != null) {
       root_box.remove(stack_sidebar);
       root_box.remove(separator);
@@ -30,7 +40,7 @@ public void on_navigation_row_changed() {
     stack_switcher.stack = stack;
     root_box.prepend(stack_switcher);
     root_box.set_orientation(Gtk.Orientation.VERTICAL);
-  } else {
+  } else if (item_string == "Sidebar") {
     if (stack_switcher != null) {
       root_box.remove(stack_switcher);
     }
@@ -43,3 +53,4 @@ public void on_navigation_row_changed() {
     root_box.set_orientation(Gtk.Orientation.HORIZONTAL);
   }
 }
+
