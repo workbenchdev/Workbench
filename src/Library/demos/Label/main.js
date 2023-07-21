@@ -5,6 +5,7 @@ const label = workbench.builder.get_object("label");
 const justification_row = workbench.builder.get_object("justification_row");
 const style_row = workbench.builder.get_object("style_row");
 const xalign_spin_button = workbench.builder.get_object("xalign_spin_button");
+const single_line_switch = workbench.builder.get_object("single_line_switch");
 
 const style_classes = [
   "none",
@@ -23,16 +24,25 @@ const style_classes = [
   "caption",
 ];
 
-label.label =
-  "  Lorem ipsum dolor sit amet, consectetur adipiscing elit,\n\
+const short_label =
+  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore disputandum putant.";
+
+const long_label =
+  "     Lorem ipsum dolor sit amet, consectetur adipiscing elit,\n\
   sed do eiusmod tempor incididunt ut labore et dolore magnam aliquam quaerat voluptatem.\n\
   Ut enim mortis metu omnis quietae vitae status perturbatur,\n\
   et ut succumbere doloribus eosque humili animo inbecilloque ferre miserum est,\n\
   ob eamque debilitatem animi multi parentes, multi amicos, non nulli patriam,\n\
   plerique autem se ipsos penitus perdiderunt, sic robustus animus et excelsus omni.";
 
-xalign_spin_button.connect("notify::value", () => {
-  label.xalign = xalign_spin_button.get_value();
+label.label = short_label;
+
+single_line_switch.connect("notify::active", () => {
+  if (!single_line_switch.active) {
+    label.label = long_label;
+  } else {
+    label.label = short_label;
+  }
 });
 
 justification_row.connect("notify::selected", () => {
