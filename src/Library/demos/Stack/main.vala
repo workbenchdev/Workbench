@@ -14,12 +14,12 @@ public void main() {
   navigation_row = (Adw.ComboRow) workbench.builder.get_object("navigation_row");
   transition_row = (Adw.ComboRow) workbench.builder.get_object("transition_row");
 
-  onNavigationRowChanged();
+  on_navigation_row_changed();
 
-  navigation_row.notify["selected"].connect(onNavigationRowChanged);
+  navigation_row.notify["selected"].connect(on_navigation_row_changed);
 }
 
-public void onNavigationRowChanged() {
+public void on_navigation_row_changed() {
     if (navigation_row.selected == 0) {
         if (stack_sidebar != null) {
             root_box.remove(stack_sidebar);
