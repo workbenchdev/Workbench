@@ -16,6 +16,33 @@ Adw.StatusPage {
         styles ["boxed-list"]
         selection-mode: none;
 
+        Adw.ActionRow {
+          title: _("Single Line");
+          activatable-widget: single_line_switch;
+
+          Switch single_line_switch {
+            valign: center;
+            active: true;
+          }
+        }
+
+        Adw.ActionRow {
+          title: _("Wrap");
+          activatable-widget: wrap_switch;
+
+          Switch wrap_switch {
+            valign: center;
+          }
+        }
+
+        Adw.ComboRow ellipsize_row {
+          title: _("Ellipsize Mode");
+          model: StringList {
+            strings ["None", "Start", "Middle", "End"]
+          };
+        }
+
+
         Adw.ComboRow style_row {
           title: _("Style Class");
           model: StringList {
@@ -24,6 +51,7 @@ Adw.StatusPage {
             "Heading", "Body", "Caption Heading", "Caption"]
           };
         }
+
 
         Adw.ComboRow justification_row {
           title: _("Justification");
@@ -41,19 +69,10 @@ Adw.StatusPage {
             value: 0.5;
             digits: 1;
             adjustment: Adjustment {
-              value: 0.5;
               step-increment: 0.1;
               lower: 0;
               upper: 1;
             };
-          }
-        }
-        Adw.ActionRow {
-          title: _("Wrap");
-          activatable-widget: wrap_switch;
-
-          Switch wrap_switch {
-            valign: center;
           }
         }
       }
@@ -69,6 +88,8 @@ Adw.StatusPage {
 
     Label label {
       wrap: bind wrap_switch.active;
+      xalign: bind xalign_spin_button.value;
+      ellipsize: bind ellipsize_row.selected;
     }
   }
 }
