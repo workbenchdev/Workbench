@@ -20,26 +20,26 @@ public void main() {
 }
 
 public void on_navigation_row_changed() {
-    if (navigation_row.selected == 0) {
-        if (stack_sidebar != null) {
-            root_box.remove(stack_sidebar);
-            root_box.remove(separator);
-        }
-
-        stack_switcher = new Gtk.StackSwitcher();
-        stack_switcher.stack = stack;
-        root_box.prepend(stack_switcher);
-        root_box.set_orientation(Gtk.Orientation.VERTICAL);
-    } else {
-        if (stack_switcher != null) {
-            root_box.remove(stack_switcher);
-        }
-
-        separator = new Gtk.Separator(Gtk.Orientation.HORIZONTAL);
-        stack_sidebar = new Gtk.StackSidebar();
-        stack_sidebar.stack = stack;
-        root_box.prepend(separator);
-        root_box.prepend(stack_sidebar);
-        root_box.set_orientation(Gtk.Orientation.HORIZONTAL);
+  if (navigation_row.selected == 0) {
+    if (stack_sidebar != null) {
+      root_box.remove(stack_sidebar);
+      root_box.remove(separator);
     }
+
+    stack_switcher = new Gtk.StackSwitcher();
+    stack_switcher.stack = stack;
+    root_box.prepend(stack_switcher);
+    root_box.set_orientation(Gtk.Orientation.VERTICAL);
+  } else {
+    if (stack_switcher != null) {
+      root_box.remove(stack_switcher);
+    }
+
+    separator = new Gtk.Separator(Gtk.Orientation.HORIZONTAL);
+    stack_sidebar = new Gtk.StackSidebar();
+    stack_sidebar.stack = stack;
+    root_box.prepend(separator);
+    root_box.prepend(stack_sidebar);
+    root_box.set_orientation(Gtk.Orientation.HORIZONTAL);
+  }
 }
