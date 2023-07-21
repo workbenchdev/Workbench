@@ -1,15 +1,16 @@
 #! /usr/bin/env -S vala workbench.vala --pkg gtk4 --pkg libadwaita-1 --pkg gio-2.0
 
-using Gtk;
-using Adw;
-using Gdk;
-using GLib;
+Gtk.Box root_box;
+Gtk.Stack stack;
+Adw.ComboRow navigation_row;
+Adw.ComboRow transition_row;
 
 public void main() {
-  var root_box = workbench.builder.get_object("root_box") as Box;
-  var stack = workbench.builder.get_object("stack") as Stack;
-  var navigation_row = workbench.builder.get_object("navigation_row") as ComboRow;
-  var transition_row = workbench.builder.get_object("transition_row") as ComboRow;
+
+  root_box = (Gtk.Box) workbench.builder.get_object("root_box");
+  stack = (Gtk.Stack) workbench.builder.get_object("stack");
+  navigation_row = (Adw.ComboRow) workbench.builder.get_object("navigation_row");
+  transition_row = (Adw.ComboRow) workbench.builder.get_object("transition_row");
 
   Gtk.Separator? separator = null;
   Gtk.StackSwitcher? stack_switcher = null;
@@ -21,7 +22,7 @@ public void main() {
     root_box.prepend(stack_switcher);
   } else {
     stack_sidebar = new Gtk.StackSidebar();
-    separator = new Separator(Gtk.Orientation.HORIZONTAL);
+    separator = new Gtk.Separator(Gtk.Orientation.HORIZONTAL);
     stack_sidebar.stack = stack;
     root_box.prepend(separator);
     root_box.prepend(stack_sidebar);
@@ -43,8 +44,8 @@ public void main() {
         root_box.remove(stack_switcher);
       }
 
-      separator = new Separator(Gtk.Orientation.HORIZONTAL);
-      stack_sidebar = new StackSidebar();
+      separator = new Gtk.Separator(Gtk.Orientation.HORIZONTAL);
+      stack_sidebar = new Gtk.StackSidebar();
       stack_sidebar.stack = stack;
       root_box.prepend(separator);
       root_box.prepend(stack_sidebar);
