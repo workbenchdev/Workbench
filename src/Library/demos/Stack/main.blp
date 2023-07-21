@@ -8,6 +8,7 @@ Box root_box {
   Stack stack {
     interpolate-size: bind interpolate_switch.active;
     transition-duration: bind transition_adjustment.value;
+    transition-type: bind transition_row.selected;
 
     StackPage page1 {
       title: _("Page 1");
