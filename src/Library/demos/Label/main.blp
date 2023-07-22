@@ -1,0 +1,103 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: _("Label");
+  description: _("Multipurpose text widget for a small amount of text");
+
+  Box {
+    orientation: vertical;
+    spacing: 18;
+
+    Adw.Clamp {
+      maximum-size: 450;
+
+      ListBox {
+        styles ["boxed-list"]
+        selection-mode: none;
+
+        Adw.ActionRow {
+          title: _("Single Line");
+          activatable-widget: single_line_switch;
+
+          Switch single_line_switch {
+            valign: center;
+            active: true;
+          }
+        }
+
+        Adw.ActionRow {
+          title: _("Use Markup");
+          activatable-widget: markup_switch;
+
+          Switch markup_switch {
+            valign: center;
+          }
+        }
+
+        Adw.ComboRow wrap_row {
+          title: _("Wrap Mode");
+          model: StringList {
+            strings ["None", "Character", "Word", "Word & Character"]
+          };
+        }
+
+        Adw.ComboRow ellipsize_row {
+          title: _("Ellipsize Mode");
+          model: StringList {
+            strings ["None", "Start", "Middle", "End"]
+          };
+        }
+
+
+        Adw.ComboRow style_row {
+          title: _("Style Class");
+          model: StringList {
+            strings ["None", "Title 1", "Title 2", "Title 3", "Title 4",
+            "Monospace", "Accent", "Success", "Warning", "Error",
+            "Heading", "Body", "Caption Heading", "Caption"]
+          };
+        }
+
+
+        Adw.ComboRow justification_row {
+          title: _("Justification");
+          model: StringList {
+            strings [_("Left"), _("Right"), _("Center"), _("Fill")]
+          };
+        }
+
+        Adw.ActionRow {
+          title: _("X Align");
+          activatable-widget: xalign_spin_button;
+
+          SpinButton xalign_spin_button {
+            valign: center;
+            value: 0.5;
+            digits: 1;
+            adjustment: Adjustment {
+              step-increment: 0.1;
+              lower: 0;
+              upper: 1;
+            };
+          }
+        }
+      }
+    }
+
+    LinkButton {
+      label: "API Reference";
+      uri: "https://docs.gtk.org/gtk4/class.Label.html";
+    }
+
+    Separator {}
+
+    Label label {
+      wrap: bind wrap_row.selected;
+      xalign: bind xalign_spin_button.value;
+      ellipsize: bind ellipsize_row.selected;
+      use-markup: bind markup_switch.active;
+    }
+  }
+}
+
