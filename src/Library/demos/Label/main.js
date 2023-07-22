@@ -25,10 +25,10 @@ const style_classes = [
 ];
 
 const short_label =
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore disputandum putant.";
+  "<b>Lorem ipsum</b> dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore disputandum putant.";
 
 const long_label =
-  "     Lorem ipsum dolor sit amet, consectetur adipiscing elit,\n\
+  "     <b>Lorem ipsum</b> dolor sit amet, consectetur adipiscing elit,\n\
   sed do eiusmod tempor incididunt ut labore et dolore magnam aliquam quaerat voluptatem.\n\
   Ut enim mortis metu omnis quietae vitae status perturbatur,\n\
   et ut succumbere doloribus eosque humili animo inbecilloque ferre miserum est,\n\
