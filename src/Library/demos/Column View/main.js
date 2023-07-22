@@ -1,8 +1,6 @@
 import Gtk from "gi://Gtk";
 import Gio from "gi://Gio";
 
-const add = workbench.builder.get_object("add");
-const remove = workbench.builder.get_object("remove");
 const column_view = workbench.builder.get_object("column_view");
 
 function createCol() {
@@ -11,28 +9,63 @@ function createCol() {
     factory,
   });
   factory.connect("setup", (factory, listItem) => {
-    const listBox = new Gtk.Box({
-      width_request: 160,
-      height_request: 160,
-      css_classes: ["card"],
-    });
     const label = new Gtk.Label({
-      halign: Gtk.Align.CENTER,
-      hexpand: true,
-      valign: Gtk.Align.CENTER,
+      height_request: 50,
+      margin_start: 12,
+      margin_end: 12,
     });
-    listBox.append(label);
-    listItem.set_child(listBox);
+    listItem.set_child(label);
   });
   factory.connect("bind", (factory, listItem) => {
-    const listBox = listItem.get_child();
+    const labelWidget = listItem.get_child();
     const modelItem = listItem.get_item();
-    const labelWidget = listBox.get_last_child();
-
     labelWidget.label = modelItem.string;
   });
   return columnViewColumn;
 }
+
+function createSecCol() {
+  const factory = new Gtk.SignalListItemFactory();
+  const columnViewColumn = new Gtk.ColumnViewColumn({
+    factory,
+  });
+  factory.connect("setup", (factory, listItem) => {
+    const label = new Gtk.Label({
+      height_request: 50,
+      margin_start: 12,
+      margin_end: 12,
+    });
+    listItem.set_child(label);
+  });
+  factory.connect("bind", (factory, listItem) => {
+    const labelWidget = listItem.get_child();
+    const modelItem = listItem.get_item();
+    labelWidget.label = modelItem.string;
+  });
+  return columnViewColumn;
+}
+
+function createThirdCol() {
+  const factory = new Gtk.SignalListItemFactory();
+  const columnViewColumn = new Gtk.ColumnViewColumn({
+    factory,
+  });
+  factory.connect("setup", (factory, listItem) => {
+    const label = new Gtk.Label({
+      height_request: 50,
+      margin_start: 12,
+      margin_end: 12,
+    });
+    listItem.set_child(label);
+  });
+  factory.connect("bind", (factory, listItem) => {
+    const labelWidget = listItem.get_child();
+    const modelItem = listItem.get_item();
+    labelWidget.label = modelItem.string;
+  });
+  return columnViewColumn;
+}
+
 //Model
 let item = 1;
 const string_model = new Gtk.StringList({
@@ -43,20 +76,12 @@ const model = new Gtk.SingleSelection({ model: string_model });
 
 column_view.model = model;
 const new_col = createCol();
+const sec_col = createSecCol();
+const third_col = createThirdCol();
 
 column_view.append_column(new_col);
-
-// Controller
-add.connect("clicked", () => {
-  const new_item = `New item ${item}`;
-  model.model.append(new_item);
-  item++;
-});
-
-remove.connect("clicked", () => {
-  const selected_item = model.get_selected();
-  model.model.remove(selected_item);
-});
+column_view.append_column(sec_col);
+column_view.append_column(third_col);
 
 //View
 model.model.connect("items-changed", (list, position, removed, added) => {

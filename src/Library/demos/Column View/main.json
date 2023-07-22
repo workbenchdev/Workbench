@@ -1,7 +1,7 @@
 {
   "name": "ColumnView",
   "category": "layout",
-  "description": "List and Grid views present a large dynamic list of model items",
+  "description": "Presents a large dynamic list of items using multiple columns with headers",
   "panels": ["ui", "preview"],
   "autorun": true
 }

@@ -3,7 +3,7 @@ using Adw 1;
 
 Adw.StatusPage {
   title: _("Column View");
-  description: _("List and Grid views present a large dynamic list of model items");
+  description: _("Presents a large dynamic list of items using multiple columns with headers");
   valign: start;
 
   Adw.Clamp {
@@ -17,25 +17,11 @@ Adw.StatusPage {
         uri: "https://docs.gtk.org/gtk4/class.ColumnView.html";
       }
 
-      Box {
-        halign: center;
-        styles ["linked"]
-        Button add {
-          label: _("Add Item");
-          tooltip-text: _("Add Item");
-        }
-
-        Button remove {
-          label: _("Remove Item");
-          tooltip-text: _("Remove Item");
-        }
-      }
-
       ColumnView column_view {
         show-column-separators: true;
         show-row-separators: true;
+        styles ['view']
       }
-
     }
   }
 }
