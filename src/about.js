@@ -86,5 +86,5 @@ function getValaVersion() {
 }
 
 function getBlueprintVersion() {
-  return "Blueprint 0.8.1";
+  return "Blueprint 0.10.0";
 }
