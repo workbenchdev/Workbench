@@ -10,7 +10,7 @@ Adw.StatusPage {
 
     Box {
       orientation: vertical;
-      spacing: 12;
+      spacing: 6;
 
       MenuButton primary {
         halign: center;
@@ -19,20 +19,39 @@ Adw.StatusPage {
         primary: true; // May not work in Previewer
       }
 
-       Label {
+      Label {
         label: _("Primary Menu Button");
+      }
+
+      Label {
+        label: _("Button Positioning");
+        margin-top: 18;
+        styles ["title-4"]
       }
 
       ListBox {
         styles ["boxed-list"]
         margin-top: 18;
-
-        Adw.ComboRow {
+        selection-mode: none;
+        Adw.ComboRow direction_row {
           title: _("Direction");
           model: StringList {
-            strings ["Up", "Down", "Left", "Right"]
+            strings ["Up", "Down", "Left", "Right", "None"]
           };
         }
+
+        Adw.ComboRow  {
+          title: _("H-align");
+          model: StringList {
+            strings ["Start", "Center", "End",]
+          };
+        }
+      }
+
+      MenuButton secondary {
+        direction: bind direction_row.selected;
+        halign: center;
+        menu-model: secondary_button_menu;
       }
     }
   }
@@ -138,4 +157,10 @@ menu primary_button_menu {
       action: "app.about";
     }
   }
+}
+
+menu secondary_button_menu {
+  item ("Item 1")
+  item ("Item 2")
+  item ("Item 3")
 }
