@@ -48,9 +48,26 @@ Adw.StatusPage {
       };
     }
 
+    ScaleButton button {
+      orientation: horizontal;
+      margin-bottom: 18;
+      halign: center;
+      adjustment: Gtk.Adjustment {
+        lower: 0;
+        upper: 100;
+        value: 0;
+        page-increment: 15;
+      };
+    }
+
     LinkButton {
-      label: "API Reference";
+      label: "Scale API Reference";
       uri: "https://docs.gtk.org/gtk4/class.Scale.html";
+    }
+
+    LinkButton {
+      label: "ScaleButton API Reference";
+      uri: "https://docs.gtk.org/gtk4/class.ScaleButton.html";
     }
 
     LinkButton {
