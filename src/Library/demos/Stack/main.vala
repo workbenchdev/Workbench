@@ -20,15 +20,15 @@ public void main() {
 }
 
 public void on_navigation_row_changed() {
-  var selected_item = navigation_row.get_selected_item();
+  // Cast the selected item to Gtk.StringObject if possible, otherwise it is null
+  var selected_item = navigation_row.get_selected_item() as Gtk.StringObject;
 
   // Ensure selected_item is not null
   if (selected_item == null) {
     return;
   }
 
-  // Cast selected_item to Gtk.StringObject and get the string
-  var item_string = ((Gtk.StringObject) selected_item).get_string();
+  string item_string = selected_item.get_string();
 
   if (item_string == "Switcher") {
     if (stack_sidebar != null) {
