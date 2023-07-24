@@ -1,21 +1,13 @@
 #!/usr/bin/env -S vala workbench.vala --pkg gtk4 --pkg libadwaita-1
 
-private Adw.PreferencesWindow pref_window;
-private Gtk.Switch dm_switch;
-private Adw.StatusPage subpage;
-private Adw.ActionRow subpage_row;
-private Gtk.Button subpage_button;
-private Gtk.Button toast_button;
-private Adw.StyleManager style_manager;
-
 public void main () {
-  pref_window = (Adw.PreferencesWindow) workbench.builder.get_object ("pref_window");
-  dm_switch = (Gtk.Switch) workbench.builder.get_object ("dm_switch");
-  subpage = (Adw.StatusPage) workbench.builder.get_object ("subpage");
-  subpage_row = (Adw.ActionRow) workbench.builder.get_object ("subpage_row");
-  subpage_button = (Gtk.Button) workbench.builder.get_object ("subpage_button");
-  toast_button = (Gtk.Button) workbench.builder.get_object ("toast_button");
-  style_manager = Adw.StyleManager.get_default();
+  var pref_window = (Adw.PreferencesWindow) workbench.builder.get_object ("pref_window");
+  var dm_switch = (Gtk.Switch) workbench.builder.get_object ("dm_switch");
+  var subpage = (Adw.StatusPage) workbench.builder.get_object ("subpage");
+  var subpage_row = (Adw.ActionRow) workbench.builder.get_object ("subpage_row");
+  var subpage_button = (Gtk.Button) workbench.builder.get_object ("subpage_button");
+  var toast_button = (Gtk.Button) workbench.builder.get_object ("toast_button");
+  var style_manager = Adw.StyleManager.get_default();
 
   dm_switch.active = style_manager.dark;
 
