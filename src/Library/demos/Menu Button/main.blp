@@ -21,18 +21,35 @@ Adw.StatusPage {
 
       Label {
         label: _("Primary Menu Button");
+        styles ["title-4"]
+      }
+
+       Label {
+        label: _("Displays an app-wide menu with standard features");
+
+      }
+
+       MenuButton secondary {
+        direction: bind direction_row.selected;
+        halign: center;
+        menu-model: secondary_button_menu;
+        margin-top: 18;
       }
 
       Label {
-        label: _("Button Positioning");
-        margin-top: 18;
+        label: _("Secondary Menu Button");
         styles ["title-4"]
+      }
+
+      Label {
+        label: _("Displays view-specific items, typically used with hierarchical navigation and sidebars");
       }
 
       ListBox {
         styles ["boxed-list"]
         margin-top: 18;
         selection-mode: none;
+
         Adw.ComboRow direction_row {
           title: _("Direction");
           model: StringList {
@@ -40,18 +57,24 @@ Adw.StatusPage {
           };
         }
 
-        Adw.ComboRow  {
-          title: _("H-align");
-          model: StringList {
-            strings ["Start", "Center", "End",]
-          };
+        Adw.ActionRow {
+          title: _("Circular");
+          activatable-widget: circular_switch;
+
+          Switch circular_switch {
+            valign: center;
+          }
         }
       }
 
-      MenuButton secondary {
-        direction: bind direction_row.selected;
-        halign: center;
-        menu-model: secondary_button_menu;
+      LinkButton {
+        label: "Human Interface Guidelines";
+         uri: "https://developer.gnome.org/hig/patterns/controls/menus.html";
+      }
+
+      LinkButton {
+        label: "Menu Button API Reference";
+         uri: "https://docs.gtk.org/gtk4/class.MenuButton.html";
       }
     }
   }
