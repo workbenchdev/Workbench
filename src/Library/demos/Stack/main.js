@@ -39,9 +39,4 @@ navigation_row.connect("notify::selected-item", () => {
   }
 });
 
-stack.transition_type = transition_row.get_selected();
-
-transition_row.connect("notify::selected-item", () => {
-  stack.transition_type = transition_row.get_selected();
-});
 
