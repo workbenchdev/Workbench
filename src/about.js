@@ -69,6 +69,7 @@ ${getBlueprintVersion()}
     "Akunne Pascal https://github.com/Kodecheff",
     "JCWasmx86 https://github.com/JCWasmx86",
     "Alex (PaladinDev) https://github.com/SpikedPaladin",
+    "Diego Iván M.E https://github.com/Diego-Ivan",
     // Add yourself as
     // "John Doe",
     // or
