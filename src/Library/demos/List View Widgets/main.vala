@@ -21,33 +21,28 @@ public void main () {
   var grid_view_factory = new Gtk.SignalListItemFactory ();
 
   grid_view_factory.setup.connect ((list_item) => {
-    var list_box = new Gtk.Box (HORIZONTAL, 0) {
-      width_request = 160,
-      height_request = 160,
-      css_classes = {"card"}
-    };
-
     var label = new Gtk.Label ("") {
+      css_classes = {"card"},
       halign = CENTER,
+      valign = CENTER,
       hexpand = true,
-      valign = CENTER
+      height_request = 160,
+      width_request = 160
     };
 
-    list_box.append (label);
-    list_item.child = list_box;
+    list_item.child = label;
   });
 
   grid_view_factory.bind.connect ((list_item) => {
-    var list_box = (Gtk.Box) list_item.child;
-    var label_widget = (Gtk.Label) list_box.get_last_child ();
-
+    var label_widget = (Gtk.Label) list_item.child;
     var model_item = (Gtk.StringObject) list_item.item;
+
     label_widget.label = model_item.string;
   });
 
   // View
   string_model.items_changed.connect ((position, removed, added) => {
-    message (@"position: $position, Item Removed? $((bool) removed), Item Added? $((bool) added)");
+    message (@"position: $position, Item Removed? $(removed > 0), Item Added? $(added > 0)");
   });
 
   model.selection_changed.connect (() => {
