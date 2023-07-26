@@ -56,6 +56,7 @@ export default function Window({ application, session }) {
     window.add_css_class("devel");
   }
   window.set_application(application);
+  window.set_title(`Workbench — ${settings.get_string("title")}`);
 
   // Popover menu theme switcher
   const button_menu = builder.get_object("button_menu");
