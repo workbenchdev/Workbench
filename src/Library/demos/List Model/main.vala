@@ -24,7 +24,7 @@ public void main () {
   );
 
   model.items_changed.connect ((position, removed, added) => {
-    message (@"position: $position, Item Removed? $((bool) removed), Item Added? $((bool) added)");
+    message (@"position: $position, Item Removed? $(removed > 0), Item Added? $(added > 0)");
   });
 
   // Filter Model
@@ -53,7 +53,7 @@ public void main () {
   });
 
   remove_button.clicked.connect (() => {
-    var selected_row = list_box_editable.get_selected_row ();
+    Gtk.ListBoxRow selected_row = list_box_editable.get_selected_row ();
     model.remove (selected_row.get_index ());
   });
 
@@ -80,17 +80,14 @@ private Gtk.Widget create_item_for_flow_box (Object item) {
   var string_object = (Gtk.StringObject) item;
   var label = new Gtk.Label (string_object.string) {
     halign = CENTER,
+    valign = CENTER,
     hexpand = true,
-    valign = CENTER
-  };
-
-  var label_bin = new Adw.Bin () {
-    child = label,
     width_request = 160,
     height_request = 160,
-    css_classes = { "card" }
+    css_classes = {"card"}
   };
-  return label_bin;
+
+  return label;
 }
 
 private Gtk.Widget create_item_for_filter_model (Object item) {
