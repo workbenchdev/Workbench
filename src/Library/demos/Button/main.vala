@@ -15,7 +15,7 @@ public void main () {
     "osd-right",
   };
 
-  foreach (var id in button_ids) {
+  foreach (string id in button_ids) {
     var button = (Gtk.Button) workbench.builder.get_object(id);
     button.clicked.connect(() => message(@"$(button.name) clicked"));
   }
