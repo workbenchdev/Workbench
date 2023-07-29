@@ -1,0 +1,27 @@
+using Gtk 4.0;
+using Adw 1;
+using GtkSource 5;
+
+Adw.StatusPage {
+  title: "Source View";
+  description: _("A widget that enables text-editing with advanced features like syntax highlighting");
+
+  Box {
+    orientation: vertical;
+    halign: center;
+
+    Frame {
+      margin-bottom: 12;
+
+      ScrolledWindow sw {
+        height-request: 180;
+        width-request: 600;
+      }
+    }
+
+    LinkButton{
+      label: "API Reference";
+      uri: "https://gnome.pages.gitlab.gnome.org/gtksourceview/gtksourceview5/class.View.html";
+    }
+  }
+}
