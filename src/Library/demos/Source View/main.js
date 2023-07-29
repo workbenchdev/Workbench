@@ -2,6 +2,8 @@ import Gtk from "gi://Gtk";
 import Adw from "gi://Adw";
 import GtkSource from "gi://GtkSource";
 
+// Strictly speaking we don't _have_ to do this here since WorkBench does this for us.
+// However, you _have_ to call this once during the startup in your application - e.g. in GApplication::startup
 GtkSource.init();
 
 // Get the language we want to use
