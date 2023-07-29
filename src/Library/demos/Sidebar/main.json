@@ -1,0 +1,7 @@
+{
+  "name": "Sidebar",
+  "category": "user_interface",
+  "description": "The sidebar for the documentation viewer",
+  "panels": ["ui", "preview"],
+  "autorun": true
+}
