@@ -1,8 +1,6 @@
-use adw::AdwMessageDialog;
-use gtk::prelude::*;
+use adw::prelude::*;
+use adw::traits::MessageDialogExt;
 use gtk::Button;
-use gtk::MessageDialog;
-use gtk::MessageType;
 use gtk::Window;
 
 fn main() {
@@ -19,7 +17,7 @@ fn main() {
 }
 
 fn build_ui(application: &gtk::Application) {
-    let builder = gtk::Builder::from_string(include_str!("path/to/your/glade/ui/file.glade"));
+    let builder = gtk::Builder::from_string(include_str!("main.xml"));
 
     // Fetch the 'subtitle' box from the builder
     let subtitle_box: gtk::Box = builder.object("subtitle").expect("Subtitle box not found");
@@ -44,19 +42,15 @@ fn greet() {
     let parent_window = Window::new();
 
     // Create the message dialog
-    let dialog = MessageDialog::new(
-        Some(&parent_window),
-        gtk::DialogFlags::MODAL,
-        MessageType::Info,
-        gtk::ButtonsType::Ok,
-        "Hello World!",
-    );
+    let dialog = adw::MessageDialog::builder()
+        .body("Hello World!")
+        .transient_for(&parent_window)
+        .build();
 
-    // Add 'OK' button to the dialog
-    dialog.add_button("OK", gtk::ResponseType::Ok);
+    dialog.add_responses(&[("ok", "Cancel")]);
 
     // Connect the 'response' signal to the closure
-    dialog.connect_response(|dialog, response| {
+    dialog.connect_response(None, |dialog, response| {
         // Print the response (e.g., gtk::ResponseType::Ok)
         println!("{:?}", response);
         // Close the dialog
