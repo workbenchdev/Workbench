@@ -79,6 +79,15 @@ export const languages = [
     document: null,
     placeholder: "// Sorry, this demo is not available in Vala yet.",
   },
+  {
+    id: "rust",
+    name: "Rust",
+    panel: "code",
+    extensions: [".rs"],
+    types: ["text/x-rust"],
+    document: null,
+    placeholder: "// Sorry, this demo is not available in Rust yet.",
+  },
 ];
 
 export function getLanguage(id) {

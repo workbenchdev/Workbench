@@ -21,6 +21,11 @@
     "editor.defaultFormatter": "rome.rome"
   },
   "vala.languageServerPath": "${workspaceFolder}/.flatpak/vala-language-server.sh",
+  "rust-analyzer.server.path": "${workspaceFolder}/.flatpak/rust-analyzer.sh",
+  "rust-analyzer.runnables.command": "${workspaceFolder}/.flatpak/cargo.sh",
+  "rust-analyzer.files.excludeDirs": [
+    ".flatpak"
+  ],
   "mesonbuild.configureOnOpen": false,
   "mesonbuild.buildFolder": "_build",
   "mesonbuild.mesonPath": "${workspaceFolder}/.flatpak/meson.sh"

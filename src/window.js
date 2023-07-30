@@ -91,6 +91,13 @@ export default function Window({ application, session }) {
   });
   langs.vala.document = document_vala;
 
+  const document_rust = Document({
+    code_view: builder.get_object("code_view_rust"),
+    file: file.get_child("main.rs"),
+    lang: langs.rust,
+  });
+  langs.rust.document = document_rust;
+
   const document_blueprint = Document({
     code_view: builder.get_object("code_view_blueprint"),
     file: file.get_child("main.blp"),
@@ -277,6 +284,18 @@ export default function Window({ application, session }) {
         }
         previewer.setSymbols(exports);
       } else if (language === "Vala") {
+        compiler = compiler || Compiler({ session });
+        const success = await compiler.compile();
+        if (success) {
+          await previewer.useExternal();
+          if (await compiler.run()) {
+            await previewer.open();
+          } else {
+            await previewer.useInternal();
+          }
+        }
+      } else if (language === "Rust") {
+        // TODO: Use actually Rust
         compiler = compiler || Compiler({ session });
         const success = await compiler.compile();
         if (success) {
