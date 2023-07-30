@@ -1,18 +1,15 @@
+use adw::AdwMessageDialog;
 use gtk::prelude::*;
 use gtk::Button;
 use gtk::MessageDialog;
 use gtk::MessageType;
 use gtk::Window;
-use libadwaita::subclass::prelude::*;
-use libadwaita::subclass::AdwMessageDialog;
-use std::rc::Rc;
 
 fn main() {
     // Initialize Gtk application
-    let application = gtk::Application::new(
-        Some("com.example.workbench"),
-        Default::default(),
-    );
+    let application = gtk::Application::builder()
+        .application_id("com.example.workbench")
+        .build();
 
     application.connect_activate(|app| {
         build_ui(app);
@@ -30,11 +27,10 @@ fn build_ui(application: &gtk::Application) {
     // Create the button
     let button = Button::with_label("Press me");
     button.set_margin_top(6);
-    button.get_style_context().add_class("suggested-action");
+    button.style_context().add_class("suggested-action");
 
     // Connect the 'clicked' signal to the greet function
-    let greet_func = Rc::new(greet);
-    button.connect_clicked(clone!(greet_func => move |_| greet_func()));
+    button.connect_clicked(|_| greet());
 
     // Append the button to the 'subtitle' box
     subtitle_box.append(&button);
@@ -45,10 +41,16 @@ fn build_ui(application: &gtk::Application) {
 
 fn greet() {
     // Create a transient parent for the message dialog (replace this with your actual parent window)
-    let parent_window = Window::new(gtk::WindowType::Toplevel);
+    let parent_window = Window::new();
 
     // Create the message dialog
-    let dialog = MessageDialog::new(Some(&parent_window), gtk::DialogFlags::MODAL, MessageType::Info, gtk::ButtonsType::Ok, "Hello World!");
+    let dialog = MessageDialog::new(
+        Some(&parent_window),
+        gtk::DialogFlags::MODAL,
+        MessageType::Info,
+        gtk::ButtonsType::Ok,
+        "Hello World!",
+    );
 
     // Add 'OK' button to the dialog
     dialog.add_button("OK", gtk::ResponseType::Ok);

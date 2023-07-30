@@ -1,0 +1,13 @@
+[package]
+name = "gtk4-rs-book-listings"
+version = "0.1.0"
+edition = "2021"
+
+
+[dependencies]
+gtk = { version = "*", package = "gtk4", features = ["v4_8"] }
+adw = { version = "*", package = "libadwaita", features = ["v1_2"] }
+
+[[bin]]
+name = "welcome"
+path = "Welcome/main.rs"
