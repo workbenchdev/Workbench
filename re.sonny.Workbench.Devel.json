@@ -139,8 +139,8 @@
       "sources": [
         {
           "type": "archive",
-          "url": "https://gitlab.gnome.org/jwestman/blueprint-compiler/-/archive/v0.8.1/blueprint-compiler-v0.8.1.tar.gz",
-          "sha512": "33f14741d358372b3953ba2bf6619b3e40df9e2649854897b80e04114031b0084bca2e1994551593438b46657392abb097c68c91f7c5da7eca48bc2992009995"
+          "url": "https://gitlab.gnome.org/jwestman/blueprint-compiler/-/archive/v0.10.0/blueprint-compiler-v0.10.0.tar.gz",
+          "sha512": "1f2a9097e3d6a030385c371a01e32caefab6f7ede1979b43492255b504250ac7f44ae22a97656a7c33c0e518236b95d6074baf8f87c53df1fbb1e42eceb39a87"
         }
       ]
     },
@@ -256,6 +256,7 @@
       ],
       "post-install": [
         "cp -a /usr/share/doc/. /app/share/doc/",
+        "cp -a /usr/share/gtk-doc/html/. /app/share/doc",
         "cp -a /usr/lib/sdk/vala/bin/. /app/bin/",
         "cp -a /usr/lib/sdk/vala/lib/. /app/lib/",
         "cp -a /usr/lib/sdk/vala/share/. /app/share/"

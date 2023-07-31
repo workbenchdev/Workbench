@@ -32,7 +32,7 @@ GLib.log_set_handler("Gdk", all_log_levels, log_handler);
 GLib.log_set_handler("Adwaita", all_log_levels, log_handler);
 GLib.log_set_handler("GVFS", all_log_levels, log_handler);
 GLib.log_set_handler("Workbench", all_log_levels, log_handler);
-// Not working - Gtk is proably using structured logging
+// Not working - Gtk is probably using structured logging
 // GLib.log_set_handler("Gtk", all_log_levels, log_handler);
 
 // https://docs.gtk.org/glib/flags.LogLevelFlags.html

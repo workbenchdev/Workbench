@@ -1,0 +1,52 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: _("Radio Buttons");
+  description: _("Allow users to make a selection from a set of options.");
+
+  Box {
+    orientation: vertical;
+
+    Box {
+      orientation: vertical;
+      halign: center;
+      spacing: 12;
+
+      CheckButton radio_button_1 {
+        active: true;
+        label: _("Force Light Mode");
+      }
+
+      CheckButton radio_button_2 {
+        label: _("Force Dark Mode");
+        group: radio_button_1;
+      }
+
+      CheckButton radio_button_3 {
+        label: _("Mixed State");
+        group: radio_button_1;
+        inconsistent: true;
+      }
+
+      CheckButton radio_button_4 {
+        label: _("Disabled");
+        group: radio_button_1;
+        sensitive: false;
+      }
+    }
+
+    Box {
+      orientation: vertical;
+      margin-top: 48;
+      LinkButton {
+        label: "Human Interface Guidelines";
+        uri: "https://developer.gnome.org/hig/patterns/controls/radio-buttons.html";
+      }
+      LinkButton {
+        label: "API Reference";
+        uri: "https://docs.gtk.org/gtk4/class.CheckButton.html";
+      }
+    }
+  }
+}
