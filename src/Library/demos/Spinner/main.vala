@@ -3,8 +3,8 @@
 public void main () {
   Gtk.init ();
 
-  var button = workbench.builder.get_object ("button") as Gtk.Button;
-  var spinner = workbench.builder.get_object ("spinner") as Gtk.Spinner;
+  var button = (Gtk.Button) workbench.builder.get_object ("button");
+  var spinner = (Gtk.Spinner) workbench.builder.get_object ("spinner");
 
   button.clicked.connect (() => {
     if (spinner.spinning) {
