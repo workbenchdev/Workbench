@@ -2,6 +2,9 @@ using Gtk 4.0;
 using Adw 1;
 
 Adw.Window {
+  height-request: 200;
+  width-request: -1;
+
   Adw.ToolbarView {
     top-bar-style: raised;
 
@@ -10,10 +13,49 @@ Adw.Window {
       title-widget: Label {
         label: _("Overlay Split View");
       };
+
+      [start]
+      ToggleButton sidebar_toggle {
+        icon-name: "dock-left-symbolic";
+      }
     }
 
-    content: Adw.OverlaySplitView split_view {};
-  }
+    content: Adw.OverlaySplitView split_view {
+      show-sidebar: bind sidebar_toggle.active;
 
+      sidebar: Box {
+        orientation: vertical;
+        valign: center;
+        halign: center;
+        spacing: 12;
+        Label {
+          label: _("Sidebar");
+          styles ["title-1"]
+        }
+
+         ToggleButton start_toggle {
+          label: _("Start");
+          styles ["pill"]
+          group: end_toggle;
+        }
+
+        ToggleButton end_toggle {
+          label: _("End");
+          styles ["pill"]
+        }
+      };
+
+      content: Box {
+        orientation: vertical;
+        valign: center;
+        spacing: 12;
+
+        Label {
+          label: _("Content");
+          styles ["title-1"]
+        }
+      };
+    };
+  }
 }
 
