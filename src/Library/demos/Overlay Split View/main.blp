@@ -1,0 +1,19 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.Window {
+  Adw.ToolbarView {
+    top-bar-style: raised;
+
+    [top]
+    Adw.HeaderBar {
+      title-widget: Label {
+        label: _("Overlay Split View");
+      };
+    }
+
+    content: Adw.OverlaySplitView split_view {};
+  }
+
+}
+
