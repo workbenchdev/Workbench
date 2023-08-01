@@ -1,0 +1,6 @@
+{
+  "name": "Overlay Split View",
+  "category": "navigation",
+  "description": "A content a sidebar view",
+  "panels": ["ui", "preview"]
+}
