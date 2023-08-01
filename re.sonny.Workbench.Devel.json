@@ -91,7 +91,7 @@
         {
           "type": "git",
           "url": "https://gitlab.freedesktop.org/gstreamer/gst-plugins-rs.git",
-          "commit": "1ed9992775c0142e67628332f5b72ac598096baf"
+          "commit": "0205aa43d6d8c5d0c9d4e4f83e0a3aaa94acef89"
         }
       ],
       "build-options": {
