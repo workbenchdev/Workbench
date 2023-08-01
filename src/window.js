@@ -4,10 +4,12 @@ import GObject from "gi://GObject";
 import Gio from "gi://Gio";
 import Adw from "gi://Adw";
 import Vte from "gi://Vte";
+import XdpGtk from "gi://XdpGtk4";
+import Xdp from "gi://Xdp";
 import { gettext as _ } from "gettext";
 
 import * as xml from "./langs/xml/xml.js";
-import { languages } from "./util.js";
+import { languages, portal } from "./util.js";
 import Document from "./Document.js";
 import PanelUI from "./PanelUI.js";
 import PanelCode from "./PanelCode.js";
@@ -313,7 +315,9 @@ export default function Window({ application, session }) {
   application.set_accels_for_action("win.format", ["<Control><Shift>Return"]);
 
   window.connect("close-request", () => {
-    deleteSession(session).catch(logError);
+    console.log("close request");
+    onCloseSession({ session, window }).catch(logError);
+    return true;
   });
 
   window.add_action(settings.create_action("safe-mode"));
@@ -371,4 +375,72 @@ async function setGtk4PreferDark(dark) {
   }
   settings.set_boolean("Settings", "gtk-application-prefer-dark-theme", dark);
   settings.save_to_file(settings_path);
+}
+
+async function onCloseSession({ session, window }) {
+  console.log("onCloseResponse");
+  const dialog = new Adw.MessageDialog({
+    heading: _("Save Changes?"),
+    body: _(
+      "This session contains unsaved changes. Changes which are not saved will be permanently lost.",
+    ),
+    close_response: "cancel",
+    modal: true,
+    transient_for: window,
+  });
+
+  dialog.add_response("cancel", _("Cancel"));
+  dialog.add_response("discard", _("Discard"));
+  dialog.add_response("save", _("Save"));
+
+  dialog.set_response_appearance("discard", Adw.ResponseAppearance.DESTRUCTIVE);
+  dialog.set_response_appearance("save", Adw.ResponseAppearance.SUGGESTED);
+
+  dialog.present();
+
+  const response = await new Promise((resolve) => {
+    dialog.connect("response", (self, response) => resolve(response));
+  });
+
+  if (response === "cancel") return;
+
+  if (response === "discard") {
+    await deleteSession(session);
+  } else if (response === "save") {
+    const file_names = [];
+    for await (const file_info of session.file.enumerate_children(
+      "standard::name",
+      Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
+      null,
+    )) {
+      file_names.push(file_info.get_name());
+    }
+
+    const result = await portal.save_files(
+      XdpGtk.parent_new_gtk(window), // parent
+      _("Save Project"), // title
+      session.name, // current_name
+      session.name, // current_folder
+      new GLib.Variant("aay", file_names), // files
+      null, // choices
+      Xdp.SaveFileFlags.NONE, // flags
+      null, // cancellable
+    );
+
+    const { uris } = result.recursiveUnpack();
+
+    for (const [idx, uri] of uris.entries()) {
+      await session.file.get_child(file_names[idx]).move_async(
+        Gio.File.new_for_uri(uri), // destination
+        Gio.FileCopyFlags.BACKUP, // flags
+        GLib.PRIORITY_DEFAULT, // priority
+        null, // cancellable
+        null, // progress_callback
+      );
+    }
+
+    await session.file.delete_async(GLib.PRIORITY_DEFAULT, null);
+  }
+
+  window.destroy();
 }

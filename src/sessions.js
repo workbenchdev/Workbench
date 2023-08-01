@@ -88,8 +88,10 @@ export async function deleteSession(session) {
 class Session {
   settings = null;
   file = null;
+  name = null;
 
   constructor(name) {
+    this.name = name;
     this.file = sessions_dir.get_child(name);
     const backend = Gio.keyfile_settings_backend_new(
       this.file.get_child("settings").get_path(),
