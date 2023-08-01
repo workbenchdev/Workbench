@@ -3,5 +3,5 @@
   "category": "user_interface",
   "description": "A User interaction pattern where users drag a UI element from one place to another",
   "panels": ["code", "ui", "preview"],
-  "autorun": false
+  "autorun": true
 }
