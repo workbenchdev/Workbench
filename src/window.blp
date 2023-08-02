@@ -568,3 +568,59 @@ menu preview_menu {
   // automatcally enabling when we detect a crash
   item (_("Safe Mode"), "win.safe-mode")
 }
+
+Adw.MessageDialog message_dialog_save_project {
+  responses [
+    cancel: _("Cancel"),
+    disacard: _("Discard") destructive,
+    save: _("Save") suggested disabled,
+  ]
+  close-response: "cancel";
+  modal: true;
+  heading: _("Save Project?");
+  body: _("This session has not been saved. Unsaved sessions will be permanently lost.");
+  extra-child: Box {
+    margin-top: 12;
+    orientation: vertical;
+    spacing: 24;
+
+    ListBox {
+      selection-mode: none;
+      styles ["boxed-list"]
+
+      Adw.EntryRow row_project_name {
+        title: _("Project Name");
+      }
+    }
+
+    Box {
+      orientation: vertical;
+
+      ListBox {
+        selection-mode: none;
+        styles ["boxed-list"]
+
+        Adw.ActionRow row_project_location {
+          title: _("Location");
+          subtitle: "Select Location";
+          activatable-widget: button_location;
+        }
+      }
+
+      Label {
+        margin-start: 12;
+        margin-top: 12;
+        halign: start;
+        label: _("The project will be created in a new subdirectory.");
+        styles ["dim-label", "caption"]
+        justify: left;
+      }
+    }
+  };
+}
+
+Button button_location {
+  icon-name: "folder-symbolic";
+  valign: center;
+  styles ["flat"]
+}

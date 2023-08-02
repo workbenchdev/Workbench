@@ -314,8 +314,16 @@ export default function Window({ application, session }) {
   window.add_action(action_format);
   application.set_accels_for_action("win.format", ["<Control><Shift>Return"]);
 
+  const action_close = new Gio.SimpleAction({
+    name: "close",
+  });
+  action_close.connect("activate", () => {
+    window.close();
+  });
+  window.add_action(action_close);
+  application.set_accels_for_action("win.close", ["<Control>W"]);
+
   window.connect("close-request", () => {
-    console.log("close request");
     onCloseSession({ session, window }).catch(logError);
     return true;
   });
@@ -378,25 +386,45 @@ async function setGtk4PreferDark(dark) {
 }
 
 async function onCloseSession({ session, window }) {
-  console.log("onCloseResponse");
-  const dialog = new Adw.MessageDialog({
-    heading: _("Save Changes?"),
-    body: _(
-      "This session contains unsaved changes. Changes which are not saved will be permanently lost.",
-    ),
-    close_response: "cancel",
-    modal: true,
-    transient_for: window,
+  const builder = Gtk.Builder.new_from_resource(resource);
+  const dialog = builder.get_object("message_dialog_save_project");
+
+  dialog.set_transient_for(window);
+  dialog.present();
+
+  let location;
+
+  const row_project_location = builder.get_object("row_project_location");
+  const button_location = builder.get_object("button_location");
+  row_project_location.add_suffix(button_location);
+  button_location.connect("clicked", () => {
+    selectLocation().catch(logError);
   });
 
-  dialog.add_response("cancel", _("Cancel"));
-  dialog.add_response("discard", _("Discard"));
-  dialog.add_response("save", _("Save"));
+  const row_project_name = builder.get_object("row_project_name");
+  function updateSaveButton() {
+    if (!row_project_name.text) {
+      dialog.set_response_enabled("save", false);
+      return;
+    }
 
-  dialog.set_response_appearance("discard", Adw.ResponseAppearance.DESTRUCTIVE);
-  dialog.set_response_appearance("save", Adw.ResponseAppearance.SUGGESTED);
+    if (!location) {
+      dialog.set_response_enabled("save", false);
+      return;
+    }
 
-  dialog.present();
+    dialog.set_response_enabled("save", true);
+  }
+  row_project_name.connect("notify::text", () => {
+    updateSaveButton();
+  });
+
+  async function selectLocation() {
+    const dialog_for_folder = new Gtk.FileDialog();
+    location = await dialog_for_folder.select_folder(workbench.window, null);
+    row_project_location.subtitle = location.get_basename();
+    updateSaveButton();
+  }
 
   const response = await new Promise((resolve) => {
     dialog.connect("response", (self, response) => resolve(response));
@@ -407,31 +435,18 @@ async function onCloseSession({ session, window }) {
   if (response === "discard") {
     await deleteSession(session);
   } else if (response === "save") {
-    const file_names = [];
+    const destination = location.get_child_for_display_name(
+      row_project_name.text,
+    );
+    await destination.make_directory_async(GLib.PRIORITY_DEFAULT, null);
+
     for await (const file_info of session.file.enumerate_children(
       "standard::name",
       Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
       null,
     )) {
-      file_names.push(file_info.get_name());
-    }
-
-    const result = await portal.save_files(
-      XdpGtk.parent_new_gtk(window), // parent
-      _("Save Project"), // title
-      session.name, // current_name
-      session.name, // current_folder
-      new GLib.Variant("aay", file_names), // files
-      null, // choices
-      Xdp.SaveFileFlags.NONE, // flags
-      null, // cancellable
-    );
-
-    const { uris } = result.recursiveUnpack();
-
-    for (const [idx, uri] of uris.entries()) {
-      await session.file.get_child(file_names[idx]).move_async(
-        Gio.File.new_for_uri(uri), // destination
+      await session.file.get_child(file_info.get_name()).move_async(
+        destination.get_child(file_info.get_name()), // destination
         Gio.FileCopyFlags.BACKUP, // flags
         GLib.PRIORITY_DEFAULT, // priority
         null, // cancellable
