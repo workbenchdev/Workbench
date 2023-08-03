@@ -75,6 +75,7 @@ export default function Window({ application, session }) {
     code_view: builder.get_object("code_view_javascript"),
     file: file.get_child("main.js"),
     lang: langs.javascript,
+    session,
   });
   langs.javascript.document = document_javascript;
 
@@ -82,6 +83,7 @@ export default function Window({ application, session }) {
     code_view: builder.get_object("code_view_vala"),
     file: file.get_child("main.vala"),
     lang: langs.vala,
+    session,
   });
   langs.vala.document = document_vala;
 
@@ -89,6 +91,7 @@ export default function Window({ application, session }) {
     code_view: builder.get_object("code_view_blueprint"),
     file: file.get_child("main.blp"),
     lang: langs.blueprint,
+    session,
   });
   langs.blueprint.document = document_blueprint;
 
@@ -96,6 +99,7 @@ export default function Window({ application, session }) {
     code_view: builder.get_object("code_view_xml"),
     file: file.get_child("main.ui"),
     lang: langs.xml,
+    session,
   });
   langs.xml.document = document_xml;
 
@@ -103,6 +107,7 @@ export default function Window({ application, session }) {
     code_view: builder.get_object("code_view_css"),
     file: file.get_child("main.css"),
     lang: langs.css,
+    session,
   });
   langs.css.document = document_css;
 
@@ -385,6 +390,12 @@ async function setGtk4PreferDark(dark) {
 
 async function onCloseSession({ session, window }) {
   if (session.is_project()) {
+    window.destroy();
+    return;
+  }
+
+  if (!session.settings.get_boolean("edited")) {
+    await deleteSession(session);
     window.destroy();
     return;
   }
