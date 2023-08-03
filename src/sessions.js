@@ -85,6 +85,26 @@ export async function deleteSession(session) {
   session.file.trash(null);
 }
 
+export async function moveSession(session, destination) {
+  await destination.make_directory_async(GLib.PRIORITY_DEFAULT, null);
+
+  for await (const file_info of session.file.enumerate_children(
+    "standard::name",
+    Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
+    null,
+  )) {
+    await session.file.get_child(file_info.get_name()).move_async(
+      destination.get_child(file_info.get_name()), // destination
+      Gio.FileCopyFlags.BACKUP, // flags
+      GLib.PRIORITY_DEFAULT, // priority
+      null, // cancellable
+      null, // progress_callback
+    );
+  }
+
+  await session.file.delete_async(GLib.PRIORITY_DEFAULT, null);
+}
+
 class Session {
   settings = null;
   file = null;

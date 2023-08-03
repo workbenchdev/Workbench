@@ -4,8 +4,6 @@ import GObject from "gi://GObject";
 import Gio from "gi://Gio";
 import Adw from "gi://Adw";
 import Vte from "gi://Vte";
-import XdpGtk from "gi://XdpGtk4";
-import Xdp from "gi://Xdp";
 import { gettext as _ } from "gettext";
 
 import * as xml from "./langs/xml/xml.js";
@@ -38,7 +36,7 @@ import "./icons/re.sonny.Workbench-screenshot-symbolic.svg" with {
 
 import "./widgets/Modal.js";
 import "./widgets/CodeView.js";
-import { deleteSession } from "./sessions.js";
+import { deleteSession, moveSession } from "./sessions.js";
 
 const style_manager = Adw.StyleManager.get_default();
 
@@ -438,23 +436,7 @@ async function onCloseSession({ session, window }) {
     const destination = location.get_child_for_display_name(
       row_project_name.text,
     );
-    await destination.make_directory_async(GLib.PRIORITY_DEFAULT, null);
-
-    for await (const file_info of session.file.enumerate_children(
-      "standard::name",
-      Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
-      null,
-    )) {
-      await session.file.get_child(file_info.get_name()).move_async(
-        destination.get_child(file_info.get_name()), // destination
-        Gio.FileCopyFlags.BACKUP, // flags
-        GLib.PRIORITY_DEFAULT, // priority
-        null, // cancellable
-        null, // progress_callback
-      );
-    }
-
-    await session.file.delete_async(GLib.PRIORITY_DEFAULT, null);
+    await moveSession(session, destination);
   }
 
   window.destroy();
