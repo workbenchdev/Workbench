@@ -2,5 +2,6 @@
   "name": "Overlay Split View",
   "category": "navigation",
   "description": "A content and sidebar view",
-  "panels": ["ui", "preview"]
+  "panels": ["ui", "preview"],
+  "autorun": true
 }
