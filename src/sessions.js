@@ -62,7 +62,6 @@ export function createSessionFromDemo(demo) {
 
   const { panels } = demo;
   const { settings } = session;
-  settings.set_string("title", demo.name);
   settings.set_boolean("show-code", panels.includes("code"));
   settings.set_boolean("show-style", panels.includes("style"));
   settings.set_boolean("show-ui", panels.includes("ui"));
