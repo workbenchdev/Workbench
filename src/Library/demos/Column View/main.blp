@@ -20,7 +20,21 @@ Adw.StatusPage {
       ColumnView column_view {
         show-column-separators: true;
         show-row-separators: true;
-        styles ['view']
+
+        ColumnViewColumn col1 {
+          title: _("Name");
+          factory: SignalListItemFactory{};
+        }
+
+        ColumnViewColumn col2 {
+          title: _("Size (in bytes)");
+          factory: SignalListItemFactory {};
+        }
+
+        ColumnViewColumn col3 {
+          title: _("Date");
+          factory: SignalListItemFactory {};
+        }
       }
     }
   }

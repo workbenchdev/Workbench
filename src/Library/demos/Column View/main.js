@@ -2,67 +2,57 @@ import Gtk from "gi://Gtk";
 import Gio from "gi://Gio";
 
 const column_view = workbench.builder.get_object("column_view");
+const col1 = workbench.builder.get_object("col1");
+const col2 = workbench.builder.get_object("col2");
+const col3 = workbench.builder.get_object("col3");
 
 function createFirstCol() {
-  const factory = new Gtk.SignalListItemFactory();
-  const columnViewColumn = new Gtk.ColumnViewColumn({
-    factory,
-  });
-  factory.connect("setup", (factory, listItem) => {
+  const factory = col1.factory;
+  factory.connect("setup", (factory, list_item) => {
     const label = new Gtk.Label({
-      height_request: 50,
       margin_start: 12,
       margin_end: 12,
     });
-    listItem.set_child(label);
+    list_item.set_child(label);
   });
-  factory.connect("bind", (factory, listItem) => {
-    const labelWidget = listItem.get_child();
-    const modelItem = listItem.get_item();
-    labelWidget.label = modelItem.get_name();
+  factory.connect("bind", (factory, list_item) => {
+    const label_widget = list_item.get_child();
+    const model_item = list_item.get_item();
+    label_widget.label = model_item.get_display_name();
   });
-  return columnViewColumn;
 }
 
 function createSecCol() {
-  const factory = new Gtk.SignalListItemFactory();
-  const columnViewColumn = new Gtk.ColumnViewColumn({
-    factory,
-  });
-  factory.connect("setup", (factory, listItem) => {
+  const factory = col2.factory;
+  factory.connect("setup", (factory, list_item) => {
     const label = new Gtk.Label({
-      height_request: 50,
       margin_start: 12,
       margin_end: 12,
     });
-    listItem.set_child(label);
+    list_item.set_child(label);
   });
-  factory.connect("bind", (factory, listItem) => {
-    const labelWidget = listItem.get_child();
-    const modelItem = listItem.get_item();
-    labelWidget.label = modelItem.get_size().toString();
+  factory.connect("bind", (factory, list_item) => {
+    const label_widget = list_item.get_child();
+    const model_item = list_item.get_item();
+    label_widget.label = model_item.get_size().toString();
   });
-  return columnViewColumn;
 }
 
 function createThirdCol() {
-  const factory = new Gtk.SignalListItemFactory();
-  const columnViewColumn = new Gtk.ColumnViewColumn({
-    factory,
-  });
-  factory.connect("setup", (factory, listItem) => {
+  const factory = col3.factory;
+  factory.connect("setup", (factory, list_item) => {
     const label = new Gtk.Label({
-      height_request: 50,
       margin_start: 12,
       margin_end: 12,
     });
-    listItem.set_child(label);
+    list_item.set_child(label);
   });
-  factory.connect("bind", (factory, listItem) => {
-    const labelWidget = listItem.get_child();
-    const modelItem = listItem.get_item();
+  factory.connect("bind", (factory, list_item) => {
+    const label_widget = list_item.get_child();
+    const model_item = list_item.get_item();
+    const date = model_item.get_modification_date_time();
+    label_widget.label = date.format("%F");
   });
-  return columnViewColumn;
 }
 
 //Model
@@ -72,19 +62,19 @@ const dir = Gio.File.new_for_path(pkg.pkgdatadir).resolve_relative_path(
 
 const dir_model = new Gtk.DirectoryList({
   file: dir,
-  attributes: "standard::*",
+  attributes: "standard::*,time:modified",
 });
 
 const model = new Gtk.SingleSelection({ model: dir_model });
 
 column_view.model = model;
-const first_col = createFirstCol();
-const sec_col = createSecCol();
-const third_col = createThirdCol();
+createFirstCol();
+createSecCol();
+createThirdCol();
 
-column_view.append_column(first_col);
-column_view.append_column(sec_col);
-column_view.append_column(third_col);
+column_view.append_column(col1);
+column_view.append_column(col2);
+column_view.append_column(col3);
 
 //View
 /*model.model.connect("items-changed", (list, position, removed, added) => {
