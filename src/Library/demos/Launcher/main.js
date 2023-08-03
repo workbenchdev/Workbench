@@ -9,7 +9,6 @@ const file_location = workbench.builder.get_object("file_location");
 const change_file = workbench.builder.get_object("change_file");
 const uri_launch = workbench.builder.get_object("uri_launch");
 const uri_details = workbench.builder.get_object("uri_details");
-const change_uri = workbench.builder.get_object("change_uri");
 
 Gio._promisify(Gtk.FileLauncher.prototype, "launch", "launch_finish");
 Gio._promisify(
