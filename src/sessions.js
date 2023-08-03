@@ -7,6 +7,7 @@ import {
   getNowForFilename,
   demos_dir,
   settings as global_settings,
+  encode,
 } from "./util.js";
 
 export const sessions_dir = data_dir.get_child("sessions");
@@ -26,7 +27,7 @@ export function getSessions() {
       null,
     )) {
       if (file_info.get_file_type() !== Gio.FileType.DIRECTORY) continue;
-      sessions.push(new Session(file_info.get_name()));
+      sessions.push(new Session(sessions_dir.get_child(file_info.get_name())));
     }
   }
 
@@ -34,8 +35,9 @@ export function getSessions() {
 }
 
 export function createSession(name = getNowForFilename()) {
-  const session = new Session(name);
-  ensureDir(session.file);
+  const file = sessions_dir.get_child(name);
+  ensureDir(file);
+  const session = new Session(file);
   return session;
 }
 
@@ -85,12 +87,46 @@ export async function deleteSession(session) {
   session.file.trash(null);
 }
 
-class Session {
+export async function saveSessionAsProject(session, destination) {
+  await destination.make_directory_async(GLib.PRIORITY_DEFAULT, null);
+
+  for await (const file_info of session.file.enumerate_children(
+    "",
+    Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
+    null,
+  )) {
+    await session.file.get_child(file_info.get_name()).move_async(
+      destination.get_child(file_info.get_name()), // destination
+      Gio.FileCopyFlags.BACKUP, // flags
+      GLib.PRIORITY_DEFAULT, // priority
+      null, // cancellable
+      null, // progress_callback
+    );
+  }
+
+  await session.file.delete_async(GLib.PRIORITY_DEFAULT, null);
+
+  await destination.get_child("README.md").replace_contents_async(
+    encode(
+      _(`This is a Workbench project.
+
+To open and run this; [install Workbench from Flathub](https://flathub.org/apps/re.sonny.Workbench) and open this project folder with it.`),
+    ),
+    null, // etag
+    false, // make_backup
+    Gio.FileCreateFlags.NONE, //flags
+    null, // cancellable
+  );
+}
+
+export class Session {
   settings = null;
   file = null;
+  name = null;
 
-  constructor(name) {
-    this.file = sessions_dir.get_child(name);
+  constructor(file) {
+    this.name = file.get_basename();
+    this.file = file;
     const backend = Gio.keyfile_settings_backend_new(
       this.file.get_child("settings").get_path(),
       "/",
@@ -101,6 +137,10 @@ class Session {
       schema_id: `${pkg.name}.Session`,
       path: "/re/sonny/Workbench/",
     });
+  }
+
+  is_project() {
+    return !this.file.get_parent().equal(sessions_dir);
   }
 }
 
