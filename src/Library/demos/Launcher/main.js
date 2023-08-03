@@ -26,8 +26,9 @@ const file = Gio.File.new_for_path(pkg.pkgdatadir).resolve_relative_path(
   "Library/demos/Launcher/workbench.txt",
 );
 file_launcher.set_file(file);
-uri_launcher.set_uri("https://github.com/sonnyp/Workbench");
+let text = "";
 
+//File Launcher
 async function launchesFile() {
   const result = await file_launcher.launch(workbench.window, null);
   if (result) {
@@ -56,6 +57,7 @@ async function changesFile() {
     console.log("File Changed");
   }
 }
+
 launch_file.connect("clicked", () => {
   launchesFile().catch(logError);
 });
@@ -78,6 +80,7 @@ change_file.connect("clicked", () => {
   changesFile().catch(logError);
 });
 
+// URI Launcher
 async function launchesUri() {
   const result = await uri_launcher.launch(workbench.window, null);
 }
@@ -86,6 +89,7 @@ uri_launch.connect("clicked", () => {
   launchesUri().catch(logError);
 });
 
-uri_details.connect("clicked", () => {
-  console.log(`File: ${uri_launcher.get_uri()}`);
+uri_details.connect("changed", () => {
+  text = uri_details.get_text();
+  uri_launcher.set_uri(text);
 });

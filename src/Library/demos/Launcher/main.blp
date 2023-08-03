@@ -2,8 +2,8 @@ using Gtk 4.0;
 using Adw 1;
 
 Adw.StatusPage {
-  title: "Launcher";
-  description: _("Present a dialog of apps required to open a File/Uri");
+  title: _("Launcher");
+  description: _("Collect the arguments that are needed to open a File or URI");
 
   Adw.Clamp {
     maximum-size: 640;
@@ -40,10 +40,10 @@ Adw.StatusPage {
                 styles ["linked"]
 
                 Button file_details {
-                  label: _("File Details");
+                  label: _("Open File");
                 }
                 Button file_location {
-                  label: _("File Location");
+                  label: _("Open Folder");
                 }
               }
 
@@ -60,7 +60,7 @@ Adw.StatusPage {
 
         Gtk.StackPage {
           name: "uri_launcher";
-          title: _("Uri Launcher");
+          title: _("URI Launcher");
           child:
             Box {
               orientation: vertical;
@@ -74,8 +74,8 @@ Adw.StatusPage {
                 }
               }
 
-              Button uri_details {
-                label: _("Uri Details");
+              Entry uri_details {
+                placeholder-text: _("Enter Uri");
               }
 
               LinkButton {
