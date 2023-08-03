@@ -36,7 +36,7 @@ import "./icons/re.sonny.Workbench-screenshot-symbolic.svg" with {
 
 import "./widgets/Modal.js";
 import "./widgets/CodeView.js";
-import { deleteSession, moveSession } from "./sessions.js";
+import { deleteSession, saveSessionAsProject } from "./sessions.js";
 
 const style_manager = Adw.StyleManager.get_default();
 
@@ -369,7 +369,7 @@ export default function Window({ application, session }) {
     term_console.scrollToEnd();
   }
 
-  return { load };
+  return { load, window };
 }
 
 async function setGtk4PreferDark(dark) {
@@ -452,7 +452,7 @@ async function onCloseSession({ session, window }) {
     const destination = location.get_child_for_display_name(
       row_project_name.text,
     );
-    await moveSession(session, destination);
+    await saveSessionAsProject(session, destination);
   }
 
   window.destroy();

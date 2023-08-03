@@ -111,7 +111,7 @@ export default function Actions({ application }) {
     open({ application, hint }).catch(logError);
   });
   application.add_action(action_open_file);
-  application.set_accels_for_action("app.open", ["<Control>O"]);
+  application.set_accels_for_action("app.open('project')", ["<Control>O"]);
 
   const action_show_screenshot = new Gio.SimpleAction({
     name: "show-screenshot",

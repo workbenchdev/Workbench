@@ -7,6 +7,7 @@ import {
   getNowForFilename,
   demos_dir,
   settings as global_settings,
+  encode,
 } from "./util.js";
 
 export const sessions_dir = data_dir.get_child("sessions");
@@ -86,11 +87,11 @@ export async function deleteSession(session) {
   session.file.trash(null);
 }
 
-export async function moveSession(session, destination) {
+export async function saveSessionAsProject(session, destination) {
   await destination.make_directory_async(GLib.PRIORITY_DEFAULT, null);
 
   for await (const file_info of session.file.enumerate_children(
-    "standard::name",
+    "",
     Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
     null,
   )) {
@@ -104,6 +105,18 @@ export async function moveSession(session, destination) {
   }
 
   await session.file.delete_async(GLib.PRIORITY_DEFAULT, null);
+
+  await destination.get_child("README.md").replace_contents_async(
+    encode(
+      _(`This is a Workbench project.
+
+To open and run this; [install Workbench from Flathub](https://flathub.org/apps/re.sonny.Workbench) and open this project folder with it.`),
+    ),
+    null, // etag
+    false, // make_backup
+    Gio.FileCreateFlags.NONE, //flags
+    null, // cancellable
+  );
 }
 
 export class Session {

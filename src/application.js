@@ -85,10 +85,11 @@ function restoreSessions() {
 function newWindow() {
   const demo = JSON.parse(readDemoFile("Welcome", "main.json"));
   const session = createSessionFromDemo(demo);
-  const { load } = Window({
+  const { load, window } = Window({
     application,
     session,
   });
+  window.maximize();
   load({ run: false }).catch(logError);
 }
 
