@@ -7,16 +7,28 @@ import { settings, data_dir, ensureDir, readDemoFile } from "./util.js";
 import { overrides } from "./overrides.js";
 import Library from "./Library/Library.js";
 import DocumentationViewer from "./DocumentationViewer.js";
-import { createSessionFromDemo, getSessions } from "./sessions.js";
+import { Session, createSessionFromDemo, getSessions } from "./sessions.js";
 
 ensureDir(data_dir);
 
 const application = new Adw.Application({
   application_id: pkg.name,
-  flags: Gio.ApplicationFlags.NON_UNIQUE,
+  flags: Gio.ApplicationFlags.HANDLES_OPEN,
   // Defaults to /re/sonny/Workbench/Devel
   // if pkg.name is re.sonny.Workbench.Devel
   resource_base_path: "/re/sonny/Workbench",
+});
+
+application.connect("open", (_self, files, hint) => {
+  const [file] = files;
+  if (!file || hint !== "project") return;
+
+  const session = new Session(file);
+  const { load } = Window({
+    application,
+    session,
+  });
+  load({ run: false }).catch(logError);
 });
 
 application.connect("startup", () => {

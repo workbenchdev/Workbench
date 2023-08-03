@@ -26,7 +26,7 @@ export function getSessions() {
       null,
     )) {
       if (file_info.get_file_type() !== Gio.FileType.DIRECTORY) continue;
-      sessions.push(new Session(file_info.get_name()));
+      sessions.push(new Session(sessions_dir.get_child(file_info.get_name())));
     }
   }
 
@@ -34,8 +34,9 @@ export function getSessions() {
 }
 
 export function createSession(name = getNowForFilename()) {
-  const session = new Session(name);
-  ensureDir(session.file);
+  const file = sessions_dir.get_child(name);
+  ensureDir(file);
+  const session = new Session(file);
   return session;
 }
 
@@ -105,14 +106,14 @@ export async function moveSession(session, destination) {
   await session.file.delete_async(GLib.PRIORITY_DEFAULT, null);
 }
 
-class Session {
+export class Session {
   settings = null;
   file = null;
   name = null;
 
-  constructor(name) {
-    this.name = name;
-    this.file = sessions_dir.get_child(name);
+  constructor(file) {
+    this.name = file.get_basename();
+    this.file = file;
     const backend = Gio.keyfile_settings_backend_new(
       this.file.get_child("settings").get_path(),
       "/",
@@ -123,6 +124,10 @@ class Session {
       schema_id: `${pkg.name}.Session`,
       path: "/re/sonny/Workbench/",
     });
+  }
+
+  is_project() {
+    return !this.file.get_parent().equal(sessions_dir);
   }
 }
 

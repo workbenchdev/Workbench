@@ -6,7 +6,7 @@ using GtkSource 5;
 Gtk.ApplicationWindow window {
   default-width: 1024;
   default-height: 768;
-  maximized: true;
+  maximized: false;
   titlebar: Gtk.HeaderBar {
     [start]
     Button button_library {
@@ -460,6 +460,12 @@ menu menu_app {
   }
 
   section {
+    item {
+      label: _("Open Project…");
+      action: "app.open";
+      target: "project";
+    }
+
     submenu {
       label: _("Bookmarks");
       section {
@@ -572,7 +578,7 @@ menu preview_menu {
 Adw.MessageDialog message_dialog_save_project {
   responses [
     cancel: _("Cancel"),
-    disacard: _("Discard") destructive,
+    discard: _("Discard") destructive,
     save: _("Save") suggested disabled,
   ]
   close-response: "cancel";

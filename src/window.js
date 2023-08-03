@@ -7,7 +7,7 @@ import Vte from "gi://Vte";
 import { gettext as _ } from "gettext";
 
 import * as xml from "./langs/xml/xml.js";
-import { languages, portal } from "./util.js";
+import { languages } from "./util.js";
 import Document from "./Document.js";
 import PanelUI from "./PanelUI.js";
 import PanelCode from "./PanelCode.js";
@@ -384,6 +384,11 @@ async function setGtk4PreferDark(dark) {
 }
 
 async function onCloseSession({ session, window }) {
+  if (session.is_project()) {
+    window.destroy();
+    return;
+  }
+
   const builder = Gtk.Builder.new_from_resource(resource);
   const dialog = builder.get_object("message_dialog_save_project");
 
@@ -418,8 +423,8 @@ async function onCloseSession({ session, window }) {
   });
 
   async function selectLocation() {
-    const dialog_for_folder = new Gtk.FileDialog();
-    location = await dialog_for_folder.select_folder(workbench.window, null);
+    const file_dialog = new Gtk.FileDialog();
+    location = await file_dialog.select_folder(window, null);
     row_project_location.subtitle = location.get_basename();
     updateSaveButton();
   }
