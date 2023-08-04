@@ -60,24 +60,22 @@ const dir = Gio.File.new_for_path(pkg.pkgdatadir).resolve_relative_path(
   "Library/demos",
 );
 
-const dir_model = new Gtk.DirectoryList({
-  file: dir,
-  attributes: "standard::*,time::modified",
+const model = new Gtk.SingleSelection({
+  model: new Gtk.SortListModel({
+    model: new Gtk.DirectoryList({
+      file: dir,
+      attributes: "standard::*,time::modified",
+    }),
+    sorter: column_view.sorter,
+  }),
 });
 
-const model = new Gtk.SingleSelection({ model: dir_model });
+column_view.sort_by_column(col1, "ascending");
 
 column_view.model = model;
 createFirstCol();
 createSecCol();
 createThirdCol();
-
-const sorter_of_colview = column_view.get_sorter();
-
-const sort_model = new Gtk.SortListModel({
-  model: dir_model,
-  sorter: sorter_of_colview,
-});
 
 //View
 /*model.model.connect("items-changed", (list, position, removed, added) => {
