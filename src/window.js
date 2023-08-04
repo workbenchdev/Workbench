@@ -56,21 +56,7 @@ export default function Window({ application, session }) {
     window.add_css_class("devel");
   }
   window.set_application(application);
-
-  function updateTitle () {
-    window.set_title (`Workbench — ${session.file.get_basename ()}`);
-  }
-
-  // Monitor the session directory and update the window title if it is renamed
-  // FIXME: The monitor does not seem to listen for rename events
-  let monitor = session.file.monitor (Gio.FileMonitorFlags.WATCH_MOVES, null);
-  monitor.connect ("changed", (file, other_file, event_type) => {
-    if (event_type === Gio.FileMonitorEvent.RENAMED) {
-      updateTitle ();
-    }
-  });
-
-  updateTitle ();
+  window.set_title (`Workbench — ${session.name}`);
 
   // Popover menu theme switcher
   const button_menu = builder.get_object("button_menu");
