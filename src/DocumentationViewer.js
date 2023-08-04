@@ -244,6 +244,10 @@ function createSubsections(
   }
 }
 
+function newListStore() {
+  return Gio.ListStore.new(DocumentationPage);
+}
+
 async function getNamespaces(base_path) {
   const namespaces = [];
   const dirs = await list(base_path);
@@ -323,9 +327,5 @@ async function enableDocSidebar(webview) {
       logError(err);
     }
   }
-}
-
-function newListStore() {
-  return Gio.ListStore.new(DocumentationPage);
 }
 

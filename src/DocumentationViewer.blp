@@ -52,7 +52,7 @@ Window documentation_viewer {
 
       SearchBar search_bar {
         key-capture-widget: sidebar;
-        SearchEntry search_entry{
+        SearchEntry search_entry {
          hexpand: true;
         }
       }
@@ -65,7 +65,7 @@ Window documentation_viewer {
         enable-rubberband: true;
         factory: BuilderListItemFactory {
             template ListItem {
-              child: TreeExpander expander{
+              child: TreeExpander expander {
                 list-row: bind template.item;
                 child:
                 Inscription {
