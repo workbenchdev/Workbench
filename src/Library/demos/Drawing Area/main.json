@@ -1,5 +1,4 @@
 {
-  "name": "Drawing Area",
   "category": "user_interface",
   "description": "Programmatically draw onto a surface.",
   "panels": ["ui", "code", "preview"],

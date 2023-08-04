@@ -2,7 +2,7 @@ import Gio from "gi://Gio";
 import Adw from "gi://Adw";
 import Gtk from "gi://Gtk";
 
-import { demos_dir, readDemoFile } from "../util.js";
+import { demos_dir, getDemo, readDemoFile } from "../util.js";
 import Window from "../window.js";
 
 import resource from "./Library.blp";
@@ -60,18 +60,9 @@ function getDemos() {
 
     let demo;
     try {
-      demo = JSON.parse(readDemoFile(child.get_name(), "main.json"));
+      demo = getDemo(child.get_name());
     } catch (err) {
       console.debug(err);
-      continue;
-    }
-
-    if (demo.name !== child.get_name()) {
-      console.warn(
-        `The demo name "${
-          demo.name
-        }" does not match the folder name "${child.get_name()}" and will be ignored.`,
-      );
       continue;
     }
 
@@ -82,7 +73,7 @@ function getDemos() {
 }
 
 async function openDemo({ application, demo_name }) {
-  const demo = JSON.parse(readDemoFile(demo_name, "main.json"));
+  const demo = getDemo(demo_name);
   const session = await createSessionFromDemo(demo);
 
   const is_js = session.file.get_child("main.js").query_exists(null);

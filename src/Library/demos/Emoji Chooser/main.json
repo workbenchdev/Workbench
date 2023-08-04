@@ -1,11 +1,6 @@
 {
-  "name": "Emoji Chooser",
   "category": "user_interface",
   "description": "Display a popover to select emojis",
-  "panels": [
-    "code",
-    "ui",
-    "preview"
-  ],
+  "panels": ["code", "ui", "preview"],
   "autorun": true
 }

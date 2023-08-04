@@ -1,5 +1,4 @@
 {
-  "name": "List Model",
   "category": "layout",
   "description": "List models are a simple interface for ordered lists of GObject instances",
   "panels": ["ui", "preview"],

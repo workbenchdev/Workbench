@@ -1,5 +1,4 @@
 {
-  "name": "Tab View",
   "category": "navigation",
   "description": "A dynamic tabbed container",
   "panels": ["ui", "preview"],

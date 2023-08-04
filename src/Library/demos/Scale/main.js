@@ -41,4 +41,3 @@ scale_two.connect("value-changed", () => {
 });
 
 scale_button.icons = volume_icons;
-
