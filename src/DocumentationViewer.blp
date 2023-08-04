@@ -49,7 +49,6 @@ Window documentation_viewer {
       orientation: vertical;
       vexpand: true;
 
-
       SearchBar search_bar {
         key-capture-widget: sidebar;
         SearchEntry search_entry {
@@ -57,30 +56,29 @@ Window documentation_viewer {
         }
       }
 
-    ScrolledWindow {
-      vexpand: true;
-      width-request: 400;
+      ScrolledWindow {
+        vexpand: true;
+        width-request: 400;
 
-      ListView list_view {
-        enable-rubberband: true;
-        factory: BuilderListItemFactory {
-            template ListItem {
-              child: TreeExpander expander {
-                list-row: bind template.item;
-                child:
-                Inscription {
-                  hexpand: true;
-                  nat-chars: 10;
-                  text-overflow: ellipsize_end;
-                  text: bind expander.item as <$DocumentationPage>.name;
+        ListView list_view {
+          enable-rubberband: true;
+          factory: BuilderListItemFactory {
+              template ListItem {
+                child: TreeExpander expander {
+                  list-row: bind template.item;
+                  child:
+                  Inscription {
+                    hexpand: true;
+                    nat-chars: 10;
+                    text-overflow: ellipsize_end;
+                    text: bind expander.item as <$DocumentationPage>.name;
+                  };
                 };
-              };
-            }
-          };
-          styles ["navigation-sidebar"]
+              }
+            };
+            styles ["navigation-sidebar"]
+          }
         }
-      }
-      styles ["background"]
     }
   }
 }
