@@ -1,5 +1,4 @@
 {
-  "name": "Grid",
   "category": "layout",
   "description": "Arrange widgets in rows and columns.",
   "panels": ["ui", "preview"],

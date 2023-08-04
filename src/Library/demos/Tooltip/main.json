@@ -1,5 +1,4 @@
 {
-  "name": "Tooltip",
   "category": "feedback",
   "description": "Show additional information about controls or app content",
   "panels": ["ui", "preview"],
