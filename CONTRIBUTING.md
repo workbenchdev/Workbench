@@ -63,7 +63,7 @@ Some guidelines
 * Keep it concise and interactive
 * Add links to follow up on the topic covered
 * Follow the patterns of existing entries
-* in `Code`, use properties (`widget.senstitive`) over methods (`widget.set/get_sensitive`)
+* Follow [the Style Guide](https://github.com/sonnyp/Workbench/wiki/Style-Guide)
 
 ## Create Library entry
 
@@ -80,7 +80,7 @@ To update or port an existing Library entry
 
 1. Open Workbench
 2. Select "Open Project…" in the menu
-3. Select the corresponding folder, for example [Emoji Chooser](./src/Library/demos/Emoji%20Chooser/)
+3. Select the corresponding Library folder, for example `Workbench/src/Library/demos/Something`
 4. Make the changes
 
 ## Submitting a contribution
