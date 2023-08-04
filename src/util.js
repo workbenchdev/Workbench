@@ -147,11 +147,11 @@ export function unstack(fn, onError = console.error) {
 }
 
 export const demos_dir = Gio.File.new_for_path(
-  GLib.build_filenamev([pkg.pkgdatadir, "Library/demos"]),
-);
+  pkg.pkgdatadir,
+).resolve_relative_path("Library/demos");
 
 export function readDemoFile(demo_name, file_name) {
-  const file = demos_dir.resolve_relative_path(`${demo_name}/${file_name}`);
+  const file = demos_dir.get_child(demo_name).get_child(file_name);
 
   let str;
 
@@ -165,6 +165,12 @@ export function readDemoFile(demo_name, file_name) {
   }
 
   return str;
+}
+
+export function getDemo(name) {
+  const demo = JSON.parse(readDemoFile(name, "main.json"));
+  demo.name = name;
+  return demo;
 }
 
 export function getNowForFilename() {

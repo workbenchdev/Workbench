@@ -86,6 +86,10 @@ export default function Window({ application, session }) {
 
   let compiler = null;
 
+  if (!file.get_child("main.xml").query_exists(null)) {
+    settings.set_int("ui-language", 1);
+  }
+
   const document_javascript = Document({
     code_view: builder.get_object("code_view_javascript"),
     file: file.get_child("main.js"),

@@ -1,5 +1,4 @@
 {
-  "name": "Audio",
   "category": "user_interface",
   "description": "Play audio with media controls",
   "panels": ["code", "preview"],

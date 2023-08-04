@@ -1,5 +1,4 @@
 {
-  "name": "Drop Down",
   "category": "controls",
   "description": "A widget to choose an item from a list of options",
   "panels": ["ui", "code", "preview"],

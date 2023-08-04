@@ -1,5 +1,4 @@
 {
-  "name": "Link Button",
   "category": "controls",
   "description": "A button with a hyperlink",
   "panels": ["ui", "preview"],
