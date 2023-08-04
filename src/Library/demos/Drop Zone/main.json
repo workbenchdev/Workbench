@@ -1,5 +1,4 @@
 {
-  "name": "Drop Zone",
   "category": "controls",
   "description": "A versatile drop area for external content",
   "panels": ["code", "preview"],

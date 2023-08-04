@@ -9,6 +9,7 @@ import {
   settings as global_settings,
   encode,
 } from "./util.js";
+import { getDemo } from "./util.js";
 
 export const sessions_dir = data_dir.get_child("sessions");
 

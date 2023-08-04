@@ -1,5 +1,4 @@
 {
-  "name": "Dialogs",
   "category": "feedback",
   "description": "Present options, choices or information to users",
   "panels": ["code", "preview"],

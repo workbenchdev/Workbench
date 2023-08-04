@@ -13,7 +13,7 @@ The following is the recommended setup:
 
 Make sure that you're building the development target `re.sonny.Workbench.Devel`.
 
-ℹ️ Please select "Blueprint" instead of "XML" in Workbench UI panel. Blueprint is experimental but that's what we use for making Workbench.
+ℹ️ Select "Blueprint" instead of "XML" in Workbench UI panel. Blueprint is experimental but that's what we use for making Workbench.
 
 If you know what you are doing you can also use VSCode with the extensions recommended in this workspace or anything else you are comfortable with. Don't forget to fetch the submodules.
 
@@ -64,17 +64,36 @@ Some guidelines
 * Add links to follow up on the topic covered
 * Follow the patterns of existing entries
 * in `Code`, use properties (`widget.senstitive`) over methods (`widget.set/get_sensitive`)
+
+## Create Library entry
+
+To create a new Library entry, duplicate an existing one and proceed to the next section.
+
+
+```sh
+cp -r src/Library/demos/Button src/Library/demos/Something
+```
+
+### Update Library entry
+
+To update or port an existing Library entry
+
+1. Open Workbench
+2. Select "Open Project…" in the menu
+3. Select the corresponding folder, for example [Emoji Chooser](./src/Library/demos/Emoji%20Chooser/)
+4. Make the changes
+
 ## Submitting a contribution
 
-Once you're satisfied with the result - you can send a pull request to include it in Workbench. You will need to copy the code into new files in [`src/Library/demos`](./src/Library/demos).
-
-Make sure it's working by running Workbench and launching your entry via the Library. If not - double check what you did and compare with other Library entries.
+Once you're satisfied with the result - you can send a pull request to include it in Workbench.
 
 Some guidelines:
 
 * Unless you don't want too - add your name to [the list of contributors](./src/about.js)
 * Use a short PR title - eg. "library: Add Video entry" - it will be used as commit message
 * If relevant, mention the related issue in the PR description
+* Test your code before asking for review, for example by starting Workbench and opening the Libary entry
+* Always review your own work before asking someone else
 
 ## Learn
 
@@ -83,10 +102,11 @@ Here is a compilation of resources to learn more about the GNOME platform.
 * [Workbench](https://github.com/sonnyp/Workbench) 😉
 * [GObject](https://gjs.guide/guides/gobject/basics.html#gobject-construction)
 * [GTK4 + GJS Book](https://rmnvgr.gitlab.io/gtk4-gjs-book/)
-* [Asynchronous programming](https://gjs.guide/guides/gjs/asynchronous-programming.html#the-main-loop)
+* [Asynchronous programming](https://gjs.guide/guides/gjs/asynchronous-programming.html)
 * [API references](https://gjs-docs.gnome.org/) make sure to enable at least GTK, GJS, GLib, Gio
 * [GJS docs](https://gitlab.gnome.org/GNOME/gjs/-/tree/master/doc)
 * [GJS examples](https://gitlab.gnome.org/GNOME/gjs/-/tree/master/examples)
+* [Human Interface Guidelines](https://developer.gnome.org/hig/)
 
 ## Debugging
 
@@ -121,7 +141,7 @@ Clean the build directory. On GNOME Builder, open the search palette with `Ctrl+
 
 If that doesn't solve it - remove the GNOME Builder cache directory
 
-```
+```sh
 rm -r ~/.var/app/org.gnome.Builder/cache/
 ```
 

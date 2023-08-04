@@ -11,3 +11,8 @@ install
 *.compiled
 *.flatpak
 .fenv
+
+# Project files
+src/Library/**/settings
+src/Library/**/workbench.vala
+src/Library/**/main.ui

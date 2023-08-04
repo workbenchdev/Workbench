@@ -1,5 +1,4 @@
 {
-  "name": "Toggle Button",
   "category": "controls",
   "description": "Represent active-state visually",
   "panels": ["ui", "preview"],

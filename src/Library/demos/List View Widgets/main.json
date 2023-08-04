@@ -1,5 +1,4 @@
 {
-  "name": "List View Widgets",
   "category": "layout",
   "description": "List and Grid views present a large dynamic list of model items",
   "panels": ["ui", "preview"],
