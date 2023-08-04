@@ -62,7 +62,7 @@ const dir = Gio.File.new_for_path(pkg.pkgdatadir).resolve_relative_path(
 
 const dir_model = new Gtk.DirectoryList({
   file: dir,
-  attributes: "standard::*,time:modified",
+  attributes: "standard::*,time::modified",
 });
 
 const model = new Gtk.SingleSelection({ model: dir_model });
@@ -72,9 +72,12 @@ createFirstCol();
 createSecCol();
 createThirdCol();
 
-column_view.append_column(col1);
-column_view.append_column(col2);
-column_view.append_column(col3);
+const sorter_of_colview = column_view.get_sorter();
+
+const sort_model = new Gtk.SortListModel({
+  model: dir_model,
+  sorter: sorter_of_colview,
+});
 
 //View
 /*model.model.connect("items-changed", (list, position, removed, added) => {
