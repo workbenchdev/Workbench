@@ -36,7 +36,7 @@ import "./icons/re.sonny.Workbench-screenshot-symbolic.svg" with {
 
 import "./widgets/Modal.js";
 import "./widgets/CodeView.js";
-import { deleteSession } from "./sessions.js";
+import { deleteSession, saveSessionAsProject } from "./sessions.js";
 
 const style_manager = Adw.StyleManager.get_default();
 
@@ -71,10 +71,15 @@ export default function Window({ application, session }) {
 
   let compiler = null;
 
+  if (!file.get_child("main.xml").query_exists(null)) {
+    settings.set_int("ui-language", 1);
+  }
+
   const document_javascript = Document({
     code_view: builder.get_object("code_view_javascript"),
     file: file.get_child("main.js"),
     lang: langs.javascript,
+    session,
   });
   langs.javascript.document = document_javascript;
 
@@ -82,6 +87,7 @@ export default function Window({ application, session }) {
     code_view: builder.get_object("code_view_vala"),
     file: file.get_child("main.vala"),
     lang: langs.vala,
+    session,
   });
   langs.vala.document = document_vala;
 
@@ -89,6 +95,7 @@ export default function Window({ application, session }) {
     code_view: builder.get_object("code_view_blueprint"),
     file: file.get_child("main.blp"),
     lang: langs.blueprint,
+    session,
   });
   langs.blueprint.document = document_blueprint;
 
@@ -96,6 +103,7 @@ export default function Window({ application, session }) {
     code_view: builder.get_object("code_view_xml"),
     file: file.get_child("main.ui"),
     lang: langs.xml,
+    session,
   });
   langs.xml.document = document_xml;
 
@@ -103,6 +111,7 @@ export default function Window({ application, session }) {
     code_view: builder.get_object("code_view_css"),
     file: file.get_child("main.css"),
     lang: langs.css,
+    session,
   });
   langs.css.document = document_css;
 
@@ -312,8 +321,18 @@ export default function Window({ application, session }) {
   window.add_action(action_format);
   application.set_accels_for_action("win.format", ["<Control><Shift>Return"]);
 
+  const action_close = new Gio.SimpleAction({
+    name: "close",
+  });
+  action_close.connect("activate", () => {
+    window.close();
+  });
+  window.add_action(action_close);
+  application.set_accels_for_action("win.close", ["<Control>W"]);
+
   window.connect("close-request", () => {
-    deleteSession(session).catch(logError);
+    onCloseSession({ session, window }).catch(logError);
+    return true;
   });
 
   window.add_action(settings.create_action("safe-mode"));
@@ -354,7 +373,7 @@ export default function Window({ application, session }) {
     term_console.scrollToEnd();
   }
 
-  return { load };
+  return { load, window };
 }
 
 async function setGtk4PreferDark(dark) {
@@ -371,4 +390,74 @@ async function setGtk4PreferDark(dark) {
   }
   settings.set_boolean("Settings", "gtk-application-prefer-dark-theme", dark);
   settings.save_to_file(settings_path);
+}
+
+async function onCloseSession({ session, window }) {
+  if (session.is_project()) {
+    window.destroy();
+    return;
+  }
+
+  if (!session.settings.get_boolean("edited")) {
+    await deleteSession(session);
+    window.destroy();
+    return;
+  }
+
+  const builder = Gtk.Builder.new_from_resource(resource);
+  const dialog = builder.get_object("message_dialog_save_project");
+
+  dialog.set_transient_for(window);
+  dialog.present();
+
+  let location;
+
+  const row_project_location = builder.get_object("row_project_location");
+  const button_location = builder.get_object("button_location");
+  row_project_location.add_suffix(button_location);
+  button_location.connect("clicked", () => {
+    selectLocation().catch(logError);
+  });
+
+  const row_project_name = builder.get_object("row_project_name");
+  function updateSaveButton() {
+    if (!row_project_name.text) {
+      dialog.set_response_enabled("save", false);
+      return;
+    }
+
+    if (!location) {
+      dialog.set_response_enabled("save", false);
+      return;
+    }
+
+    dialog.set_response_enabled("save", true);
+  }
+  row_project_name.connect("notify::text", () => {
+    updateSaveButton();
+  });
+
+  async function selectLocation() {
+    const file_dialog = new Gtk.FileDialog();
+    location = await file_dialog.select_folder(window, null);
+    row_project_location.subtitle = location.get_basename();
+    updateSaveButton();
+  }
+
+  const response = await new Promise((resolve) => {
+    dialog.connect("response", (self, response) => resolve(response));
+  });
+
+  if (response === "cancel") return;
+
+  if (response === "discard") {
+    await deleteSession(session);
+  } else if (response === "save") {
+    const destination = location.get_child_for_display_name(
+      row_project_name.text,
+    );
+    await saveSessionAsProject(session, destination);
+  }
+
+  window.destroy();
 }

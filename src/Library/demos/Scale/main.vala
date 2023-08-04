@@ -2,12 +2,20 @@
 
 private Gtk.Scale scale_one;
 private Gtk.Scale scale_two;
+private Gtk.ScaleButton scale_button;
 
 public void main () {
   scale_one = (Gtk.Scale) workbench.builder.get_object ("one");
   scale_two = (Gtk.Scale) workbench.builder.get_object ("two");
+  scale_button = (Gtk.ScaleButton) workbench.builder.get_object("button");
 
   string[] marks = { "A", "B", "C" };
+  string[] volume_icons = {
+    "audio-volume-muted-symbolic",
+    "audio-volume-high-symbolic",
+    "audio-volume-low-symbolic",
+    "audio-volume-medium-symbolic"
+  };
 
   for (int i = 0; i < marks.length; i++) {
     scale_two.add_mark(i * 50, Gtk.PositionType.RIGHT, marks[i]);
@@ -36,4 +44,6 @@ public void main () {
 
     message (@"Mark $(label) reached");
   });
+
+  scale_button.set_icons(volume_icons);
 }

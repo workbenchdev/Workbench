@@ -2,7 +2,7 @@ import Source from "gi://GtkSource";
 import Gio from "gi://Gio";
 import GLib from "gi://GLib";
 
-export default function Document({ code_view, file, lang }) {
+export default function Document({ session, code_view, file, lang }) {
   const { buffer } = code_view;
   let handler_id = null;
 
@@ -13,7 +13,11 @@ export default function Document({ code_view, file, lang }) {
   start();
 
   function save() {
-    saveSourceBuffer({ source_file, buffer }).catch(logError);
+    saveSourceBuffer({ source_file, buffer })
+      .catch(logError)
+      .finally(() => {
+        session.settings.set_boolean("edited", true);
+      });
   }
 
   function start() {

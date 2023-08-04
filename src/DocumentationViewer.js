@@ -71,7 +71,14 @@ export default function DocumentationViewer({ application }) {
     webview.go_forward();
   });
 
-  getNamespaces(base_path)
+  getNamespaces(base_path, [
+    "atk",
+    "javascriptcoregtk-4.1",
+    "libhandy-1",
+    "libnotify-0",
+    "webkit2gtk-4.1",
+    "webkit2gtk-web-extension-4.1",
+  ])
     .then((docs) => {
       const root = newListStore();
       for (const doc of docs) {
@@ -248,11 +255,12 @@ function newListStore() {
   return Gio.ListStore.new(DocumentationPage);
 }
 
-async function getNamespaces(base_path) {
+async function getNamespaces(base_path, filter_docs) {
   const namespaces = [];
   const dirs = await list(base_path);
+  const filtered = dirs.filter(dir => !(filter_docs.includes(dir)))
 
-  for (const dir of dirs) {
+  for (const dir of filtered) {
     const results = await Promise.allSettled([
       getNamespaceFromIndexJSON(base_path, dir),
       getNamespaceFromIndexHTML(base_path, dir),
