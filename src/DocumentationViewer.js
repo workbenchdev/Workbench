@@ -76,14 +76,15 @@ export default function DocumentationViewer({ application }) {
       const root = newListStore();
       for (const doc of docs) {
         const dir_path = base_path.resolve_relative_path(doc.dir);
-        getChildren(dir_path)
-          .then((model) => {
-            root.append(new DocumentationPage({
+        getChildren(dir_path).then((model) => {
+          root.append(
+            new DocumentationPage({
               name: doc.title,
               uri: doc.uri,
               children: model,
-            }))
-          })
+            }),
+          );
+        });
       }
       return root;
     })
@@ -92,19 +93,21 @@ export default function DocumentationViewer({ application }) {
         root,
         false,
         false,
-        item => item.children,
-      )
-      const sorter = Gtk.TreeListRowSorter.new(Gtk.CustomSorter.new((a,b) => {
-        const name1 = a.name;
-        const name2 = b.name;
-        return name1.localeCompare(name2);
-      }));
+        (item) => item.children,
+      );
+      const sorter = Gtk.TreeListRowSorter.new(
+        Gtk.CustomSorter.new((a, b) => {
+          const name1 = a.name;
+          const name2 = b.name;
+          return name1.localeCompare(name2);
+        }),
+      );
       const sort_model = Gtk.SortListModel.new(tree_model, sorter);
-      const selection_model = new Gtk.SingleSelection({model: sort_model});
+      const selection_model = new Gtk.SingleSelection({ model: sort_model });
       selection_model.connect("notify::selected", () => {
         const uri = selection_model.selected_item.item.uri;
         if (uri) webview.load_uri(uri);
-      })
+      });
       list_view.model = selection_model;
     })
     .catch(logError);
@@ -137,11 +140,10 @@ function createSections(docs, dir) {
     error: ["Error Domains", "#domains"],
     callback: ["Callbacks", "#callbacks"],
     const: ["Constants", "#constants"],
-  }
+  };
 
   const sections = {};
-  for (const section in section_name_uri)
-    sections[section] = newListStore();
+  for (const section in section_name_uri) sections[section] = newListStore();
 
   const subsection_name_uri = {
     ctor: ["Constructors", "#constructors"],
@@ -151,7 +153,7 @@ function createSections(docs, dir) {
     signal: ["Signals", "#signals"],
     class_method: ["Class Methods", "#class-methods"],
     vfunc: ["Virtual Methods", "#virtual-methods"],
-  }
+  };
 
   // Contains all items from the namespace that need a subsection
   // A subsection is used to show an item's methods, properties, signals etc
@@ -168,17 +170,16 @@ function createSections(docs, dir) {
         uri: dir.get_child(doc).get_uri(),
         // children is set to a non-null value later if it needs subsections
         children: null,
-      })
+      });
 
       // If an item needs a subsection, then create empty "buckets" for it
       if (subsections_required.includes(split_name[0])) {
         const subsection = {};
-        for (const sub in subsection_name_uri)
-          subsection[sub] = newListStore()
+        for (const sub in subsection_name_uri) subsection[sub] = newListStore();
         subsections[split_name[1]] = subsection;
       }
       // Add file into the corresponding section it belongs to
-      sections[split_name[0]].append(doc_page)
+      sections[split_name[0]].append(doc_page);
     }
   }
 
@@ -186,31 +187,43 @@ function createSections(docs, dir) {
   for (const doc of docs) {
     const split_name = doc.split(".");
     // File is of the form xx.xx.xx.html for example ctor.Button.new.html
-    if (split_name.length == 4  && subsections[split_name[1]]) {
-        const doc_page = new DocumentationPage({
+    if (split_name.length == 4 && subsections[split_name[1]]) {
+      const doc_page = new DocumentationPage({
         name: split_name[2],
         uri: dir.get_child(doc).get_uri(),
         children: null,
-      })
+      });
       // Add file to the subsection it belongs to
       subsections[split_name[1]][split_name[0]].append(doc_page);
     }
   }
   // Sets the children for items that need subsections
-  createSubsections(subsections, subsections_required, subsection_name_uri, sections);
+  createSubsections(
+    subsections,
+    subsections_required,
+    subsection_name_uri,
+    sections,
+  );
 
   const sections_model = newListStore();
   for (const section in sections) {
-    sections_model.append(new DocumentationPage({
-      name: section_name_uri[section][0],
-      uri: `${index_html}${section_name_uri[section][1]}`,
-      children: sections[section],
-    }))
+    sections_model.append(
+      new DocumentationPage({
+        name: section_name_uri[section][0],
+        uri: `${index_html}${section_name_uri[section][1]}`,
+        children: sections[section],
+      }),
+    );
   }
-  return sections_model
+  return sections_model;
 }
 
-function createSubsections(subsections, subsections_required, subsection_name_uri, sections) {
+function createSubsections(
+  subsections,
+  subsections_required,
+  subsection_name_uri,
+  sections,
+) {
   for (const type of subsections_required) {
     for (const item of sections[type]) {
       const model = newListStore();
@@ -218,11 +231,13 @@ function createSubsections(subsections, subsections_required, subsection_name_ur
       for (const subsection in subsections[name]) {
         // If the ListStore is empty then dont create a subsection for it
         if (subsections[name][subsection].get_n_items() > 0)
-          model.append(new DocumentationPage({
-            name: subsection_name_uri[subsection][0],
-            uri: `${item.uri}${subsection_name_uri[subsection][1]}`,
-            children: subsections[name][subsection],
-          }))
+          model.append(
+            new DocumentationPage({
+              name: subsection_name_uri[subsection][0],
+              uri: `${item.uri}${subsection_name_uri[subsection][1]}`,
+              children: subsections[name][subsection],
+            }),
+          );
       }
       item.children = model;
     }
@@ -247,7 +262,7 @@ async function getNamespaces(base_path) {
     namespaces.push({
       title,
       uri,
-      dir
+      dir,
     });
   }
 
@@ -311,5 +326,6 @@ async function enableDocSidebar(webview) {
 }
 
 function newListStore() {
-  return Gio.ListStore.new(DocumentationPage)
+  return Gio.ListStore.new(DocumentationPage);
 }
+
