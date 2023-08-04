@@ -3,8 +3,8 @@ import Gio from "gi://Gio";
 
 const video = workbench.builder.get_object("video");
 
-video.file = Gio.File.new_for_path(pkg.pkgdatadir).resolve_relative_path(
-  "Library/demos/Video/workbench-video.mp4",
+video.file = Gio.File.new_for_uri(
+  workbench.resolve("./workbench-video.mp4.png"),
 );
 
 const click_gesture = new Gtk.GestureClick();
