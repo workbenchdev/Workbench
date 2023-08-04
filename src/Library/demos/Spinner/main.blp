@@ -2,7 +2,7 @@ using Gtk 4.0;
 using Adw 1;
 
 Adw.StatusPage {
-  title: "Spinner 2";
+  title: "Spinner";
   description: _("Display loading state");
 
   Box {
@@ -18,10 +18,7 @@ Adw.StatusPage {
       icon-name: "media-playback-pause";
       margin-bottom: 30;
       halign: center;
-
-      styles [
-        "circular",
-      ]
+      styles ["circular"]
     }
 
     LinkButton {
@@ -40,4 +37,3 @@ Adw.StatusPage {
     }
   }
 }
-
