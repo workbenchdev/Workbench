@@ -144,6 +144,7 @@ function createSections(docs, dir) {
     alias: ["Aliases", "#aliases"],
     enum: ["Enumerations", "#enums"],
     flags: ["Bitfields", "#bitfields"],
+    func: ["Functions", "#functions"],
     error: ["Error Domains", "#domains"],
     callback: ["Callbacks", "#callbacks"],
     const: ["Constants", "#constants"],
