@@ -1,7 +1,7 @@
 {
   "name": "Launcher",
   "category": "controls",
-  "description": "Present a dialog of apps required to open a file/uri",
+  "description": "Collect the arguments that are needed to open a File or URI",
   "panels": ["code", "preview"],
   "autorun": true
 }

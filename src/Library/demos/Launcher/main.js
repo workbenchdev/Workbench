@@ -9,6 +9,7 @@ const file_location = workbench.builder.get_object("file_location");
 const change_file = workbench.builder.get_object("change_file");
 const uri_launch = workbench.builder.get_object("uri_launch");
 const uri_details = workbench.builder.get_object("uri_details");
+const change_uri = workbench.builder.get_object("change_uri");
 
 Gio._promisify(Gtk.FileLauncher.prototype, "launch", "launch_finish");
 Gio._promisify(
@@ -28,37 +29,8 @@ file_launcher.set_file(file);
 let text = "";
 
 //File Launcher
-async function launchesFile() {
-  const result = await file_launcher.launch(workbench.window, null);
-  if (result) {
-    console.log("File Launched");
-  }
-}
-
-async function launchesParentFolder() {
-  const result = await file_launcher.open_containing_folder(
-    workbench.window,
-    null,
-  );
-  if (result) {
-    console.log("Parent folder opened");
-  }
-}
-
-async function changesFile() {
-  const dialog_for_file = new Gtk.FileDialog({
-    title: _("Select File"),
-    modal: true,
-  });
-  const new_file = await dialog_for_file.open(workbench.window, null);
-  if (file) {
-    file_launcher.set_file(new_file);
-    console.log("File Changed");
-  }
-}
-
 launch_file.connect("clicked", () => {
-  launchesFile().catch(logError);
+  file_launcher.launch(workbench.window, null).catch(logError);
 });
 
 file_details.connect("clicked", () => {
@@ -72,23 +44,37 @@ file_details.connect("clicked", () => {
 });
 
 file_location.connect("clicked", () => {
-  launchesParentFolder().catch(logError);
+  file_launcher.open_containing_folder(workbench.window, null).catch(logError);
 });
 
 change_file.connect("clicked", () => {
-  changesFile().catch(logError);
+  try {
+    const dialog_for_file = new Gtk.FileDialog({
+      title: _("Select File"),
+      modal: true,
+    });
+    const new_file = dialog_for_file.open(workbench.window, null);
+    if (file) {
+      file_launcher.set_file(new_file);
+      console.log("File Changed");
+    }
+  } catch (err) {
+    logError(err);
+  }
 });
 
 // URI Launcher
-async function launchesUri() {
-  const result = await uri_launcher.launch(workbench.window, null);
-}
-
 uri_launch.connect("clicked", () => {
-  launchesUri().catch(logError);
+  uri_launcher.launch(workbench.window, null).catch(logError);
 });
-
 uri_details.connect("changed", () => {
   text = uri_details.get_text();
+
   uri_launcher.set_uri(text);
+
+  try {
+    uri_launch.sensitive = GLib.Uri.is_valid(text, GLib.UriFlags.NONE);
+  } catch {
+    uri_launch.sensitive = false;
+  }
 });

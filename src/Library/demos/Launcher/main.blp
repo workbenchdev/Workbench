@@ -40,7 +40,7 @@ Adw.StatusPage {
                 styles ["linked"]
 
                 Button file_details {
-                  label: _("Open File");
+                  label: _("File Name");
                 }
                 Button file_location {
                   label: _("Open Folder");
@@ -70,12 +70,13 @@ Adw.StatusPage {
                 halign: center;
                 Button uri_launch {
                   label: _("Launch");
+                  sensitive: false;
                   styles ["suggested-action", "pill"]
                 }
               }
 
               Entry uri_details {
-                placeholder-text: _("Enter URI");
+                placeholder-text: _("Enter Uri");
               }
 
               LinkButton {
@@ -88,7 +89,3 @@ Adw.StatusPage {
     }
   }
 }
-
-
-
-
