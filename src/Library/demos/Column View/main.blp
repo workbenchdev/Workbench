@@ -2,88 +2,41 @@ using Gtk 4.0;
 using Adw 1;
 
 Adw.StatusPage {
-  title: _("Launcher");
-  description: _("Collect the arguments that are needed to open a File or URI");
+  title: _("Column View");
+  description: _("Presents a large dynamic list of items using multiple columns with headers");
+  valign: start;
 
   Adw.Clamp {
-    maximum-size: 640;
+    maximum-size: 240;
+
     Box {
       orientation: vertical;
-      spacing: 24;
+      spacing: 18;
 
-      Gtk.StackSwitcher {
-        stack: stack;
-        halign: center;
+      LinkButton {
+        label: _("Documentation");
+        uri: "https://docs.gtk.org/gtk4/class.ColumnView.html";
       }
 
-      Gtk.Stack stack {
-        transition-type: crossfade;
-        vexpand: true;
+      Frame {
+        ColumnView column_view {
+          show-column-separators: true;
+          show-row-separators: true;
 
-        Gtk.StackPage {
-          name: "file_launcher";
-          title: _("File Launcher");
-          child:
-            Box {
-              orientation: vertical;
-              halign: center;
-              spacing: 24;
-              Box {
-                halign: center;
-                Button launch_file {
-                  label: _("Launch");
-                  styles ["suggested-action", "pill"]
-                }
-              }
+          ColumnViewColumn col1 {
+            title: _("Name");
+            factory: SignalListItemFactory{};
+          }
 
-              Box {
-                styles ["linked"]
+          ColumnViewColumn col2 {
+            title: _("Size (in bytes)");
+            factory: SignalListItemFactory {};
+          }
 
-                Button file_details {
-                  label: _("File Name");
-                }
-                Button file_location {
-                  label: _("Open Folder");
-                }
-              }
-
-              Button change_file {
-                label: _("Choose another file");
-              }
-
-              LinkButton {
-                label: _("API Reference");
-                uri : "https://docs.gtk.org/gtk4/class.FileLauncher.html";
-              }
-          };
-        }
-
-        Gtk.StackPage {
-          name: "uri_launcher";
-          title: _("URI Launcher");
-          child:
-            Box {
-              orientation: vertical;
-              halign: center;
-              spacing: 24;
-              Box {
-                halign: center;
-                Button uri_launch {
-                  label: _("Launch");
-                  sensitive: false;
-                  styles ["suggested-action", "pill"]
-                }
-              }
-
-              Entry uri_details {
-                placeholder-text: _("Enter Uri");
-              }
-
-              LinkButton {
-                label: _("API Reference");
-                uri : "https://docs.gtk.org/gtk4/class.UriLauncher.html";
-              }
-          };
+          ColumnViewColumn col3 {
+            title: _("Date");
+            factory: SignalListItemFactory {};
+          }
         }
       }
     }
