@@ -1,5 +1,6 @@
 import Gtk from "gi://Gtk";
 import Gio from "gi://Gio";
+import GObject from "gi://GObject";
 
 const column_view = workbench.builder.get_object("column_view");
 const col1 = workbench.builder.get_object("col1");
@@ -70,7 +71,29 @@ const model = new Gtk.SingleSelection({
   }),
 });
 
-column_view.sort_by_column(col1, "ascending");
+col1.sorter = new Gtk.StringSorter({
+  expression: new Gtk.ClosureExpression(
+    GObject.TYPE_STRING,
+    (fileInfo) => fileInfo.get_display_name(),
+    null,
+  ),
+});
+
+col2.sorter = new Gtk.NumericSorter({
+  expression: new Gtk.ClosureExpression(
+    GObject.TYPE_INT,
+    (fileInfo) => fileInfo.get_size(),
+    null,
+  ),
+});
+
+col3.sorter = new Gtk.NumericSorter({
+  expression: new Gtk.ClosureExpression(
+    GObject.TYPE_INT,
+    (fileInfo) => fileInfo.get_modification_date_time(),
+    null,
+  ),
+});
 
 column_view.model = model;
 createFirstCol();
