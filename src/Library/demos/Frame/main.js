@@ -1,6 +1,5 @@
 import Gio from "gi://Gio";
 import Gtk from "gi://Gtk";
-import Gdk from "gi://Gdk";
 
 const pic_with_frame = workbench.builder.get_object("with_frame");
 const pic_without_frame = workbench.builder.get_object("without_frame");
@@ -10,9 +9,7 @@ const textview_without_frame = workbench.builder.get_object(
   "textview_without_frame",
 );
 
-const file = Gio.File.new_for_path(pkg.pkgdatadir).resolve_relative_path(
-  "Library/demos/Frame/image.png",
-);
+const file = Gio.File.new_for_uri(workbench.resolve("./image.png"));
 
 const buffer = new Gtk.TextBuffer();
 buffer.set_text(

@@ -135,6 +135,7 @@ export default function Window({ application, session }) {
     panel_ui,
     term_console,
     settings,
+    session,
   });
 
   const panel_code = PanelCode({
