@@ -57,6 +57,7 @@ export default function Compiler({ session }) {
         "main",
         "set_builder",
         "set_window",
+        session.file.get_uri(),
       );
     } catch (err) {
       logError(err);
