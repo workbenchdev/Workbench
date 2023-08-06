@@ -1,5 +1,4 @@
 {
-  "name": "Flow Box",
   "category": "layout",
   "description": "Puts child widgets in a reflowing grid",
   "panels": ["ui", "preview"],
