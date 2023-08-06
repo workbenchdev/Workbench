@@ -76,7 +76,7 @@ async function openDemo({ application, demo_name }) {
   const demo = getDemo(demo_name);
   const session = await createSessionFromDemo(demo);
 
-  const is_js = session.file.get_child("main.js").query_exists(null);
+  const is_js = session.settings.get_int("code-language") === 0;
 
   const { load } = Window({ application, session });
   await load({ run: demo.autorun && is_js });

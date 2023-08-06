@@ -124,7 +124,9 @@ namespace Workbench {
 
     // filename to loadable module or empty string ("") to just run it again
     // also builder_symbol can be empty. Then the builder object is not handed over to the module
-    public void run (string filename, string run_symbol, string builder_symbol, string window_symbol) {
+    public void run (string filename, string run_symbol, string builder_symbol, string window_symbol, string uri) {
+      void* function;
+
       if (filename == "") {
         if (this.module == null) {
           stderr.printf ("No Module specified yet.\n");
@@ -145,13 +147,16 @@ namespace Workbench {
         }
       }
 
+      this.module.symbol ("set_base_uri", out function);
+      var set_base_uri = (BaseUriFunction) function;
+      set_base_uri (uri);
+
       if (builder_symbol != "") {
         if (this.builder == null) {
           stderr.printf ("No UI definition loaded yet.\n");
           return;
         }
 
-        void* function;
         this.module.symbol (builder_symbol, out function);
         if (function == null) {
           stderr.printf (@"Module does not contain symbol '$builder_symbol'.\n");
@@ -171,7 +176,6 @@ namespace Workbench {
         set_window (this.window);
       }
 
-      void* function;
       this.module.symbol (run_symbol, out function);
       if (function == null) {
         stderr.printf (@"Function '$run_symbol' not found.\n");
@@ -214,6 +218,9 @@ namespace Workbench {
 
     [CCode (has_target=false)]
     private delegate void WindowFunction (Gtk.Window window);
+
+    [CCode (has_target=false)]
+    private delegate void BaseUriFunction (string uri);
 
     private Gtk.Window? window;
     private Gtk.Widget? target;
