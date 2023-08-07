@@ -7,6 +7,8 @@ const toggle_orientation = workbench.builder.get_object("toggle_orientation");
 const button_start = workbench.builder.get_object("button_start");
 const button_end = workbench.builder.get_object("button_end");
 
+button_start.sensitive = false;
+
 const scrollbars = [
   scrolled_window.get_hscrollbar(),
   scrolled_window.get_vscrollbar(),
@@ -28,6 +30,11 @@ for (let i = 0; i < num_items; i++) {
 }
 
 scrolled_window.connect("edge-reached", () => {
+  const scrollbar = scrollbars[orientation];
+  const adj = scrollbar.adjustment;
+  // Enable end button if scrollbar is at the start
+  button_end.sensitive = adj.value === adj.lower;
+  button_start.sensitive = !button_end.sensitive;
   console.log("Edge Reached");
 });
 
@@ -62,13 +69,8 @@ function populateContainer(container, label) {
 }
 
 function disableButtons() {
-  button_end.sensitive = false;
   button_start.sensitive = false;
-}
-
-function enableButtons() {
-  button_end.sensitive = true;
-  button_start.sensitive = true;
+  button_end.sensitive = false;
 }
 
 function createScrollbarAnim(scrollbar, direction) {
@@ -79,13 +81,10 @@ function createScrollbarAnim(scrollbar, direction) {
   const animation = new Adw.TimedAnimation({
     widget: scrollbar,
     value_from: adjustment.value,
-    value_to: direction ? adjustment.upper : 0,
-    duration: 3000,
+    value_to: direction ? adjustment.upper - adjustment.page_size : 0,
+    duration: 1000,
     easing: Adw.Easing["LINEAR"],
     target: target,
-  });
-  animation.connect("done", () => {
-    enableButtons();
   });
   return animation;
 }
