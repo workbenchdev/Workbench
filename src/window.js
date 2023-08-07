@@ -19,6 +19,7 @@ import prettier_babel from "./lib/prettier-babel.js";
 import prettier_postcss from "./lib/prettier-postcss.js";
 import Previewer from "./Previewer/Previewer.js";
 import Compiler from "./langs/vala/Compiler.js";
+import RustCompiler from "./langs/rust/Compiler.js"
 import ThemeSelector from "../troll/src/widgets/ThemeSelector.js";
 
 import resource from "./window.blp";
@@ -93,7 +94,7 @@ export default function Window({ application, session }) {
 
   const document_rust = Document({
     code_view: builder.get_object("code_view_rust"),
-    file: file.get_child("main.rs"),
+    file: file.get_child("code.rs"),
     lang: langs.rust,
   });
   langs.rust.document = document_rust;
@@ -296,7 +297,7 @@ export default function Window({ application, session }) {
         }
       } else if (language === "Rust") {
         // TODO: Use actually Rust
-        compiler = compiler || Compiler({ session });
+        compiler = compiler || RustCompiler({ session });
         const success = await compiler.compile();
         if (success) {
           await previewer.useExternal();
