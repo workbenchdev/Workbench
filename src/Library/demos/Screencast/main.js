@@ -20,8 +20,6 @@ const parent = XdpGtk.parent_new_gtk(workbench.window);
 const output = workbench.builder.get_object("output");
 const button = workbench.builder.get_object("button");
 
-Gio._promisify(Xdp.Session.prototype, "start", "start_finish");
-
 button.connect("clicked", () => {
   startScreencastSession().catch(logError);
 });
