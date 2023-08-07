@@ -1,6 +1,7 @@
 {
+  "name": "Image",
   "category": "user_interface",
-  "description": "Display a round avatar for image or initials.",
+  "description": "Display images as icons",
   "panels": ["ui", "preview"],
   "autorun": true
 }

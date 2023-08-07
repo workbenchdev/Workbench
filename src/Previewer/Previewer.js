@@ -39,6 +39,7 @@ export default function Previewer({
   application,
   term_console,
   settings,
+  session,
 }) {
   let panel_code;
 
@@ -64,6 +65,7 @@ export default function Previewer({
     application,
     dropdown_preview_align,
     panel_ui,
+    session,
   });
   const external = External({
     onWindowChange(open) {
@@ -78,6 +80,7 @@ export default function Previewer({
     output,
     builder,
     panel_ui,
+    session,
   });
 
   const code_view_css = builder.get_object("code_view_css");

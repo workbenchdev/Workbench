@@ -1,5 +1,4 @@
 {
-  "name": "Popovers",
   "category": "user_interface",
   "description": "Popups are used to display content in a container anchored to another widget",
   "panels": ["ui", "preview"],

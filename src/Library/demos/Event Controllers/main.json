@@ -1,5 +1,4 @@
 {
-  "name": "Event Controllers",
   "category": "controls",
   "description": "Ancillary Objects which responds to events",
   "panels": ["code", "preview"],

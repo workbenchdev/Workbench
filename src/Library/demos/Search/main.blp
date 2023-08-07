@@ -4,12 +4,12 @@ using Adw 1;
 Adw.Window {
   default-width: 800;
   default-height: 600;
-  title: _("Search Demo");
+  title: _("Search");
 
   Box container {
     orientation: vertical;
 
-    HeaderBar header {
+    HeaderBar {
       ToggleButton button_search {
         icon-name: "loupe-large-symbolic";
       }
@@ -38,23 +38,23 @@ Adw.Window {
           orientation: vertical;
           spacing: 6;
           Label {
-            label: "API References";
+            label: _("API References");
           }
           Box{
             halign: center;
             LinkButton {
-              label: "Search Entry";
+              label: _("Search Entry");
               uri: "https://docs.gtk.org/gtk4/class.SearchEntry.html";
             }
             LinkButton {
-              label: "Search Bar";
+              label: _("Search Bar");
               uri: "https://docs.gtk.org/gtk4/class.SearchBar";
             }
           }
 
           LinkButton {
-            margin-top:6;
-            label: "Human Interface Guidelines";
+            margin-top: 6;
+            label: _("Human Interface Guidelines");
             uri: "https://developer.gnome.org/hig/patterns/nav/search.html";
           }
         }
@@ -84,7 +84,5 @@ Adw.Window {
         vexpand: true;
       }
     }
-
-
   }
 }

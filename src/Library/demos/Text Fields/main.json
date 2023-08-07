@@ -1,5 +1,4 @@
 {
-  "name": "Text Fields",
   "category": "controls",
   "description": "Single line widgets to enter text",
   "panels": ["ui", "preview"],

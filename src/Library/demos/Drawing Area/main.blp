@@ -16,7 +16,6 @@ Adw.StatusPage {
 
     Scale scale {
       orientation: horizontal;
-      width-request: 300;
       draw-value: true;
       adjustment: Gtk.Adjustment {
         lower: -25;
@@ -24,6 +23,11 @@ Adw.StatusPage {
         value: 0;
       };
     }
+
+    LinkButton {
+      margin-top: 48;
+      label: "API Reference";
+      uri: "https://docs.gtk.org/gtk4/class.DrawingArea.html";
+    }
   }
 }
-//https://docs.gtk.org/gtk4/class.DrawingArea.html

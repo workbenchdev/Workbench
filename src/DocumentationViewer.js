@@ -91,7 +91,14 @@ export default function DocumentationViewer({ application }) {
     webview.load_uri(row.uri);
   });
 
-  getDocs(base_path)
+  getDocs(base_path, [
+    "atk",
+    "javascriptcoregtk-4.1",
+    "libhandy-1",
+    "libnotify-0",
+    "webkit2gtk-4.1",
+    "webkit2gtk-web-extension-4.1",
+  ])
     .then((docs) => {
       for (const doc of docs) {
         const row = new Adw.ActionRow({
@@ -123,11 +130,12 @@ export default function DocumentationViewer({ application }) {
   application.add_action(action_documentation);
 }
 
-async function getDocs(base_path) {
+async function getDocs(base_path, filter_docs) {
   const docs = [];
   const dirs = await list(base_path);
+  const filtered = dirs.filter(dir => !(filter_docs.includes(dir)))
 
-  for (const dir of dirs) {
+  for (const dir of filtered) {
     const results = await Promise.allSettled([
       readDocIndexJSON(base_path, dir),
       readDocIndexHTML(base_path, dir),

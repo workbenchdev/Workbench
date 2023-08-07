@@ -7,7 +7,7 @@ export function setup({ document }) {
   const { file, code_view } = document;
 
   const api_file = Gio.File.new_for_path(
-    GLib.build_filenamev([pkg.pkgdatadir, "workbench-api.vala"]),
+    GLib.build_filenamev([pkg.pkgdatadir, "workbench.vala"]),
   );
 
   api_file.copy(
