@@ -1,6 +1,4 @@
 import Gio from "gi://Gio";
-import Adw from "gi://Adw";
-import Gtk from "gi://Gtk";
 
 const picture = workbench.builder.get_object("picture");
 const content_fit_row = workbench.builder.get_object("content_fit_row");

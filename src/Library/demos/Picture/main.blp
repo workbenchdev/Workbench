@@ -19,8 +19,8 @@ Adw.StatusPage {
 
       ListBox {
         styles ["boxed-list"]
-        margin-top : 12;
-        margin-bottom : 12;
+        margin-top: 12;
+        margin-bottom: 12;
 
         Adw.ComboRow content_fit_row {
           title: _("Content Fit");
@@ -42,8 +42,8 @@ Adw.StatusPage {
     }
 
      Picture picture {
-      halign:center;
-      valign:center;
+      halign: center;
+      valign: center;
       can-shrink: bind can_shrink_switch.active;
       content-fit: bind content_fit_row.selected;
     }
