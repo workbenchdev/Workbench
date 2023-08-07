@@ -1,5 +1,5 @@
-mod code;
 pub(crate) mod workbench;
+mod code;
 
 use std::{
     ffi::{c_char, CStr},
