@@ -26,7 +26,6 @@ const file = Gio.File.new_for_path(pkg.pkgdatadir).resolve_relative_path(
   "Library/demos/Launcher/workbench.txt",
 );
 file_launcher.set_file(file);
-let text = "";
 
 //File Launcher
 launch_file.connect("clicked", () => {
@@ -48,19 +47,23 @@ file_location.connect("clicked", () => {
 });
 
 change_file.connect("clicked", () => {
-  try {
-    const dialog_for_file = new Gtk.FileDialog({
-      title: _("Select File"),
-      modal: true,
-    });
-    const new_file = dialog_for_file.open(workbench.window, null);
-    if (file) {
+  let new_file = null;
+
+  const dialog_for_file = new Gtk.FileDialog({
+    title: _("Select File"),
+    modal: true,
+  });
+  dialog_for_file
+    .open(workbench.window, null)
+    .then((result) => {
+      new_file = result;
+    })
+    .catch((err) => {
+      console.debug(err.message);
+    })
+    .finally(() => {
       file_launcher.set_file(new_file);
-      console.log("File Changed");
-    }
-  } catch (err) {
-    logError(err);
-  }
+    });
 });
 
 // URI Launcher
@@ -68,7 +71,7 @@ uri_launch.connect("clicked", () => {
   uri_launcher.launch(workbench.window, null).catch(logError);
 });
 uri_details.connect("changed", () => {
-  text = uri_details.get_text();
+  const text = uri_details.get_text();
 
   uri_launcher.set_uri(text);
 
