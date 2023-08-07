@@ -13,6 +13,7 @@
   <bug-database rdf:resource="https://workbench.sonny.re/feedback" />
   <programming-language>JavaScript</programming-language>
   <programming-language>Vala</programming-language>
+  <programming-language>C</programming-language>
 
   <platform>GTK 4</platform>
   <platform>Libadwaita</platform>
