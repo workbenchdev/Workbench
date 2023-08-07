@@ -7,76 +7,23 @@ const col1 = workbench.builder.get_object("col1");
 const col2 = workbench.builder.get_object("col2");
 const col3 = workbench.builder.get_object("col3");
 
-function createFirstCol() {
-  const factory = col1.factory;
-  factory.connect("setup", (factory, list_item) => {
-    const label = new Gtk.Label({
-      margin_start: 12,
-      margin_end: 12,
-    });
-    list_item.set_child(label);
-  });
-  factory.connect("bind", (factory, list_item) => {
-    const label_widget = list_item.get_child();
-    const model_item = list_item.get_item();
-    label_widget.label = model_item.get_display_name();
-  });
-}
-
-function createSecCol() {
-  const factory = col2.factory;
-  factory.connect("setup", (factory, list_item) => {
-    const label = new Gtk.Label({
-      margin_start: 12,
-      margin_end: 12,
-    });
-    list_item.set_child(label);
-  });
-  factory.connect("bind", (factory, list_item) => {
-    const label_widget = list_item.get_child();
-    const model_item = list_item.get_item();
-    label_widget.label = model_item.get_size().toString();
-  });
-}
-
-function createThirdCol() {
-  const factory = col3.factory;
-  factory.connect("setup", (factory, list_item) => {
-    const label = new Gtk.Label({
-      margin_start: 12,
-      margin_end: 12,
-    });
-    list_item.set_child(label);
-  });
-  factory.connect("bind", (factory, list_item) => {
-    const info = list_item.item;
-    const mtime = info.get_modification_date_time();
-    const date = new Date(mtime.to_unix() * 1000);
-    const now = new Date();
-
-    const options = {};
-    if (date.getMonth() < now.getMonth() || date.getDay() < now.getDay())
-      options.dateStyle = "long";
-    else options.timeStyle = "short";
-
-    const label = list_item.child;
-    label.label = Intl.DateTimeFormat(undefined, options).format(date);
-  });
-}
-
 //Model
 const dir = Gio.File.new_for_path(pkg.pkgdatadir).resolve_relative_path(
   "Library/demos",
 );
 
-const model = new Gtk.SingleSelection({
-  model: new Gtk.SortListModel({
-    model: new Gtk.DirectoryList({
-      file: dir,
-      attributes: "standard::*,time::modified",
-    }),
-    sorter: column_view.sorter,
-  }),
+const data_model = new Gtk.DirectoryList({
+  file: dir,
+  attributes: "standard::*,time::modified",
+});
+
+const sort_model = new Gtk.SortListModel({
+  model: data_model,
+  sorter: column_view.sorter,
+});
+
+column_view.model = new Gtk.SingleSelection({
+  model: sort_model,
 });
 
 col1.sorter = new Gtk.StringSorter({
@@ -97,27 +44,62 @@ col2.sorter = new Gtk.NumericSorter({
 
 col3.sorter = new Gtk.NumericSorter({
   expression: new Gtk.ClosureExpression(
-    GObject.TYPE_INT64,
-    (fileInfo) => fileInfo.get_modification_date_time().to_unix(),
+    GObject.TYPE_INT,
+    (fileInfo) => fileInfo.get_modification_date_time(),
     null,
   ),
 });
 
-column_view.model = model;
-createFirstCol();
-createSecCol();
-createThirdCol();
-
 //View
-/*model.model.connect("items-changed", (list, position, removed, added) => {
-  console.log(
-    `position: ${position}, Item removed? ${Boolean(
-      removed,
-    )}, Item added? ${Boolean(added)}`,
-  );
+//Column 1
+const factory_col1 = col1.factory;
+factory_col1.connect("setup", (factory, list_item) => {
+  const label = new Gtk.Label({
+    margin_start: 12,
+    margin_end: 12,
+  });
+  list_item.set_child(label);
+});
+factory_col1.connect("bind", (factory, list_item) => {
+  const label_widget = list_item.get_child();
+  const model_item = list_item.get_item();
+  label_widget.label = model_item.get_display_name();
 });
 
-model.connect("selection-changed", () => {
-  const selected_item = model.get_selected();
-  console.log(`Model item selected from view: ${model.model}`);
-});*/
+//Column 2
+const factory_col2 = col2.factory;
+factory_col2.connect("setup", (factory, list_item) => {
+  const label = new Gtk.Label({
+    margin_start: 12,
+    margin_end: 12,
+  });
+  list_item.set_child(label);
+});
+factory_col2.connect("bind", (factory, list_item) => {
+  const label_widget = list_item.get_child();
+  const model_item = list_item.get_item();
+  const size = model_item.get_size();
+  if (Math.floor(size / 1_000_000_000) > 0)
+    label_widget.label = `${(size / 1_000_000_000).toFixed(1)} GB`;
+  else if (Math.floor(size / 1_000_000) > 0)
+    label_widget.label = `${(size / 1_000_000).toFixed(1)} MB`;
+  else if (Math.floor(size / 1000) > 0)
+    label_widget.label = `${(size / 1000).toFixed(1)} kB`;
+  else label_widget.label = `${size / 1000} bytes`;
+});
+
+//Column 3
+const factory_col3 = col3.factory;
+factory_col3.connect("setup", (factory, list_item) => {
+  const label = new Gtk.Label({
+    margin_start: 12,
+    margin_end: 12,
+  });
+  list_item.set_child(label);
+});
+factory_col3.connect("bind", (factory, list_item) => {
+  const label_widget = list_item.get_child();
+  const model_item = list_item.get_item();
+  const date = model_item.get_modification_date_time();
+  label_widget.label = date.format("%F");
+});
