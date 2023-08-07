@@ -9,7 +9,7 @@ const parent = XdpGtk.parent_new_gtk(workbench.window);
 const output = workbench.builder.get_object("output");
 const button = workbench.builder.get_object("button");
 
-let screencastSession;
+let screencast_session;
 
 button.connect("clicked", () => {
   portal.create_screencast_session(
@@ -21,8 +21,8 @@ button.connect("clicked", () => {
     null,
     async (portal, result) => {
       try {
-        screencastSession = portal.create_screencast_session_finish(result);
-        if (screencastSession) {
+        screencast_session = portal.create_screencast_session_finish(result);
+        if (screencast_session) {
           try {
             await on_clicked();
           } catch (error) {
@@ -39,7 +39,7 @@ button.connect("clicked", () => {
 });
 
 async function on_clicked() {
-  screencastSession.start(parent, null, async (session, result) => {
+  screencast_session.start(parent, null, async (session, result) => {
     try {
       if (session.start_finish(result)) {
         const pw_remote = await session.open_pipewire_remote();
@@ -60,6 +60,23 @@ async function on_clicked() {
 
         // Set up and Link Pipeline
         source.set_property("fd", pw_remote); // pw_remote is the file descriptor obtained from libportal
+
+        // Obtain the node id from the screencast session
+        const streams = screencast_session.get_streams().deepUnpack();
+        let node_id;
+        for (const [id, streamData] of streams) {
+          node_id = id; // Assuming there's only one stream for simplicity
+          break;
+        }
+
+        // Check if streamId is available
+        if (node_id) {
+          // Set the path property of pipewiresrc
+          source.set_property("path", node_id);
+        } else {
+          console.error("No available node id");
+        }
+
         glsinkbin.set_property("sink", paintable_sink);
 
         pipeline.add(source);
@@ -85,4 +102,3 @@ async function on_clicked() {
     }
   });
 }
-
