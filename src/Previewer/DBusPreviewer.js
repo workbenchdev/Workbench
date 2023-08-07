@@ -7,7 +7,7 @@ const interface_info = nodeInfo.interfaces[0];
 
 const guid = Gio.dbus_generate_guid();
 const server = Gio.DBusServer.new_sync(
-  "unix:abstract=re.sonny.Workbench.vala_previewer", // FIXME: alex says abstract socket sucks
+  "unix:abstract=re.sonny.Workbench.vala_previewer", // FIXME: abstract socket sucks
   Gio.DBusServerFlags.AUTHENTICATION_REQUIRE_SAME_USER,
   guid,
   null,

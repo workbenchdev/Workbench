@@ -1,10 +1,8 @@
-import Gtk from "gi://Gtk";
 import Adw from "gi://Adw";
 
 const button = workbench.builder.get_object("button_search");
 const searchbar = workbench.builder.get_object("searchbar");
 const searchentry = workbench.builder.get_object("searchentry");
-const headerbar = workbench.builder.get_object("headerbar");
 const stack = workbench.builder.get_object("stack");
 const main_page = workbench.builder.get_object("main_page");
 const search_page = workbench.builder.get_object("search_page");

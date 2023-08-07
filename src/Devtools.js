@@ -1,9 +1,8 @@
 import Gio from "gi://Gio";
 
 import TermConsole from "./TermConsole.js";
-import { settings } from "./util.js";
 
-export default function Devtools({ application, window, builder }) {
+export default function Devtools({ application, window, builder, settings }) {
   const button_console = builder.get_object("button_console");
   const terminal = builder.get_object("terminal");
   const paned = builder.get_object("paned");
@@ -91,5 +90,7 @@ export default function Devtools({ application, window, builder }) {
   window.add_action(action_console);
   application.set_accels_for_action("win.console", ["<Control><Shift>K"]);
 
-  return { term_console: TermConsole({ builder, window, application }) };
+  return {
+    term_console: TermConsole({ builder, window, application, settings }),
+  };
 }

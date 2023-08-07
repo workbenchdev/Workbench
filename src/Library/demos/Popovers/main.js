@@ -8,4 +8,3 @@ for (const id of popover_ids) {
 function onClosed(popover) {
   console.log(`${popover.name} closed.`);
 }
-

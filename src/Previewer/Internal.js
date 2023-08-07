@@ -16,6 +16,7 @@ export default function Internal({
   application,
   dropdown_preview_align,
   panel_ui,
+  session,
 }) {
   const bus = {};
   addSignalMethods(bus);
@@ -70,6 +71,9 @@ export default function Internal({
       application,
       builder,
       template,
+      resolve(path) {
+        return session.file.resolve_relative_path(path).get_uri();
+      },
       preview(object) {
         dropdown_preview_align.visible = false;
         dropdown_preview_align.selected = 0;
@@ -201,10 +205,6 @@ export default function Internal({
     }
 
     css_provider = new Gtk.CssProvider();
-    css_provider.connect("parsing-error", (_self, section, error) => {
-      const diagnostic = getCssDiagnostic(section, error);
-      builder.get_object("code_view_css").handleDiagnostics([diagnostic]);
-    });
     css_provider.load_from_data(style, -1);
     Gtk.StyleContext.add_provider_for_display(
       output.get_display(),
@@ -283,23 +283,4 @@ function screenshot({ widget, path }) {
   texture.save_to_png(path);
 
   return true;
-}
-
-// Converts a Gtk.CssSection and Gtk.CssError to an LSP diagnostic object
-function getCssDiagnostic(section, error) {
-  const start_location = section.get_start_location();
-  const end_location = section.get_end_location();
-
-  const range = {
-    start: {
-      line: start_location.lines,
-      character: start_location.line_chars,
-    },
-    end: {
-      line: end_location.lines,
-      character: end_location.line_chars,
-    },
-  };
-
-  return { range, message: error.message, severity: 1 };
 }

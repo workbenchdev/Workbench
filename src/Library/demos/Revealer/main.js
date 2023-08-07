@@ -7,15 +7,8 @@ const revealer_crossfade = workbench.builder.get_object("revealer_crossfade");
 const image1 = workbench.builder.get_object("image1");
 const image2 = workbench.builder.get_object("image2");
 
-let file = Gio.File.new_for_path(pkg.pkgdatadir).resolve_relative_path(
-  "Library/demos/Revealer/image1.png",
-);
-image1.file = file;
-
-file = Gio.File.new_for_path(pkg.pkgdatadir).resolve_relative_path(
-  "Library/demos/Revealer/image2.png",
-);
-image2.file = file;
+image1.file = Gio.File.new_for_uri(workbench.resolve("./image1.png"));
+image2.file = Gio.File.new_for_uri(workbench.resolve("./image2.png"));
 
 button_slide.connect("toggled", () => {
   revealer_slide.reveal_child = button_slide.active;

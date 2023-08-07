@@ -7,12 +7,7 @@ import Vte from "gi://Vte";
 import { gettext as _ } from "gettext";
 
 import * as xml from "./langs/xml/xml.js";
-import {
-  settings,
-  createDataDir,
-  getLanguageForFile,
-  languages,
-} from "./util.js";
+import { languages } from "./util.js";
 import Document from "./Document.js";
 import PanelUI from "./PanelUI.js";
 import PanelCode from "./PanelCode.js";
@@ -22,8 +17,6 @@ import Devtools from "./Devtools.js";
 import prettier from "./lib/prettier.js";
 import prettier_babel from "./lib/prettier-babel.js";
 import prettier_postcss from "./lib/prettier-postcss.js";
-import Library, { readDemo } from "./Library/Library.js";
-import DocumentationViewer from "./DocumentationViewer.js";
 import Previewer from "./Previewer/Previewer.js";
 import Compiler from "./langs/vala/Compiler.js";
 import ThemeSelector from "../troll/src/widgets/ThemeSelector.js";
@@ -43,15 +36,18 @@ import "./icons/re.sonny.Workbench-screenshot-symbolic.svg" with {
 
 import "./widgets/Modal.js";
 import "./widgets/CodeView.js";
+import { deleteSession, saveSessionAsProject } from "./sessions.js";
 
 const style_manager = Adw.StyleManager.get_default();
 
-const langs = Object.fromEntries(languages.map((lang) => [lang.id, lang]));
+export default function Window({ application, session }) {
+  const langs = Object.fromEntries(
+    languages.map((lang) => [lang.id, { ...lang }]),
+  );
 
-export default function Window({ application }) {
+  const { file, settings } = session;
+
   Vte.Terminal.new();
-
-  const data_dir = createDataDir();
 
   const builder = Gtk.Builder.new_from_resource(resource);
 
@@ -71,46 +67,51 @@ export default function Window({ application }) {
   const panel_preview = builder.get_object("panel_preview");
   const panel_placeholder = builder.get_object("panel_placeholder");
 
-  const { term_console } = Devtools({ application, window, builder });
-
-  const toast_overlay = builder.get_object("toast_overlay");
+  const { term_console } = Devtools({ application, window, builder, settings });
 
   let compiler = null;
 
-  const placeholders = readDemo("Welcome");
+  if (!file.get_child("main.xml").query_exists(null)) {
+    settings.set_int("ui-language", 1);
+  }
 
   const document_javascript = Document({
     code_view: builder.get_object("code_view_javascript"),
-    placeholder: placeholders.javascript,
-    file: Gio.File.new_for_path(GLib.build_filenamev([data_dir, "state.js"])),
+    file: file.get_child("main.js"),
+    lang: langs.javascript,
+    session,
   });
   langs.javascript.document = document_javascript;
 
   const document_vala = Document({
     code_view: builder.get_object("code_view_vala"),
-    placeholder: placeholders.vala,
-    file: Gio.File.new_for_path(GLib.build_filenamev([data_dir, "state.vala"])),
+    file: file.get_child("main.vala"),
+    lang: langs.vala,
+    session,
   });
   langs.vala.document = document_vala;
 
   const document_blueprint = Document({
     code_view: builder.get_object("code_view_blueprint"),
-    placeholder: placeholders.blueprint,
-    file: Gio.File.new_for_path(GLib.build_filenamev([data_dir, "state.blp"])),
+    file: file.get_child("main.blp"),
+    lang: langs.blueprint,
+    session,
   });
   langs.blueprint.document = document_blueprint;
 
   const document_xml = Document({
     code_view: builder.get_object("code_view_xml"),
-    placeholder: placeholders.xml,
-    file: Gio.File.new_for_path(GLib.build_filenamev([data_dir, "state.xml"])),
+    file: file.get_child("main.ui"),
+    lang: langs.xml,
+    session,
   });
   langs.xml.document = document_xml;
 
   const document_css = Document({
     code_view: builder.get_object("code_view_css"),
-    placeholder: placeholders.css,
-    file: Gio.File.new_for_path(GLib.build_filenamev([data_dir, "state.css"])),
+    file: file.get_child("main.css"),
+    lang: langs.css,
+    session,
   });
   langs.css.document = document_css;
 
@@ -118,30 +119,31 @@ export default function Window({ application }) {
     application,
     builder,
     langs,
-    data_dir,
     term_console,
     document_xml,
     document_blueprint,
+    settings,
   });
 
-  PanelStyle({ builder, document_css });
+  PanelStyle({ builder, document_css, settings });
 
   const previewer = Previewer({
     output,
     builder,
     window,
     application,
-    data_dir,
     panel_ui,
     term_console,
+    settings,
+    session,
   });
 
   const panel_code = PanelCode({
     builder,
     previewer,
-    data_dir,
     document_vala,
     document_javascript,
+    settings,
   });
 
   previewer.setPanelCode(panel_code);
@@ -232,7 +234,7 @@ export default function Window({ application }) {
     }
   }
 
-  async function runCode(prettify = true) {
+  async function runCode({ format }) {
     button_run.set_sensitive(false);
 
     term_console.clear();
@@ -243,7 +245,7 @@ export default function Window({ application }) {
     try {
       await panel_ui.update();
 
-      if (prettify) {
+      if (format) {
         formatCode();
       }
 
@@ -275,10 +277,8 @@ export default function Window({ application }) {
         }
         previewer.setSymbols(exports);
       } else if (language === "Vala") {
-        compiler = compiler || Compiler(data_dir);
-        const success = await compiler.compile(
-          langs.vala.document.code_view.buffer.text,
-        );
+        compiler = compiler || Compiler({ session });
+        const success = await compiler.compile();
         if (success) {
           await previewer.useExternal();
           if (await compiler.run()) {
@@ -308,7 +308,7 @@ export default function Window({ application }) {
     name: "run",
   });
   action_run.connect("activate", () => {
-    runCode().catch(logError);
+    runCode({ format: true }).catch(logError);
   });
   window.add_action(action_run);
   application.set_accels_for_action("win.run", ["<Control>Return"]);
@@ -322,67 +322,43 @@ export default function Window({ application }) {
   window.add_action(action_format);
   application.set_accels_for_action("win.format", ["<Control><Shift>Return"]);
 
-  const undo_action = new Gio.SimpleAction({
-    name: "workbench_undo",
-    parameter_type: new GLib.VariantType("s"),
+  const action_close = new Gio.SimpleAction({
+    name: "close",
   });
-  undo_action.connect("activate", (_self, target) => {
-    const updated = JSON.parse(target.unpack()).updated;
-    languages.forEach(({ id, document }) => {
-      if (updated.includes(id)) document.code_view.buffer.undo();
-    });
-
-    const panels = JSON.parse(target.unpack()).panels;
-    settings.set_boolean("show-code", panels[0]);
-    settings.set_boolean("show-style", panels[1]);
-    settings.set_boolean("show-ui", panels[2]);
-    settings.set_boolean("show-preview", panels[3]);
-
-    const langs = JSON.parse(target.unpack()).langs;
-    settings.set_int("code-language", langs[0]);
-    settings.set_int("ui-language", langs[1]);
+  action_close.connect("activate", () => {
+    window.close();
   });
-  window.add_action(undo_action);
+  window.add_action(action_close);
+  application.set_accels_for_action("win.close", ["<Control>W"]);
 
-  async function openDemo(demo_name) {
-    const documents = languages.map((language) => language.document);
+  window.connect("close-request", () => {
+    onCloseSession({ session, window }).catch(logError);
+    return true;
+  });
 
-    const demo = readDemo(demo_name);
-    const { javascript, css, xml, blueprint, panels, autorun } = demo;
-    let { vala } = demo;
+  window.add_action(settings.create_action("safe-mode"));
+  window.add_action(settings.create_action("auto-preview"));
 
-    if (!!javascript && !vala) {
-      settings.set_int("code-language", 0);
-      vala = "// Sorry, this demo is not available in Vala yet.";
-    }
+  window.present();
 
+  const documents = Object.values(langs).map((lang) => lang.document);
+  async function load({ run }) {
     panel_ui.stop();
     previewer.stop();
     documents.forEach((document) => document.stop());
 
-    settings.set_string("selected-demo", demo_name);
-
-    document_javascript.code_view.replaceText(javascript);
-    document_vala.code_view.replaceText(vala);
-    settings.set_boolean("show-code", panels.includes("code"));
-
-    document_css.code_view.replaceText(css);
-    settings.set_boolean("show-style", panels.includes("style"));
-
-    document_blueprint.code_view.replaceText(blueprint);
-    document_xml.code_view.replaceText(xml);
-    settings.set_boolean("show-ui", panels.includes("ui"));
-    settings.set_boolean("show-preview", panels.includes("preview"));
-
-    // Until we have proper inline errors
-    // let's always show the console
-    // in the future we may let each demo decide
-    settings.set_boolean("show-console", true);
+    await Promise.all([
+      document_javascript.load(),
+      document_vala.load(),
+      document_blueprint.load(),
+      document_xml.load(),
+      document_css.load(),
+    ]);
 
     await previewer.useInternal();
 
-    if (panel_code.language === "JavaScript" && autorun === true) {
-      await runCode(false);
+    if (run) {
+      await runCode({ format: false });
     } else {
       term_console.clear();
       panel_ui.start();
@@ -392,110 +368,13 @@ export default function Window({ application }) {
     }
 
     documents.forEach((document) => {
-      document.save();
       document.start();
     });
 
     term_console.scrollToEnd();
-
-    toast_overlay.add_toast(
-      new Adw.Toast({
-        title: _("The demo has been loaded"),
-        button_label: _("Undo"),
-        action_name: "win.workbench_undo",
-        action_target: GLib.Variant.new_string(
-          JSON.stringify({
-            updated: ["javascript", "css", "xml", "blueprint", "vala"],
-            panels: [
-              settings.get_boolean("show-code"),
-              settings.get_boolean("show-style"),
-              settings.get_boolean("show-ui"),
-              settings.get_boolean("show-preview"),
-            ],
-            langs: [
-              settings.get_int("code-language"),
-              settings.get_int("ui-language"),
-            ],
-          }),
-        ),
-      }),
-    );
   }
 
-  Library({
-    openDemo,
-    window,
-    application,
-  });
-
-  DocumentationViewer({ application });
-
-  const text_decoder = new TextDecoder();
-  async function openFile(file) {
-    const language = getLanguageForFile(file);
-    if (!language) {
-      const toast = new Adw.Toast({
-        title: _("This file cannot be loaded"),
-      });
-      toast_overlay.add_toast(toast);
-      return;
-    }
-
-    let data;
-
-    try {
-      [, data] = file.load_contents(null);
-      data = text_decoder.decode(data);
-    } catch (err) {
-      logError(err);
-      return;
-    }
-
-    const {
-      document: { code_view },
-    } = language;
-    code_view.replaceText(data);
-
-    settings.set_boolean(`show-${language.panel}`, true);
-
-    if (language.id === "xml") {
-      settings.set_int("ui-language", 0);
-    } else if (language.id === "blueprint") {
-      settings.set_int("ui-language", 1);
-    } else if (language.id === "javascript") {
-      settings.set_int("code-language", 0);
-    } else if (language.id === "vala") {
-      settings.set_int("code-language", 1);
-    }
-
-    if (language.panel === "ui") {
-      settings.set_boolean("show-preview", true);
-    }
-
-    toast_overlay.add_toast(
-      new Adw.Toast({
-        title: _("The file has been loaded"),
-        button_label: _("Undo"),
-        action_name: "win.workbench_undo",
-        action_target: GLib.Variant.new_string(
-          JSON.stringify({
-            updated: [language.id],
-            panels: [
-              settings.get_boolean("show-code"),
-              settings.get_boolean("show-style"),
-              settings.get_boolean("show-ui"),
-              settings.get_boolean("show-preview"),
-            ],
-            langs: [
-              settings.get_int("code-language"),
-              settings.get_int("ui-language"),
-            ],
-          }),
-        ),
-      }),
-    );
-  }
-  return { window, openFile };
+  return { load, window };
 }
 
 async function setGtk4PreferDark(dark) {
@@ -512,4 +391,74 @@ async function setGtk4PreferDark(dark) {
   }
   settings.set_boolean("Settings", "gtk-application-prefer-dark-theme", dark);
   settings.save_to_file(settings_path);
+}
+
+async function onCloseSession({ session, window }) {
+  if (session.is_project()) {
+    window.destroy();
+    return;
+  }
+
+  if (!session.settings.get_boolean("edited")) {
+    await deleteSession(session);
+    window.destroy();
+    return;
+  }
+
+  const builder = Gtk.Builder.new_from_resource(resource);
+  const dialog = builder.get_object("message_dialog_save_project");
+
+  dialog.set_transient_for(window);
+  dialog.present();
+
+  let location;
+
+  const row_project_location = builder.get_object("row_project_location");
+  const button_location = builder.get_object("button_location");
+  row_project_location.add_suffix(button_location);
+  button_location.connect("clicked", () => {
+    selectLocation().catch(logError);
+  });
+
+  const row_project_name = builder.get_object("row_project_name");
+  function updateSaveButton() {
+    if (!row_project_name.text) {
+      dialog.set_response_enabled("save", false);
+      return;
+    }
+
+    if (!location) {
+      dialog.set_response_enabled("save", false);
+      return;
+    }
+
+    dialog.set_response_enabled("save", true);
+  }
+  row_project_name.connect("notify::text", () => {
+    updateSaveButton();
+  });
+
+  async function selectLocation() {
+    const file_dialog = new Gtk.FileDialog();
+    location = await file_dialog.select_folder(window, null);
+    row_project_location.subtitle = location.get_basename();
+    updateSaveButton();
+  }
+
+  const response = await new Promise((resolve) => {
+    dialog.connect("response", (self, response) => resolve(response));
+  });
+
+  if (response === "cancel") return;
+
+  if (response === "discard") {
+    await deleteSession(session);
+  } else if (response === "save") {
+    const destination = location.get_child_for_display_name(
+      row_project_name.text,
+    );
+    await saveSessionAsProject(session, destination);
+  }
+
+  window.destroy();
 }
