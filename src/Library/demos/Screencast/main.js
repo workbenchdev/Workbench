@@ -11,6 +11,14 @@ const button = workbench.builder.get_object("button");
 
 let screencast_session;
 
+Gio._promisify(
+  Xdp.Portal.prototype,
+  "create_screencast_session",
+  "create_screencast_session_finish",
+);
+
+Gio._promisify(Xdp.Session.prototype, "start", "start_finish");
+
 button.connect("clicked", () => {
   portal.create_screencast_session(
     Xdp.OutputType.MONITOR,
@@ -21,7 +29,9 @@ button.connect("clicked", () => {
     null,
     async (portal, result) => {
       try {
-        screencast_session = portal.create_screencast_session_finish(result);
+        screencast_session = await portal.create_screencast_session_finish(
+          result,
+        );
         if (screencast_session) {
           try {
             await on_clicked();
