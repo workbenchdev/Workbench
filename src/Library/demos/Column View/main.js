@@ -44,8 +44,8 @@ col2.sorter = new Gtk.NumericSorter({
 
 col3.sorter = new Gtk.NumericSorter({
   expression: new Gtk.ClosureExpression(
-    GObject.TYPE_INT,
-    (fileInfo) => fileInfo.get_modification_date_time(),
+    GObject.TYPE_INT64,
+    (fileInfo) => fileInfo.get_modification_date_time().to_unix(),
     null,
   ),
 });
