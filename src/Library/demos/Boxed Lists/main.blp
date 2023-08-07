@@ -43,6 +43,18 @@ Adw.StatusPage {
           subtitle: _("Simple on/off control");
         }
 
+        Adw.SpinRow {
+          title: _("Spin Row");
+          subtitle: _("Increment or decrement a value");
+          climb-rate: 0.2;
+          adjustment: Adjustment {
+            lower: 0;
+            upper: 100;
+            step-increment: 1;
+            value: 50;
+          };
+        }
+
         Adw.ComboRow {
           title: _("Choose an item");
           subtitle: _("List of options from a drop down");
