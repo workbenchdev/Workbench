@@ -120,8 +120,8 @@
       "sources": [
         {
           "type": "archive",
-          "url": "https://download.gnome.org/sources/libshumate/1.0/libshumate-1.0.3.tar.xz",
-          "sha256": "77a192f0dfec082b8de20b1939f3adf03eed41114d49fdaae2bbb2729ceb015a"
+          "url": "https://download.gnome.org/sources/libshumate/1.0/libshumate-1.0.5.tar.xz",
+          "sha256": "a8cfd8df9177ee44b04733b017af13c9e93f98765cdc89b750a48edaf701956c"
         }
       ]
     },
@@ -131,16 +131,18 @@
       "build-commands": ["chmod +x rome", "cp rome /app/bin/rome"],
       "sources": [
         {
-          "type": "archive",
+          "type": "file",
+          "dest-filename": "rome",
           "only-arches": ["aarch64"],
-          "url": "https://registry.npmjs.org/@rometools/cli-linux-arm64/-/cli-linux-arm64-12.1.1.tgz",
-          "sha512": "8ca25e4fa488d5df5b90094c398977750b73bd38bdf1db0903310cf754955cb9793a78e4e7967d406f5fd44e276d2efa2cae1e65a34c70aaacec5da14b255e75"
+          "url": "https://github.com/rome/tools/releases/download/cli%2Fv12.1.3-nightly.4c8cf32/rome-linux-arm64",
+          "sha512": "1eb832e8042cdd690d46487be2d7c67eb068684cd4f95831dc42ead68bef582d991fd19c87273133175235c6411fb5cb4e67cefec77b71b6354fea4d8a270c58"
         },
         {
-          "type": "archive",
+          "type": "file",
+          "dest-filename": "rome",
           "only-arches": ["x86_64"],
-          "url": "https://registry.npmjs.org/@rometools/cli-linux-x64/-/cli-linux-x64-12.1.1.tgz",
-          "sha512": "0ac2e3658b4b41d2a831cae85d72949997721507e0565ec2f282080dc24dce61d929d57046123533e9caff4be9885b558c2b7a8fe0b0da00d89284128a14edd3"
+          "url": "https://github.com/rome/tools/releases/download/cli%2Fv12.1.3-nightly.4c8cf32/rome-linux-x64",
+          "sha512": "6ee701d85cca7655e39f9a0b414e1f75cb423beb4032af5ccebe9510a3cd1266b136c805b3a4b32062a7df4c18c37909580cf42ca7687fe454258295ee25b5fb"
         }
       ]
     },
@@ -224,8 +226,10 @@
         }
       ],
       "post-install": [
+        "rm -rf /app/share/doc/appstream",
+        "cp -a /usr/share/gtk-doc/html/. /app/share/doc/",
+        "rm -r /app/share/doc/appstream",
         "cp -a /usr/share/doc/. /app/share/doc/",
-        "cp -a /usr/share/gtk-doc/html/. /app/share/doc",
         "cp -a /usr/lib/sdk/vala/bin/. /app/bin/",
         "cp -a /usr/lib/sdk/vala/lib/. /app/lib/",
         "cp -a /usr/lib/sdk/vala/share/. /app/share/"
