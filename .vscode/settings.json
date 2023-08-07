@@ -25,5 +25,8 @@
   "rust-analyzer.runnables.command": "${workspaceFolder}/.flatpak/cargo.sh",
   "rust-analyzer.files.excludeDirs": [
     ".flatpak"
-  ]
+  ],
+  "mesonbuild.configureOnOpen": false,
+  "mesonbuild.buildFolder": "_build",
+  "mesonbuild.mesonPath": "${workspaceFolder}/.flatpak/meson.sh"
 }

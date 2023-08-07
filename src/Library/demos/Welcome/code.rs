@@ -1,9 +1,9 @@
+use crate::workbench;
 use adw::prelude::*;
 use glib::clone;
 use gtk::glib;
 
-fn main() -> glib::ExitCode {
-    // Initialize Gtk application
+pub fn main() -> glib::ExitCode {
     let app = adw::Application::builder()
         .application_id("com.example.workbench")
         .build();
@@ -13,10 +13,10 @@ fn main() -> glib::ExitCode {
 }
 
 fn build_ui(app: &adw::Application) {
-    let builder = gtk::Builder::from_string(include_str!("main.xml"));
-
     // Fetch the 'subtitle' box from the builder
-    let subtitle_box: gtk::Box = builder.object("subtitle").expect("Subtitle box not found");
+    let subtitle_box: gtk::Box = workbench::builder()
+        .object("subtitle")
+        .expect("Subtitle box not found");
 
     // Create the button
     let button = gtk::Button::builder()
@@ -28,12 +28,14 @@ fn build_ui(app: &adw::Application) {
     // Append the button to the 'subtitle' box
     subtitle_box.append(&button);
 
-    let welcome_box: gtk::Box = builder.object("welcome").expect("Welcome box not found");
+    let welcome_box: gtk::Box = workbench::builder()
+        .object("welcome")
+        .expect("Welcome box not found");
 
-    let window = adw::ApplicationWindow::builder()
+    let window = gtk::ApplicationWindow::builder()
         .application(app)
         .title("Workbench")
-        .content(&welcome_box) // Set the welcome_box as the main content
+        .child(&welcome_box) // Set the welcome_box as the main content
         .build();
 
     // Connect the 'clicked' signal to the greet function
@@ -44,7 +46,7 @@ fn build_ui(app: &adw::Application) {
     window.show();
 }
 
-fn greet(parent_window: adw::ApplicationWindow) {
+fn greet(parent_window: gtk::ApplicationWindow) {
     // Create the message dialog
     let dialog = adw::MessageDialog::builder()
         .body("Hello World!")
