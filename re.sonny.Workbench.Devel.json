@@ -1,7 +1,7 @@
 {
   "id": "re.sonny.Workbench.Devel",
   "runtime": "org.gnome.Sdk",
-  "runtime-version": "44",
+  "runtime-version": "master",
   "sdk": "org.gnome.Sdk",
   "sdk-extensions": [
     "org.freedesktop.Sdk.Extension.vala",
@@ -225,7 +225,7 @@
         {
           "type": "git",
           "url": "https://github.com/JCWasmx86/GTKCssLanguageServer",
-          "commit": "638bf6e8836d9c2aed6d4c5d17dbf00311155145"
+          "commit": "6fa2252d55c4c11a866b6ea91c1a8ad52d7d3a01"
         }
       ],
       "modules": [
