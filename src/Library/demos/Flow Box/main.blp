@@ -1,0 +1,38 @@
+using Gtk 4.0;
+using Adw 1;
+
+Gtk.Window {
+  default-width: 800;
+  default-height: 800;
+  title: _("Flow Box Demo");
+  titlebar: Adw.HeaderBar {};
+
+  Adw.StatusPage {
+    title: _("Flow Box");
+    description: _("Puts child widgets in a reflowing grid");
+
+    Box {
+      spacing: 12;
+      orientation: vertical;
+
+      ScrolledWindow {
+        propagate-natural-height: true;
+        has-frame: true;
+
+        FlowBox flowbox {
+          orientation: horizontal;
+          row-spacing: 6;
+          column-spacing: 6;
+          homogeneous: true;
+          max-children-per-line: 6;
+          min-children-per-line: 3;
+        }
+      }
+
+      LinkButton {
+        label: "API Reference";
+        uri: "https://docs.gtk.org/gtk4/class.FlowBox.html";
+      }
+    }
+  }
+}

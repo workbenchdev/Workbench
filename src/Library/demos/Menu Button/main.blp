@@ -1,0 +1,189 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: _("Menu Button");
+  description: _("Displays a popover on button click");
+
+  Adw.Clamp {
+    maximum-size: 500;
+
+    Box {
+      orientation: vertical;
+      spacing: 6;
+
+      MenuButton primary {
+        halign: center;
+        icon-name: "open-menu-symbolic";
+        menu-model: primary_button_menu;
+        primary: true; // May not work in Previewer
+      }
+
+      Label {
+        label: _("Primary Menu Button");
+        styles ["title-4"]
+      }
+
+       Label {
+        label: _("Displays an app-wide menu with standard features");
+
+      }
+
+       MenuButton secondary {
+        direction: bind direction_row.selected;
+        halign: center;
+        menu-model: secondary_button_menu;
+        margin-top: 18;
+      }
+
+      Label {
+        label: _("Secondary Menu Button");
+        styles ["title-4"]
+      }
+
+      Label {
+        label: _("Displays view-specific items, typically used with hierarchical navigation and sidebars");
+      }
+
+      ListBox {
+        styles ["boxed-list"]
+        margin-top: 18;
+        selection-mode: none;
+
+        Adw.ComboRow direction_row {
+          title: _("Direction");
+          model: StringList {
+            strings ["Up", "Down", "Left", "Right", "None"]
+          };
+        }
+
+        Adw.ActionRow {
+          title: _("Circular");
+          activatable-widget: circular_switch;
+
+          Switch circular_switch {
+            valign: center;
+          }
+        }
+      }
+
+      LinkButton {
+        label: "Human Interface Guidelines";
+         uri: "https://developer.gnome.org/hig/patterns/controls/menus.html";
+      }
+
+      LinkButton {
+        label: "Menu Button API Reference";
+         uri: "https://docs.gtk.org/gtk4/class.MenuButton.html";
+      }
+    }
+  }
+}
+
+menu primary_button_menu {
+  section {
+    submenu {
+      label: _("Bookmarks");
+      section {
+        label: _("Learn");
+
+        item {
+          label: _("Developer Documentation");
+          action: "app.open_uri";
+          target: "https://developer.gnome.org/documentation/index.html";
+        }
+
+
+        item {
+          label: _("Human Interface Guidelines");
+          action: "app.open_uri";
+          target: "https://developer.gnome.org/hig/";
+        }
+
+        item {
+          label: _("JavaScript");
+          action: "app.open_uri";
+          target: "https://gjs.guide";
+        }
+
+        item {
+          label: _("Vala");
+          action: "app.open_uri";
+          target: "https://wiki.gnome.org/Projects/Vala";
+        }
+
+        item {
+          label: _("Blueprint");
+          action: "app.open_uri";
+          target: "https://gitlab.gnome.org/jwestman/blueprint-compiler";
+        }
+      }
+
+      section {
+        label: _("Get help");
+
+        item {
+          label: _("Discourse");
+          action: "app.open_uri";
+          target: "https://discourse.gnome.org/c/platform/5";
+        }
+
+        item {
+          label: _("Matrix");
+          action: "app.open_uri";
+          target: "https://matrix.to/#/#workbench:gnome.org";
+        }
+      }
+    }
+
+    item {
+      label: _("Icon Library");
+      action: "app.icon_library";
+    }
+
+    submenu {
+      label: _("Platform Tools");
+
+      item {
+        label: _("Adwaita Demo");
+        action: "app.platform_tools";
+        target: "adwaita-1-demo";
+      }
+
+      item {
+        label: _("GTK Demo");
+        action: "app.platform_tools";
+        target: "gtk4-demo";
+      }
+
+      item {
+        label: _("GTK Widget Factory");
+        action: "app.platform_tools";
+        target: "gtk4-widget-factory";
+      }
+    }
+  }
+
+  item {
+    label: _("Documentation");
+    action: "app.documentation";
+  }
+
+  section {
+    item {
+      label: _("Keyboard Shortcuts");
+      action: "app.shortcuts";
+    }
+
+    item {
+      label: _("About Workbench");
+      action: "app.about";
+    }
+  }
+}
+
+menu secondary_button_menu {
+  item ("Item 1")
+  item ("Item 2")
+  item ("Item 3")
+}

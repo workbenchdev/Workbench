@@ -1,5 +1,4 @@
 {
-  "name": "Styling with CSS",
   "category": "user_interface",
   "description": "Change the appearence of widgets",
   "panels": ["ui", "style", "preview"],

@@ -1,5 +1,4 @@
 {
-  "name": "Text Colors",
   "category": "user_interface",
   "description": "Color text programatically with Pango",
   "panels": ["code", "preview"],

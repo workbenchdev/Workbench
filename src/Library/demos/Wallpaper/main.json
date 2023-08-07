@@ -1,5 +1,4 @@
 {
-  "name": "Wallpaper",
   "category": "platform",
   "description": "Request to set the user desktop background image",
   "panels": ["code", "preview"],
