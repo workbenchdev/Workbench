@@ -94,7 +94,7 @@ export default function Window({ application, session }) {
 
   const document_rust = Document({
     code_view: builder.get_object("code_view_rust"),
-    file: file.get_child("main.valas"),
+    file: file.get_child("src/code.rs"),
     lang: langs.rust,
   });
   langs.rust.document = document_rust;
@@ -368,6 +368,7 @@ export default function Window({ application, session }) {
 
     await Promise.all([
       document_javascript.load(),
+      document_rust.load(),
       document_vala.load(),
       document_blueprint.load(),
       document_xml.load(),
