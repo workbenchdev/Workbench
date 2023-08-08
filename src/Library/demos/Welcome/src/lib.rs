@@ -16,7 +16,8 @@ static mut URI: Option<PathBuf> = None;
 
 #[no_mangle]
 extern "C" fn main() -> c_int {
-    code::main().into()
+    code::main();
+    EXIT_SUCCESS
 }
 
 #[no_mangle]

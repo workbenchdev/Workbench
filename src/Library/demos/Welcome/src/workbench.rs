@@ -1,5 +1,6 @@
 use std::path::{Path, PathBuf};
 
+#[allow(dead_code)]
 pub(crate) fn builder() -> &'static gtk::Builder {
     unsafe {
         crate::BUILDER
@@ -8,6 +9,7 @@ pub(crate) fn builder() -> &'static gtk::Builder {
     }
 }
 
+#[allow(dead_code)]
 pub(crate) fn window() -> &'static gtk::Window {
     unsafe {
         crate::WINDOW
@@ -16,6 +18,7 @@ pub(crate) fn window() -> &'static gtk::Window {
     }
 }
 
+#[allow(dead_code)]
 pub(crate) fn resolve(path: impl AsRef<Path>) -> PathBuf {
     unsafe { crate::URI.as_ref().unwrap().join(path) }
 }
