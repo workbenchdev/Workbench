@@ -2,7 +2,7 @@ import Gio from "gi://Gio";
 import dbus_previewer from "../../Previewer/DBusPreviewer.js";
 import { decode } from "../../util.js";
 
-export default function Compiler({ session }) {
+export default function ValaCompiler({ session }) {
   const { file } = session;
 
   const module_file = file.get_child("libworkbenchcode.so");
