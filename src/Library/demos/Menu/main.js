@@ -7,7 +7,7 @@ const label = workbench.builder.get_object("label");
 const text_group = new Gio.SimpleActionGroup();
 label.insert_action_group("text", text_group);
 
-const text_state = { italic: false, bold: false, foreground: "white" };
+const text_state = { italic: false, bold: false, foreground: "green" };
 
 const italic_action = new Gio.SimpleAction({
   name: "italic",
@@ -35,7 +35,7 @@ text_group.add_action(bold_action);
 
 const color_action = new Gio.SimpleAction({
   name: "color",
-  state: GLib.Variant.new_string("white"),
+  state: GLib.Variant.new_string("green"),
   parameter_type: new GLib.VariantType("s"),
 });
 
