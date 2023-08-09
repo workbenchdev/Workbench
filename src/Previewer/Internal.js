@@ -16,6 +16,7 @@ export default function Internal({
   application,
   dropdown_preview_align,
   panel_ui,
+  session,
 }) {
   const bus = {};
   addSignalMethods(bus);
@@ -70,6 +71,9 @@ export default function Internal({
       application,
       builder,
       template,
+      resolve(path) {
+        return session.file.resolve_relative_path(path).get_uri();
+      },
       preview(object) {
         dropdown_preview_align.visible = false;
         dropdown_preview_align.selected = 0;

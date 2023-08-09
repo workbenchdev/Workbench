@@ -108,8 +108,8 @@
       "sources": [
         {
           "type": "archive",
-          "url": "https://gitlab.gnome.org/jwestman/blueprint-compiler/-/archive/v0.8.1/blueprint-compiler-v0.8.1.tar.gz",
-          "sha512": "33f14741d358372b3953ba2bf6619b3e40df9e2649854897b80e04114031b0084bca2e1994551593438b46657392abb097c68c91f7c5da7eca48bc2992009995"
+          "url": "https://gitlab.gnome.org/jwestman/blueprint-compiler/-/archive/v0.10.0/blueprint-compiler-v0.10.0.tar.gz",
+          "sha512": "1f2a9097e3d6a030385c371a01e32caefab6f7ede1979b43492255b504250ac7f44ae22a97656a7c33c0e518236b95d6074baf8f87c53df1fbb1e42eceb39a87"
         }
       ]
     },
@@ -120,8 +120,8 @@
       "sources": [
         {
           "type": "archive",
-          "url": "https://download.gnome.org/sources/libshumate/1.0/libshumate-1.0.3.tar.xz",
-          "sha256": "77a192f0dfec082b8de20b1939f3adf03eed41114d49fdaae2bbb2729ceb015a"
+          "url": "https://download.gnome.org/sources/libshumate/1.0/libshumate-1.0.5.tar.xz",
+          "sha256": "a8cfd8df9177ee44b04733b017af13c9e93f98765cdc89b750a48edaf701956c"
         }
       ]
     },
@@ -131,16 +131,18 @@
       "build-commands": ["chmod +x rome", "cp rome /app/bin/rome"],
       "sources": [
         {
-          "type": "archive",
+          "type": "file",
+          "dest-filename": "rome",
           "only-arches": ["aarch64"],
-          "url": "https://registry.npmjs.org/@rometools/cli-linux-arm64/-/cli-linux-arm64-12.1.1.tgz",
-          "sha512": "8ca25e4fa488d5df5b90094c398977750b73bd38bdf1db0903310cf754955cb9793a78e4e7967d406f5fd44e276d2efa2cae1e65a34c70aaacec5da14b255e75"
+          "url": "https://github.com/rome/tools/releases/download/cli%2Fv12.1.3-nightly.4c8cf32/rome-linux-arm64",
+          "sha512": "1eb832e8042cdd690d46487be2d7c67eb068684cd4f95831dc42ead68bef582d991fd19c87273133175235c6411fb5cb4e67cefec77b71b6354fea4d8a270c58"
         },
         {
-          "type": "archive",
+          "type": "file",
+          "dest-filename": "rome",
           "only-arches": ["x86_64"],
-          "url": "https://registry.npmjs.org/@rometools/cli-linux-x64/-/cli-linux-x64-12.1.1.tgz",
-          "sha512": "0ac2e3658b4b41d2a831cae85d72949997721507e0565ec2f282080dc24dce61d929d57046123533e9caff4be9885b558c2b7a8fe0b0da00d89284128a14edd3"
+          "url": "https://github.com/rome/tools/releases/download/cli%2Fv12.1.3-nightly.4c8cf32/rome-linux-x64",
+          "sha512": "6ee701d85cca7655e39f9a0b414e1f75cb423beb4032af5ccebe9510a3cd1266b136c805b3a4b32062a7df4c18c37909580cf42ca7687fe454258295ee25b5fb"
         }
       ]
     },
@@ -157,7 +159,7 @@
         {
           "type": "git",
           "url": "https://gitlab.gnome.org/Teams/Design/icon-development-kit-www.git",
-          "commit": "f2ecae16b8303d196577ebbbcb320d7a28ee0c69"
+          "commit": "3ac8811ad9de28006ce1d9e3ea9c4eaca2422c5d"
         }
       ],
       "modules": [
@@ -224,7 +226,10 @@
         }
       ],
       "post-install": [
-        "cp -a /usr/share/gtk-doc/html/. /app/share/doc",
+        "rm -rf /app/share/doc/appstream",
+        "cp -a /usr/share/gtk-doc/html/. /app/share/doc/",
+        "rm -rf /app/share/doc/appstream",
+        "cp -a /usr/share/doc/. /app/share/doc/",
         "cp -a /usr/lib/sdk/vala/bin/. /app/bin/",
         "cp -a /usr/lib/sdk/vala/lib/. /app/lib/",
         "cp -a /usr/lib/sdk/vala/share/. /app/share/"
