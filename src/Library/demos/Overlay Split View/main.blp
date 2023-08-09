@@ -6,73 +6,81 @@ Adw.Window {
   height-request: 200;
   default-width: 640;
   default-height: 480;
+  modal: true;
+  title: _("Overlay Split view");
 
   Adw.Breakpoint {
-    condition ("max-width: 500px")
+    condition ("max-width: 400sp")
     setters {
       split_view.collapsed: true;
     }
   }
 
-  Adw.ToolbarView {
+  content: Adw.ToolbarView {
     top-bar-style: raised;
 
     [top]
-    Adw.HeaderBar header {
-      title-widget: Label {
-        label: _("Overlay Split View");
-      };
+    Adw.HeaderBar {
 
       [start]
-      ToggleButton sidebar_toggle {
-        icon-name: "dock-left-symbolic";
+      ToggleButton show_sidebar_button {
+        icon-name: "dock-left";
+        tooltip-text: _("Toggle Sidebar");
         active: bind split_view.show-sidebar;
+        visible: bind start_toggle.active;
+      }
+
+      [end]
+      ToggleButton {
+        icon-name: "dock-right";
+        tooltip-text: _("Toggle Sidebar");
+        active: bind show_sidebar_button.active;
+        visible: bind end_toggle.active;
       }
     }
 
     content: Adw.OverlaySplitView split_view {
-      show-sidebar: bind sidebar_toggle.active;
+      show-sidebar: bind show_sidebar_button.active;
 
-      sidebar: Box {
-        orientation: vertical;
-        valign: center;
-        halign: center;
-        spacing: 12;
-        Label {
-          label: _("Sidebar");
-          styles ["title-1"]
-        }
+      sidebar: Adw.StatusPage {
+        title: _("Sidebar");
 
-         ToggleButton start_toggle {
-          label: _("Start");
-          active: true;
-          styles ["pill"]
-          group: end_toggle;
-        }
+       child: Box {
+          orientation: vertical;
+          halign: center;
+          spacing: 18;
 
-        ToggleButton end_toggle {
-          label: _("End");
-          styles ["pill"]
-        }
+          ToggleButton start_toggle {
+            label: _("Start");
+            can-shrink: true;
+            active: true;
+            styles ["pill"]
+          }
+
+          ToggleButton end_toggle {
+            label: _("End");
+            can-shrink: true;
+            group: start_toggle;
+            styles ["pill"]
+          }
+        };
       };
 
-      content: Box {
-        orientation: vertical;
-        valign: center;
-        spacing: 12;
+      content: Adw.StatusPage {
+        title: _("Content");
 
-        Label {
-          label: _("Content");
-          styles ["title-1"]
-        }
+        Box {
+          orientation: vertical;
+          valign: center;
+          spacing: 18;
 
-        LinkButton {
-          label: "API Reference";
-          uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/main/class.OverlaySplitView.html";
-          margin-top: 24;
+          LinkButton {
+            label: "API Reference";
+            uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/main/class.OverlaySplitView.html";
+            margin-top: 24;
+          }
         }
       };
     };
-  }
+  };
 }
-
