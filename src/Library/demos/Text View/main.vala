@@ -51,13 +51,7 @@ void main () {
     buffer.@delete(ref start, ref end);
   });
 
-  textview.copy_clipboard.connect(() => {
-    message("Text copied to clipboard");
-  });
-  textview.cut_clipboard.connect(() => {
-    message("Text cut to clipboard");
-  });
-  textview.paste_clipboard.connect(() => {
-    message("Text pasted");
-  });
+  textview.copy_clipboard.connect(() => message("Text copied to clipboard"));
+  textview.cut_clipboard.connect(() => message("Text cut to clipboard"));
+  textview.paste_clipboard.connect(() => message("Text pasted"));
 }
