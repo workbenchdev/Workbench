@@ -1,7 +1,7 @@
 {
   "name": "Launcher",
-  "category": "controls",
-  "description": "Collect the arguments that are needed to open a File or URI",
+  "category": "platform",
+  "description": "Open a File or URI",
   "panels": ["code", "preview"],
   "autorun": true
 }

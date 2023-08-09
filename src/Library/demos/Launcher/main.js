@@ -3,14 +3,6 @@ import Gdk from "gi://Gdk";
 import Gio from "gi://Gio";
 import GLib from "gi://GLib";
 
-const launch_file = workbench.builder.get_object("launch_file");
-const file_name = workbench.builder.get_object("file_name");
-const file_location = workbench.builder.get_object("file_location");
-const change_file = workbench.builder.get_object("change_file");
-const uri_launch = workbench.builder.get_object("uri_launch");
-const uri_details = workbench.builder.get_object("uri_details");
-const change_uri = workbench.builder.get_object("change_uri");
-
 Gio._promisify(Gtk.FileLauncher.prototype, "launch", "launch_finish");
 Gio._promisify(
   Gtk.FileLauncher.prototype,
@@ -20,27 +12,32 @@ Gio._promisify(
 Gio._promisify(Gtk.FileDialog.prototype, "open", "open_finish");
 Gio._promisify(Gtk.UriLauncher.prototype, "launch", "launch_finish");
 
-const file_launcher = new Gtk.FileLauncher();
-const uri_launcher = new Gtk.UriLauncher();
-const file = Gio.File.new_for_path(pkg.pkgdatadir).resolve_relative_path(
-  "Library/demos/Launcher/workbench.txt",
-);
-file_launcher.set_file(file);
-file_launcher.always_ask = true;
+const launch_file = workbench.builder.get_object("launch_file");
+const file_name = workbench.builder.get_object("file_name");
+const file_location = workbench.builder.get_object("file_location");
+const change_file = workbench.builder.get_object("change_file");
+const uri_launch = workbench.builder.get_object("uri_launch");
+const uri_details = workbench.builder.get_object("uri_details");
 
 //File Launcher
+
+const file = Gio.File.new_for_uri(workbench.resolve("workbench.txt"));
+const file_launcher = new Gtk.FileLauncher({
+  always_ask: true,
+  file,
+});
+
 launch_file.connect("clicked", () => {
   file_launcher.launch(workbench.window, null).catch(logError);
 });
 
 file_launcher.connect("notify::file", () => {
-  const file_info = file_launcher.get_file();
-  const details = file_info.query_info(
-    "standard::*",
-    Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
+  const details = file_launcher.file.query_info(
+    "standard::display-name",
+    Gio.FileQueryInfoFlags.NONE,
     null,
   );
-  file_name.label = details.get_name();
+  file_name.label = details.get_display_name();
 });
 
 file_location.connect("clicked", () => {
@@ -48,31 +45,23 @@ file_location.connect("clicked", () => {
 });
 
 change_file.connect("clicked", () => {
-  let new_file = null;
-
-  const dialog_for_file = new Gtk.FileDialog({
-    title: _("Select File"),
-    modal: true,
-  });
-  dialog_for_file
+  new Gtk.FileDialog()
     .open(workbench.window, null)
-    .then((result) => {
-      new_file = result;
+    .then((file) => {
+      file_launcher.file = file;
     })
-    .catch((err) => {
-      console.debug(err.message);
-    })
-    .finally(() => {
-      file_launcher.set_file(new_file);
-    });
+    .catch(logError);
 });
 
 // URI Launcher
+
 uri_launch.connect("clicked", () => {
-  uri_launcher.launch(workbench.window, null).catch(logError);
+  new Gtk.UriLauncher({ uri: uri_details.text })
+    .launch(workbench.window, null)
+    .catch(logError);
 });
 uri_details.connect("changed", () => {
-  const text = uri_details.get_text();
+  const text = uri_details.text;
 
   uri_launcher.set_uri(text);
 
@@ -82,3 +71,4 @@ uri_details.connect("changed", () => {
     uri_launch.sensitive = false;
   }
 });
+
