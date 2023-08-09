@@ -1,0 +1,98 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: _("Launcher");
+  description: _("Collect the arguments that are needed to open a File or URI");
+
+  Adw.Clamp {
+    maximum-size: 640;
+    Box {
+      orientation: vertical;
+      spacing: 24;
+
+      Gtk.StackSwitcher {
+        stack: stack;
+        halign: center;
+      }
+
+      Gtk.Stack stack {
+        transition-type: crossfade;
+        vexpand: true;
+
+        Gtk.StackPage {
+          name: "file_launcher";
+          title: _("File Launcher");
+          child:
+            Box {
+              orientation: vertical;
+              halign: center;
+              spacing: 24;
+              Box {
+                halign: center;
+                spacing: 18;
+                orientation: horizontal;
+
+                Button launch_file {
+                  label: _("Launch");
+                  styles ["suggested-action", "pill"]
+                }
+                Button file_location {
+                  label: _("View");
+                  styles ["suggested-action", "pill"]
+                }
+              }
+
+              Button change_file {
+                label: _("Select File");
+                child: Box {
+                  halign: center;
+                  orientation: vertical;
+                  Label {
+                    label: _("Select File");
+                    styles ["title-4"]
+                  }
+                  Label file_name {
+                    label: _("workbench.txt");
+                    styles ["dim-label", "body"]
+                  }
+                };
+              }
+              LinkButton {
+                label: _("API Reference");
+                uri : "https://docs.gtk.org/gtk4/class.FileLauncher.html";
+              }
+          };
+        }
+
+        Gtk.StackPage {
+          name: "uri_launcher";
+          title: _("URI Launcher");
+          child:
+            Box {
+              orientation: vertical;
+              halign: center;
+              spacing: 24;
+              Box {
+                halign: center;
+                Button uri_launch {
+                  label: _("Launch");
+                  sensitive: false;
+                  styles ["suggested-action", "pill"]
+                }
+              }
+
+              Entry uri_details {
+                placeholder-text: _("Enter Uri");
+              }
+
+              LinkButton {
+                label: _("API Reference");
+                uri : "https://docs.gtk.org/gtk4/class.UriLauncher.html";
+              }
+          };
+        }
+      }
+    }
+  }
+}
