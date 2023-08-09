@@ -4,7 +4,7 @@ import Gio from "gi://Gio";
 import GLib from "gi://GLib";
 
 const launch_file = workbench.builder.get_object("launch_file");
-const file_details = workbench.builder.get_object("file_details");
+const file_name = workbench.builder.get_object("file_name");
 const file_location = workbench.builder.get_object("file_location");
 const change_file = workbench.builder.get_object("change_file");
 const uri_launch = workbench.builder.get_object("uri_launch");
@@ -32,14 +32,14 @@ launch_file.connect("clicked", () => {
   file_launcher.launch(workbench.window, null).catch(logError);
 });
 
-file_details.connect("clicked", () => {
+file_launcher.connect("notify::file", () => {
   const file_info = file_launcher.get_file();
   const details = file_info.query_info(
     "standard::*",
     Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
     null,
   );
-  console.log(`File: ${details.get_name()}`);
+  file_name.label = details.get_name();
 });
 
 file_location.connect("clicked", () => {

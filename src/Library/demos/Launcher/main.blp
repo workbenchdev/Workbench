@@ -30,27 +30,34 @@ Adw.StatusPage {
               spacing: 24;
               Box {
                 halign: center;
+                spacing: 18;
+                orientation: horizontal;
+
                 Button launch_file {
                   label: _("Launch");
                   styles ["suggested-action", "pill"]
                 }
-              }
-
-              Box {
-                styles ["linked"]
-
-                Button file_details {
-                  label: _("File Name");
-                }
                 Button file_location {
-                  label: _("Open Folder");
+                  label: _("View");
+                  styles ["suggested-action", "pill"]
                 }
               }
 
               Button change_file {
-                label: _("Choose another file");
+                label: _("Select File");
+                child: Box {
+                  halign: center;
+                  orientation: vertical;
+                  Label {
+                    label: _("Select File");
+                    styles ["title-4"]
+                  }
+                  Label file_name {
+                    label: _("workbench.txt");
+                    styles ["dim-label", "body"]
+                  }
+                };
               }
-
               LinkButton {
                 label: _("API Reference");
                 uri : "https://docs.gtk.org/gtk4/class.FileLauncher.html";
