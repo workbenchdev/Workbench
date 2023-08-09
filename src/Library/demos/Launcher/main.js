@@ -26,6 +26,7 @@ const file = Gio.File.new_for_path(pkg.pkgdatadir).resolve_relative_path(
   "Library/demos/Launcher/workbench.txt",
 );
 file_launcher.set_file(file);
+file_launcher.always_ask = true;
 
 //File Launcher
 launch_file.connect("clicked", () => {
