@@ -1,0 +1,6 @@
+{
+  "category": "user_interface",
+  "description": "Separates one widget from another",
+  "panels": ["ui", "preview"],
+  "autorun": true
+}

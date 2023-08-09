@@ -1,0 +1,30 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: _("Editable Label");
+  description: _("A text widget with an editing mode");
+
+  Box {
+    orientation: vertical;
+    halign: center;
+    spacing: 12;
+
+    EditableLabel edit_label {
+      text: _("Lorem ipsum dolor sit amet, consectetur adipiscing elit");
+      editing: bind edit_switch.active;
+    }
+
+    Switch edit_switch {
+      halign: center;
+      active: bind edit_label.editing;
+    }
+
+    LinkButton {
+      label: "API Reference";
+      uri: "https://docs.gtk.org/gtk4/class.EditableLabel.html";
+      margin-top: 12;
+    }
+  }
+}
+

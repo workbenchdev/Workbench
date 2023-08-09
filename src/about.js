@@ -68,6 +68,9 @@ ${getBlueprintVersion()}
     "Jose Hunter https://github.com/halfmexican/",
     "Akunne Pascal https://github.com/Kodecheff",
     "JCWasmx86 https://github.com/JCWasmx86",
+    "Alex (PaladinDev) https://github.com/SpikedPaladin",
+    "Diego Iván M.E https://github.com/Diego-Ivan",
+    "Marvin W https://github.com/mar-v-in",
     // Add yourself as
     // "John Doe",
     // or
@@ -86,5 +89,5 @@ function getValaVersion() {
 }
 
 function getBlueprintVersion() {
-  return "Blueprint 0.8.1";
+  return "Blueprint 0.10.0";
 }

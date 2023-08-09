@@ -102,6 +102,17 @@ export default function Actions({ application }) {
   // application.add_action(settings.create_action("safe-mode"));
   // application.add_action(settings.create_action("auto-preview"));
 
+  const action_open_file = new Gio.SimpleAction({
+    name: "open",
+    parameter_type: new GLib.VariantType("s"),
+  });
+  action_open_file.connect("activate", (_self, target) => {
+    const hint = target.unpack();
+    open({ application, hint }).catch(logError);
+  });
+  application.add_action(action_open_file);
+  application.set_accels_for_action("app.open('project')", ["<Control>O"]);
+
   const action_show_screenshot = new Gio.SimpleAction({
     name: "show-screenshot",
     parameter_type: new GLib.VariantType("s"),
@@ -121,4 +132,13 @@ async function showScreenshot({ application, uri }) {
     Xdp.OpenUriFlags.NONE,
     null, // cancellable
   );
+}
+
+async function open({ application, hint }) {
+  const file_dialog = new Gtk.FileDialog();
+  const file = await file_dialog.select_folder(
+    application.get_active_window(),
+    null,
+  );
+  application.open([file], hint);
 }

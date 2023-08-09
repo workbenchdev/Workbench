@@ -1,5 +1,4 @@
 {
-  "name": "Welcome",
   "category": "uncategorized",
   "description": "The initial welcome demo with instructions on how to use Workbench.",
   "panels": ["ui", "preview"],
