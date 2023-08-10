@@ -8,7 +8,7 @@ Adw.Window {
   default-height: 480;
 
   Adw.Breakpoint {
-    condition ("max-width: 500px")
+    condition ("max-width: 400sp")
     setters {
       split_view.collapsed: true;
       button.visible: true;
@@ -22,6 +22,7 @@ Adw.Window {
 
         [top]
         Adw.HeaderBar {
+          decoration-layout: "icon:close";
           show-title: false;
         }
 
@@ -47,11 +48,12 @@ Adw.Window {
 
         [top]
         Adw.HeaderBar {
+          decoration-layout: "icon:close";
           show-title: false;
         }
 
         content: Adw.StatusPage {
-          title: _("Navigation Split View");
+          title: _("Content");
 
           LinkButton {
             label: "API Reference";
