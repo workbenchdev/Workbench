@@ -1,0 +1,6 @@
+{
+  "category": "Breakpoints",
+  "description": "Create adaptive UI elements",
+  "panels": ["ui", "preview"],
+  "autorun": true
+}
