@@ -1,0 +1,6 @@
+{
+  "category": "platform",
+  "description": "An API to monitor system power profiles",
+  "panels": ["code", "preview"],
+  "autorun": true
+}

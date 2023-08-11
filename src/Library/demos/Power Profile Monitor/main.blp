@@ -1,0 +1,31 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.ToastOverlay overlay {
+  Adw.StatusPage {
+    title: _("Power Profile Monitor");
+    description: _("An API to monitor system power profiles");
+
+    Box {
+      spacing: 24;
+      orientation: vertical;
+
+      Box {
+        halign: center;
+        spacing: 6;
+        Image {
+          icon-name: "lightbulb-symbolic";
+          styles ["dim-label"]
+        }
+        Label  {
+          label: _("Try toggling Power Mode to \"Power Saver\" from Settings > Power\n or from Quick settings");
+          styles ["dim-label"]
+        }
+      }
+
+      LinkButton {
+        label: "API Reference";
+      }
+    }
+  }
+}
