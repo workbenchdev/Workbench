@@ -1,5 +1,5 @@
 {
-  "category": "user_interface",
+  "category": "navigation",
   "description": "A widget presenting sidebar and content side by side or as a navigation view.",
   "panels": ["ui", "preview"],
   "autorun": true
