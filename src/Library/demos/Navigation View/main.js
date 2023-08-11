@@ -28,6 +28,10 @@ next_button.connect("clicked", () => {
 
 previous_button.connect("clicked", () => {
   nav_view.pop();
+  next_button.sensitive = true;
+  if (nav_view.get_visible_page() === nav_pageone) {
+    previous_button.sensitive = false;
+  }
 });
 
 yes_button.connect("notify::active", () => {
