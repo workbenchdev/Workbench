@@ -11,8 +11,7 @@ const previous_button = workbench.builder.get_object("previous_button");
 const nav_pagetwo = workbench.builder.get_object("nav_pagetwo");
 const nav_pagethree = workbench.builder.get_object("nav_pagethree");
 const nav_pagefour = workbench.builder.get_object("nav_pagefour");
-const yes_button = workbench.builder.get_object("yes_button");
-const no_button = workbench.builder.get_object("no_button");
+const decisive_button = workbench.builder.get_object("decisive_button");
 
 next_button.connect("clicked", () => {
   previous_button.sensitive = true;
@@ -34,10 +33,6 @@ previous_button.connect("clicked", () => {
   }
 });
 
-yes_button.connect("notify::active", () => {
-  nav_view.animate_transitions = true;
-});
-
-no_button.connect("notify::active", () => {
-  nav_view.animate_transitions = false;
+decisive_button.connect("notify::active", () => {
+  nav_view.animate_transitions = decisive_button.active;
 });

@@ -6,34 +6,48 @@ Adw.StatusPage {
     halign: center;
     valign: start;
     orientation: vertical;
+    spacing: 18;
+    CenterBox {
+      [start]
+      Button previous_button {
+        icon-name: _("go-previous-symbolic");
+        sensitive: false;
+        styles ["circular","suggested-action"]
+      }
+      [end]
+      Button next_button {
+        icon-name: _("go-next-symbolic");
+        styles ["circular","suggested-action"]
+      }
+    }
     Box {
       height-request: 360;
       width-request: 360;
       halign: center;
-      margin-bottom: 24;
       orientation: vertical;
       styles ["card"]
 
       Adw.NavigationView nav_view {
+        animate-transitions: false;
         Adw.NavigationPage nav_pageone {
           title: _("Page 1");
           Adw.StatusPage {
-            title: _("Hello 👋");
-            description: _("➡️");
+            title: _("Hello");
+            description: _("page 1");
           }
         }
         Adw.NavigationPage nav_pagetwo {
           title: _("Page 2");
           Adw.StatusPage {
             title: _("from");
-            description: _("➡️");
+            description: _("page 2");
           }
         }
         Adw.NavigationPage nav_pagethree {
           title: _("Page 3");
           Adw.StatusPage {
             title: _("Workbench :)");
-            description: _("➡️");
+            description: _("page 3");
           }
         }
         Adw.NavigationPage nav_pagefour {
@@ -54,36 +68,9 @@ Adw.StatusPage {
         }
       }
     }
-    Box {
-      halign: center;
-      margin-bottom: 24;
-      styles ["linked"]
-      Button previous_button {
-        label: _("Previous Page");
-        sensitive: false;
-      }
-      Button next_button {
-        label: _("Next Page");
-      }
-    }
     Adw.PreferencesGroup{
-      Adw.ActionRow {
+      Adw.SwitchRow decisive_button {
         title: _("Animate transitions ?");
-        activatable-widget: decision_box;
-
-        Box decision_box {
-          styles ["linked"]
-          ToggleButton yes_button {
-            valign: center;
-            label: _("Yes");
-            active: true;
-          }
-          ToggleButton no_button {
-            valign: center;
-            label: _("No");
-            group: yes_button;
-          }
-        }
       }
     }
   }
