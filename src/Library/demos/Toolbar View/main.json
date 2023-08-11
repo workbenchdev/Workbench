@@ -1,0 +1,6 @@
+{
+  "category": "controls",
+  "description": "Represent active-state visually",
+  "panels": ["ui", "preview"],
+  "autorun": true
+}
