@@ -1,0 +1,173 @@
+using Gtk 4.0;
+using Adw 1;
+
+Box {
+  orientation: vertical;
+
+  Adw.Banner banner {
+    button-label: _("Resume");
+    title: _("Metered Network — syncing paused");
+    use-markup: true;
+    revealed: false;
+  }
+
+  Adw.StatusPage {
+    title: _("Network Monitor");
+    description: _("An API to monitor network connectivity");
+    vexpand: true;
+
+    Box {
+      spacing: 54;
+      orientation: vertical;
+      halign: center;
+
+      Box {
+        homogeneous: true;
+
+        Box {
+          spacing: 6;
+          orientation: vertical;
+
+          Label {
+            halign: start;
+            label: _("Network Metered");
+            styles ["title-4"]
+          }
+
+          Label {
+            halign: start;
+            label: _("Check if your network is metered");
+            styles ["dim-label"]
+          }
+        }
+
+        MenuButton {
+          halign: end;
+          valign: center;
+          icon-name: "lightbulb-symbolic";
+
+          popover: Popover {
+            Box steps {
+              margin-top: 6;
+              margin-bottom: 6;
+              margin-start: 6;
+              margin-end: 6;
+              orientation: vertical;
+              spacing: 12;
+
+              Label {
+                halign: start;
+                label: _("To mark your network as metered");
+              }
+
+              Label {
+                halign: start;
+                label: _("1. Go to Settings > Wi-Fi");
+              }
+
+              Label {
+                halign: start;
+                label: _("2. Click on the gear next to your network's name");
+              }
+
+              Label {
+                halign: start;
+                label: _("3. Check off \"Metered connection: has data limits or can incur charges\"");
+              }
+
+              Label {
+                halign: start;
+                label: _("4. Apply the changes and reconnect to the network");
+              }
+            }
+          };
+          styles ["flat"]
+        }
+      }
+
+      Box {
+        spacing: 24;
+        orientation: vertical;
+        halign: center;
+
+        Box {
+          homogeneous: true;
+
+          Box {
+            spacing: 6;
+            orientation: vertical;
+
+            Label {
+              halign: start;
+              label: _("Network Connectivity");
+              styles ["title-4"]
+            }
+
+            Label {
+              halign: start;
+              label: _("Check your network connectivity status");
+              styles ["dim-label"]
+            }
+          }
+
+          MenuButton {
+            valign: center;
+            halign: end;
+            icon-name: "lightbulb-symbolic";
+            popover: Popover {
+              Box {
+                margin-top: 6;
+                margin-bottom: 6;
+                margin-start: 6;
+                margin-end:6;
+
+                Label {
+                  label: _("You can try turning your network off/on");
+                }
+              }
+            };
+
+            styles ["flat"]
+          }
+        }
+
+
+        Box {
+          orientation: vertical;
+          spacing: 12;
+
+          LevelBar level_bar{
+            mode: discrete;
+            min-value: 0;
+            max-value: 4;
+          }
+
+          Box {
+            homogeneous: true;
+
+            Label {
+              label: _("Local");
+            }
+
+            Label {
+              label: _("Limited");
+            }
+
+            Label {
+              label: _("Portal");
+            }
+
+            Label {
+              label: _("Full");
+            }
+          }
+        }
+      }
+
+      LinkButton {
+        label: "API Reference";
+        uri: "https://docs.gtk.org/gio/iface.NetworkMonitor.html";
+      }
+    }
+  }
+}
