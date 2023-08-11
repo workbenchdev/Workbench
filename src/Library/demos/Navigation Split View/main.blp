@@ -18,11 +18,11 @@ Adw.Window {
   content: Adw.NavigationSplitView split_view {
     sidebar: Adw.NavigationPage {
       title: "Sidebar";
+      tag: "sidebar";
       child: Adw.ToolbarView {
 
         [top]
         Adw.HeaderBar {
-          decoration-layout: "icon:close";
           show-title: false;
         }
 
@@ -32,6 +32,7 @@ Adw.Window {
           Button button {
             visible: false;
             halign: center;
+            can-shrink: true;
             label: _("Open Content");
             action-name: "navigation.push";
             action-target: "'content'";
@@ -48,7 +49,6 @@ Adw.Window {
 
         [top]
         Adw.HeaderBar {
-          decoration-layout: "icon:close";
           show-title: false;
         }
 
