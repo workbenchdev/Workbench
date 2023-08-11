@@ -1,0 +1,90 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  Box {
+    halign: center;
+    valign: start;
+    orientation: vertical;
+    Box {
+      height-request: 360;
+      width-request: 360;
+      halign: center;
+      margin-bottom: 24;
+      orientation: vertical;
+      styles ["card"]
+
+      Adw.NavigationView nav_view {
+        Adw.NavigationPage nav_pageone {
+          title: _("Page 1");
+          Adw.StatusPage {
+            title: _("Hello 👋");
+            description: _("➡️");
+          }
+        }
+        Adw.NavigationPage nav_pagetwo {
+          title: _("Page 2");
+          Adw.StatusPage {
+            title: _("from");
+            description: _("➡️");
+          }
+        }
+        Adw.NavigationPage nav_pagethree {
+          title: _("Page 3");
+          Adw.StatusPage {
+            title: _("Workbench :)");
+            description: _("➡️");
+          }
+        }
+        Adw.NavigationPage nav_pagefour {
+          title: _("Page 4");
+          Adw.StatusPage {
+            title: _("Navigation View");
+            description: _("A page-based navigation container.");
+            Box {
+              orientation: vertical;
+              spacing: 18;
+              vexpand:true;
+              LinkButton {
+                label: _("API Reference");
+                uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/main/class.NavigationView.html";
+              }
+            }
+          }
+        }
+      }
+    }
+    Box {
+      halign: center;
+      margin-bottom: 24;
+      styles ["linked"]
+      Button previous_button {
+        label: _("Previous Page");
+        sensitive: false;
+      }
+      Button next_button {
+        label: _("Next Page");
+      }
+    }
+    Adw.PreferencesGroup{
+      Adw.ActionRow {
+        title: _("Animate transitions ?");
+        activatable-widget: decision_box;
+
+        Box decision_box {
+          styles ["linked"]
+          ToggleButton yes_button {
+            valign: center;
+            label: _("Yes");
+            active: true;
+          }
+          ToggleButton no_button {
+            valign: center;
+            label: _("No");
+            group: yes_button;
+          }
+        }
+      }
+    }
+  }
+}
