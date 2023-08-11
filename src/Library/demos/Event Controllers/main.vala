@@ -3,8 +3,7 @@
 private bool ctrl_pressed = false;
 
 public void main () {
-  // Gtk.Window hides Gtk.Widget's add_controller method, thus we need to access it as a Widget.
-  Gtk.Widget window = workbench.window;
+  Gtk.Window window = workbench.window;
 
   var pic1 = (Gtk.Picture) workbench.builder.get_object ("pic1");
   var pic2 = (Gtk.Picture) workbench.builder.get_object ("pic2");
@@ -19,7 +18,8 @@ public void main () {
   var ctrl_button = (Gtk.Button) workbench.builder.get_object ("ctrl_button");
 
   var key_controller = new Gtk.EventControllerKey ();
-  window.add_controller (key_controller);
+  // Gtk.Window hides Gtk.Widget's add_controller method, thus we need to cast it
+  ((Gtk.Widget) window).add_controller (key_controller);
 
   key_controller.key_pressed.connect ((keyval, keycode, state) => {
     if (keyval == Gdk.Key.Control_L || keyval == Gdk.Key.Control_R) {
@@ -47,7 +47,7 @@ public void main () {
   var gesture_click = new Gtk.GestureClick () {
     button = 0
   };
-  window.add_controller (gesture_click);
+  ((Gtk.Widget) window).add_controller (gesture_click);
 
   gesture_click.pressed.connect ((gesture, n_press, x, y) => {
     switch (gesture.get_current_button ()) {
