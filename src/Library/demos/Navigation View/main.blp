@@ -10,14 +10,19 @@ Adw.StatusPage {
     CenterBox {
       [start]
       Button previous_button {
-        icon-name: _("go-previous-symbolic");
+        icon-name: "go-previous-symbolic";
         sensitive: false;
-        styles ["circular","suggested-action"]
+        styles ["circular", "suggested-action"]
+      }
+      [center]
+      Label title {
+        label: _("Page 1");
+        styles ["title-4"]
       }
       [end]
       Button next_button {
-        icon-name: _("go-next-symbolic");
-        styles ["circular","suggested-action"]
+        icon-name: "go-next-symbolic";
+        styles ["circular", "suggested-action"]
       }
     }
     Box {
@@ -30,28 +35,25 @@ Adw.StatusPage {
       Adw.NavigationView nav_view {
         animate-transitions: false;
         Adw.NavigationPage nav_pageone {
-          title: _("Page 1");
+          title: bind title.label;
           Adw.StatusPage {
             title: _("Hello");
-            description: _("page 1");
           }
         }
         Adw.NavigationPage nav_pagetwo {
-          title: _("Page 2");
+          title: bind title.label;
           Adw.StatusPage {
             title: _("from");
-            description: _("page 2");
           }
         }
         Adw.NavigationPage nav_pagethree {
-          title: _("Page 3");
+          title: bind title.label;
           Adw.StatusPage {
             title: _("Workbench :)");
-            description: _("page 3");
           }
         }
         Adw.NavigationPage nav_pagefour {
-          title: _("Page 4");
+          title: bind title.label;
           Adw.StatusPage {
             title: _("Navigation View");
             description: _("A page-based navigation container.");
@@ -69,8 +71,12 @@ Adw.StatusPage {
       }
     }
     Adw.PreferencesGroup{
-      Adw.SwitchRow decisive_button {
-        title: _("Animate transitions ?");
+      styles ["boxed-list"]
+      Adw.SwitchRow decisive_button_transition {
+        title: _("Animate transitions");
+      }
+      Adw.SwitchRow decisive_button_poponescape {
+        title: _("Pop on Escape");
       }
     }
   }
