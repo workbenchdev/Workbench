@@ -1,5 +1,5 @@
 {
-  "category": "Breakpoints",
+  "category": "layout",
   "description": "Create adaptive UI elements",
   "panels": ["ui", "preview"],
   "autorun": true
