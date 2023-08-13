@@ -24,7 +24,7 @@ Adw.StatusPage {
         icon-name: "go-next-symbolic";
         styles ["circular", "suggested-action"]
       }
-    }    
+    }
     Box {
       height-request: 360;
       width-request: 360;
@@ -34,21 +34,25 @@ Adw.StatusPage {
 
       Adw.NavigationView nav_view {
         Adw.NavigationPage nav_pageone {
+          title: _("Page 1");
           Adw.StatusPage {
             title: _("Hello");
           }
         }
         Adw.NavigationPage nav_pagetwo {
+          title: _("Page 2");
           Adw.StatusPage {
             title: _("from");
           }
         }
         Adw.NavigationPage nav_pagethree {
+          title: _("Page 3");
           Adw.StatusPage {
             title: _("Workbench :)");
           }
         }
         Adw.NavigationPage nav_pagefour {
+          title: _("Page 4");
           Adw.StatusPage {
             title: _("Navigation View");
             description: _("A page-based navigation container.");
@@ -73,7 +77,7 @@ Adw.StatusPage {
       Adw.SwitchRow decisive_button_poponescape {
         title: _("Pop on Escape");
         active: bind nav_view.pop-on-escape bidirectional;
-      }      
+      }
     }
   }
 }
