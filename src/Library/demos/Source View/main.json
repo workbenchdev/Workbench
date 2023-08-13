@@ -1,7 +1,7 @@
 {
   "name": "Source View",
   "category": "controls",
-  "description": "A widget with advanced text-editing features like syntax highlighting",
-  "panels": ["code", "ui", "preview"],
-  "autorun": false
+  "description": "Widget that enables text-editing with advanced features like syntax highlighting",
+  "panels": ["code", "preview"],
+  "autorun": true
 }
