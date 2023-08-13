@@ -8,8 +8,29 @@ Adw.StatusPage {
   Box {
     orientation: vertical;
     halign: center;
+    
+    Box {
+      halign: center;
+      spacing: 6;
+      orientation: horizontal;
+
+      Button button_increase {
+        icon-name: "plus";
+      }
+
+      Button button_decrease {
+        icon-name: "minus";
+      }
+    }
+
+    LinkButton {
+      margin-top: 12;
+      label: "API Reference";
+      uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.3/class.Clamp.html";
+    }
 
     Adw.Clamp clamp {
+      margin-top: 24;
       maximum-size: 400;
       tightening-threshold: 200;
       margin-bottom: 24;
@@ -17,31 +38,7 @@ Adw.StatusPage {
        Label label {
         wrap: true;
         label: _("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ");
-
       }
-
-    }
-
-    FlowBox {
-      halign: center;
-      orientation: vertical;
-
-      Button increase {
-        icon-name: "plus";
-        halign: center;
-
-      }
-
-      Button decrease {
-        icon-name: "minus";
-        halign: center;
-      }
-
-    }
-
-    LinkButton {
-      label: "API Reference";
-      uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.3/class.Clamp.html";
     }
   }
 }

@@ -1,8 +1,8 @@
-const increase = workbench.builder.get_object("increase");
-const decrease = workbench.builder.get_object("decrease");
+const button_increase = workbench.builder.get_object("button_increase");
+const button_decrease = workbench.builder.get_object("button_decrease");
 const clamp = workbench.builder.get_object("clamp");
 
-function handleIncrease() {
+function increase() {
   const current_size = clamp.get_maximum_size();
   const current_threshold = clamp.get_tightening_threshold();
   clamp.maximum_size = current_size + 300;
@@ -13,7 +13,7 @@ function handleIncrease() {
   }
 }
 
-function handleDecrease() {
+function decrease() {
   const current_size = clamp.get_maximum_size();
   const current_threshold = clamp.get_tightening_threshold();
   clamp.maximum_size = current_size - 300;
@@ -24,5 +24,6 @@ function handleDecrease() {
   }
 }
 
-increase.connect("clicked", handleIncrease);
-decrease.connect("clicked", handleDecrease);
+button_increase.connect("clicked", increase);
+button_decrease.connect("clicked", decrease);
+
