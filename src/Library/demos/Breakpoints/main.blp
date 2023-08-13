@@ -15,7 +15,7 @@ Gtk.Window {
 
     Image image {
       icon-size: large;
-      icon-name: "face-devilish-symbolic";
+      icon-name: "smile-symbolic";
     }
 
     Adw.BreakpointBin breakpoint_bin {
@@ -23,7 +23,7 @@ Gtk.Window {
       height-request: 50;
 
       Adw.Breakpoint breakpoint {
-      condition ("max-width: 500sp")
+        condition ("max-width: 500sp")
         setters {
           breakpoint_bin.child: narrow;
         }
