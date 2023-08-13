@@ -296,6 +296,21 @@ workbench_completion_request_init (WorkbenchCompletionRequest *self)
 }
 
 /**
+ * workbench_completion_request_get_cancellable: (get-property cancellable)
+ *
+ * Get the cancellable for the request.
+ *
+ * Returns: (transfer none) (nullable): a `GCancellable`
+ */
+GCancellable *
+workbench_completion_request_get_cancellable (WorkbenchCompletionRequest *request)
+{
+  g_return_val_if_fail (WORKBENCH_IS_COMPLETION_REQUEST (request), NULL);
+
+  return request->cancellable;
+}
+
+/**
  * workbench_completion_request_get_context: (get-property context)
  *
  * Get the completion context for the request.
