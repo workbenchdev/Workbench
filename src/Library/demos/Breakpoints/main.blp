@@ -6,9 +6,9 @@ Gtk.Window {
   height-request: 200;
   default-width: 640;
   default-height: 480;
-  title: _("Breakpoints");
+  title: bind page.title;
 
-  Adw.StatusPage {
+  Adw.StatusPage page {
     title: _("Breakpoints");
     description: _("Resize the window to see the breakpoint effect");
     child: Box {
@@ -50,7 +50,6 @@ Gtk.Window {
   }
 }
 
-
 Label label_narrow {
   label: _("Narrow");
   styles ["title-4"]
@@ -58,5 +57,5 @@ Label label_narrow {
 
 Label label_wide {
   label: _("Wide");
-   styles ["title-1"]
+  styles ["title-1"]
 }
