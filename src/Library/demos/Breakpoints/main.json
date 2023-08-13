@@ -1,6 +1,6 @@
 {
   "category": "layout",
-  "description": "Create adaptive UI elements",
+  "description": "Create adaptive UI",
   "panels": ["ui", "preview"],
   "autorun": true
 }
