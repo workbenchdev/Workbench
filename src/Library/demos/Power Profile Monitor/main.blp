@@ -4,7 +4,7 @@ using Adw 1;
 Adw.ToastOverlay overlay {
   Adw.StatusPage {
     title: _("Power Profile Monitor");
-    description: _("An API to monitor system power profiles");
+    description: _("Monitor Power Mode");
 
     Box {
       spacing: 24;
@@ -18,13 +18,14 @@ Adw.ToastOverlay overlay {
           styles ["dim-label"]
         }
         Label  {
-          label: _("Try toggling Power Mode to \"Power Saver\" from Settings > Power\n or from Quick settings");
+          label: _("Try toggling Power Mode to \"Power Saver\" from Settings → Power\n or from Quick Toggles");
           styles ["dim-label"]
         }
       }
 
       LinkButton {
         label: "API Reference";
+        uri: "https://docs.gtk.org/gio/iface.PowerProfileMonitor.html";
       }
     }
   }

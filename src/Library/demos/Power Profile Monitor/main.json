@@ -1,6 +1,6 @@
 {
   "category": "platform",
-  "description": "An API to monitor system power profiles",
+  "description": "Monitor Power Mode",
   "panels": ["code", "preview"],
   "autorun": true
 }
