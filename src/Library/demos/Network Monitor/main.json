@@ -1,6 +1,6 @@
 {
   "category": "platform",
-  "description": "An API to monitor network connectivity",
+  "description": "Monitor network status",
   "panels": ["code", "preview"],
   "autorun": true
 }
