@@ -1,5 +1,4 @@
 {
-  "name": "Actions",
   "category": "controls",
   "description": "A high-level interface used to describe a piece of functionality",
   "panels": ["ui", "preview"],

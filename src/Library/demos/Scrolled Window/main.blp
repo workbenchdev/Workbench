@@ -1,0 +1,76 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: _("Scrolled Window");
+  description: _("A container that makes its child scrollable");
+
+  Adw.Clamp {
+    Box{
+      hexpand: true;
+      vexpand: true;
+      spacing: 12;
+      orientation: vertical;
+
+      Box{
+        halign: center;
+        spacing: 18;
+
+        Label {
+          label: _("Orientation");
+        }
+
+        Box {
+          margin-start: 6;
+          homogeneous: true;
+          halign: center;
+          styles ["linked"]
+
+          ToggleButton toggle_orientation {
+            label: _("Horizontal");
+            active: true;
+          }
+          ToggleButton {
+            label: _("Vertical");
+            group: toggle_orientation;
+          }
+        }
+
+        Label {
+          label: _("Go To");
+        }
+
+        Box{
+
+          Button button_start {
+            label: _("Start");
+          }
+
+          Button button_end {
+            label: _("End");
+          }
+          styles ["linked"]
+        }
+      }
+
+
+
+      ScrolledWindow scrolled_window {
+        margin-bottom: 24;
+        margin-top: 24;
+        has-frame: true;
+        propagate-natural-height: true;
+        max-content-height: 300;
+
+        Box container {
+          homogeneous: true;
+        }
+      }
+
+      LinkButton {
+        label: "API Reference";
+        uri: "https://docs.gtk.org/gtk4/class.ScrolledWindow.html";
+      }
+    }
+  }
+}

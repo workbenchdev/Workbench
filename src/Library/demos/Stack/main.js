@@ -1,16 +1,9 @@
 import Gtk from "gi://Gtk";
-import Adw from "gi://Adw";
-import Gdk from "gi://Gdk";
-import GObject from "gi://GObject";
 
 const root_box = workbench.builder.get_object("root_box");
 const stack = workbench.builder.get_object("stack");
 const navigation_row = workbench.builder.get_object("navigation_row");
-const transition_row = workbench.builder.get_object("transition_row");
-const interpolate_switch = workbench.builder.get_object("interpolate_switch");
-const transition_spin_button = workbench.builder.get_object(
-  "transition_spin_button",
-);
+
 let navigation_widget;
 let separator;
 
@@ -38,5 +31,3 @@ navigation_row.connect("notify::selected-item", () => {
     root_box.orientation = Gtk.Orientation.HORIZONTAL;
   }
 });
-
-

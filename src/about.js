@@ -71,6 +71,7 @@ ${getBlueprintVersion()}
     "Alex (PaladinDev) https://github.com/SpikedPaladin",
     "Diego Iván M.E https://github.com/Diego-Ivan",
     "Rasmus Thomsen <oss@cogitri.dev>",
+    "Marvin W https://github.com/mar-v-in",
     // Add yourself as
     // "John Doe",
     // or
