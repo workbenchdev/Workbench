@@ -17,21 +17,23 @@ next_button.connect("clicked", () => {
   switch (nav_view.visible_page) {
     case nav_pageone:
       nav_view.push(nav_pagetwo);
-      title.label = "Page 2";
       break;
     case nav_pagetwo:
       nav_view.push(nav_pagethree);
-      title.label = "Page 3";
       break;
     case nav_pagethree:
       nav_view.push(nav_pagefour);
-      title.label = "Page 4";
       break;
   }
 });
 
 previous_button.connect("clicked", () => {
   nav_view.pop();
+});
+
+nav_view.connect("notify::visible-page", () => {
+  previous_button.sensitive = nav_view.visible_page !== nav_pageone;
+  next_button.sensitive = nav_view.visible_page !== nav_pagefour;
   switch (nav_view.visible_page) {
     case nav_pageone:
       title.label = "Page 1";
@@ -42,18 +44,8 @@ previous_button.connect("clicked", () => {
     case nav_pagethree:
       title.label = "Page 3";
       break;
+    case nav_pagefour:
+      title.label = "Page 4";
+      break;
   }
-});
-
-decisive_button_transition.connect("notify::active", () => {
-  nav_view.animate_transitions = decisive_button_transition.active;
-});
-
-decisive_button_poponescape.connect("notify::active", () => {
-  nav_view.pop_on_escape = decisive_button_poponescape.active;
-});
-
-nav_view.connect("notify::visible-page", () => {
-  previous_button.sensitive = nav_view.visible_page !== nav_pageone;
-  next_button.sensitive = nav_view.visible_page !== nav_pagefour;
 });
