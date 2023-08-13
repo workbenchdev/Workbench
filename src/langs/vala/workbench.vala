@@ -7,12 +7,12 @@ namespace workbench {
     }
 }
 
-public void set_builder (Gtk.Builder b) {
-    workbench.builder = b;
+public void set_builder (Gtk.Builder builder) {
+    workbench.builder = builder;
 }
 
-public void set_window (Gtk.Window w) {
-    workbench.window = w;
+public void set_window (Gtk.Window window) {
+    workbench.window = window;
 }
 
 public void set_base_uri (string uri) {

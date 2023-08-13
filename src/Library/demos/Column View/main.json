@@ -1,0 +1,7 @@
+{
+  "name": "Column View",
+  "category": "layout",
+  "description": "Presents a large dynamic list of items using multiple columns with headers",
+  "panels": ["ui", "preview"],
+  "autorun": true
+}

@@ -1,0 +1,85 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.Window {
+  width-request: 360;
+  height-request: 200;
+  default-width: 640;
+  default-height: 480;
+  title: _("Overlay Split view");
+
+  Adw.Breakpoint {
+    condition ("max-width: 400sp")
+    setters {
+      split_view.collapsed: true;
+    }
+  }
+
+  content: Adw.ToolbarView {
+    top-bar-style: raised;
+
+    [top]
+    Adw.HeaderBar {
+
+      [start]
+      ToggleButton show_sidebar_button {
+        icon-name: "dock-left";
+        tooltip-text: _("Toggle Sidebar");
+        active: bind split_view.show-sidebar;
+        visible: bind start_toggle.active;
+      }
+
+      [end]
+      ToggleButton {
+        icon-name: "dock-right";
+        tooltip-text: _("Toggle Sidebar");
+        active: bind show_sidebar_button.active;
+        visible: bind end_toggle.active;
+      }
+    }
+
+    content: Adw.OverlaySplitView split_view {
+      show-sidebar: bind show_sidebar_button.active;
+
+      sidebar: Adw.StatusPage {
+        title: _("Sidebar");
+
+       child: Box {
+          orientation: vertical;
+          halign: center;
+          spacing: 18;
+
+          ToggleButton start_toggle {
+            label: _("Start");
+            can-shrink: true;
+            active: true;
+            styles ["pill"]
+          }
+
+          ToggleButton end_toggle {
+            label: _("End");
+            can-shrink: true;
+            group: start_toggle;
+            styles ["pill"]
+          }
+        };
+      };
+
+      content: Adw.StatusPage {
+        title: _("Content");
+
+        Box {
+          orientation: vertical;
+          valign: center;
+          spacing: 18;
+
+          LinkButton {
+            label: "API Reference";
+            uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/main/class.OverlaySplitView.html";
+            margin-top: 24;
+          }
+        }
+      };
+    };
+  };
+}
