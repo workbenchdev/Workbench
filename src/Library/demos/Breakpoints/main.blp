@@ -8,40 +8,45 @@ Gtk.Window {
   default-height: 480;
   title: _("Breakpoints");
 
-  Box {
-    orientation: vertical;
-    spacing: 12;
-    valign: center;
+  Adw.StatusPage {
+    title: _("Breakpoints");
+    description: _("Resize the window to see the breakpoint effect");
+    child: Box {
+      orientation: vertical;
+      spacing: 12;
+      valign: center;
 
-    Image image {
-      icon-size: large;
-      icon-name: "smile-symbolic";
-    }
-
-    Adw.BreakpointBin breakpoint_bin {
-      width-request: 200;
-      height-request: 50;
-
-      Adw.Breakpoint breakpoint {
-        condition ("max-width: 500sp")
-        setters {
-          breakpoint_bin.child: narrow;
-        }
+      Image image {
+        icon-size: large;
+        icon-name: "smile-symbolic";
       }
 
-      child: wide;
-    }
+      Adw.BreakpointBin breakpoint_bin {
+        width-request: 200;
+        height-request: 50;
 
-    LinkButton {
-      margin-top: 24;
-      label: "Breakpoint";
-      uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/main/class.Breakpoint.html";
-    }
+        Adw.Breakpoint breakpoint {
+          condition ("max-width: 500sp")
+          setters {
+            breakpoint_bin.child: label_narrow;
+            image.icon-size: normal;
+          }
+        }
 
-    LinkButton {
-      label: "Breakpoint Bin";
-      uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/main/class.BreakpointBin.html";
-    }
+        child: label_wide;
+      }
+
+      LinkButton {
+        margin-top: 24;
+        label: "Breakpoint";
+        uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/main/class.Breakpoint.html";
+      }
+
+      LinkButton {
+        label: "Breakpoint Bin";
+        uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/main/class.BreakpointBin.html";
+      }
+    };
   }
 }
 
