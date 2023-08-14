@@ -180,7 +180,7 @@ menu menu_app {
     }
 
     item {
-      label: _("About WorkBench");
+      label: _("About Workbench");
       action: "app.about";
     }
   }
@@ -201,4 +201,28 @@ Box gtk_box {
     label: _("Hello from Workbench");
   }
 }
-
+Adw.TabBar tab_bar {
+  view: tab_view;
+}
+Adw.TabView tab_view{
+  Adw.TabPage main_tab_page{
+    title: _("First Page");
+    child:
+      Adw.StatusPage {
+        hexpand: true;
+        vexpand: true;
+        title: _("Tab View");
+        description: _("A dynamic tabbed container");
+      };
+  }
+    Adw.TabPage main_tab_page2{
+    title: _("Second Page");
+    child:
+      Adw.StatusPage {
+        hexpand: true;
+        vexpand: true;
+        title: _("Tab View");
+        description: _("A dynamic tabbed container");
+      };
+  }
+}
