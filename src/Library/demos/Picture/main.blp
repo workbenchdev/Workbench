@@ -1,8 +1,7 @@
 using Gtk 4.0;
 using Adw 1;
 
-
- Adw.StatusPage {
+Adw.StatusPage {
   title: _("Picture");
   description: _("Display images at their natural sizes");
 
@@ -19,26 +18,30 @@ using Adw 1;
       valign: center;
       can-shrink: true;
       content-fit: fill;
+      alternative-text: _("Blobs");
     }
-    Label {label: _("Fill");}
+
+    Label { label: _("Fill"); }
 
     Picture picture2 {
       halign: center;
       valign: center;
       can-shrink: true;
       content-fit: contain;
+      alternative-text: _("Drool");
     }
 
-    Label {label: _("Contain");}
+    Label { label: _("Contain"); }
 
     Picture picture3 {
       halign: center;
       valign: center;
       can-shrink: true;
       content-fit: cover;
+      alternative-text: _("Keys");
     }
 
-    Label {label: _("Cover");}
+    Label { label: _("Cover"); }
 
      LinkButton {
       label: _("API Reference");
