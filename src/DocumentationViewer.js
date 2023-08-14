@@ -2,9 +2,7 @@ import GObject from "gi://GObject";
 import Gtk from "gi://Gtk";
 import Gio from "gi://Gio";
 import GLib from "gi://GLib";
-import Adw from "gi://Adw";
 import WebKit from "gi://WebKit";
-
 import { decode } from "./util.js";
 import resource from "./DocumentationViewer.blp";
 
@@ -163,8 +161,6 @@ function createSections(docs, dir) {
     vfunc: ["Virtual Methods", "#virtual-methods"],
   };
 
-  // Contains all items from the namespace that need a subsection
-  // A subsection is used to show an item's methods, properties, signals etc
   const subsections = {};
   // List of sections that need subsections
   const subsections_required = ["class", "iface", "struct", "error"];
@@ -172,7 +168,7 @@ function createSections(docs, dir) {
   for (const doc of docs) {
     const split_name = doc.split(".");
     // If file is of the form xx.xx.html for example class.Button.html
-    if (split_name.length == 3 && sections[split_name[0]]) {
+    if (split_name.length === 3 && sections[split_name[0]]) {
       const doc_page = new DocumentationPage({
         name: split_name[1],
         uri: dir.get_child(doc).get_uri(),
@@ -191,11 +187,10 @@ function createSections(docs, dir) {
     }
   }
 
-  // Iterate through all the files again to add items into the subsection "buckets"
   for (const doc of docs) {
     const split_name = doc.split(".");
     // File is of the form xx.xx.xx.html for example ctor.Button.new.html
-    if (split_name.length == 4 && subsections[split_name[1]]) {
+    if (split_name.length === 4 && subsections[split_name[1]]) {
       const doc_page = new DocumentationPage({
         name: split_name[2],
         uri: dir.get_child(doc).get_uri(),
@@ -259,7 +254,7 @@ function newListStore() {
 async function getNamespaces(base_path, filter_docs) {
   const namespaces = [];
   const dirs = await list(base_path);
-  const filtered = dirs.filter(dir => !(filter_docs.includes(dir)))
+  const filtered = dirs.filter((dir) => !filter_docs.includes(dir));
 
   for (const dir of filtered) {
     const results = await Promise.allSettled([
@@ -337,4 +332,3 @@ async function enableDocSidebar(webview) {
     }
   }
 }
-
