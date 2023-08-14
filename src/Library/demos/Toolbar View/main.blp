@@ -114,117 +114,91 @@ ActionBar action_bar {
   }
 }
 Adw.ViewStack stack {
-      vexpand: true;
+  vexpand: true;
 
-      Adw.ViewStackPage page1 {
-        name: "page1";
-        title: _("Favorites");
-        icon-name: "star-filled-rounded-symbolic";
-        use-underline: true;
-        child: Adw.StatusPage{
-          title: bind page1.title;
-          icon-name: bind page1.icon-name;
-          child:
+  Adw.ViewStackPage page1 {
+    name: "page1";
+    title: _("Favorites");
+    icon-name: "star-filled-rounded-symbolic";
+    use-underline: true;
+    child: Adw.StatusPage{
+      title: bind page1.title;
+      icon-name: bind page1.icon-name;
+    };
+  }
 
-          Box{
-            orientation: vertical;
-            valign: center;
+  Adw.ViewStackPage page2 {
+    name: "page2";
+    title: _("Recents");
+    icon-name: "clock-alt-symbolic";
+    use-underline: true;
+    child: Adw.StatusPage{
+      title: bind page2.title;
+      icon-name: bind page2.icon-name;
+    };
+  }
 
-            LinkButton {
-              label: "API Reference";
-              uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.3/class.ViewSwitcher.html";
-            }
-            LinkButton {
-              label: "Human Interface Guidelines";
-              uri: "https://developer.gnome.org/hig/patterns/nav/view-switchers.html";
-            }
-          };
-        };
-      }
+  Adw.ViewStackPage page3 {
+    name: "page3";
+    title: _("Notifications");
+    icon-name: "bell-symbolic";
+    badge-number: 0;
+    needs-attention: true;
+    use-underline: true;
+    child: Adw.StatusPage{
+      title: bind page3.title;
+      icon-name: bind page3.icon-name;
+    };
+  }
 
-      Adw.ViewStackPage page2 {
-        name: "page2";
-        title: _("Recents");
-        icon-name: "clock-alt-symbolic";
-        use-underline: true;
-        child: Adw.StatusPage {
-          title: bind page2.title;
-          icon-name: bind page2.icon-name;
-          child:
+  Adw.ViewStackPage page4 {
+    name: "page4";
+    title: _("Account");
+    icon-name: "person-symbolic";
+    use-underline: true;
+    child: Adw.StatusPage{
+      title: bind page4.title;
+      icon-name: bind page4.icon-name;
+    };
+  }
+}
 
-          Box {
-            orientation: vertical;
-            valign: center;
+Adw.ViewSwitcherBar switcher_bar {
+  stack: stack;
+  reveal: true;
+}
 
-            LinkButton {
-              label: "API Reference";
-              uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.3/class.ViewSwitcher.html";
-            }
-            LinkButton {
-              label: "Human Interface Guidelines";
-              uri: "https://developer.gnome.org/hig/patterns/nav/view-switchers.html";
-            }
-          };
-        };
-      }
+PopoverMenuBar popover {
+  menu-model: menu_app;
+}
 
-      Adw.ViewStackPage page3 {
-        name: "page3";
-        title: _("Notifications");
-        icon-name: "bell-symbolic";
-        badge-number: 0;
-        needs-attention: true;
-        use-underline: true;
-        child:
-
-        Adw.StatusPage {
-          title: bind page3.title;
-          valign: start;
-          margin-start: 15;
-          margin-end: 15;
-          child:
-
-          Adw.Clamp {
-            maximum-size: 500;
-            ListBox notification_list {
-              halign: baseline;
-              styles["boxed-list"]
-            }
-          };
-        };
-      }
-
-      Adw.ViewStackPage page4 {
-        name: "page4";
-        title: _("Account");
-        icon-name: "person-symbolic";
-        use-underline: true;
-        child: Adw.StatusPage{
-          title: bind page4.title;
-          icon-name: bind page4.icon-name;
-          child: Box{
-            orientation: vertical;
-            valign: center;
-
-            LinkButton {
-              label: "API Reference";
-              uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.3/class.ViewSwitcher.html";
-            }
-
-            LinkButton {
-              label: "Human Interface Guidelines";
-              uri: "https://developer.gnome.org/hig/patterns/nav/view-switchers.html";
-            }
-          };
-        };
-      }
+menu menu_app {
+  section {
+    item {
+      label: _("Keyboard Shortcuts");
+      action: "app.shortcuts";
     }
 
-    Adw.ViewSwitcherBar switcher_bar {
-      stack: stack;
-      reveal: true;
+    item {
+      label: _("About WorkBench");
+      action: "app.about";
     }
+  }
+}
 
+SearchBar search_bar {
+  search-mode-enabled: true;
+  show-close-button: true;
+  SearchEntry {
+    placeholder-text: _("Start Searching...");
+  }
+}
 
-
+Box gtk_box {
+  hexpand: true;
+  halign: center;
+  Gtk.Label {
+    label: _("Hello from Workbench");
+  }
+}
 
