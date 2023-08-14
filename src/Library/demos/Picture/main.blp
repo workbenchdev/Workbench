@@ -8,10 +8,9 @@ Adw.StatusPage {
   child: Box {
     orientation: vertical;
     spacing: 12;
-    margin-top: 24;
     margin-end: 24;
     margin-start: 24;
-    margin-bottom: 24;
+
 
     Picture picture1 {
       halign: center;
@@ -21,7 +20,15 @@ Adw.StatusPage {
       alternative-text: _("Blobs");
     }
 
-    Label { label: _("Fill"); }
+    Label {
+      label: _("Fill");
+      styles["title-3"]
+    }
+
+    Label {
+      label: _("fills the entire allocation, without taking its aspect ratio in consideration.");
+      margin-bottom: 24;
+    }
 
     Picture picture2 {
       halign: center;
@@ -31,7 +38,16 @@ Adw.StatusPage {
       alternative-text: _("Drool");
     }
 
-    Label { label: _("Contain"); }
+    Label {
+      label: _("Contain");
+      styles["title-3"]
+    }
+
+
+    Label {
+      label: _("scales the content to fit the allocation, while taking its aspect ratio in consideration.");
+      margin-bottom: 24;
+    }
 
     Picture picture3 {
       halign: center;
@@ -41,7 +57,15 @@ Adw.StatusPage {
       alternative-text: _("Keys");
     }
 
-    Label { label: _("Cover"); }
+    Label {
+      label: _("Cover");
+      styles["title-3"]
+    }
+
+     Label {
+      label: _("Cover the entire allocation, while taking the content aspect ratio in consideration. ");
+      margin-bottom: 24;
+    }
 
      LinkButton {
       label: _("API Reference");
