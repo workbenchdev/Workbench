@@ -20,9 +20,8 @@
   "[json]": {
     "editor.defaultFormatter": "rome.rome"
   },
+  "vala.languageServerPath": "${workspaceFolder}/.flatpak/vala-language-server.sh",
   "mesonbuild.configureOnOpen": false,
   "mesonbuild.buildFolder": "_build",
-  "mesonbuild.mesonPath": "${workspaceFolder}/.flatpak/meson.sh",
-  "vala.languageServerPath": "${workspaceFolder}/.flatpak/vala-language-server.sh",
-  "C_Cpp.default.compileCommands": "_build/compile_commands.json"
+  "mesonbuild.mesonPath": "${workspaceFolder}/.flatpak/meson.sh"
 }
