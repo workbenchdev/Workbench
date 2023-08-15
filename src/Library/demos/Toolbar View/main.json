@@ -1,6 +1,6 @@
 {
-  "category": "controls",
-  "description": "Represent active-state visually",
+  "category": "user_interface",
+  "description": "A widget containing a page, as well as top and/or bottom bars.",
   "panels": ["ui", "preview"],
   "autorun": true
 }
