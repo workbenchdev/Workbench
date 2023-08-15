@@ -1,6 +1,6 @@
 {
   "category": "user_interface",
-  "description": "Display three child widgets, while keeping the middle centered",
+  "description": "Displays three child widgets, while keeping the middle centered",
   "panels": ["ui", "preview"],
   "autorun": true
 }
