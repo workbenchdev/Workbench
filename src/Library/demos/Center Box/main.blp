@@ -6,26 +6,41 @@ Adw.StatusPage {
   description: _("Displays three child widgets, while keeping the middle centered");
 
   child: Box {
-    spacing: 12;
+    spacing: 24;
+    orientation: vertical;
 
-    CenterBox {
-      [start]
-      Switch {
-        valign: center;
-      }
+    Adw.Clamp {
+    maximum-size: bind width_adjustment.value;
+    child: CenterBox {
+        shrink-center-last: true;
 
-      [middle]
-      CheckButton {}
+        [start]
+        Switch {
+          valign: center;
+        }
 
-      [end]
-      Entry {
+        [center]
+        Entry {}
 
-      }
+        [end]
+        CheckButton {}
+      };
+    }
+
+    Scale width_scale {
+      orientation: horizontal;
+      halign: center;
+      width-request: 120;
+      adjustment: Adjustment width_adjustment {
+        lower: 200;
+        upper: 500;
+        value: 325;
+      };
     }
 
     LinkButton {
       label: "API Reference";
-      uri: "https://docs.gtk.org/gtk4/class.CheckButton.html";
+      uri: "https://docs.gtk.org/gtk4/class.CenterBox.html";
     }
   };
 }
