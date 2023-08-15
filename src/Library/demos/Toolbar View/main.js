@@ -28,32 +28,52 @@ reveal_bottombar.connect("notify::active", () => {
 
 topbar_select.connect("notify::selected-item", () => {
   if (topbar_select.get_selected() === 3) {
-    toolbar_view.add_top_bar(action_bar);
+    changeHeaderBar(workbench.builder.get_object("action_bar"));
   } else if (topbar_select.get_selected() === 2) {
-    toolbar_view.add_top_bar(switcher_bar);
+    changeHeaderBar(workbench.builder.get_object("switcher_bar"));
   } else if (topbar_select.get_selected() === 4) {
-    toolbar_view.add_top_bar(popover);
+    changeHeaderBar(workbench.builder.get_object("popover"));
   } else if (topbar_select.get_selected() === 5) {
-    toolbar_view.add_top_bar(search_bar);
+    changeHeaderBar(workbench.builder.get_object("search_bar"));
   } else if (topbar_select.get_selected() === 6) {
-    toolbar_view.add_top_bar(gtk_box);
+    changeHeaderBar(workbench.builder.get_object("gtk_box"));
   } else if (topbar_select.get_selected() === 1) {
-    toolbar_view.add_top_bar(tab_bar);
+    changeHeaderBar(workbench.builder.get_object("tab_bar"));
   }
 });
 
 bottombar_select.connect("notify::selected-item", () => {
   if (bottombar_select.get_selected() === 3) {
-    toolbar_view.add_bottom_bar(action_bar);
+    changeBottomBar(workbench.builder.get_object("action_bar"));
   } else if (bottombar_select.get_selected() === 2) {
-    toolbar_view.add_bottom_bar(switcher_bar);
+    changeBottomBar(workbench.builder.get_object("switcher_bar"));
   } else if (bottombar_select.get_selected() === 4) {
-    toolbar_view.add_bottom_bar(popover);
+    changeBottomBar(workbench.builder.get_object("popover"));
   } else if (bottombar_select.get_selected() === 5) {
-    toolbar_view.add_bottom_bar(search_bar);
+    changeBottomBar(workbench.builder.get_object("search_bar"));
   } else if (bottombar_select.get_selected() === 6) {
-    toolbar_view.add_bottom_bar(gtk_box);
-  } else if (topbar_select.get_selected() === 1) {
-    toolbar_view.add_bottom_bar(tab_bar);
+    changeBottomBar(workbench.builder.get_object("gtk_box"));
+  } else if (bottombar_select.get_selected() === 1) {
+    changeBottomBar(workbench.builder.get_object("tab_bar"));
   }
 });
+
+let header_bar;
+
+header_bar = header_top;
+
+function changeHeaderBar(new_header_bar) {
+  toolbar_view.remove(header_bar);
+  toolbar_view.add_top_bar(new_header_bar);
+  header_bar = new_header_bar;
+}
+
+let bottom_bar;
+
+bottom_bar = header_bottom;
+
+function changeBottomBar(new_bottom_bar) {
+  toolbar_view.remove(bottom_bar);
+  toolbar_view.add_bottom_bar(new_bottom_bar);
+  bottom_bar = new_bottom_bar;
+}
