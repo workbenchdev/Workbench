@@ -1,0 +1,42 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: _("Session Monitor");
+  description: _("Monitor the login session state");
+
+  Adw.Clamp {
+    maximum-size: 340;
+    
+    Box {
+      spacing: 12;
+      orientation: vertical;
+
+      Adw.EntryRow entry {
+        title: "Reason";
+        styles ["card"]
+      }
+    
+      Box {
+        spacing: 18;
+        homogeneous: true;
+
+        Button button_start {
+          label: _("Start Session");
+          styles ["suggested-action", "pill"]
+        }
+
+        Button button_stop {
+          label: _("Stop Session");
+          sensitive: false;
+          styles ["destructive-action", "pill"]
+        }
+      }
+
+      LinkButton {
+        label: "API Reference";
+        uri: "https://libportal.org/method.Portal.session_monitor_start.html";
+      }
+    }
+  }
+}

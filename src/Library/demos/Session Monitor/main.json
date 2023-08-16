@@ -1,0 +1,6 @@
+{
+  "category": "platform",
+  "description": "Monitor the login session state",
+  "panels": ["code", "preview"],
+  "autorun": true
+}
