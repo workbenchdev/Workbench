@@ -30,11 +30,11 @@ button_stop.connect("clicked", () => {
 
 portal.connect(
   "session-state-changed",
-  async (self, screensaver_active, session_state) => {
+  (self, screensaver_active, session_state) => {
     if (session_state === Xdp.LoginSessionState.QUERY_END) {
       console.log("User is logging out");
       portal.session_monitor_query_end_response();
-      await inhibitSession(Xdp.InhibitFlags.LOGOUT);
+      inhibitSession(Xdp.InhibitFlags.LOGOUT);
     }
   },
 );
