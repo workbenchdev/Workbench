@@ -1,5 +1,4 @@
 {
-  "name": "View Switcher",
   "category": "navigation",
   "description": "View Switchers allow users to switch between different predefined pages",
   "panels": ["code", "ui", "preview"],

@@ -2,13 +2,12 @@ import Gio from "gi://Gio";
 
 import LSPClient from "../../lsp/LSPClient.js";
 
-export function setup({ data_dir, document }) {
+export function setup({ document }) {
   const { file, code_view } = document;
 
   const lspc = createLSPClient({
     code_view,
-    uri: file.get_uri(),
-    data_dir,
+    file,
   });
 
   lspc.start().catch(logError);
@@ -18,9 +17,11 @@ export function setup({ data_dir, document }) {
   });
 }
 
-function createLSPClient({ uri, code_view, data_dir }) {
+function createLSPClient({ file, code_view }) {
+  const uri = file.get_uri();
+
   const lspc = new LSPClient(["rome", "lsp-proxy"], {
-    rootUri: Gio.File.new_for_path(data_dir).get_uri(),
+    rootUri: file.get_parent().get_uri(),
     uri,
     languageId: "javascript",
     buffer: code_view.buffer,

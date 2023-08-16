@@ -1,0 +1,6 @@
+{
+  "category": "user_interface",
+  "description": "Toolbar for contextual actions.",
+  "panels": ["ui", "preview"],
+  "autorun": true
+}

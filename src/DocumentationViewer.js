@@ -87,7 +87,18 @@ export default function DocumentationViewer({ application }) {
   listbox.set_sort_func(sort);
   listbox.invalidate_sort();
   listbox.set_filter_func(filter);
-  getDocs(base_path)
+  listbox.connect("row-selected", (self, row) => {
+    webview.load_uri(row.uri);
+  });
+
+  getDocs(base_path, [
+    "atk",
+    "javascriptcoregtk-4.1",
+    "libhandy-1",
+    "libnotify-0",
+    "webkit2gtk-4.1",
+    "webkit2gtk-web-extension-4.1",
+  ])
     .then((docs) => {
       for (const doc of docs) {
         const row = new Adw.ActionRow({
@@ -97,14 +108,11 @@ export default function DocumentationViewer({ application }) {
         row.add_suffix(new Gtk.Image({ icon_name: "go-next-symbolic" }));
         listbox.append(row);
       }
-      listbox.connect("row-selected", (self, row) => {
-        webview.load_uri(row.uri);
-      });
     })
     .catch(logError);
 
-  function sort(row1, row2) {
-    return row1.title > row2.title;
+  function sort(a, b) {
+    return a.title.localeCompare(b.title);
   }
 
   function filter(row) {
@@ -122,31 +130,44 @@ export default function DocumentationViewer({ application }) {
   application.add_action(action_documentation);
 }
 
-async function getDocs(base_path) {
+async function getDocs(base_path, filter_docs) {
   const docs = [];
   const dirs = await list(base_path);
-  for (const dir of dirs) {
-    try {
-      const index = await readDocIndex(base_path, dir);
-      const namespace = `${index["meta"]["ns"]}-${index["meta"]["version"]}`;
-      const uri = base_path.get_child(dir).get_child("index.html").get_uri();
-      docs.push({
-        title: namespace,
-        uri: uri,
-      });
-    } catch (e) {
-      // Ignore the error if the dir does not contain index.json
-      if (!e.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.NOT_FOUND)) logError(e);
-    }
+  const filtered = dirs.filter(dir => !(filter_docs.includes(dir)))
+
+  for (const dir of filtered) {
+    const results = await Promise.allSettled([
+      readDocIndexJSON(base_path, dir),
+      readDocIndexHTML(base_path, dir),
+    ]);
+
+    const fulfilled = results.find((result) => result.status === "fulfilled");
+    if (!fulfilled) continue;
+
+    const title = fulfilled.value;
+    const uri = base_path.get_child(dir).get_child("index.html").get_uri();
+    docs.push({
+      title,
+      uri,
+    });
   }
 
   return docs;
 }
 
-async function readDocIndex(base_path, dir) {
+async function readDocIndexJSON(base_path, dir) {
   const file = base_path.get_child(dir).get_child("index.json");
-  const [json] = await file.load_contents_async(null);
-  return JSON.parse(decode(json));
+  const [data] = await file.load_contents_async(null);
+  const json = JSON.parse(decode(data));
+  return `${json["meta"]["ns"]}-${json["meta"]["version"]}`;
+}
+
+async function readDocIndexHTML(base_path, dir) {
+  const file = base_path.get_child(dir).get_child("api-index-full.html");
+  const [data] = await file.load_contents_async(null);
+  const html = decode(data);
+  const pattern = /<title>Index: ([^<]+)/;
+  return html.match(pattern)[1];
 }
 
 async function list(dir) {
@@ -168,8 +189,12 @@ async function disableDocSidebar(webview) {
   try {
     const script = `window.document.querySelector("nav").style.display = "none"`;
     await webview.evaluate_javascript(script, -1, null, null, null);
-  } catch (e) {
-    logError(e);
+  } catch (err) {
+    if (
+      !err.matches(WebKit.JavascriptError, WebKit.JavascriptError.SCRIPT_FAILED)
+    ) {
+      logError(err);
+    }
   }
 }
 
@@ -177,7 +202,11 @@ async function enableDocSidebar(webview) {
   try {
     const script = `window.document.querySelector("nav").style.display = "block"`;
     await webview.evaluate_javascript(script, -1, null, null, null);
-  } catch (e) {
-    logError(e);
+  } catch (err) {
+    if (
+      !err.matches(WebKit.JavascriptError, WebKit.JavascriptError.SCRIPT_FAILED)
+    ) {
+      logError(err);
+    }
   }
 }

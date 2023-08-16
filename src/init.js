@@ -6,13 +6,22 @@ import "gi://Soup?version=3.0";
 import "gi://WebKit?version=6.0";
 import "gi://Pango?version=1.0";
 
+import Gtk from "gi://Gtk";
 import Gio from "gi://Gio";
 import Xdp from "gi://Xdp";
 import Source from "gi://GtkSource";
 import WebKit from "gi://WebKit";
 
+Gio._promisify(Xdp.Portal.prototype, "trash_file", "trash_file_finish");
+Gio._promisify(Xdp.Portal.prototype, "open_uri", "open_uri_finish");
 Gio._promisify(Xdp.Portal.prototype, "open_file", "open_file_finish");
 Gio._promisify(Xdp.Portal.prototype, "open_directory", "open_directory_finish");
+Gio._promisify(Xdp.Portal.prototype, "save_files", "save_files_finish");
+Gio._promisify(
+  Gtk.FileDialog.prototype,
+  "select_folder",
+  "select_folder_finish",
+);
 
 Gio._promisify(
   Gio.InputStream.prototype,
@@ -46,7 +55,13 @@ Gio._promisify(
   "replace_contents_async",
   "replace_contents_finish",
 );
+Gio._promisify(
+  Gio.File.prototype,
+  "make_directory_async",
+  "make_directory_finish",
+);
 Gio._promisify(Gio.File.prototype, "delete_async", "delete_finish");
+Gio._promisify(Gio.File.prototype, "move_async", "move_finish");
 
 Gio._promisify(Source.FileSaver.prototype, "save_async", "save_finish");
 Gio._promisify(Source.FileLoader.prototype, "load_async", "load_finish");

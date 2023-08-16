@@ -1,10 +1,6 @@
 {
-  "name": "Font Dialog",
   "category": "controls",
   "description": "Show a dialog to select a font",
-  "panels": [
-    "ui",
-    "preview"
-  ],
+  "panels": ["ui", "preview"],
   "autorun": true
 }

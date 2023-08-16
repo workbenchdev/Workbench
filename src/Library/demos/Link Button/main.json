@@ -1,0 +1,6 @@
+{
+  "category": "controls",
+  "description": "A button with a hyperlink",
+  "panels": ["ui", "preview"],
+  "autorun": true
+}
