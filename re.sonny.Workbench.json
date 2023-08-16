@@ -9,12 +9,11 @@
     "org.freedesktop.Sdk.Extension.rust-stable"
   ],
   "build-options": {
-    "append-path": "/usr/lib/sdk/vala/bin",
+    "append-path": "/usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/vala/bin",
     "append-ld-library-path": "/usr/lib/sdk/vala/lib",
     "env": {
       "CARGO_HOME": "/run/build/cargo-c/cargo"
-    },
-    "append-path": "/usr/lib/sdk/rust-stable/bin"
+    }
   },
   "command": "workbench",
   "finish-args": [
@@ -90,9 +89,9 @@
       "buildsystem": "simple",
       "sources": [
         {
-          "type": "archive",
-          "url": "https://gitlab.freedesktop.org/gstreamer/gst-plugins-rs/-/archive/0.10.9/gst-plugins-rs-0.10.9.tar.gz",
-          "sha512": "81140948e2be6a339d619d867e9b757c56e490aba81373c1df9bbeabe3103081d949718a8977f484dda159322d943c13ca5904a34282d1ce2cc25ed25c0a3994"
+          "type": "git",
+          "url": "https://gitlab.freedesktop.org/gstreamer/gst-plugins-rs.git",
+          "commit": "f92dc28696cb4148183a9e67272437f6a6bce412"
         }
       ],
       "build-options": {
