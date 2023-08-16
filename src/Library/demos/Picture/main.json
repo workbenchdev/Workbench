@@ -1,5 +1,4 @@
 {
-  "name": "Picture",
   "category": "user_interface",
   "description": "Display images at their natural sizes",
   "panels": ["code", "ui", "preview"],
