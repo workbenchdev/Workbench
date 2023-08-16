@@ -1,0 +1,32 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.ToastOverlay overlay {
+  Adw.StatusPage {
+    title: _("Power Profile Monitor");
+    description: _("Monitor Power Mode");
+
+    Box {
+      spacing: 24;
+      orientation: vertical;
+
+      Box {
+        halign: center;
+        spacing: 6;
+        Image {
+          icon-name: "lightbulb-symbolic";
+          styles ["dim-label"]
+        }
+        Label  {
+          label: _("Try toggling Power Mode to \"Power Saver\" from Settings → Power\n or from Quick Toggles");
+          styles ["dim-label"]
+        }
+      }
+
+      LinkButton {
+        label: "API Reference";
+        uri: "https://docs.gtk.org/gio/iface.PowerProfileMonitor.html";
+      }
+    }
+  }
+}

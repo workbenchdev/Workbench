@@ -1,0 +1,46 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: "Clamp";
+  description: "A widget constraining its child to a given size.";
+
+  Box {
+    orientation: vertical;
+    halign: center;
+    
+    Box {
+      halign: center;
+      spacing: 6;
+      orientation: horizontal;
+
+      Button button_increase {
+        icon-name: "plus";
+      }
+
+      Button button_decrease {
+        icon-name: "minus";
+      }
+    }
+
+    LinkButton {
+      margin-top: 12;
+      label: "API Reference";
+      uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.3/class.Clamp.html";
+    }
+
+    Adw.Clamp clamp {
+      margin-top: 24;
+      maximum-size: 400;
+      tightening-threshold: 200;
+      margin-bottom: 24;
+
+       Label label {
+        wrap: true;
+        label: _("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ");
+      }
+    }
+  }
+}
+
+
