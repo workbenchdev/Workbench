@@ -5,96 +5,82 @@ Adw.Window {
   width-request: 360;
   height-request: 200;
   default-width: 640;
-  default-height: 480;
-  Adw.StatusPage {
-    Box {
-      halign: center;
-      orientation: vertical;
-      spacing: 36;
+  default-height: 640;
+
+  Adw.ToolbarView toolbar_view {
+    vexpand:true;
+    extend-content-to-bottom-edge: true;
+    extend-content-to-top-edge: true;
+    top-bar-style: bind barstyle_select.selected;
+    bottom-bar-style: bind barstyle_select.selected;
+    reveal-top-bars: false;
+    reveal-bottom-bars: false;
+    [top]
+    Adw.HeaderBar header_top {
+      title-widget: Label{
+      label:_("Header Bar");
+      };
+    }
+    content: Adw.StatusPage {
       Box {
-        halign: center;
-        Adw.PreferencesGroup {
-          styles ["boxed-list"]
-          Adw.ComboRow topbar_select {
-            title: _("Top Bar :");
-            model: StringList {
-              strings ["Header Bar","Tab Bar","View Switcher Bar","Action Bar","PopOverMenu Bar","Search Bar","Gtk Box"]
-            };
-          }
-          Adw.ComboRow bottombar_select{
-            title: _("Bottom Bar :");
-            model: StringList {
-              strings ["Header Bar","Tab Bar","View Switcher Bar","Action Bar","PopOverMenu Bar","Search Bar","Gtk Box"]
-            };
-          }
-          Adw.ComboRow barstyle_select{
-            title: _("Bar Style:");
-            model: StringList {
-              strings ["Flat","Raised","Raised-Border"]
-            };
-          }
-        }
-      }
-      Box {
-        height-request: 300;
-        width-request: 300;
         halign: center;
         orientation: vertical;
-        styles ["card"]
-
-        Adw.ToolbarView toolbar_view {
-          vexpand:true;
-          extend-content-to-bottom-edge: true;
-          extend-content-to-top-edge: true;
-          top-bar-style: bind barstyle_select.selected;
-          bottom-bar-style: bind barstyle_select.selected;
-          reveal-top-bars: false;
-          reveal-bottom-bars: false;
-          [top]
-          Adw.HeaderBar header_top {
-            title-widget: Label{
-              label:_("Header Bar");
-            };
-          }
-          content: Adw.StatusPage {
-            Box {
-              halign: center;
-              orientation: vertical;
-              spacing: 6;
-              Label{
-                label: _("Toolbar View");
-                styles ["title-1"]
-              }
-              Label{
-                wrap: true;
-                label: _("A widget containing a page, as well as top and/or bottom bars.");
-              }
-              LinkButton{
-                label: _("API Reference");
-                uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/main/class.ToolbarView.html";
-              }
+        spacing: 18;
+        Label{
+          label: _("Toolbar View");
+          styles ["title-1"]
+        }
+        Label{
+          wrap: true;
+          label: _("A widget containing a page, as well as top and/or bottom bars.");
+        }
+        LinkButton{
+          label: _("API Reference");
+          uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/main/class.ToolbarView.html";
+        }
+        Box {
+          halign: center;
+          Adw.PreferencesGroup {
+            styles ["boxed-list"]
+            Adw.ComboRow topbar_select {
+              title: _("Top Bar :");
+              model: StringList {
+                strings ["Header Bar","Tab Bar","View Switcher Bar","Action Bar","PopOverMenu Bar","Search Bar","Gtk Box"]
+              };
             }
-          };
-          [bottom]
-          Adw.HeaderBar header_bottom {
-            title-widget: Label{
-              label: _("Header Bar");
-            };
+            Adw.ComboRow bottombar_select{
+              title: _("Bottom Bar :");
+              model: StringList {
+                strings ["Header Bar","Tab Bar","View Switcher Bar","Action Bar","PopOverMenu Bar","Search Bar","Gtk Box"]
+              };
+            }
+            Adw.ComboRow barstyle_select{
+              title: _("Bar Style:");
+              model: StringList {
+                strings ["Flat","Raised","Raised-Border"]
+              };
+            }
+          }
+        }
+        Box {
+          halign: center;
+          spacing: 12;
+          ToggleButton reveal_topbar{
+            label: _("Reveal Top Bar");
+            styles ["pill"]
+          }
+          ToggleButton reveal_bottombar{
+            label: _("Reveal Bottom Bar");
+            styles ["pill"]
           }
         }
       }
-      Box {
-        halign: center;
-        spacing: 12;
-        ToggleButton reveal_topbar{
-          label: _("Reveal Top Bar");
-          styles ["pill"]
-        }
-        ToggleButton reveal_bottombar{
-          label: _("Reveal Bottom Bar");
-          styles ["pill"]
-        }
-      }
+    };
+    [bottom]
+    Adw.HeaderBar header_bottom {
+      title-widget: Label{
+      label: _("Header Bar");
+      };
     }
   }
 }
