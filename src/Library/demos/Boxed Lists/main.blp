@@ -34,6 +34,18 @@ Adw.StatusPage {
           }
         }
 
+        Adw.ActionRow {
+          title: _("ActionRow can have a activatable widget");
+          subtitle: _("Click on the row to activate it");
+          activatable-widget: activatable_toggle;
+
+          [suffix]
+          ToggleButton activatable_toggle {
+            icon-name: "hand-touch-symbolic";
+            valign: center;
+          }
+        }
+
         Adw.EntryRow {
           title: _("A row can be an entry");
         }
