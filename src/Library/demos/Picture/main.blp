@@ -11,66 +11,97 @@ Adw.StatusPage {
     margin-end: 24;
     margin-start: 24;
 
-
-    Picture picture1 {
+    StackSwitcher {
+      stack: stack;
       halign: center;
-      valign: center;
-      can-shrink: true;
-      content-fit: fill;
-      alternative-text: _("Blobs");
     }
 
-    Label {
-      label: _("Fill");
-      styles["title-3"]
+    Stack stack {
+
+      StackPage {
+        title: "Fill";
+
+        child: Box {
+          spacing: 12;
+          orientation: vertical;
+
+          Picture picture1 {
+            halign: center;
+            valign: center;
+            can-shrink: true;
+            content-fit: fill;
+            alternative-text: _("Blobs");
+          }
+
+          Label {
+            label: _("Fill");
+            styles["title-3"]
+          }
+
+          Label {
+            label: _("fills the entire allocation, without taking its aspect ratio in consideration.");
+            margin-bottom: 24;
+          }
+        };
+      }
+
+      StackPage {
+        title: "Contain";
+
+        child: Box {
+          spacing: 12;
+          orientation: vertical;
+          Picture picture2 {
+            halign: center;
+            valign: center;
+            can-shrink: true;
+            content-fit: contain;
+            alternative-text: _("Drool");
+          }
+
+          Label {
+            label: _("Contain");
+            styles["title-3"]
+          }
+
+          Label {
+            label: _("scales the content to fit the allocation, while taking its aspect ratio in consideration.");
+            margin-bottom: 24;
+          }
+        };
+      }
+
+      StackPage {
+        title: "Cover";
+
+        child: Box {
+          spacing: 12;
+          orientation: vertical;
+          Picture picture3 {
+            halign: center;
+            valign: center;
+            can-shrink: true;
+            content-fit: cover;
+            alternative-text: _("Keys");
+          }
+
+          Label {
+            label: _("Cover");
+            styles["title-3"]
+          }
+
+          Label {
+            label: _("Cover the entire allocation, while taking the content aspect ratio in consideration.");
+            margin-bottom: 24;
+          }
+        };
+      }
     }
 
-    Label {
-      label: _("fills the entire allocation, without taking its aspect ratio in consideration.");
-      margin-bottom: 24;
-    }
-
-    Picture picture2 {
-      halign: center;
-      valign: center;
-      can-shrink: true;
-      content-fit: contain;
-      alternative-text: _("Drool");
-    }
-
-    Label {
-      label: _("Contain");
-      styles["title-3"]
-    }
-
-
-    Label {
-      label: _("scales the content to fit the allocation, while taking its aspect ratio in consideration.");
-      margin-bottom: 24;
-    }
-
-    Picture picture3 {
-      halign: center;
-      valign: center;
-      can-shrink: true;
-      content-fit: cover;
-      alternative-text: _("Keys");
-    }
-
-    Label {
-      label: _("Cover");
-      styles["title-3"]
-    }
-
-     Label {
-      label: _("Cover the entire allocation, while taking the content aspect ratio in consideration. ");
-      margin-bottom: 24;
-    }
-
-     LinkButton {
+    LinkButton {
       label: _("API Reference");
       uri: "https://docs.gtk.org/gtk4/class.Picture.html";
-      margin-bottom : 12;
+      margin-bottom: 12;
     }
   };
 }
