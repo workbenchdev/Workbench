@@ -6,36 +6,77 @@ Adw.StatusPage {
   description: _("Monitor the login session state");
 
   Adw.Clamp {
-    maximum-size: 340;
-    
+    maximum-size: 400;
+
     Box {
       spacing: 12;
       orientation: vertical;
 
       Adw.EntryRow entry {
-        title: "Reason";
+        title: _("Reason");
         styles ["card"]
       }
-    
+
+      ListBox {
+        Adw.ActionRow {
+          title: _("Logout");
+          [suffix]
+          CheckButton logout {
+          }
+        }
+
+        Adw.ActionRow {
+          title: _("User Switch");
+          [suffix]
+          CheckButton user_switch {
+          }
+        }
+
+        Adw.ActionRow {
+          title: _("Suspend");
+          [suffix]
+          CheckButton suspend {
+          }
+        }
+
+        Adw.ActionRow {
+          title: _("Idle");
+          [suffix]
+          CheckButton idle {
+          }
+        }
+        styles ["boxed-list"]
+      }
+
       Box {
-        spacing: 18;
         homogeneous: true;
 
         Button button_start {
+          halign: center;
           label: _("Start Session");
           styles ["suggested-action", "pill"]
         }
 
         Button button_stop {
+          halign: center;
           label: _("Stop Session");
           sensitive: false;
           styles ["destructive-action", "pill"]
         }
       }
 
-      LinkButton {
-        label: "API Reference";
-        uri: "https://libportal.org/method.Portal.session_monitor_start.html";
+      Box {
+        halign: center;
+        
+        LinkButton {
+          label: "Session Monitor";
+          uri: "https://libportal.org/method.Portal.session_monitor_start.html";
+        }
+        
+        LinkButton {
+          label: "Session Inhibit";
+          uri: "https://libportal.org/method.Portal.session_inhibit.html";
+        }
       }
     }
   }
