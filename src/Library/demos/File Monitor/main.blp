@@ -1,0 +1,33 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.ToastOverlay overlay {
+  Adw.StatusPage {
+    title: _("File Monitor");
+    description: _("Monitors a file or directory for changes");
+    icon-name: "paper-symbolic";
+    Box {
+      orientation: vertical;
+      halign: center;
+      spacing: 18;
+
+      Box {
+        orientation: vertical;
+        spacing: 6;
+        Button edit_file {
+          label: _("Edit file");
+          styles ["suggested-action","pill"]
+        }
+
+        Label file_name {
+          label: _("");
+          styles ["caption"]
+        }
+      }
+      LinkButton {
+        label: _("API Reference");
+        uri: "https://docs.gtk.org/gio/method.File.monitor.html";
+      }
+    }
+  }
+}
