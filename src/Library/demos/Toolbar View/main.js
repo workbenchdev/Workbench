@@ -38,8 +38,11 @@ function changeBottomBar(new_bottom_bar) {
 
 topbar_select.connect("notify::selected-item", () => {
   switch (topbar_select.get_selected()) {
+    case 0:
+      changeHeaderBar(workbench.builder.get_object("header_top"));
+      break;
     case 1:
-      changeHeaderBar(workbench.builder.get_object("header_bar"));
+      changeHeaderBar(workbench.builder.get_object("tab_bar"));
       break;
     case 2:
       changeHeaderBar(workbench.builder.get_object("switcher_bar"));
@@ -62,7 +65,7 @@ topbar_select.connect("notify::selected-item", () => {
 bottombar_select.connect("notify::selected-item", () => {
   switch (bottombar_select.get_selected()) {
     case 1:
-      changeBottomBar(workbench.builder.get_object("header_bar"));
+      changeBottomBar(workbench.builder.get_object("header_bottom"));
       break;
     case 2:
       changeBottomBar(workbench.builder.get_object("switcher_bar"));
