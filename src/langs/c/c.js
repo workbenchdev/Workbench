@@ -5,6 +5,7 @@ import LSPClient from "../../lsp/LSPClient.js";
 
 export function setup({ document }) {
   const { file, code_view } = document;
+
   const lspc = createLSPClient({
     code_view,
     file,
