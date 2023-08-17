@@ -13,67 +13,111 @@ Adw.Window {
     extend-content-to-top-edge: true;
     top-bar-style: bind barstyle_select.selected;
     bottom-bar-style: bind barstyle_select.selected;
-    reveal-top-bars: false;
-    reveal-bottom-bars: false;
+    reveal-top-bars:  true;
+    reveal-bottom-bars: true;
     [top]
     Adw.HeaderBar header_top {
-      title-widget: Label{
+      title-widget: Label {
       label:_("Header Bar");
       };
     }
-    content: Adw.StatusPage {
-      Box {
-        halign: center;
-        orientation: vertical;
-        spacing: 18;
-        Label{
-          label: _("Toolbar View");
-          styles ["title-1"]
-        }
-        Label{
-          wrap: true;
-          label: _("A widget containing a page, as well as top and/or bottom bars.");
-        }
-        LinkButton{
-          label: _("API Reference");
-          uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/main/class.ToolbarView.html";
-        }
-        Box {
-          halign: center;
-          Adw.PreferencesGroup {
-            styles ["boxed-list"]
-            Adw.ComboRow topbar_select {
-              title: _("Top Bar :");
-              model: StringList {
-                strings ["Header Bar","Tab Bar","View Switcher Bar","Action Bar","PopOverMenu Bar","Search Bar","Gtk Box"]
-              };
+    content: Adw.ViewStack stack {
+      vexpand: true;
+
+      Adw.ViewStackPage page_defualt {
+        name: "page_default";
+        title: _("Toolbar View");
+        icon-name: "toolbars-symbolic";
+        child: Adw.StatusPage{
+          Box {
+            halign: center;
+            orientation: vertical;
+            spacing: 18;
+            Label{
+              label: _("Toolbar View");
+              styles ["title-1"]
             }
-            Adw.ComboRow bottombar_select{
-              title: _("Bottom Bar :");
-              model: StringList {
-                strings ["Header Bar","Tab Bar","View Switcher Bar","Action Bar","PopOverMenu Bar","Search Bar","Gtk Box"]
-              };
+            Label{
+              wrap: true;
+              label: _("A widget containing a page, as well as top and/or bottom bars.");
             }
-            Adw.ComboRow barstyle_select{
-              title: _("Bar Style:");
-              model: StringList {
-                strings ["Flat","Raised","Raised-Border"]
-              };
+            LinkButton{
+              label: _("API Reference");
+              uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/main/class.ToolbarView.html";
+            }
+            Box {
+              halign: center;
+              Adw.PreferencesGroup {
+                styles ["boxed-list"]
+                Adw.ComboRow topbar_select {
+                  title: _("Select top bar:  ");
+                  model: StringList {
+                    strings [_("Header Bar"),_("Tab Bar"),_("View Switcher Bar"),_("Action Bar"),_("PopOverMenu Bar"),_("Search Bar"),_("Gtk Box")]
+                  };
+                  styles ["heading"]
+                }
+                Adw.ComboRow bottombar_select{
+                  title: _("Select bottom bar:  ");
+                  model: StringList {
+                    strings [_("Header Bar"),_("Tab Bar"),_("View Switcher Bar"),_("Action Bar"),_("PopOverMenu Bar"),_("Search Bar"),_("Gtk Box")]
+                  };
+                  styles ["heading"]
+                }
+                Adw.ComboRow barstyle_select{
+                  title: _("Select style for the bars:  ");
+                  model: StringList {
+                    strings [_("Flat"),_("Raised"),_("Raised-Border")]
+                  };
+                  styles ["heading"]
+                }
+              }
+            }
+            Box {
+              halign: center;
+              spacing: 12;
+              ToggleButton reveal_topbar{
+                label: _("Reveal Top Bar");
+                active: true;
+                styles ["pill"]
+              }
+              ToggleButton reveal_bottombar{
+                label: _("Reveal Bottom Bar");
+                active: true;
+                styles ["pill"]
+              }
             }
           }
+        };
+      }
+
+      Adw.ViewStackPage page1 {
+        name: "page1";
+        title: _("Page 1");
+        icon-name: "explore2-symbolic";
+        use-underline: true;
+        child: Adw.StatusPage{
+          title: _("Hello");
+          };
         }
-        Box {
-          halign: center;
-          spacing: 12;
-          ToggleButton reveal_topbar{
-            label: _("Reveal Top Bar");
-            styles ["pill"]
-          }
-          ToggleButton reveal_bottombar{
-            label: _("Reveal Bottom Bar");
-            styles ["pill"]
-          }
-        }
+
+      Adw.ViewStackPage page2 {
+        name: "page2";
+        title: _("Page 2");
+        icon-name: "explore2-symbolic";
+        use-underline: true;
+        child: Adw.StatusPage{
+          title: _("from");
+          };
+      }
+
+      Adw.ViewStackPage page3 {
+        name: "page3";
+        title: _("Page 3");
+        icon-name: "explore2-symbolic";
+        use-underline: true;
+        child: Adw.StatusPage{
+          title: _("Workbench");
+        };
       }
     };
     [bottom]
@@ -103,55 +147,6 @@ ActionBar action_bar {
   [end]
   Button end_widget {
     icon-name: "padlock2-symbolic";
-  }
-}
-Adw.ViewStack stack {
-  vexpand: true;
-
-  Adw.ViewStackPage page1 {
-    name: "page1";
-    title: _("Favorites");
-    icon-name: "star-filled-rounded-symbolic";
-    use-underline: true;
-    child: Adw.StatusPage{
-      title: bind page1.title;
-      icon-name: bind page1.icon-name;
-    };
-  }
-
-  Adw.ViewStackPage page2 {
-    name: "page2";
-    title: _("Recents");
-    icon-name: "clock-alt-symbolic";
-    use-underline: true;
-    child: Adw.StatusPage{
-      title: bind page2.title;
-      icon-name: bind page2.icon-name;
-    };
-  }
-
-  Adw.ViewStackPage page3 {
-    name: "page3";
-    title: _("Notifications");
-    icon-name: "bell-symbolic";
-    badge-number: 0;
-    needs-attention: true;
-    use-underline: true;
-    child: Adw.StatusPage{
-      title: bind page3.title;
-      icon-name: bind page3.icon-name;
-    };
-  }
-
-  Adw.ViewStackPage page4 {
-    name: "page4";
-    title: _("Account");
-    icon-name: "person-symbolic";
-    use-underline: true;
-    child: Adw.StatusPage{
-      title: bind page4.title;
-      icon-name: bind page4.icon-name;
-    };
   }
 }
 

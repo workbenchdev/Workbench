@@ -18,49 +18,11 @@ const search_bar = workbench.builder.get_object("search_bar");
 const gtk_box = workbench.builder.get_object("gtk_box");
 const tab_bar = workbench.builder.get_object("tab_bar");
 
-reveal_topbar.connect("notify::active", () => {
-  toolbar_view.reveal_top_bars = reveal_topbar.active;
-});
-
-reveal_bottombar.connect("notify::active", () => {
-  toolbar_view.reveal_bottom_bars = reveal_bottombar.active;
-});
-
-topbar_select.connect("notify::selected-item", () => {
-  if (topbar_select.get_selected() === 3) {
-    changeHeaderBar(workbench.builder.get_object("action_bar"));
-  } else if (topbar_select.get_selected() === 2) {
-    changeHeaderBar(workbench.builder.get_object("switcher_bar"));
-  } else if (topbar_select.get_selected() === 4) {
-    changeHeaderBar(workbench.builder.get_object("popover"));
-  } else if (topbar_select.get_selected() === 5) {
-    changeHeaderBar(workbench.builder.get_object("search_bar"));
-  } else if (topbar_select.get_selected() === 6) {
-    changeHeaderBar(workbench.builder.get_object("gtk_box"));
-  } else if (topbar_select.get_selected() === 1) {
-    changeHeaderBar(workbench.builder.get_object("tab_bar"));
-  }
-});
-
-bottombar_select.connect("notify::selected-item", () => {
-  if (bottombar_select.get_selected() === 3) {
-    changeBottomBar(workbench.builder.get_object("action_bar"));
-  } else if (bottombar_select.get_selected() === 2) {
-    changeBottomBar(workbench.builder.get_object("switcher_bar"));
-  } else if (bottombar_select.get_selected() === 4) {
-    changeBottomBar(workbench.builder.get_object("popover"));
-  } else if (bottombar_select.get_selected() === 5) {
-    changeBottomBar(workbench.builder.get_object("search_bar"));
-  } else if (bottombar_select.get_selected() === 6) {
-    changeBottomBar(workbench.builder.get_object("gtk_box"));
-  } else if (bottombar_select.get_selected() === 1) {
-    changeBottomBar(workbench.builder.get_object("tab_bar"));
-  }
-});
-
 let header_bar;
+let bottom_bar;
 
 header_bar = header_top;
+bottom_bar = header_bottom;
 
 function changeHeaderBar(new_header_bar) {
   toolbar_view.remove(header_bar);
@@ -68,12 +30,62 @@ function changeHeaderBar(new_header_bar) {
   header_bar = new_header_bar;
 }
 
-let bottom_bar;
-
-bottom_bar = header_bottom;
-
 function changeBottomBar(new_bottom_bar) {
   toolbar_view.remove(bottom_bar);
   toolbar_view.add_bottom_bar(new_bottom_bar);
   bottom_bar = new_bottom_bar;
 }
+
+topbar_select.connect("notify::selected-item", () => {
+  switch (topbar_select.get_selected()) {
+    case 1:
+      changeHeaderBar(workbench.builder.get_object("tab_bar"));
+      break;
+    case 2:
+      changeHeaderBar(workbench.builder.get_object("switcher_bar"));
+      break;
+    case 3:
+      changeHeaderBar(workbench.builder.get_object("action_bar"));
+      break;
+    case 4:
+      changeHeaderBar(workbench.builder.get_object("popover"));
+      break;
+    case 5:
+      changeHeaderBar(workbench.builder.get_object("search_bar"));
+      break;
+    case 6:
+      changeHeaderBar(workbench.builder.get_object("gtk_box"));
+      break;
+  }
+});
+
+bottombar_select.connect("notify::selected-item", () => {
+  switch (bottombar_select.get_selected()) {
+    case 1:
+      changeBottomBar(workbench.builder.get_object("tab_bar"));
+      break;
+    case 2:
+      changeBottomBar(workbench.builder.get_object("switcher_bar"));
+      break;
+    case 3:
+      changeBottomBar(workbench.builder.get_object("action_bar"));
+      break;
+    case 4:
+      changeBottomBar(workbench.builder.get_object("popover"));
+      break;
+    case 5:
+      changeBottomBar(workbench.builder.get_object("search_bar"));
+      break;
+    case 6:
+      changeBottomBar(workbench.builder.get_object("gtk_box"));
+      break;
+  }
+});
+
+reveal_topbar.connect("notify::active", () => {
+  toolbar_view.reveal_top_bars = reveal_topbar.active;
+});
+
+reveal_bottombar.connect("notify::active", () => {
+  toolbar_view.reveal_bottom_bars = reveal_bottombar.active;
+});
