@@ -60,3 +60,5 @@ src/sessions.js
 src/DocumentationViewer.blp
 src/DocumentationViewer.js
 src/langs/css/css.js
+src/langs/c/c.js
+

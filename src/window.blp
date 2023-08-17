@@ -155,6 +155,7 @@ Gtk.ApplicationWindow window {
                   strings [
                     "JavaScript",
                     "Vala",
+                    "C",
                   ]
                 };
                 tooltip-text: _("Switch Document");
@@ -177,6 +178,12 @@ Gtk.ApplicationWindow window {
               name: 'Vala';
               child: $CodeView code_view_vala {
                 language_id: 'vala';
+              };
+            }
+            StackPage {
+              name: 'C';
+              child: $CodeView code_view_c {
+                language_id: 'c';
               };
             }
           }
