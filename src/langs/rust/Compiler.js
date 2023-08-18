@@ -4,8 +4,8 @@ import dbus_previewer from "../../Previewer/DBusPreviewer.js";
 
 export default function Compiler({ session }) {
   const { file } = session;
-  const xdgCacheHome = GLib.getenv("XDG_CACHE_HOME");
-  const targetPath = `${xdgCacheHome}/rust_build_cache`;
+  const cacheDir = GLib.get_user_cache_dir();
+  const targetPath = `${cacheDir}/rust_build_cache`;
 
   async function compile() {
     const cargo_launcher = new Gio.SubprocessLauncher();
