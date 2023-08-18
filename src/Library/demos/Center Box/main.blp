@@ -3,15 +3,15 @@ using Adw 1;
 
 Adw.StatusPage {
   title: _("Center Box");
-  description: _("Displays three child widgets, while keeping the middle centered");
+  description: _("Displays three child widgets, while keeping the middle one centered");
 
   child: Box {
     spacing: 24;
     orientation: vertical;
 
     Adw.Clamp {
-    maximum-size: bind width_adjustment.value;
-    child: CenterBox {
+      maximum-size: bind width_adjustment.value;
+      child: CenterBox {
         shrink-center-last: true;
 
         [start]
@@ -39,7 +39,7 @@ Adw.StatusPage {
     }
 
     LinkButton {
-      label: "API Reference";
+      label: _("API Reference");
       uri: "https://docs.gtk.org/gtk4/class.CenterBox.html";
     }
   };

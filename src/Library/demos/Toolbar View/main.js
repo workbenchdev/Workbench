@@ -92,3 +92,4 @@ reveal_topbar.connect("notify::active", () => {
 reveal_bottombar.connect("notify::active", () => {
   toolbar_view.reveal_bottom_bars = reveal_bottombar.active;
 });
+

@@ -15,12 +15,14 @@ Adw.Window {
     bottom-bar-style: bind barstyle_select.selected;
     reveal-top-bars:  true;
     reveal-bottom-bars: true;
+    
     [top]
     Adw.HeaderBar header_top {
       title-widget: Label {
-      label:_("Header Bar");
+        label:_("Header Bar");
       };
     }
+    
     content: Adw.ViewStack stack {
       vexpand: true;
 
@@ -33,15 +35,15 @@ Adw.Window {
             halign: center;
             orientation: vertical;
             spacing: 18;
-            Label{
+            Label {
               label: _("Toolbar View");
               styles ["title-1"]
             }
-            Label{
+            Label {
               wrap: true;
               label: _("A widget containing a page, as well as top and/or bottom bars.");
             }
-            LinkButton{
+            LinkButton {
               label: _("API Reference");
               uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/main/class.ToolbarView.html";
             }
@@ -49,23 +51,25 @@ Adw.Window {
               Adw.PreferencesGroup {
                 styles ["boxed-list"]
                 Adw.ComboRow topbar_select {
-                  title: _("Select top bar:  ");
+                  title: _("Top bar");
                   model: StringList {
                     strings [_("Header Bar"),_("Tab Bar"),_("View Switcher Bar"),_("Action Bar"),_("PopOverMenu Bar"),_("Search Bar"),_("Gtk Box")]
                   };
+                  selected: 0;
                   styles ["heading"]
                 }
                 Adw.ComboRow bottombar_select{
-                  title: _("Select bottom bar:  ");
+                  title: _("Bottom bar");
                   model: StringList {
                     strings [_("Header Bar"),_("Tab Bar"),_("View Switcher Bar"),_("Action Bar"),_("PopOverMenu Bar"),_("Search Bar"),_("Gtk Box")]
                   };
+                  selected: 0;
                   styles ["heading"]
                 }
                 Adw.ComboRow barstyle_select{
-                  title: _("Select style for the bars:  ");
+                  title: _("Style");
                   model: StringList {
-                    strings [_("Flat"),_("Raised"),_("Raised-Border")]
+                    strings [_("Flat"), _("Raised"), _("Raised-Border")]
                   };
                   styles ["heading"]
                 }
@@ -104,9 +108,9 @@ Adw.Window {
         title: _("Page 2");
         icon-name: "explore2-symbolic";
         use-underline: true;
-        child: Adw.StatusPage{
+        child: Adw.StatusPage {
           title: _("from");
-          };
+        };
       }
 
       Adw.ViewStackPage page3 {
@@ -114,19 +118,21 @@ Adw.Window {
         title: _("Page 3");
         icon-name: "explore2-symbolic";
         use-underline: true;
-        child: Adw.StatusPage{
+        child: Adw.StatusPage {
           title: _("Workbench");
         };
       }
     };
+
     [bottom]
     Adw.HeaderBar header_bottom {
-      title-widget: Label{
-      label: _("Header Bar");
+      title-widget: Label {
+       label: _("Header Bar");
       };
     }
   }
 }
+
 ActionBar action_bar {
   revealed: true;
   valign: end;
@@ -176,7 +182,7 @@ SearchBar search_bar {
   search-mode-enabled: true;
   show-close-button: true;
   SearchEntry {
-    placeholder-text: _("Start Searching...");
+    placeholder-text: _("Start Searching…");
   }
 }
 
@@ -187,28 +193,29 @@ Box gtk_box {
     label: _("Hello from Workbench");
   }
 }
+
 Adw.TabBar tab_bar {
   view: tab_view;
 }
-Adw.TabView tab_view{
-  Adw.TabPage main_tab_page{
+
+Adw.TabView tab_view {
+  Adw.TabPage main_tab_page {
     title: _("First Page");
-    child:
-      Adw.StatusPage {
-        hexpand: true;
-        vexpand: true;
-        title: _("Tab View");
-        description: _("A dynamic tabbed container");
-      };
+    child: Adw.StatusPage {
+      hexpand: true;
+      vexpand: true;
+      title: _("Tab View");
+      description: _("A dynamic tabbed container");
+    };
   }
-    Adw.TabPage main_tab_page2{
+
+  Adw.TabPage main_tab_page2 {
     title: _("Second Page");
-    child:
-      Adw.StatusPage {
-        hexpand: true;
-        vexpand: true;
-        title: _("Tab View");
-        description: _("A dynamic tabbed container");
-      };
+    child: Adw.StatusPage {
+      hexpand: true;
+      vexpand: true;
+      title: _("Tab View");
+      description: _("A dynamic tabbed container");
+    };
   }
 }
