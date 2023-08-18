@@ -12,7 +12,7 @@ blueprint_compiler = find_program(
   '/app/bin/blueprint-compiler',
 )
 
-install_subdir('Library/demos', install_dir : join_paths(pkgdatadir, 'Library'))
+install_subdir('Library', install_dir: pkgdatadir)
 
 output = run_command('../build-aux/list-demo-blp-files.sh', check: true)
 blueprint_files = output.stdout().strip().split('\n')

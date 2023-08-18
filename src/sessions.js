@@ -6,6 +6,7 @@ import {
   ensureDir,
   getNowForFilename,
   demos_dir,
+  rust_template_dir,
   settings as global_settings,
   encode,
 } from "./util.js";
@@ -45,6 +46,7 @@ export function createSessionFromDemo(demo) {
   const session = createSession();
 
   copy_demos(demo, session);
+  copy_rust_template_dir(session);
 
   const { panels } = demo;
   const { settings } = session;
@@ -66,10 +68,15 @@ export function createSessionFromDemo(demo) {
 
 function copy_demos(demo, session) {
   const demo_dir = demos_dir.get_child(demo.name);
-  copy_files_and_directories(demo_dir, session.file);
+  copy_directory(demo_dir, session.file);
 }
 
-function copy_files_and_directories(source, destination) {
+function copy_rust_template_dir(session) {
+  copy_directory(rust_template_dir, session.file);
+}
+
+// Copy directory that can contain one level of directories
+function copy_directory(source, destination) {
   for (const child of source.enumerate_children(
     "",
     Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
@@ -83,15 +90,18 @@ function copy_files_and_directories(source, destination) {
       .get_file_type();
 
     if (child_type === Gio.FileType.DIRECTORY) {
-      copy_directory(child_source, child_destination);
+      copy_directory_flat(child_source, child_destination);
     } else if (child_type === Gio.FileType.REGULAR) {
       child_source.copy(child_destination, Gio.FileCopyFlags.NONE, null, null);
     }
   }
 }
 
-function copy_directory(source, destination) {
-  destination.make_directory_with_parents(null);
+// Copy directory, but ignore children that are directories
+function copy_directory_flat(source, destination) {
+  if (!destination.query_exists(null)) {
+    destination.make_directory(null);
+  }
 
   for (const child of source.enumerate_children(
     "",
@@ -106,7 +116,7 @@ function copy_directory(source, destination) {
       .get_file_type();
 
     if (child_type === Gio.FileType.DIRECTORY) {
-      copy_directory(child_source, child_destination);
+      copy_directory_flat(child_source, child_destination);
     } else if (child_type === Gio.FileType.REGULAR) {
       child_source.copy(child_destination, Gio.FileCopyFlags.NONE, null, null);
     }
