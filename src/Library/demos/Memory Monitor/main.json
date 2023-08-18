@@ -1,0 +1,6 @@
+{
+  "category": "platform",
+  "description": "Monitor system memory",
+  "panels": ["ui", "preview"],
+  "autorun": true
+}
