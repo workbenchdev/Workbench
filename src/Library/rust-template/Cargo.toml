@@ -12,3 +12,6 @@ libc = "0.2"
 
 [lib]
 crate-type = ["cdylib"]
+
+[target.x86_64-unknown-linux-gnu]
+rustflags = ["-C", "link-arg=-fuse-ld=/app/bin/mold"]

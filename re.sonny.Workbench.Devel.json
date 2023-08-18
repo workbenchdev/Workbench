@@ -6,18 +6,13 @@
   "sdk-extensions": [
     "org.freedesktop.Sdk.Extension.vala",
     "org.gnome.Sdk.Docs",
-    "org.freedesktop.Sdk.Extension.rust-stable",
-    "org.freedesktop.Sdk.Extension.llvm16"
+    "org.freedesktop.Sdk.Extension.rust-stable"
   ],
   "build-options": {
-    "append-path": "/usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/llvm16/bin:/usr/lib/sdk/vala/bin",
+    "append-path": "/usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/vala/bin",
     "append-ld-library-path": "/usr/lib/sdk/vala/lib",
     "env": {
-      "CARGO_HOME": "/run/build/cargo-c/cargo",
-      "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER": "clang",
-      "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTFLAGS": "-C link-arg=-fuse-ld=/usr/lib/sdk/rust-stable/bin/mold",
-      "CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER": "clang",
-      "CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_RUSTFLAGS": "-C link-arg=-fuse-ld=/usr/lib/sdk/rust-stable/bin/mold"
+      "CARGO_HOME": "/run/build/cargo-c/cargo"
     },
     "test-args": ["--socket=x11", "--share=network"]
   },
