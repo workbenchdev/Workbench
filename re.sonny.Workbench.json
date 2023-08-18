@@ -1,7 +1,7 @@
 {
   "id": "re.sonny.Workbench",
   "runtime": "org.gnome.Sdk",
-  "runtime-version": "master",
+  "runtime-version": "45beta",
   "sdk": "org.gnome.Sdk",
   "sdk-extensions": [
     "org.freedesktop.Sdk.Extension.vala",
@@ -89,9 +89,9 @@
       "buildsystem": "simple",
       "sources": [
         {
-          "type": "git",
-          "url": "https://gitlab.freedesktop.org/gstreamer/gst-plugins-rs.git",
-          "commit": "f92dc28696cb4148183a9e67272437f6a6bce412"
+          "type": "archive",
+          "url": "https://gitlab.freedesktop.org/gstreamer/gst-plugins-rs/-/archive/0.11.0/gst-plugins-rs-0.11.0.tar.gz",
+          "sha256": "b04bd028a0c9eb6c49caf1a011e779731156ff2ab2d5342efd658d0eb014f843"
         }
       ],
       "build-options": {
@@ -114,8 +114,8 @@
       "sources": [
         {
           "type": "archive",
-          "url": "https://download.gnome.org/sources/vte/0.72/vte-0.72.2.tar.xz",
-          "sha256": "f7966fd185a6981f53964162b71cfef7e606495155d6f5827b72aa0dd6741c9e"
+          "url": "https://download.gnome.org/sources/vte/0.73/vte-0.73.93.tar.xz",
+          "sha256": "dade04c8dd3f9a7b6f7dd0f886d23e1b41debe175a15ce40f3a94921db1ae0ae"
         }
       ]
     },
@@ -150,8 +150,8 @@
       "sources": [
         {
           "type": "archive",
-          "url": "https://download.gnome.org/sources/libshumate/1.0/libshumate-1.0.5.tar.xz",
-          "sha256": "a8cfd8df9177ee44b04733b017af13c9e93f98765cdc89b750a48edaf701956c"
+          "url": "https://download.gnome.org/sources/libshumate/1.1/libshumate-1.1.beta.tar.xz",
+          "sha256": "10d7f4c55d651881dfa6a706200ad29d148043a6a76d3642f02394313ac5102c"
         }
       ]
     },
@@ -189,7 +189,7 @@
         {
           "type": "git",
           "url": "https://gitlab.gnome.org/Teams/Design/icon-development-kit-www.git",
-          "commit": "f2ecae16b8303d196577ebbbcb320d7a28ee0c69"
+          "commit": "3ac8811ad9de28006ce1d9e3ea9c4eaca2422c5d"
         }
       ],
       "modules": [
