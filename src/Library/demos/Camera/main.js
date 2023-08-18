@@ -23,7 +23,12 @@ async function accessCamera() {
     return;
   }
 
-  const success = portal.access_camera(parent, Xdp.CameraFlags.NONE, null);
+  const success = await portal.access_camera(
+    parent,
+    Xdp.CameraFlags.NONE,
+    null,
+  );
+
   if (!success) {
     console.log("Permission denied");
     return;
