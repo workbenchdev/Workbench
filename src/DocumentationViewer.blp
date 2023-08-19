@@ -9,22 +9,16 @@ Adw.Window documentation_viewer {
   default-width: 1024;
   default-height: 768;
   hide-on-close: true;
+  title: _("Manuals");
 
-  content: Adw.NavigationSplitView split_view{
+  content: Adw.NavigationSplitView split_view {
     sidebar: Adw.NavigationPage {
       child: Adw.ToolbarView {
         [top]
         Adw.HeaderBar {
-          Button button_back {
-            icon-name: "go-previous-symbolic";
-            tooltip-text: _("Back");
-            styles ["flat"]
-          }
-          Button button_forward {
-            icon-name: "go-next-symbolic";
-            tooltip-text: _("Forward");
-            styles ["flat"]
-          }
+          title-widget: Adw.WindowTitle {
+            title: bind documentation_viewer.title;
+          };
         }
 
         content: ScrolledWindow {
@@ -57,7 +51,19 @@ Adw.Window documentation_viewer {
       child: Adw.ToolbarView {
         [top]
         Adw.HeaderBar {
-          show-title: false;
+          //show-title: false;
+          [start]
+          Button button_back {
+            icon-name: "go-previous-symbolic";
+            tooltip-text: _("Back");
+            styles ["flat"]
+          }
+          [start]
+          Button button_forward {
+            icon-name: "go-next-symbolic";
+            tooltip-text: _("Forward");
+            styles ["flat"]
+          }
         }
 
         content: WebKit.WebView webview {
