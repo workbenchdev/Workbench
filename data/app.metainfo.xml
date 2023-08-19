@@ -10,16 +10,16 @@
   <summary>Learn and prototype with GNOME technologies</summary>
   <translation type="gettext">@app_id@</translation>
   <description>
-    <p>Workbench goal is to let you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a GTK user interface.</p>
+    <p>Workbench lets you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a GTK user interface.</p>
     <p>Among other things, Workbench comes with</p>
     <ul>
-      <li>realtime GTK/CSS preview</li>
-      <li>library of examples</li>
+      <li>Live GTK/CSS preview</li>
+      <li>Library of 100+ examples</li>
       <li>JavaScript and Vala support</li>
       <li>XML and Blueprint for describing user interface</li>
-      <li>syntax highlighting, undo/redo, autosave, session restore</li>
-      <li>code linter and formatter</li>
-      <li>terminal output</li>
+      <li>Syntax highlighting, undo/redo, autosave, sessions and projects</li>
+      <li>Code linter and formatter</li>
+      <li>Terminal output</li>
       <li>1000+ icons</li>
     </ul>
   </description>
@@ -47,6 +47,78 @@
   </screenshots>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="45" date="2023-09-15">
+      <description>
+        <ul>
+          <li>Use GNOME 45</li>
+          <li>Add multi windows and sessions support</li>
+          <li>Support saving and opening a project</li>
+          <li>Add offline Documentation Viewer</li>
+          <li>Use GTKCssLanguageServer</li>
+          <li>Update to Blueprint 0.10.0</li>
+          <li>Update to Rome 12.1.3</li>
+          <li>Update to vte 0.72.2</li>
+          <li>Update Icon Development Kit</li>
+          <li>Add a workbench.resolve API</li>
+          <li>Allow running Vala without UI code</li>
+          <li>New Library entry: Map</li>
+          <li>New Library entry: Search</li>
+          <li>New Library entry: Audio</li>
+          <li>New Library entry: Event Controllers</li>
+          <li>New Library entry: Action Bar</li>
+          <li>New Library entry: Location</li>
+          <li>New Library entry: Checkboxes</li>
+          <li>New Library entry: Radio Buttons</li>
+          <li>New Library entry: List View</li>
+          <li>New Library entry: Separator</li>
+          <li>New Library entry: Link Button</li>
+          <li>New Library entry: Actions</li>
+          <li>New Library entry: Tooltip</li>
+          <li>New Library entry: Flow Box</li>
+          <li>New Library entry: Emoji Chooser</li>
+          <li>New Library entry: Editable Label</li>
+          <li>New Library entry: Drop Zone</li>
+          <li>New Library entry: Label</li>
+          <li>New Library entry: Menu Button</li>
+          <li>New Library entry: Image</li>
+          <li>New Library entry: Column View</li>
+          <li>New Library entry: Menu</li>
+          <li>New Library entry: Laucher (File / Uri)</li>
+          <li>New Library entry: Navigation Split View</li>
+          <li>New Library entry: Overlay Split View</li>
+          <li>New Library entry: Navigation View</li>
+          <li>New Library entry: Scrolled Window</li>
+          <li>New Library entry: Power Profile Monitor</li>
+          <li>New Library entry: Network Monitor Demo</li>
+          <li>New Library entry: Clamp</li>
+          <li>New Library entry: Source View</li>
+          <li>New Library entry: Breakpoint</li>
+          <li>New Library entry: Screencast</li>
+          <li>Update Boxed List Library entry with Spin and Switch rows</li>
+          <li>Update Boxed List Library entry with activatable widget</li>
+          <li>Update Scale Library entry with Spin Button</li>
+          <li>Library entry ported to Vala: Text Fields</li>
+          <li>Library entry ported to Vala: HTTP Image</li>
+          <li>Library entry ported to Vala: Color Dialog</li>
+          <li>Library entry ported to Vala: Scale</li>
+          <li>Library entry ported to Vala: Stack</li>
+          <li>Library entry ported to Vala: Preferences Window</li>
+          <li>Library entry ported to Vala: List Model</li>
+          <li>Library entry ported to Vala: List View</li>
+          <li>Library entry ported to Vala: About Window</li>
+          <li>Library entry ported to Vala: Button</li>
+          <li>Library entry ported to Vala: Spinner</li>
+          <li>Library entry ported to Vala: Text View</li>
+          <li>Library entry ported to Vala: Wallpaper</li>
+          <li>Library entry ported to Vala: Screenshot</li>
+          <li>Library entry ported to Vala: Account</li>
+          <li>Library entry ported to Vala: Color Picker</li>
+          <li>Library entry ported to Vala: Email</li>
+          <li>Library entry ported to Vala: Location</li>
+          <li>Library entry ported to Vala: Event Controllers</li>
+        </ul>
+      </description>
+    </release>
     <release version="44.2" date="2023-06-23">
       <description>
         <ul>

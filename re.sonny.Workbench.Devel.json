@@ -1,15 +1,19 @@
 {
   "id": "re.sonny.Workbench.Devel",
   "runtime": "org.gnome.Sdk",
-  "runtime-version": "master",
+  "runtime-version": "45beta",
   "sdk": "org.gnome.Sdk",
   "sdk-extensions": [
     "org.freedesktop.Sdk.Extension.vala",
-    "org.gnome.Sdk.Docs"
+    "org.gnome.Sdk.Docs",
+    "org.freedesktop.Sdk.Extension.rust-stable"
   ],
   "build-options": {
-    "append-path": "/usr/lib/sdk/vala/bin",
-    "append-ld-library-path": "/usr/lib/sdk/vala/lib"
+    "append-path": "/usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/vala/bin",
+    "append-ld-library-path": "/usr/lib/sdk/vala/lib",
+    "env": {
+      "CARGO_HOME": "/run/build/cargo-c/cargo"
+    }
   },
   "command": "workbench",
   "finish-args": [
@@ -72,6 +76,32 @@
       ]
     },
     {
+      "name": "cargo-c",
+      "buildsystem": "simple",
+      "build-commands": ["cargo install cargo-c --root /app"],
+      "build-options": {
+        "build-args": ["--share=network"]
+      },
+      "cleanup": ["*"]
+    },
+    {
+      "name": "gst-plugins-rs",
+      "buildsystem": "simple",
+      "sources": [
+        {
+          "type": "archive",
+          "url": "https://gitlab.freedesktop.org/gstreamer/gst-plugins-rs/-/archive/0.11.0/gst-plugins-rs-0.11.0.tar.gz",
+          "sha256": "b04bd028a0c9eb6c49caf1a011e779731156ff2ab2d5342efd658d0eb014f843"
+        }
+      ],
+      "build-options": {
+        "build-args": ["--share=network"]
+      },
+      "build-commands": [
+        "cargo cinstall --features wayland,x11glx,x11egl -p gst-plugin-gtk4 --prefix=/app"
+      ]
+    },
+    {
       "name": "vte",
       "buildsystem": "meson",
       "config-opts": [
@@ -84,8 +114,8 @@
       "sources": [
         {
           "type": "archive",
-          "url": "https://download.gnome.org/sources/vte/0.72/vte-0.72.2.tar.xz",
-          "sha256": "f7966fd185a6981f53964162b71cfef7e606495155d6f5827b72aa0dd6741c9e"
+          "url": "https://download.gnome.org/sources/vte/0.73/vte-0.73.93.tar.xz",
+          "sha256": "dade04c8dd3f9a7b6f7dd0f886d23e1b41debe175a15ce40f3a94921db1ae0ae"
         }
       ]
     },
@@ -120,8 +150,8 @@
       "sources": [
         {
           "type": "archive",
-          "url": "https://download.gnome.org/sources/libshumate/1.0/libshumate-1.0.5.tar.xz",
-          "sha256": "a8cfd8df9177ee44b04733b017af13c9e93f98765cdc89b750a48edaf701956c"
+          "url": "https://download.gnome.org/sources/libshumate/1.1/libshumate-1.1.beta.tar.xz",
+          "sha256": "10d7f4c55d651881dfa6a706200ad29d148043a6a76d3642f02394313ac5102c"
         }
       ]
     },
