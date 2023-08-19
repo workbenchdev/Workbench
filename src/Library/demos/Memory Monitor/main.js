@@ -1,4 +1,3 @@
-import Adw from "gi://Adw";
 import Gio from "gi://Gio";
 
 const memory_monitor = Gio.MemoryMonitor.dup_default();
@@ -9,6 +8,7 @@ cache.set("b", 2);
 cache.set("c", 3);
 
 memory_monitor.connect("low-memory-warning", (monitor, level) => {
+  // Use inequalities for checking as new levels may be added in the future
   if (level >= Gio.MemoryMonitorWarningLevel.LOW) {
     // Processes should free up unneeded resources
     console.log("Warning Level: Low");
