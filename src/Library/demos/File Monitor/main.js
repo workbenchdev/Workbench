@@ -14,16 +14,11 @@ const file_name = workbench.builder.get_object("file_name");
 const { buffer } = edit_entry;
 const file = Gio.File.new_for_uri(workbench.resolve("workbench.txt"));
 const file_dir = file.get_parent();
+const overlay = workbench.builder.get_object("overlay");
 const file_launcher = new Gtk.FileLauncher({
   always_ask: true,
   file,
 });
-const monitor_for_dir = file_dir.monitor(
-  Gio.FileMonitorFlags.WATCH_MOVES,
-  null,
-);
-const monitor_for_file = file.monitor(Gio.FileMonitorFlags.NONE, null);
-const overlay = workbench.builder.get_object("overlay");
 const details = file.query_info(
   "standard::display-name",
   Gio.FileQueryInfoFlags.NONE,
@@ -31,18 +26,28 @@ const details = file.query_info(
 );
 file_name.label = details.get_display_name();
 buffer.set_text("Start editing ... ", -1);
+
+const monitor_for_dir = file_dir.monitor(
+  Gio.FileMonitorFlags.WATCH_MOVES,
+  null,
+);
+const monitor_for_file = file.monitor(Gio.FileMonitorFlags.NONE, null);
+
 delete_file.connect("clicked", () => {
   file.delete_async(GLib.PRIORITY_DEFAULT, null).catch(logError);
 });
+
 create_file.connect("clicked", () => {
   const new_file = file_dir.get_child("new-file.txt");
   new_file
     .create_async(Gio.FileCreateFlags.NONE, GLib.PRIORITY_DEFAULT, null, null)
     .catch(logError);
 });
+
 view_file.connect("clicked", () => {
   file_launcher.launch(workbench.window, null).catch(logError);
 });
+
 monitor_for_file.connect("changed", () => {
   const toast = new Adw.Toast({
     title: "File modified",
@@ -50,6 +55,7 @@ monitor_for_file.connect("changed", () => {
   });
   overlay.add_toast(toast);
 });
+
 monitor_for_dir.connect("changed", (monitor, child, other_file, event) => {
   const toast = new Adw.Toast({
     title: "Unknown Event",
@@ -70,12 +76,7 @@ monitor_for_dir.connect("changed", (monitor, child, other_file, event) => {
 });
 
 edit_file.connect("clicked", () => {
-  const text = buffer.get_text(
-    buffer.get_start_iter(),
-    buffer.get_end_iter(),
-    true,
-  );
-  const bytes = new GLib.Bytes(text);
+  const bytes = new GLib.Bytes(buffer.text);
   file
     .replace_contents_async(
       bytes,
