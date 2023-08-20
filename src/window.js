@@ -38,6 +38,8 @@ import "./widgets/Modal.js";
 import "./widgets/CodeView.js";
 import { deleteSession, saveSessionAsProject } from "./sessions.js";
 
+Gio._promisify(Adw.MessageDialog.prototype, "choose", "choose_finish");
+
 const style_manager = Adw.StyleManager.get_default();
 
 export default function Window({ application, session }) {
@@ -445,10 +447,7 @@ async function onCloseSession({ session, window }) {
     updateSaveButton();
   }
 
-  const response = await new Promise((resolve) => {
-    dialog.connect("response", (self, response) => resolve(response));
-  });
-
+  const response = await dialog.choose(null);
   if (response === "cancel") return;
 
   if (response === "discard") {
