@@ -38,8 +38,6 @@ import "./widgets/Modal.js";
 import "./widgets/CodeView.js";
 import { deleteSession, saveSessionAsProject } from "./sessions.js";
 
-Gio._promisify(Adw.MessageDialog.prototype, "choose", "choose_finish");
-
 const style_manager = Adw.StyleManager.get_default();
 
 export default function Window({ application, session }) {
