@@ -23,7 +23,11 @@
     "--socket=fallback-x11",
     "--socket=wayland",
     "--device=dri",
-    "--share=network"
+    "--share=network",
+    "--env=CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER=clang",
+    "--env=CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER=clang",
+    "--env=CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTFLAGS=-C link-arg=-fuse-ld=/app/bin/mold",
+    "--env=CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_RUSTFLAGS=-C link-arg=-fuse-ld=/app/bin/mold"
   ],
   "cleanup": [
     "/include",
