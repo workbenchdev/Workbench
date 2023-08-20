@@ -12,10 +12,8 @@
     "append-path": "/usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/vala/bin",
     "append-ld-library-path": "/usr/lib/sdk/vala/lib",
     "env": {
-      "CARGO_HOME": "/run/build/cargo-c/cargo",
-      "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER": "clang"
-    },
-    "test-args": ["--socket=x11", "--share=network"]
+      "CARGO_HOME": "/run/build/cargo-c/cargo"
+    }
   },
   "command": "workbench",
   "finish-args": [
