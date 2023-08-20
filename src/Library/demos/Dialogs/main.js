@@ -1,5 +1,8 @@
 import Adw from "gi://Adw";
 import Gtk from "gi://Gtk";
+import Gio from "gi://Gio";
+
+Gio._promisify(Adw.MessageDialog.prototype, "choose", "choose_finish");
 
 const button_confirmation = workbench.builder.get_object("button_confirmation");
 const button_error = workbench.builder.get_object("button_error");
@@ -25,7 +28,7 @@ function createConfirmationDialog() {
     console.log(`Selected "${response}" response.`);
   });
 
-  dialog.present();
+  dialog.choose(null);
 }
 
 function createErrorDialog() {
@@ -43,7 +46,7 @@ function createErrorDialog() {
     console.log(`Selected "${response}" response.`);
   });
 
-  dialog.present();
+  dialog.choose(null);
 }
 
 //Creates a message dialog with an extra child
@@ -78,7 +81,7 @@ function createAdvancedDialog() {
     }
   });
 
-  dialog.present();
+  dialog.choose(null);
 }
 
 button_confirmation.connect("clicked", createConfirmationDialog);
