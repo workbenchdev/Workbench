@@ -14,6 +14,16 @@ Adw.Window {
     bottom-bar-style: bind barstyle_select.selected;
     reveal-top-bars:  bind reveal_topbar.active;
     reveal-bottom-bars: bind reveal_bottombar.active;
+    
+    // In this demo we are using the API to set the header bars
+    // you can use the [top] and [bottom] child types directly instead
+    // [top]
+    // Adw.HeaderBar {
+      // title-widget: Adw.WindowTitle {
+        // title: _("Header Bar");
+      // };
+    // }
+
 
     content: Adw.ViewStack stack {
       Adw.ViewStackPage page_defualt {
@@ -115,8 +125,8 @@ Adw.Window {
 }
 
 Adw.HeaderBar header_bar {
-  title-widget: Label {
-    label:_("Header Bar");
+  title-widget: Adw.WindowTitle {
+    title: _("Header Bar");
   };
 }
 
