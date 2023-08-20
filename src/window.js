@@ -94,7 +94,7 @@ export default function Window({ application, session }) {
 
   const document_rust = Document({
     code_view: builder.get_object("code_view_rust"),
-    file: file.get_child("src/code.rs"),
+    file: file.get_child("code.rs"),
     lang: langs.rust,
   });
   langs.rust.document = document_rust;

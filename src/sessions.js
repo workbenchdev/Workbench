@@ -195,6 +195,7 @@ function migrateStateToSession() {
     ["state.css", "main.css"],
     ["state.js", "main.js"],
     ["state.vala", "main.vala"],
+    ["state.rs", "main.rs"],
     ["state.xml", "main.ui"],
   ];
 

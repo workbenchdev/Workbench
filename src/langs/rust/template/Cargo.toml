@@ -20,4 +20,4 @@ features = ["v1_4", "gtk_v4_10"]
 
 [lib]
 crate-type = ["cdylib"]
-
+path = "lib.rs"
