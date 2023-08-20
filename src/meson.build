@@ -45,7 +45,6 @@ configure_file(
   install_dir: get_option('bindir')
 )
 
-install_subdir('langs/rust/', install_dir : join_paths(pkgdatadir, 'Library', 'Welcome'), strip_directory : true)
 install_data('langs/vala/workbench.vala', install_dir: pkgdatadir)
 subdir('Previewer')
 
