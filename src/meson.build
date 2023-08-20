@@ -12,7 +12,9 @@ blueprint_compiler = find_program(
   '/app/bin/blueprint-compiler',
 )
 
-install_subdir('Library', install_dir: pkgdatadir)
+install_subdir('Library/demos', install_dir : join_paths(pkgdatadir, 'Library'))
+install_subdir('langs/rust/template', install_dir : join_paths(pkgdatadir, 'langs/rust'))
+
 
 output = run_command('../build-aux/list-demo-blp-files.sh', check: true)
 blueprint_files = output.stdout().strip().split('\n')

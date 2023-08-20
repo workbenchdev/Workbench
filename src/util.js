@@ -161,7 +161,7 @@ export const demos_dir = Gio.File.new_for_path(
 
 export const rust_template_dir = Gio.File.new_for_path(
   pkg.pkgdatadir,
-).resolve_relative_path("Library/rust-template");
+).resolve_relative_path("langs/rust/template");
 
 export function readDemoFile(demo_name, file_name) {
   const file = demos_dir.get_child(demo_name).get_child(file_name);
