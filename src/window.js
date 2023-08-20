@@ -445,10 +445,7 @@ async function onCloseSession({ session, window }) {
     updateSaveButton();
   }
 
-  const response = await new Promise((resolve) => {
-    dialog.connect("response", (self, response) => resolve(response));
-  });
-
+  const response = await dialog.choose(null);
   if (response === "cancel") return;
 
   if (response === "discard") {
