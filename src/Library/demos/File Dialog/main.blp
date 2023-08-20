@@ -1,0 +1,39 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: _("File Dialog");
+  description: _("Present a dialog to open and save files");
+
+  Box {
+    orientation: vertical;
+    spacing: 24;
+
+    Label {
+      label: _("Modes");
+      styles ["title-4"]
+    }
+
+    DropDown dropdown_mode {
+      halign: center;
+      model: StringList {
+        strings [_("Open File"), _("Open Multiple Files"), _("Select Folder"), _("Select Multiple Folders"), _("Save File")]
+      };
+      selected: 0;
+    }
+
+    Button button {
+      halign: center;
+      label: _("Trigger");
+      styles ["pill", "suggested-action"]
+    }
+
+    LinkButton {
+      label: _("API Reference");
+      uri: "https://docs.gtk.org/gtk4/class.FileDialog.html";
+    }
+  }
+}
+
+
+
