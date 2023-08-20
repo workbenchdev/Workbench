@@ -31,7 +31,7 @@ const monitor_for_dir = file_dir.monitor(
   Gio.FileMonitorFlags.WATCH_MOVES,
   null,
 );
-const monitor_for_file = file.monitor(Gio.FileMonitorFlags.NONE, null);
+const monitor_for_file = file.monitor(Gio.FileMonitorFlags.WATCH_MOVES, null);
 
 delete_file.connect("clicked", () => {
   file.delete_async(GLib.PRIORITY_DEFAULT, null).catch(logError);
