@@ -3,73 +3,77 @@ using Adw 1;
 using GObject 2.0;
 using WebKit 6.0;
 
-Window documentation_viewer {
-  title: _("Documentation");
+Adw.Window documentation_viewer {
+  width-request: 400;
+  height-request: 400;
   default-width: 1024;
   default-height: 768;
   hide-on-close: true;
-  titlebar: Adw.HeaderBar {
-    Button button_back{
-      icon-name: "go-previous-symbolic";
-      tooltip-text: _("Back");
-      styles ["flat"]
-    }
-    Button button_forward {
-      icon-name: "go-next-symbolic";
-      tooltip-text: _("Forward");
-      styles ["flat"]
-    }
-    ToggleButton button_sidebar {
-      active: false;
-      icon-name: "dock-left-symbolic";
-      tooltip-text: _("Toggle Sidepanel");
-    }
-    ToggleButton button_search {
-      icon-name: "loupe-large-symbolic";
-      tooltip-text: _("Search");
-    }
-  };
+  title: _("Manuals");
 
-
-  Paned documentation_paned {
-    position: 400;
-
-    [end]
-    WebKit.WebView webview {
-      settings: WebKit.Settings {
-        enable-back-forward-navigation-gestures: true;
-        enable-developer-extras: true;
-        enable-smooth-scrolling: true;
-      };
-    }
-
-    [start]
-    Box sidebar {
-      visible: bind button_sidebar.active;
-      orientation: vertical;
-      vexpand: true;
-
-
-      SearchBar search_bar {
-        key-capture-widget: sidebar;
-        SearchEntry search_entry{
-         hexpand: true;
+  content: Adw.NavigationSplitView split_view {
+    sidebar: Adw.NavigationPage {
+      child: Adw.ToolbarView {
+        [top]
+        Adw.HeaderBar {
+          title-widget: Adw.WindowTitle {
+            title: bind documentation_viewer.title;
+          };
         }
-      }
 
-      ScrolledWindow {
-        ListBox listbox {
-          margin-top: 12;
-          margin-bottom: 12;
-          margin-start: 12;
-          margin-end: 12;
-          hexpand: true;
+        content: ScrolledWindow {
           vexpand: true;
-          valign: start;
-          styles ["boxed-list"]
+          width-request: 400;
+
+          ListView list_view {
+            enable-rubberband: true;
+            factory: BuilderListItemFactory {
+
+              template ListItem {
+                child: TreeExpander expander {
+                  list-row: bind template.item;
+                  child: Inscription {
+                    hexpand: true;
+                    nat-chars: 10;
+                    text-overflow: ellipsize_end;
+                    text: bind expander.item as <$DocumentationPage>.name;
+                  };
+                };
+              }
+            };
+            styles ["navigation-sidebar"]
+          }
+        };
+      };
+    };
+
+    content: Adw.NavigationPage {
+      child: Adw.ToolbarView {
+        [top]
+        Adw.HeaderBar {
+          //show-title: false;
+          [start]
+          Button button_back {
+            icon-name: "go-previous-symbolic";
+            tooltip-text: _("Back");
+            styles ["flat"]
+          }
+          [start]
+          Button button_forward {
+            icon-name: "go-next-symbolic";
+            tooltip-text: _("Forward");
+            styles ["flat"]
+          }
         }
-      }
-      styles ["background"]
-    }
-  }
+
+        content: WebKit.WebView webview {
+          settings: WebKit.Settings {
+            enable-back-forward-navigation-gestures: true;
+            enable-developer-extras: true;
+            enable-smooth-scrolling: true;
+          };
+        };
+      };
+    };
+  };
 }
