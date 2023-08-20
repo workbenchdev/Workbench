@@ -2,40 +2,54 @@ import GObject from "gi://GObject";
 import Gtk from "gi://Gtk";
 import Gio from "gi://Gio";
 import GLib from "gi://GLib";
-import Adw from "gi://Adw";
 import WebKit from "gi://WebKit";
-
 import { decode } from "./util.js";
 import resource from "./DocumentationViewer.blp";
+
+const DocumentationPage = GObject.registerClass(
+  {
+    GTypeName: "DocumentationPage",
+    Properties: {
+      name: GObject.ParamSpec.string(
+        "name",
+        "name",
+        "Display name in the sidebar",
+        GObject.ParamFlags.READWRITE,
+        "",
+      ),
+      uri: GObject.ParamSpec.string(
+        "uri",
+        "uri",
+        "Uri to the documentation page",
+        GObject.ParamFlags.READWRITE,
+        "",
+      ),
+      children: GObject.ParamSpec.object(
+        "children",
+        "children",
+        null,
+        GObject.ParamFlags.READWRITE,
+        Gio.ListStore,
+      ),
+    },
+  },
+  class DocumentationPage extends GObject.Object {},
+);
 
 export default function DocumentationViewer({ application }) {
   const builder = Gtk.Builder.new_from_resource(resource);
 
   const window = builder.get_object("documentation_viewer");
   const webview = builder.get_object("webview");
-  const listbox = builder.get_object("listbox");
-  const search_bar = builder.get_object("search_bar");
-  const button_sidebar = builder.get_object("button_sidebar");
-  const button_search = builder.get_object("button_search");
-  const search_entry = builder.get_object("search_entry");
+  const list_view = builder.get_object("list_view");
   const button_back = builder.get_object("button_back");
   const button_forward = builder.get_object("button_forward");
 
   const base_path = Gio.File.new_for_path("/app/share/doc");
-  webview.load_uri(
-    base_path.resolve_relative_path("gtk4/index.html").get_uri(),
-  );
-  let loaded = false;
 
   webview.connect("load-changed", (self, load_event) => {
     updateButtons();
-
-    if (load_event === WebKit.LoadEvent.FINISHED) {
-      loaded = true;
-      button_sidebar.active = false;
-    } else {
-      loaded = false;
-    }
+    if (load_event === WebKit.LoadEvent.FINISHED) disableDocSidebar(webview);
   });
 
   webview.get_back_forward_list().connect("changed", () => {
@@ -55,43 +69,7 @@ export default function DocumentationViewer({ application }) {
     webview.go_forward();
   });
 
-  button_sidebar.connect("toggled", () => {
-    if (loaded) {
-      if (button_sidebar.active) disableDocSidebar(webview);
-      else enableDocSidebar(webview);
-    }
-  });
-
-  button_sidebar.connect("toggled", () => {
-    if (loaded) {
-      if (button_sidebar.active) disableDocSidebar(webview);
-      else enableDocSidebar(webview);
-    }
-  });
-
-  search_entry.connect("search-changed", () => {
-    listbox.invalidate_filter();
-  });
-
-  search_bar.bind_property(
-    "search-mode-enabled",
-    button_search,
-    "active",
-    GObject.BindingFlags.BIDIRECTIONAL,
-  );
-
-  button_search.connect("toggled", () => {
-    if (button_search.active) button_sidebar.active = true;
-  });
-
-  listbox.set_sort_func(sort);
-  listbox.invalidate_sort();
-  listbox.set_filter_func(filter);
-  listbox.connect("row-selected", (self, row) => {
-    webview.load_uri(row.uri);
-  });
-
-  getDocs(base_path, [
+  getNamespaces(base_path, [
     "atk",
     "javascriptcoregtk-4.1",
     "libhandy-1",
@@ -100,25 +78,44 @@ export default function DocumentationViewer({ application }) {
     "webkit2gtk-web-extension-4.1",
   ])
     .then((docs) => {
+      const root = newListStore();
       for (const doc of docs) {
-        const row = new Adw.ActionRow({
-          title: doc.title,
+        const dir_path = base_path.resolve_relative_path(doc.dir);
+        getChildren(dir_path).then((model) => {
+          root.append(
+            new DocumentationPage({
+              name: doc.title,
+              uri: doc.uri,
+              children: model,
+            }),
+          );
         });
-        row.uri = doc.uri;
-        row.add_suffix(new Gtk.Image({ icon_name: "go-next-symbolic" }));
-        listbox.append(row);
       }
+      return root;
+    })
+    .then((root) => {
+      const tree_model = Gtk.TreeListModel.new(
+        root,
+        false,
+        false,
+        (item) => item.children,
+      );
+      const sorter = Gtk.TreeListRowSorter.new(
+        Gtk.CustomSorter.new((a, b) => {
+          const name1 = a.name;
+          const name2 = b.name;
+          return name1.localeCompare(name2);
+        }),
+      );
+      const sort_model = Gtk.SortListModel.new(tree_model, sorter);
+      const selection_model = new Gtk.SingleSelection({ model: sort_model });
+      selection_model.connect("notify::selected", () => {
+        const uri = selection_model.selected_item.item.uri;
+        if (uri) webview.load_uri(uri);
+      });
+      list_view.model = selection_model;
     })
     .catch(logError);
-
-  function sort(a, b) {
-    return a.title.localeCompare(b.title);
-  }
-
-  function filter(row) {
-    const re = new RegExp(search_entry.text, "i");
-    return re.test(row.title);
-  }
 
   const action_documentation = new Gio.SimpleAction({
     name: "documentation",
@@ -130,15 +127,141 @@ export default function DocumentationViewer({ application }) {
   application.add_action(action_documentation);
 }
 
-async function getDocs(base_path, filter_docs) {
-  const docs = [];
+async function getChildren(dir) {
+  const docs = await list(dir);
+  return createSections(docs, dir);
+}
+
+function createSections(docs, dir) {
+  const index_html = dir.get_child("index.html").get_uri();
+
+  const section_name_uri = {
+    class: ["Classes", "#classes"],
+    iface: ["Interfaces", "#interfaces"],
+    struct: ["Structs", "#structs"],
+    alias: ["Aliases", "#aliases"],
+    enum: ["Enumerations", "#enums"],
+    flags: ["Bitfields", "#bitfields"],
+    func: ["Functions", "#functions"],
+    error: ["Error Domains", "#domains"],
+    callback: ["Callbacks", "#callbacks"],
+    const: ["Constants", "#constants"],
+  };
+
+  const sections = {};
+  for (const section in section_name_uri) sections[section] = newListStore();
+
+  const subsection_name_uri = {
+    ctor: ["Constructors", "#constructors"],
+    type_func: ["Functions", "#type-functions"],
+    method: ["Instance Methods", "#methods"],
+    property: ["Properties", "#properties"],
+    signal: ["Signals", "#signals"],
+    class_method: ["Class Methods", "#class-methods"],
+    vfunc: ["Virtual Methods", "#virtual-methods"],
+  };
+
+  const subsections = {};
+  // List of sections that need subsections
+  const subsections_required = ["class", "iface", "struct", "error"];
+
+  for (const doc of docs) {
+    const split_name = doc.split(".");
+    // If file is of the form xx.xx.html for example class.Button.html
+    if (split_name.length === 3 && sections[split_name[0]]) {
+      const doc_page = new DocumentationPage({
+        name: split_name[1],
+        uri: dir.get_child(doc).get_uri(),
+        // children is set to a non-null value later if it needs subsections
+        children: null,
+      });
+
+      // If an item needs a subsection, then create empty "buckets" for it
+      if (subsections_required.includes(split_name[0])) {
+        const subsection = {};
+        for (const sub in subsection_name_uri) subsection[sub] = newListStore();
+        subsections[split_name[1]] = subsection;
+      }
+      // Add file into the corresponding section it belongs to
+      sections[split_name[0]].append(doc_page);
+    }
+  }
+
+  for (const doc of docs) {
+    const split_name = doc.split(".");
+    // File is of the form xx.xx.xx.html for example ctor.Button.new.html
+    if (split_name.length === 4 && subsections[split_name[1]]) {
+      const doc_page = new DocumentationPage({
+        name: split_name[2],
+        uri: dir.get_child(doc).get_uri(),
+        children: null,
+      });
+      // Add file to the subsection it belongs to
+      subsections[split_name[1]][split_name[0]].append(doc_page);
+    }
+  }
+  // Sets the children for items that need subsections
+  createSubsections(
+    subsections,
+    subsections_required,
+    subsection_name_uri,
+    sections,
+  );
+
+  const sections_model = newListStore();
+  for (const section in sections) {
+    // If the ListStore is empty then dont create a section for it
+    if (sections[section].get_n_items() > 0)
+      sections_model.append(
+        new DocumentationPage({
+          name: section_name_uri[section][0],
+          uri: `${index_html}${section_name_uri[section][1]}`,
+          children: sections[section],
+        }),
+      );
+  }
+  return sections_model;
+}
+
+function createSubsections(
+  subsections,
+  subsections_required,
+  subsection_name_uri,
+  sections,
+) {
+  for (const type of subsections_required) {
+    for (const item of sections[type]) {
+      const model = newListStore();
+      const name = item.name;
+      for (const subsection in subsections[name]) {
+        // If the ListStore is empty then dont create a subsection for it
+        if (subsections[name][subsection].get_n_items() > 0)
+          model.append(
+            new DocumentationPage({
+              name: subsection_name_uri[subsection][0],
+              uri: `${item.uri}${subsection_name_uri[subsection][1]}`,
+              children: subsections[name][subsection],
+            }),
+          );
+      }
+      item.children = model;
+    }
+  }
+}
+
+function newListStore() {
+  return Gio.ListStore.new(DocumentationPage);
+}
+
+async function getNamespaces(base_path, filter_docs) {
+  const namespaces = [];
   const dirs = await list(base_path);
-  const filtered = dirs.filter(dir => !(filter_docs.includes(dir)))
+  const filtered = dirs.filter((dir) => !filter_docs.includes(dir));
 
   for (const dir of filtered) {
     const results = await Promise.allSettled([
-      readDocIndexJSON(base_path, dir),
-      readDocIndexHTML(base_path, dir),
+      getNamespaceFromIndexJSON(base_path, dir),
+      getNamespaceFromIndexHTML(base_path, dir),
     ]);
 
     const fulfilled = results.find((result) => result.status === "fulfilled");
@@ -146,23 +269,24 @@ async function getDocs(base_path, filter_docs) {
 
     const title = fulfilled.value;
     const uri = base_path.get_child(dir).get_child("index.html").get_uri();
-    docs.push({
+    namespaces.push({
       title,
       uri,
+      dir,
     });
   }
 
-  return docs;
+  return namespaces;
 }
 
-async function readDocIndexJSON(base_path, dir) {
+async function getNamespaceFromIndexJSON(base_path, dir) {
   const file = base_path.get_child(dir).get_child("index.json");
   const [data] = await file.load_contents_async(null);
   const json = JSON.parse(decode(data));
   return `${json["meta"]["ns"]}-${json["meta"]["version"]}`;
 }
 
-async function readDocIndexHTML(base_path, dir) {
+async function getNamespaceFromIndexHTML(base_path, dir) {
   const file = base_path.get_child(dir).get_child("api-index-full.html");
   const [data] = await file.load_contents_async(null);
   const html = decode(data);
