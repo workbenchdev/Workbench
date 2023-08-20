@@ -6,7 +6,7 @@ bin_conf.set('prefix', prefix)
 bin_conf.set('libdir', join_paths(get_option('prefix'), get_option('libdir')))
 bin_conf.set('datadir', datadir)
 bin_conf.set('pkgdatadir', pkgdatadir)
-bin_conf.set('sourcedir', meson.source_root())
+bin_conf.set('sourcedir', meson.project_source_root())
 
 blueprint_compiler = find_program(
   '/app/bin/blueprint-compiler',
@@ -45,7 +45,7 @@ configure_file(
   install_dir: get_option('bindir')
 )
 
-install_data('langs/vala/workbench-api.vala', install_dir: pkgdatadir)
+install_data('langs/vala/workbench.vala', install_dir: pkgdatadir)
 subdir('Previewer')
 
 gjspack = find_program('../troll/gjspack/bin/gjspack')
@@ -56,7 +56,7 @@ gresource = custom_target('gjspack',
     gjspack,
     '--appid=' + app_id,
     '--prefix', '/re/sonny/Workbench',
-    '--project-root', meson.source_root(),
+    '--project-root', meson.project_source_root(),
     '--resource-root', meson.project_source_root() / 'src',
     '--blueprint-compiler', blueprint_compiler,
     '--no-executable',

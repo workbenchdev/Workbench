@@ -1,5 +1,4 @@
 {
-  "name": "Spinner",
   "category": "feedback",
   "description": "Display loading state",
   "panels": ["ui", "preview"],

@@ -6,19 +6,19 @@ Learn and prototype with GNOME technologies
 
 ![](data/workbench.gif)
 
-<a href='https://beta.flathub.org/apps/details/re.sonny.Workbench'><img width='180' height='60' alt='Download on Flathub' src='https://flathub.org/assets/badges/flathub-badge-en.svg'/></a>
+<a href='https://flathub.org/apps/re.sonny.Workbench'><img width='240' height='80' alt='Download on Flathub' src='https://dl.flathub.org/assets/badges/flathub-badge-en.svg'/></a>
 
-Workbench goal is to let you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a GTK user interface.
+Workbench lets you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a GTK user interface.
 
 Among other things, Workbench comes with
 
-- realtime GTK/CSS preview
-- library of examples
+- Live GTK/CSS preview
+- Library of 100+ examples
 - JavaScript and Vala support
 - XML and Blueprint for describing user interface
-- syntax highlighting, undo/redo, autosave, session restore
-- code linter and formatter
-- terminal output
+- Syntax highlighting, undo/redo, autosave, sessions and projects
+- Code linter and formatter
+- Terminal output
 - 1000+ icons
 
 ℹ️ Workbench is made possible by Flatpak. Only Flathub Workbench is supported.
@@ -32,12 +32,12 @@ Among other things, Workbench comes with
 <details>
   <summary>Disable code formatting</summary>
 
-Workbench uses the [prettier](https://prettier.io/) code formatter. If you need to exclude some code you can use special comments.
+Workbench uses [Rome](https://rome.tools/) and [Prettier](https://prettier.io/) code formatters. If you need to exclude some code you can use special comments.
 
 [JavaScript](https://prettier.io/docs/en/ignore.html#javascript)
 
 ```js
-// prettier-ignore
+// rome-ignore format
 matrix(
   1, 0, 0,
   0, 1, 0,
@@ -118,5 +118,9 @@ https://fosstodon.org/@TheEvilSkeleton/108598098682948266
 > I'm really new to development and workbench its being a fantastic help not just to code itself, but to understand the gtk logic.
 
 https://matrix.to/#/!kDBZrVKCdhrVuWxbGe:matrix.org/$XmIz7FA-UwpoiwHxDyzve1P-J1ecMHkL0x8Br23mUxg
+
+> Installed this (again) a short while ago this is for sure the most fun I've had with a development tool
+
+https://floss.social/@agavi@hachyderm.io/110594674482784960
 
 </details>

@@ -1,10 +1,21 @@
-import Gio from "gi://Gio";
 import Adw from "gi://Adw";
+import Gio from "gi://Gio";
 
 import Window from "./window.js";
 import Actions from "./actions.js";
-import { settings } from "./util.js";
+import {
+  settings,
+  data_dir,
+  ensureDir,
+  readDemoFile,
+  getDemo,
+} from "./util.js";
 import { overrides } from "./overrides.js";
+import Library from "./Library/Library.js";
+import DocumentationViewer from "./DocumentationViewer.js";
+import { Session, createSessionFromDemo, getSessions } from "./sessions.js";
+
+ensureDir(data_dir);
 
 const application = new Adw.Application({
   application_id: pkg.name,
@@ -14,28 +25,37 @@ const application = new Adw.Application({
   resource_base_path: "/re/sonny/Workbench",
 });
 
-let window;
-application.connect("open", (_self, files, _hint) => {
-  if (!window) return;
+application.connect("open", (_self, files, hint) => {
+  const [file] = files;
+  if (!file || hint !== "project") return;
 
-  for (const file of files) {
-    window.openFile(file).catch(logError);
-  }
+  const session = new Session(file);
+  const { load } = Window({
+    application,
+    session,
+  });
+  load({ run: false }).catch(logError);
+});
+
+application.connect("startup", () => {
+  Library({
+    application,
+  });
+
+  DocumentationViewer({
+    application,
+  });
+
+  restoreSessions();
 });
 
 application.connect("activate", () => {
-  if (!window) {
-    window = Window({
-      application,
-    });
+  if (application.is_remote) {
+    newWindow();
   }
-  window.window.present();
 });
 
 application.set_option_context_description("<https://workbench.sonny.re>");
-application.set_option_context_parameter_string("[files…]");
-// TODO: Add examples
-application.set_option_context_summary("");
 
 Actions({ application });
 
@@ -48,5 +68,34 @@ function setColorScheme() {
 }
 setColorScheme();
 settings.connect("changed::color-scheme", setColorScheme);
+
+// We are not using async otherwise the app segfaults
+// does not like opening a window in a promise
+// TODO: make a reproducer and file a GJS bug
+function restoreSessions() {
+  const sessions = getSessions();
+
+  if (sessions.length < 1) {
+    newWindow();
+  } else {
+    sessions.forEach((session) => {
+      const { load } = Window({
+        application,
+        session,
+      });
+      load({ run: false }).catch(logError);
+    });
+  }
+}
+
+function newWindow() {
+  const session = createSessionFromDemo(getDemo("Welcome"));
+  const { load, window } = Window({
+    application,
+    session,
+  });
+  window.maximize();
+  load({ run: false }).catch(logError);
+}
 
 export default application;
