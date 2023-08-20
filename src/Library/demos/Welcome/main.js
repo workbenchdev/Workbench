@@ -1,5 +1,8 @@
 import Gtk from "gi://Gtk";
 import Adw from "gi://Adw";
+import Gio from "gi://Gio";
+
+Gio._promisify(Adw.MessageDialog.prototype, "choose", "choose_finish");
 
 const box = workbench.builder.get_object("subtitle");
 
@@ -26,5 +29,5 @@ function greet() {
     console.log(response);
   });
 
-  dialog.present();
+  dialog.choose(null);
 }
