@@ -12,15 +12,16 @@ const delete_file = workbench.builder.get_object("delete_file");
 const edit_file = workbench.builder.get_object("edit_file");
 const file_name = workbench.builder.get_object("file_name");
 const { buffer } = edit_entry;
-const file = Gio.File.new_for_path(pkg.pkgdatadir).resolve_relative_path(
-  "Library/demos/File Monitor/workbench.txt",
-);
+const file = Gio.File.new_for_uri(workbench.resolve("workbench.txt"));
 const file_dir = file.get_parent();
 const file_launcher = new Gtk.FileLauncher({
   always_ask: true,
   file,
 });
-const monitor_for_dir = file.monitor(Gio.FileMonitorFlags.NONE, null);
+const monitor_for_dir = file_dir.monitor(
+  Gio.FileMonitorFlags.WATCH_MOVES,
+  null,
+);
 const monitor_for_file = file.monitor(Gio.FileMonitorFlags.NONE, null);
 const overlay = workbench.builder.get_object("overlay");
 const details = file.query_info(
@@ -34,8 +35,10 @@ delete_file.connect("clicked", () => {
   file.delete_async(GLib.PRIORITY_DEFAULT, null).catch(logError);
 });
 create_file.connect("clicked", () => {
-  const new_file = Gio.File.new_for_path("test-file.txt");
-  new_file.create(Gio.FileCreateFlags.NONE, null);
+  const new_file = file_dir.get_child("new-file.txt");
+  new_file
+    .create_async(Gio.FileCreateFlags.NONE, GLib.PRIORITY_DEFAULT, null, null)
+    .catch(logError);
 });
 view_file.connect("clicked", () => {
   file_launcher.launch(workbench.window, null).catch(logError);
@@ -47,11 +50,22 @@ monitor_for_file.connect("changed", () => {
   });
   overlay.add_toast(toast);
 });
-monitor_for_dir.connect("changed", () => {
+monitor_for_dir.connect("changed", (monitor, child, other_file, event) => {
   const toast = new Adw.Toast({
-    title: "Directory Modified",
+    title: "Unknown Event",
     timeout: 2,
   });
+  switch (event) {
+    case Gio.FileMonitorEvent.RENAMED:
+      toast.title = `${child.get_basename()} was renamed to ${other_file.get_basename()}`;
+      break;
+    case Gio.FileMonitorEvent.MOVED_IN:
+      toast.title = `${child.get_basename()} was moved into the directory`;
+      break;
+    case Gio.FileMonitorEvent.MOVED_OUT:
+      toast.title = `${child.get_basename()} was moved out of the directory`;
+      break;
+  }
   overlay.add_toast(toast);
 });
 
@@ -68,7 +82,6 @@ edit_file.connect("clicked", () => {
       null,
       false,
       Gio.FileCreateFlags.REPLACE_DESTINATION,
-      null,
       null,
     )
     .catch(logError);

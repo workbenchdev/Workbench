@@ -12,17 +12,21 @@ Adw.ToastOverlay overlay {
       spacing: 18;
 
       Label file_name {
-        label: _("");
+        label: _("No File");
         styles ["title-4"]
       }
-      TextView edit_entry {
+      Frame {
         height-request: 96;
         width-request: 96;
-        right-margin: 12;
-        left-margin: 12;
-        top-margin: 12;
-        bottom-margin: 12;
-        wrap-mode: char;
+        ScrolledWindow {
+          TextView edit_entry {
+            right-margin: 12;
+            left-margin: 12;
+            top-margin: 12;
+            bottom-margin: 12;
+            wrap-mode: char;
+          }
+        }
       }
       Box {
         styles ["linked"]
