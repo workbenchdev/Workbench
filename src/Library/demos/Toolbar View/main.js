@@ -7,89 +7,79 @@ import Adw from "gi://Adw";
 const topbar_select = workbench.builder.get_object("topbar_select");
 const bottombar_select = workbench.builder.get_object("bottombar_select");
 const toolbar_view = workbench.builder.get_object("toolbar_view");
-const reveal_topbar = workbench.builder.get_object("reveal_topbar");
-const reveal_bottombar = workbench.builder.get_object("reveal_bottombar");
-const header_top = workbench.builder.get_object("header_top");
-const header_bottom = workbench.builder.get_object("header_bottom");
-const action_bar = workbench.builder.get_object("action_bar");
-const switcher_bar = workbench.builder.get_object("switcher_bar");
-const popover = workbench.builder.get_object("popover");
-const search_bar = workbench.builder.get_object("search_bar");
-const gtk_box = workbench.builder.get_object("gtk_box");
-const tab_bar = workbench.builder.get_object("tab_bar");
 
-let header_bar;
+let top_bar;
 let bottom_bar;
 
-header_bar = header_top;
-bottom_bar = header_bottom;
-
-function changeHeaderBar(new_header_bar) {
-  toolbar_view.remove(header_bar);
-  toolbar_view.add_top_bar(new_header_bar);
-  header_bar = new_header_bar;
+function changeTopBar(name) {
+  const new_top_bar = workbench.builder.get_object(name);
+  top_bar && toolbar_view.remove(top_bar);
+  toolbar_view.add_top_bar(new_top_bar);
+  top_bar = new_top_bar;
 }
 
-function changeBottomBar(new_bottom_bar) {
-  toolbar_view.remove(bottom_bar);
+function changeBottomBar(name) {
+  const new_bottom_bar = workbench.builder.get_object(name);
+  bottom_bar && toolbar_view.remove(bottom_bar);
   toolbar_view.add_bottom_bar(new_bottom_bar);
   bottom_bar = new_bottom_bar;
 }
 
-topbar_select.connect("notify::selected-item", () => {
-  switch (topbar_select.get_selected()) {
+topbar_select.connect("notify::selected-item", selectTopBar);
+bottombar_select.connect("notify::selected-item", selectBottomBar);
+
+selectTopBar();
+selectBottomBar();
+
+function selectTopBar() {
+  switch (topbar_select.selected) {
     case 0:
-      changeHeaderBar(workbench.builder.get_object("header_top"));
+      changeTopBar("header_bar");
       break;
     case 1:
-      changeHeaderBar(workbench.builder.get_object("tab_bar"));
+      changeTopBar("tab_bar");
       break;
     case 2:
-      changeHeaderBar(workbench.builder.get_object("switcher_bar"));
+      changeTopBar("switcher_bar");
       break;
     case 3:
-      changeHeaderBar(workbench.builder.get_object("action_bar"));
+      changeTopBar("action_bar");
       break;
     case 4:
-      changeHeaderBar(workbench.builder.get_object("popover"));
+      changeTopBar("popover");
       break;
     case 5:
-      changeHeaderBar(workbench.builder.get_object("search_bar"));
+      changeTopBar("search_bar");
       break;
     case 6:
-      changeHeaderBar(workbench.builder.get_object("gtk_box"));
+      changeTopBar("gtk_box");
       break;
   }
-});
+}
 
-bottombar_select.connect("notify::selected-item", () => {
-  switch (bottombar_select.get_selected()) {
+function selectBottomBar() {
+  switch (bottombar_select.selected) {
+    case 0:
+      changeBottomBar("header_bar");
+      break;
     case 1:
-      changeBottomBar(workbench.builder.get_object("header_bottom"));
+      changeBottomBar("tab_bar");
       break;
     case 2:
-      changeBottomBar(workbench.builder.get_object("switcher_bar"));
+      changeBottomBar("switcher_bar");
       break;
     case 3:
-      changeBottomBar(workbench.builder.get_object("action_bar"));
+      changeBottomBar("action_bar");
       break;
     case 4:
-      changeBottomBar(workbench.builder.get_object("popover"));
+      changeBottomBar("popover");
       break;
     case 5:
-      changeBottomBar(workbench.builder.get_object("search_bar"));
+      changeBottomBar("search_bar");
       break;
     case 6:
-      changeBottomBar(workbench.builder.get_object("gtk_box"));
+      changeBottomBar("gtk_box");
       break;
   }
-});
-
-reveal_topbar.connect("notify::active", () => {
-  toolbar_view.reveal_top_bars = reveal_topbar.active;
-});
-
-reveal_bottombar.connect("notify::active", () => {
-  toolbar_view.reveal_bottom_bars = reveal_bottombar.active;
-});
+}
 

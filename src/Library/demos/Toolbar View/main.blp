@@ -3,29 +3,19 @@ using Adw 1;
 
 Adw.Window {
   width-request: 360;
-  height-request: 200;
+  height-request: 640;
   default-width: 640;
   default-height: 640;
 
   Adw.ToolbarView toolbar_view {
-    vexpand:true;
-    extend-content-to-bottom-edge: true;
-    extend-content-to-top-edge: true;
+    extend-content-to-bottom-edge: bind extend_bottom.active;
+    extend-content-to-top-edge: bind extend_top.active;
     top-bar-style: bind barstyle_select.selected;
     bottom-bar-style: bind barstyle_select.selected;
-    reveal-top-bars:  true;
-    reveal-bottom-bars: true;
-    
-    [top]
-    Adw.HeaderBar header_top {
-      title-widget: Label {
-        label:_("Header Bar");
-      };
-    }
-    
-    content: Adw.ViewStack stack {
-      vexpand: true;
+    reveal-top-bars:  bind reveal_topbar.active;
+    reveal-bottom-bars: bind reveal_bottombar.active;
 
+    content: Adw.ViewStack stack {
       Adw.ViewStackPage page_defualt {
         name: "page_default";
         title: _("Toolbar View");
@@ -47,46 +37,44 @@ Adw.Window {
               label: _("API Reference");
               uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/main/class.ToolbarView.html";
             }
-            Adw.PreferencesPage {
-              Adw.PreferencesGroup {
-                styles ["boxed-list"]
-                Adw.ComboRow topbar_select {
-                  title: _("Top bar");
-                  model: StringList {
-                    strings [_("Header Bar"),_("Tab Bar"),_("View Switcher Bar"),_("Action Bar"),_("PopOverMenu Bar"),_("Search Bar"),_("Gtk Box")]
-                  };
-                  selected: 0;
-                  styles ["heading"]
-                }
-                Adw.ComboRow bottombar_select{
-                  title: _("Bottom bar");
-                  model: StringList {
-                    strings [_("Header Bar"),_("Tab Bar"),_("View Switcher Bar"),_("Action Bar"),_("PopOverMenu Bar"),_("Search Bar"),_("Gtk Box")]
-                  };
-                  selected: 0;
-                  styles ["heading"]
-                }
-                Adw.ComboRow barstyle_select{
-                  title: _("Style");
-                  model: StringList {
-                    strings [_("Flat"), _("Raised"), _("Raised-Border")]
-                  };
-                  styles ["heading"]
-                }
+            ListBox list_box {
+              styles ["boxed-list"]
+              selection-mode: none;
+              Adw.ComboRow topbar_select {
+                title: _("Top bar");
+                model: StringList {
+                  strings [_("Header Bar"),_("Tab Bar"),_("View Switcher Bar"),_("Action Bar"),_("PopOverMenu Bar"),_("Search Bar"),_("Gtk Box")]
+                };
+                selected: 0;
               }
-            }
-            Box {
-              halign: center;
-              spacing: 12;
-              ToggleButton reveal_topbar{
-                label: _("Reveal Top Bar");
-                active: true;
-                styles ["pill"]
+              Adw.ComboRow bottombar_select {
+                title: _("Bottom bar");
+                model: StringList {
+                  strings [_("Header Bar"),_("Tab Bar"),_("View Switcher Bar"),_("Action Bar"),_("PopOverMenu Bar"),_("Search Bar"),_("Gtk Box")]
+                };
+                selected: 2;
               }
-              ToggleButton reveal_bottombar{
-                label: _("Reveal Bottom Bar");
+              Adw.ComboRow barstyle_select {
+                title: _("Style");
+                model: StringList {
+                  strings [_("Flat"), _("Raised"), _("Raised-Border")]
+                };
+              }
+              Adw.SwitchRow reveal_topbar {
+                title: _("Reveal Top Bar");
                 active: true;
-                styles ["pill"]
+              }
+              Adw.SwitchRow reveal_bottombar {
+                title: _("Reveal Bottom Bar");
+                active: true;
+              }
+              Adw.SwitchRow extend_top {
+                title: _("Extend content behind top bar");
+                active: false;
+              }
+              Adw.SwitchRow extend_bottom {
+                title: _("Extend content behind bottom bar");
+                active: false;
               }
             }
           }
@@ -123,14 +111,13 @@ Adw.Window {
         };
       }
     };
-
-    [bottom]
-    Adw.HeaderBar header_bottom {
-      title-widget: Label {
-       label: _("Header Bar");
-      };
-    }
   }
+}
+
+Adw.HeaderBar header_bar {
+  title-widget: Label {
+    label:_("Header Bar");
+  };
 }
 
 ActionBar action_bar {
@@ -187,11 +174,9 @@ SearchBar search_bar {
 }
 
 Box gtk_box {
-  hexpand: true;
-  halign: center;
-  Gtk.Label {
-    label: _("Hello from Workbench");
-  }
+  name: "gtk_box";
+  halign: fill;
+  height-request: 20;
 }
 
 Adw.TabBar tab_bar {
