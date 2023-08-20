@@ -172,7 +172,7 @@ function createSections(docs, dir) {
       const doc_page = new DocumentationPage({
         name: split_name[1],
         uri: dir.get_child(doc).get_uri(),
-        // children is set to a non-null value later if it needs subsections
+        // children is set to a non-null value later if it nif (subsections[name][subsection].get_n_items() > 0)eeds subsections
         children: null,
       });
 
@@ -210,13 +210,15 @@ function createSections(docs, dir) {
 
   const sections_model = newListStore();
   for (const section in sections) {
-    sections_model.append(
-      new DocumentationPage({
-        name: section_name_uri[section][0],
-        uri: `${index_html}${section_name_uri[section][1]}`,
-        children: sections[section],
-      }),
-    );
+    // If the ListStore is empty then dont create a section for it
+    if (sections[section].get_n_items() > 0)
+      sections_model.append(
+        new DocumentationPage({
+          name: section_name_uri[section][0],
+          uri: `${index_html}${section_name_uri[section][1]}`,
+          children: sections[section],
+        }),
+      );
   }
   return sections_model;
 }
