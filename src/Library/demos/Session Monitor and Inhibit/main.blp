@@ -2,14 +2,13 @@ using Gtk 4.0;
 using Adw 1;
 
 Adw.StatusPage {
-  title: _("Session Monitor");
-  description: _("Monitor the login session state");
+  title: _("Session Monitor and Inhibit");
+  description: _("Monitor the login session state and inhibit session state changes");
 
   Adw.Clamp {
     maximum-size: 400;
 
     Box {
-      spacing: 12;
       orientation: vertical;
 
       Adw.EntryRow entry {
@@ -17,38 +16,31 @@ Adw.StatusPage {
         styles ["card"]
       }
 
+      Label {
+        margin-top: 12;
+        halign: start;
+        label: "Actions to inhibit that can end user's session";
+        styles ["dim-label"]
+      }
+
       ListBox {
         Adw.ActionRow {
           title: _("Logout");
           [suffix]
-          CheckButton logout {
+          CheckButton check_logout {
           }
         }
-
-        Adw.ActionRow {
-          title: _("User Switch");
-          [suffix]
-          CheckButton user_switch {
-          }
-        }
-
-        Adw.ActionRow {
-          title: _("Suspend");
-          [suffix]
-          CheckButton suspend {
-          }
-        }
-
         Adw.ActionRow {
           title: _("Idle");
           [suffix]
-          CheckButton idle {
+          CheckButton check_idle {
           }
         }
         styles ["boxed-list"]
       }
 
       Box {
+        margin-top: 12;
         homogeneous: true;
 
         Button button_start {
@@ -66,16 +58,25 @@ Adw.StatusPage {
       }
 
       Box {
+        margin-top: 24;
+        orientation: vertical;
         halign: center;
-        
-        LinkButton {
-          label: "Session Monitor";
-          uri: "https://libportal.org/method.Portal.session_monitor_start.html";
+
+        Label {
+          label: _("API References");
+          styles ["title-2"]
         }
-        
-        LinkButton {
-          label: "Session Inhibit";
-          uri: "https://libportal.org/method.Portal.session_inhibit.html";
+
+        Box {
+          LinkButton {
+            label: "Session Monitor";
+            uri: "https://libportal.org/method.Portal.session_monitor_start.html";
+          }
+
+          LinkButton {
+            label: "Session Inhibit";
+            uri: "https://libportal.org/method.Portal.session_inhibit.html";
+          }
         }
       }
     }

@@ -17,10 +17,8 @@ Gio._promisify(
 const portal = new Xdp.Portal();
 const parent = XdpGtk.parent_new_gtk(workbench.window);
 const entry = workbench.builder.get_object("entry");
-const check_logout = workbench.builder.get_object("logout");
-const check_user_switch = workbench.builder.get_object("user_switch");
-const check_suspend = workbench.builder.get_object("suspend");
-const check_idle = workbench.builder.get_object("idle");
+const check_logout = workbench.builder.get_object("check_logout");
+const check_idle = workbench.builder.get_object("check_idle");
 const button_start = workbench.builder.get_object("button_start");
 const button_stop = workbench.builder.get_object("button_stop");
 let ids = [];
@@ -60,9 +58,13 @@ async function startSession() {
     button_start.sensitive = false;
     button_stop.sensitive = true;
     if (check_logout.active) inhibitSession(Xdp.InhibitFlags.LOGOUT);
-    if (check_user_switch.active) inhibitSession(Xdp.InhibitFlags.USER_SWITCH);
-    if (check_suspend.active) inhibitSession(Xdp.InhibitFlags.SUSPEND);
     if (check_idle.active) inhibitSession(Xdp.InhibitFlags.IDLE);
+    /*
+    Xdp Portal also supports inhibition of Suspend and User Switch
+    using the flags SUSPEND and USER_SWITCH respectively. But these
+    actions cannot be inhibited on GNOME as they do not end user's
+    session.
+    */
   }
 }
 
@@ -79,4 +81,3 @@ async function inhibitSession(flag) {
   const id = await portal.session_inhibit(parent, reason, flag, null);
   ids.push(id);
 }
-
