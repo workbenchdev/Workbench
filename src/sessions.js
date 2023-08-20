@@ -44,9 +44,10 @@ export function createSession(name = getNowForFilename()) {
 
 export function createSessionFromDemo(demo) {
   const session = createSession();
+  const demo_dir = demos_dir.get_child(demo.name);
 
-  copy_demos(demo, session);
-  copy_rust_template_dir(session);
+  copy_directory(demo_dir, session);
+  copy_directory(rust_template_dir, session);
 
   const { panels } = demo;
   const { settings } = session;
@@ -66,60 +67,22 @@ export function createSessionFromDemo(demo) {
   return session;
 }
 
-function copy_demos(demo, session) {
-  const demo_dir = demos_dir.get_child(demo.name);
-  copy_directory(demo_dir, session.file);
-}
-
-function copy_rust_template_dir(session) {
-  copy_directory(rust_template_dir, session.file);
-}
-
-// Copy directory that can contain one level of directories
+// There is no copy directory function
 function copy_directory(source, destination) {
-  for (const child of source.enumerate_children(
+  for (const file_info of source.enumerate_children(
     "",
     Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
     null,
   )) {
-    const child_source = source.get_child(child.get_name());
-    const child_destination = destination.get_child(child.get_name());
+    if (file_info.get_file_type() === Gio.FileType.DIRECTORY) continue;
 
-    const child_type = child_source
-      .query_info("standard::type", Gio.FileQueryInfoFlags.NONE, null)
-      .get_file_type();
-
-    if (child_type === Gio.FileType.DIRECTORY) {
-      copy_directory_flat(child_source, child_destination);
-    } else if (child_type === Gio.FileType.REGULAR) {
-      child_source.copy(child_destination, Gio.FileCopyFlags.NONE, null, null);
-    }
-  }
-}
-
-// Copy directory, but ignore children that are directories
-function copy_directory_flat(source, destination) {
-  if (!destination.query_exists(null)) {
-    destination.make_directory(null);
-  }
-
-  for (const child of source.enumerate_children(
-    "",
-    Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
-    null,
-  )) {
-    const child_source = source.get_child(child.get_name());
-    const child_destination = destination.get_child(child.get_name());
-
-    const child_type = child_source
-      .query_info("standard::type", Gio.FileQueryInfoFlags.NONE, null)
-      .get_file_type();
-
-    if (child_type === Gio.FileType.DIRECTORY) {
-      copy_directory_flat(child_source, child_destination);
-    } else if (child_type === Gio.FileType.REGULAR) {
-      child_source.copy(child_destination, Gio.FileCopyFlags.NONE, null, null);
-    }
+    const child = source.get_child(file_info.get_name());
+    child.copy(
+      destination.file.get_child(child.get_basename()),
+      Gio.FileCopyFlags.NONE,
+      null,
+      null,
+    );
   }
 }
 
