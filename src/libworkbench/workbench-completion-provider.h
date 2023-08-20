@@ -12,6 +12,7 @@
 #include <gtksourceview/gtksource.h>
 
 #include "workbench-completion-request.h"
+#include "workbench-global.h"
 
 G_BEGIN_DECLS
 

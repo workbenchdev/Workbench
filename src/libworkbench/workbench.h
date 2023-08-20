@@ -10,6 +10,7 @@
 
 #include "workbench-completion-provider.h"
 #include "workbench-completion-request.h"
+#include "workbench-global.h"
 
 #undef WORKBENCH_INSIDE
 

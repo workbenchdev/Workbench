@@ -41,7 +41,7 @@ libworkbench_c_args = [
   '-Wno-missing-declarations',
 
   '-DWORKBENCH_COMPILATION',
-  '-DWORKBENCH_EXPORT=__attribute__((visibility("default"))) extern',
+  '-D_WORKBENCH_EXTERN=__attribute__((visibility("default"))) extern',
 ]
 libworkbench_link_args = []
 libworkbench_deps = [
@@ -61,6 +61,7 @@ libworkbench_headers = files([
   'workbench.h',
   'workbench-completion-provider.h',
   'workbench-completion-request.h',
+  'workbench-global.h',
 ])
 
 libworkbench_sources = files([
@@ -73,8 +74,9 @@ install_headers(libworkbench_headers,
 )
 
 libworkbench_enums = gnome.mkenums_simple('libworkbench-enums',
-         sources: libworkbench_headers,
+   header_prefix: '#include "workbench-global.h"',
        decorator: 'WORKBENCH_EXPORT',
+         sources: libworkbench_headers,
   install_header: true,
      install_dir: join_paths(includedir, 'libworkbench'),
 )
