@@ -172,7 +172,7 @@ function createSections(docs, dir) {
       const doc_page = new DocumentationPage({
         name: split_name[1],
         uri: dir.get_child(doc).get_uri(),
-        // children is set to a non-null value later if it nif (subsections[name][subsection].get_n_items() > 0)eeds subsections
+        // children is set to a non-null value later if it needs subsections
         children: null,
       });
 
