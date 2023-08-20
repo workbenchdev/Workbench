@@ -1,17 +1,23 @@
 [package]
 name = "demo"
-version = "0.1.0"
+version = "1.0.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-adw = { version = "0.5.2", package = "libadwaita", features = ["v1_2"] }
-gtk = { version = "0.7.1", package = "gtk4" }
 libc = "0.2"
+
+[dependencies.gtk]
+version = "0.7"
+package = "gtk4"
+features = ["gnome_45"]
+
+[dependencies.adw]
+version = "0.5"
+package = "libadwaita"
+features = ["v1_4", "gtk_v4_10"]
 
 [lib]
 crate-type = ["cdylib"]
 
-[target.x86_64-unknown-linux-gnu]
-rustflags = ["-C", "link-arg=-fuse-ld=/app/bin/mold"]

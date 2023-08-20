@@ -6,7 +6,8 @@
   "sdk-extensions": [
     "org.freedesktop.Sdk.Extension.vala",
     "org.gnome.Sdk.Docs",
-    "org.freedesktop.Sdk.Extension.rust-stable"
+    "org.freedesktop.Sdk.Extension.rust-stable",
+    "org.freedesktop.Sdk.Extension.llvm16"
   ],
   "build-options": {
     "append-path": "/usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/vala/bin",
@@ -266,7 +267,10 @@
         "cp -a /usr/lib/sdk/vala/share/. /app/share/",
         "cp -a /usr/lib/sdk/rust-stable/bin/. /app/bin/",
         "cp -a /usr/lib/sdk/rust-stable/lib/. /app/lib/",
-        "cp -a /usr/lib/sdk/rust-stable/share/. /app/share/"
+        "cp -a /usr/lib/sdk/rust-stable/share/. /app/share/",
+        "cp -a /usr/lib/sdk/llvm16/bin/. /app/bin/",
+        "cp -a /usr/lib/sdk/llvm16/lib/. /app/lib/",
+        "cp -a /usr/lib/sdk/llvm16/share/. /app/share/"
       ]
     }
   ]
