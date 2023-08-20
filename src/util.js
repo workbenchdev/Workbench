@@ -79,6 +79,15 @@ export const languages = [
     document: null,
     placeholder: "// Sorry, this demo is not available in Vala yet.",
   },
+  {
+    id: "c",
+    name: "C",
+    panel: "code",
+    extensions: [".c", ".h"],
+    types: ["text/x-c"],
+    document: null,
+    placeholder: "// Sorry, this demo is not available in C yet.",
+  },
 ];
 
 export function getLanguage(id) {

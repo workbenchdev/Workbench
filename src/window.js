@@ -91,6 +91,14 @@ export default function Window({ application, session }) {
   });
   langs.vala.document = document_vala;
 
+  const document_c = Document({
+    code_view: builder.get_object("code_view_c"),
+    file: file.get_child("main.c"),
+    lang: langs.c,
+    session,
+  });
+  langs.c.document = document_c;
+
   const document_blueprint = Document({
     code_view: builder.get_object("code_view_blueprint"),
     file: file.get_child("main.blp"),
@@ -142,6 +150,7 @@ export default function Window({ application, session }) {
     builder,
     previewer,
     document_vala,
+    document_c,
     document_javascript,
     settings,
   });
@@ -287,6 +296,8 @@ export default function Window({ application, session }) {
             await previewer.useInternal();
           }
         }
+      } else if (language === "C") {
+        console.log("Compiling!")
       }
     } catch (err) {
       // prettier xml errors are not instances of Error
@@ -350,6 +361,7 @@ export default function Window({ application, session }) {
     await Promise.all([
       document_javascript.load(),
       document_vala.load(),
+      document_c.load(),
       document_blueprint.load(),
       document_xml.load(),
       document_css.load(),
