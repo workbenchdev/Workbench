@@ -1,5 +1,4 @@
 import "./init.js";
-import "./log_handler.js";
 import application from "./application.js";
 
 pkg.initGettext();

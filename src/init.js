@@ -12,6 +12,10 @@ import Adw from "gi://Adw";
 import Xdp from "gi://Xdp";
 import Source from "gi://GtkSource";
 import WebKit from "gi://WebKit";
+import Workbench from "gi://Workbench";
+
+
+Workbench.init();
 
 Gio._promisify(Adw.MessageDialog.prototype, "choose", "choose_finish");
 Gio._promisify(Xdp.Portal.prototype, "trash_file", "trash_file_finish");

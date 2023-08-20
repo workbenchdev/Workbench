@@ -61,11 +61,13 @@ libworkbench_headers = files([
   'workbench.h',
   'workbench-completion-provider.h',
   'workbench-completion-request.h',
+  'workbench-global.h',
 ])
 
 libworkbench_sources = files([
   'workbench-completion-provider.c',
   'workbench-completion-request.c',
+  'workbench-global.c',
 ])
 
 install_headers(libworkbench_headers,
