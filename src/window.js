@@ -70,8 +70,6 @@ export default function Window({ application, session }) {
 
   const { term_console } = Devtools({ application, window, builder, settings });
 
-  let compiler = null;
-
   if (!file.get_child("main.xml").query_exists(null)) {
     settings.set_int("ui-language", 1);
   }
@@ -242,6 +240,9 @@ export default function Window({ application, session }) {
     }
   }
 
+  let compiler_vala = null;
+  let compiler_rust = null;
+
   async function runCode({ format }) {
     button_run.set_sensitive(false);
 
@@ -285,22 +286,22 @@ export default function Window({ application, session }) {
         }
         previewer.setSymbols(exports);
       } else if (language === "Vala") {
-        compiler = compiler || ValaCompiler({ session });
-        const success = await compiler.compile();
+        compiler_vala = compiler_vala || ValaCompiler({ session });
+        const success = await compiler_vala.compile();
         if (success) {
           await previewer.useExternal();
-          if (await compiler.run()) {
+          if (await compiler_vala.run()) {
             await previewer.open();
           } else {
             await previewer.useInternal();
           }
         }
       } else if (language === "Rust") {
-        compiler = compiler || RustCompiler({ session });
-        const success = await compiler.compile();
+        compiler_rust = compiler_rust || RustCompiler({ session });
+        const success = await compiler_rust.compile();
         if (success) {
           await previewer.useExternal();
-          if (await compiler.run()) {
+          if (await compiler_rust.run()) {
             await previewer.open();
           } else {
             await previewer.useInternal();
