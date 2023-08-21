@@ -41,11 +41,24 @@ export default function DocumentationViewer({ application }) {
 
   const window = builder.get_object("documentation_viewer");
   const webview = builder.get_object("webview");
-  const list_view = builder.get_object("list_view");
   const button_back = builder.get_object("button_back");
   const button_forward = builder.get_object("button_forward");
+  const stack = builder.get_object("stack");
+  const browse_list_view = builder.get_object("browse_list_view");
+  const search_list_view = builder.get_object("search_list_view");
+  const browse_page = builder.get_object("browse_page");
+  const search_page = builder.get_object("search_page");
+  const search_entry = builder.get_object("search_entry");
 
   const base_path = Gio.File.new_for_path("/app/share/doc");
+
+  search_entry.connect("search-changed", () => {
+    if (search_entry.text) {
+      stack.visible_child = search_page;
+    } else {
+      stack.visible_child = browse_page;
+    }
+  });
 
   webview.connect("load-changed", (self, load_event) => {
     updateButtons();
@@ -113,7 +126,7 @@ export default function DocumentationViewer({ application }) {
         const uri = selection_model.selected_item.item.uri;
         if (uri) webview.load_uri(uri);
       });
-      list_view.model = selection_model;
+      browse_list_view.model = selection_model;
     })
     .catch(logError);
 
@@ -125,6 +138,16 @@ export default function DocumentationViewer({ application }) {
     window.present();
   });
   application.add_action(action_documentation);
+}
+
+function flattenModel(list_store, flattened_model = newListStore()) {
+  for (const item of list_store) {
+    flattened_model.append(item);
+    if (item.children) {
+      flattenModel(item.children, flattened_model);
+    }
+  }
+  return flattened_model;
 }
 
 async function getChildren(dir) {
