@@ -40,7 +40,7 @@ export default function External({ output, builder, onWindowChange }) {
     try {
       await dbus_proxy.CloseWindowAsync();
     } catch (err) {
-      logger.debug(err);
+      console.debug(err);
       return;
     }
     stack.set_visible_child_name("open_window");
