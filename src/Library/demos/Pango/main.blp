@@ -1,0 +1,48 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: _("Pango Markup");
+  description: _("Internationalized text layout and rendering");
+
+  Box {
+    orientation: vertical;
+    halign: center;
+    spacing: 12;
+
+    Label label {
+      label: _("<span foreground=\"blue\" size=\"x-large\">Blue text</span> is <i>cool</i>!");
+      use-markup: true;
+    }
+
+    Label label2 {
+      label: _("<i>Italic text</i> and <b>Bold text</b>");
+      use-markup: true;
+    }
+
+    Label label3 {
+      label: _("<s>Strikethrough text</s> and <u>Underlined text</u>");
+      use-markup: true;
+    }
+
+    Label label4 {
+      label: _("<span font_family=\"Monospace\" weight=\"bold\" size=\"large\">Monospace Bold Large</span>");
+      use-markup: true;
+    }
+
+    Label label5 {
+      label: _("<span strikethrough=\"true\" strikethrough_color=\"red\">Strikethrough Red</span> and <span underline=\"double\" underline_color=\"green\">Double Underline Green</span>");
+      use-markup: true;
+    }
+
+    Label label6 {
+      label: _("<span background=\"red\" text_transform=\"uppercase\" line_height=\"1.5\">Background Red, Uppercase, Line Height 1.5</span>");
+      use-markup: true;
+    }
+    LinkButton {
+      label: "Pango Reference";
+      uri: "https://docs.gtk.org/Pango/index.html";
+      margin-top: 12;
+    }
+  }
+}
