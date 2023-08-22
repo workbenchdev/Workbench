@@ -41,7 +41,6 @@ view_file.connect("clicked", () => {
 });
 
 monitor_for_file.connect("changed", (monitor, file, other_file, event) => {
-  console.log(event);
   if (event === Gio.FileMonitorEvent.CHANGES_DONE_HINT) {
     const toast = new Adw.Toast({
       title: "File modified",
