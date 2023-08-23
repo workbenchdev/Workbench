@@ -213,15 +213,46 @@ export default function Window({ application, session }) {
     return code;
   }
 
+  function formatRustCode(text) {
+    const rustfmtLauncher = Gio.SubprocessLauncher.new(
+      Gio.SubprocessFlags.STDIN_PIPE | Gio.SubprocessFlags.STDOUT_PIPE,
+    );
+
+    const rustfmtProcess = rustfmtLauncher.spawnv([
+      "rustfmt",
+      "--quiet",
+      "--emit",
+      "stdout",
+    ]);
+
+    const [success, stdout, stderr] = rustfmtProcess.communicate_utf8(
+      text,
+      null,
+    );
+
+    if (!success) {
+      logError(`Error running rustfmt: ${stderr}`);
+      return text; // Return the original text if formatting fails
+    }
+
+    return stdout;
+  }
+
   function formatCode() {
-    if (panel_code.panel.visible && panel_code.language === "JavaScript") {
-      format(langs.javascript.document.code_view, (text) => {
-        return prettier.format(text, {
-          parser: "babel",
-          plugins: [prettier_babel],
-          trailingComma: "all",
+    if (panel_code.panel.visible) {
+      if (panel_code.language === "JavaScript") {
+        format(langs.javascript.document.code_view, (text) => {
+          return prettier.format(text, {
+            parser: "babel",
+            plugins: [prettier_babel],
+            trailingComma: "all",
+          });
         });
-      });
+      } else if (panel_code.language === "Rust") {
+        format(langs.rust.document.code_view, (text) => {
+          return formatRustCode(text);
+        });
+      }
     }
 
     if (builder.get_object("panel_style").visible) {
