@@ -1,6 +1,6 @@
 using Gtk 4.0;
 using Adw 1;
-using GtkSource 5; // Using GtkSource 5
+using GtkSource 5;
 
 Adw.StatusPage {
   title: _("Spellchecking");
@@ -20,7 +20,7 @@ Adw.StatusPage {
       indent-width: 4;
       show-line-numbers: true;
       buffer: GtkSource.Buffer buffer {
-        text: "this is incorrent text";
+        text: "This is incorrent text. \n Right click mistakes to correct them.";
       };
     };
   }
