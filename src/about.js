@@ -52,6 +52,7 @@ ${getBlueprintVersion()}
     artists: [
       "Tobias Bernard <tbernard@gnome.org>",
       "Jakub Steiner https://jimmac.eu",
+      "Brage Fuglseth https://bragefuglseth.dev",
     ],
   });
 
