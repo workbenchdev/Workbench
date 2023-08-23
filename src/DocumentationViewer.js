@@ -47,9 +47,19 @@ export default function DocumentationViewer({ application }) {
 
   const base_path = Gio.File.new_for_path("/app/share/doc");
 
+  const user_content_manager = webview.get_user_content_manager();
+
+  const stylesheet = new WebKit.UserStyleSheet(
+    ".devhelp-hidden { display: none; }", // source
+    WebKit.UserContentInjectedFrames.ALL_FRAMES, // injected_frames
+    WebKit.UserStyleLevel.USER, // level
+    null,
+    null,
+  );
+  user_content_manager.add_style_sheet(stylesheet);
+
   webview.connect("load-changed", (self, load_event) => {
     updateButtons();
-    if (load_event === WebKit.LoadEvent.FINISHED) disableDocSidebar(webview);
   });
 
   webview.get_back_forward_list().connect("changed", () => {
@@ -307,30 +317,4 @@ async function list(dir) {
     files.push(info.get_name());
   }
   return files;
-}
-
-async function disableDocSidebar(webview) {
-  try {
-    const script = `window.document.querySelector("nav").style.display = "none"`;
-    await webview.evaluate_javascript(script, -1, null, null, null);
-  } catch (err) {
-    if (
-      !err.matches(WebKit.JavascriptError, WebKit.JavascriptError.SCRIPT_FAILED)
-    ) {
-      logError(err);
-    }
-  }
-}
-
-async function enableDocSidebar(webview) {
-  try {
-    const script = `window.document.querySelector("nav").style.display = "block"`;
-    await webview.evaluate_javascript(script, -1, null, null, null);
-  } catch (err) {
-    if (
-      !err.matches(WebKit.JavascriptError, WebKit.JavascriptError.SCRIPT_FAILED)
-    ) {
-      logError(err);
-    }
-  }
 }
