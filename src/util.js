@@ -79,6 +79,15 @@ export const languages = [
     document: null,
     placeholder: "// Sorry, this demo is not available in Vala yet.",
   },
+  {
+    id: "rust",
+    name: "Rust",
+    panel: "code",
+    extensions: [".rs"],
+    types: ["text/x-rust"],
+    document: null,
+    placeholder: "// Sorry, this demo is not available in Rust yet.",
+  },
 ];
 
 export function getLanguage(id) {
@@ -149,6 +158,10 @@ export function unstack(fn, onError = console.error) {
 export const demos_dir = Gio.File.new_for_path(
   pkg.pkgdatadir,
 ).resolve_relative_path("Library/demos");
+
+export const rust_template_dir = Gio.File.new_for_path(
+  pkg.pkgdatadir,
+).resolve_relative_path("langs/rust/template");
 
 export function readDemoFile(demo_name, file_name) {
   const file = demos_dir.get_child(demo_name).get_child(file_name);

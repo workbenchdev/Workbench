@@ -1,0 +1,23 @@
+[package]
+name = "demo"
+version = "1.0.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+libc = "0.2"
+
+[dependencies.gtk]
+version = "0.7"
+package = "gtk4"
+features = ["gnome_45"]
+
+[dependencies.adw]
+version = "0.5"
+package = "libadwaita"
+features = ["v1_4", "gtk_v4_10"]
+
+[lib]
+crate-type = ["cdylib"]
+path = "lib.rs"

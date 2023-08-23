@@ -1,0 +1,6 @@
+{
+  "category": "platform",
+  "description": "Present a dialog to open and save files",
+  "panels": ["code", "preview"],
+  "autorun": true
+}
