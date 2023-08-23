@@ -15,7 +15,6 @@ export default function Library({ application }) {
   let illustration_file = Gio.File.new_for_path(
     pkg.pkgdatadir
   ).resolve_relative_path("assets/library.svg");
-  console.log("badonk");
   const illustration = builder.get_object("illustration");
   illustration.set_file(illustration_file);
 
