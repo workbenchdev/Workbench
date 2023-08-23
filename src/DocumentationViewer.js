@@ -5,7 +5,6 @@ import GLib from "gi://GLib";
 import WebKit from "gi://WebKit";
 import { decode } from "./util.js";
 import resource from "./DocumentationViewer.blp";
-import { root } from "./lib/postcss.js";
 
 const DocumentationPage = GObject.registerClass(
   {
