@@ -1,0 +1,50 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.ToastOverlay overlay {
+  Adw.StatusPage {
+    title: _("File Monitor");
+    description: _("Monitors a file or directory for changes");
+    icon-name: "paper-symbolic";
+    Box {
+      orientation: vertical;
+      halign: center;
+      spacing: 18;
+
+      Label file_name {
+        label: _("No File");
+        styles ["title-4"]
+      }
+      Frame {
+        height-request: 96;
+        width-request: 96;
+        ScrolledWindow {
+          TextView edit_entry {
+            right-margin: 12;
+            left-margin: 12;
+            top-margin: 12;
+            bottom-margin: 12;
+            wrap-mode: char;
+          }
+        }
+      }
+      Box {
+        styles ["linked"]
+        Button view_file {
+          label: _("View File");
+        }
+        Button delete_file {
+          label: _("Delete File");
+        }
+      }
+      Button edit_file {
+        label: _("Apply changes");
+        styles ["suggested-action","pill"]
+      }
+      LinkButton {
+        label: _("API Reference");
+        uri: "https://docs.gtk.org/gio/method.File.monitor.html";
+      }
+    }
+  }
+}

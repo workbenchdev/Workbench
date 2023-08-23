@@ -23,5 +23,10 @@
   "vala.languageServerPath": "${workspaceFolder}/.flatpak/vala-language-server.sh",
   "mesonbuild.configureOnOpen": false,
   "mesonbuild.buildFolder": "_build",
-  "mesonbuild.mesonPath": "${workspaceFolder}/.flatpak/meson.sh"
+  "mesonbuild.mesonPath": "${workspaceFolder}/.flatpak/meson.sh",
+  "rust-analyzer.server.path": "${workspaceFolder}/.flatpak/rust-analyzer.sh",
+  "rust-analyzer.runnables.command": "${workspaceFolder}/.flatpak/cargo.sh",
+  "rust-analyzer.files.excludeDirs": [
+    ".flatpak"
+  ]
 }

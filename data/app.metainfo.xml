@@ -51,16 +51,17 @@
       <description>
         <ul>
           <li>Use GNOME 45</li>
+          <li>Support Rust</li>
           <li>Add multi windows and sessions support</li>
           <li>Support saving and opening a project</li>
-          <li>Add offline Documentation Viewer</li>
+          <li>Add offline documentation viewer "Manuals"</li>
           <li>Use GTKCssLanguageServer</li>
+          <li>Add a workbench.resolve API</li>
+          <li>Allow running Vala without UI code</li>
           <li>Update to Blueprint 0.10.0</li>
           <li>Update to Rome 12.1.3</li>
           <li>Update to vte 0.72.2</li>
           <li>Update Icon Development Kit</li>
-          <li>Add a workbench.resolve API</li>
-          <li>Allow running Vala without UI code</li>
           <li>New Library entry: Map</li>
           <li>New Library entry: Search</li>
           <li>New Library entry: Audio</li>
@@ -94,28 +95,13 @@
           <li>New Library entry: Source View</li>
           <li>New Library entry: Breakpoint</li>
           <li>New Library entry: Screencast</li>
-          <li>Update Boxed List Library entry with Spin and Switch rows</li>
-          <li>Update Boxed List Library entry with activatable widget</li>
-          <li>Update Scale Library entry with Spin Button</li>
-          <li>Library entry ported to Vala: Text Fields</li>
-          <li>Library entry ported to Vala: HTTP Image</li>
-          <li>Library entry ported to Vala: Color Dialog</li>
-          <li>Library entry ported to Vala: Scale</li>
-          <li>Library entry ported to Vala: Stack</li>
-          <li>Library entry ported to Vala: Preferences Window</li>
-          <li>Library entry ported to Vala: List Model</li>
-          <li>Library entry ported to Vala: List View</li>
-          <li>Library entry ported to Vala: About Window</li>
-          <li>Library entry ported to Vala: Button</li>
-          <li>Library entry ported to Vala: Spinner</li>
-          <li>Library entry ported to Vala: Text View</li>
-          <li>Library entry ported to Vala: Wallpaper</li>
-          <li>Library entry ported to Vala: Screenshot</li>
-          <li>Library entry ported to Vala: Account</li>
-          <li>Library entry ported to Vala: Color Picker</li>
-          <li>Library entry ported to Vala: Email</li>
-          <li>Library entry ported to Vala: Location</li>
-          <li>Library entry ported to Vala: Event Controllers</li>
+          <li>New Library entry: File Dialog</li>
+          <li>New Library entry: Toolbar View</li>
+          <li>New Library entry: Picture</li>
+          <li>New Library entry: Memory Monitor</li>
+          <li>New Library entry: Camera</li>
+          <li>New Library entry: Center Box</li>
+          <li>New Library entry: File Monitor</li>
         </ul>
       </description>
     </release>

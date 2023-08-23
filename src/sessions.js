@@ -6,6 +6,7 @@ import {
   ensureDir,
   getNowForFilename,
   demos_dir,
+  rust_template_dir,
   settings as global_settings,
   encode,
 } from "./util.js";
@@ -43,24 +44,10 @@ export function createSession(name = getNowForFilename()) {
 
 export function createSessionFromDemo(demo) {
   const session = createSession();
-
   const demo_dir = demos_dir.get_child(demo.name);
-  // There is no copy directory function
-  for (const file_info of demo_dir.enumerate_children(
-    "",
-    Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
-    null,
-  )) {
-    if (file_info.get_file_type() === Gio.FileType.DIRECTORY) continue;
 
-    const child = demo_dir.get_child(file_info.get_name());
-    child.copy(
-      session.file.get_child(child.get_basename()),
-      Gio.FileCopyFlags.NONE,
-      null,
-      null,
-    );
-  }
+  copy_directory(demo_dir, session);
+  copy_directory(rust_template_dir, session);
 
   const { panels } = demo;
   const { settings } = session;
@@ -78,6 +65,25 @@ export function createSessionFromDemo(demo) {
   );
 
   return session;
+}
+
+// There is no copy directory function
+function copy_directory(source, destination) {
+  for (const file_info of source.enumerate_children(
+    "",
+    Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
+    null,
+  )) {
+    if (file_info.get_file_type() === Gio.FileType.DIRECTORY) continue;
+
+    const child = source.get_child(file_info.get_name());
+    child.copy(
+      destination.file.get_child(child.get_basename()),
+      Gio.FileCopyFlags.NONE,
+      null,
+      null,
+    );
+  }
 }
 
 export async function deleteSession(session) {
@@ -152,6 +158,7 @@ function migrateStateToSession() {
     ["state.css", "main.css"],
     ["state.js", "main.js"],
     ["state.vala", "main.vala"],
+    ["state.rs", "main.rs"],
     ["state.xml", "main.ui"],
   ];
 
