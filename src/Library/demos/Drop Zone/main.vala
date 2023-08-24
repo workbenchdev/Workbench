@@ -71,7 +71,9 @@ void main() {
 private Widget createImagePreview(GLib.File file) {
   var widget = createBoxWidget();
 
-  var picture = new Picture() {file = file, can_shrink = true, content_fit = Gtk.ContentFit.SCALE_DOWN  };
+  var picture = new Picture() {
+    file = file, can_shrink = true, content_fit = Gtk.ContentFit.SCALE_DOWN
+  };
   widget.append(picture);
 
   return widget;
@@ -80,7 +82,9 @@ private Widget createImagePreview(GLib.File file) {
 private Widget createTextPreview(string text) {
   var widget = createBoxWidget();
 
-  var label = new Label(text) {wrap = true};
+  var label = new Label(text) {
+    wrap = true
+  };
   widget.append(label);
 
   return widget;

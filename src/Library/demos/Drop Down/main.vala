@@ -5,13 +5,13 @@ using GLib;
 
 // Define our class for our custom model
 public class KeyValuePair : Object {
-  public string key { get; set; default = ""; }
-  public string value { get; set; default = ""; }
+public string key { get; set; default = ""; }
+public string value { get; set; default = ""; }
 
-  public KeyValuePair(string key, string value) {
-    this.key = key;
-    this.value = value;
-  }
+public KeyValuePair(string key, string value) {
+  this.key = key;
+  this.value = value;
+}
 }
 
 public void main() {

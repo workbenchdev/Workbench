@@ -22,14 +22,14 @@ G_DECLARE_DERIVABLE_TYPE (WorkbenchCompletionProvider, workbench_completion_prov
 
 struct _WorkbenchCompletionProviderClass
 {
-  GObjectClass   parent_class;
+  GObjectClass parent_class;
 
   /* signal closures */
-  void           (*completion_request) (WorkbenchCompletionProvider *self,
-                                        WorkbenchCompletionRequest  *request);
+  void (*completion_request) (WorkbenchCompletionProvider *self,
+                              WorkbenchCompletionRequest  *request);
 
   /*< private >*/
-  gpointer       padding[8];
+  gpointer padding[8];
 };
 
 G_END_DECLS

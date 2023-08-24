@@ -1,4 +1,4 @@
-#!/usr/bin/env -S vala workbench.vala --pkg gtk4 --pkg libadwaita-1
+#! /usr/bin/env -S vala workbench.vala --pkg gtk4 --pkg libadwaita-1
 
 public void main () {
   var overlay = workbench.builder.get_object ("overlay") as Adw.ToastOverlay;
@@ -21,4 +21,3 @@ public void main () {
   var button_advanced = workbench.builder.get_object("button_advanced") as Gtk.Button;
   button_advanced.sensitive = false;
 }
-

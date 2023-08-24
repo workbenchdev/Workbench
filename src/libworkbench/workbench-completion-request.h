@@ -32,7 +32,7 @@ typedef enum
 #define WORKBENCH_TYPE_COMPLETION_REQUEST (workbench_completion_request_get_type())
 
 WORKBENCH_EXPORT
-G_DECLARE_FINAL_TYPE (WorkbenchCompletionRequest, workbench_completion_request, WORKBENCH, COMPLETION_REQUEST, GObject)
+  G_DECLARE_FINAL_TYPE (WorkbenchCompletionRequest, workbench_completion_request, WORKBENCH, COMPLETION_REQUEST, GObject)
 
 WORKBENCH_EXPORT
 GCancellable                * workbench_completion_request_get_cancellable (WorkbenchCompletionRequest  *request);
@@ -47,12 +47,12 @@ void                          workbench_completion_request_add             (Work
                                                                             GtkSourceCompletionProposal *proposal);
 WORKBENCH_EXPORT
 void                          workbench_completion_request_splice          (WorkbenchCompletionRequest  *request,
-                                                                            unsigned int                 position,
-                                                                            unsigned int                 n_removals,
+                                                                            unsigned int position,
+                                                                            unsigned int n_removals,
                                                                             gpointer                    *additions,
-                                                                            unsigned int                 n_additions);
+                                                                            unsigned int n_additions);
 WORKBENCH_EXPORT
 void                          workbench_completion_request_state_changed   (WorkbenchCompletionRequest  *request,
-                                                                            WorkbenchRequestState        state);
+                                                                            WorkbenchRequestState state);
 
 G_END_DECLS

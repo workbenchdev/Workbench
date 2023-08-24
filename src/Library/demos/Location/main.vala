@@ -1,4 +1,4 @@
-#!/usr/bin/env -S vala workbench.vala --pkg libadwaita-1 --pkg libportal-gtk4
+#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1 --pkg libportal-gtk4
 
 private Xdp.Portal portal;
 private Xdp.Parent parent;
@@ -70,7 +70,7 @@ private void on_location_updated (
   string description,
   int64 timestamp_seconds,
   int64 timestamp_ms
-) {
+  ) {
   message ("Location updated");
   latitude_label.label = latitude.to_string ();
   longitude_label.label = longitude.to_string ();
@@ -103,7 +103,7 @@ private async void start_session () {
       (Xdp.LocationAccuracy) accuracy_button.selected,
       NONE,
       null
-    );
+      );
 
     if (result) {
       message ("Location access granted");

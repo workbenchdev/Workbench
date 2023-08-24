@@ -1,4 +1,4 @@
-#!/usr/bin/env -S vala workbench.vala --pkg libadwaita-1 --pkg libportal-gtk4
+#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1 --pkg libportal-gtk4
 
 private Xdp.Portal portal;
 private Xdp.Parent parent;
@@ -17,7 +17,7 @@ private async void on_button_clicked () {
     Variant result = yield portal.pick_color (parent, null);
 
     double r, g, b;
-    VariantIter iter = result.iterator (); // Iterate over the array in the variant
+    VariantIter iter = result.iterator ();             // Iterate over the array in the variant
     iter.next ("d", out r);
     iter.next ("d", out g);
     iter.next ("d", out b);

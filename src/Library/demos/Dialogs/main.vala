@@ -16,9 +16,9 @@ private void _create_confirmation_dialog (Gtk.Button button) {
   Gtk.Window window = workbench.window;
 
   Adw.MessageDialog dialog = new Adw.MessageDialog
-    (window,
-    "Replace File?",
-    """A file named "example.png" already exists. Do you want to replace it?""");
+                               (window,
+                               "Replace File?",
+                               """A file named "example.png" already exists. Do you want to replace it?""");
 
   dialog.close_response = "replace";
 
@@ -41,9 +41,9 @@ private void _create_error_dialog (Gtk.Button button) {
   Gtk.Window window = button.get_ancestor(window_type) as Gtk.Window;
 
   Adw.MessageDialog dialog = new Adw.MessageDialog
-    (window,
-    "Critical Error",
-    "You did something you should not have");
+                               (window,
+                               "Critical Error",
+                               "You did something you should not have");
 
   dialog.close_response = "okay";
 
@@ -71,7 +71,9 @@ private void _create_advanced_dialog(Gtk.Button button) {
   dialog.add_response("login", "Login");
   dialog.set_response_appearance("login", Adw.ResponseAppearance.SUGGESTED);
 
-  var entry = new Gtk.PasswordEntry() {show_peek_icon = true};
+  var entry = new Gtk.PasswordEntry() {
+    show_peek_icon = true
+  };
 
   dialog.set_extra_child(entry);
 

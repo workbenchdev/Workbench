@@ -90,6 +90,5 @@ export function format(text) {
   return prettier.format(text, {
     parser: "babel",
     plugins: [prettier_babel],
-    trailingComma: "all",
   });
 }

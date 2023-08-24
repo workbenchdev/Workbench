@@ -1,4 +1,4 @@
-#!/usr/bin/env -S vala workbench.vala --pkg libadwaita-1 --pkg gdk-pixbuf-2.0 --pkg libsoup-3.0
+#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1 --pkg gdk-pixbuf-2.0 --pkg libsoup-3.0
 
 public errordomain MessageError {
   FAILED;

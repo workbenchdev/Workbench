@@ -1,4 +1,4 @@
-#!/usr/bin/env -S vala workbench.vala --pkg gtk4 --pkg libadwaita-1 --pkg libsoup-3.0
+#! /usr/bin/env -S vala workbench.vala --pkg gtk4 --pkg libadwaita-1 --pkg libsoup-3.0
 
 private Gtk.Button button_connect;
 private Gtk.Button button_disconnect;
@@ -22,7 +22,7 @@ public void main () {
       var message = new Soup.Message (
         "GET",
         uri
-      );
+        );
 
       // https://valadoc.org/libsoup-3.0/Soup.Session.websocket_connect_async.html
       session.websocket_connect_async.begin (
@@ -32,23 +32,23 @@ public void main () {
         1,
         null,
         (obj, res) => {
-          try {
-            connection = session.websocket_connect_async.end (res);
-          } catch (Error err) {
-            onError (err);
-            return;
-          }
-
-          connection.closed.connect (onClosed);
-          connection.error.connect (onError);
-          connection.message.connect (onMessage);
-
-          onOpen();
+        try {
+          connection = session.websocket_connect_async.end (res);
+        } catch (Error err) {
+          onError (err);
+          return;
         }
-      );
+
+        connection.closed.connect (onClosed);
+        connection.error.connect (onError);
+        connection.message.connect (onMessage);
+
+        onOpen();
+      }
+        );
     } catch (Error err) {
-        stderr.printf ("error: " + err.message + "\n");
-        return;
+      stderr.printf ("error: " + err.message + "\n");
+      return;
     }
   });
 
@@ -96,4 +96,3 @@ private void send (string msg) {
   stdout.printf ("sent: " + msg + "\n");
   connection.send_text (msg);
 }
-

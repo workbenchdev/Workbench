@@ -1,4 +1,4 @@
-#!/usr/bin/env -S vala workbench.vala --pkg libadwaita-1 --pkg libportal-gtk4
+#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1 --pkg libportal-gtk4
 
 private Gtk.Revealer revealer;
 private Adw.EntryRow entry;
@@ -28,11 +28,11 @@ private async void on_button_clicked () {
     Variant result = yield portal.get_user_information (parent, reason, NONE, null);
 
     /*
-    * result is a Variant dictionary containing the following fields:
-    * id (s): the user id
-    * name (s): the users real name
-    * image (s): the uri of an image file for the users avatar picture
-    */
+     * result is a Variant dictionary containing the following fields:
+     * id (s): the user id
+     * name (s): the users real name
+     * image (s): the uri of an image file for the users avatar picture
+     */
 
     var id = (string) result.lookup_value ("id", VariantType.STRING);
     var name = (string) result.lookup_value ("name", VariantType.STRING);

@@ -28,14 +28,14 @@
 
 struct _WorkbenchCompletionRequest
 {
-  GObject                      parent_instance;
+  GObject parent_instance;
 
   GPtrArray                   *items;
 
   GCancellable                *cancellable;
   GtkSourceCompletionContext  *context;
   GtkSourceCompletionProvider *provider;
-  WorkbenchRequestState        state;
+  WorkbenchRequestState state;
 };
 
 static void   g_list_model_iface_init (GListModelInterface *iface);
@@ -62,13 +62,13 @@ static GParamSpec *properties[N_PROPERTIES] = { 0, };
  */
 static gpointer
 workbench_completion_request_get_item (GListModel   *model,
-                                       unsigned int  position)
+                                       unsigned int position)
 {
   WorkbenchCompletionRequest *self = WORKBENCH_COMPLETION_REQUEST (model);
 
   g_assert (WORKBENCH_IS_COMPLETION_REQUEST (self));
 
-  if G_UNLIKELY (position >= self->items->len)
+  if (G_UNLIKELY (position >= self->items->len))
     return NULL;
 
   return g_object_ref (g_ptr_array_index (self->items, position));
@@ -128,7 +128,7 @@ workbench_completion_request_finalize (GObject *object)
 
 static void
 workbench_completion_request_get_property (GObject    *object,
-                                           guint       prop_id,
+                                           guint prop_id,
                                            GValue     *value,
                                            GParamSpec *pspec)
 {
@@ -136,61 +136,61 @@ workbench_completion_request_get_property (GObject    *object,
   GListModel *list = G_LIST_MODEL (object);
 
   switch (prop_id)
-    {
-    case PROP_CANCELLABLE:
-      g_value_set_object (value, self->cancellable);
-      break;
+  {
+  case PROP_CANCELLABLE:
+    g_value_set_object (value, self->cancellable);
+    break;
 
-    case PROP_CONTEXT:
-      g_value_set_object (value, self->context);
-      break;
+  case PROP_CONTEXT:
+    g_value_set_object (value, self->context);
+    break;
 
-    case PROP_ITEM_TYPE:
-      g_value_set_gtype (value, g_list_model_get_item_type (list));
-      break;
+  case PROP_ITEM_TYPE:
+    g_value_set_gtype (value, g_list_model_get_item_type (list));
+    break;
 
-    case PROP_N_ITEMS:
-      g_value_set_uint (value, g_list_model_get_n_items (list));
-      break;
+  case PROP_N_ITEMS:
+    g_value_set_uint (value, g_list_model_get_n_items (list));
+    break;
 
-    case PROP_PROVIDER:
-      g_value_set_object (value, self->provider);
-      break;
+  case PROP_PROVIDER:
+    g_value_set_object (value, self->provider);
+    break;
 
-    case PROP_STATE:
-      g_value_set_enum (value, self->state);
-      break;
+  case PROP_STATE:
+    g_value_set_enum (value, self->state);
+    break;
 
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
-    }
+  default:
+    G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+  }
 }
 
 static void
 workbench_completion_request_set_property (GObject      *object,
-                                           guint         prop_id,
+                                           guint prop_id,
                                            const GValue *value,
                                            GParamSpec   *pspec)
 {
   WorkbenchCompletionRequest *self = WORKBENCH_COMPLETION_REQUEST (object);
 
   switch (prop_id)
-    {
-    case PROP_CANCELLABLE:
-      self->cancellable = g_value_dup_object (value);
-      break;
+  {
+  case PROP_CANCELLABLE:
+    self->cancellable = g_value_dup_object (value);
+    break;
 
-    case PROP_CONTEXT:
-      self->context = g_value_dup_object (value);
-      break;
+  case PROP_CONTEXT:
+    self->context = g_value_dup_object (value);
+    break;
 
-    case PROP_PROVIDER:
-      self->provider = g_value_dup_object (value);
-      break;
+  case PROP_PROVIDER:
+    self->provider = g_value_dup_object (value);
+    break;
 
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
-    }
+  default:
+    G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+  }
 }
 
 static void
@@ -392,10 +392,10 @@ workbench_completion_request_add (WorkbenchCompletionRequest  *request,
  */
 void
 workbench_completion_request_splice (WorkbenchCompletionRequest *request,
-                                     unsigned int                position,
-                                     unsigned int                n_removals,
+                                     unsigned int position,
+                                     unsigned int n_removals,
                                      gpointer                   *additions,
-                                     unsigned int                n_additions)
+                                     unsigned int n_additions)
 {
   g_return_if_fail (WORKBENCH_IS_COMPLETION_REQUEST (request));
   g_return_if_fail (position + n_removals >= position); /* overflow */
@@ -403,11 +403,11 @@ workbench_completion_request_splice (WorkbenchCompletionRequest *request,
   g_ptr_array_remove_range (request->items, position, n_removals);
 
   for (unsigned int i = 0; i < n_additions; i++)
-    {
-      g_ptr_array_insert (request->items,
-                          position + i,
-                          g_object_ref (additions[i]));
-    }
+  {
+    g_ptr_array_insert (request->items,
+                        position + i,
+                        g_object_ref (additions[i]));
+  }
 
   g_list_model_items_changed (G_LIST_MODEL (request),
                               position,
@@ -427,7 +427,7 @@ workbench_completion_request_splice (WorkbenchCompletionRequest *request,
  */
 void
 workbench_completion_request_state_changed (WorkbenchCompletionRequest *request,
-                                            WorkbenchRequestState       state)
+                                            WorkbenchRequestState state)
 {
   g_return_if_fail (WORKBENCH_IS_COMPLETION_REQUEST (request));
 

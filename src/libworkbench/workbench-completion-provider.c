@@ -42,19 +42,19 @@ workbench_completion_provider_real_completion_request (WorkbenchCompletionProvid
   g_assert (WORKBENCH_IS_COMPLETION_REQUEST (request));
 
   if (!g_signal_has_handler_pending (self, signals [COMPLETION_REQUEST], 0, TRUE))
+  {
+    static gboolean warned = FALSE;
+
+    if (warned)
     {
-      static gboolean warned = FALSE;
-
-      if (warned)
-        {
-          g_warning ("Your provider does not implement 'completion_request()' "
-                     "and has no handlers connected to 'completion-provider'.");
-          warned = TRUE;
-        }
-
-      workbench_completion_request_state_changed (request,
-                                                  WORKBENCH_REQUEST_STATE_CANCELLED);
+      g_warning ("Your provider does not implement 'completion_request()' "
+                 "and has no handlers connected to 'completion-provider'.");
+      warned = TRUE;
     }
+
+    workbench_completion_request_state_changed (request,
+                                                WORKBENCH_REQUEST_STATE_CANCELLED);
+  }
 }
 
 /*
@@ -88,27 +88,27 @@ on_request_state (WorkbenchCompletionRequest *request,
     return;
 
   switch (workbench_completion_request_get_state (request))
-    {
-    case WORKBENCH_REQUEST_STATE_UNKNOWN:
-    case WORKBENCH_REQUEST_STATE_CANCELLED:
-      g_task_return_new_error (task,
-                               G_IO_ERROR,
-                               G_IO_ERROR_CANCELLED,
-                               "Operation cancelled");
-      break;
+  {
+  case WORKBENCH_REQUEST_STATE_UNKNOWN:
+  case WORKBENCH_REQUEST_STATE_CANCELLED:
+    g_task_return_new_error (task,
+                             G_IO_ERROR,
+                             G_IO_ERROR_CANCELLED,
+                             "Operation cancelled");
+    break;
 
-    case WORKBENCH_REQUEST_STATE_COMPLETE:
-      g_task_return_pointer (task, g_object_ref (request), g_object_unref);
-      break;
-    }
+  case WORKBENCH_REQUEST_STATE_COMPLETE:
+    g_task_return_pointer (task, g_object_ref (request), g_object_unref);
+    break;
+  }
 }
 
 static void
 workbench_completion_provider_populate_async (GtkSourceCompletionProvider *provider,
                                               GtkSourceCompletionContext  *context,
                                               GCancellable                *cancellable,
-                                              GAsyncReadyCallback          callback,
-                                              gpointer                     user_data)
+                                              GAsyncReadyCallback callback,
+                                              gpointer user_data)
 {
   WorkbenchCompletionProvider *self = WORKBENCH_COMPLETION_PROVIDER (provider);
   g_autoptr (WorkbenchCompletionRequest) request = NULL;

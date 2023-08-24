@@ -53,4 +53,3 @@ public void on_navigation_row_changed() {
     root_box.set_orientation(Gtk.Orientation.HORIZONTAL);
   }
 }
-

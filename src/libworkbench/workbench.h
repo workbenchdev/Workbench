@@ -12,4 +12,3 @@
 #include "workbench-completion-request.h"
 
 #undef WORKBENCH_INSIDE
-

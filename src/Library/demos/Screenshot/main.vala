@@ -1,4 +1,4 @@
-#!/usr/bin/env -S vala workbench.vala --pkg libadwaita-1 --pkg libportal-gtk4
+#! /usr/bin/env -S vala workbench.vala --pkg libadwaita-1 --pkg libportal-gtk4
 
 private Xdp.Portal portal;
 private Xdp.Parent parent;
@@ -27,7 +27,7 @@ private void show_permission_error () {
     workbench.window,
     "Permission Error",
     "Ensure Screenshot permission is enabled in\nSettings → Apps → Workbench"
-  ) {
+    ) {
     close_response = "ok",
     modal = true,
   };
