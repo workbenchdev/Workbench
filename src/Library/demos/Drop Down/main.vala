@@ -15,7 +15,6 @@ public KeyValuePair(string key, string value) {
 }
 
 public void main() {
-
   Gtk.DropDown drop_down = workbench.builder.get_object("drop_down") as Gtk.DropDown;
   Gtk.DropDown advanced_drop_down = workbench.builder.get_object("advanced_drop_down") as Gtk.DropDown;
 

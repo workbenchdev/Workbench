@@ -13,9 +13,11 @@ public void main () {
 
   // Model
   int item = 1;
-  var string_model = new Gtk.StringList (
-    {"Default Item 1", "Default Item 2", "Default Item 3"}
-    );
+  var string_model = new Gtk.StringList ({
+    "Default Item 1",
+    "Default Item 2",
+    "Default Item 3"
+  });
   var model = new Gtk.SingleSelection (string_model);
 
   var grid_view_factory = new Gtk.SignalListItemFactory ();

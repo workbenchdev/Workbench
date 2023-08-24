@@ -19,9 +19,11 @@ public void main () {
 
   // Model
   int item = 1;
-  var model = new Gtk.StringList (
-    {"Default Item 1", "Default Item 2", "Default Item 3"}
-    );
+  var model = new Gtk.StringList ({
+    "Default Item 1",
+    "Default Item 2",
+    "Default Item 3"
+  });
 
   model.items_changed.connect ((position, removed, added) => {
     message (@"position: $position, Item Removed? $(removed > 0), Item Added? $(added > 0)");

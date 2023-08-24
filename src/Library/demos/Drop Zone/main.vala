@@ -72,7 +72,9 @@ private Widget createImagePreview(GLib.File file) {
   var widget = createBoxWidget();
 
   var picture = new Picture() {
-    file = file, can_shrink = true, content_fit = Gtk.ContentFit.SCALE_DOWN
+    file = file,
+    can_shrink = true,
+    content_fit = Gtk.ContentFit.SCALE_DOWN
   };
   widget.append(picture);
 

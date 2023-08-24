@@ -27,7 +27,7 @@
   "lint-staged": {
     "*.{js,cjs,mjs}": "rome format --write",
     "*.{css,json,md}": "prettier --write",
-    "*.{rs}": "flatpak run --command=/usr/lib/sdk/rust-stable/bin/rustfmt --file-forwarding org.gnome.Sdk//45beta @@ ",
+    "*.rs": "flatpak run --command=/usr/lib/sdk/rust-stable/bin/rustfmt --file-forwarding org.gnome.Sdk//45beta @@ ",
     "*.{vala,c,h}": "flatpak run --command=/usr/lib/sdk/vala/bin/uncrustify --file-forwarding org.gnome.Sdk//45beta -c - --replace --no-backup --set indent_with_tabs=0 --set nl_end_of_file=force --set nl_end_of_file_min=1 --set indent_columns=2 @@ "
   }
 }

@@ -1,10 +1,7 @@
 
 .PHONY: lint test
 
-lint:
-	./node_modules/.bin/rome ci .
-
-test: lint
+test:
 	./troll/tst/bin.js test/*.test.js
 # https://github.com/ximion/appstream/issues/398#issuecomment-1129454985
 # flatpak run org.freedesktop.appstream.cli validate --override=release-time-missing=info --no-net data/app.metainfo.xml
