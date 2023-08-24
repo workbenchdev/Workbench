@@ -6,7 +6,7 @@ Adw.StatusPage {
   description: _("Monitor the login session state and inhibit session state changes");
 
   Adw.Clamp {
-    maximum-size: 400;
+    maximum-size: 380;
 
     Box {
       orientation: vertical;
@@ -24,17 +24,12 @@ Adw.StatusPage {
       }
 
       ListBox {
-        Adw.ActionRow {
+        selection-mode: none;
+        Adw.SwitchRow switch_row_logout {
           title: _("Logout");
-          [suffix]
-          CheckButton check_logout {
-          }
         }
-        Adw.ActionRow {
+        Adw.SwitchRow switch_row_idle {
           title: _("Idle");
-          [suffix]
-          CheckButton check_idle {
-          }
         }
         styles ["boxed-list"]
       }

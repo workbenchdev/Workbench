@@ -17,8 +17,8 @@ Gio._promisify(
 const portal = new Xdp.Portal();
 const parent = XdpGtk.parent_new_gtk(workbench.window);
 const entry = workbench.builder.get_object("entry");
-const check_logout = workbench.builder.get_object("check_logout");
-const check_idle = workbench.builder.get_object("check_idle");
+const switch_row_logout = workbench.builder.get_object("switch_row_logout");
+const switch_row_idle = workbench.builder.get_object("switch_row_idle");
 const button_start = workbench.builder.get_object("button_start");
 const button_stop = workbench.builder.get_object("button_stop");
 let ids = [];
@@ -57,8 +57,8 @@ async function startSession() {
   if (result) {
     button_start.sensitive = false;
     button_stop.sensitive = true;
-    if (check_logout.active) inhibitSession(Xdp.InhibitFlags.LOGOUT);
-    if (check_idle.active) inhibitSession(Xdp.InhibitFlags.IDLE);
+    if (switch_row_logout.active) inhibitSession(Xdp.InhibitFlags.LOGOUT);
+    if (switch_row_idle.active) inhibitSession(Xdp.InhibitFlags.IDLE);
     /*
     Xdp Portal also supports inhibition of Suspend and User Switch
     using the flags SUSPEND and USER_SWITCH respectively. But these
