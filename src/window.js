@@ -18,7 +18,8 @@ import prettier from "./lib/prettier.js";
 import prettier_babel from "./lib/prettier-babel.js";
 import prettier_postcss from "./lib/prettier-postcss.js";
 import Previewer from "./Previewer/Previewer.js";
-import Compiler from "./langs/vala/Compiler.js";
+import ValaCompiler from "./langs/vala/Compiler.js";
+import RustCompiler from "./langs/rust/Compiler.js";
 import ThemeSelector from "../troll/src/widgets/ThemeSelector.js";
 
 import resource from "./window.blp";
@@ -69,8 +70,6 @@ export default function Window({ application, session }) {
 
   const { term_console } = Devtools({ application, window, builder, settings });
 
-  let compiler = null;
-
   if (!file.get_child("main.xml").query_exists(null)) {
     settings.set_int("ui-language", 1);
   }
@@ -90,6 +89,13 @@ export default function Window({ application, session }) {
     session,
   });
   langs.vala.document = document_vala;
+
+  const document_rust = Document({
+    code_view: builder.get_object("code_view_rust"),
+    file: file.get_child("code.rs"),
+    lang: langs.rust,
+  });
+  langs.rust.document = document_rust;
 
   const document_blueprint = Document({
     code_view: builder.get_object("code_view_blueprint"),
@@ -207,15 +213,46 @@ export default function Window({ application, session }) {
     return code;
   }
 
+  function formatRustCode(text) {
+    const rustfmtLauncher = Gio.SubprocessLauncher.new(
+      Gio.SubprocessFlags.STDIN_PIPE | Gio.SubprocessFlags.STDOUT_PIPE,
+    );
+
+    const rustfmtProcess = rustfmtLauncher.spawnv([
+      "rustfmt",
+      "--quiet",
+      "--emit",
+      "stdout",
+    ]);
+
+    const [success, stdout, stderr] = rustfmtProcess.communicate_utf8(
+      text,
+      null,
+    );
+
+    if (!success) {
+      logError(`Error running rustfmt: ${stderr}`);
+      return text; // Return the original text if formatting fails
+    }
+
+    return stdout;
+  }
+
   function formatCode() {
-    if (panel_code.panel.visible && panel_code.language === "JavaScript") {
-      format(langs.javascript.document.code_view, (text) => {
-        return prettier.format(text, {
-          parser: "babel",
-          plugins: [prettier_babel],
-          trailingComma: "all",
+    if (panel_code.panel.visible) {
+      if (panel_code.language === "JavaScript") {
+        format(langs.javascript.document.code_view, (text) => {
+          return prettier.format(text, {
+            parser: "babel",
+            plugins: [prettier_babel],
+            trailingComma: "all",
+          });
         });
-      });
+      } else if (panel_code.language === "Rust") {
+        format(langs.rust.document.code_view, (text) => {
+          return formatRustCode(text);
+        });
+      }
     }
 
     if (builder.get_object("panel_style").visible) {
@@ -233,6 +270,9 @@ export default function Window({ application, session }) {
       });
     }
   }
+
+  let compiler_vala = null;
+  let compiler_rust = null;
 
   async function runCode({ format }) {
     button_run.set_sensitive(false);
@@ -277,11 +317,22 @@ export default function Window({ application, session }) {
         }
         previewer.setSymbols(exports);
       } else if (language === "Vala") {
-        compiler = compiler || Compiler({ session });
-        const success = await compiler.compile();
+        compiler_vala = compiler_vala || ValaCompiler({ session });
+        const success = await compiler_vala.compile();
         if (success) {
           await previewer.useExternal();
-          if (await compiler.run()) {
+          if (await compiler_vala.run()) {
+            await previewer.open();
+          } else {
+            await previewer.useInternal();
+          }
+        }
+      } else if (language === "Rust") {
+        compiler_rust = compiler_rust || RustCompiler({ session });
+        const success = await compiler_rust.compile();
+        if (success) {
+          await previewer.useExternal();
+          if (await compiler_rust.run()) {
             await previewer.open();
           } else {
             await previewer.useInternal();
@@ -349,6 +400,7 @@ export default function Window({ application, session }) {
 
     await Promise.all([
       document_javascript.load(),
+      document_rust.load(),
       document_vala.load(),
       document_blueprint.load(),
       document_xml.load(),
@@ -445,10 +497,7 @@ async function onCloseSession({ session, window }) {
     updateSaveButton();
   }
 
-  const response = await new Promise((resolve) => {
-    dialog.connect("response", (self, response) => resolve(response));
-  });
-
+  const response = await dialog.choose(null);
   if (response === "cancel") return;
 
   if (response === "discard") {

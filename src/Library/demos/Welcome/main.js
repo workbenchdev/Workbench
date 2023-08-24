@@ -1,5 +1,8 @@
 import Gtk from "gi://Gtk";
 import Adw from "gi://Adw";
+import Gio from "gi://Gio";
+
+Gio._promisify(Adw.MessageDialog.prototype, "choose", "choose_finish");
 
 const box = workbench.builder.get_object("subtitle");
 
@@ -9,12 +12,14 @@ const button = new Gtk.Button({
   margin_top: 6,
   css_classes: ["suggested-action"],
 });
-button.connect("clicked", greet);
+button.connect("clicked", () => {
+  greet().catch(logError);
+});
 box.append(button);
 
 console.log("Welcome to Workbench!");
 
-function greet() {
+async function greet() {
   // https://gjs-docs.gnome.org/adw1~1/adw.messagedialog
   const dialog = new Adw.MessageDialog({
     body: "Hello World!",
@@ -22,9 +27,7 @@ function greet() {
   });
 
   dialog.add_response("ok", "OK");
-  dialog.connect("response", (self, response) => {
-    console.log(response);
-  });
 
-  dialog.present();
+  const response = await dialog.choose(null);
+  console.log(response);
 }

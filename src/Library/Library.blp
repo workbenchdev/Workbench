@@ -10,8 +10,13 @@ Adw.PreferencesWindow library {
 
   Adw.PreferencesPage {
     Adw.PreferencesGroup {
+      Picture picture_illustration {
+        can-shrink: false;
+        margin-bottom: 30;
+      }
+
       Label {
-        label: _('Learn, Test, Remix');
+        label: _("Learn, Test, Remix");
         styles ["title-1"]
       }
     }
@@ -44,11 +49,11 @@ Adw.PreferencesWindow library {
     }
 
     Adw.PreferencesGroup library_user_interface {
-      title: "User Interface";
+      title: _("User Interface");
     }
 
     Adw.PreferencesGroup library_platform {
-      title: "Platform APIs";
+      title: _("Platform APIs");
     }
 
     Adw.PreferencesGroup {

@@ -10,16 +10,16 @@
   <summary>Learn and prototype with GNOME technologies</summary>
   <translation type="gettext">@app_id@</translation>
   <description>
-    <p>Workbench goal is to let you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a GTK user interface.</p>
+    <p>Workbench lets you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a GTK user interface.</p>
     <p>Among other things, Workbench comes with</p>
     <ul>
-      <li>realtime GTK/CSS preview</li>
-      <li>library of examples</li>
+      <li>Live GTK/CSS preview</li>
+      <li>Library of 100+ examples</li>
       <li>JavaScript and Vala support</li>
       <li>XML and Blueprint for describing user interface</li>
-      <li>syntax highlighting, undo/redo, autosave, session restore</li>
-      <li>code linter and formatter</li>
-      <li>terminal output</li>
+      <li>Syntax highlighting, undo/redo, autosave, sessions and projects</li>
+      <li>Code linter and formatter</li>
+      <li>Terminal output</li>
       <li>1000+ icons</li>
     </ul>
   </description>
@@ -47,6 +47,64 @@
   </screenshots>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="45" date="2023-09-15">
+      <description>
+        <ul>
+          <li>Use GNOME 45</li>
+          <li>Support Rust</li>
+          <li>Add multi windows and sessions support</li>
+          <li>Support saving and opening a project</li>
+          <li>Add offline documentation viewer "Manuals"</li>
+          <li>Use GTKCssLanguageServer</li>
+          <li>Add a workbench.resolve API</li>
+          <li>Allow running Vala without UI code</li>
+          <li>Update to Blueprint 0.10.0</li>
+          <li>Update to Rome 12.1.3</li>
+          <li>Update to vte 0.72.2</li>
+          <li>Update Icon Development Kit</li>
+          <li>New Library entry: Map</li>
+          <li>New Library entry: Search</li>
+          <li>New Library entry: Audio</li>
+          <li>New Library entry: Event Controllers</li>
+          <li>New Library entry: Action Bar</li>
+          <li>New Library entry: Location</li>
+          <li>New Library entry: Checkboxes</li>
+          <li>New Library entry: Radio Buttons</li>
+          <li>New Library entry: List View</li>
+          <li>New Library entry: Separator</li>
+          <li>New Library entry: Link Button</li>
+          <li>New Library entry: Actions</li>
+          <li>New Library entry: Tooltip</li>
+          <li>New Library entry: Flow Box</li>
+          <li>New Library entry: Emoji Chooser</li>
+          <li>New Library entry: Editable Label</li>
+          <li>New Library entry: Drop Zone</li>
+          <li>New Library entry: Label</li>
+          <li>New Library entry: Menu Button</li>
+          <li>New Library entry: Image</li>
+          <li>New Library entry: Column View</li>
+          <li>New Library entry: Menu</li>
+          <li>New Library entry: Laucher (File / Uri)</li>
+          <li>New Library entry: Navigation Split View</li>
+          <li>New Library entry: Overlay Split View</li>
+          <li>New Library entry: Navigation View</li>
+          <li>New Library entry: Scrolled Window</li>
+          <li>New Library entry: Power Profile Monitor</li>
+          <li>New Library entry: Network Monitor Demo</li>
+          <li>New Library entry: Clamp</li>
+          <li>New Library entry: Source View</li>
+          <li>New Library entry: Breakpoint</li>
+          <li>New Library entry: Screencast</li>
+          <li>New Library entry: File Dialog</li>
+          <li>New Library entry: Toolbar View</li>
+          <li>New Library entry: Picture</li>
+          <li>New Library entry: Memory Monitor</li>
+          <li>New Library entry: Camera</li>
+          <li>New Library entry: Center Box</li>
+          <li>New Library entry: File Monitor</li>
+        </ul>
+      </description>
+    </release>
     <release version="44.2" date="2023-06-23">
       <description>
         <ul>

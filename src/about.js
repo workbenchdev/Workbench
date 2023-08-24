@@ -43,6 +43,7 @@ ${getBlueprintVersion()}
       "Sonny Piers https://sonny.re",
       "Lorenz Wildberg https://gitlab.gnome.org/lwildberg",
       "Andy Holmes https://gitlab.gnome.org/andyholmes",
+      "Julian Hofer https://julianhofer.eu/",
     ],
     designers: [
       "Sonny Piers https://sonny.re",
@@ -51,6 +52,7 @@ ${getBlueprintVersion()}
     artists: [
       "Tobias Bernard <tbernard@gnome.org>",
       "Jakub Steiner https://jimmac.eu",
+      "Brage Fuglseth https://bragefuglseth.dev",
     ],
   });
 
@@ -92,3 +94,4 @@ function getValaVersion() {
 function getBlueprintVersion() {
   return "Blueprint 0.10.0";
 }
+
