@@ -12,11 +12,8 @@ export default function Library({ application }) {
   const builder = Gtk.Builder.new_from_resource(resource);
   const window = builder.get_object("library");
 
-  const illustration_file = Gio.File.new_for_path(
-    pkg.pkgdatadir
-  ).resolve_relative_path("assets/library.svg");
-  const illustration = builder.get_object("illustration");
-  illustration.set_file(illustration_file);
+  const picture_illustration = builder.get_object("picture_illustration");
+  picture_illustration.set_resource(illustration);
 
   let last_selected;
 
