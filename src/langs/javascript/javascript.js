@@ -1,5 +1,7 @@
 import Gio from "gi://Gio";
 
+import prettier from "../../lib/prettier.js";
+import prettier_babel from "../../lib/prettier-babel.js";
 import LSPClient from "../../lsp/LSPClient.js";
 
 export function setup({ document }) {
@@ -82,4 +84,12 @@ function createLSPClient({ file, code_view }) {
   );
 
   return lspc;
+}
+
+export function format(text) {
+  return prettier.format(text, {
+    parser: "babel",
+    plugins: [prettier_babel],
+    trailingComma: "all",
+  });
 }

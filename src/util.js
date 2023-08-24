@@ -2,6 +2,10 @@ import GLib from "gi://GLib";
 import Gio from "gi://Gio";
 import Xdp from "gi://Xdp";
 import GObject from "gi://GObject";
+import { format as formatXML } from "./langs/xml/xml.js";
+import { format as formatJavaScript } from "./langs/javascript/javascript.js";
+import { format as formatCSS } from "./langs/css/css.js";
+import { format as formatRust } from "./langs/rust/rust.js";
 
 export const portal = new Xdp.Portal();
 
@@ -45,6 +49,9 @@ export const languages = [
     extensions: [".blp"],
     types: [],
     document: null,
+    format(text) {
+      return text;
+    },
   },
   {
     id: "xml",
@@ -53,6 +60,7 @@ export const languages = [
     extensions: [".ui"],
     types: ["application/x-gtk-builder"],
     document: null,
+    format: formatXML,
   },
   {
     id: "javascript",
@@ -61,6 +69,7 @@ export const languages = [
     extensions: [".js", ".mjs"],
     types: ["text/javascript", "application/javascript"],
     document: null,
+    format: formatJavaScript,
   },
   {
     id: "css",
@@ -69,6 +78,7 @@ export const languages = [
     extensions: [".css"],
     types: ["text/css"],
     document: null,
+    format: formatCSS,
   },
   {
     id: "vala",
@@ -78,6 +88,9 @@ export const languages = [
     types: ["text/x-vala"],
     document: null,
     placeholder: "// Sorry, this demo is not available in Vala yet.",
+    format(text) {
+      return text;
+    },
   },
   {
     id: "rust",
@@ -87,6 +100,7 @@ export const languages = [
     types: ["text/x-rust"],
     document: null,
     placeholder: "// Sorry, this demo is not available in Rust yet.",
+    format: formatRust,
   },
 ];
 

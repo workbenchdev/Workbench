@@ -1,3 +1,5 @@
+import prettier from "../../lib/prettier.js";
+import prettier_postcss from "../../lib/prettier-postcss.js";
 import LSPClient from "../../lsp/LSPClient.js";
 
 export function setup({ document }) {
@@ -51,4 +53,11 @@ function createLSPClient({ code_view, file }) {
   );
 
   return lspc;
+}
+
+export function format(text) {
+  return prettier.format(text, {
+    parser: "css",
+    plugins: [prettier_postcss],
+  });
 }

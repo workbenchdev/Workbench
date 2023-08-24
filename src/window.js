@@ -6,7 +6,6 @@ import Adw from "gi://Adw";
 import Vte from "gi://Vte";
 import { gettext as _ } from "gettext";
 
-import * as xml from "./langs/xml/xml.js";
 import { languages } from "./util.js";
 import Document from "./Document.js";
 import PanelUI from "./PanelUI.js";
@@ -14,9 +13,6 @@ import PanelCode from "./PanelCode.js";
 import PanelStyle from "./PanelStyle.js";
 import Devtools from "./Devtools.js";
 
-import prettier from "./lib/prettier.js";
-import prettier_babel from "./lib/prettier-babel.js";
-import prettier_postcss from "./lib/prettier-postcss.js";
 import Previewer from "./Previewer/Previewer.js";
 import ValaCompiler from "./langs/vala/Compiler.js";
 import RustCompiler from "./langs/rust/Compiler.js";
@@ -213,61 +209,23 @@ export default function Window({ application, session }) {
     return code;
   }
 
-  function formatRustCode(text) {
-    const rustfmtLauncher = Gio.SubprocessLauncher.new(
-      Gio.SubprocessFlags.STDIN_PIPE | Gio.SubprocessFlags.STDOUT_PIPE,
-    );
-
-    const rustfmtProcess = rustfmtLauncher.spawnv([
-      "rustfmt",
-      "--quiet",
-      "--emit",
-      "stdout",
-    ]);
-
-    const [success, stdout, stderr] = rustfmtProcess.communicate_utf8(
-      text,
-      null,
-    );
-
-    if (!success) {
-      logError(`Error running rustfmt: ${stderr}`);
-      return text; // Return the original text if formatting fails
-    }
-
-    return stdout;
-  }
-
   function formatCode() {
     if (panel_code.panel.visible) {
       if (panel_code.language === "JavaScript") {
-        format(langs.javascript.document.code_view, (text) => {
-          return prettier.format(text, {
-            parser: "babel",
-            plugins: [prettier_babel],
-            trailingComma: "all",
-          });
-        });
+        format(langs.javascript.document.code_view, langs.javascript.format);
       } else if (panel_code.language === "Rust") {
-        format(langs.rust.document.code_view, (text) => {
-          return formatRustCode(text);
-        });
+        format(langs.rust.document.code_view, langs.rust.format);
+      } else if (panel_code.language === "Vala") {
+        format(langs.vala.document.code_view, langs.vala.format);
       }
     }
 
     if (builder.get_object("panel_style").visible) {
-      format(langs.css.document.code_view, (text) => {
-        return prettier.format(text, {
-          parser: "css",
-          plugins: [prettier_postcss],
-        });
-      });
+      format(langs.css.document.code_view, langs.css.format);
     }
 
     if (panel_ui.panel.visible) {
-      format(langs.xml.document.code_view, (text) => {
-        return xml.format(text, 2);
-      });
+      format(langs.xml.document.code_view, langs.xml.format);
     }
   }
 
