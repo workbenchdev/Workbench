@@ -253,7 +253,7 @@
     {
       "name": "libspelling",
       "buildsystem": "meson",
-      "config-opts": ["-Ddocs=false"],
+      "config-opts": ["-Ddocs=true"],
       "sources": [
         {
           "type": "git",
