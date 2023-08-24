@@ -140,13 +140,14 @@ export default function Window({ application, session }) {
     session,
   });
 
-  const panel_code = PanelCode({
+  const { panel_code, vala } = PanelCode({
     builder,
     previewer,
     document_vala,
     document_javascript,
     settings,
   });
+  langs.vala.format = vala.format;
 
   previewer.setPanelCode(panel_code);
 
@@ -189,13 +190,13 @@ export default function Window({ application, session }) {
     previewer.openInspector().catch(logError);
   });
 
-  function format(code_view, formatter) {
+  async function format(code_view, formatter) {
     let code;
 
     const { buffer } = code_view;
 
     try {
-      code = formatter(buffer.text.trim());
+      code = await formatter(buffer.text.trim());
     } catch (err) {
       logError(err);
       return;
@@ -209,23 +210,26 @@ export default function Window({ application, session }) {
     return code;
   }
 
-  function formatCode() {
+  async function formatCode() {
     if (panel_code.panel.visible) {
       if (panel_code.language === "JavaScript") {
-        format(langs.javascript.document.code_view, langs.javascript.format);
+        await format(
+          langs.javascript.document.code_view,
+          langs.javascript.format,
+        );
       } else if (panel_code.language === "Rust") {
-        format(langs.rust.document.code_view, langs.rust.format);
+        await format(langs.rust.document.code_view, langs.rust.format);
       } else if (panel_code.language === "Vala") {
-        format(langs.vala.document.code_view, langs.vala.format);
+        await format(langs.vala.document.code_view, langs.vala.format);
       }
     }
 
     if (builder.get_object("panel_style").visible) {
-      format(langs.css.document.code_view, langs.css.format);
+      await format(langs.css.document.code_view, langs.css.format);
     }
 
     if (panel_ui.panel.visible) {
-      format(langs.xml.document.code_view, langs.xml.format);
+      await format(langs.xml.document.code_view, langs.xml.format);
     }
   }
 
@@ -244,7 +248,7 @@ export default function Window({ application, session }) {
       await panel_ui.update();
 
       if (format) {
-        formatCode();
+        await formatCode();
       }
 
       if (language === "JavaScript") {

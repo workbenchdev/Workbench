@@ -53,7 +53,7 @@ export default function PanelCode({
     panel: panel_code,
   };
 
-  setupVala({ document: document_vala });
+  const vala = setupVala({ document: document_vala });
   setupJavaScript({ document: document_javascript });
 
   function switchLanguage() {
@@ -63,5 +63,5 @@ export default function PanelCode({
   }
   switchLanguage();
 
-  return panel;
+  return { panel_code: panel, vala };
 }
