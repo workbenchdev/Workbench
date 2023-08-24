@@ -18,4 +18,3 @@ network_monitor.connect("network-changed", () => {
 banner.connect("button-clicked", () => {
   banner.revealed = false;
 });
-

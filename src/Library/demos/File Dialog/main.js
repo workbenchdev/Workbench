@@ -96,4 +96,3 @@ async function saveFile() {
   const file = await dialog.save(workbench.window, null);
   console.log(`Save file to ${file.get_path()}`);
 }
-

@@ -25,7 +25,7 @@
     "prepare": "husky install"
   },
   "lint-staged": {
-    "*.{js,cjs,mjs}": "rome format --write package.json",
-    "*.{css,json,md,html,yaml,yml}": "prettier --write"
+    "*.{js,cjs,mjs}": "rome format --write",
+    "*.{css,json,md}": "prettier --write"
   }
 }
