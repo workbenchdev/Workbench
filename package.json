@@ -26,6 +26,7 @@
   },
   "lint-staged": {
     "*.{js,cjs,mjs}": "rome format --write",
-    "*.{css,json,md}": "prettier --write"
+    "*.{css,json,md}": "prettier --write",
+    "*.{rs}": "rustfmt"
   }
 }
