@@ -175,8 +175,8 @@ function createSearchListModel(base_path, indexes, webview, filter) {
   return createSearchSelectionModel(model, filter, webview);
 }
 
-function createSearchSelectionModel(root_model, filter, webview) {
-  const filter_model = Gtk.FilterListModel.new(root_model, filter);
+function createSearchSelectionModel(model, filter, webview) {
+  const filter_model = Gtk.FilterListModel.new(model, filter);
   const sorter = Gtk.StringSorter.new(filter.expression);
   const sort_model = Gtk.SortListModel.new(filter_model, sorter);
   const selection_model = Gtk.SingleSelection.new(sort_model);
