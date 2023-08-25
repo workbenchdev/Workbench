@@ -11,7 +11,7 @@ Gio._promisify(
 );
 
 const single_button = workbench.builder.get_object("single_button");
-const multiple_button = workbench.builder.get_object("button");
+const multiple_button = workbench.builder.get_object("multiple_button");
 
 async function openFile() {
   const default_dir = Gio.File.new_for_path(
