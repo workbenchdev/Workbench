@@ -1,6 +1,0 @@
-{
-  "category": "platform",
-  "description": "Check spelling using libspelling",
-  "panels": ["ui", "preview"],
-  "autorun": true
-}
