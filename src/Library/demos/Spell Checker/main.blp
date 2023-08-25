@@ -5,7 +5,6 @@ using GtkSource 5;
 Adw.StatusPage {
   title: _("Spell Checker");
   description: _("Simple spell checker using libspelling");
-
   child: Box {
     spacing: 12;
     orientation: vertical;
@@ -15,15 +14,12 @@ Adw.StatusPage {
       width-request: 400;
       has-frame: true;
 
-      child: GtkSource.View source_view {
-        auto-indent: true;
-        indent-width: 4;
-        show-line-numbers: true;
+      child: TextView source_view {
         buffer: GtkSource.Buffer buffer {
           text: "This is incorrent text. \n Right click mistakes to correct them.";
         };
-    };
-  }
+      };
+    }
 
     LinkButton {
       label: _("Documentation");
@@ -31,4 +27,3 @@ Adw.StatusPage {
     }
   };
 }
-
