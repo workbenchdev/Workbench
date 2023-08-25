@@ -40,13 +40,11 @@ async function openMultipleFiles() {
 }
 
 
-// Handle button click
 single_button.connect("clicked", () => {
   openFile().catch(logError);
 });
 
 
-// Handle button click
 multiple_button.connect("clicked", () => {
   openMultipleFiles().catch(logError);
 });

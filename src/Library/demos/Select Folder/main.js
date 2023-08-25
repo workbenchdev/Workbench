@@ -35,12 +35,11 @@ async function selectMultipleFolders() {
   console.log(`${selected_items_count} selected folders`);
 }
 
-// Handle button click for the desired option
+
 single_button.connect("clicked", () => {
   selectFolder().catch(logError);
 });
 
-// Handle button click for the desired option
 multiple_button.connect("clicked", () => {
   selectMultipleFolders().catch(logError);
 });
