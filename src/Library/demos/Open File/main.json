@@ -1,0 +1,6 @@
+{
+  "category": "platform",
+  "description": "Open a file using file dialog",
+  "panels": ["ui", "preview"],
+  "autorun": true
+}
