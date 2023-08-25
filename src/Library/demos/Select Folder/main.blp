@@ -9,11 +9,18 @@ Adw.StatusPage {
     orientation: vertical;
     spacing: 24;
 
-    Button button {
+    Button single_button {
       halign: center;
-      label: _("Select");
+      label: _("Select a folder");
       styles ["pill", "suggested-action"]
     }
+
+     Button mutliple_button {
+      halign: center;
+      label: _("Select multiple folders");
+      styles ["pill", "suggested-action"]
+    }
+
 
     LinkButton {
       label: _("API Reference");

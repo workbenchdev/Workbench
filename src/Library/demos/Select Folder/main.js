@@ -14,7 +14,8 @@ Gio._promisify(
   "select_multiple_folders_finish",
 );
 
-const button = workbench.builder.get_object("button");
+const single_button = workbench.builder.get_object("single_button");
+const multiple_button = workbench.builder.get_object("button");
 
 async function selectFolder() {
   const dialog_for_folder = new Gtk.FileDialog();
@@ -35,6 +36,11 @@ async function selectMultipleFolders() {
 }
 
 // Handle button click for the desired option
-button.connect("clicked", () => {
-  selectFolder().catch(logError); // or selectMultipleFolders().catch(logError);
+single_button.connect("clicked", () => {
+  selectFolder().catch(logError);
+});
+
+// Handle button click for the desired option
+multiple_button.connect("clicked", () => {
+  selectMultipleFolders().catch(logError);
 });

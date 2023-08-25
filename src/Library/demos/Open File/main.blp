@@ -9,9 +9,15 @@ Adw.StatusPage {
     orientation: vertical;
     spacing: 24;
 
-    Button button {
+    Button single_button {
       halign: center;
-      label: _("Open");
+      label: _("Open a file");
+      styles ["pill", "suggested-action"]
+    }
+
+     Button mutliple_button {
+      halign: center;
+      label: _("Open multiple files");
       styles ["pill", "suggested-action"]
     }
 

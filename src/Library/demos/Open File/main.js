@@ -9,7 +9,9 @@ Gio._promisify(
   "open_multiple",
   "open_multiple_finish",
 );
-const button = workbench.builder.get_object("button");
+
+const single_button = workbench.builder.get_object("single_button");
+const multiple_button = workbench.builder.get_object("button");
 
 async function openFile() {
   const default_dir = Gio.File.new_for_path(
@@ -27,7 +29,24 @@ async function openFile() {
   console.log(`Selected File: ${info.get_name()}`);
 }
 
+async function openMultipleFiles() {
+  const dialog_for_multiple_files = new Gtk.FileDialog();
+  const files = await dialog_for_multiple_files.open_multiple(
+    workbench.window,
+    null,
+  );
+  const selected_items_count = files.get_n_items();
+  console.log(`No of selected files: ${selected_items_count}`);
+}
+
+
 // Handle button click
-button.connect("clicked", () => {
+single_button.connect("clicked", () => {
   openFile().catch(logError);
+});
+
+
+// Handle button click
+multiple_button.connect("clicked", () => {
+  openMultipleFiles().catch(logError);
 });
