@@ -1,6 +1,6 @@
 {
   "category": "platform",
-  "description": "Open files using file dialog",
+  "description": "Save a file using a file dialog",
   "panels": ["ui", "preview"],
   "autorun": true
 }
