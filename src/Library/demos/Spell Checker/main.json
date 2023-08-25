@@ -1,6 +1,6 @@
 {
   "category": "platform",
   "description": "Simple spell checker using libspelling",
-  "panels": ["ui", "preview"],
+  "panels": ["code", "preview"],
   "autorun": true
 }
