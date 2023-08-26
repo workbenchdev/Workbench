@@ -9,18 +9,18 @@ Adw.StatusPage {
   child: Box {
     spacing: 12;
     orientation: vertical;
-
+    halign: center;
+  
     ScrolledWindow scrolled_window {
       height-request: 100;
       width-request: 400;
       has-frame: true;
 
       child: TextView text_view {
-      top-margin: 6;
-      bottom-margin: 6;
-      left-margin: 12;
-      right-margin: 12;
-
+        top-margin: 6;
+        bottom-margin: 6;
+        left-margin: 12;
+        right-margin: 12;
         buffer: GtkSource.Buffer buffer {
           text: "This is incorrent text. \nRight click mistakes to correct them.";
         };
@@ -28,8 +28,8 @@ Adw.StatusPage {
     }
 
     LinkButton {
-      label: _("API Reference");
-      uri: "https://chergert.pages.gitlab.gnome.org/libspelling/libspelling-1/class.Checker.html";
+      label: _("Documentation");
+      uri: "https://chergert.pages.gitlab.gnome.org/libspelling/libspelling-1/";
     }
   };
 }

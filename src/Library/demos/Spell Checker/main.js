@@ -17,3 +17,4 @@ text_view.set_extra_menu(extra_menu);
 text_view.insert_action_group("spelling", adapter);
 
 adapter.set_enabled(true);
+
