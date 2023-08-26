@@ -1,0 +1,6 @@
+{
+  "category": "platform",
+  "description": "Select folders using a file dialog",
+  "panels": ["ui", "preview"],
+  "autorun": true
+}

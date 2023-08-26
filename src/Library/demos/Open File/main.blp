@@ -1,0 +1,32 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: _("Open File");
+  description: _("Open a file using a file dialog");
+
+  Box {
+    orientation: vertical;
+    spacing: 24;
+
+    Button single_button {
+      halign: center;
+      label: _("Open a file");
+      styles ["pill", "suggested-action"]
+    }
+
+     Button mutliple_button {
+      halign: center;
+      label: _("Open multiple files");
+      styles ["pill", "suggested-action"]
+    }
+
+    LinkButton {
+      label: _("API Reference");
+      uri: "https://docs.gtk.org/gtk4/class.FileDialog.html";
+    }
+  }
+}
+
+
+
