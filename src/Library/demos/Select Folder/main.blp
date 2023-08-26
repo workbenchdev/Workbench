@@ -1,0 +1,33 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: _("Select Folder");
+  description: _("Select folders using a file dialog");
+
+  Box {
+    orientation: vertical;
+    spacing: 24;
+
+    Button single_button {
+      halign: center;
+      label: _("Select a folder");
+      styles ["pill", "suggested-action"]
+    }
+
+     Button mutliple_button {
+      halign: center;
+      label: _("Select multiple folders");
+      styles ["pill", "suggested-action"]
+    }
+
+
+    LinkButton {
+      label: _("API Reference");
+      uri: "https://docs.gtk.org/gtk4/class.FileDialog.html";
+    }
+  }
+}
+
+
+
