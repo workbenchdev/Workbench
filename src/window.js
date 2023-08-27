@@ -223,6 +223,8 @@ export default function Window({ application, session }) {
       "--quiet",
       "--emit",
       "stdout",
+      "--edition",
+      "2021",
     ]);
 
     const [success, stdout, stderr] = rustfmtProcess.communicate_utf8(
