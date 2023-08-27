@@ -289,10 +289,9 @@ function getChildren(index, dir) {
         const newSubsection = {};
         for (const subsection in subsection_types)
           newSubsection[subsection] = newListStore();
-
         subsections[symbol.type_name] = newSubsection;
-        location = subsections[symbol.type_name][symbol.type];
       }
+      location = subsections[symbol.type_name][symbol.type];
     }
     if (location)
       location.append(
