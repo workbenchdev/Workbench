@@ -9,7 +9,7 @@ pub fn main() {
     button.connect_clicked(|_| {
         MainContext::default().spawn_local(async {
             if let Err(err) = send_email().await {
-                eprintln!("{err}")
+                eprintln!("Could not send email: {err}")
             }
         });
     });
