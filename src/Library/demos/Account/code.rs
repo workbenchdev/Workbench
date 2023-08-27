@@ -11,7 +11,7 @@ pub fn main() {
     button.connect_clicked(|_| {
         MainContext::default().spawn_local(async {
             if let Err(err) = request_user_information().await {
-                eprintln!("{err}")
+                eprintln!("Could not request user information: {err}")
             }
         });
     });
