@@ -9,7 +9,7 @@ pub fn main() {
     button.connect_clicked(|_| {
         MainContext::default().spawn_local(async {
             if let Err(err) = pick_color().await {
-                eprintln!("{err}")
+                eprintln!("Could not pick color: {err}")
             }
         });
     });
