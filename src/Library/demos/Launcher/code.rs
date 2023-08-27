@@ -12,7 +12,7 @@ pub fn main() {
     file_launcher.set_always_ask(true);
 
     let launch_file: gtk::Button = workbench::builder().object("launch_file").unwrap();
-    launch_file.connect_clicked(clone!(@weak file_launcher => move |_| {
+    launch_file.connect_clicked(clone!(@strong file_launcher => move |_| {
         file_launcher.launch(Some(workbench::window()), gio::Cancellable::NONE, |_| ())
     }));
 
@@ -31,7 +31,7 @@ pub fn main() {
     });
 
     let file_location: gtk::Button = workbench::builder().object("file_location").unwrap();
-    file_location.connect_clicked(clone!(@strong file_launcher => move |_| {
+    file_location.connect_clicked(clone!(@weak file_launcher => move |_| {
         file_launcher.open_containing_folder(
             Some(workbench::window()),
             gio::Cancellable::NONE,
