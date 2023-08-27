@@ -63,8 +63,6 @@ uri_launch.connect("clicked", () => {
 uri_details.connect("changed", () => {
   const text = uri_details.text;
 
-  uri_launcher.set_uri(text);
-
   try {
     uri_launch.sensitive = GLib.Uri.is_valid(text, GLib.UriFlags.NONE);
   } catch {
