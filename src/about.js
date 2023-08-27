@@ -74,6 +74,7 @@ ${getBlueprintVersion()}
     "Diego Iván M.E https://github.com/Diego-Ivan",
     "Rasmus Thomsen <oss@cogitri.dev>",
     "Marvin W https://github.com/mar-v-in",
+    "Saad Khan https://github.com/saadulkh",
     // Add yourself as
     // "John Doe",
     // or
@@ -94,4 +95,3 @@ function getValaVersion() {
 function getBlueprintVersion() {
   return "Blueprint 0.10.0";
 }
-
