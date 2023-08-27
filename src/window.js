@@ -215,7 +215,7 @@ export default function Window({ application, session }) {
 
   function formatRustCode(text) {
     const rustfmtLauncher = Gio.SubprocessLauncher.new(
-      Gio.SubprocessFlags.STDIN_PIPE | Gio.SubprocessFlags.STDOUT_PIPE,
+      Gio.SubprocessFlags.STDIN_PIPE | Gio.SubprocessFlags.STDOUT_PIPE | G_SUBPROCESS_FLAGS_STDERR_PIPE,
     );
 
     const rustfmtProcess = rustfmtLauncher.spawnv([
@@ -232,7 +232,7 @@ export default function Window({ application, session }) {
       null,
     );
 
-    if (!success) {
+    if (!success || stderr !== "") {
       logError(`Error running rustfmt: ${stderr}`);
       return text; // Return the original text if formatting fails
     }
