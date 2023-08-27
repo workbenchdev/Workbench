@@ -1,10 +1,28 @@
 import GObject from "gi://GObject";
+import Gdk from "gi://Gdk";
 import Gtk from "gi://Gtk";
 
 const button = workbench.builder.get_object("custom_button");
 
 const clicker = new Gtk.GestureClick();
-clicker.connect("released", () => {
+clicker.connect("released", () => toggleButton(button));
+button.add_controller(clicker);
+
+const key_controller = new Gtk.EventControllerKey();
+key_controller.connect("key-released", (controller, keyval) => {
+  const keyvals = [
+    Gdk.KEY_space,
+    Gdk.KEY_KP_Space,
+    Gdk.KEY_Return,
+    Gdk.KEY_ISO_Enter,
+    Gdk.KEY_KP_Enter,
+  ];
+
+  if (keyvals.includes(keyval)) toggleButton(button);
+});
+button.add_controller(key_controller);
+
+function toggleButton(button) {
   let checked = (button.get_state_flags() & Gtk.StateFlags.CHECKED) !== 0;
   let pressed = Gtk.AccessibleTristate.FALSE;
 
@@ -29,6 +47,5 @@ clicker.connect("released", () => {
 
   // Grab the focus
   button.grab_focus();
-});
+}
 
-button.add_controller(clicker);
