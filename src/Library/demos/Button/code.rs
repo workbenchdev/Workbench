@@ -2,7 +2,7 @@ use crate::workbench;
 use adw::prelude::*;
 
 pub fn main() {
-    let button_ids: Vec<&str> = vec![
+    let button_ids = Vec::from([
         "regular",
         "flat",
         "suggested",
@@ -14,16 +14,16 @@ pub fn main() {
         "pill",
         "osd-left",
         "osd-right",
-    ];
+    ]);
 
     for id in button_ids {
         let button: gtk::Button = workbench::builder()
             .object(id)
-            .expect("Button need to be present.");
-        button.connect_clicked(|button| on_button_clicked(button));
+            .unwrap();
+        button.connect_clicked(on_button_clicked);
     }
 }
 
 fn on_button_clicked(button: &gtk::Button) {
-    println!("{} clicked", button.label().unwrap())
+    println!("{} clicked", button.widget_name())
 }
