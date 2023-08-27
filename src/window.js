@@ -215,7 +215,7 @@ export default function Window({ application, session }) {
 
   function formatRustCode(text) {
     const rustfmtLauncher = Gio.SubprocessLauncher.new(
-      Gio.SubprocessFlags.STDIN_PIPE | Gio.SubprocessFlags.STDOUT_PIPE | G_SUBPROCESS_FLAGS_STDERR_PIPE,
+      Gio.SubprocessFlags.STDIN_PIPE | Gio.SubprocessFlags.STDOUT_PIPE | Gio.SubprocessFlags.STDERR_PIPE,
     );
 
     const rustfmtProcess = rustfmtLauncher.spawnv([
