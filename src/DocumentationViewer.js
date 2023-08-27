@@ -17,6 +17,13 @@ const DocumentationPage = GObject.registerClass(
         GObject.ParamFlags.READWRITE,
         "",
       ),
+      search_name: GObject.ParamSpec.string(
+        "search_name",
+        "search_name",
+        "Name used to search the item in sidebar",
+        GObject.ParamFlags.READWRITE,
+        "",
+      ),
       uri: GObject.ParamSpec.string(
         "uri",
         "uri",
@@ -41,9 +48,14 @@ export default function DocumentationViewer({ application }) {
 
   const window = builder.get_object("documentation_viewer");
   const webview = builder.get_object("webview");
-  const list_view = builder.get_object("list_view");
   const button_back = builder.get_object("button_back");
   const button_forward = builder.get_object("button_forward");
+  const stack = builder.get_object("stack");
+  const browse_list_view = builder.get_object("browse_list_view");
+  const search_list_view = builder.get_object("search_list_view");
+  const browse_page = builder.get_object("browse_page");
+  const search_page = builder.get_object("search_page");
+  const search_entry = builder.get_object("search_entry");
 
   const base_path = Gio.File.new_for_path("/app/share/doc");
 
@@ -58,7 +70,7 @@ export default function DocumentationViewer({ application }) {
   );
   user_content_manager.add_style_sheet(stylesheet);
 
-  webview.connect("load-changed", (self, load_event) => {
+  webview.connect("load-changed", () => {
     updateButtons();
   });
 
@@ -79,89 +91,182 @@ export default function DocumentationViewer({ application }) {
     webview.go_forward();
   });
 
-  getNamespaces(base_path, [
+  const expr = new Gtk.ClosureExpression(
+    GObject.TYPE_STRING,
+    (item) => item.search_name,
+    null,
+  );
+  const filter = new Gtk.StringFilter({
+    expression: expr,
+    match_mode: Gtk.StringFilterMatchMode.SUBSTRING,
+  });
+
+  search_entry.connect("search-changed", () => {
+    if (search_entry.text) {
+      stack.visible_child = search_page;
+      filter.search = search_entry.text;
+    } else {
+      stack.visible_child = browse_page;
+    }
+  });
+
+  let promise_load;
+  const filter_docs = [
     "atk",
     "javascriptcoregtk-4.1",
     "libhandy-1",
     "libnotify-0",
     "webkit2gtk-4.1",
     "webkit2gtk-web-extension-4.1",
-  ])
-    .then((docs) => {
-      const root = newListStore();
-      for (const doc of docs) {
-        const dir_path = base_path.resolve_relative_path(doc.dir);
-        getChildren(dir_path).then((model) => {
-          root.append(
-            new DocumentationPage({
-              name: doc.title,
-              uri: doc.uri,
-              children: model,
-            }),
+  ];
+  async function open() {
+    if (!promise_load)
+      promise_load = getDirs(base_path, filter_docs)
+        .then((dirs) => createIndex(base_path, dirs))
+        .then((indexes) => {
+          browse_list_view.model = createBrowseListModel(
+            base_path,
+            indexes,
+            webview,
+          );
+          search_list_view.model = createSearchListModel(
+            base_path,
+            indexes,
+            webview,
+            filter,
           );
         });
-      }
-      return root;
-    })
-    .then((root) => {
-      const tree_model = Gtk.TreeListModel.new(
-        root,
-        false,
-        false,
-        (item) => item.children,
-      );
-      const sorter = Gtk.TreeListRowSorter.new(
-        Gtk.CustomSorter.new((a, b) => {
-          const name1 = a.name;
-          const name2 = b.name;
-          return name1.localeCompare(name2);
-        }),
-      );
-      const sort_model = Gtk.SortListModel.new(tree_model, sorter);
-      const selection_model = new Gtk.SingleSelection({ model: sort_model });
-      selection_model.connect("notify::selected", () => {
-        const uri = selection_model.selected_item.item.uri;
-        if (uri) webview.load_uri(uri);
-      });
-      list_view.model = selection_model;
-    })
-    .catch(logError);
+    await promise_load;
+    window.present();
+  }
 
   const action_documentation = new Gio.SimpleAction({
     name: "documentation",
     parameter_type: null,
   });
   action_documentation.connect("activate", () => {
-    window.present();
+    open();
   });
   application.add_action(action_documentation);
 }
 
-async function getChildren(dir) {
-  const docs = await list(dir);
-  return createSections(docs, dir);
+function createSearchListModel(base_path, indexes, webview, filter) {
+  const model = newListStore();
+  for (let i = 0; i < indexes.length; i++) {
+    const index = indexes[i];
+    const dir = base_path.get_child(index.dir);
+    const meta = index.meta;
+    const namespace = `${meta.ns}-${meta.version}`;
+    model.append(
+      new DocumentationPage({
+        uri: dir.get_child("index.html").get_uri(),
+        search_name: namespace,
+      }),
+    );
+    for (const symbol of index.symbols) {
+      model.append(
+        new DocumentationPage({
+          search_name: getSearchNameForDocument(symbol, meta),
+          uri: `${dir.get_uri()}/${getLinkForDocument(symbol)}`,
+        }),
+      );
+    }
+  }
+  return createSearchSelectionModel(model, filter, webview);
 }
 
-function createSections(docs, dir) {
-  const index_html = dir.get_child("index.html").get_uri();
+function createSearchSelectionModel(model, filter, webview) {
+  const filter_model = Gtk.FilterListModel.new(model, filter);
+  const sorter = Gtk.StringSorter.new(filter.expression);
+  const sort_model = Gtk.SortListModel.new(filter_model, sorter);
+  const selection_model = Gtk.SingleSelection.new(sort_model);
 
-  const section_name_uri = {
+  selection_model.connect("selection-changed", () => {
+    const uri = selection_model.selected_item.uri;
+    webview.load_uri(uri);
+  });
+  return selection_model;
+}
+
+function createBrowseListModel(base_path, indexes, webview) {
+  const model = newListStore();
+  for (let i = 0; i < indexes.length; i++) {
+    const index = indexes[i];
+    const dir = base_path.get_child(index.dir);
+    const namespace = `${index.meta.ns}-${index.meta.version}`;
+    model.append(
+      new DocumentationPage({
+        name: namespace,
+        uri: dir.get_child("index.html").get_uri(),
+        children: getChildren(index, dir),
+      }),
+    );
+  }
+  return createBrowseSelectionModel(model, webview);
+}
+
+async function createIndex(base_path, dirs) {
+  const indexes = [];
+  for (const dir of dirs) {
+    indexes.push(readIndexJSON(base_path, dir));
+  }
+  const results = await Promise.allSettled(indexes);
+  const fullfiled = results.filter((result) => result.status === "fulfilled");
+  const values = [];
+  fullfiled.forEach((result) => values.push(result.value));
+  return values;
+}
+
+async function getDirs(base_path, filter_docs) {
+  const dirs = await list(base_path);
+  const filtered = dirs.filter((dir) => !filter_docs.includes(dir));
+  return filtered;
+}
+
+function createBrowseSelectionModel(root_model, webview) {
+  const tree_model = Gtk.TreeListModel.new(
+    root_model,
+    false,
+    false,
+    (item) => item.children,
+  );
+  const sorter = Gtk.TreeListRowSorter.new(
+    Gtk.CustomSorter.new((a, b) => {
+      const name1 = a.name;
+      const name2 = b.name;
+      return name1.localeCompare(name2);
+    }),
+  );
+  const sort_model = Gtk.SortListModel.new(tree_model, sorter);
+  const selection_model = Gtk.SingleSelection.new(sort_model);
+
+  selection_model.connect("selection-changed", () => {
+    const uri = selection_model.selected_item.item.uri;
+    webview.load_uri(uri);
+  });
+  selection_model.selected = 12;
+  return selection_model;
+}
+
+function getChildren(index, dir) {
+  const index_html = dir.get_child("index.html").get_uri();
+  const symbols = index.symbols;
+
+  const section_types = {
     class: ["Classes", "#classes"],
-    iface: ["Interfaces", "#interfaces"],
-    struct: ["Structs", "#structs"],
+    content: ["Addition Documentation", "#extra"],
+    interface: ["Interfaces", "#interfaces"],
+    record: ["Structs", "#structs"],
     alias: ["Aliases", "#aliases"],
     enum: ["Enumerations", "#enums"],
-    flags: ["Bitfields", "#bitfields"],
-    func: ["Functions", "#functions"],
-    error: ["Error Domains", "#domains"],
+    bitfield: ["Bitfields", "#bitfields"],
+    function: ["Functions", "#functions"],
+    function_macro: ["Function Macros", "function_macros"],
+    domain: ["Error Domains", "#domains"],
     callback: ["Callbacks", "#callbacks"],
-    const: ["Constants", "#constants"],
+    constant: ["Constants", "#constants"],
   };
-
-  const sections = {};
-  for (const section in section_name_uri) sections[section] = newListStore();
-
-  const subsection_name_uri = {
+  const subsection_types = {
     ctor: ["Constructors", "#constructors"],
     type_func: ["Functions", "#type-functions"],
     method: ["Instance Methods", "#methods"],
@@ -171,61 +276,41 @@ function createSections(docs, dir) {
     vfunc: ["Virtual Methods", "#virtual-methods"],
   };
 
+  const sections = {};
   const subsections = {};
-  // List of sections that need subsections
-  const subsections_required = ["class", "iface", "struct", "error"];
 
-  for (const doc of docs) {
-    const split_name = doc.split(".");
-    // If file is of the form xx.xx.html for example class.Button.html
-    if (split_name.length === 3 && sections[split_name[0]]) {
-      const doc_page = new DocumentationPage({
-        name: split_name[1],
-        uri: dir.get_child(doc).get_uri(),
-        // children is set to a non-null value later if it needs subsections
-        children: null,
-      });
+  for (const section in section_types) sections[section] = newListStore();
 
-      // If an item needs a subsection, then create empty "buckets" for it
-      if (subsections_required.includes(split_name[0])) {
-        const subsection = {};
-        for (const sub in subsection_name_uri) subsection[sub] = newListStore();
-        subsections[split_name[1]] = subsection;
+  for (const symbol of symbols) {
+    let location;
+    if (sections[symbol.type]) location = sections[symbol.type];
+    else if (symbol.type_name) {
+      if (!subsections[symbol.type_name]) {
+        const newSubsection = {};
+        for (const subsection in subsection_types)
+          newSubsection[subsection] = newListStore();
+        subsections[symbol.type_name] = newSubsection;
       }
-      // Add file into the corresponding section it belongs to
-      sections[split_name[0]].append(doc_page);
+      location = subsections[symbol.type_name][symbol.type];
     }
+    if (location)
+      location.append(
+        new DocumentationPage({
+          name: symbol.name,
+          uri: `${dir.get_uri()}/${getLinkForDocument(symbol)}`,
+        }),
+      );
   }
 
-  for (const doc of docs) {
-    const split_name = doc.split(".");
-    // File is of the form xx.xx.xx.html for example ctor.Button.new.html
-    if (split_name.length === 4 && subsections[split_name[1]]) {
-      const doc_page = new DocumentationPage({
-        name: split_name[2],
-        uri: dir.get_child(doc).get_uri(),
-        children: null,
-      });
-      // Add file to the subsection it belongs to
-      subsections[split_name[1]][split_name[0]].append(doc_page);
-    }
-  }
-  // Sets the children for items that need subsections
-  createSubsections(
-    subsections,
-    subsections_required,
-    subsection_name_uri,
-    sections,
-  );
+  createSubsections(subsections, subsection_types, sections);
 
   const sections_model = newListStore();
   for (const section in sections) {
-    // If the ListStore is empty then dont create a section for it
     if (sections[section].get_n_items() > 0)
       sections_model.append(
         new DocumentationPage({
-          name: section_name_uri[section][0],
-          uri: `${index_html}${section_name_uri[section][1]}`,
+          name: section_types[section][0],
+          uri: `${index_html}${section_types[section][1]}`,
           children: sections[section],
         }),
       );
@@ -233,23 +318,19 @@ function createSections(docs, dir) {
   return sections_model;
 }
 
-function createSubsections(
-  subsections,
-  subsections_required,
-  subsection_name_uri,
-  sections,
-) {
-  for (const type of subsections_required) {
+function createSubsections(subsections, subsection_types, sections) {
+  // Create subsections (Constructors, Methods, Signals....) for sections in "required"
+  const required = ["class", "interface", "record", "domain"];
+  for (const type of required) {
     for (const item of sections[type]) {
       const model = newListStore();
       const name = item.name;
       for (const subsection in subsections[name]) {
-        // If the ListStore is empty then dont create a subsection for it
         if (subsections[name][subsection].get_n_items() > 0)
           model.append(
             new DocumentationPage({
-              name: subsection_name_uri[subsection][0],
-              uri: `${item.uri}${subsection_name_uri[subsection][1]}`,
+              name: subsection_types[subsection][0],
+              uri: `${item.uri}${subsection_types[subsection][1]}`,
               children: subsections[name][subsection],
             }),
           );
@@ -263,45 +344,90 @@ function newListStore() {
   return Gio.ListStore.new(DocumentationPage);
 }
 
-async function getNamespaces(base_path, filter_docs) {
-  const namespaces = [];
-  const dirs = await list(base_path);
-  const filtered = dirs.filter((dir) => !filter_docs.includes(dir));
+function getSearchNameForDocument(doc, meta) {
+  switch (doc.type) {
+    case "alias":
+    case "bitfield":
+    case "callback":
+    case "class":
+    case "domain":
+    case "enum":
+    case "interface":
+    case "record":
+      return doc.ctype;
 
-  for (const dir of filtered) {
-    const results = await Promise.allSettled([
-      getNamespaceFromIndexJSON(base_path, dir),
-      getNamespaceFromIndexHTML(base_path, dir),
-    ]);
+    case "class_method":
+    case "constant":
+    case "ctor":
+    case "function":
+    case "function_macro":
+    case "method":
+    case "type_func":
+      return doc.ident;
 
-    const fulfilled = results.find((result) => result.status === "fulfilled");
-    if (!fulfilled) continue;
+    case "property":
+      return `${meta.ns}${doc.type_name}:${doc.name}`;
+    case "signal":
+      return `${meta.ns}${doc.type_name}::${doc.name}`;
+    case "vfunc":
+      return `${meta.ns}${doc.type_name}.${doc.name}`;
 
-    const title = fulfilled.value;
-    const uri = base_path.get_child(dir).get_child("index.html").get_uri();
-    namespaces.push({
-      title,
-      uri,
-      dir,
-    });
+    case "content":
+      return doc.name;
   }
-
-  return namespaces;
 }
 
-async function getNamespaceFromIndexJSON(base_path, dir) {
+function getLinkForDocument(doc) {
+  switch (doc.type) {
+    case "alias":
+      return `alias.${doc.name}.html`;
+    case "bitfield":
+      return `flags.${doc.name}.html`;
+    case "callback":
+      return `callback.${doc.name}.html`;
+    case "class":
+      return `class.${doc.name}.html`;
+    case "class_method":
+      return `class_method.${doc.struct_for}.${doc.name}.html`;
+    case "constant":
+      return `const.${doc.name}.html`;
+    case "content":
+      return doc.href;
+    case "ctor":
+      return `ctor.${doc.type_name}.${doc.name}.html`;
+    case "domain":
+      return `error.${doc.name}.html`;
+    case "enum":
+      return `enum.${doc.name}.html`;
+    case "function":
+      return `func.${doc.name}.html`;
+    case "function_macro":
+      return `func.${doc.name}.html`;
+    case "interface":
+      return `iface.${doc.name}.html`;
+    case "method":
+      return `method.${doc.type_name}.${doc.name}.html`;
+    case "property":
+      return `property.${doc.type_name}.${doc.name}.html`;
+    case "record":
+      return `struct.${doc.name}.html`;
+    case "signal":
+      return `signal.${doc.type_name}.${doc.name}.html`;
+    case "type_func":
+      return `type_func.${doc.type_name}.${doc.name}.html`;
+    case "union":
+      return `union.${doc.name}.html`;
+    case "vfunc":
+      return `vfunc.${doc.type_name}.${doc.name}.html`;
+  }
+}
+
+async function readIndexJSON(base_path, dir) {
+  // Reads index.json in the given dir
   const file = base_path.get_child(dir).get_child("index.json");
   const [data] = await file.load_contents_async(null);
   const json = JSON.parse(decode(data));
-  return `${json["meta"]["ns"]}-${json["meta"]["version"]}`;
-}
-
-async function getNamespaceFromIndexHTML(base_path, dir) {
-  const file = base_path.get_child(dir).get_child("api-index-full.html");
-  const [data] = await file.load_contents_async(null);
-  const html = decode(data);
-  const pattern = /<title>Index: ([^<]+)/;
-  return html.match(pattern)[1];
+  return { dir, ...json };
 }
 
 async function list(dir) {
