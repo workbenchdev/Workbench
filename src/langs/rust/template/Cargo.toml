@@ -8,6 +8,8 @@ edition = "2021"
 [dependencies]
 ashpd = "0.6.2"
 libc = "0.2"
+url = "2.4.0"
+
 
 [dependencies.gtk]
 version = "0.7"
