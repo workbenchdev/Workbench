@@ -18,10 +18,10 @@ Adw.StatusPage {
         Adw.ActionRow {
           title: _("Enable the Screen Reader");
           accessibility {
-            described-by: sr_shortcut;
+            described-by: orca_shortcut;
           }
 
-          [suffix] ShortcutLabel sr_shortcut {
+          [suffix] ShortcutLabel orca_shortcut {
             accelerator: "<Super><Alt>s";
             valign: center;
           }
@@ -91,28 +91,33 @@ Adw.StatusPage {
           }
         }
 
-        Box {
+        Box custom_box {
           orientation: vertical;
+          spacing: 18;
           styles ["card"]
 
-          ToggleButton revealer_button {
-            label: _("Danger, Will Robinson!");
+          Adw.Bin custom_button {
+            css-name: "button";
+            focusable: true;
+            focus-on-click: true;
             halign: center;
             margin-top: 18;
+            accessible-role: toggle_button;
             accessibility {
-              controls: revealer;
-              description: _("Toggle to open revealer");
+              labelled-by: custom_button_label;
             }
-            styles ["destructive-action", "pill"]
+            styles ["toggle", "pill"]
+
+            Label custom_button_label {
+              label: _("Custom Button");
+            }
           }
 
-          Revealer revealer {
-            height-request: 48;
-            reveal-child: bind revealer_button.active;
-            child: Label {
-              selectable: true;
-              label: "🤖";
-            };
+          ToggleButton standard_button {
+            halign: center;
+            label: _("Standard Button");
+            margin-bottom: 18;
+            styles ["pill"]
           }
         }
       }
