@@ -1,5 +1,6 @@
 use crate::workbench;
 use ashpd::desktop::email::EmailRequest;
+use ashpd::WindowIdentifier;
 use glib::MainContext;
 use gtk::glib;
 use gtk::prelude::*;
@@ -17,7 +18,9 @@ pub fn main() {
 
 async fn send_email() -> ashpd::Result<()> {
     let entry: gtk::Entry = workbench::builder().object("entry").unwrap();
+    let identifier = WindowIdentifier::from_native(&workbench::window().native().unwrap()).await;
     let request = EmailRequest::default()
+        .identifier(identifier)
         .address(entry.text().as_str())
         .subject("Email from Workbench")
         .body("Hello World!")
@@ -28,7 +31,7 @@ async fn send_email() -> ashpd::Result<()> {
         eprintln!("Could not send email: {err}.");
     } else {
         println!("Success");
-    })
+    }
     Ok(())
 }
 
