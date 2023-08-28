@@ -60,12 +60,12 @@ pub fn main() {
         );
     }));
 
-    uri_details.connect_changed(clone!(@weak uri_launch => move |uri_details| {
+    uri_details.connect_changed(move |uri_details| {
         if glib::Uri::is_valid(uri_details.text().as_str(), glib::UriFlags::NONE).is_ok() {
             uri_launch.set_sensitive(true);
         } else {
             uri_launch.set_sensitive(false);
         }
-    }));
+    });
 }
 
