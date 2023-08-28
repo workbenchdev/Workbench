@@ -26,10 +26,10 @@ async fn set_wallpaper() -> Result<(), Box<dyn Error>> {
         .build_uri(&uri)
         .await?;
 
-    if request.response().is_ok() {
-        println!("Success");
+    if let Err(err) = request.response() {
+        eprintln!("Could not set wallpaper: {err}.");
     } else {
-        eprintln!("Could not set wallpaper.");
+        println!("Success");
     }
     Ok(())
 }

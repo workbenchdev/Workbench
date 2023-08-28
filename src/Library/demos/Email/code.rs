@@ -24,11 +24,11 @@ async fn send_email() -> ashpd::Result<()> {
         .send()
         .await?;
 
-    if request.response().is_ok() {
-        println!("Success");
+    if let Err(err) = request.response() {
+        eprintln!("Could not send email: {err}.");
     } else {
-        eprintln!("Failure, verify that you have an email application.");
-    }
+        println!("Success");
+    })
     Ok(())
 }
 
