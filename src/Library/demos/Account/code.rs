@@ -2,6 +2,7 @@ use std::error::Error;
 
 use crate::workbench;
 use ashpd::desktop::account::UserInformation;
+use ashpd::WindowIdentifier;
 use glib::MainContext;
 use gtk::prelude::*;
 use gtk::{gdk, gio, glib};
@@ -19,9 +20,11 @@ pub fn main() {
 
 async fn request_user_information() -> Result<(), Box<dyn Error>> {
     let entry: adw::EntryRow = workbench::builder().object("entry").unwrap();
+    let identifier = WindowIdentifier::from_native(&entry.native().unwrap()).await;
 
     let response = UserInformation::request()
         .reason(entry.text().as_str())
+        .identifier(identifier)
         .send()
         .await?
         .response()?;

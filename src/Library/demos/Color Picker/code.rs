@@ -1,5 +1,6 @@
 use crate::workbench;
 use ashpd::desktop::screenshot::Color;
+use ashpd::WindowIdentifier;
 use glib::MainContext;
 use gtk::prelude::*;
 use gtk::{gdk, glib};
@@ -16,15 +17,13 @@ pub fn main() {
 }
 
 async fn pick_color() -> ashpd::Result<()> {
-    let color = Color::request().send().await?.response()?;
-
-    let color = gdk::RGBA::new(
-        color.red() as f32,
-        color.green() as f32,
-        color.blue() as f32,
-        1.0,
-    );
+    let identifier = WindowIdentifier::from_native(&workbench::window().native().unwrap()).await;
+    let result = Color::request()
+        .identifier(identifier)
+        .send()
+        .await?
+        .response()?;
+    let color = gdk::RGBA::from(result);
     println!("Selected color is {color}");
     Ok(())
 }
-
