@@ -13,14 +13,14 @@ pub fn main() {
         .unwrap();
 
     banner.connect_button_clicked(move |banner| {
-        alert(banner, &overlay);
+        alert(&overlay);
         banner.set_revealed(false);
     });
 
     button_show_banner.connect_clicked(move |_| banner.set_revealed(true));
 }
 
-pub fn alert(_banner: &adw::Banner, overlay: &adw::ToastOverlay) {
+fn alert(overlay: &adw::ToastOverlay) {
     let toast = adw::Toast::builder()
         .title("Troubleshoot successful!")
         .timeout(3)
