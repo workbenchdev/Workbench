@@ -6,7 +6,6 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-ashpd = "0.6.2"
 libc = "0.2"
 url = "2.4.0"
 
@@ -20,6 +19,10 @@ features = ["gnome_45"]
 version = "0.5"
 package = "libadwaita"
 features = ["v1_4", "gtk_v4_10"]
+
+[dependencies.ashpd]
+version = "0.6.2"
+features = ["gtk4"]
 
 [lib]
 crate-type = ["cdylib"]
