@@ -52,7 +52,7 @@ pub fn main() {
     let uri_launch: gtk::Button = workbench::builder().object("uri_launch").unwrap();
     let uri_details: gtk::Entry = workbench::builder().object("uri_details").unwrap();
 
-    uri_launch.connect_clicked(clone!(@strong uri_details => move |_| {
+    uri_launch.connect_clicked(clone!(@weak uri_details => move |_| {
         gtk::UriLauncher::new(uri_details.text().as_str()).launch(
             Some(crate::workbench::window()),
             gio::Cancellable::NONE,
@@ -60,7 +60,7 @@ pub fn main() {
         );
     }));
 
-    uri_details.connect_changed(clone!(@strong uri_launch => move |uri_details| {
+    uri_details.connect_changed(clone!(@weak uri_launch => move |uri_details| {
         if glib::Uri::is_valid(uri_details.text().as_str(), glib::UriFlags::NONE).is_ok() {
             uri_launch.set_sensitive(true);
         } else {
