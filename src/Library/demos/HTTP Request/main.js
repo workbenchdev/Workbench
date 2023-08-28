@@ -16,7 +16,7 @@ async function fetchFeaturedArticle() {
     const month = String(date.getMonth() + 1).padStart(2, "0");
     const day = String(date.getDate()).padStart(2, "0");
 
-    //Make request
+    // Make request
     const url = `https://api.wikimedia.org/feed/v1/wikipedia/en/featured/${year}/${month}/${day}`;
     const message = Soup.Message.new("GET", url);
 
