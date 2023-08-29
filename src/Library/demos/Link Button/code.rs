@@ -9,7 +9,8 @@ pub fn main() {
 
     linkbutton.connect_activate_link(|button| {
         println!("About to activate {}", button.uri());
-
+        // Return true if handling the link manually, or
+        // false to let the default behavior continue
         false.into()
     });
 }
