@@ -26,4 +26,3 @@ function decrease() {
 
 button_increase.connect("clicked", increase);
 button_decrease.connect("clicked", decrease);
-

@@ -7,4 +7,3 @@ const path = Gio.File.new_for_uri(
 workbench.builder.get_object("icon1").file = path;
 workbench.builder.get_object("icon2").file = path;
 workbench.builder.get_object("icon3").file = path;
-
