@@ -1,3 +1,4 @@
+#[rustfmt::skip]
 mod code;
 pub(crate) mod workbench;
 

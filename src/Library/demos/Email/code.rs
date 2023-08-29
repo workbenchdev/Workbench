@@ -34,4 +34,3 @@ async fn send_email() -> ashpd::Result<()> {
     }
     Ok(())
 }
-
