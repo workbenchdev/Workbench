@@ -5,14 +5,25 @@ on:
     branches: [main]
 
 jobs:
-  test:
+  CI:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
           submodules: "recursive"
+
       - uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: "npm"
+
+      - uses: awalsh128/cache-apt-pkgs-action@latest
+        with:
+          packages: flatpak
+          version: 1.0
+
+      # See also https://github.com/flatpak/flatpak-github-actions
+      - run: flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+      - run: flatpak remote-add --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
+      - run: flatpak install org.gnome.Platform//45beta org.flatpak.Builder
       - run: make ci
