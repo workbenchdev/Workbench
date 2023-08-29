@@ -8,7 +8,7 @@ pub fn main() {
         println!("Breakpoint Applied");
     });
 
-    breakpoint.connect_unapply(|breakpoint| {
+    breakpoint.connect_unapply(|_| {
         println!("Breakpoint Unapplied");
     });
 }
