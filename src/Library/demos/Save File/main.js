@@ -17,4 +17,3 @@ async function saveFile() {
 button.connect("clicked", () => {
   saveFile().catch(logError);
 });
-

@@ -95,4 +95,3 @@ async function startScreencastSession() {
     pipeline.set_state(Gst.State.NULL);
   });
 }
-

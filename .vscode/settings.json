@@ -26,7 +26,8 @@
   "mesonbuild.mesonPath": "${workspaceFolder}/.flatpak/meson.sh",
   "rust-analyzer.server.path": "${workspaceFolder}/.flatpak/rust-analyzer.sh",
   "rust-analyzer.runnables.command": "${workspaceFolder}/.flatpak/cargo.sh",
-  "rust-analyzer.files.excludeDirs": [
-    ".flatpak"
-  ]
+  "rust-analyzer.files.excludeDirs": [".flatpak"],
+  "[yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }

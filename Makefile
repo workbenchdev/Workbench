@@ -1,10 +1,13 @@
 
 .PHONY: lint test
 
+install:
+	npm install
+
 lint:
 	./node_modules/.bin/rome ci .
 
-test: lint
+test:
 	./troll/tst/bin.js test/*.test.js
 # https://github.com/ximion/appstream/issues/398#issuecomment-1129454985
 # flatpak run org.freedesktop.appstream.cli validate --override=release-time-missing=info --no-net data/app.metainfo.xml
@@ -15,6 +18,10 @@ test: lint
 	flatpak-builder --show-manifest re.sonny.Workbench.Devel.json > /dev/null
 	find po/ -type f -name "*po" -print0 | xargs -0 -n1 msgfmt -o /dev/null --check
 	flatpak run --command=flatpak-builder-lint org.flatpak.Builder --exceptions re.sonny.Workbench.json
-	flatpak run org.flathub.flatpak-external-data-checker re.sonny.Workbench.json
+	flatpak run --command=flatpak-builder-lint org.flatpak.Builder --exceptions re.sonny.Workbench.Devel.json
+# flatpak run org.flathub.flatpak-external-data-checker re.sonny.Workbench.json
+# flatpak run org.flathub.flatpak-external-data-checker re.sonny.Workbench.Devel.json
 # as used by Flathub
 # flatpak run --env=G_DEBUG=fatal-criticals --command=appstream-util org.flatpak.Builder validate data/app.metainfo.xml
+
+ci: install lint test
