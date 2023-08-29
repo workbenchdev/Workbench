@@ -2,10 +2,10 @@
 .PHONY: lint test
 
 install:
-	flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 	flatpak remote-add --user --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
-	flatpak install --user --noninteractive flathub-beta org.gnome.Platform//45beta
-	flatpak install --user --noninteractive flathub org.flatpak.Builder
+	flatpak install --user flathub-beta org.gnome.Platform//45beta
+	flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+	flatpak install --user flathub org.flatpak.Builder
 	npm install
 
 lint:

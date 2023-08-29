@@ -23,4 +23,9 @@ jobs:
           packages: flatpak
           version: 1.0
 
+      - name: Cache Flatpak dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.local/share/flatpak
+
       - run: make ci
