@@ -17,9 +17,7 @@ pub fn main() {
     ]);
 
     for id in button_ids {
-        let button: gtk::Button = workbench::builder()
-            .object(id)
-            .unwrap();
+        let button: gtk::Button = workbench::builder().object(id).unwrap();
         button.connect_clicked(on_button_clicked);
     }
 }

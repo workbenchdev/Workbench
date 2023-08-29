@@ -7,18 +7,10 @@ use std::cell::Cell;
 use std::rc::Rc;
 
 pub fn main() {
-    let tab_view: adw::TabView = workbench::builder()
-        .object("tab_view")
-        .unwrap();
-    let button_new_tab: gtk::Button = workbench::builder()
-        .object("button_new_tab")
-        .unwrap();
-    let overview: adw::TabOverview = workbench::builder()
-        .object("overview")
-        .unwrap();
-    let button_overview: gtk::Button = workbench::builder()
-        .object("button_overview")
-        .unwrap();
+    let tab_view: adw::TabView = workbench::builder().object("tab_view").unwrap();
+    let button_new_tab: gtk::Button = workbench::builder().object("button_new_tab").unwrap();
+    let overview: adw::TabOverview = workbench::builder().object("overview").unwrap();
+    let button_overview: gtk::Button = workbench::builder().object("button_overview").unwrap();
     let tab_count = Rc::new(Cell::new(1));
 
     button_new_tab.connect_clicked(clone!(@weak tab_view, @weak tab_count => move |_| {
