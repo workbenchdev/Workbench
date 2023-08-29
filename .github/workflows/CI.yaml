@@ -23,7 +23,8 @@ jobs:
           version: 1.0
 
       # See also https://github.com/flatpak/flatpak-github-actions
-      - run: flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-      - run: flatpak remote-add --user --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
-      - run: flatpak install --user org.gnome.Platform//45beta org.flatpak.Builder
+      - run: flatpak remote-add --user --noninteractive --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+      - run: flatpak remote-add --user --noninteractive --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
+      - run: flatpak install --user --noninteractive flathub-beta org.gnome.Platform//45beta
+      - run: flatpak install --user --noninteractive flathub org.flatpak.Builder
       - run: make ci
