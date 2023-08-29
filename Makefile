@@ -3,9 +3,9 @@
 
 install:
 	flatpak remote-add --user --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
-	flatpak install --user --assumeyes flathub-beta org.gnome.Platform//45beta
+	flatpak install --user --noninteractive flathub-beta org.gnome.Platform//45beta
 	flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-	flatpak install --user --assumeyes flathub org.flatpak.Builder
+	flatpak install --user --noninteractive flathub org.flatpak.Builder
 	npm install
 
 lint:
@@ -19,8 +19,8 @@ test:
 # https://discourse.gnome.org/t/gtk-builder-tool-requires-and-libraries/9222
 # gtk-builder-tool validate src/*.ui
 	find po/ -type f -name "*po" -print0 | xargs -0 -n1 msgfmt -o /dev/null --check
-	flatpak run --command=flatpak-builder-lint org.flatpak.Builder --exceptions re.sonny.Workbench.json
-	flatpak run --command=flatpak-builder-lint org.flatpak.Builder --exceptions re.sonny.Workbench.Devel.json
+	flatpak run --user --command=flatpak-builder-lint org.flatpak.Builder --exceptions re.sonny.Workbench.json
+	flatpak run --user --command=flatpak-builder-lint org.flatpak.Builder --exceptions re.sonny.Workbench.Devel.json
 # flatpak run org.flathub.flatpak-external-data-checker re.sonny.Workbench.json
 # flatpak run org.flathub.flatpak-external-data-checker re.sonny.Workbench.Devel.json
 # as used by Flathub
