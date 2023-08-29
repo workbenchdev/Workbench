@@ -27,6 +27,13 @@ export default [
   },
 
   {
+    input: "node_modules/prettier/plugins/estree.mjs",
+    output: {
+      file: "src/lib/prettier-estree.js",
+    },
+  },
+
+  {
     input: "node_modules/prettier/plugins/postcss.mjs",
     output: {
       file: "src/lib/prettier-postcss.js",

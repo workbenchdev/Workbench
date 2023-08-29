@@ -17,6 +17,7 @@ import Devtools from "./Devtools.js";
 import prettier from "./lib/prettier.js";
 import prettier_babel from "./lib/prettier-babel.js";
 import prettier_postcss from "./lib/prettier-postcss.js";
+import prettier_estree from "./lib/prettier-estree.js";
 import Previewer from "./Previewer/Previewer.js";
 import ValaCompiler from "./langs/vala/Compiler.js";
 import RustCompiler from "./langs/rust/Compiler.js";
@@ -94,6 +95,7 @@ export default function Window({ application, session }) {
     code_view: builder.get_object("code_view_rust"),
     file: file.get_child("code.rs"),
     lang: langs.rust,
+    session,
   });
   langs.rust.document = document_rust;
 
@@ -193,13 +195,13 @@ export default function Window({ application, session }) {
     previewer.openInspector().catch(logError);
   });
 
-  function format(code_view, formatter) {
+  async function format(code_view, formatter) {
     let code;
 
     const { buffer } = code_view;
 
     try {
-      code = formatter(buffer.text.trim());
+      code = await formatter(buffer.text.trim());
     } catch (err) {
       logError(err);
       return;
@@ -242,25 +244,24 @@ export default function Window({ application, session }) {
     return stdout;
   }
 
-  function formatCode() {
+  async function formatCode() {
     if (panel_code.panel.visible) {
       if (panel_code.language === "JavaScript") {
-        format(langs.javascript.document.code_view, (text) => {
+        await format(langs.javascript.document.code_view, (text) => {
           return prettier.format(text, {
             parser: "babel",
-            plugins: [prettier_babel],
-            trailingComma: "all",
+            plugins: [prettier_babel, prettier_estree],
           });
         });
       } else if (panel_code.language === "Rust") {
-        format(langs.rust.document.code_view, (text) => {
+        await format(langs.rust.document.code_view, (text) => {
           return formatRustCode(text);
         });
       }
     }
 
     if (builder.get_object("panel_style").visible) {
-      format(langs.css.document.code_view, (text) => {
+      await format(langs.css.document.code_view, (text) => {
         return prettier.format(text, {
           parser: "css",
           plugins: [prettier_postcss],
@@ -269,7 +270,7 @@ export default function Window({ application, session }) {
     }
 
     if (panel_ui.panel.visible) {
-      format(langs.xml.document.code_view, (text) => {
+      await format(langs.xml.document.code_view, (text) => {
         return xml.format(text, 2);
       });
     }
@@ -290,7 +291,7 @@ export default function Window({ application, session }) {
       await panel_ui.update();
 
       if (format) {
-        formatCode();
+        await formatCode();
       }
 
       if (language === "JavaScript") {
