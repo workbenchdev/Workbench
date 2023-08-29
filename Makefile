@@ -1,5 +1,6 @@
 
 .PHONY: install lint test ci
+.DEFAULT_GOAL := ci
 
 install:
 	flatpak remote-add --user --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
@@ -12,7 +13,7 @@ lint:
 	./node_modules/.bin/rome ci .
 
 test:
-	flatpak run --filesystem=host:ro --command="gjs" org.gnome.Platform//45beta -m ./troll/tst/bin.js test/*.test.js
+	flatpak run --user --filesystem=host:ro --command="gjs" org.gnome.Platform//45beta -m ./troll/tst/bin.js test/*.test.js
 # https://github.com/ximion/appstream/issues/398#issuecomment-1129454985
 # flatpak run org.freedesktop.appstream.cli validate --override=release-time-missing=info --no-net data/app.metainfo.xml
 #	desktop-file-validate --no-hints data/app.desktop
