@@ -11,8 +11,5 @@ pub fn main() {
 
     linkbutton.connect_notify(Some("visited"), |button, _| {
         println!("About to activate {}", button.uri());
-      // Return true if handling the link manually, or
-        // false to let the default behavior continue
-        false;
     });
 }
