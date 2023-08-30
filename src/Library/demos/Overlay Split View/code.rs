@@ -1,6 +1,7 @@
-use crate::glib;
 use crate::workbench;
 use adw::prelude::*;
+use glib::clone;
+use gtk::glib;
 
 pub fn main() {
     let overlay_split_view: adw::OverlaySplitView =
@@ -9,13 +10,11 @@ pub fn main() {
     let start_toggle: gtk::ToggleButton = workbench::builder().object("start_toggle").unwrap();
     let end_toggle: gtk::ToggleButton = workbench::builder().object("end_toggle").unwrap();
 
-    start_toggle.connect_toggled(glib::clone!(@strong overlay_split_view => move |_| {
-        overlay_split_view
-            .set_sidebar_position(gtk::PackType::Start);
+    start_toggle.connect_toggled(clone!(@strong overlay_split_view => move |_| {
+        overlay_split_view.set_sidebar_position(gtk::PackType::Start);
     }));
 
-    end_toggle.connect_toggled(glib::clone!(@strong overlay_split_view =>move |_| {
-        overlay_split_view
-            .set_sidebar_position(gtk::PackType::End);
+    end_toggle.connect_toggled(clone!(@strong overlay_split_view => move |_| {
+        overlay_split_view.set_sidebar_position(gtk::PackType::End);
     }));
 }
