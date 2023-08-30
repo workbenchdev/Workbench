@@ -14,8 +14,8 @@ pub fn main() {
     .cloned()
     .collect();
 
-    for (id, name) in buttons.iter() {
-        let button: gtk::ToggleButton = workbench::builder().object(*id).unwrap();
+    for (id, name) in buttons.into_iter() {
+        let button: gtk::ToggleButton = workbench::builder().object(id).unwrap();
         let cloned_name = name.to_string();
         button.connect_active_notify(move |button| {
             let status = if button.is_active() { "On" } else { "Off" };
