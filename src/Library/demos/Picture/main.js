@@ -11,4 +11,3 @@ picture_fill.file = file;
 picture_contain.file = file;
 picture_cover.file = file;
 picture_scale_down.file = file;
-

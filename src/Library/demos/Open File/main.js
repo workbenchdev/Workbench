@@ -46,4 +46,3 @@ button_single.connect("clicked", () => {
 button_multiple.connect("clicked", () => {
   openMultipleFiles().catch(logError);
 });
-

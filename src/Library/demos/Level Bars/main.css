@@ -1,5 +1,5 @@
 levelbar block.full {
-    background-color: @success_color;
+  background-color: @success_color;
 }
 
 levelbar block.half {

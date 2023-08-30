@@ -69,4 +69,3 @@ uri_details.connect("changed", () => {
     uri_launch.sensitive = false;
   }
 });
-

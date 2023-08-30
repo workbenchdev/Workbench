@@ -22,4 +22,3 @@ power_profile_monitor.connect("notify::power-saver-enabled", () => {
 
   overlay.add_toast(toast);
 });
-

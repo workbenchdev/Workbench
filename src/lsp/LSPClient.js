@@ -3,7 +3,8 @@ import Gio from "gi://Gio";
 
 import { LSPError } from "./LSP.js";
 
-import { getPid, once } from "../../troll/src/util.js";
+import { getPid } from "../../troll/src/util.js";
+import { once } from "../../troll/src/async.js";
 
 const { addSignalMethods } = imports.signals;
 

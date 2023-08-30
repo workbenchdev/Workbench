@@ -13,21 +13,28 @@ export default [
   },
 
   {
-    input: "node_modules/prettier/esm/standalone.mjs",
+    input: "node_modules/prettier/standalone.mjs",
     output: {
       file: "src/lib/prettier.js",
     },
   },
 
   {
-    input: "node_modules/prettier/esm/parser-babel.mjs",
+    input: "node_modules/prettier/plugins/babel.mjs",
     output: {
       file: "src/lib/prettier-babel.js",
     },
   },
 
   {
-    input: "node_modules/prettier/esm/parser-postcss.mjs",
+    input: "node_modules/prettier/plugins/estree.mjs",
+    output: {
+      file: "src/lib/prettier-estree.js",
+    },
+  },
+
+  {
+    input: "node_modules/prettier/plugins/postcss.mjs",
     output: {
       file: "src/lib/prettier-postcss.js",
     },

@@ -36,4 +36,3 @@ async fn set_wallpaper() -> Result<(), Box<dyn Error>> {
     }
     Ok(())
 }
-

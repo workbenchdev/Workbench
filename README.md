@@ -32,28 +32,9 @@ Among other things, Workbench comes with
 <details>
   <summary>Disable code formatting</summary>
 
-Workbench uses [Rome](https://rome.tools/) and [Prettier](https://prettier.io/) code formatters. If you need to exclude some code you can use special comments.
-
-[JavaScript](https://prettier.io/docs/en/ignore.html#javascript)
-
-```js
-// rome-ignore format
-matrix(
-  1, 0, 0,
-  0, 1, 0,
-  0, 0, 1
-);
-```
+[JavaScript](https://docs.rome.tools/formatter/#ignoring-code)
 
 [CSS](https://prettier.io/docs/en/ignore.html#css)
-
-```css
-/* prettier-ignore */
-.my    ugly rule
-{
-
-}
-```
 
 </details>
 

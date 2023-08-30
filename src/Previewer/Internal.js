@@ -4,7 +4,7 @@ import Graphene from "gi://Graphene";
 import GObject from "gi://GObject";
 import Adw from "gi://Adw";
 
-import { once } from "../../troll/src/util.js";
+import { once } from "../../troll/src/async.js";
 
 const { addSignalMethods } = imports.signals;
 

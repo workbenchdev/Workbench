@@ -9,9 +9,11 @@
     "@rollup/plugin-commonjs": "^22.0.1",
     "@rollup/plugin-node-resolve": "^13.3.0",
     "events": "^3.3.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^14.0.1",
     "ltx": "git://github.com/xmppjs/ltx.git#093c7bdced57c22f7eccba3bccfc141150654395",
     "postcss": "^8.4.14",
-    "prettier": "^2.7.1",
+    "prettier": "^3.0.3",
     "rollup": "^2.76.0",
     "rollup-plugin-ignore": "^1.0.10",
     "rollup-plugin-node-polyfills": "^0.2.1",
@@ -19,6 +21,12 @@
   },
   "type": "module",
   "scripts": {
-    "postinstall": "rollup -c rollup.config.js"
+    "postinstall": "rollup -c rollup.config.js",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "*.{js,cjs,mjs}": "rome format --write",
+    "*.{css,json,md,yaml,yml}": "prettier --write",
+    "*.rs": "flatpak run --user --command=/usr/lib/sdk/rust-stable/bin/rustfmt --filesystem=host:ro org.gnome.Sdk//45beta --edition 2021"
   }
 }

@@ -17,6 +17,29 @@ Make sure that you're building the development target `re.sonny.Workbench.Devel`
 
 If you know what you are doing you can also use VSCode with the extensions recommended in this workspace or anything else you are comfortable with. Don't forget to fetch the submodules.
 
+## Install development dependencies
+
+We provide a couple of tools to make the development process pleasant.
+
+- Code formatter that runs automatically on git commit
+- Single command to run all the tests locally
+
+```sh
+# Ubuntu requirements
+# sudo apt install flatpak nodejs gettext make
+# Fedora requirements
+# sudo dnf install flatpak nodejs gettext make
+
+cd Workbench
+make setup
+```
+
+Before submitting a PR, we recommend running tests locally with
+
+```sh
+make test
+```
+
 ## Getting started
 
 If you're completely new to GNOME development this is for you.
@@ -24,9 +47,10 @@ If you're completely new to GNOME development this is for you.
 Open the "Welcome" example from Workbench Library.
 
 Important fundamentals are
-  * objects
-  * properties
-  * signals
+
+- objects
+- properties
+- signals
 
 Every widget in GTK is an object. For example, `Gtk.Box`, `Gtk.Button`, ...
 
@@ -56,19 +80,18 @@ Feel free to reach out and ask for a topic or feedback.
 
 Some guidelines
 
-* Start with something small and accessible
-* Focus on quality over quantity
-* Make sure you don't pick something deprecated [or soon to be](https://docs.gtk.org/gtk4/#classes)
-* Select "Blueprint" instead of "XML" in the UI panel
-* Keep it concise and interactive
-* Add links to follow up on the topic covered
-* Follow the patterns of existing entries
-* Follow [the Style Guide](https://github.com/sonnyp/Workbench/wiki/Style-Guide)
+- Start with something small and accessible
+- Focus on quality over quantity
+- Make sure you don't pick something deprecated [or soon to be](https://docs.gtk.org/gtk4/#classes)
+- Select "Blueprint" instead of "XML" in the UI panel
+- Keep it concise and interactive
+- Add links to follow up on the topic covered
+- Follow the patterns of existing entries
+- Follow [the Style Guide](https://github.com/sonnyp/Workbench/wiki/Style-Guide)
 
 ## Create Library entry
 
 To create a new Library entry, duplicate an existing one and proceed to the next section.
-
 
 ```sh
 cp -r src/Library/demos/Button src/Library/demos/Something
@@ -89,24 +112,24 @@ Once you're satisfied with the result - you can send a pull request to include i
 
 Some guidelines:
 
-* Unless you don't want too - add your name to [the list of contributors](./src/about.js)
-* Use a short PR title - eg. "library: Add Video entry" - it will be used as commit message
-* If relevant, mention the related issue in the PR description
-* Test your code before asking for review, for example by starting Workbench and opening the Libary entry
-* Always review your own work before asking someone else
+- Unless you don't want too - add your name to [the list of contributors](./src/about.js)
+- Use a short PR title - eg. "library: Add Video entry" - it will be used as commit message
+- If relevant, mention the related issue in the PR description
+- Test your code before asking for review, for example by starting Workbench and opening the Libary entry
+- Always review your own work before asking someone else
 
 ## Learn
 
 Here is a compilation of resources to learn more about the GNOME platform.
 
-* [Workbench](https://github.com/sonnyp/Workbench) 😉
-* [GObject](https://gjs.guide/guides/gobject/basics.html#gobject-construction)
-* [GTK4 + GJS Book](https://rmnvgr.gitlab.io/gtk4-gjs-book/)
-* [Asynchronous programming](https://gjs.guide/guides/gjs/asynchronous-programming.html)
-* [API references](https://gjs-docs.gnome.org/) make sure to enable at least GTK, GJS, GLib, Gio
-* [GJS docs](https://gitlab.gnome.org/GNOME/gjs/-/tree/master/doc)
-* [GJS examples](https://gitlab.gnome.org/GNOME/gjs/-/tree/master/examples)
-* [Human Interface Guidelines](https://developer.gnome.org/hig/)
+- [Workbench](https://github.com/sonnyp/Workbench) 😉
+- [GObject](https://gjs.guide/guides/gobject/basics.html#gobject-construction)
+- [GTK4 + GJS Book](https://rmnvgr.gitlab.io/gtk4-gjs-book/)
+- [Asynchronous programming](https://gjs.guide/guides/gjs/asynchronous-programming.html)
+- [API references](https://gjs-docs.gnome.org/) make sure to enable at least GTK, GJS, GLib, Gio
+- [GJS docs](https://gitlab.gnome.org/GNOME/gjs/-/tree/master/doc)
+- [GJS examples](https://gitlab.gnome.org/GNOME/gjs/-/tree/master/examples)
+- [Human Interface Guidelines](https://developer.gnome.org/hig/)
 
 ## Debugging
 
@@ -118,8 +141,8 @@ To view debug logs, use the following command in [`src/workbench`](../src/workbe
 
 See also
 
-* [GJS Logging](https://gitlab.gnome.org/GNOME/gjs/-/blob/master/doc/Logging.md)
-* [Flatpak Debugging](https://docs.flatpak.org/en/latest/debugging.html)
+- [GJS Logging](https://gitlab.gnome.org/GNOME/gjs/-/blob/master/doc/Logging.md)
+- [Flatpak Debugging](https://docs.flatpak.org/en/latest/debugging.html)
 
 <!--
 ## Translation

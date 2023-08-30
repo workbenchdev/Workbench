@@ -45,4 +45,3 @@ async fn request_user_information() -> Result<(), Box<dyn Error>> {
     println!("Information retrieved");
     Ok(())
 }
-

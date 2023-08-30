@@ -2,15 +2,10 @@ use crate::workbench;
 use adw::prelude::*;
 
 pub fn main() {
-    let banner: adw::Banner = workbench::builder()
-        .object("banner")
-        .unwrap();
-    let overlay: adw::ToastOverlay = workbench::builder()
-        .object("overlay")
-        .unwrap();
-    let button_show_banner: gtk::Button = workbench::builder()
-        .object("button_show_banner")
-        .unwrap();
+    let banner: adw::Banner = workbench::builder().object("banner").unwrap();
+    let overlay: adw::ToastOverlay = workbench::builder().object("overlay").unwrap();
+    let button_show_banner: gtk::Button =
+        workbench::builder().object("button_show_banner").unwrap();
 
     banner.connect_button_clicked(move |banner| {
         alert(&overlay);
