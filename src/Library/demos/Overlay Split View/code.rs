@@ -10,11 +10,11 @@ pub fn main() {
     let start_toggle: gtk::ToggleButton = workbench::builder().object("start_toggle").unwrap();
     let end_toggle: gtk::ToggleButton = workbench::builder().object("end_toggle").unwrap();
 
-    start_toggle.connect_toggled(clone!(@strong overlay_split_view => move |_| {
+    start_toggle.connect_toggled(clone!(@weak overlay_split_view => move |_| {
         overlay_split_view.set_sidebar_position(gtk::PackType::Start);
     }));
 
-    end_toggle.connect_toggled(clone!(@strong overlay_split_view => move |_| {
+    end_toggle.connect_toggled(move |_| {
         overlay_split_view.set_sidebar_position(gtk::PackType::End);
-    }));
+    });
 }
