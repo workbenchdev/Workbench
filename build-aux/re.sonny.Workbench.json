@@ -1,5 +1,5 @@
 {
-  "id": "re.sonny.Workbench.Devel",
+  "id": "re.sonny.Workbench",
   "runtime": "org.gnome.Sdk",
   "runtime-version": "45beta",
   "sdk": "org.gnome.Sdk",
@@ -23,6 +23,10 @@
     "--socket=fallback-x11",
     "--socket=wayland",
     "--device=dri",
+    "--env=CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER=clang",
+    "--env=CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER=clang",
+    "--env=CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTFLAGS=-C link-arg=-fuse-ld=/app/bin/mold",
+    "--env=CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_RUSTFLAGS=-C link-arg=-fuse-ld=/app/bin/mold",
     "--share=network"
   ],
   "cleanup": [
@@ -61,7 +65,7 @@
       "name": "Workbench",
       "buildsystem": "meson",
       "builddir": true,
-      "config-opts": ["-Dprofile=development"],
+      "config-opts": ["-Dprofile=default"],
       "sources": [
         {
           "type": "dir",
@@ -78,7 +82,10 @@
         "cp -a /usr/lib/sdk/vala/share/. /app/share/",
         "cp -a /usr/lib/sdk/rust-stable/bin/. /app/bin/",
         "cp -a /usr/lib/sdk/rust-stable/lib/. /app/lib/",
-        "cp -a /usr/lib/sdk/rust-stable/share/. /app/share/"
+        "cp -a /usr/lib/sdk/rust-stable/share/. /app/share/",
+        "cp -a /usr/lib/sdk/llvm16/bin/. /app/bin/",
+        "cp -a /usr/lib/sdk/llvm16/lib/. /app/lib/",
+        "cp -a /usr/lib/sdk/llvm16/share/. /app/share/"
       ]
     }
   ]
