@@ -1,0 +1,12 @@
+{
+  "name": "libshumate",
+  "buildsystem": "meson",
+  "config-opts": ["-Dgtk_doc=true", "-Dlibsoup3=true"],
+  "sources": [
+    {
+      "type": "archive",
+      "url": "https://download.gnome.org/sources/libshumate/1.1/libshumate-1.1.beta.tar.xz",
+      "sha256": "10d7f4c55d651881dfa6a706200ad29d148043a6a76d3642f02394313ac5102c"
+    }
+  ]
+}
