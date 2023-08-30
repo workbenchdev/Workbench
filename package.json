@@ -27,6 +27,6 @@
   "lint-staged": {
     "*.{js,cjs,mjs}": "rome format --write",
     "*.{css,json,md,yaml,yml}": "prettier --write",
-    "*.rs": "flatpak run --command=/usr/lib/sdk/rust-stable/bin/rustfmt --filesystem=host:ro org.gnome.Sdk//45beta --edition 2021"
+    "*.rs": "flatpak run --user --command=/usr/lib/sdk/rust-stable/bin/rustfmt --filesystem=host:ro org.gnome.Sdk//45beta --edition 2021"
   }
 }

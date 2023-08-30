@@ -17,6 +17,29 @@ Make sure that you're building the development target `re.sonny.Workbench.Devel`
 
 If you know what you are doing you can also use VSCode with the extensions recommended in this workspace or anything else you are comfortable with. Don't forget to fetch the submodules.
 
+## Install development dependencies
+
+We provide a couple of tools to make the development process pleasant.
+
+- Code formatter that runs automatically on git commit
+- Single command to run all the tests locally
+
+```sh
+# Ubuntu requirements
+# sudo apt install flatpak nodejs gettext make
+# Fedora requirements
+# sudo dnf install flatpak nodejs gettext make
+
+cd Workbench
+make setup
+```
+
+Before submitting a PR, we recommend running tests locally with
+
+```sh
+make test
+```
+
 ## Getting started
 
 If you're completely new to GNOME development this is for you.
