@@ -19,7 +19,7 @@ pub fn main() {
         let cloned_name = name.to_string();
         button.connect_active_notify(move |button| {
             let status = if button.is_active() { "On" } else { "Off" };
-            println!("{} {}", cloned_name, status);
+            println!("{cloned_name} {status}");
         });
     }
 }
