@@ -4,7 +4,7 @@ SHELL:=/bin/bash -O globstar
 
 setup:
 	flatpak remote-add --user --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
-	flatpak install --user --noninteractive flathub-beta org.gnome.Platform//45beta
+	flatpak install --user --noninteractive flathub-beta org.gnome.Sdk//45beta
 	flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 	flatpak install --user --noninteractive flathub org.flatpak.Builder
 	npm install
@@ -17,7 +17,7 @@ lint:
 	flatpak run --user --command=flatpak-builder-lint org.flatpak.Builder --exceptions re.sonny.Workbench.Devel.json
 
 unit:
-	flatpak run --user --filesystem=host:ro --command="gjs" org.gnome.Platform//45beta -m ./troll/tst/bin.js test/*.test.js
+	flatpak run --user --filesystem=host:ro --command="gjs" org.gnome.Sdk//45beta -m ./troll/tst/bin.js test/*.test.js
 
 # https://github.com/ximion/appstream/issues/398#issuecomment-1129454985
 # flatpak run org.freedesktop.appstream.cli validate --override=release-time-missing=info --no-net data/app.metainfo.xml
