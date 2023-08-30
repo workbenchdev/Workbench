@@ -15,10 +15,11 @@
     <ul>
       <li>Live GTK/CSS preview</li>
       <li>Library of 100+ examples</li>
-      <li>JavaScript and Vala support</li>
-      <li>XML and Blueprint for describing user interface</li>
-      <li>Syntax highlighting, undo/redo, autosave, sessions and projects</li>
+      <li>JavaScript, Rust and Vala support</li>
+      <li>Declarative user interface syntax</li>
+      <li>Autosave, sessions and projects</li>
       <li>Code linter and formatter</li>
+      <li>Offline documentation</li>
       <li>Terminal output</li>
       <li>1000+ icons</li>
     </ul>
@@ -95,13 +96,17 @@
           <li>New Library entry: Source View</li>
           <li>New Library entry: Breakpoint</li>
           <li>New Library entry: Screencast</li>
-          <li>New Library entry: File Dialog</li>
           <li>New Library entry: Toolbar View</li>
           <li>New Library entry: Picture</li>
           <li>New Library entry: Memory Monitor</li>
           <li>New Library entry: Camera</li>
           <li>New Library entry: Center Box</li>
           <li>New Library entry: File Monitor</li>
+          <li>New Library entry: Session Monitor and Inhibit</li>
+          <li>New Library entry: Open File</li>
+          <li>New Library entry: Save File</li>
+          <li>New Library entry: Select Folder</li>
+          <li>New Library entry: Spell Checker</li>
         </ul>
       </description>
     </release>

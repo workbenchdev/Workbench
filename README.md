@@ -14,10 +14,11 @@ Among other things, Workbench comes with
 
 - Live GTK/CSS preview
 - Library of 100+ examples
-- JavaScript and Vala support
-- XML and Blueprint for describing user interface
-- Syntax highlighting, undo/redo, autosave, sessions and projects
+- JavaScript, Rust and Vala support
+- Declarative user interface syntax
+- Autosave, sessions and projects
 - Code linter and formatter
+- Offline documentation
 - Terminal output
 - 1000+ icons
 
@@ -47,9 +48,9 @@ Use GNOME Builder to start a new project using the appropriate GNOME Application
 
 ## Credits
 
-Workbench would not be possible without
+Workbench is made of many components, thank you
 
-Flatpak, GTK, GLib, GtkSourceView, libadwaita, VTE, GJS, Blueprint, icon-development-kit, Vala
+Flatpak, GTK, GLib, GtkSourceView, libadwaita, VTE, GJS, Blueprint, icon-development-kit, Vala, GTKCssLanguageServer, gtk-rs
 
 and the GNOME community 🖤
 
