@@ -7,9 +7,9 @@ pub fn main() {
     let start_widget: gtk::Button = workbench::builder().object("start_widget").unwrap();
     let end_widget: gtk::Button = workbench::builder().object("end_widget").unwrap();
 
-    button.connect_clicked(move |button| {
-        action_bar.set_revealed(!button.is_active());
-    });
+   button.connect_notify_local(Some("active"), move |button, _| {
+    action_bar.set_revealed(!button.is_active());
+});
 
     start_widget.connect_clicked(|_| {
         println!("Start Widget");
