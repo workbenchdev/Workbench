@@ -75,6 +75,7 @@ ${getBlueprintVersion()}
     "Rasmus Thomsen <oss@cogitri.dev>",
     "Marvin W https://github.com/mar-v-in",
     "Saad Khan https://github.com/saadulkh",
+    "Adeel Ahmed Qureshi https://github.com/itsAdee",
     // Add yourself as
     // "John Doe",
     // or
