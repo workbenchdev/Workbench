@@ -21,8 +21,8 @@ If you know what you are doing you can also use VSCode with the extensions recom
 
 We provide a couple of tools to make the development process pleasant.
 
-- Code formatter that runs automatically on git commit.
-- Simple script to run all the tests locally.
+- Code formatter that runs automatically on git commit
+- Single command to run all the tests locally
 
 ```sh
 # Ubuntu requirements
