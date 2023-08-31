@@ -4,10 +4,10 @@ import Gtk from "gi://Gtk";
 
 import { LSPError } from "./lsp/LSP.js";
 import {
-  getLanguage,
   unstack,
   listenProperty,
   settings as global_settings,
+  getLanguage,
 } from "./util.js";
 
 import {
@@ -16,6 +16,12 @@ import {
 } from "./langs/blueprint/blueprint.js";
 
 const { addSignalMethods } = imports.signals;
+
+const lang_blueprint = getLanguage("blueprint");
+const lang_xml = getLanguage("xml");
+// Make sure it matches app.gschhema.xml re.sonny.Workbench.UserInterfaceLanguage enum
+// and dropdown_ui_lang
+export const ui_languages = [lang_blueprint, lang_xml];
 
 export default function PanelUI({
   application,
@@ -54,6 +60,7 @@ export default function PanelUI({
   // TODO: File a bug libadwaita
   // flat does nothing on GtkDropdown or GtkComboBox or GtkComboBoxText
   dropdown_ui_lang.get_first_child().add_css_class("flat");
+  dropdown_ui_lang.set_selected(settings.get_enum("user-interface-language"));
 
   const blueprint = setupBlueprint({
     document: document_blueprint,
@@ -101,9 +108,9 @@ export default function PanelUI({
   // FIXME we should wait for previewer update instead
   // when loading demo
   async function update() {
-    if (lang.id === "blueprint") {
+    if (lang === lang_blueprint) {
       onXML(await blueprint.compile());
-    } else if (lang.id === "xml") {
+    } else if (lang === lang_xml) {
       onXML(buffer_xml.text);
     }
   }
@@ -119,9 +126,9 @@ export default function PanelUI({
 
   function start() {
     stop();
-    lang = getLanguage(dropdown_ui_lang.selected_item.string);
+    lang = getLanguage(settings.get_string("user-interface-language"));
     handler_id_xml = code_view_xml.connect("changed", () => {
-      if (lang.id !== "xml") return;
+      if (lang !== lang_xml) return;
       onXML(code_view_xml.buffer.text);
     });
     handler_id_blueprint = code_view_blueprint.connect("changed", onBlueprint);
@@ -138,34 +145,34 @@ export default function PanelUI({
     }
   }
 
-  dropdown_ui_lang.set_selected(settings.get_int("ui-language"));
   const dropdown_selected_signal = listenProperty(
     dropdown_ui_lang,
     "selected",
     (value) => {
-      onChangeLang(value).catch(logError);
+      const lang = ui_languages.indexOf(value);
+      onChangeLang(lang).catch(logError);
     },
   );
 
-  settings.connect("changed::ui-language", () => {
-    global_settings.set_int(
-      "recent-ui-language",
-      settings.get_int("ui-language"),
+  settings.connect("changed::user-interface-language", () => {
+    global_settings.set_enum(
+      "recent-user-interface-language",
+      settings.get_enum("user-interface-language"),
     );
   });
 
-  async function onChangeLang(value) {
-    if (value === 0) {
+  async function onChangeLang(lang) {
+    if (lang === lang_xml) {
       try {
         await convertToXML();
       } catch (err) {
         logError(err);
         dropdown_selected_signal.block();
-        dropdown_ui_lang.set_selected(1);
+        dropdown_ui_lang.set_selected(ui_languages.indexOf(lang_blueprint));
         dropdown_selected_signal.unblock();
         return;
       }
-    } else if (value === 1) {
+    } else if (lang === lang_blueprint) {
       try {
         await convertToBlueprint();
       } catch (err) {
@@ -175,20 +182,20 @@ export default function PanelUI({
           logError(err);
         }
         dropdown_selected_signal.block();
-        dropdown_ui_lang.set_selected(0);
+        dropdown_ui_lang.set_selected(ui_languages.indexOf(lang_xml));
         dropdown_selected_signal.unblock();
         return;
       }
     }
 
-    settings.set_int("ui-language", dropdown_ui_lang.selected);
+    settings.set_enum("user-interface-language", dropdown_ui_lang.selected);
     setupLanguage();
   }
 
   function setupLanguage() {
     start();
     stack_ui.set_visible_child_name(lang.id);
-    button_ui_experimental_blueprint.visible = lang.id === "blueprint";
+    button_ui_experimental_blueprint.visible = lang === lang_blueprint;
   }
   setupLanguage();
 

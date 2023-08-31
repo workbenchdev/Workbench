@@ -7,9 +7,9 @@ import Vte from "gi://Vte";
 import { gettext as _ } from "gettext";
 
 import * as xml from "./langs/xml/xml.js";
-import { languages } from "./util.js";
+import { getLanguage, languages } from "./util.js";
 import Document from "./Document.js";
-import PanelUI from "./PanelUI.js";
+import PanelUI, { ui_languages } from "./PanelUI.js";
 import PanelCode from "./PanelCode.js";
 import PanelStyle from "./PanelStyle.js";
 import Devtools from "./Devtools.js";
@@ -72,7 +72,10 @@ export default function Window({ application, session }) {
   const { term_console } = Devtools({ application, window, builder, settings });
 
   if (!file.get_child("main.xml").query_exists(null)) {
-    settings.set_int("ui-language", 1);
+    settings.set_enum(
+      "user-interface-language",
+      ui_languages.indexOf(getLanguage("blueprint")),
+    );
   }
 
   const document_javascript = Document({
