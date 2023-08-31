@@ -8,6 +8,6 @@ Type=Application
 Categories=WebDevelopment;Development;IDE;GNOME;GTK;
 Icon=@app_id@
 # TRANSLATORS: Don't translate
-Keywords=CSS;JavaScript;GJS;Blueprint;builder;Vala;GTK;libadwaita;
+Keywords=CSS;JavaScript;GJS;Blueprint;builder;Vala;GTK;libadwaita;Rust;doc;playground;code;
 DBusActivatable=true
 StartupNotify=true

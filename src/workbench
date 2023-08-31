@@ -2,4 +2,4 @@
 
 
 SHELL=/bin/sh script --flush --quiet --return /var/tmp/workbench --command "WEBKIT_DISABLE_DMABUF_RENDERER=1 @app_id@ $@"
-# SHELL=/bin/sh script --flush --quiet --return /var/tmp/workbench --command "G_MESSAGES_DEBUG=\"@app_id@\" @app_id@ $@"
+# SHELL=/bin/sh script --flush --quiet --return /var/tmp/workbench --command "G_MESSAGES_DEBUG=\"@app_id@\" WEBKIT_DISABLE_DMABUF_RENDERER=1 @app_id@ $@"

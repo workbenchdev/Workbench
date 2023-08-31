@@ -1,0 +1,92 @@
+{
+  "id": "re.sonny.Workbench",
+  "runtime": "org.gnome.Sdk",
+  "runtime-version": "45beta",
+  "sdk": "org.gnome.Sdk",
+  "sdk-extensions": [
+    "org.freedesktop.Sdk.Extension.vala",
+    "org.gnome.Sdk.Docs",
+    "org.freedesktop.Sdk.Extension.rust-stable",
+    "org.freedesktop.Sdk.Extension.llvm16"
+  ],
+  "build-options": {
+    "append-path": "/usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/vala/bin",
+    "append-ld-library-path": "/usr/lib/sdk/vala/lib",
+    "env": {
+      "CARGO_HOME": "/run/build/cargo-c/cargo"
+    },
+    "test-args": ["--socket=x11", "--share=network"]
+  },
+  "command": "workbench",
+  "finish-args": [
+    "--share=ipc",
+    "--socket=fallback-x11",
+    "--socket=wayland",
+    "--device=dri",
+    "--share=network",
+    "--env=CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER=clang",
+    "--env=CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER=clang",
+    "--env=CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTFLAGS=-C link-arg=-fuse-ld=/app/bin/mold",
+    "--env=CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_RUSTFLAGS=-C link-arg=-fuse-ld=/app/bin/mold"
+  ],
+  "cleanup": [
+    "/include",
+    "/lib/pkgconfig",
+    "/man",
+    "/share/doc",
+    "/share/gtk-doc",
+    "/share/man",
+    "/share/pkgconfig",
+    "/share/installed-tests",
+    "*.la",
+    "*.a"
+  ],
+  "modules": [
+    {
+      "name": "cargo-c",
+      "buildsystem": "simple",
+      "build-commands": ["cargo install cargo-c --root /app"],
+      "build-options": {
+        "build-args": ["--share=network"]
+      },
+      "cleanup": ["*"]
+    },
+    "modules/gi-docgen.json",
+    "modules/gst-plugins-rs.json",
+    "modules/vte.json",
+    "modules/libshumate.json",
+    "modules/libportal.json",
+    "modules/libspelling.json",
+    "modules/GTKCssLanguageServer.json",
+    "modules/blueprint-compiler.json",
+    "modules/rome.json",
+    "modules/icon-development-kit.json",
+    {
+      "name": "Workbench",
+      "buildsystem": "meson",
+      "builddir": true,
+      "config-opts": ["-Dprofile=default"],
+      "sources": [
+        {
+          "type": "dir",
+          "path": "."
+        }
+      ],
+      "post-install": [
+        "rm -rf /app/share/doc/appstream",
+        "cp -a /usr/share/gtk-doc/html/. /app/share/doc/",
+        "rm -rf /app/share/doc/appstream",
+        "cp -a /usr/share/doc/. /app/share/doc/",
+        "cp -a /usr/lib/sdk/vala/bin/. /app/bin/",
+        "cp -a /usr/lib/sdk/vala/lib/. /app/lib/",
+        "cp -a /usr/lib/sdk/vala/share/. /app/share/",
+        "cp -a /usr/lib/sdk/rust-stable/bin/. /app/bin/",
+        "cp -a /usr/lib/sdk/rust-stable/lib/. /app/lib/",
+        "cp -a /usr/lib/sdk/rust-stable/share/. /app/share/",
+        "cp -a /usr/lib/sdk/llvm16/bin/. /app/bin/",
+        "cp -a /usr/lib/sdk/llvm16/lib/. /app/lib/",
+        "cp -a /usr/lib/sdk/llvm16/share/. /app/share/"
+      ]
+    }
+  ]
+}

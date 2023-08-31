@@ -13,8 +13,8 @@ lint:
 	./node_modules/.bin/rome ci .
 	flatpak run --user --command=/usr/lib/sdk/rust-stable/bin/rustfmt --filesystem=host:ro org.gnome.Sdk//45beta --check --edition 2021 **/*.rs
 	find po/ -type f -name "*po" -print0 | xargs -0 -n1 msgfmt -o /dev/null --check
-	flatpak run --user --command=flatpak-builder-lint org.flatpak.Builder --exceptions re.sonny.Workbench.json
-	flatpak run --user --command=flatpak-builder-lint org.flatpak.Builder --exceptions re.sonny.Workbench.Devel.json
+	flatpak run --user --command=flatpak-builder-lint org.flatpak.Builder --exceptions build-aux/re.sonny.Workbench.json
+	flatpak run --user --command=flatpak-builder-lint org.flatpak.Builder --exceptions build-aux/re.sonny.Workbench.Devel.json
 
 unit:
 	flatpak run --user --filesystem=host:ro --command="gjs" org.gnome.Sdk//45beta -m ./troll/tst/bin.js test/*.test.js

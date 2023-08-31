@@ -2,7 +2,7 @@
 
 Thank you for considering contributing to Workbench. Feel free to [get in touch](https://matrix.to/#/%23workbench:gnome.org).
 
-## Setup
+## Getting started
 
 The following is the recommended setup:
 
@@ -17,7 +17,29 @@ Make sure that you're building the development target `re.sonny.Workbench.Devel`
 
 If you know what you are doing you can also use VSCode with the extensions recommended in this workspace or anything else you are comfortable with. Don't forget to fetch the submodules.
 
-## Install development dependencies
+## Learn
+
+If you're completely new to GNOME development this is for you.
+
+Open the "Welcome" example from Workbench Library.
+
+Important fundamentals are
+
+- objects
+- properties
+- signals
+
+Every widget in GTK is an object. For example, `Gtk.Box`, `Gtk.Button`, ...
+
+Properties affect an object to change its appearance or behavior.
+
+Signals are events that can be listened to. Like `clicked` on `Gtk.Button`.
+
+The Welcome example in the Library has all 3. Play with it, try to understand and make changes. If you break things you can always go back by select "Welcome" example from the Workbench Library again.
+
+Once you understand these 3 things, try creating something new. There are plenty of widgets and patterns to explore.
+
+## Setup
 
 We provide a couple of tools to make the development process pleasant.
 
@@ -39,28 +61,6 @@ Before submitting a PR, we recommend running tests locally with
 ```sh
 make test
 ```
-
-## Getting started
-
-If you're completely new to GNOME development this is for you.
-
-Open the "Welcome" example from Workbench Library.
-
-Important fundamentals are
-
-- objects
-- properties
-- signals
-
-Every widget in GTK is an object. For example, `Gtk.Box`, `Gtk.Button`, ...
-
-Properties affect an object to change its appearance or behavior.
-
-Signals are events that can be listened to. Like `clicked` on `Gtk.Button`.
-
-The Welcome example in the Library has all 3. Play with it, try to understand and make changes. If you break things you can always go back by select "Welcome" example from the Workbench Library again.
-
-Once you understand these 3 things, try creating something new. There are plenty of widgets and patterns to explore.
 
 ## Your first contribution
 
