@@ -60,23 +60,22 @@ Adw.StatusPage {
           [suffix] ShortcutLabel activate_shortcut {
             accelerator: "space";
             valign: center;
+            accessibility {
+              description: _("Spacebar");
+            }
           }
         }
       }
 
-      Box group_box {
+      Box custom_group {
         orientation: vertical;
         margin-top: 18;
         spacing: 18;
-        accessible-role: group;
-        accessibility {
-          labelled-by: group_label;
-          described-by: group_description;
-        }
 
-        Box {
+        Box group_header {
           orientation: vertical;
           spacing: 6;
+          accessible-role: group;
 
           Label group_label {
             label: _("Related Elements");
@@ -91,9 +90,14 @@ Adw.StatusPage {
           }
         }
 
-        Box custom_box {
+        Box group_box {
           orientation: vertical;
           spacing: 18;
+          accessible-role: group;
+          accessibility {
+            labelled-by: group_label;
+            described-by: group_description;
+          }
           styles ["card"]
 
           Adw.Bin custom_button {
@@ -122,7 +126,7 @@ Adw.StatusPage {
         }
       }
 
-      Box {
+      Box documentation_list {
         orientation: vertical;
         halign: center;
         accessible-role: list;
