@@ -237,8 +237,8 @@ export default function Window({ application, session }) {
     );
 
     if (!success || stderr !== "") {
-      logError(`Error running rustfmt: ${stderr}`);
-      return text; // Return the original text if formatting fails
+      console.error(`Error running rustfmt: ${stderr}`);
+      return text;
     }
 
     return stdout;
