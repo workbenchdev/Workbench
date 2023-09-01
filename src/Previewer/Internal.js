@@ -6,6 +6,7 @@ import Adw from "gi://Adw";
 
 import { once } from "../../troll/src/async.js";
 
+// eslint-disable-next-line no-restricted-globals
 const { addSignalMethods } = imports.signals;
 
 export default function Internal({

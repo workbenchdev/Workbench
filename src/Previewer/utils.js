@@ -14,6 +14,7 @@ export function getObjectClass(class_name) {
   );
   if (!namespace) return null;
 
+  // eslint-disable-next-line no-restricted-globals
   const namespace_repository = imports.gi[namespace];
   if (!namespace_repository) return null;
 
@@ -152,7 +153,9 @@ function getNamespaces() {
   for (const search_path of search_paths) {
     try {
       namespaces.push(...getSearchPathNamespaces(search_path));
-    } catch {}
+    } catch {
+      /* */
+    }
   }
   return namespaces;
 }

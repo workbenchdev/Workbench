@@ -3,13 +3,7 @@ import Gio from "gi://Gio";
 
 import Window from "./window.js";
 import Actions from "./actions.js";
-import {
-  settings,
-  data_dir,
-  ensureDir,
-  readDemoFile,
-  getDemo,
-} from "./util.js";
+import { settings, data_dir, ensureDir, getDemo } from "./util.js";
 import { overrides } from "./overrides.js";
 import Library from "./Library/Library.js";
 import DocumentationViewer from "./DocumentationViewer.js";

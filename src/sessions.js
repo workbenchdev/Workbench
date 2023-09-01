@@ -1,5 +1,6 @@
 import Gio from "gi://Gio";
 import GLib from "gi://GLib";
+import { gettext as _ } from "gettext";
 
 import {
   data_dir,
