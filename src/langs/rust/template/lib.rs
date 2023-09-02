@@ -14,8 +14,13 @@ static mut URI: Option<String> = None;
 
 #[no_mangle]
 extern "C" fn main() -> c_int {
-    code::main();
-    EXIT_SUCCESS
+    let result = std::panic::catch_unwind(code::main);
+
+    if result.is_ok() {
+        EXIT_SUCCESS
+    } else {
+        EXIT_FAILURE
+    }
 }
 
 #[no_mangle]
@@ -38,11 +43,10 @@ extern "C" fn set_window(window_ptr: *mut gtk::ffi::GtkWindow) -> c_int {
 
 #[no_mangle]
 extern "C" fn set_base_uri(c_string: *const c_char) -> c_int {
+    if c_string.is_null() {
+        return EXIT_FAILURE;
+    }
     unsafe {
-        if c_string.is_null() {
-            return EXIT_FAILURE;
-        }
-
         let c_str = CStr::from_ptr(c_string);
         if let Ok(str_slice) = c_str.to_str() {
             URI = Some(str_slice.to_string());
@@ -50,3 +54,4 @@ extern "C" fn set_base_uri(c_string: *const c_char) -> c_int {
     }
     EXIT_SUCCESS
 }
+
