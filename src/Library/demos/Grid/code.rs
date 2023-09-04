@@ -16,7 +16,7 @@ pub fn main() {
     for id in button_ids {
         let button: gtk::Button = workbench::builder().object(id).unwrap();
         button.connect_clicked(clone!(@strong step => move |button| {
-            onClicked(button, step.clone())
+            on_clicked(button, step.clone())
         }));
     }
 }
