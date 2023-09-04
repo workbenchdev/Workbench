@@ -122,7 +122,7 @@ namespace Workbench {
       Gtk.StyleContext.add_provider_for_display (Gdk.Display.get_default (), this.css , Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
     }
 
-    public void run (string filename, string uri) {
+    public void run (string filename, string uri) throws DBusError {
       if (this.module != null) {
         this.module.close ();
       }
@@ -159,7 +159,7 @@ namespace Workbench {
       var main_function = (MainFunction) function;
       int result = main_function ();
       if (result != 1) {
-            throw new GLib.DBusError.SPAWN_CHILD_EXITED("demo exited with error code 1");
+            throw new DBusError.SPAWN_CHILD_EXITED("demo exited with error code 1");
       }
     }
 
