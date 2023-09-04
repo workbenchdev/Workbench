@@ -21,7 +21,7 @@ pub fn main() {
     }
 }
 
-pub fn onClicked(button: &gtk::Button, step: Rc<Cell<i32>>) {
+fn on_clicked(button: &gtk::Button, step: Rc<Cell<i32>>) {
     // Check access for user action
     let image: gtk::Image = button.child().unwrap().downcast().unwrap();
     if image.icon_name().is_some() {
