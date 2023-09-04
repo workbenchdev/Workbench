@@ -7,7 +7,7 @@ use std::cell::Cell;
 use std::rc::Rc;
 
 pub fn main() {
-    let button_ids = vec![
+    let button_ids = [
         "button00", "button01", "button02", "button10", "button11", "button12", "button20",
         "button21", "button22",
     ];
