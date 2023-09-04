@@ -157,7 +157,10 @@ namespace Workbench {
         return;
       }
       var main_function = (MainFunction) function;
-      main_function ();
+      int result = main_function ();
+      if (result != 1) {
+            throw new GLib.DBusError.SPAWN_CHILD_EXITED("demo exited with error code 1");
+      }
     }
 
     public void close_window () {
@@ -185,7 +188,7 @@ namespace Workbench {
     public signal void css_parser_error (string message, int start_line, int start_char, int end_line, int end_char);
 
     [CCode (has_target=false)]
-    private delegate void MainFunction ();
+    private delegate int MainFunction ();
 
     [CCode (has_target=false)]
     private delegate void BuilderFunction (Gtk.Builder builder);
