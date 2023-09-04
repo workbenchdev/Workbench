@@ -12,6 +12,9 @@ install
 *.flatpak
 .fenv
 
+# IDEs / editors
+.idea
+
 # Project files
 src/Library/**/settings
 src/Library/**/workbench.vala
