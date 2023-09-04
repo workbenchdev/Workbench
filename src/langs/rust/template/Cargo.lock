@@ -356,6 +356,7 @@ dependencies = [
  "gtk4",
  "libadwaita",
  "libc",
+ "rand",
  "url",
 ]
 
@@ -1947,4 +1948,3 @@ dependencies = [
  "quote",
  "syn 1.0.109",
 ]
-
