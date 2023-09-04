@@ -16,10 +16,11 @@ static mut URI: Option<String> = None;
 extern "C" fn main() -> c_int {
     let result = std::panic::catch_unwind(code::main);
 
-    if result.is_ok() {
-        EXIT_SUCCESS
-    } else {
+    if let Err(err) = result {
+        eprintln!("{err}");
         EXIT_FAILURE
+    } else {
+        EXIT_SUCCESS
     }
 }
 
