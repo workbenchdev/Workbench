@@ -14,6 +14,7 @@ blueprint_compiler = find_program(
 
 install_subdir('Library/demos', install_dir : join_paths(pkgdatadir, 'Library'))
 install_subdir('langs/rust/template', install_dir : join_paths(pkgdatadir, 'langs/rust'))
+install_subdir('langs/python/template', install_dir : join_paths(pkgdatadir, 'langs/python'))
 
 configure_file(
   input: 'bin.js',

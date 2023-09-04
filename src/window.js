@@ -20,6 +20,7 @@ import prettier_estree from "./lib/prettier-estree.js";
 import Previewer from "./Previewer/Previewer.js";
 import ValaCompiler from "./langs/vala/Compiler.js";
 import RustCompiler from "./langs/rust/Compiler.js";
+import PythonBuilder from "./langs/python/Builder.js";
 import ThemeSelector from "../troll/src/widgets/ThemeSelector.js";
 
 import resource from "./window.blp";
@@ -94,6 +95,14 @@ export default function Window({ application, session }) {
     session,
   });
   langs.rust.document = document_rust;
+
+  const document_python = Document({
+    code_view: builder.get_object("code_view_python"),
+    file: file.get_child("main.py"),
+    lang: langs.python,
+    session,
+  });
+  langs.python.document = document_python;
 
   const document_blueprint = Document({
     code_view: builder.get_object("code_view_blueprint"),
@@ -274,6 +283,7 @@ export default function Window({ application, session }) {
 
   let compiler_vala = null;
   let compiler_rust = null;
+  let builder_python = null;
 
   async function runCode({ format }) {
     button_run.set_sensitive(false);
@@ -349,6 +359,17 @@ export default function Window({ application, session }) {
             await previewer.useInternal();
           }
         }
+      } else if (language === "Python") {
+        builder_python = builder_python || PythonBuilder({ session });
+        const success = await builder_python.build();
+        if (success) {
+          await previewer.useExternal();
+          if (await builder_python.run()) {
+            await previewer.open();
+          } else {
+            await previewer.useInternal();
+          }
+        }
       }
     } catch (err) {
       // prettier xml errors are not instances of Error
@@ -413,6 +434,7 @@ export default function Window({ application, session }) {
       document_javascript.load(),
       document_rust.load(),
       document_vala.load(),
+      document_python.load(),
       document_blueprint.load(),
       document_xml.load(),
       document_css.load(),

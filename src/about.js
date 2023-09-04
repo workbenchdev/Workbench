@@ -54,6 +54,7 @@ ${getBlueprintVersion()}
       "Tobias Bernard <tbernard@gnome.org>",
       "Jakub Steiner https://jimmac.eu",
       "Brage Fuglseth https://bragefuglseth.dev",
+      "Marco Köpcke https://github.com/theCapypara",
     ],
   });
 

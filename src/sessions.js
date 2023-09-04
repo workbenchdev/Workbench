@@ -8,6 +8,7 @@ import {
   getNowForFilename,
   demos_dir,
   rust_template_dir,
+  python_template_dir,
   settings as global_settings,
   encode,
 } from "./util.js";
@@ -49,6 +50,7 @@ export function createSessionFromDemo(demo) {
 
   copy_directory(demo_dir, session);
   copy_directory(rust_template_dir, session);
+  copy_directory(python_template_dir, session);
 
   const { panels } = demo;
   const { settings } = session;
@@ -156,6 +158,7 @@ function migrateStateToSession() {
     ["state.js", "main.js"],
     ["state.vala", "main.vala"],
     ["state.rs", "main.rs"],
+    ["state.py", "main.py"],
     ["state.xml", "main.ui"],
   ];
 
