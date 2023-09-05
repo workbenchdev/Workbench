@@ -124,19 +124,25 @@ export default function DocumentationViewer({ application }) {
       promise_load = getDirs(base_path, filter_docs)
         .then((dirs) => createIndex(base_path, dirs))
         .then((indexes) => {
+          console.time("Create browse list model");
           browse_list_view.model = createBrowseListModel(
             base_path,
             indexes,
             webview,
           );
+          console.timeEnd("Create browse list model");
+          console.time("Create search list model");
           search_list_view.model = createSearchListModel(
             base_path,
             indexes,
             webview,
             filter,
           );
+          console.timeEnd("Create search list model");
         });
+    console.time("Promise load");
     await promise_load;
+    console.timeEnd("Promise load");
     window.present();
   }
 
@@ -206,6 +212,7 @@ function createBrowseListModel(base_path, indexes, webview) {
 }
 
 async function createIndex(base_path, dirs) {
+  console.time("Loading indexes");
   const indexes = [];
   for (const dir of dirs) {
     indexes.push(readIndexJSON(base_path, dir));
@@ -214,12 +221,15 @@ async function createIndex(base_path, dirs) {
   const fullfiled = results.filter((result) => result.status === "fulfilled");
   const values = [];
   fullfiled.forEach((result) => values.push(result.value));
+  console.timeEnd("Loading indexes");
   return values;
 }
 
 async function getDirs(base_path, filter_docs) {
+  console.time("Loading dirs");
   const dirs = await list(base_path);
   const filtered = dirs.filter((dir) => !filter_docs.includes(dir));
+  console.timeEnd("Loading dirs");
   return filtered;
 }
 
