@@ -2,18 +2,17 @@ use crate::workbench;
 use glib::clone;
 use gtk::glib;
 use gtk::prelude::*;
-use gtk::SpinType::StepForward;
+use gtk::SpinType;
 
 pub fn main() {
     let hours: gtk::SpinButton = workbench::builder().object("hours").unwrap();
     let minutes: gtk::SpinButton = workbench::builder().object("minutes").unwrap();
+    hours.set_text("00");
+    minutes.set_text("00");
 
-    fn tellTime(hours: &str, minutes: &str) {
-        println!("The time selected is {hours}:{minutes}");
-    }
 
     hours.connect_value_changed(clone!(@weak minutes => move |hours| {
-        tellTime(&hours.text(), &minutes.text());
+        tell_time(&hours.text(), &minutes.text());
     }));
 
     hours.connect_output(move |hours| {
@@ -30,12 +29,15 @@ pub fn main() {
         return true.into();
     });
 
-    minutes.connect_wrapped(clone!(@weak hours => move |minutes| {
-      let spin_type: gtk:: SpinType = StepForward;
-      hours.spin(spin_type, 1.0);
+    minutes.connect_wrapped(clone!(@weak hours => move |_| {
+      hours.spin(SpinType::StepForward, 1.0);
     }));
 
     minutes.connect_value_changed(move |minutes| {
-        tellTime(&hours.text(), &minutes.text());
+        tell_time(&hours.text(), &minutes.text());
     });
+}
+
+fn tell_time(hours: &str, minutes: &str) {
+  println!("The time selected is {hours}:{minutes}");
 }
