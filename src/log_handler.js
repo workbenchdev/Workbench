@@ -115,5 +115,6 @@ function log_handler(domain, level, message) {
   str += "\n";
 
   // console.terminal.fork_command(`echo ${str}`);
+  // eslint-disable-next-line no-restricted-globals
   print(str);
 }

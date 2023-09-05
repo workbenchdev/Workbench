@@ -47,7 +47,6 @@ for (const orientation in scrollbars) {
 }
 
 scrolled_window.connect("edge-reached", () => {
-  const scrollbar = scrollbars[container.orientation];
   console.log("Edge Reached");
 });
 

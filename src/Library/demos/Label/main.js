@@ -1,10 +1,6 @@
-import Gtk from "gi://Gtk";
-import Adw from "gi://Adw";
-
 const label = workbench.builder.get_object("label");
 const justification_row = workbench.builder.get_object("justification_row");
 const style_row = workbench.builder.get_object("style_row");
-const xalign_spin_button = workbench.builder.get_object("xalign_spin_button");
 const single_line_switch = workbench.builder.get_object("single_line_switch");
 
 const style_classes = [

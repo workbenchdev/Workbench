@@ -15,6 +15,7 @@ import {
   logBlueprintError,
 } from "./langs/blueprint/blueprint.js";
 
+// eslint-disable-next-line no-restricted-globals
 const { addSignalMethods } = imports.signals;
 
 export default function PanelUI({

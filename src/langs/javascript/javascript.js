@@ -1,5 +1,3 @@
-import Gio from "gi://Gio";
-
 import LSPClient from "../../lsp/LSPClient.js";
 
 export function setup({ document }) {
@@ -20,7 +18,7 @@ export function setup({ document }) {
 function createLSPClient({ file, code_view }) {
   const uri = file.get_uri();
 
-  const lspc = new LSPClient(["rome", "lsp-proxy"], {
+  const lspc = new LSPClient(["biome", "lsp-proxy"], {
     rootUri: file.get_parent().get_uri(),
     uri,
     languageId: "javascript",
@@ -29,13 +27,13 @@ function createLSPClient({ file, code_view }) {
   lspc.capabilities.workspace = { configuration: true };
 
   lspc.connect("exit", () => {
-    console.debug("rome language server exit");
+    console.debug("biome language server exit");
   });
   lspc.connect("output", (_self, message) => {
-    console.debug(`rome language server OUT:\n${JSON.stringify(message)}`);
+    console.debug(`biome language server OUT:\n${JSON.stringify(message)}`);
   });
   lspc.connect("input", (_self, message) => {
-    console.debug(`rome language server IN:\n${JSON.stringify(message)}`);
+    console.debug(`biome language server IN:\n${JSON.stringify(message)}`);
   });
 
   // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#workspace_configuration
@@ -44,7 +42,7 @@ function createLSPClient({ file, code_view }) {
       .send({
         id,
         result: params.items.map((item) => {
-          return item.section === "rome"
+          return item.section === "biome"
             ? {
                 formatter: {
                   enabled: true,

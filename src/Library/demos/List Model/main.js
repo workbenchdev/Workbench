@@ -1,6 +1,3 @@
-import Gio from "gi://Gio";
-import Gdk from "gi://Gdk";
-import GObject from "gi://GObject";
 import Gtk from "gi://Gtk";
 import Adw from "gi://Adw";
 

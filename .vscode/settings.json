@@ -13,13 +13,7 @@
     ".flatpak/**": true,
     "_build/**": true
   },
-  "editor.defaultFormatter": "rome.rome",
-  "[javascript]": {
-    "editor.defaultFormatter": "rome.rome"
-  },
-  "[json]": {
-    "editor.defaultFormatter": "rome.rome"
-  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "rust-analyzer.server.path": "${workspaceFolder}/.flatpak/rust-analyzer.sh",
   "rust-analyzer.runnables.command": "${workspaceFolder}/.flatpak/cargo.sh",
   "rust-analyzer.files.excludeDirs": [".flatpak"],
@@ -29,5 +23,8 @@
   "vala.languageServerPath": "${workspaceFolder}/.flatpak/vala-language-server.sh",
   "mesonbuild.configureOnOpen": false,
   "mesonbuild.buildFolder": "_build",
-  "mesonbuild.mesonPath": "${workspaceFolder}/.flatpak/meson.sh"
+  "mesonbuild.mesonPath": "${workspaceFolder}/.flatpak/meson.sh",
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }
