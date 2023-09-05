@@ -1,6 +1,5 @@
 import GtkSource from "gi://GtkSource";
 import Spelling from "gi://Spelling";
-import Adw from "gi://Adw";
 
 GtkSource.init();
 

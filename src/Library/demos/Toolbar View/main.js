@@ -1,9 +1,3 @@
-import Gio from "gi://Gio";
-import Gdk from "gi://Gdk";
-import GObject from "gi://GObject";
-import Gtk from "gi://Gtk";
-import Adw from "gi://Adw";
-
 const topbar_select = workbench.builder.get_object("topbar_select");
 const bottombar_select = workbench.builder.get_object("bottombar_select");
 const toolbar_view = workbench.builder.get_object("toolbar_view");

@@ -8,6 +8,6 @@
     "mesonbuild.mesonbuild",
     "prince781.vala",
     "bodil.blueprint-gtk",
-    "rome.rome"
+    "dbaeumer.vscode-eslint"
   ]
 }

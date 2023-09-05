@@ -3,6 +3,7 @@ import Gdk from "gi://Gdk";
 import GObject from "gi://GObject";
 import GLib from "gi://GLib";
 import Gio from "gi://Gio";
+import { gettext as _ } from "gettext";
 
 import * as xml from "../langs/xml/xml.js";
 import * as postcss from "../lib/postcss.js";
@@ -262,11 +263,15 @@ export default function Previewer({
 
     try {
       await current?.closeInspector();
-    } catch {}
+    } catch {
+      /*  */
+    }
 
     try {
       await current?.stop();
-    } catch {}
+    } catch {
+      /*  */
+    }
 
     current = previewer;
 

@@ -5,6 +5,7 @@ import GLib from "gi://GLib";
 import { setConsoleLogDomain } from "console";
 import Xdp from "gi://Xdp";
 
+// eslint-disable-next-line no-restricted-globals
 imports.package.init({
   name: "@app_id@",
   version: "@version@",

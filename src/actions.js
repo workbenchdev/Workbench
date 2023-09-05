@@ -4,7 +4,6 @@ import GLib from "gi://GLib";
 import Gdk from "gi://Gdk";
 import Xdp from "gi://Xdp";
 import XdpGtk from "gi://XdpGtk4";
-import { gettext as _ } from "gettext";
 
 import About from "./about.js";
 import shortcutsWindow from "./shortcutsWindow.js";
