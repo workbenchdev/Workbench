@@ -1,5 +1,6 @@
 use crate::workbench;
 use glib::clone;
+use glib::signal::Propagation;
 use gtk::glib;
 use gtk::prelude::*;
 use gtk::SpinType;
@@ -10,7 +11,6 @@ pub fn main() {
     hours.set_text("00");
     minutes.set_text("00");
 
-
     hours.connect_value_changed(clone!(@weak minutes => move |hours| {
         tell_time(&hours.text(), &minutes.text());
     }));
@@ -19,18 +19,18 @@ pub fn main() {
         let value = hours.value();
         let text = format!("{:02}", value);
         hours.set_text(&text);
-        return true.into();
+        Propagation::Stop
     });
 
     minutes.connect_output(move |minutes| {
         let value = minutes.value();
         let text = format!("{:02}", value);
         minutes.set_text(&text);
-        return true.into();
+        Propagation::Stop
     });
 
     minutes.connect_wrapped(clone!(@weak hours => move |_| {
-      hours.spin(SpinType::StepForward, 1.0);
+        hours.spin(SpinType::StepForward, 1.0);
     }));
 
     minutes.connect_value_changed(move |minutes| {
@@ -39,5 +39,5 @@ pub fn main() {
 }
 
 fn tell_time(hours: &str, minutes: &str) {
-  println!("The time selected is {hours}:{minutes}");
+    println!("The time selected is {hours}:{minutes}");
 }
