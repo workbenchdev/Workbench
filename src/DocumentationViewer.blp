@@ -66,6 +66,16 @@ Adw.Window documentation_viewer {
 
             ListView search_list_view {
               enable-rubberband: true;
+              model: SingleSelection search_model {
+                model: SortListModel {
+                  sorter: StringSorter search_sorter {};
+                  model: FilterListModel filter_model{
+                    filter: StringFilter filter {
+                      match-mode: substring;
+                    };
+                  };
+                };
+              };
               factory: BuilderListItemFactory {
                 template ListItem {
                   child: Inscription {

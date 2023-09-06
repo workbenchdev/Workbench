@@ -96,10 +96,9 @@ export default function DocumentationViewer({ application }) {
     (item) => item.search_name,
     null,
   );
-  const filter = new Gtk.StringFilter({
-    expression: expr,
-    match_mode: Gtk.StringFilterMatchMode.SUBSTRING,
-  });
+  const filter_model = builder.get_object("filter_model");
+  const filter = filter_model.filter;
+  filter.expression = expr;
 
   search_entry.connect("search-changed", () => {
     if (search_entry.text) {
@@ -108,6 +107,14 @@ export default function DocumentationViewer({ application }) {
     } else {
       stack.visible_child = browse_page;
     }
+  });
+
+  const search_model = builder.get_object("search_model");
+  const sorter = builder.get_object("search_sorter");
+  sorter.expression = expr;
+  search_model.connect("selection-changed", () => {
+    const uri = search_model.selected_item.uri;
+    webview.load_uri(uri);
   });
 
   let promise_load;
@@ -119,31 +126,27 @@ export default function DocumentationViewer({ application }) {
     "webkit2gtk-4.1",
     "webkit2gtk-web-extension-4.1",
   ];
+
   async function open() {
     if (!promise_load)
       promise_load = getDirs(base_path, filter_docs)
         .then((dirs) => createIndex(base_path, dirs))
         .then((indexes) => {
+          const root_model = createTreeModel(base_path, indexes);
           console.time("Create browse list model");
-          browse_list_view.model = createBrowseListModel(
-            base_path,
-            indexes,
+          browse_list_view.model = createBrowseSelectionModel(
+            root_model,
             webview,
           );
           console.timeEnd("Create browse list model");
           console.time("Create search list model");
-          search_list_view.model = createSearchListModel(
-            base_path,
-            indexes,
-            webview,
-            filter,
-          );
+          const model = flattenModel(root_model);
+          filter_model.model = model;
           console.timeEnd("Create search list model");
         });
     console.time("Promise load");
     await promise_load;
     console.timeEnd("Promise load");
-    window.present();
   }
 
   const action_documentation = new Gio.SimpleAction({
@@ -151,50 +154,13 @@ export default function DocumentationViewer({ application }) {
     parameter_type: null,
   });
   action_documentation.connect("activate", () => {
+    window.present();
     open();
   });
   application.add_action(action_documentation);
 }
 
-function createSearchListModel(base_path, indexes, webview, filter) {
-  const model = newListStore();
-  for (let i = 0; i < indexes.length; i++) {
-    const index = indexes[i];
-    const dir = base_path.get_child(index.dir);
-    const meta = index.meta;
-    const namespace = `${meta.ns}-${meta.version}`;
-    model.append(
-      new DocumentationPage({
-        uri: dir.get_child("index.html").get_uri(),
-        search_name: namespace,
-      }),
-    );
-    for (const symbol of index.symbols) {
-      model.append(
-        new DocumentationPage({
-          search_name: getSearchNameForDocument(symbol, meta),
-          uri: `${dir.get_uri()}/${getLinkForDocument(symbol)}`,
-        }),
-      );
-    }
-  }
-  return createSearchSelectionModel(model, filter, webview);
-}
-
-function createSearchSelectionModel(model, filter, webview) {
-  const filter_model = Gtk.FilterListModel.new(model, filter);
-  const sorter = Gtk.StringSorter.new(filter.expression);
-  const sort_model = Gtk.SortListModel.new(filter_model, sorter);
-  const selection_model = Gtk.SingleSelection.new(sort_model);
-
-  selection_model.connect("selection-changed", () => {
-    const uri = selection_model.selected_item.uri;
-    webview.load_uri(uri);
-  });
-  return selection_model;
-}
-
-function createBrowseListModel(base_path, indexes, webview) {
+function createTreeModel(base_path, indexes) {
   const model = newListStore();
   for (let i = 0; i < indexes.length; i++) {
     const index = indexes[i];
@@ -203,12 +169,21 @@ function createBrowseListModel(base_path, indexes, webview) {
     model.append(
       new DocumentationPage({
         name: namespace,
+        search_name: namespace,
         uri: dir.get_child("index.html").get_uri(),
         children: getChildren(index, dir),
       }),
     );
   }
-  return createBrowseSelectionModel(model, webview);
+  return model;
+}
+
+function flattenModel(list_store, flattened_model = newListStore()) {
+  for (const item of list_store) {
+    if (item.search_name) flattened_model.append(item);
+    if (item.children) flattenModel(item.children, flattened_model);
+  }
+  return flattened_model;
 }
 
 async function createIndex(base_path, dirs) {
@@ -307,6 +282,7 @@ function getChildren(index, dir) {
       location.append(
         new DocumentationPage({
           name: symbol.name,
+          search_name: getSearchNameForDocument(symbol, index.meta),
           uri: `${dir.get_uri()}/${getLinkForDocument(symbol)}`,
         }),
       );
