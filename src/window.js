@@ -19,6 +19,7 @@ import prettier_babel from "./lib/prettier-babel.js";
 import prettier_postcss from "./lib/prettier-postcss.js";
 import Previewer from "./Previewer/Previewer.js";
 import Compiler from "./langs/vala/Compiler.js";
+import CCompiler from "./langs/c/Compiler.js";
 import ThemeSelector from "../troll/src/widgets/ThemeSelector.js";
 
 import resource from "./window.blp";
@@ -297,7 +298,16 @@ export default function Window({ application, session }) {
           }
         }
       } else if (language === "C") {
-        console.log("Compiling!")
+        compiler = compiler || CCompiler({ session });
+        const success = await compiler.compile();
+        if (success) {
+          await previewer.useExternal();
+          if (await compiler.run()) {
+            await previewer.open();
+          } else {
+            await previewer.useInternal();
+          }
+        }
       }
     } catch (err) {
       // prettier xml errors are not instances of Error

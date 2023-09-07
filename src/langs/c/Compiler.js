@@ -9,6 +9,8 @@ export default function Compiler({ session }) {
   const file_c = file.get_child("main.c");
 
   async function compile() {
+    console.log("compiling!")
+
     const gcc_launcher = new Gio.SubprocessLauncher();
     gcc_launcher.set_cwd(file.get_path());
     const gcc = gcc_launcher.spawnv([
