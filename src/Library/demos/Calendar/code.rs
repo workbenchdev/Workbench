@@ -15,7 +15,7 @@ pub fn main() {
         println!("{}", calendar.date().format("%Y").unwrap());
     });
 
-    calendar.connect_day_selected(move |calendar| {
+    calendar.connect_day_selected(|calendar| {
         println!("{}", calendar.date().format_iso8601().unwrap());
     });
 
