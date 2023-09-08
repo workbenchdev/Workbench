@@ -7,7 +7,7 @@ pub fn main() {
         println!("{}", calendar.date().format("%e").unwrap());
     });
 
-    calendar.connect_month_notify(move |calendar| {
+    calendar.connect_month_notify(|calendar| {
         println!("{}", calendar.date().format("%B").unwrap());
     });
 
