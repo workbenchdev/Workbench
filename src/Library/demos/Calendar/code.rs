@@ -11,7 +11,7 @@ pub fn main() {
         println!("{}", calendar.date().format("%B").unwrap());
     });
 
-    calendar.connect_year_notify(move |calendar| {
+    calendar.connect_year_notify(|calendar| {
         println!("{}", calendar.date().format("%Y").unwrap());
     });
 
