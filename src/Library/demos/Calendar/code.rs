@@ -3,7 +3,7 @@ use crate::workbench;
 pub fn main() {
     let calendar: gtk::Calendar = workbench::builder().object("calendar").unwrap();
 
-    calendar.connect_day_notify(move |calendar| {
+    calendar.connect_day_notify(|calendar| {
         println!("{}", calendar.date().format("%e").unwrap());
     });
 
