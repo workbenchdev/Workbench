@@ -22,7 +22,6 @@ fn rainbow_attributes(input_str: &str) -> pango::AttrList {
 
     // Create a color array with the length needed to color all the letters
     let mut color_array = Vec::new();
-
     let mut i = 0;
     while i < input_str.chars().count() {
         color_array.extend_from_slice(&rainbow_colors);
