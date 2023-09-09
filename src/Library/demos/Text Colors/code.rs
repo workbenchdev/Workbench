@@ -15,9 +15,9 @@ fn update_attributes(label: &gtk::Label) {
     label.set_attributes(Some(&rainbow_attributes(label.label().as_str())));
 }
 
-pub fn rainbow_attributes(input_str: &str) -> pango::AttrList {
-    // Generates an Attribute List that styles the label in rainbow colors.
-    // The `str` parameter is needed to detect string length + position of spaces
+/// Generates an Attribute List that styles the label in rainbow colors.
+/// The `str` parameter is needed to detect string length + position of spaces
+fn rainbow_attributes(input_str: &str) -> pango::AttrList {
     let rainbow_colors = ["#D00", "#C50", "#E90", "#090", "#24E", "#55E", "#C3C"];
 
     // Create a color array with the length needed to color all the letters
