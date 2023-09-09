@@ -197,6 +197,7 @@ export default function PanelUI({
   panel.stop = stop;
   panel.update = update;
   panel.panel = panel_ui;
+  panel.blueprint = blueprint;
 
   return panel;
 }

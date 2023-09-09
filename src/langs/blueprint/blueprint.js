@@ -1,4 +1,5 @@
 import GLib from "gi://GLib";
+import Source from "gi://GtkSource";
 
 import LSPClient from "../../lsp/LSPClient.js";
 
@@ -40,7 +41,70 @@ export function setup({ document }) {
       });
       return blp;
     },
+    async format(text) {
+      // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_formatting
+      const text_edits = await lspc.request("textDocument/formatting", {
+        textDocument: {
+          uri: file.get_uri(),
+        },
+        options: {
+          tabSize: 2,
+          insertSpaces: true,
+          trimTrailingWhitespace: true,
+          insertFinalNewline: true,
+          trimFinalNewlines: true,
+        },
+      });
+
+      console.log(text_edits);
+      if (!text_edits) return text;
+
+      return applyTextEdits(text_edits, text);
+    },
   };
+}
+
+export function applyTextEdits(text_edits, text) {
+  const buffer = new Source.Buffer({ text });
+
+  let new_text = text;
+  // let new_text = text;
+
+  for (const text_edit of text_edits) {
+    new_text = applyTextEdit(text_edit, buffer, new_text);
+  }
+
+  return new_text;
+}
+
+function applyTextEdit({ range, newText }, buffer, text) {
+  const { start, end } = range;
+  const [, start_iter] = buffer.get_iter_at_line_offset(
+    start.line,
+    start.character,
+  );
+  const [, end_iter] = buffer.get_iter_at_line_offset(end.line, end.character);
+
+  console.log(
+    text.slice(0, start_iter.get_offset()) +
+      newText +
+      text.slice(end_iter.get_offset()),
+  );
+
+  return (
+    text.slice(0, start_iter.get_offset()) +
+    newText +
+    text.slice(end_iter.get_offset())
+  );
+
+  // const bounds = new_buffer.get_bounds();
+
+  // const str =
+  //   new_buffer.get_slice(bounds[0], start_iter, false) +
+  //   newText +
+  //   new_buffer.get_slice(end_iter, bounds[1], false);
+  // console.log(str);
+  // new_buffer.text = str;
 }
 
 const SYSLOG_IDENTIFIER = pkg.name;
@@ -72,6 +136,7 @@ function createLSPClient({ code_view, file }) {
     uri,
     languageId: "blueprint",
     buffer: code_view.buffer,
+    quiet: false,
   });
 
   lspc.connect("exit", () => {

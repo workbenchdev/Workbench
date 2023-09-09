@@ -7,3 +7,5 @@ import "gi://Adw?version=1";
 import "gi://Soup?version=3.0";
 import "gi://WebKit?version=6.0";
 import "gi://Pango?version=1.0";
+
+globalThis.pkg = {};

@@ -268,6 +268,9 @@ export default function Window({ application, session }) {
       await format(langs.xml.document.code_view, (text) => {
         return xml.format(text, 2);
       });
+      await format(langs.blueprint.document.code_view, async (text) => {
+        return panel_ui.blueprint.format(text);
+      });
     }
   }
 
