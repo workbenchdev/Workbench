@@ -1,5 +1,4 @@
 {
-  "name": "Image",
   "category": "user_interface",
   "description": "Display images as icons",
   "panels": ["ui", "preview"],

@@ -1,0 +1,68 @@
+root: true
+env:
+  es2023: true
+parser: "@babel/eslint-parser"
+parserOptions:
+  sourceType: module
+  ecmaVersion: 2023
+  requireConfigFile: false
+  babelOptions:
+    plugins:
+      - "@babel/plugin-syntax-import-assertions"
+extends:
+  - eslint:recommended
+  - plugin:import/errors
+  - plugin:import/warnings
+  - plugin:prettier/recommended
+globals:
+  __DEV__: readonly
+  pkg: readonly
+  # gjs
+  ARGV: readonly
+  Debugger: readonly
+  GIRepositoryGType: readonly
+  globalThis: readonly
+  imports: readonly
+  Intl: readonly
+  log: readonly
+  logError: readonly
+  print: readonly
+  printerr: readonly
+  window: readonly
+  TextEncoder: readonly
+  TextDecoder: readonly
+  console: readonly
+  setTimeout: readonly
+  setInterval: readonly
+  clearTimeout: readonly
+  clearInterval: readonly
+rules:
+  # Possible Problems
+  # https://eslint.org/docs/latest/rules/#possible-problems
+  array-callback-return: [error] # https://eslint.org/docs/latest/rules/array-callback-return
+  no-duplicate-imports: [error] # https://eslint.org/docs/latest/rules/no-duplicate-imports
+  no-new-native-nonconstructor: [error] # https://eslint.org/docs/latest/rules/no-new-native-nonconstructor
+  # TODO: log and logError
+  no-restricted-globals: [error, window, printerr, print, imports] # https://eslint.org/docs/rules/no-restricted-globals
+  no-unused-vars: # https://eslint.org/docs/latest/rules/no-unused-vars
+    - error
+    - vars: all
+      args: none
+      ignoreRestSiblings: false
+
+  # Suggestions
+  # https://eslint.org/docs/latest/rules/#suggestions
+  eqeqeq: [error, always] # https://eslint.org/docs/rules/eqeqeq
+  no-implicit-globals: [error] # https://eslint.org/docs/latest/rules/no-implicit-globals
+  no-var: [error] # https://eslint.org/docs/rules/no-var
+  prefer-arrow-callback: [
+      error,
+      { allowNamedFunctions: true, allowUnboundThis: true },
+    ] # https://eslint.org/docs/rules/prefer-arrow-callback
+  prefer-const: [error] # https://eslint.org/docs/rules/prefer-const
+
+  # eslint-plugin-import
+  # https://github.com/benmosher/eslint-plugin-import/
+  import/extensions: ["error", "ignorePackages"]
+  import/no-unresolved:
+    [2, { ignore: ["gi://*", "resource://*", "cairo", "gettext", "system"] }]

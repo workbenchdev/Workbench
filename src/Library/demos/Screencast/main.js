@@ -1,4 +1,3 @@
-import Gtk from "gi://Gtk";
 import Xdp from "gi://Xdp";
 import XdpGtk from "gi://XdpGtk4";
 import GObject from "gi://GObject";

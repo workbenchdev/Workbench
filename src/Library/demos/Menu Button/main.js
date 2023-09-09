@@ -1,5 +1,3 @@
-import Gtk from "gi://Gtk";
-
 const circular_switch = workbench.builder.get_object("circular_switch");
 const secondary_button = workbench.builder.get_object("secondary");
 

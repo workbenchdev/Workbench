@@ -6,6 +6,7 @@ import { LSPError } from "./LSP.js";
 import { getPid } from "../../troll/src/util.js";
 import { once } from "../../troll/src/async.js";
 
+// eslint-disable-next-line no-restricted-globals
 const { addSignalMethods } = imports.signals;
 
 const encoder_utf8 = new TextEncoder("utf8");
@@ -156,6 +157,7 @@ export default class LSPClient {
   async _read_headers() {
     const headers = Object.create(null);
 
+    // eslint-disable-next-line no-constant-condition
     while (true) {
       const [bytes] = await this.stdout.read_line_async(
         GLib.PRIORITY_DEFAULT,

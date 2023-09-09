@@ -1,5 +1,4 @@
 {
-  "name": "Launcher",
   "category": "platform",
   "description": "Open a File or URI",
   "panels": ["code", "preview"],

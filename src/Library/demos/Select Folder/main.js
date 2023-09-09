@@ -1,7 +1,5 @@
 import Gtk from "gi://Gtk";
-import Gdk from "gi://Gdk";
 import Gio from "gi://Gio";
-import GLib from "gi://GLib";
 
 Gio._promisify(
   Gtk.FileDialog.prototype,
