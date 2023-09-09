@@ -6,9 +6,7 @@ use gtk::pango;
 
 pub fn main() {
     let label: gtk::Label = workbench::builder().object("label").unwrap();
-    label.connect_label_notify(|label| {
-        update_attributes(label);
-    });
+    label.connect_label_notify(update_attributes);
     update_attributes(&label);
 }
 
