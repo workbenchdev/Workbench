@@ -56,10 +56,11 @@ export function setup({ document }) {
         },
       });
 
-      console.log(text_edits);
-      if (!text_edits) return text;
+      if (!text_edits || text_edits.length !== 1) return text;
+      const newText = text_edits[0].newText;
+      if (!newText) return text;
 
-      return applyTextEdits(text_edits, text);
+      return newText;
     },
   };
 }
@@ -124,12 +125,12 @@ export function logBlueprintInfo(info) {
 }
 
 function createLSPClient({ code_view, file }) {
-  const bin = "/app/bin/blueprint-compiler";
+  // const bin = "/app/bin/blueprint-compiler";
   const uri = file.get_uri();
-  // const bin = GLib.build_filenamev([
-  //   pkg.sourcedir,
-  //   "blueprint-compiler/blueprint-compiler.py",
-  // ]);
+  const bin = GLib.build_filenamev([
+    "/home/sonny/Projects/GNOME",
+    "blueprint-compiler/blueprint-compiler.py",
+  ]);
 
   const lspc = new LSPClient([bin, "lsp"], {
     rootUri: file.get_parent().get_uri(),
