@@ -10,8 +10,8 @@ pub fn main() {
     update_attributes(&label);
 }
 
+/// A Pango Attribute List is used to style the label
 fn update_attributes(label: &gtk::Label) {
-    // A Pango Attribute List is used to style the label
     label.set_attributes(Some(&rainbow_attributes(label.label().as_str())));
 }
 
