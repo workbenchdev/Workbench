@@ -82,22 +82,15 @@ pub fn go_to_location(
     }
 
     if latitude > SHUMATE_MAX_LATITUDE || latitude < SHUMATE_MIN_LATITUDE {
-        println!(
-            "Latitudes must be between {} and {}!",
-            SHUMATE_MIN_LATITUDE, SHUMATE_MAX_LATITUDE
-        );
+        println!("Latitudes must be between {SHUMATE_MIN_LATITUDE} and {SHUMATE_MAX_LATITUDE}!");
         return;
     }
 
     if latitude > SHUMATE_MAX_LONGITUDE || latitude < SHUMATE_MIN_LONGITUDE {
-        println!(
-            "Longitudes must be between {} and {}!",
-            SHUMATE_MIN_LONGITUDE, SHUMATE_MAX_LONGITUDE
-        );
+        println!("Longitudes must be between {SHUMATE_MIN_LONGITUDE} and {SHUMATE_MAX_LONGITUDE}!");
         return;
     }
 
     viewport.set_zoom_level(5.);
     map.go_to(latitude, longitude);
 }
-
