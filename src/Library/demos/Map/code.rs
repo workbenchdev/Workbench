@@ -9,6 +9,7 @@ use shumate::prelude::*;
 use shumate::MAP_SOURCE_OSM_MAPNIK;
 
 pub fn main() {
+    gtk::init().unwrap();
     let map_widget: shumate::SimpleMap = workbench::builder().object("map_widget").unwrap();
     let registry = shumate::MapSourceRegistry::with_defaults();
 
