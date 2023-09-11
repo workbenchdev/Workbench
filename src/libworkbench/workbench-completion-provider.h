@@ -17,7 +17,6 @@ G_BEGIN_DECLS
 
 #define WORKBENCH_TYPE_COMPLETION_PROVIDER (workbench_completion_provider_get_type())
 
-WORKBENCH_EXPORT
 G_DECLARE_DERIVABLE_TYPE (WorkbenchCompletionProvider, workbench_completion_provider, WORKBENCH, COMPLETION_PROVIDER, GObject)
 
 struct _WorkbenchCompletionProviderClass
