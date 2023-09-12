@@ -66,6 +66,17 @@ Adw.Window documentation_viewer {
 
             ListView search_list_view {
               enable-rubberband: true;
+              model: SingleSelection search_model {
+                model: SortListModel {
+                  sorter: StringSorter search_sorter {};
+                  model: FilterListModel filter_model {
+                    filter: StringFilter filter {
+                      match-mode: substring;
+                    };
+                  };
+                };
+              };
+
               factory: BuilderListItemFactory {
                 template ListItem {
                   child: Inscription {
@@ -87,13 +98,14 @@ Adw.Window documentation_viewer {
       child: Adw.ToolbarView {
         [top]
         Adw.HeaderBar {
-          //show-title: false;
+          show-title: false;
           [start]
           Button button_back {
             icon-name: "go-previous-symbolic";
             tooltip-text: _("Back");
             styles ["flat"]
           }
+
           [start]
           Button button_forward {
             icon-name: "go-next-symbolic";
