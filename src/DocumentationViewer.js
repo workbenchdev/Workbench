@@ -136,7 +136,7 @@ export default function DocumentationViewer({ application }) {
   });
   action_documentation.connect("activate", () => {
     window.present();
-    open();
+    open().catch(console.error);
   });
   application.add_action(action_documentation);
 }
@@ -159,8 +159,7 @@ async function loadLibrary(model, directory) {
 
     model.append(page);
   } catch (error) {
-    if (!error.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.NOT_FOUND))
-      logError(error);
+    if (!error.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.NOT_FOUND)) throw error;
   }
 }
 
@@ -177,7 +176,7 @@ async function scanLibraries(model, base_dir) {
   const libraries = [];
 
   const iter = await base_dir.enumerate_children_async(
-    "standard::*",
+    "standard::name,standard::type",
     Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
     GLib.PRIORITY_DEFAULT,
     null,
@@ -215,12 +214,13 @@ function createBrowseSelectionModel(root_model, webview) {
     false,
     (item) => item.children,
   );
-  const expr = new Gtk.ClosureExpression(
-    GObject.TYPE_STRING,
-    (item) => item.search_name,
-    null,
+  const sorter = Gtk.TreeListRowSorter.new(
+    Gtk.CustomSorter.new((a, b) => {
+      const name1 = a.name;
+      const name2 = b.name;
+      return name1.localeCompare(name2);
+    }),
   );
-  const sorter = Gtk.TreeListRowSorter.new(Gtk.StringSorter.new(expr));
   const sort_model = Gtk.SortListModel.new(tree_model, sorter);
   const selection_model = Gtk.SingleSelection.new(sort_model);
 
