@@ -38,7 +38,7 @@ function onClosed() {
 
 function onError(_self, err) {
   console.log("error");
-  logError(err);
+  console.error(err);
 }
 
 function onMessage(_self, type, message) {
@@ -56,7 +56,9 @@ function send(message) {
 }
 
 button_connect.connect("clicked", () => {
-  connect().catch(logError);
+  connect().catch((err)=>{
+    console.error(err);
+  });
 });
 
 button_disconnect.connect("clicked", () => {

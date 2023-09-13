@@ -34,9 +34,13 @@ async function selectMultipleFolders() {
 }
 
 button_single.connect("clicked", () => {
-  selectFolder().catch(logError);
+  selectFolder().catch((err)=>{
+    console.error(err);
+  });
 });
 
 button_multiple.connect("clicked", () => {
-  selectMultipleFolders().catch(logError);
+  selectMultipleFolders().catch((err)=>{
+    console.error(err);
+  });
 });

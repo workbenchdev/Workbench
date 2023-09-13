@@ -27,7 +27,9 @@ const file_launcher = new Gtk.FileLauncher({
 });
 
 launch_file.connect("clicked", () => {
-  file_launcher.launch(workbench.window, null).catch(logError);
+  file_launcher.launch(workbench.window, null).catch((err)=>{
+    console.error(err);
+  });
 });
 
 file_launcher.connect("notify::file", () => {
@@ -40,7 +42,9 @@ file_launcher.connect("notify::file", () => {
 });
 
 file_location.connect("clicked", () => {
-  file_launcher.open_containing_folder(workbench.window, null).catch(logError);
+  file_launcher.open_containing_folder(workbench.window, null).catch((err)=>{
+    console.error(err);
+  });
 });
 
 change_file.connect("clicked", () => {
@@ -49,7 +53,9 @@ change_file.connect("clicked", () => {
     .then((file) => {
       file_launcher.file = file;
     })
-    .catch(logError);
+    .catch((err)=>{
+      console.error(err);
+    });
 });
 
 // URI Launcher
@@ -57,7 +63,9 @@ change_file.connect("clicked", () => {
 uri_launch.connect("clicked", () => {
   new Gtk.UriLauncher({ uri: uri_details.text })
     .launch(workbench.window, null)
-    .catch(logError);
+    .catch((err)=>{
+      console.error(err);
+    });
 });
 uri_details.connect("changed", () => {
   const text = uri_details.text;

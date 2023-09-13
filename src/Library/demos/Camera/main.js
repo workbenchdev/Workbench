@@ -14,7 +14,9 @@ const output = workbench.builder.get_object("output");
 const button = workbench.builder.get_object("button");
 
 button.connect("clicked", () => {
-  accessCamera().catch(logError);
+  accessCamera().catch((err)=>{
+    console.error(err);
+  });
 });
 
 async function accessCamera() {
