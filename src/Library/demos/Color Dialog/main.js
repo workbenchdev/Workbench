@@ -1,25 +1,43 @@
+import Gtk from "gi://Gtk";
 import Gdk from "gi://Gdk";
 import Gio from "gi://Gio";
-import Xdp from "gi://Xdp";
-import XdpGtk from "gi://XdpGtk4";
 
-Gio._promisify(Xdp.Portal.prototype, "pick_color", "pick_color_finish");
+Gio._promisify(Gtk.ColorDialog.prototype, "choose_rgba", "choose_rgba_finish");
 
-const portal = new Xdp.Portal();
-const parent = XdpGtk.parent_new_gtk(workbench.window);
-const button = workbench.builder.get_object("button");
+const color_dialog_button = workbench.builder.get_object("color_dialog_button");
+const custom_button = workbench.builder.get_object("custom_button");
 
-async function onClicked() {
-  // result is a GVariant of the form (ddd), containing red, green and blue components in the range [0,1]
-  const result = await portal.pick_color(parent, null);
-  const [r, g, b] = result.deepUnpack();
+const color = new Gdk.RGBA();
+color.parse("red");
 
-  const color = new Gdk.RGBA({ red: r, green: g, blue: b, alpha: 1.0 });
-  console.log(`Selected color is: ${color.to_string()}`);
-}
+const dialog_standard = new Gtk.ColorDialog({
+  title: "Select a color",
+  modal: true,
+  with_alpha: true,
+});
 
-button.connect("clicked", () => {
+color_dialog_button.dialog = dialog_standard;
+color_dialog_button.rgba = color;
+
+color_dialog_button.connect("notify::rgba", () => {
+  console.log(
+    `Color Dialog Button: The color selected is ${color_dialog_button.rgba.to_string()}`,
+  );
+});
+
+const dialog_custom = new Gtk.ColorDialog({
+  title: "Select a color",
+  modal: true,
+  with_alpha: false,
+});
+
+custom_button.connect("clicked", () => {
   onClicked().catch((err)=>{
     console.error(err);
   });
 });
+
+async function onClicked() {
+  const color = await dialog_custom.choose_rgba(workbench.window, null, null);
+  console.log(`Custom Button: The color selected is ${color.to_string()}`);
+}
