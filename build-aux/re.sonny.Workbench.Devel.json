@@ -12,10 +12,10 @@
   "build-options": {
     "append-path": "/usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/vala/bin",
     "append-ld-library-path": "/usr/lib/sdk/vala/lib",
-    "env": {
-      "CARGO_HOME": "/run/build/cargo-c/cargo"
-    },
-    "test-args": ["--socket=x11", "--share=network"]
+    "test-args": [
+      "--socket=x11",
+      "--share=network"
+    ]
   },
   "command": "workbench",
   "finish-args": [
@@ -42,17 +42,9 @@
     "*.a"
   ],
   "modules": [
-    {
-      "name": "cargo-c",
-      "buildsystem": "simple",
-      "build-commands": ["cargo install cargo-c --root /app"],
-      "build-options": {
-        "build-args": ["--share=network"]
-      },
-      "cleanup": ["*"]
-    },
-    "modules/gi-docgen.json",
+    "modules/cargo-c.json",
     "modules/gst-plugins-rs.json",
+    "modules/gi-docgen.json",
     "modules/vte.json",
     "modules/libshumate.json",
     "modules/libportal.json",
@@ -65,7 +57,9 @@
       "name": "Workbench",
       "buildsystem": "meson",
       "builddir": true,
-      "config-opts": ["-Dprofile=development"],
+      "config-opts": [
+        "-Dprofile=development"
+      ],
       "sources": [
         {
           "type": "dir",

@@ -1,0 +1,24 @@
+{
+  "name": "cargo-c",
+  "buildsystem": "simple",
+  "sources": [
+    {
+      "type": "archive",
+      "url": "https://github.com/lu-zero/cargo-c/archive/refs/tags/v0.9.23.tar.gz",
+      "sha256": "bb6c119d72682095fe05fcb6b6eead33090f3eb6e71950f21b8f51a2013984ad"
+    },
+    /* Generated with flatpak-builder-tools */
+    "cargo-c-sources.json"
+  ],
+  "build-commands": [
+    "cargo install --offline --path . --root /app"
+  ],
+  "build-options": {
+    "env": {
+      "CARGO_HOME": "/run/build/cargo-c/cargo"
+    }
+  },
+  "cleanup": [
+    "*"
+  ]
+}

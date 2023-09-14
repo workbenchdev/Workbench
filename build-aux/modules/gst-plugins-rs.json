@@ -4,14 +4,19 @@
   "sources": [
     {
       "type": "archive",
-      "url": "https://gitlab.freedesktop.org/gstreamer/gst-plugins-rs/-/archive/0.11.0/gst-plugins-rs-0.11.0.tar.gz",
-      "sha256": "b04bd028a0c9eb6c49caf1a011e779731156ff2ab2d5342efd658d0eb014f843"
-    }
+      "url": "https://crates.io/api/v1/crates/gst-plugin-gtk4/0.11.0/download",
+      "dest-filename": "gst-plugin-gtk4-0.11.0.tar.gz",
+      "sha256": "c3ee0132150ee059c35642b51c5d663eadb9fa4d21f83a56dd584b03c1c45ffd"
+    },
+    /* Generated with flatpak-builder-tools */
+    "gst-plugin-rs-sources.json"
+  ],
+  "build-commands": [
+    "cargo cinstall --offline --release --features=wayland,x11glx,x11egl --library-type=cdylib --prefix=/app"
   ],
   "build-options": {
-    "build-args": ["--share=network"]
-  },
-  "build-commands": [
-    "cargo cinstall --features wayland,x11glx,x11egl -p gst-plugin-gtk4 --prefix=/app"
-  ]
+    "env": {
+      "CARGO_HOME": "/run/build/gst-plugin-gtk4/cargo"
+    }
+  }
 }
