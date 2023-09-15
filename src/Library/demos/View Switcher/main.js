@@ -9,10 +9,9 @@ notifications_page.badge_number = notification_count;
 
 for (let i = 0; i < notification_count; i++) {
   const notification_row = new Adw.ActionRow({
+    title: "Notification",
     selectable: false,
   });
-
-  notification_row.title = "Notification";
 
   const button = new Gtk.Button({
     halign: "center",
