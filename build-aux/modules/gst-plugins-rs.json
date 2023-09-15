@@ -12,11 +12,12 @@
     "gst-plugin-rs-sources.json"
   ],
   "build-commands": [
-    "cargo cinstall --offline --release --features=wayland,x11glx,x11egl --library-type=cdylib --prefix=/app"
+    "cargo cinstall --release --features=wayland,x11glx,x11egl --library-type=cdylib --prefix=/app"
   ],
   "build-options": {
     "env": {
       "CARGO_HOME": "/run/build/gst-plugin-gtk4/cargo"
-    }
+    },
+    "build-args": ["--socket=x11", "--share=network"]
   }
 }
