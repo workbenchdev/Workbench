@@ -26,8 +26,8 @@ pub fn main() {
             .build();
 
         button.connect_clicked(clone!(
-            @strong notification_count, @strong notifications_page,
-            @strong notification_list, @strong notification_row => move |_| {
+            @strong notifications_page, @strong notification_list,
+            @strong notification_row => move |_| {
                 notifications_page.set_badge_number(notifications_page.badge_number() - 1);
                 notification_list.remove(&notification_row);
 
