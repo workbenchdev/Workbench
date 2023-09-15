@@ -2,7 +2,6 @@ use crate::workbench;
 use adw::prelude::*;
 
 use crate::glib::clone;
-use gtk::glib;
 use std::cell::Cell;
 use std::rc::Rc;
 
@@ -28,8 +27,8 @@ pub fn main() {
             .build();
 
         button.connect_clicked(clone!(
-            @weak notification_count, @weak notifications_page,
-            @weak notification_list, @weak notification_row => move |_| {
+            @strong notification_count, @strong notifications_page,
+            @strong notification_list, @strong notification_row => move |_| {
                 notification_count.set(notification_count.get() - 1);
                 notifications_page.set_badge_number(notification_count.get());
                 notification_list.remove(&notification_row);
