@@ -16,7 +16,7 @@
   ],
   "build-options": {
     "env": {
-      "CARGO_HOME": "/run/build/gst-plugin-gtk4/cargo"
+      "CARGO_HOME": "/run/build/gst-plugins-rs/cargo"
     }
   }
 }
