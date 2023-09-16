@@ -24,9 +24,7 @@ const button_stop = workbench.builder.get_object("button_stop");
 let ids = [];
 
 button_start.connect("clicked", () => {
-  startSession().catch((err)=>{
-    console.error(err);
-  });
+  startSession().catch(console.error);
 });
 
 button_stop.connect("clicked", () => {

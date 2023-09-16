@@ -33,15 +33,11 @@ const monitor_for_dir = file_dir.monitor(
 const monitor_for_file = file.monitor(Gio.FileMonitorFlags.NONE, null);
 
 delete_file.connect("clicked", () => {
-  file.delete_async(GLib.PRIORITY_DEFAULT, null).catch((err)=>{
-    console.error(err);
-  });
+  file.delete_async(GLib.PRIORITY_DEFAULT, null).catch(console.error);
 });
 
 view_file.connect("clicked", () => {
-  file_launcher.launch(workbench.window, null).catch((err)=>{
-    console.error(err);
-  });
+  file_launcher.launch(workbench.window, null).catch(console.error);
 });
 
 monitor_for_file.connect("changed", (monitor, file, other_file, event) => {
@@ -84,7 +80,5 @@ edit_file.connect("clicked", () => {
       Gio.FileCreateFlags.REPLACE_DESTINATION,
       null,
     )
-    .catch((err)=>{
-      console.error(err);
-    });
+    .catch(logError);
 });

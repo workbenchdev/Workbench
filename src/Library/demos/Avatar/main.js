@@ -19,9 +19,7 @@ const dialog = new Gtk.FileDialog({
 });
 
 button.connect("clicked", () => {
-  onClicked().catch((err)=>{
-    console.error(err);
-  });
+  onClicked().catch(console.error);
 });
 
 async function onClicked() {

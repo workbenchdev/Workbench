@@ -39,13 +39,9 @@ async function openMultipleFiles() {
 }
 
 button_single.connect("clicked", () => {
-  openFile().catch((err)=>{
-    console.error(err);
-  });
+  openFile().catch(console.error);
 });
 
 button_multiple.connect("clicked", () => {
-  openMultipleFiles().catch((err)=>{
-    console.error(err);
-  });
+  openMultipleFiles().catch(console.error);
 });

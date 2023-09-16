@@ -32,9 +32,7 @@ const dialog_custom = new Gtk.FontDialog({
   modal: true,
 });
 
-custom_button.connect("clicked", () => onClicked().catch((err)=>{
-  console.error(err);
-}));
+custom_button.connect("clicked", () => onClicked().catch(console.error));
 
 async function onClicked() {
   const result = await dialog_custom.choose_family(

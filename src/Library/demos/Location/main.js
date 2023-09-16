@@ -103,9 +103,7 @@ portal.connect(
 );
 
 start.connect("clicked", () => {
-  startSession().catch((err)=>{
-    console.error(err);
-  });
+  startSession().catch(console.error);
 });
 
 close.connect("clicked", () => {

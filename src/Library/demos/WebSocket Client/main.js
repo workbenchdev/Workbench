@@ -56,9 +56,7 @@ function send(message) {
 }
 
 button_connect.connect("clicked", () => {
-  connect().catch((err)=>{
-    console.error(err);
-  });
+  connect().catch(console.error);
 });
 
 button_disconnect.connect("clicked", () => {

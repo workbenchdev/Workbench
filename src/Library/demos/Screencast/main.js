@@ -20,9 +20,7 @@ const output = workbench.builder.get_object("output");
 const button = workbench.builder.get_object("button");
 
 button.connect("clicked", () => {
-  startScreencastSession().catch((err)=>{
-    console.error(err);
-  });
+  startScreencastSession().catch(console.error);
 });
 
 async function startScreencastSession() {
