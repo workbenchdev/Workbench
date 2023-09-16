@@ -7,6 +7,7 @@ edition = "2021"
 
 [dependencies]
 libc = "0.2"
+rand = "0.8.5"
 url = "2.4.0"
 
 
@@ -23,6 +24,11 @@ features = ["v1_4", "gtk_v4_10"]
 [dependencies.ashpd]
 version = "0.6.2"
 features = ["gtk4"]
+
+[dependencies.shumate]
+version = "0.4.1"
+package = "libshumate"
+features = ["v1_1"]
 
 [lib]
 crate-type = ["cdylib"]

@@ -88,3 +88,9 @@ Gio._promisify(
   "load_contents_async",
   "load_contents_finish",
 );
+
+Gio._promisify(
+  Gio.FileEnumerator.prototype,
+  "next_files_async",
+  "next_files_finish",
+);

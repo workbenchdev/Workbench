@@ -4,7 +4,6 @@ import GObject from "gi://GObject";
 import Gio from "gi://Gio";
 import Adw from "gi://Adw";
 import Vte from "gi://Vte";
-import { gettext as _ } from "gettext";
 
 import * as xml from "./langs/xml/xml.js";
 import { getLanguage, languages } from "./util.js";
@@ -14,7 +13,7 @@ import PanelCode from "./PanelCode.js";
 import PanelStyle from "./PanelStyle.js";
 import Devtools from "./Devtools.js";
 
-import prettier from "./lib/prettier.js";
+import { format as prettier } from "./lib/prettier.js";
 import prettier_babel from "./lib/prettier-babel.js";
 import prettier_postcss from "./lib/prettier-postcss.js";
 import prettier_estree from "./lib/prettier-estree.js";
@@ -27,14 +26,10 @@ import resource from "./window.blp";
 
 import "./icons/re.sonny.Workbench-beaker.svg" with { type: "icon" };
 import "./icons/re.sonny.Workbench-code-symbolic.svg" with { type: "icon" };
-import "./icons/re.sonny.Workbench-placeholder-symbolic.svg" with {
-  type: "icon",
-};
+import "./icons/re.sonny.Workbench-placeholder-symbolic.svg" with { type: "icon" };
 import "./icons/re.sonny.Workbench-preview-symbolic.svg" with { type: "icon" };
 import "./icons/re.sonny.Workbench-ui-symbolic.svg" with { type: "icon" };
-import "./icons/re.sonny.Workbench-screenshot-symbolic.svg" with {
-  type: "icon",
-};
+import "./icons/re.sonny.Workbench-screenshot-symbolic.svg" with { type: "icon" };
 
 import "./widgets/Modal.js";
 import "./widgets/CodeView.js";
@@ -240,8 +235,8 @@ export default function Window({ application, session }) {
     );
 
     if (!success || stderr !== "") {
-      logError(`Error running rustfmt: ${stderr}`);
-      return text; // Return the original text if formatting fails
+      console.error(`Error running rustfmt: ${stderr}`);
+      return text;
     }
 
     return stdout;
@@ -251,7 +246,7 @@ export default function Window({ application, session }) {
     if (panel_code.panel.visible) {
       if (panel_code.language === "JavaScript") {
         await format(langs.javascript.document.code_view, (text) => {
-          return prettier.format(text, {
+          return prettier(text, {
             parser: "babel",
             plugins: [prettier_babel, prettier_estree],
           });
@@ -265,7 +260,7 @@ export default function Window({ application, session }) {
 
     if (builder.get_object("panel_style").visible) {
       await format(langs.css.document.code_view, (text) => {
-        return prettier.format(text, {
+        return prettier(text, {
           parser: "css",
           plugins: [prettier_postcss],
         });

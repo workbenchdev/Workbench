@@ -1,4 +1,3 @@
-import Gtk from "gi://Gtk";
 import Adw from "gi://Adw";
 
 const tab_view = workbench.builder.get_object("tab_view");

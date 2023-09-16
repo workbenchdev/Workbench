@@ -1,5 +1,3 @@
-import Gtk from "gi://Gtk";
-
 const breakpoint = workbench.builder.get_object("breakpoint");
 
 breakpoint.connect("apply", () => {

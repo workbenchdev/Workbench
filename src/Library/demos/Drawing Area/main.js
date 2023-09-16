@@ -40,7 +40,7 @@ scaleRotate.connect("value-changed", () => {
     const y = triangle_original[i][1];
     let angle = Math.atan(Math.abs(y) / Math.abs(x));
     if (x > 0 && y > 0) {
-      angle = angle;
+      // no change
     }
     if (x < 0 && y > 0) {
       angle = Math.PI - angle;
@@ -53,7 +53,7 @@ scaleRotate.connect("value-changed", () => {
     }
     if (x === 0) {
       if (y > 0) {
-        angle = angle;
+        // no change
       }
       if (y < 0) {
         angle = -1 * angle;
@@ -61,10 +61,10 @@ scaleRotate.connect("value-changed", () => {
     }
     if (y === 0) {
       if (x > 0) {
-        angle = angle;
+        // no change
       }
       if (x < 0) {
-        angle = M_PI;
+        // no change
       }
     }
     // Add to original angle scale value
