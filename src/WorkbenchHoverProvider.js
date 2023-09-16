@@ -48,7 +48,7 @@ class WorkbenchHoverProvider extends GObject.Object {
       if (diagnostics.length < 1) return [false, null];
       this.showDiagnostics(display, diagnostics);
     } catch (err) {
-      logError(err);
+      console.error(err);
       return [false, null];
     }
 

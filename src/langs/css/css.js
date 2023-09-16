@@ -8,10 +8,10 @@ export function setup({ document }) {
     file,
   });
 
-  lspc.start().catch(logError);
+  lspc.start().catch(console.error);
   code_view.buffer.connect("modified-changed", () => {
     if (!code_view.buffer.get_modified()) return;
-    lspc.didChange().catch(logError);
+    lspc.didChange().catch(console.error);
   });
 }
 

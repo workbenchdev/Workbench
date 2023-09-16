@@ -19,7 +19,7 @@ export default function External({ output, builder, onWindowChange }) {
     try {
       dbus_proxy = await dbus_previewer.getProxy();
     } catch (err) {
-      logError(err);
+      console.error(err);
     }
   }
 

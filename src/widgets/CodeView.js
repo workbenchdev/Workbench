@@ -31,7 +31,7 @@ class CodeView extends Gtk.Widget {
       this.#prepareSignals();
       this.#updateStyle();
     } catch (err) {
-      logError(err);
+      console.error(err);
       throw err;
     }
   }

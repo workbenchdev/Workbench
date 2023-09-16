@@ -28,7 +28,7 @@ application.connect("open", (_self, files, hint) => {
     application,
     session,
   });
-  load({ run: false }).catch(logError);
+  load({ run: false }).catch(console.error);
 });
 
 application.connect("startup", () => {
@@ -77,7 +77,7 @@ function restoreSessions() {
         application,
         session,
       });
-      load({ run: false }).catch(logError);
+      load({ run: false }).catch(console.error);
     });
   }
 }
@@ -89,7 +89,7 @@ function newWindow() {
     session,
   });
   window.maximize();
-  load({ run: false }).catch(logError);
+  load({ run: false }).catch(console.error);
 }
 
 export default application;

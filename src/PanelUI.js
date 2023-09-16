@@ -116,7 +116,7 @@ export default function PanelUI({
 
   const onBlueprint = unstack(function onBlueprint() {
     return blueprint.compile().then(onXML);
-  }, logError);
+  }, console.error);
 
   function start() {
     stop();
@@ -144,7 +144,7 @@ export default function PanelUI({
     dropdown_ui_lang,
     "selected",
     (value) => {
-      onChangeLang(value).catch(logError);
+      onChangeLang(value).catch(console.error);
     },
   );
 
@@ -160,7 +160,7 @@ export default function PanelUI({
       try {
         await convertToXML();
       } catch (err) {
-        logError(err);
+        console.error(err);
         dropdown_selected_signal.block();
         dropdown_ui_lang.set_selected(1);
         dropdown_selected_signal.unblock();
@@ -173,7 +173,7 @@ export default function PanelUI({
         if (err instanceof LSPError) {
           logBlueprintError(err);
         } else {
-          logError(err);
+          console.error(err);
         }
         dropdown_selected_signal.block();
         dropdown_ui_lang.set_selected(0);

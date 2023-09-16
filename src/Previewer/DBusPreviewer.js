@@ -48,7 +48,7 @@ async function startProcess() {
       connection.get_peer_credentials().to_string(),
       remote_peer_vanished,
     );
-    if (error) logError(error);
+    if (error) console.error(error);
   });
 
   proxy = await Gio.DBusProxy.new(

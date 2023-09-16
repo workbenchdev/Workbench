@@ -8,10 +8,10 @@ export function setup({ document }) {
     file,
   });
 
-  lspc.start().catch(logError);
+  lspc.start().catch(console.error);
   code_view.buffer.connect("modified-changed", () => {
     if (!code_view.buffer.get_modified()) return;
-    lspc.didChange().catch(logError);
+    lspc.didChange().catch(console.error);
   });
 }
 
@@ -65,7 +65,7 @@ function createLSPClient({ file, code_view }) {
             : undefined;
         }),
       })
-      .catch(logError);
+      .catch(console.error);
   });
 
   // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_publishDiagnostics

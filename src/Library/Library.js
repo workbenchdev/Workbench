@@ -35,7 +35,7 @@ export default function Library({ application }) {
     widget.connect("activated", () => {
       last_selected = widget;
 
-      openDemo({ application, demo_name: demo.name }).catch(logError);
+      openDemo({ application, demo_name: demo.name }).catch(console.error);
     });
 
     builder.get_object(`library_${demo.category}`).add(widget);
