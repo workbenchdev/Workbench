@@ -12,10 +12,7 @@
   "build-options": {
     "append-path": "/usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/vala/bin",
     "append-ld-library-path": "/usr/lib/sdk/vala/lib",
-    "test-args": [
-      "--socket=x11",
-      "--share=network"
-    ]
+    "test-args": ["--socket=x11", "--share=network"]
   },
   "command": "workbench",
   "finish-args": [
@@ -44,7 +41,7 @@
   "modules": [
     "modules/cargo-c.json",
     "modules/gi-docgen.json",
-    "modules/gst-plugins-rs.json",
+    "modules/gst-plugin-gtk4.json",
     "modules/vte.json",
     "modules/libshumate.json",
     "modules/libportal.json",
@@ -57,9 +54,7 @@
       "name": "Workbench",
       "buildsystem": "meson",
       "builddir": true,
-      "config-opts": [
-        "-Dprofile=default"
-      ],
+      "config-opts": ["-Dprofile=default"],
       "sources": [
         {
           "type": "dir",
