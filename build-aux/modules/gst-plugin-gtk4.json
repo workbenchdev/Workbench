@@ -1,0 +1,22 @@
+{
+  "name": "gst-plugin-gtk4",
+  "buildsystem": "simple",
+  "sources": [
+    {
+      "type": "archive",
+      "url": "https://crates.io/api/v1/crates/gst-plugin-gtk4/0.11.0/download",
+      "dest-filename": "gst-plugin-gtk4-0.11.0.tar.gz",
+      "sha256": "c3ee0132150ee059c35642b51c5d663eadb9fa4d21f83a56dd584b03c1c45ffd"
+    },
+    /* Generated with flatpak-builder-tools */
+    "gst-plugin-gtk4-sources.json"
+  ],
+  "build-commands": [
+    "cargo cinstall --offline --release --features=wayland,x11glx,x11egl --library-type=cdylib --prefix=/app"
+  ],
+  "build-options": {
+    "env": {
+      "CARGO_HOME": "/run/build/gst-plugin-gtk4/cargo"
+    }
+  }
+}
