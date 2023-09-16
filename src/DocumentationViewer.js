@@ -240,7 +240,7 @@ const SECTION_TYPES = {
   enum: ["Enumerations", "#enums"],
   bitfield: ["Bitfields", "#bitfields"],
   function: ["Functions", "#functions"],
-  function_macro: ["Function Macros", "function_macros"],
+  function_macro: ["Function Macros", "#function_macros"],
   domain: ["Error Domains", "#domains"],
   callback: ["Callbacks", "#callbacks"],
   constant: ["Constants", "#constants"],
