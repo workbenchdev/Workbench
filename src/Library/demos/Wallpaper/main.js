@@ -28,7 +28,5 @@ async function onClicked() {
 }
 
 button.connect("clicked", () => {
-  onClicked().catch((err)=>{
-    console.error(err);
-  });
+  onClicked().catch(console.error);
 });
