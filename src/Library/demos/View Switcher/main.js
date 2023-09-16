@@ -22,7 +22,7 @@ for (let i = 0; i < notification_count; i++) {
   });
 
   button.connect("clicked", () => {
-    notifications_page.badge_number = --notification_count;
+    notifications_page.badge_number -= 1;
     notification_list.remove(notification_row);
 
     if (notifications_page.badge_number === 0) {
