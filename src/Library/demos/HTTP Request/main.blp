@@ -10,7 +10,6 @@ Adw.StatusPage {
     spacing: 24;
 
     Label article_title {
-      label: _("Article Title");
       styles ["title-4"]
     }
 
@@ -27,6 +26,11 @@ Adw.StatusPage {
         wrap-mode: word;
         editable: false;
       };
+    }
+
+    LinkButton {
+      label: _("Documentation");
+      uri: "https://libsoup.org/libsoup-3.0/index.html";
     }
   };
 }
