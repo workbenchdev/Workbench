@@ -4,7 +4,7 @@ import Gtk from "gi://Gtk";
 const notifications_page = workbench.builder.get_object("page3");
 const notification_list = workbench.builder.get_object("notification_list");
 
-let notification_count = 5;
+const notification_count = 5;
 notifications_page.badge_number = notification_count;
 
 for (let i = 0; i < notification_count; i++) {
