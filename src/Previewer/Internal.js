@@ -122,7 +122,7 @@ export default function Internal({
         const prop_name = prop.get_name();
         // AdwWindow and AdwApplicationWindow have child and titlebar properties but do not support setting them
         // "Using gtk_window_get_titlebar() and gtk_window_set_titlebar() is not supported and will result in a crash."
-        // https://gnome.pages.gitlab.gnome.org/libadwaita/doc/main/class.Window.html
+        // https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.4/class.Window.html
         // https://github.com/sonnyp/Workbench/issues/130
         if (
           (object_preview instanceof Adw.Window ||
