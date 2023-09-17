@@ -4,11 +4,22 @@
   "runtime-version": "45beta",
   "sdk": "org.gnome.Sdk",
   "sdk-extensions": [
-    "org.freedesktop.Sdk.Extension.vala",
     "org.gnome.Sdk.Docs",
+    "org.freedesktop.Sdk.Extension.vala",
     "org.freedesktop.Sdk.Extension.rust-stable",
     "org.freedesktop.Sdk.Extension.llvm16"
   ],
+  "add-extensions": {
+    "org.freedesktop.Sdk.Extension.vala": {
+      "version": "23.08"
+    },
+    "org.freedesktop.Sdk.Extension.rust-stable": {
+      "version": "23.08"
+    },
+    "org.freedesktop.Sdk.Extension.llvm16": {
+      "version": "23.08"
+    }
+  },
   "build-options": {
     "append-path": "/usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/vala/bin",
     "append-ld-library-path": "/usr/lib/sdk/vala/lib",
@@ -65,13 +76,7 @@
         "rm -rf /app/share/doc/appstream",
         "cp -a /usr/share/gtk-doc/html/. /app/share/doc/",
         "rm -rf /app/share/doc/appstream",
-        "cp -a /usr/share/doc/. /app/share/doc/",
-        "cp -a /usr/lib/sdk/vala/bin/. /app/bin/",
-        "cp -a /usr/lib/sdk/vala/lib/. /app/lib/",
-        "cp -a /usr/lib/sdk/rust-stable/bin/. /app/bin/",
-        "cp -a /usr/lib/sdk/rust-stable/lib/. /app/lib/",
-        "cp -a /usr/lib/sdk/llvm16/bin/. /app/bin/",
-        "cp -a /usr/lib/sdk/llvm16/lib/. /app/lib/"
+        "cp -a /usr/share/doc/. /app/share/doc/"
       ]
     }
   ]
