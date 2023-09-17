@@ -47,4 +47,3 @@ fn rainbow_attributes(input_str: &str) -> pango::AttrList {
     // https://docs.rs/pango/0.18.0/pango/struct.AttrList.html#method.from_string
     pango::AttrList::from_string(&attr_list_string).unwrap()
 }
-

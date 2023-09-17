@@ -21,4 +21,3 @@ pub fn main() {
 
     calendar.mark_day(15);
 }
-
