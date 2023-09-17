@@ -154,6 +154,8 @@ export default function PanelUI({
         await convertToXML();
       } catch (err) {
         logError(err);
+        // FIXME: Looks like the block() calls don't work
+        // and the notify::selected signal is emitted
         dropdown_selected_signal.block();
         dropdown_ui_lang.set_selected(ui_languages.indexOf(lang_blueprint));
         dropdown_selected_signal.unblock();
