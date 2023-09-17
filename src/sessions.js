@@ -60,10 +60,6 @@ export function createSessionFromDemo(demo) {
     "code-language",
     global_settings.get_int("recent-code-language"),
   );
-  settings.set_int(
-    "ui-language",
-    global_settings.get_int("recent-ui-language"),
-  );
 
   return session;
 }
