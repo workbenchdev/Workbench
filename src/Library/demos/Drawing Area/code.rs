@@ -3,7 +3,7 @@ use glib::clone;
 use gtk::glib;
 use gtk::prelude::*;
 use std::cell::RefCell;
-use std::f64::consts;
+use std::f64::consts::PI;
 use std::rc::Rc;
 
 pub fn main() {
@@ -33,23 +33,22 @@ pub fn main() {
 
     scale_rotate.connect_value_changed(move |scale_rotate| {
         // Recalculate value of points of triangle
-        for i in 0..3 {
+        for (point, point_original) in triangle.borrow_mut().iter_mut().zip(triangle_original) {
             // Calculate original angle
-            let x = triangle_original[i][0];
-            let y = triangle_original[i][1];
-            let pi = consts::PI;
+            let x = point_original[0];
+            let y = point_original[1];
             let mut angle = (y.abs() / x.abs()).atan();
             if x > 0. && y > 0. {
                 // no change
             }
             if x < 0. && y > 0. {
-                angle = pi - angle;
+                angle = PI - angle;
             }
             if x < 0. && y < 0. {
-                angle = pi + angle;
+                angle = PI + angle;
             }
             if x > 0. && y < 0. {
-                angle = pi * 2. - angle;
+                angle = PI * 2. - angle;
             }
             if x == 0. {
                 if y > 0. {
@@ -68,12 +67,12 @@ pub fn main() {
                 }
             }
             // Add to original angle scale value
-            angle += scale_rotate.value() * pi / 180.;
+            angle += scale_rotate.value() * PI / 180.;
             // Set new value to triangle
             let radius = (x * x + y * y).sqrt();
 
-            triangle.borrow_mut()[i][0] = radius * angle.cos();
-            triangle.borrow_mut()[i][1] = radius * angle.sin();
+            point[0] = radius * angle.cos();
+            point[1] = radius * angle.sin();
 
             // Redraw drawing_area
             drawing_area.queue_draw();
