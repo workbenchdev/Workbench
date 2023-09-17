@@ -16,9 +16,7 @@ Gio._promisify(
 );
 
 button.connect("clicked", () => {
-  takeScreenshot().catch((err) => {
-    console.error(err);
-  });
+  takeScreenshot().catch(console.error);
 });
 
 async function takeScreenshot() {
