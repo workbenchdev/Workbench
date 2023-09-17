@@ -3,7 +3,8 @@ import GLib from "gi://GLib";
 import Gio from "gi://Gio";
 import GdkPixbuf from "gi://GdkPixbuf";
 
-const IMAGE_URL = "https://cataas.com/cat";
+// https://picsum.photos/
+const IMAGE_URL = "https://picsum.photos/800";
 
 Gio._promisify(Soup.Session.prototype, "send_async", "send_finish");
 Gio._promisify(

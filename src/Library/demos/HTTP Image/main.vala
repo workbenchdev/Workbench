@@ -4,7 +4,8 @@ public errordomain MessageError {
   FAILED;
 }
 
-private const string IMAGE_URL = "https://cataas.com/cat";
+// https://picsum.photos/
+private const string IMAGE_URL = "https://picsum.photos/800";
 
 public async void main () {
   try {
