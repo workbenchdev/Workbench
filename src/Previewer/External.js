@@ -51,7 +51,7 @@ export default function External({ output, builder, onWindowChange }) {
       .then(() => {
         return dbus_previewer.stop();
       })
-      .catch(logError);
+      .catch(console.error);
   }
 
   async function updateXML({ xml, target_id, original_id }) {

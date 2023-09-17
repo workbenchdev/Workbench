@@ -80,5 +80,5 @@ edit_file.connect("clicked", () => {
       Gio.FileCreateFlags.REPLACE_DESTINATION,
       null,
     )
-    .catch(logError);
+    .catch(console.error);
 });

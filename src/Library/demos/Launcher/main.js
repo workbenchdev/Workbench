@@ -40,7 +40,9 @@ file_launcher.connect("notify::file", () => {
 });
 
 file_location.connect("clicked", () => {
-  file_launcher.open_containing_folder(workbench.window, null).catch(console.error);
+  file_launcher
+    .open_containing_folder(workbench.window, null)
+    .catch(console.error);
 });
 
 change_file.connect("clicked", () => {
