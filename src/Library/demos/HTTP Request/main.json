@@ -1,5 +1,5 @@
 {
-  "category": "platform",
+  "category": "network",
   "description": "Make a request to an API",
   "panels": ["code", "preview"],
   "autorun": true
