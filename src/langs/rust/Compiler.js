@@ -31,7 +31,7 @@ export default function Compiler({ session }) {
       const sharedLibrary = `${targetPath}/debug/libdemo.so`;
       await proxy.RunAsync(sharedLibrary, session.file.get_uri());
     } catch (err) {
-      logError(err);
+      console.error(err);
       return false;
     }
 

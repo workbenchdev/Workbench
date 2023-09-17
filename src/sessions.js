@@ -86,7 +86,7 @@ function copy_directory(source, destination) {
 export async function deleteSession(session) {
   // There is no method to recursively delete a folder so we trash instead
   // https://github.com/flatpak/xdg-desktop-portal/issues/630 :/
-  // portal.trash_file(file.get_path(), null).catch(logError);
+  // portal.trash_file(file.get_path(), null).catch(console.error);
   session.file.trash(null);
 }
 

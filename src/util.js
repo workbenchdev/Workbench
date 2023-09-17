@@ -30,7 +30,7 @@ export function getFlatpakInfo() {
     keyFile.load_from_file("/.flatpak-info", GLib.KeyFileFlags.NONE);
   } catch (err) {
     if (err.code !== GLib.FileError.NOENT) {
-      logError(err);
+      console.error(err);
     }
     return null;
   }

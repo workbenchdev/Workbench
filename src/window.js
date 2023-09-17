@@ -153,7 +153,7 @@ export default function Window({ application, session }) {
 
   function updateStyle() {
     // For Platform Tools
-    setGtk4PreferDark(style_manager.dark).catch(logError);
+    setGtk4PreferDark(style_manager.dark).catch(console.error);
   }
   updateStyle();
   style_manager.connect("notify::dark", updateStyle);
@@ -183,7 +183,7 @@ export default function Window({ application, session }) {
   settings.connect("changed", updatePanel);
 
   button_inspector.connect("clicked", () => {
-    previewer.openInspector().catch(logError);
+    previewer.openInspector().catch(console.error);
   });
 
   async function format(code_view, formatter) {
@@ -194,7 +194,7 @@ export default function Window({ application, session }) {
     try {
       code = await formatter(buffer.text.trim());
     } catch (err) {
-      logError(err);
+      console.error(err);
       return;
     }
 
@@ -309,7 +309,7 @@ export default function Window({ application, session }) {
         } finally {
           file_javascript
             .delete_async(GLib.PRIORITY_DEFAULT, null)
-            .catch(logError);
+            .catch(console.error);
         }
         previewer.setSymbols(exports);
       } else if (language === "Vala") {
@@ -338,7 +338,7 @@ export default function Window({ application, session }) {
     } catch (err) {
       // prettier xml errors are not instances of Error
       if (err instanceof Error || err instanceof GLib.Error) {
-        logError(err);
+        console.error(err);
       } else {
         console.error(err);
       }
@@ -355,7 +355,7 @@ export default function Window({ application, session }) {
     name: "run",
   });
   action_run.connect("activate", () => {
-    runCode({ format: true }).catch(logError);
+    runCode({ format: true }).catch(console.error);
   });
   window.add_action(action_run);
   application.set_accels_for_action("win.run", ["<Control>Return"]);
@@ -379,7 +379,7 @@ export default function Window({ application, session }) {
   application.set_accels_for_action("win.close", ["<Control>W"]);
 
   window.connect("close-request", () => {
-    onCloseSession({ session, window }).catch(logError);
+    onCloseSession({ session, window }).catch(console.error);
     return true;
   });
 
@@ -465,7 +465,7 @@ async function onCloseSession({ session, window }) {
   const button_location = builder.get_object("button_location");
   row_project_location.add_suffix(button_location);
   button_location.connect("clicked", () => {
-    selectLocation().catch(logError);
+    selectLocation().catch(console.error);
   });
 
   const row_project_name = builder.get_object("row_project_name");

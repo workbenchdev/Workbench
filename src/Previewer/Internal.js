@@ -36,7 +36,7 @@ export default function Internal({
         await panel_ui.update();
         await once(bus, "object_root", { timeout: 5000 });
       } catch (err) {
-        logError(err);
+        console.error(err);
         return;
       }
     }

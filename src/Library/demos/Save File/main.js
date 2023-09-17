@@ -15,5 +15,5 @@ async function saveFile() {
 
 // Handle button click
 button.connect("clicked", () => {
-  saveFile().catch(logError);
+  saveFile().catch(console.error);
 });

@@ -59,7 +59,7 @@ export default function PanelCode({
   function switchLanguage() {
     panel.language = dropdown_code_lang.selected_item.string;
     stack_code.visible_child_name = panel.language;
-    previewer.useInternal().catch(logError);
+    previewer.useInternal().catch(console.error);
   }
   switchLanguage();
 
