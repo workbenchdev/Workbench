@@ -143,7 +143,7 @@ export default function PanelUI({
     dropdown_ui_lang,
     "selected",
     (value) => {
-      const lang = ui_languages.indexOf(value);
+      const lang = ui_languages[value];
       onChangeLang(lang).catch(logError);
     },
   );
@@ -175,7 +175,7 @@ export default function PanelUI({
       }
     }
 
-    settings.set_enum("user-interface-language", dropdown_ui_lang.selected);
+    settings.set_string("user-interface-language", lang.id);
     setupLanguage();
   }
 
