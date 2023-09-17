@@ -177,7 +177,7 @@ function migrateStateToSession() {
         null, // progress_callback
       );
     } catch (err) {
-      if (err.code !== GLib.FileError.NOENT) {
+      if (err.code !== Gio.IOErrorEnum.NOT_FOUND) {
         throw err;
       }
     }
