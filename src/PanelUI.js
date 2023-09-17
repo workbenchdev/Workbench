@@ -3,12 +3,7 @@ import GObject from "gi://GObject";
 import Gtk from "gi://Gtk";
 
 import { LSPError } from "./lsp/LSP.js";
-import {
-  unstack,
-  listenProperty,
-  settings as global_settings,
-  getLanguage,
-} from "./util.js";
+import { unstack, listenProperty, getLanguage } from "./util.js";
 
 import {
   setup as setupBlueprint,
@@ -20,8 +15,6 @@ const { addSignalMethods } = imports.signals;
 
 const lang_blueprint = getLanguage("blueprint");
 const lang_xml = getLanguage("xml");
-// Make sure it matches app.gschhema.xml re.sonny.Workbench.UserInterfaceLanguage enum
-// and dropdown_ui_lang
 export const ui_languages = [lang_blueprint, lang_xml];
 
 export default function PanelUI({
@@ -154,13 +147,6 @@ export default function PanelUI({
       onChangeLang(lang).catch(logError);
     },
   );
-
-  settings.connect("changed::user-interface-language", () => {
-    global_settings.set_enum(
-      "recent-user-interface-language",
-      settings.get_enum("user-interface-language"),
-    );
-  });
 
   async function onChangeLang(lang) {
     if (lang === lang_xml) {

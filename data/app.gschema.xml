@@ -15,9 +15,6 @@
     <key name="recent-code-language" type="i">
       <default>0</default>
     </key>
-    <key name="recent-user-interface-language" enum="re.sonny.Workbench.UserInterfaceLanguage">
-      <default>'blueprint'</default>
-    </key>
   </schema>
   <schema id="@app_id@.Session" path="/re/sonny/Workbench/">
     <key name="show-code" type="b">

@@ -6,9 +6,9 @@ import Adw from "gi://Adw";
 import Vte from "gi://Vte";
 
 import * as xml from "./langs/xml/xml.js";
-import { getLanguage, languages } from "./util.js";
+import { languages } from "./util.js";
 import Document from "./Document.js";
-import PanelUI, { ui_languages } from "./PanelUI.js";
+import PanelUI from "./PanelUI.js";
 import PanelCode from "./PanelCode.js";
 import PanelStyle from "./PanelStyle.js";
 import Devtools from "./Devtools.js";
@@ -65,13 +65,6 @@ export default function Window({ application, session }) {
   const panel_placeholder = builder.get_object("panel_placeholder");
 
   const { term_console } = Devtools({ application, window, builder, settings });
-
-  if (!file.get_child("main.xml").query_exists(null)) {
-    settings.set_enum(
-      "user-interface-language",
-      ui_languages.indexOf(getLanguage("blueprint")),
-    );
-  }
 
   const document_javascript = Document({
     code_view: builder.get_object("code_view_javascript"),
