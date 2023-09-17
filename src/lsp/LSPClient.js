@@ -35,6 +35,7 @@ export default class LSPClient {
     this.capabilities = {
       textDocument: {
         publishDiagnostics: {},
+        completion: {},
       },
     };
   }

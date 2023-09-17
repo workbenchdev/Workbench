@@ -12,10 +12,75 @@ import Template from "./CodeView.blp" with { type: "uri" };
 import WorkbenchHoverProvider from "../WorkbenchHoverProvider.js";
 import { registerClass } from "../overrides.js";
 
+import Workbench from "gi://Workbench";
+
 Source.init();
 
 const scheme_manager = Source.StyleSchemeManager.get_default();
 const style_manager = Adw.StyleManager.get_default();
+
+const CompletionProvider = GObject.registerClass(
+  {
+    GTypeName: "CompletionProvider",
+    Implements: [Source.CompletionProvider],
+  },
+  class CompletionProvider extends Workbench.CompletionProvider {
+    vfunc_activate(context, proposal) {
+      console.log("activate", proposal);
+      context
+        .get_view()
+        .push_snippet(
+          Source.Snippet.new_parsed(proposal.get_typed_text()),
+          null,
+        );
+    }
+
+    vfunc_display(context, proposal, cell) {
+      // const [, start, end] = context.get_bounds();
+      // const text = this.buffer.get_text(start, end, false);
+      // if (text.startsWith(context.get_word())) return null;
+
+      // log("display", proposal.label, cell.get_column());
+      switch (cell.get_column()) {
+        // case Source.CompletionColumn.ICON:
+        //   var image = new Gtk.Image ();
+        //   image_cache.request_paintable (emoji.url, (is_loaded, paintable) => {
+        //     image.paintable = paintable;
+        //   });
+        //   cell.set_widget (image);
+        //   break;
+        // case Source.CompletionColumn.ICON:
+        //   cell.set_icon_name("re.sonny.Workbench-symbolic");
+        //   break;
+        case Source.CompletionColumn.TYPED_TEXT:
+          cell.set_text(proposal.get_typed_text());
+          break;
+        default:
+          cell.text = null;
+          break;
+      }
+      // log(context);
+      // log(proposals);
+    }
+  },
+);
+
+// class Proposal extends  {}
+const Proposal = GObject.registerClass(
+  {
+    Implements: [Source.CompletionProposal],
+  },
+  class Proposal extends GObject.Object {
+    constructor(completion_proposal) {
+      super();
+      Object.assign(this, completion_proposal);
+    }
+
+    get_typed_text() {
+      return this.label;
+    }
+  },
+);
 
 class CodeView extends Gtk.Widget {
   constructor({ language_id, ...params } = {}) {
@@ -28,6 +93,7 @@ class CodeView extends Gtk.Widget {
       this.buffer.set_language(this.language);
 
       this.#prepareHoverProvider();
+      this.#prepareCompletionProvider();
       this.#prepareSignals();
       this.#updateStyle();
     } catch (err) {
@@ -79,6 +145,74 @@ class CodeView extends Gtk.Widget {
     const hover = this.source_view.get_hover();
     // hover.hover_delay = 25;
     hover.add_provider(provider);
+  }
+
+  #onCompletionRequest = (provider, request) => {
+    console.log(`completion-request: ${request.context.get_word()}`);
+
+    const [, start, end] = request.context.get_bounds();
+    const text = this.buffer.get_text(start, end, false);
+
+    // log(request.context.get_proposals_for_provider(completion_provider));
+
+    // console.log({
+    //   start: {
+    //     line: start.get_line(),
+    //     offset: start.get_line_offset(),
+    //   },
+    //   end: {
+    //     line: end.get_line(),
+    //     offset: end.get_line_offset(),
+    //   },
+    //   text,
+    // });
+
+    this.css
+      .completion(end)
+      .then((result) => {
+        log(result);
+
+        result.forEach((completion) => {
+          if (completion.insertText?.startsWith(text)) {
+            request.add(new Proposal(completion));
+          }
+        });
+      })
+      .catch(logError)
+      .finally(() => {
+        request.state_changed(Workbench.RequestState.COMPLETE);
+      });
+  };
+
+  #prepareCompletionProvider() {
+    const completion_provider = new CompletionProvider();
+
+    completion_provider.connect(
+      "completion-request",
+      this.#onCompletionRequest,
+    );
+
+    // this.buffer.connect("notify::cursor-position", async (self) => {
+    //   if (!this.blueprint) return;
+    //   const iter_cursor = self.get_iter_at_offset(self.cursor_position);
+    //   try {
+    //     const result = await this.blueprint.hover(iter_cursor);
+    //     console.log(result);
+    //   } catch (err) {
+    //     logError(err);
+    //   }
+    // });
+    const completion = this.source_view.get_completion();
+
+    completion.connect("show", () => {
+      log("completion show");
+    });
+
+    completion.connect("hide", () => {
+      log("completion hide");
+    });
+
+    completion.add_provider(completion_provider);
   }
 
   clearDiagnostics() {
