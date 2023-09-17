@@ -14,6 +14,7 @@
   <programming-language>JavaScript</programming-language>
   <programming-language>Vala</programming-language>
   <programming-language>C</programming-language>
+  <programming-language>Rust</programming-language>
 
   <platform>GTK 4</platform>
   <platform>Libadwaita</platform>
