@@ -1,5 +1,6 @@
 import Adw from "gi://Adw";
 import Gtk from "gi://Gtk";
+import { gettext as _ } from "gettext";
 
 const parent = workbench.window;
 const button = workbench.builder.get_object("button");
@@ -26,7 +27,7 @@ function openAboutWindow() {
 
   dialog.add_link(
     _("Documentation"),
-    "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/main/class.AboutWindow.html",
+    "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.4/class.AboutWindow.html",
   );
 
   dialog.add_legal_section(

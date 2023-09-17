@@ -14,9 +14,13 @@ export default function Document({ session, code_view, file, lang }) {
 
   function save() {
     saveSourceBuffer({ source_file, buffer })
-      .catch(logError)
+      .catch(console.error)
       .finally(() => {
-        session.settings.set_boolean("edited", true);
+        try {
+          session.settings.set_boolean("edited", true);
+        } catch (err) {
+          console.error(err);
+        }
       });
   }
 

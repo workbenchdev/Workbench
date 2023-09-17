@@ -1,7 +1,5 @@
 import Gtk from "gi://Gtk";
-import Gdk from "gi://Gdk";
 import Gio from "gi://Gio";
-import GLib from "gi://GLib";
 
 Gio._promisify(Gtk.FileDialog.prototype, "save", "save_finish");
 const button = workbench.builder.get_object("button");
@@ -17,5 +15,5 @@ async function saveFile() {
 
 // Handle button click
 button.connect("clicked", () => {
-  saveFile().catch(logError);
+  saveFile().catch(console.error);
 });

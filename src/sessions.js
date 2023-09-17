@@ -1,5 +1,6 @@
 import Gio from "gi://Gio";
 import GLib from "gi://GLib";
+import { gettext as _ } from "gettext";
 
 import {
   data_dir,
@@ -59,10 +60,6 @@ export function createSessionFromDemo(demo) {
     "code-language",
     global_settings.get_int("recent-code-language"),
   );
-  settings.set_int(
-    "ui-language",
-    global_settings.get_int("recent-ui-language"),
-  );
 
   return session;
 }
@@ -89,7 +86,7 @@ function copy_directory(source, destination) {
 export async function deleteSession(session) {
   // There is no method to recursively delete a folder so we trash instead
   // https://github.com/flatpak/xdg-desktop-portal/issues/630 :/
-  // portal.trash_file(file.get_path(), null).catch(logError);
+  // portal.trash_file(file.get_path(), null).catch(console.error);
   session.file.trash(null);
 }
 

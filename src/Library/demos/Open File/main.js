@@ -1,5 +1,4 @@
 import Gtk from "gi://Gtk";
-import Gdk from "gi://Gdk";
 import Gio from "gi://Gio";
 import GLib from "gi://GLib";
 
@@ -10,8 +9,8 @@ Gio._promisify(
   "open_multiple_finish",
 );
 
-const single_button = workbench.builder.get_object("single_button");
-const multiple_button = workbench.builder.get_object("multiple_button");
+const button_single = workbench.builder.get_object("button_single");
+const button_multiple = workbench.builder.get_object("button_multiple");
 
 async function openFile() {
   const default_dir = Gio.File.new_for_path(
@@ -39,12 +38,10 @@ async function openMultipleFiles() {
   console.log(`No of selected files: ${selected_items_count}`);
 }
 
-
-single_button.connect("clicked", () => {
-  openFile().catch(logError);
+button_single.connect("clicked", () => {
+  openFile().catch(console.error);
 });
 
-
-multiple_button.connect("clicked", () => {
-  openMultipleFiles().catch(logError);
+button_multiple.connect("clicked", () => {
+  openMultipleFiles().catch(console.error);
 });

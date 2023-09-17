@@ -76,11 +76,11 @@ async function createAdvancedDialog() {
 }
 
 button_confirmation.connect("clicked", () => {
-  createConfirmationDialog().catch(logError);
+  createConfirmationDialog().catch(console.error);
 });
 button_error.connect("clicked", () => {
-  createErrorDialog().catch(logError);
+  createErrorDialog().catch(console.error);
 });
 button_advanced.connect("clicked", () => {
-  createAdvancedDialog().catch(logError);
+  createAdvancedDialog().catch(console.error);
 });

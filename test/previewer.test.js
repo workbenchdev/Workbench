@@ -1,4 +1,7 @@
-import "../src/init.js";
+import "./init.js";
+
+import WebKit from "gi://WebKit";
+import Source from "gi://GtkSource";
 
 import tst, { assert } from "../troll/tst/tst.js";
 import { getObjectClass } from "../src/Previewer/utils.js";
@@ -6,10 +9,10 @@ import { getObjectClass } from "../src/Previewer/utils.js";
 const test = tst("previewer");
 
 test("getObjectClass", () => {
-  assert.equal(getObjectClass("WebKitWebView"), imports.gi.WebKit.WebView);
+  assert.equal(getObjectClass("WebKitWebView"), WebKit.WebView);
   assert.equal(
     getObjectClass("GtkSourceCompletionProvider"),
-    imports.gi.GtkSource.CompletionProvider,
+    Source.CompletionProvider,
   );
 });
 

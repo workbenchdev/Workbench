@@ -31,7 +31,7 @@ class CodeView extends Gtk.Widget {
       this.#prepareSignals();
       this.#updateStyle();
     } catch (err) {
-      logError(err);
+      console.error(err);
       throw err;
     }
   }
@@ -209,6 +209,7 @@ function connect_signals(target, signals) {
   });
 }
 
+// eslint-disable-next-line no-unused-vars
 function disconnect_signals(target, handler_ids) {
   handler_ids.forEach((handler_id) => target.disconnect(handler_id));
 }

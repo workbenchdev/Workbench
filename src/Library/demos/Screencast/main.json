@@ -1,5 +1,4 @@
 {
-  "name": "Screencast",
   "category": "platform",
   "description": "Capture your display",
   "panels": ["code", "preview"],

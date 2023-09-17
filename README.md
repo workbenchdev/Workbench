@@ -14,10 +14,11 @@ Among other things, Workbench comes with
 
 - Live GTK/CSS preview
 - Library of 100+ examples
-- JavaScript and Vala support
-- XML and Blueprint for describing user interface
-- Syntax highlighting, undo/redo, autosave, sessions and projects
+- JavaScript, Rust and Vala support
+- Declarative user interface syntax
+- Autosave, sessions and projects
 - Code linter and formatter
+- Offline documentation
 - Terminal output
 - 1000+ icons
 
@@ -32,28 +33,9 @@ Among other things, Workbench comes with
 <details>
   <summary>Disable code formatting</summary>
 
-Workbench uses [Rome](https://rome.tools/) and [Prettier](https://prettier.io/) code formatters. If you need to exclude some code you can use special comments.
-
-[JavaScript](https://prettier.io/docs/en/ignore.html#javascript)
-
-```js
-// rome-ignore format
-matrix(
-  1, 0, 0,
-  0, 1, 0,
-  0, 0, 1
-);
-```
+[JavaScript](https://docs.rome.tools/formatter/#ignoring-code)
 
 [CSS](https://prettier.io/docs/en/ignore.html#css)
-
-```css
-/* prettier-ignore */
-.my    ugly rule
-{
-
-}
-```
 
 </details>
 
@@ -66,9 +48,9 @@ Use GNOME Builder to start a new project using the appropriate GNOME Application
 
 ## Credits
 
-Workbench would not be possible without
+Workbench is made of many components, thank you
 
-Flatpak, GTK, GLib, GtkSourceView, libadwaita, VTE, GJS, Blueprint, icon-development-kit, Vala
+Flatpak, GTK, GLib, GtkSourceView, libadwaita, VTE, GJS, Blueprint, icon-development-kit, Vala, GTKCssLanguageServer, gtk-rs
 
 and the GNOME community 🖤
 

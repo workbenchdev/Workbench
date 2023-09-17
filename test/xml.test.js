@@ -1,4 +1,4 @@
-import "../src/init.js";
+import "./init.js";
 
 import tst, { assert } from "../troll/tst/tst.js";
 import { format } from "../src/langs/xml/xml.js";
@@ -147,7 +147,9 @@ test.skip("library examples", () => {
         throw new Error(decode(stderr));
       }
       xml = decode(stdout);
-    } catch {}
+    } catch {
+      /* */
+    }
     if (!xml) continue;
 
     count++;

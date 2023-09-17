@@ -62,3 +62,5 @@ src/DocumentationViewer.js
 src/langs/css/css.js
 
 src/langs/rust/Compiler.js
+troll/src/async.js
+src/lib/prettier-estree.js

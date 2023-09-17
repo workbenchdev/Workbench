@@ -1,4 +1,4 @@
-// Pango is a text layout library. It can be used for e.g. formatting text
+// Pango is a text layout library. It can e.g. be used for formatting text
 // https://gjs-docs.gnome.org/pango10~1.0/
 import Pango from "gi://Pango";
 
@@ -8,12 +8,12 @@ updateAttributes();
 
 function updateAttributes() {
   // A Pango Attribute List is used to style the label
-  label.attributes = rainbow_attributes(label.label);
+  label.attributes = rainbowAttributes(label.label);
 }
 
 // Generates an Attribute List that styles the label in rainbow colors.
 // The `str` parameter is needed to detect string length + position of spaces
-function rainbow_attributes(str) {
+function rainbowAttributes(str) {
   const RAINBOW_COLORS = [
     "#D00",
     "#C50",

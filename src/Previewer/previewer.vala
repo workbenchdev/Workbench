@@ -60,6 +60,7 @@ namespace Workbench {
     }
 
     public void update_ui (string content, string target_id, string original_id = "") {
+      typeof (Shumate.SimpleMap).ensure();
       this.builder = new Gtk.Builder.from_string (content, content.length);
 
       var target = this.builder.get_object (target_id) as Gtk.Widget;
@@ -118,7 +119,7 @@ namespace Workbench {
         var end = section.get_end_location();
         this.css_parser_error(error.message, (int)start.lines, (int)start.line_chars, (int)end.lines, (int)end.line_chars);
       });
-      this.css.load_from_data (content, -1);
+      this.css.load_from_data (content.data);
       Gtk.StyleContext.add_provider_for_display (Gdk.Display.get_default (), this.css , Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
     }
 

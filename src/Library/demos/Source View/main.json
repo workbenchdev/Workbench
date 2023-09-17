@@ -1,5 +1,4 @@
 {
-  "name": "Source View",
   "category": "controls",
   "description": "Widget that enables text-editing with advanced features like syntax highlighting",
   "panels": ["code", "preview"],

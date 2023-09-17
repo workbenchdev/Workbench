@@ -3,6 +3,7 @@ import Gdk from "gi://Gdk";
 import GObject from "gi://GObject";
 import GLib from "gi://GLib";
 import Gio from "gi://Gio";
+import { gettext as _ } from "gettext";
 
 import * as xml from "../langs/xml/xml.js";
 import * as postcss from "../lib/postcss.js";
@@ -74,7 +75,7 @@ export default function Previewer({
         stack.set_visible_child_name("close_window");
       } else {
         stack.set_visible_child_name("open_window");
-        useInternal().catch(logError);
+        useInternal().catch(console.error);
       }
     },
     output,
@@ -176,7 +177,7 @@ export default function Previewer({
       tree = xml.parse(text);
       ({ target_id, text, original_id, template } = targetBuildable(tree));
     } catch (err) {
-      // logError(err);
+      // console.error(err);
       console.debug(err);
     }
 
@@ -210,7 +211,7 @@ export default function Previewer({
         console.warn(err.message);
         return;
       }
-      logError(err);
+      console.error(err);
       return;
     }
 
@@ -235,7 +236,7 @@ export default function Previewer({
     symbols = null;
   }
 
-  const schedule_update = unstack(update, logError);
+  const schedule_update = unstack(update, console.error);
 
   async function useExternal() {
     if (current !== external) {
@@ -262,11 +263,15 @@ export default function Previewer({
 
     try {
       await current?.closeInspector();
-    } catch {}
+    } catch {
+      /*  */
+    }
 
     try {
       await current?.stop();
-    } catch {}
+    } catch {
+      /*  */
+    }
 
     current = previewer;
 
@@ -275,7 +280,7 @@ export default function Previewer({
         await current.open();
         stack.set_visible_child_name("close_window");
       } catch (err) {
-        logError(err);
+        console.error(err);
       }
     });
 
@@ -284,19 +289,19 @@ export default function Previewer({
         await current.close();
         stack.set_visible_child_name("open_window");
       } catch (err) {
-        logError(err);
+        console.error(err);
       }
     });
 
     try {
       await current.start();
     } catch (err) {
-      logError(err);
+      console.error(err);
     }
   }
 
   builder.get_object("button_screenshot").connect("clicked", () => {
-    screenshot({ application, window, current }).catch(logError);
+    screenshot({ application, window, current }).catch(console.error);
   });
 
   setPreviewer(internal);
@@ -438,7 +443,7 @@ function registerSignals({ tree, scope, symbols, template }) {
       scope[signal.handler] = makeSignalHandler(signal, { symbols, template });
     }
   } catch (err) {
-    logError(err);
+    console.error(err);
   }
 }
 

@@ -13,7 +13,7 @@ const button = new Gtk.Button({
   css_classes: ["suggested-action"],
 });
 button.connect("clicked", () => {
-  greet().catch(logError);
+  greet().catch(console.error);
 });
 box.append(button);
 

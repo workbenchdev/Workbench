@@ -3,13 +3,7 @@ import Gio from "gi://Gio";
 
 import Window from "./window.js";
 import Actions from "./actions.js";
-import {
-  settings,
-  data_dir,
-  ensureDir,
-  readDemoFile,
-  getDemo,
-} from "./util.js";
+import { settings, data_dir, ensureDir, getDemo } from "./util.js";
 import { overrides } from "./overrides.js";
 import Library from "./Library/Library.js";
 import DocumentationViewer from "./DocumentationViewer.js";
@@ -34,7 +28,7 @@ application.connect("open", (_self, files, hint) => {
     application,
     session,
   });
-  load({ run: false }).catch(logError);
+  load({ run: false }).catch(console.error);
 });
 
 application.connect("startup", () => {
@@ -83,7 +77,7 @@ function restoreSessions() {
         application,
         session,
       });
-      load({ run: false }).catch(logError);
+      load({ run: false }).catch(console.error);
     });
   }
 }
@@ -95,7 +89,7 @@ function newWindow() {
     session,
   });
   window.maximize();
-  load({ run: false }).catch(logError);
+  load({ run: false }).catch(console.error);
 }
 
 export default application;

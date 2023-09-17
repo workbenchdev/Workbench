@@ -234,8 +234,8 @@ Gtk.ApplicationWindow window {
               DropDown dropdown_ui_lang {
                 model: StringList {
                   strings [
-                    "XML",
                     "Blueprint",
+                    "XML",
                   ]
                 };
                 tooltip-text: _("Convert and Switch Syntax");
@@ -501,6 +501,12 @@ menu menu_app {
           label: _("Vala");
           action: "app.open_uri";
           target: "https://wiki.gnome.org/Projects/Vala";
+        }
+
+        item {
+          label: _("Rust");
+          action: "app.open_uri";
+          target: "https://gtk-rs.org";
         }
 
         item {

@@ -1,6 +1,5 @@
 import GtkSource from "gi://GtkSource";
 import Spelling from "gi://Spelling";
-import Adw from "gi://Adw";
 
 GtkSource.init();
 
@@ -17,4 +16,3 @@ text_view.set_extra_menu(extra_menu);
 text_view.insert_action_group("spelling", adapter);
 
 adapter.set_enabled(true);
-

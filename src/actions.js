@@ -4,7 +4,6 @@ import GLib from "gi://GLib";
 import Gdk from "gi://Gdk";
 import Xdp from "gi://Xdp";
 import XdpGtk from "gi://XdpGtk4";
-import { gettext as _ } from "gettext";
 
 import About from "./about.js";
 import shortcutsWindow from "./shortcutsWindow.js";
@@ -73,7 +72,7 @@ export default function Actions({ application }) {
     //     Xdp.OpenUriFlags.NONE,
     //     null, // cancellable
     //   )
-    //   .catch(logError);
+    //   .catch(console.error);
   });
   application.add_action(action_open_uri);
 
@@ -93,7 +92,7 @@ export default function Actions({ application }) {
     try {
       GLib.spawn_command_line_async(`sh -c "/bin/${name} > /dev/null 2>&1"`);
     } catch (err) {
-      logError(err);
+      console.error(err);
     }
   });
   application.add_action(action_platform_tools);
@@ -108,7 +107,7 @@ export default function Actions({ application }) {
   });
   action_open_file.connect("activate", (_self, target) => {
     const hint = target.unpack();
-    open({ application, hint }).catch(logError);
+    open({ application, hint }).catch(console.error);
   });
   application.add_action(action_open_file);
   application.set_accels_for_action("app.open('project')", ["<Control>O"]);
@@ -119,7 +118,7 @@ export default function Actions({ application }) {
   });
   action_show_screenshot.connect("activate", (_self, target) => {
     const uri = target.unpack();
-    showScreenshot({ application, uri }).catch(logError);
+    showScreenshot({ application, uri }).catch(console.error);
   });
   application.add_action(action_show_screenshot);
 }

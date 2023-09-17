@@ -3,8 +3,10 @@ import Gio from "gi://Gio";
 
 import { LSPError } from "./LSP.js";
 
-import { getPid, once } from "../../troll/src/util.js";
+import { getPid } from "../../troll/src/util.js";
+import { once } from "../../troll/src/async.js";
 
+// eslint-disable-next-line no-restricted-globals
 const { addSignalMethods } = imports.signals;
 
 const encoder_utf8 = new TextEncoder("utf8");
@@ -142,19 +144,20 @@ export default class LSPClient {
         this.emit("exit");
         // this._start_process();
       })
-      .catch(logError);
+      .catch(console.error);
     this.stdin = this.proc.get_stdin_pipe();
     this.stdout = new Gio.DataInputStream({
       base_stream: this.proc.get_stdout_pipe(),
       close_base_stream: true,
     });
 
-    this._read().catch(logError);
+    this._read().catch(console.error);
   }
 
   async _read_headers() {
     const headers = Object.create(null);
 
+    // eslint-disable-next-line no-constant-condition
     while (true) {
       const [bytes] = await this.stdout.read_line_async(
         GLib.PRIORITY_DEFAULT,
@@ -204,7 +207,7 @@ export default class LSPClient {
       this._onmessage(content);
     }
 
-    this._read().catch(logError);
+    this._read().catch(console.error);
   }
 
   _onmessage(message) {

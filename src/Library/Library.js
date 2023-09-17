@@ -2,7 +2,7 @@ import Gio from "gi://Gio";
 import Adw from "gi://Adw";
 import Gtk from "gi://Gtk";
 
-import { demos_dir, getDemo, readDemoFile } from "../util.js";
+import { demos_dir, getDemo } from "../util.js";
 import Window from "../window.js";
 
 import resource from "./Library.blp";
@@ -35,7 +35,7 @@ export default function Library({ application }) {
     widget.connect("activated", () => {
       last_selected = widget;
 
-      openDemo({ application, demo_name: demo.name }).catch(logError);
+      openDemo({ application, demo_name: demo.name }).catch(console.error);
     });
 
     builder.get_object(`library_${demo.category}`).add(widget);
