@@ -58,7 +58,7 @@
       "sources": [
         {
           "type": "dir",
-          "path": "."
+          "path": "../"
         }
       ],
       "post-install": [

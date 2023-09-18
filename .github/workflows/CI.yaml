@@ -1,11 +1,14 @@
 name: CI
 
 on:
+  push:
+    branches: [main]
   pull_request:
     branches: [main]
 
 jobs:
   CI:
+    if: ${{ github.event_name == 'pull_request' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -30,3 +33,23 @@ jobs:
           key: 45beta
 
       - run: make ci
+
+  flatpak:
+    name: "Flatpak"
+    runs-on: ubuntu-latest
+    container:
+      image: bilelmoussaoui/flatpak-github-actions:gnome-nightly
+      options: --privileged
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: "recursive"
+      - name: Install Extensions
+        run: |
+          flatpak --system install -y --noninteractive org.freedesktop.Sdk.Extension.vala/x86_64/23.08 org.freedesktop.Sdk.Extension.rust-stable/x86_64/23.08 org.freedesktop.Sdk.Extension.llvm16/x86_64/23.08
+      - uses: flatpak/flatpak-github-actions/flatpak-builder@v6
+        with:
+          bundle: workbench.flatpak
+          repository-name: flathub-beta
+          manifest-path: build-aux/re.sonny.Workbench.Devel.json
+          cache-key: flatpak-builder-${{ github.sha }}
