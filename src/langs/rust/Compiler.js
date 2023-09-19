@@ -14,7 +14,6 @@ export default function Compiler({ session }) {
     const cargo = cargo_launcher.spawnv([
       "cargo",
       "build",
-      "--locked",
       "--target-dir",
       targetPath,
     ]);
