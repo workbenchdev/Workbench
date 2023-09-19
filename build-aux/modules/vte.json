@@ -2,17 +2,17 @@
   "name": "vte",
   "buildsystem": "meson",
   "config-opts": [
-    "-Ddocs=false",
+    "-Ddocs=true",
     "-Dgtk3=false",
     "-Dgtk4=true",
-    "-Dvapi=false",
+    "-Dvapi=true",
     "-Dglade=false"
   ],
   "sources": [
     {
       "type": "archive",
-      "url": "https://download.gnome.org/sources/vte/0.73/vte-0.73.93.tar.xz",
-      "sha256": "dade04c8dd3f9a7b6f7dd0f886d23e1b41debe175a15ce40f3a94921db1ae0ae"
+      "url": "https://download.gnome.org/sources/vte/0.74/vte-0.74.0.tar.xz",
+      "sha256": "9ae08f777952ba793221152d360550451580f42d3b570e3341ebb6841984c76b"
     }
   ]
 }
