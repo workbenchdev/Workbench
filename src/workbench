@@ -1,5 +1,5 @@
 #!/bin/sh
 
 
-SHELL=/bin/sh script --flush --quiet --return /var/tmp/workbench --command "WEBKIT_DISABLE_DMABUF_RENDERER=1 @app_id@ $@"
-# SHELL=/bin/sh script --flush --quiet --return /var/tmp/workbench --command "G_MESSAGES_DEBUG=\"@app_id@\" WEBKIT_DISABLE_DMABUF_RENDERER=1 @app_id@ $@"
+SHELL=/bin/sh PATH=/app/bin:$PATH LD_LIBRARY_PATH=/app/lib:$LD_LIBRARY_PATH script --flush --quiet --return /var/tmp/workbench --command "WEBKIT_DISABLE_DMABUF_RENDERER=1 @app_id@ $@"
+# SHELL=/bin/sh PATH=/app/bin:$PATH LD_LIBRARY_PATH=/app/lib:$LD_LIBRARY_PATH script --flush --quiet --return /var/tmp/workbench --command "G_MESSAGES_DEBUG=\"@app_id@\" WEBKIT_DISABLE_DMABUF_RENDERER=1 @app_id@ $@"
