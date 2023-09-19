@@ -30,3 +30,39 @@ jobs:
           key: 45beta
 
       - run: make ci
+
+  flatter:
+    name: Flatpak
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/andyholmes/flatter/gnome:45
+      options: --privileged
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Install Runtimes
+        run: |
+          flatpak install -y --noninteractive \
+                          flathub \
+                          org.flatpak.Builder \
+                          org.freedesktop.Sdk//23.08 \
+                          org.freedesktop.Sdk.Extension.rust-stable//23.08 \
+                          org.freedesktop.Sdk.Extension.node18//23.08 \
+                          org.freedesktop.Sdk.Extension.vala//23.08 \
+                          org.freedesktop.Sdk.Extension.llvm16//23.08
+          flatpak install -y --noninteractive \
+                          flathub-beta \
+                          org.gnome.Platform//45beta \
+                          org.gnome.Sdk//45beta \
+                          org.gnome.Sdk.Docs//45beta
+
+      - name: Build
+        uses: andyholmes/flatter@main
+        with:
+          files: |
+            build-aux/re.sonny.Workbench.Devel.json
+          upload-bundles: true
