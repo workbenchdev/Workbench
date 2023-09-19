@@ -40,6 +40,8 @@
     "*.a"
   ],
   "modules": [
+    "modules/cargo-c.json",
+    "modules/gst-plugin-gtk4.json",
     "modules/gi-docgen.json",
     "modules/vte.json",
     "modules/libshumate.json",
