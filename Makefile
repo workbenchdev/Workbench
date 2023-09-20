@@ -19,9 +19,6 @@ lint:
 # Flatpak manifests
 	flatpak run --user --command=flatpak-builder-lint org.flatpak.Builder --exceptions build-aux/re.sonny.Workbench.json
 	flatpak run --user --command=flatpak-builder-lint org.flatpak.Builder --exceptions build-aux/re.sonny.Workbench.Devel.json
-# build flatpak and do this
-# flatpak run --env=G_DEBUG=fatal-criticals --command=appstream-util org.flatpak.Builder validate data/app.metainfo.xml
-
 
 unit:
 	flatpak run --user --filesystem=host:ro --command="gjs" org.gnome.Sdk//45beta -m ./troll/tst/bin.js test/*.test.js
@@ -49,4 +46,8 @@ sandbox: setup
 
 flatpak: setup
 	flatpak-builder --ccache --force-clean flatpak build-aux/re.sonny.Workbench.Devel.json
+# This is what Flathub does - consider moving to lint
+	flatpak run --env=G_DEBUG=fatal-criticals --command=appstream-util org.flatpak.Builder validate flatpak/files/share/appdata/re.sonny.Workbench.Devel.appdata.xml
+	flatpak run --command="desktop-file-validate" --filesystem=host:ro org.freedesktop.Sdk//23.08 flatpak/files/share/applications/re.sonny.Workbench.Devel.desktop
+# appstreamcli validate --override=release-time-missing=info /path/to/your/app.metainfo.xml
 	flatpak-builder --run flatpak build-aux/re.sonny.Workbench.Devel.json bash

@@ -52,6 +52,7 @@
     "modules/GTKCssLanguageServer.json",
     "modules/blueprint-compiler.json",
     "modules/biome.json",
+    "modules/icon-development-kit.json",
     {
       "name": "Workbench",
       "buildsystem": "meson",
@@ -68,10 +69,10 @@
         "cp -a /usr/lib/sdk/vala/bin/. /app/bin/",
         "cp -a /usr/lib/sdk/vala/lib/. /app/lib/",
         "#cp -a /usr/lib/sdk/vala/share/. /app/share/",
-        "cp -a /usr/lib/sdk/rust-stable/bin/. /app/bin/",
-        "cp -a /usr/lib/sdk/rust-stable/lib/. /app/lib/",
         "cp -a /usr/lib/sdk/llvm16/bin/. /app/bin/",
-        "cp -a /usr/lib/sdk/llvm16/lib/. /app/lib/"
+        "cp -a /usr/lib/sdk/llvm16/lib/. /app/lib/",
+        "cp -a /usr/lib/sdk/rust-stable/bin/. /app/bin/",
+        "cp -a /usr/lib/sdk/rust-stable/lib/. /app/lib/"
       ]
     }
   ]
