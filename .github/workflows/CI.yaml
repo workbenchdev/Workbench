@@ -27,6 +27,6 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.local/share/flatpak
-          key: 45beta
+          key: 45
 
       - run: make ci
