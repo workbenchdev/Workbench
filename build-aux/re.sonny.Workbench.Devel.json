@@ -3,6 +3,7 @@
   "runtime": "org.gnome.Sdk",
   "runtime-version": "45beta",
   "sdk": "org.gnome.Sdk",
+  "separate-locales": false,
   "sdk-extensions": [
     "org.gnome.Sdk.Docs",
     "org.freedesktop.Sdk.Extension.vala",
@@ -10,6 +11,7 @@
     "org.freedesktop.Sdk.Extension.llvm16"
   ],
   "build-options": {
+    "no-debuginfo": true,
     "append-path": "/usr/lib/sdk/vala/bin:/usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/llvm16/bin",
     "append-ld-library-path": "/usr/lib/sdk/vala/lib",
     "env": {
@@ -29,9 +31,8 @@
   ],
   "cleanup": [
     "/include",
-    "/lib/pkgconfig",
     "/man",
-    "/share/doc",
+    "#/share/doc",
     "/share/gtk-doc",
     "/share/man",
     "/share/pkgconfig",
@@ -40,17 +41,13 @@
     "*.a"
   ],
   "modules": [
-    "modules/cargo-c.json",
-    "modules/gst-plugin-gtk4.json",
     "modules/gi-docgen.json",
     "modules/vte.json",
     "modules/libshumate.json",
     "modules/libportal.json",
-    "modules/libspelling.json",
     "modules/GTKCssLanguageServer.json",
     "modules/blueprint-compiler.json",
     "modules/biome.json",
-    "modules/icon-development-kit.json",
     {
       "name": "Workbench",
       "buildsystem": "meson",
@@ -61,6 +58,17 @@
           "type": "dir",
           "path": ".."
         }
+      ],
+      "post-install": [
+        "mkdir -p /app/share/doc",
+        "cp -a /usr/share/runtime/docs/doc/. /app/share/doc/",
+        "cp -a /usr/lib/sdk/vala/bin/. /app/bin/",
+        "cp -a /usr/lib/sdk/vala/lib/. /app/lib/",
+        "#cp -a /usr/lib/sdk/vala/share/. /app/share/",
+        "cp -a /usr/lib/sdk/rust-stable/bin/. /app/bin/",
+        "cp -a /usr/lib/sdk/rust-stable/lib/. /app/lib/",
+        "cp -a /usr/lib/sdk/llvm16/bin/. /app/bin/",
+        "cp -a /usr/lib/sdk/llvm16/lib/. /app/lib/"
       ]
     }
   ]

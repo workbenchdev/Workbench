@@ -1,18 +1,16 @@
 #!/bin/sh
 
-
 SHELL=/bin/sh
 
 export WEBKIT_DISABLE_DMABUF_RENDERER=1
 # export G_MESSAGES_DEBUG=@app_id@
 
 export CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER=clang
-export CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTFLAGS="-C link-arg=-fuse-ld=/usr/lib/sdk/rust-stable/bin/mold"
+export CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTFLAGS="-C link-arg=-fuse-ld=/app/bin/mold"
 export CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER=clang
-export CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_RUSTFLAGS="-C link-arg=-fuse-ld=/usr/lib/sdk/rust-stable/bin/mold"
+export CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_RUSTFLAGS="-C link-arg=-fuse-ld=/app/bin/mold"
 
-source /usr/lib/sdk/vala/enable.sh
-source /usr/lib/sdk/rust-stable/enable.sh
-source /usr/lib/sdk/llvm16/enable.sh
+# Required when org.freedesktop.Sdk.Extension.vala is not installed
+export LD_LIBRARY_PATH=/app/lib/vala-0.56/:$LD_LIBRARY_PATH
 
 script --flush --quiet --return /var/tmp/workbench --command "@app_id@ $@"

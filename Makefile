@@ -1,12 +1,12 @@
 SHELL:=/bin/bash -O globstar
-.PHONY: setup lint unit test ci
+.PHONY: setup lint unit test ci sandbox flatpak
 .DEFAULT_GOAL := ci
 
 setup:
 	flatpak remote-add --user --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
-	flatpak install --or-update --user --noninteractive flathub-beta org.gnome.Platform//45beta org.gnome.Sdk//45beta org.gnome.Sdk.Docs//45beta
+	flatpak install --or-update --user --noninteractive flathub-beta org.gnome.Sdk//45beta org.gnome.Sdk.Docs//45beta
 	flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-	flatpak install --or-update --user --noninteractive flathub org.flatpak.Builder org.freedesktop.Sdk//23.08 org.freedesktop.Sdk.Extension.rust-stable//23.08 org.freedesktop.Sdk.Extension.node18//23.08 org.freedesktop.Sdk.Extension.vala//23.08 org.freedesktop.Sdk.Extension.llvm16//23.08
+	flatpak install --or-update --user --noninteractive flathub org.flatpak.Builder org.freedesktop.Sdk.Extension.rust-stable//23.08 org.freedesktop.Sdk.Extension.node18//23.08 org.freedesktop.Sdk.Extension.vala//23.08 org.freedesktop.Sdk.Extension.llvm16//23.08
 	npm install
 
 lint:
@@ -39,3 +39,14 @@ unit:
 test: unit lint
 
 ci: setup unit lint
+
+# Note that if you have Sdk extensions installed they will be used
+# make sure to test without the sdk extensions installed
+sandbox: setup
+	flatpak-builder --ccache --user --install --force-clean flatpak build-aux/re.sonny.Workbench.Devel.json
+	flatpak run --command="bash" re.sonny.Workbench.Devel
+
+flatpak: setup
+	flatpak-builder --ccache --force-clean flatpak build-aux/re.sonny.Workbench.Devel.json
+# flatpak remove --noninteractive org.gnome.Sdk.Docs//45beta org.freedesktop.Sdk.Extension.rust-stable//23.08 org.freedesktop.Sdk.Extension.vala//23.08 org.freedesktop.Sdk.Extension.llvm16//23.08
+	flatpak-builder --run flatpak build-aux/re.sonny.Workbench.Devel.json bash
