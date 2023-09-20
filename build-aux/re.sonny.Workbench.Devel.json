@@ -31,6 +31,7 @@
   ],
   "cleanup": [
     "/include",
+    "/lib/pkgconfig",
     "/man",
     "#/share/doc",
     "/share/gtk-doc",
@@ -60,7 +61,6 @@
         }
       ],
       "post-install": [
-        "mkdir -p /app/share/doc",
         "cp -a /usr/share/runtime/docs/doc/. /app/share/doc/",
         "cp -a /usr/lib/sdk/vala/bin/. /app/bin/",
         "cp -a /usr/lib/sdk/vala/lib/. /app/lib/",

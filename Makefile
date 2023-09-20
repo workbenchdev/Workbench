@@ -44,9 +44,9 @@ ci: setup unit lint
 # make sure to test without the sdk extensions installed
 sandbox: setup
 	flatpak-builder --ccache --user --install --force-clean flatpak build-aux/re.sonny.Workbench.Devel.json
+# flatpak remove --noninteractive org.gnome.Sdk.Docs//45beta org.freedesktop.Sdk.Extension.rust-stable//23.08 org.freedesktop.Sdk.Extension.vala//23.08 org.freedesktop.Sdk.Extension.llvm16//23.08
 	flatpak run --command="bash" re.sonny.Workbench.Devel
 
 flatpak: setup
 	flatpak-builder --ccache --force-clean flatpak build-aux/re.sonny.Workbench.Devel.json
-# flatpak remove --noninteractive org.gnome.Sdk.Docs//45beta org.freedesktop.Sdk.Extension.rust-stable//23.08 org.freedesktop.Sdk.Extension.vala//23.08 org.freedesktop.Sdk.Extension.llvm16//23.08
 	flatpak-builder --run flatpak build-aux/re.sonny.Workbench.Devel.json bash
