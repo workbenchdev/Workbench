@@ -60,7 +60,6 @@ namespace Workbench {
     }
 
     public void update_ui (string content, string target_id, string original_id = "") {
-      typeof (Shumate.SimpleMap).ensure();
       this.builder = new Gtk.Builder.from_string (content, content.length);
 
       var target = this.builder.get_object (target_id) as Gtk.Widget;
