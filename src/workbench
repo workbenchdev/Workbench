@@ -1,6 +1,4 @@
-#!/bin/sh
-
-SHELL=/bin/sh
+#!/bin/bash
 
 export WEBKIT_DISABLE_DMABUF_RENDERER=1
 # export G_MESSAGES_DEBUG=@app_id@
