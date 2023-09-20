@@ -12,14 +12,8 @@
   ],
   "build-options": {
     "no-debuginfo": true,
-    "append-path": "/usr/lib/sdk/vala/bin:/usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/llvm16/bin",
-    "append-ld-library-path": "/usr/lib/sdk/vala/lib",
-    "env": {
-      "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER": "clang",
-      "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTFLAGS": "-C link-arg=-fuse-ld=/usr/lib/sdk/rust-stable/bin/mold",
-      "CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER": "clang",
-      "CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_RUSTFLAGS": "-C link-arg=-fuse-ld=/usr/lib/sdk/rust-stable/bin/mold"
-    }
+    "append-path": "/usr/lib/sdk/vala/bin:/usr/lib/sdk/rust-stable/bin",
+    "append-ld-library-path": "/usr/lib/sdk/vala/lib"
   },
   "command": "workbench",
   "finish-args": [
@@ -52,7 +46,6 @@
     "modules/GTKCssLanguageServer.json",
     "modules/blueprint-compiler.json",
     "modules/biome.json",
-    "modules/icon-development-kit.json",
     {
       "name": "Workbench",
       "buildsystem": "meson",
