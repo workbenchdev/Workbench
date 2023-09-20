@@ -46,6 +46,7 @@
     "modules/GTKCssLanguageServer.json",
     "modules/blueprint-compiler.json",
     "modules/biome.json",
+    "modules/icon-development-kit.json",
     {
       "name": "Workbench",
       "buildsystem": "meson",
