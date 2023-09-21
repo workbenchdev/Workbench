@@ -9,6 +9,8 @@
     "org.freedesktop.Sdk.Extension.rust-stable"
   ],
   "build-options": {
+    "strip": false,
+    "no-debuginfo": true,
     "append-path": "/usr/lib/sdk/vala/bin:/usr/lib/sdk/rust-stable/bin",
     "append-ld-library-path": "/usr/lib/sdk/vala/lib"
   },
