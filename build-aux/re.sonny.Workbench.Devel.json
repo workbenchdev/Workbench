@@ -1,7 +1,7 @@
 {
   "id": "re.sonny.Workbench.Devel",
   "runtime": "org.gnome.Sdk",
-  "runtime-version": "45beta",
+  "runtime-version": "45",
   "sdk": "org.gnome.Sdk",
   "separate-locales": false,
   "sdk-extensions": [
