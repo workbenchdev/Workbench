@@ -9,8 +9,6 @@
     "org.freedesktop.Sdk.Extension.rust-stable"
   ],
   "build-options": {
-    "strip": false,
-    "no-debuginfo": true,
     "append-path": "/usr/lib/sdk/vala/bin:/usr/lib/sdk/rust-stable/bin",
     "append-ld-library-path": "/usr/lib/sdk/vala/lib"
   },
@@ -48,7 +46,6 @@
     {
       "name": "Workbench",
       "buildsystem": "meson",
-      "builddir": true,
       "config-opts": ["-Dprofile=default"],
       "sources": [
         {
@@ -56,6 +53,10 @@
           "path": ".."
         }
       ],
+      "build-options": {
+        "strip": false,
+        "no-debuginfo": true
+      },
       "post-install": [
         "cp -a /usr/share/runtime/docs/doc/. /app/share/doc/",
         "cp -a /usr/lib/sdk/vala/bin/. /app/bin/",

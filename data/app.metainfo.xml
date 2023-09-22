@@ -31,24 +31,18 @@
   <url type="vcs-browser">https://workbench.sonny.re/source</url>
   <screenshots>
     <screenshot type="default">
-      <image>
-        https://raw.githubusercontent.com/sonnyp/Workbench/main/data/screenshot.png
-      </image>
+      <image>https://raw.githubusercontent.com/sonnyp/Workbench/main/data/screenshot.png</image>
     </screenshot>
     <screenshot>
-      <image>
-        https://raw.githubusercontent.com/sonnyp/Workbench/main/data/screenshot-code.png
-      </image>
+      <image>https://raw.githubusercontent.com/sonnyp/Workbench/main/data/screenshot-code.png</image>
     </screenshot>
     <screenshot>
-      <image>
-        https://raw.githubusercontent.com/sonnyp/Workbench/main/data/screenshot-library.png
-      </image>
+      <image>https://raw.githubusercontent.com/sonnyp/Workbench/main/data/screenshot-library.png</image>
     </screenshot>
   </screenshots>
   <content_rating type="oars-1.1" />
   <releases>
-    <release version="45" date="2023-09-17">
+    <release version="45" date="2023-09-22">
       <description>
         <ul>
           <li>Use GNOME 45</li>
@@ -60,7 +54,7 @@
           <li>Add a workbench.resolve API</li>
           <li>Allow running Vala without UI code</li>
           <li>Update to Blueprint 0.10.0</li>
-          <li>Update to vte 0.72.2</li>
+          <li>Update to vte 0.74</li>
           <li>Update to libportal 0.7</li>
           <li>Update Icon Development Kit</li>
           <li>Replace Rome Language Server with Biome Language Server</li>
