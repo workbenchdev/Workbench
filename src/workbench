@@ -6,4 +6,7 @@ export WEBKIT_DISABLE_DMABUF_RENDERER=1
 # Required when org.freedesktop.Sdk.Extension.vala is not installed
 export LD_LIBRARY_PATH=/app/lib/vala-0.56/:$LD_LIBRARY_PATH
 
+# Required to allow pkgconfig to find pc files in /app/lib/pkgconfig
+export PKG_CONFIG_PATH=/app/lib/pkgconfig/:$PKG_CONFIG_PATH
+
 script --flush --quiet --return /var/tmp/workbench --command "@app_id@ $@"

@@ -24,12 +24,12 @@
   ],
   "cleanup": [
     "/include",
-    "/lib/pkgconfig",
+    "#/lib/pkgconfig",
     "/man",
     "#/share/doc",
     "/share/gtk-doc",
     "/share/man",
-    "/share/pkgconfig",
+    "#/share/pkgconfig",
     "/share/installed-tests",
     "*.la",
     "*.a"
