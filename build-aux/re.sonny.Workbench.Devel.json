@@ -48,7 +48,6 @@
     {
       "name": "Workbench",
       "buildsystem": "meson",
-      "builddir": true,
       "config-opts": ["-Dprofile=development"],
       "sources": [
         {
