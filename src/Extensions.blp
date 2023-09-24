@@ -1,0 +1,157 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.Window window {
+  hide-on-close: true;
+  modal: false;
+  default-height: 700;
+  default-width: 700;
+
+  Adw.ToolbarView {
+    extend-content-to-top-edge: true;
+    [top]
+    Adw.HeaderBar {
+      show-title: false;
+    }
+
+    content: Adw.StatusPage {
+      title: _("Extensions");
+
+      Adw.Clamp {
+        Box {
+          orientation: vertical;
+          spacing: 12;
+
+          Box {
+            orientation: vertical;
+
+
+            Label {
+              label: _("Rust language support");
+              xalign: 0;
+              styles [
+                "heading"
+              ]
+            }
+
+            Label {
+              margin-top: 8;
+              label: _("To enable Rust run the following command in your Console or Terminal.");
+              xalign: 0;
+              styles [
+                "dim-label"
+              ]
+            }
+
+            Label {
+              margin-top: 2;
+              use-markup: true;
+              wrap: true;
+              selectable: true;
+              xalign: 0;
+              label: "flatpak install flathub org.freedesktop.Sdk.Extension.rust-stable//23.08 org.freedesktop.Sdk.Extension.llvm16//23.08";
+
+              styles [
+                "code",
+                "view",
+                "frame",
+                "monospace"
+              ]
+            }
+          }
+
+          Box {
+            orientation: vertical;
+
+
+            Label {
+              label: _("Vala language support");
+              xalign: 0;
+              styles [
+                "heading"
+              ]
+            }
+
+            Label {
+              margin-top: 8;
+              label: _("To enable Vala run the following command in your Console or Terminal.");
+              xalign: 0;
+              styles [
+                "dim-label"
+              ]
+            }
+
+
+            Label  {
+              margin-top: 2;
+              use-markup: true;
+              wrap: true;
+              selectable: true;
+              xalign: 0;
+              label: "flatpak install flathub org.freedesktop.Sdk.Extension.vala//23.08";
+
+              styles [
+                "code",
+                "view",
+                "frame",
+                "monospace"
+              ]
+            }
+          }
+
+          Box {
+            orientation: vertical;
+
+            Label {
+              label: _("Documentation and API references");
+              xalign: 0;
+              styles [
+                "heading"
+              ]
+            }
+
+            Label {
+              margin-top: 8;
+              label: _("To enable offline documentation run the following command in your Console or Terminal.");
+              xalign: 0;
+              styles [
+                "dim-label"
+              ]
+            }
+
+            Label  {
+              margin-top: 2;
+              use-markup: true;
+              wrap: true;
+              selectable: true;
+              xalign: 0;
+              label: "flatpak install flathub org.gnome.Sdk.Docs//45";
+
+              styles [
+                "code",
+                "view",
+                "frame",
+                "monospace"
+              ]
+            }
+          }
+
+          Box {
+            margin-top: 18;
+            halign: center;
+            Image {
+              icon-name: "refresh-large-symbolic";
+              margin-end: 12;
+            }
+            Label {
+              label: "To apply changes, restart Workbench\nonce the commands have completed.";
+              styles [
+                "heading"
+              ]
+            }
+          }
+        }
+      }
+    };
+  }
+}

@@ -56,7 +56,7 @@ export default function DocumentationViewer({ application }) {
   const search_page = builder.get_object("search_page");
   const search_entry = builder.get_object("search_entry");
 
-  const base_path = Gio.File.new_for_path("/app/share/doc");
+  const base_path = Gio.File.new_for_path("/usr/share/doc");
 
   const user_content_manager = webview.get_user_content_manager();
 

@@ -4,7 +4,7 @@ SHELL:=/bin/bash -O globstar
 
 setup:
 	flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-	flatpak install --or-update --user --noninteractive flathub org.gnome.Sdk//45 org.gnome.Sdk.Docs//45 org.flatpak.Builder org.freedesktop.Sdk.Extension.rust-stable//23.08 org.freedesktop.Sdk.Extension.node18//23.08 org.freedesktop.Sdk.Extension.vala//23.08
+	flatpak install --or-update --user --noninteractive flathub org.gnome.Sdk//45 org.gnome.Sdk.Docs//45 org.flatpak.Builder org.freedesktop.Sdk.Extension.rust-stable//23.08 org.freedesktop.Sdk.Extension.node18//23.08 org.freedesktop.Sdk.Extension.vala//23.08 org.freedesktop.Sdk.Extension.llvm16//23.08
 	npm install
 
 lint:
@@ -39,7 +39,7 @@ ci: setup unit lint
 # make sure to test without the sdk extensions installed
 sandbox: setup
 	flatpak-builder --ccache --user --install --force-clean flatpak build-aux/re.sonny.Workbench.Devel.json
-# flatpak remove --noninteractive org.gnome.Sdk.Docs//45 org.freedesktop.Sdk.Extension.rust-stable//23.08 org.freedesktop.Sdk.Extension.vala//23.08
+# flatpak remove --noninteractive org.gnome.Sdk.Docs//45 org.freedesktop.Sdk.Extension.rust-stable//23.08 org.freedesktop.Sdk.Extension.vala//23.08 org.freedesktop.Sdk.Extension.llvm16//23.08
 	flatpak run --command="bash" re.sonny.Workbench.Devel
 
 flatpak: setup
