@@ -1,6 +1,6 @@
 {
   "id": "re.sonny.Workbench.Devel",
-  "runtime": "org.gnome.Platform",
+  "runtime": "org.gnome.Sdk",
   "runtime-version": "45",
   "sdk": "org.gnome.Sdk",
   "sdk-extensions": [
@@ -48,10 +48,6 @@
     {
       "name": "Workbench",
       "buildsystem": "meson",
-      "build-options": {
-        "strip": false,
-        "no-debuginfo": true
-      },
       "config-opts": ["-Dprofile=development"],
       "sources": [
         {
