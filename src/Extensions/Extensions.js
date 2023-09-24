@@ -55,7 +55,7 @@ export function isRustEnabled() {
 }
 
 export function isValaEnabled() {
-  extensions.includes("org.freedesktop.Sdk.Extension.vala");
+  return extensions.includes("org.freedesktop.Sdk.Extension.vala");
 }
 
 export function isDocumentationEnabled() {
