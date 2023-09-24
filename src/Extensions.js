@@ -1,15 +1,24 @@
 import Gio from "gi://Gio";
-import Gtk from "gi://Gtk";
+import GLib from "gi://GLib";
 
-import resource from "./Extensions.blp";
+import { build } from "../troll/src/main.js";
 
+import Interace from "./Extensions.blp" with { type: "uri" };
 import { settings } from "./util.js";
-
 import "./Extensions/Extension.js";
 
 export default function Extensions({ application }) {
-  const builder = Gtk.Builder.new_from_resource(resource);
-  const window = builder.get_object("window");
+  const { window, extension_rust, extension_vala, extension_documentation } =
+    build(Interace);
+
+  const extensions = getExtensions();
+  extension_rust.enabled =
+    extensions.includes("org.freedesktop.Sdk.Extension.rust-stable") &&
+    extensions.includes("org.freedesktop.Sdk.Extension.llvm16");
+  extension_documentation.enabled = extensions.includes("org.gnome.Sdk.Docs");
+  extension_vala.enabled = extensions.includes(
+    "org.freedesktop.Sdk.Extension.vala",
+  );
 
   const action_extensions = new Gio.SimpleAction({
     name: "extensions",
@@ -29,4 +38,14 @@ export default function Extensions({ application }) {
   }
 
   application.add_action(action_extensions);
+}
+
+function getExtensions() {
+  const keyfile = new GLib.KeyFile();
+
+  keyfile.load_from_file("/.flatpak-info", GLib.KeyFileFlags.NONE);
+
+  return keyfile
+    .get_string_list("Instance", "runtime-extensions")
+    .map((extension) => extension.split("=")[0]);
 }

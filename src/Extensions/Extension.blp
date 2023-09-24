@@ -3,9 +3,8 @@ using Gtk 4.0;
 template $Extension : Box {
   orientation: vertical;
 
-  ToggleButton toggle {
-    styles ["flat"]
-
+  CenterBox {
+    [start]
     Box {
       spacing: 4;
       Image image_enabled {
@@ -20,29 +19,33 @@ template $Extension : Box {
         ]
       }
     }
+
+    [end]
+    ToggleButton toggle {
+      icon-name: "flatpak-symbolic";
+      styles ["flat", "circular"]
+    }
   }
 
   Revealer revealer {
-    reveal-child: true;
+    reveal-child: bind toggle.active;
 
     Box {
       orientation: vertical;
-      Label {
+      Label label_hint {
         margin-top: 8;
-        label: _("To enable Rust run the following command in your Console or Terminal.");
         xalign: 0;
         styles [
           "dim-label"
         ]
       }
 
-      Label {
+      Label label_command {
         margin-top: 2;
         use-markup: true;
         wrap: true;
         selectable: true;
         xalign: 0;
-        label: "flatpak install flathub org.freedesktop.Sdk.Extension.rust-stable//23.08 org.freedesktop.Sdk.Extension.llvm16//23.08";
 
         styles [
           "code",

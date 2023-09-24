@@ -22,118 +22,27 @@ Adw.Window window {
           orientation: vertical;
           spacing: 12;
 
-          Box {
-            orientation: vertical;
-
-
-            Label {
-              label: _("Rust language support");
-              xalign: 0;
-              styles [
-                "heading"
-              ]
-            }
-
-            Label {
-              margin-top: 8;
-              label: _("To enable Rust run the following command in your Console or Terminal.");
-              xalign: 0;
-              styles [
-                "dim-label"
-              ]
-            }
-
-            Label {
-              margin-top: 2;
-              use-markup: true;
-              wrap: true;
-              selectable: true;
-              xalign: 0;
-              label: "flatpak install flathub org.freedesktop.Sdk.Extension.rust-stable//23.08 org.freedesktop.Sdk.Extension.llvm16//23.08";
-
-              styles [
-                "code",
-                "view",
-                "frame",
-                "monospace"
-              ]
-            }
+          $Extension {
+            title: _("JavaScript language support");
+            enabled: true;
           }
 
-          Box {
-            orientation: vertical;
-
-
-            Label {
-              label: _("Vala language support");
-              xalign: 0;
-              styles [
-                "heading"
-              ]
-            }
-
-            Label {
-              margin-top: 8;
-              label: _("To enable Vala run the following command in your Console or Terminal.");
-              xalign: 0;
-              styles [
-                "dim-label"
-              ]
-            }
-
-
-            Label  {
-              margin-top: 2;
-              use-markup: true;
-              wrap: true;
-              selectable: true;
-              xalign: 0;
-              label: "flatpak install flathub org.freedesktop.Sdk.Extension.vala//23.08";
-
-              styles [
-                "code",
-                "view",
-                "frame",
-                "monospace"
-              ]
-            }
+          $Extension extension_rust {
+            title: _("Rust language support");
+            hint: _("To enable Rust run the following command in your Console or Terminal.");
+            command: "flatpak install flathub org.freedesktop.Sdk.Extension.rust-stable//23.08 org.freedesktop.Sdk.Extension.llvm16//23.08";
           }
 
-          Box {
-            orientation: vertical;
+          $Extension extension_vala {
+            title: _("Vala language support");
+            hint: _("To enable Vala run the following command in your Console or Terminal.");
+            command: "flatpak install flathub org.freedesktop.Sdk.Extension.vala//23.08";
+          }
 
-            Label {
-              label: _("Documentation and API references");
-              xalign: 0;
-              styles [
-                "heading"
-              ]
-            }
-
-            Label {
-              margin-top: 8;
-              label: _("To enable offline documentation run the following command in your Console or Terminal.");
-              xalign: 0;
-              styles [
-                "dim-label"
-              ]
-            }
-
-            Label  {
-              margin-top: 2;
-              use-markup: true;
-              wrap: true;
-              selectable: true;
-              xalign: 0;
-              label: "flatpak install flathub org.gnome.Sdk.Docs//45";
-
-              styles [
-                "code",
-                "view",
-                "frame",
-                "monospace"
-              ]
-            }
+          $Extension extension_documentation {
+            title: _("Documentation");
+            hint: _("To enable documentation run the following command in your Console or Terminal.");
+            command: "flatpak install flathub org.gnome.Sdk.Docs//45";
           }
 
           Box {
