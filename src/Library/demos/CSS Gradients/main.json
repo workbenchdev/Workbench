@@ -1,0 +1,6 @@
+{
+  "category": "user_interface",
+  "description": "Generate an image that smoothly fades from one color to another.",
+  "panels": ["style", "preview"],
+  "autorun": true
+}
