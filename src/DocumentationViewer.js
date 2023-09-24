@@ -5,6 +5,10 @@ import GLib from "gi://GLib";
 import WebKit from "gi://WebKit";
 import { decode } from "./util.js";
 import resource from "./DocumentationViewer.blp";
+import {
+  action_extensions,
+  isDocumentationEnabled,
+} from "./Extensions/Extensions.js";
 
 const DocumentationPage = GObject.registerClass(
   {
@@ -131,6 +135,11 @@ export default function DocumentationViewer({ application }) {
     parameter_type: null,
   });
   action_documentation.connect("activate", () => {
+    if (!isDocumentationEnabled()) {
+      action_extensions.activate(null);
+      return;
+    }
+
     window.present();
     open().catch(console.error);
   });
