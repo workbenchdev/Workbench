@@ -3,437 +3,446 @@ using Adw 1;
 using Vte 3.91;
 using GtkSource 5;
 
-Gtk.ApplicationWindow window {
+Adw.ApplicationWindow window {
   default-width: 1024;
   default-height: 768;
   maximized: false;
-  titlebar: Gtk.HeaderBar {
-    [start]
-    Button button_library {
-      child: Adw.ButtonContent {
-        icon-name: "library-symbolic";
-        label: _("_Library");
-        use-underline: true;
-      };
-      action-name: "app.library";
-      tooltip-text: _("Open Library of Demos and Examples (Ctrl+Shift+O)");
-    }
 
-    [title]
-    Box {
-      spacing: 6;
-      orientation: horizontal;
-      homogeneous: true;
+  Adw.ToolbarView {
+    top-bar-style: raised;
 
-      ToggleButton button_code {
-        child: Box {
-          halign: center;
-
-          Image {
-            icon-name: "re.sonny.Workbench-code-symbolic";
-          }
-
-          Label {
-            label: _("_Code");
-            use-underline: true;
-          }
-        };
-
-        styles ["flat", "view-toggler"]
-      }
-
-      ToggleButton button_style {
-        child: Box {
-          halign: center;
-
-          Image {
-            icon-name: "larger-brush-symbolic";
-          }
-
-          Label {
-            label: _("_Style");
-            use-underline: true;
-          }
-        };
-
-        styles ["flat", "view-toggler"]
-      }
-
-      ToggleButton button_ui {
-        child: Box {
-          halign: center;
-
-          Image {
-            icon-name: "re.sonny.Workbench-ui-symbolic";
-          }
-
-          Label {
-            label: _("_UI");
-            use-underline: true;
-          }
-        };
-
-        styles ["flat", "view-toggler"]
-      }
-
-      ToggleButton button_preview {
-        child: Box {
-          halign: center;
-
-          Image {
-            icon-name: "re.sonny.Workbench-preview-symbolic";
-          }
-
-          Label {
-            label: _("_Preview");
-            use-underline: true;
-          }
-        };
-
-        styles ["flat", "view-toggler"]
-      }
-    }
-
-    [end]
-    MenuButton button_menu {
-      menu-model: menu_app;
-      icon-name: "open-menu-symbolic";
-      tooltip-text: _("Main Menu");
-      primary: true;
-    }
-
-    [end]
-    Button button_run {
-      child: Adw.ButtonContent {
-        icon-name: "media-playback-start-symbolic";
-        label: _("_Run");
-        use-underline: true;
-      };
-      action-name: "win.run";
-      tooltip-text: _("Run (Ctrl+⏎)");
-      styles ["suggested-action"]
-    }
-  };
-
-  [content]
-  // Not used currently but we keep it in case we need it
-  Adw.ToastOverlay toast_overlay {
-    Paned paned {
-      orientation: vertical;
-      shrink-start-child: false;
-      shrink-end-child: false;
-      resize-start-child: true;
-      resize-end-child: true;
-
+    [top]
+    Gtk.HeaderBar {
       [start]
+      Button button_library {
+        child: Adw.ButtonContent {
+          icon-name: "library-symbolic";
+          label: _("_Library");
+          use-underline: true;
+        };
+        action-name: "app.library";
+        tooltip-text: _("Open Library of Demos and Examples (Ctrl+Shift+O)");
+      }
+
+      [title]
       Box {
+        spacing: 6;
         orientation: horizontal;
-        vexpand: true;
         homogeneous: true;
 
-        Box panel_code {
-          name: "panel_code";
-          orientation: vertical;
+        ToggleButton button_code {
+          child: Box {
+            halign: center;
 
-          CenterBox {
-            styles ["toolbar", "panel_header"]
-
-            [start]
-            Box {
-              Label {
-                label: _("<b>Code</b>");
-                use-markup: true;
-                styles ["dim-label"]
-              }
-
-              Separator {
-                styles ["spacer"]
-              }
-
-              DropDown dropdown_code_lang {
-                model: StringList {
-                  strings [
-                    "JavaScript",
-                    "Vala",
-                    "Rust",
-                  ]
-                };
-                tooltip-text: _("Switch Document");
-              }
+            Image {
+              icon-name: "re.sonny.Workbench-code-symbolic";
             }
-          }
 
-          Separator {
-          }
-
-          Stack stack_code {
-            hexpand: true;
-            StackPage {
-              name: 'JavaScript';
-              child: $CodeView code_view_javascript {
-                language_id: 'js';
-              };
-            }
-            StackPage {
-              name: 'Vala';
-              child: $CodeView code_view_vala {
-                language_id: 'vala';
-              };
-            }
-            StackPage {
-              name: 'Rust';
-              child: $CodeView code_view_rust {
-                language_id: 'rust';
-              };
-            }
-          }
-        }
-
-        Box panel_style {
-          name: "panel_style";
-          orientation: vertical;
-
-          CenterBox {
-            styles ["toolbar", "panel_header"]
-
-            [start]
             Label {
-              label: _("<b>Style CSS</b>");
-              use-markup: true;
-              styles ["dim-label"]
+              label: _("_Code");
+              use-underline: true;
             }
-          }
+          };
 
-          Separator {
-          }
-
-          $CodeView code_view_css {
-            language_id: 'css';
-          }
+          styles ["flat", "view-toggler"]
         }
 
-        Box panel_ui {
-          name: "panel_ui";
-          orientation: vertical;
+        ToggleButton button_style {
+          child: Box {
+            halign: center;
 
-          CenterBox {
-            styles ["toolbar", "panel_header"]
-
-            [start]
-            Box {
-              Label {
-                label: _("<b>UI</b>");
-                use-markup: true;
-                styles ["dim-label"]
-              }
-
-              Separator {
-                styles ["spacer"]
-              }
-
-              DropDown dropdown_ui_lang {
-                model: StringList {
-                  strings [
-                    "Blueprint",
-                    "XML",
-                  ]
-                };
-                tooltip-text: _("Convert and Switch Syntax");
-              }
-              Button button_ui_experimental_blueprint {
-                icon-name: "applications-science-symbolic";
-                tooltip-text: _("Information About Blueprint");
-              }
+            Image {
+              icon-name: "larger-brush-symbolic";
             }
-          }
 
-          Separator {
-          }
-
-          Stack stack_ui {
-            hexpand: true;
-
-            StackPage {
-              name: 'blueprint';
-              child: $CodeView code_view_blueprint {
-                language_id: 'blueprint';
-              };
+            Label {
+              label: _("_Style");
+              use-underline: true;
             }
-            StackPage {
-              name: 'xml';
-              child: $CodeView code_view_xml {
-                language_id: 'xml';
-              };
-            }
-          }
+          };
+
+          styles ["flat", "view-toggler"]
         }
 
-        Box panel_preview {
-          orientation: vertical;
+        ToggleButton button_ui {
+          child: Box {
+            halign: center;
 
-          CenterBox {
-            styles ["toolbar", "panel_header"]
-
-            [start]
-            MenuButton {
-              halign: center;
-              valign: center;
-              label: _("Preview");
-              styles ["flat"]
-              menu-model: preview_menu;
+            Image {
+              icon-name: "re.sonny.Workbench-ui-symbolic";
             }
 
-            [center]
-            DropDown dropdown_preview_align {
-              visible: false;
-              model: StringList {
-                strings [
-                  _("Fill"),
-                  _("Center"),
-                ]
-              };
-              tooltip-text: _("Select Preview Mode");
+            Label {
+              label: _("_UI");
+              use-underline: true;
             }
+          };
 
-            [end]
-            Button button_screenshot {
-              icon-name: "re.sonny.Workbench-screenshot-symbolic";
-              tooltip-text: _("Screenshot Preview");
-              accessibility {
-                label: _("Screenshot Preview");
-              }
-            }
-          }
-
-          Separator {
-          }
-
-          Stack stack_preview {
-            StackPage {
-              name: "inline";
-              child: Box {
-                ScrolledWindow {
-                  name: "workbench_output";
-                  vexpand: true;
-                  hexpand: true;
-
-                  child: Viewport output {
-                    halign: fill;
-                    valign: fill;
-                    styles ["background"]
-                  };
-                }
-
-                Separator {
-                }
-              };
-            }
-
-            StackPage {
-              name: "open_window";
-              child: Adw.StatusPage {
-                title: _("Windowed Preview");
-                description: _("This interface can only be previewed as a separate window.\nWe recommend using “Always on Top”.");
-                icon-name: "multitasking-windows-symbolic";
-
-                Box {
-                  halign: center;
-
-                  Button button_open_preview_window {
-                    label: _("Show Preview Window");
-                    styles ["pill", "suggested-action"]
-                  }
-                }
-              };
-            }
-
-            StackPage {
-              name: "close_window";
-              child: Adw.StatusPage {
-                title: _("Windowed Preview");
-                description: _("This interface can only be previewed as a separate window.\nWe recommend using “Always on Top”.");
-                icon-name: "multitasking-windows-symbolic";
-
-                Box {
-                  halign: center;
-
-                  Button button_close_preview_window {
-                    label: _("Close Preview Window");
-                    styles ["pill"]
-                  }
-                }
-              };
-            }
-          }
+          styles ["flat", "view-toggler"]
         }
 
-        Box panel_placeholder {
-          visible: false;
-          name: "placeholder";
-          halign: center;
-          valign: center;
+        ToggleButton button_preview {
+          child: Box {
+            halign: center;
 
-          Image {
-            icon-name: "re.sonny.Workbench-placeholder-symbolic";
-            pixel-size: 512;
-          }
+            Image {
+              icon-name: "re.sonny.Workbench-preview-symbolic";
+            }
+
+            Label {
+              label: _("_Preview");
+              use-underline: true;
+            }
+          };
+
+          styles ["flat", "view-toggler"]
         }
       }
 
       [end]
-      Box {
+      MenuButton button_menu {
+        menu-model: menu_app;
+        icon-name: "open-menu-symbolic";
+        tooltip-text: _("Main Menu");
+        primary: true;
+      }
+
+      [end]
+      Button button_run {
+        child: Adw.ButtonContent {
+          icon-name: "media-playback-start-symbolic";
+          label: _("_Run");
+          use-underline: true;
+        };
+        action-name: "win.run";
+        tooltip-text: _("Run (Ctrl+⏎)");
+        styles ["suggested-action"]
+      }
+    }
+
+    // Not used currently but we keep it in case we need it
+    Adw.ToastOverlay toast_overlay {
+      Paned paned {
         orientation: vertical;
+        shrink-start-child: false;
+        shrink-end-child: false;
+        resize-start-child: true;
+        resize-end-child: true;
 
-        CenterBox toolbar_devtools {
-          name: "toolbar_devtools";
-          [start]
-          Box {
-            styles ["toolbar"]
+        [start]
+        Box {
+          orientation: horizontal;
+          vexpand: true;
+          homogeneous: true;
 
-            ToggleButton button_console {
-              child: Adw.ButtonContent {
-                icon-name: "terminal-symbolic";
-                label: _("C_onsole");
-                use-underline: true;
-              };
-              action-name: "win.console";
-              tooltip-text: _("Show Logs (Ctrl+Shift+K)");
+          Box panel_code {
+            name: "panel_code";
+            orientation: vertical;
+
+            CenterBox {
+              styles ["toolbar", "panel_header"]
+              height-request: 46;
+
+              [start]
+              Box {
+                Label {
+                  label: _("<b>Code</b>");
+                  use-markup: true;
+                  styles ["dim-label"]
+                }
+
+                Separator {
+                  styles ["spacer"]
+                }
+
+                DropDown dropdown_code_lang {
+                  model: StringList {
+                    strings [
+                      "JavaScript",
+                      "Vala",
+                      "Rust",
+                    ]
+                  };
+                  tooltip-text: _("Switch Document");
+                }
+              }
             }
 
-            Button button_inspector {
-              child: Adw.ButtonContent {
-                icon-name: "find-location-symbolic";
-                label: _("_Inspector");
-                use-underline: true;
-              };
-              tooltip-text: _("Open GTK Inspector (Ctrl+Shift+I)");
+            Separator {
+            }
+
+            Stack stack_code {
+              hexpand: true;
+              StackPage {
+                name: 'JavaScript';
+                child: $CodeView code_view_javascript {
+                  language_id: 'js';
+                };
+              }
+              StackPage {
+                name: 'Vala';
+                child: $CodeView code_view_vala {
+                  language_id: 'vala';
+                };
+              }
+              StackPage {
+                name: 'Rust';
+                child: $CodeView code_view_rust {
+                  language_id: 'rust';
+                };
+              }
             }
           }
 
-          [end]
-          Box {
-            styles ["toolbar"]
+          Box panel_style {
+            name: "panel_style";
+            orientation: vertical;
 
-            Button button_clear {
-              child: Adw.ButtonContent {
-                icon-name: "eraser4-symbolic";
-                label: _("Cl_ear");
-                use-underline: true;
-              };
-              action-name: "win.clear";
-              tooltip-text: _("Clear Console (Ctrl+K)");
+            CenterBox {
+              styles ["toolbar", "panel_header"]
+              height-request: 46;
+
+              [start]
+              Label {
+                label: _("<b>Style CSS</b>");
+                use-markup: true;
+                styles ["dim-label"]
+              }
+            }
+
+            Separator {
+            }
+
+            $CodeView code_view_css {
+              language_id: 'css';
+            }
+          }
+
+          Box panel_ui {
+            name: "panel_ui";
+            orientation: vertical;
+
+            CenterBox {
+              styles ["toolbar", "panel_header"]
+              height-request: 46;
+
+              [start]
+              Box {
+                Label {
+                  label: _("<b>UI</b>");
+                  use-markup: true;
+                  styles ["dim-label"]
+                }
+
+                Separator {
+                  styles ["spacer"]
+                }
+
+                DropDown dropdown_ui_lang {
+                  model: StringList {
+                    strings [
+                      "Blueprint",
+                      "XML",
+                    ]
+                  };
+                  tooltip-text: _("Convert and Switch Syntax");
+                }
+                Button button_ui_experimental_blueprint {
+                  icon-name: "applications-science-symbolic";
+                  tooltip-text: _("Information About Blueprint");
+                }
+              }
+            }
+
+            Separator {
+            }
+
+            Stack stack_ui {
+              hexpand: true;
+
+              StackPage {
+                name: 'blueprint';
+                child: $CodeView code_view_blueprint {
+                  language_id: 'blueprint';
+                };
+              }
+              StackPage {
+                name: 'xml';
+                child: $CodeView code_view_xml {
+                  language_id: 'xml';
+                };
+              }
+            }
+          }
+
+          Box panel_preview {
+            orientation: vertical;
+
+            CenterBox {
+              styles ["toolbar", "panel_header"]
+              height-request: 46;
+
+              [start]
+              MenuButton {
+                halign: center;
+                valign: center;
+                label: _("Preview");
+                styles ["flat"]
+                menu-model: preview_menu;
+              }
+
+              [center]
+              DropDown dropdown_preview_align {
+                visible: false;
+                model: StringList {
+                  strings [
+                    _("Fill"),
+                    _("Center"),
+                  ]
+                };
+                tooltip-text: _("Select Preview Mode");
+              }
+
+              [end]
+              Button button_screenshot {
+                icon-name: "re.sonny.Workbench-screenshot-symbolic";
+                tooltip-text: _("Screenshot Preview");
+                accessibility {
+                  label: _("Screenshot Preview");
+                }
+              }
+            }
+
+            Separator {
+            }
+
+            Stack stack_preview {
+              StackPage {
+                name: "inline";
+                child: Box {
+                  ScrolledWindow {
+                    name: "workbench_output";
+                    vexpand: true;
+                    hexpand: true;
+
+                    child: Viewport output {
+                      halign: fill;
+                      valign: fill;
+                      styles ["background"]
+                    };
+                  }
+
+                  Separator {
+                  }
+                };
+              }
+
+              StackPage {
+                name: "open_window";
+                child: Adw.StatusPage {
+                  title: _("Windowed Preview");
+                  description: _("This interface can only be previewed as a separate window.\nWe recommend using “Always on Top”.");
+                  icon-name: "multitasking-windows-symbolic";
+
+                  Box {
+                    halign: center;
+
+                    Button button_open_preview_window {
+                      label: _("Show Preview Window");
+                      styles ["pill", "suggested-action"]
+                    }
+                  }
+                };
+              }
+
+              StackPage {
+                name: "close_window";
+                child: Adw.StatusPage {
+                  title: _("Windowed Preview");
+                  description: _("This interface can only be previewed as a separate window.\nWe recommend using “Always on Top”.");
+                  icon-name: "multitasking-windows-symbolic";
+
+                  Box {
+                    halign: center;
+
+                    Button button_close_preview_window {
+                      label: _("Close Preview Window");
+                      styles ["pill"]
+                    }
+                  }
+                };
+              }
+            }
+          }
+
+          Box panel_placeholder {
+            visible: false;
+            name: "placeholder";
+            halign: center;
+            valign: center;
+
+            Image {
+              icon-name: "re.sonny.Workbench-placeholder-symbolic";
+              pixel-size: 512;
             }
           }
         }
 
-        Box devtools {
-          ScrolledWindow {
-            Vte.Terminal terminal {
-              scroll-unit-is-pixels: true;
-              enable-fallback-scrolling: false;
-              hexpand: true;
-              input-enabled: false;
-              scrollback-lines: 512;
+        [end]
+        Box {
+          orientation: vertical;
+
+          CenterBox toolbar_devtools {
+            name: "toolbar_devtools";
+            [start]
+            Box {
+              styles ["toolbar"]
+
+              ToggleButton button_console {
+                child: Adw.ButtonContent {
+                  icon-name: "terminal-symbolic";
+                  label: _("C_onsole");
+                  use-underline: true;
+                };
+                action-name: "win.console";
+                tooltip-text: _("Show Logs (Ctrl+Shift+K)");
+              }
+
+              Button button_inspector {
+                child: Adw.ButtonContent {
+                  icon-name: "find-location-symbolic";
+                  label: _("_Inspector");
+                  use-underline: true;
+                };
+                tooltip-text: _("Open GTK Inspector (Ctrl+Shift+I)");
+              }
+            }
+
+            [end]
+            Box {
+              styles ["toolbar"]
+
+              Button button_clear {
+                child: Adw.ButtonContent {
+                  icon-name: "eraser4-symbolic";
+                  label: _("Cl_ear");
+                  use-underline: true;
+                };
+                action-name: "win.clear";
+                tooltip-text: _("Clear Console (Ctrl+K)");
+              }
+            }
+          }
+
+          Box devtools {
+            ScrolledWindow {
+              Vte.Terminal terminal {
+                scroll-unit-is-pixels: true;
+                enable-fallback-scrolling: false;
+                hexpand: true;
+                input-enabled: false;
+                scrollback-lines: 512;
+              }
             }
           }
         }
