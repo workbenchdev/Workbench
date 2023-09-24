@@ -62,7 +62,7 @@
         "cp -a /usr/share/runtime/docs/doc/. /app/share/doc/",
         "cp -a /usr/lib/sdk/vala/bin/. /app/bin/",
         "cp -a /usr/lib/sdk/vala/lib/. /app/lib/",
-        "#cp -a /usr/lib/sdk/vala/share/. /app/share/",
+        "true #cp -a /usr/lib/sdk/vala/share/. /app/share/ # org.gnome.Sdk already ships what we need",
         "cp -a /usr/lib/sdk/rust-stable/bin/. /app/bin/",
         "cp -a /usr/lib/sdk/rust-stable/lib/. /app/lib/"
       ]

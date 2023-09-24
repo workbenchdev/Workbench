@@ -13,7 +13,7 @@ const buffer = GtkSource.Buffer.new_with_language(language);
 buffer.set_text('console.log("Hello World!");', -1);
 
 // Create the SourceView which displays the buffer's display
-const source_view = GtkSource.View.new({
+const source_view = new GtkSource.View({
   auto_indent: true,
   indent_width: 4,
   buffer,
