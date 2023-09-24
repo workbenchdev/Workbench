@@ -135,10 +135,10 @@ Adw.ApplicationWindow window {
           vexpand: true;
           homogeneous: true;
 
-          Box panel_code {
+          Adw.ToolbarView panel_code {
             name: "panel_code";
-            orientation: vertical;
 
+            [top]
             CenterBox {
               styles ["toolbar", "panel_header"]
               height-request: 46;
@@ -194,10 +194,10 @@ Adw.ApplicationWindow window {
             }
           }
 
-          Box panel_style {
+          Adw.ToolbarView panel_style {
             name: "panel_style";
-            orientation: vertical;
 
+            [top]
             CenterBox {
               styles ["toolbar", "panel_header"]
               height-request: 46;
@@ -218,10 +218,10 @@ Adw.ApplicationWindow window {
             }
           }
 
-          Box panel_ui {
+          Adw.ToolbarView panel_ui {
             name: "panel_ui";
-            orientation: vertical;
 
+            [top]
             CenterBox {
               styles ["toolbar", "panel_header"]
               height-request: 46;
@@ -275,9 +275,10 @@ Adw.ApplicationWindow window {
             }
           }
 
-          Box panel_preview {
-            orientation: vertical;
+          Adw.ToolbarView panel_preview {
+            name: "panel_preview";
 
+            [top]
             CenterBox {
               styles ["toolbar", "panel_header"]
               height-request: 46;

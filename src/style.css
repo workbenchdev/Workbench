@@ -20,4 +20,13 @@
 #panel_style,
 #panel_ui {
   border-right: solid 1px @borders;
+  background-color: #fcfcfc;
+}
+
+/* Prevent dev banner on second toolbar */
+#panel_code > revealer,
+#panel_style > revealer,
+#panel_ui > revealer,
+#panel_preview > revealer {
+  background-image: none;
 }

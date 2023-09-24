@@ -6,6 +6,7 @@ pkg.initGettext();
 
 import "./language-specs/blueprint.lang";
 import "./style.css";
+import "./style-dark.css";
 
 export function main(argv) {
   return application.runAsync(argv);
