@@ -1,0 +1,56 @@
+using Gtk 4.0;
+
+template $Extension : Box {
+  orientation: vertical;
+
+  ToggleButton toggle {
+    styles ["flat"]
+
+    Box {
+      spacing: 4;
+      Image image_enabled {
+        icon-name: "test-pass-symbolic";
+        styles ["success"]
+      }
+
+      Label label_title {
+        xalign: 0;
+        styles [
+          "heading"
+        ]
+      }
+    }
+  }
+
+  Revealer revealer {
+    reveal-child: true;
+
+    Box {
+      orientation: vertical;
+      Label {
+        margin-top: 8;
+        label: _("To enable Rust run the following command in your Console or Terminal.");
+        xalign: 0;
+        styles [
+          "dim-label"
+        ]
+      }
+
+      Label {
+        margin-top: 2;
+        use-markup: true;
+        wrap: true;
+        selectable: true;
+        xalign: 0;
+        label: "flatpak install flathub org.freedesktop.Sdk.Extension.rust-stable//23.08 org.freedesktop.Sdk.Extension.llvm16//23.08";
+
+        styles [
+          "code",
+          "view",
+          "frame",
+          "monospace"
+        ]
+      }
+    }
+  }
+}
