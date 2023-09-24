@@ -34,6 +34,11 @@ import "./icons/re.sonny.Workbench-screenshot-symbolic.svg" with { type: "icon" 
 import "./widgets/Modal.js";
 import "./widgets/CodeView.js";
 import { deleteSession, saveSessionAsProject } from "./sessions.js";
+import {
+  action_extensions,
+  isRustEnabled,
+  isValaEnabled,
+} from "./Extensions/Extensions.js";
 
 const style_manager = Adw.StyleManager.get_default();
 
@@ -313,6 +318,11 @@ export default function Window({ application, session }) {
         }
         previewer.setSymbols(exports);
       } else if (language === "Vala") {
+        if (!isValaEnabled()) {
+          action_extensions.activate(null);
+          return;
+        }
+
         compiler_vala = compiler_vala || ValaCompiler({ session });
         const success = await compiler_vala.compile();
         if (success) {
@@ -324,6 +334,11 @@ export default function Window({ application, session }) {
           }
         }
       } else if (language === "Rust") {
+        if (!isRustEnabled()) {
+          action_extensions.activate(null);
+          return;
+        }
+
         compiler_rust = compiler_rust || RustCompiler({ session });
         const success = await compiler_rust.compile();
         if (success) {

@@ -25,6 +25,11 @@ features = ["v1_4", "gtk_v4_10"]
 version = "0.6.2"
 features = ["gtk4"]
 
+[dependencies.shumate]
+version = "0.4.1"
+package = "libshumate"
+features = ["v1_1"]
+
 [lib]
 crate-type = ["cdylib"]
 path = "lib.rs"

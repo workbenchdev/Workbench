@@ -3,11 +3,11 @@
   "runtime": "org.gnome.Platform",
   "runtime-version": "45",
   "sdk": "org.gnome.Sdk",
-  "separate-locales": false,
   "sdk-extensions": [
     "org.gnome.Sdk.Docs",
     "org.freedesktop.Sdk.Extension.vala",
-    "org.freedesktop.Sdk.Extension.rust-stable"
+    "org.freedesktop.Sdk.Extension.rust-stable",
+    "org.freedesktop.Sdk.Extension.llvm16"
   ],
   "build-options": {
     "append-path": "/usr/lib/sdk/vala/bin:/usr/lib/sdk/rust-stable/bin",
@@ -19,16 +19,17 @@
     "--socket=fallback-x11",
     "--socket=wayland",
     "--device=dri",
-    "--share=network"
+    "--share=network",
+    "--socket=pulseaudio"
   ],
   "cleanup": [
     "/include",
-    "/lib/pkgconfig",
+    "#/lib/pkgconfig",
     "/man",
     "#/share/doc",
     "/share/gtk-doc",
     "/share/man",
-    "/share/pkgconfig",
+    "#/share/pkgconfig",
     "/share/installed-tests",
     "*.la",
     "*.a"
@@ -57,14 +58,6 @@
           "type": "dir",
           "path": ".."
         }
-      ],
-      "post-install": [
-        "cp -a /usr/share/runtime/docs/doc/. /app/share/doc/",
-        "cp -a /usr/lib/sdk/vala/bin/. /app/bin/",
-        "cp -a /usr/lib/sdk/vala/lib/. /app/lib/",
-        "cp -a /usr/lib/sdk/vala/share/. /app/share/",
-        "cp -a /usr/lib/sdk/rust-stable/bin/. /app/bin/",
-        "cp -a /usr/lib/sdk/rust-stable/lib/. /app/lib/"
       ]
     }
   ]

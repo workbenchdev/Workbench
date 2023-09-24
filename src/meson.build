@@ -15,22 +15,6 @@ blueprint_compiler = find_program(
 install_subdir('Library/demos', install_dir : join_paths(pkgdatadir, 'Library'))
 install_subdir('langs/rust/template', install_dir : join_paths(pkgdatadir, 'langs/rust'))
 
-
-output = run_command('../build-aux/list-demo-blp-files.sh', check: true)
-blueprint_files = output.stdout().strip().split('\n')
-message('blueprint files: @0@'.format(blueprint_files))
-
-custom_target('blueprints',
-  input: blueprint_files,
-  output: '.',
-  install: true,
-  install_dir: pkgdatadir,
-  command: [
-    blueprint_compiler,
-    'batch-compile', '@OUTPUT@', '@CURRENT_SOURCE_DIR@', '@INPUT@'
-  ],
-)
-
 configure_file(
   input: 'bin.js',
   output: app_id,

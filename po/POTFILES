@@ -64,3 +64,12 @@ src/langs/css/css.js
 src/langs/rust/Compiler.js
 troll/src/async.js
 src/lib/prettier-estree.js
+src/Extensions.blp
+src/Extensions.js
+src/Extensions/Extension.blp
+src/Extensions/Extension.js
+troll/src/gsx.js
+troll/src/builder.js
+troll/src/main.js
+src/Extensions/Extensions.blp
+src/Extensions/Extensions.js

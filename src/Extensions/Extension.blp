@@ -1,0 +1,59 @@
+using Gtk 4.0;
+
+template $Extension : Box {
+  orientation: vertical;
+
+  CenterBox {
+    [start]
+    Box {
+      spacing: 4;
+      Image image_enabled {
+        icon-name: "test-pass-symbolic";
+        styles ["success"]
+      }
+
+      Label label_title {
+        xalign: 0;
+        styles [
+          "heading"
+        ]
+      }
+    }
+
+    [end]
+    ToggleButton toggle {
+      icon-name: "flatpak-symbolic";
+      styles ["flat", "circular"]
+    }
+  }
+
+  Revealer revealer {
+    reveal-child: bind toggle.active;
+
+    Box {
+      orientation: vertical;
+      Label label_hint {
+        margin-top: 8;
+        xalign: 0;
+        styles [
+          "dim-label"
+        ]
+      }
+
+      Label label_command {
+        margin-top: 2;
+        use-markup: true;
+        wrap: true;
+        selectable: true;
+        xalign: 0;
+
+        styles [
+          "code",
+          "view",
+          "frame",
+          "monospace"
+        ]
+      }
+    }
+  }
+}

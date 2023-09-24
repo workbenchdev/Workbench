@@ -6,6 +6,7 @@ import Actions from "./actions.js";
 import { settings, data_dir, ensureDir, getDemo } from "./util.js";
 import { overrides } from "./overrides.js";
 import Library from "./Library/Library.js";
+import Extensions from "./Extensions/Extensions.js";
 import DocumentationViewer from "./DocumentationViewer.js";
 import { Session, createSessionFromDemo, getSessions } from "./sessions.js";
 
@@ -33,6 +34,10 @@ application.connect("open", (_self, files, hint) => {
 
 application.connect("startup", () => {
   Library({
+    application,
+  });
+
+  Extensions({
     application,
   });
 
