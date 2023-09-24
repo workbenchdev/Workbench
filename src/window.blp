@@ -390,15 +390,16 @@ Adw.ApplicationWindow window {
         }
 
         [end]
-        Box {
-          orientation: vertical;
+        Adw.ToolbarView {
+          name: "panel_devtools";
 
+          [top]
           CenterBox toolbar_devtools {
             name: "toolbar_devtools";
+            styles ["toolbar", "panel_header"]
             [start]
             Box {
-              styles ["toolbar"]
-
+              spacing: 6;
               ToggleButton button_console {
                 child: Adw.ButtonContent {
                   icon-name: "terminal-symbolic";
@@ -421,8 +422,6 @@ Adw.ApplicationWindow window {
 
             [end]
             Box {
-              styles ["toolbar"]
-
               Button button_clear {
                 child: Adw.ButtonContent {
                   icon-name: "eraser4-symbolic";

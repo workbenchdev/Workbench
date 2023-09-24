@@ -88,7 +88,7 @@ function rgba(value) {
   return rgba;
 }
 
-// Adapted from https://gitlab.gnome.org/GNOME/console/-/blob/87c6ae3b55dc399f052db251202ce0d6c122e98d/src/kgx-terminal.c#L110
+// Adapted from https://gitlab.gnome.org/GNOME/console/-/blob/1ac7791714d9a4add7211d6f2c35a6dbe90edfd5/src/kgx-terminal.c#L145
 function updateTerminalColors(terminal) {
   const palette = [
     rgba("#241f31"), // Black
@@ -110,13 +110,15 @@ function updateTerminalColors(terminal) {
   ];
 
   let fg;
-  let bg;
+  const bg = new Gdk.RGBA();
   if (style_manager.dark) {
     fg = new Gdk.RGBA({ red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 });
-    bg = new Gdk.RGBA({ red: 0.05, green: 0.05, blue: 0.05, alpha: 1.0 });
+    // bg = new Gdk.RGBA({ red: 0.12, green: 0.12, blue: 0.12, alpha: 1.0 });
+    bg.parse("#262626");
   } else {
     fg = new Gdk.RGBA({ red: 0, green: 0, blue: 0, alpha: 0 });
-    bg = new Gdk.RGBA({ red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 });
+    // bg = new Gdk.RGBA({ red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0 });
+    bg.parse("#fcfcfc");
   }
 
   terminal.set_colors(fg, bg, palette);
