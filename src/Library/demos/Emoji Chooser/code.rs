@@ -10,7 +10,3 @@ pub fn main() {
         button.set_label(emoji);
     });
 }
-
-fn tell_time(hours: &str, minutes: &str) {
-    println!("The time selected is {hours}:{minutes}");
-}
