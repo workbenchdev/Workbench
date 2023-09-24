@@ -71,3 +71,5 @@ src/Extensions/Extension.js
 troll/src/gsx.js
 troll/src/builder.js
 troll/src/main.js
+src/Extensions/Extensions.blp
+src/Extensions/Extensions.js

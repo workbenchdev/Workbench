@@ -56,8 +56,6 @@ export default function DocumentationViewer({ application }) {
   const search_page = builder.get_object("search_page");
   const search_entry = builder.get_object("search_entry");
 
-  const base_path = Gio.File.new_for_path("/usr/share/doc");
-
   const user_content_manager = webview.get_user_content_manager();
 
   const stylesheet = new WebKit.UserStyleSheet(
@@ -118,16 +116,14 @@ export default function DocumentationViewer({ application }) {
 
   async function open() {
     const root_model = Gio.ListStore.new(DocumentationPage);
-
-    scanLibraries(root_model, base_path)
-      .then(() => {
-        browse_list_view.model.selected = 12;
-        const search_model = flattenModel(root_model);
-        filter_model.model = search_model;
-      })
-      .catch(console.error);
-
     browse_list_view.model = createBrowseSelectionModel(root_model, webview);
+
+    await scanLibraries(root_model, Gio.File.new_for_path("/usr/share/doc"));
+    browse_list_view.model.selected = 12;
+    await scanLibraries(root_model, Gio.File.new_for_path("/app/share/doc"));
+
+    const search_model = flattenModel(root_model);
+    filter_model.model = search_model;
   }
 
   const action_documentation = new Gio.SimpleAction({

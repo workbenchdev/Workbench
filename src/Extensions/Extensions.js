@@ -1,11 +1,12 @@
 import Gio from "gi://Gio";
 import GLib from "gi://GLib";
 
-import { build } from "../troll/src/main.js";
+import { build } from "../../troll/src/main.js";
 
 import Interace from "./Extensions.blp" with { type: "uri" };
-import { settings } from "./util.js";
-import "./Extensions/Extension.js";
+import { settings } from "../util.js";
+
+import "./Extension.js";
 
 export default function Extensions({ application }) {
   const { window, extension_rust, extension_vala, extension_documentation } =
