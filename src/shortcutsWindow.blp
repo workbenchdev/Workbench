@@ -1,7 +1,6 @@
 using Gtk 4.0;
 
 ShortcutsWindow shortcuts_window {
-  modal: true;
 
   ShortcutsSection {
     title: "Workbench";
@@ -19,6 +18,11 @@ ShortcutsWindow shortcuts_window {
       ShortcutsShortcut {
         accelerator: "<Control>O";
         title: _("Open Project");
+      }
+
+      ShortcutsShortcut {
+        accelerator: "<Control>M";
+        title: _("Open Manuals");
       }
 
       ShortcutsShortcut {

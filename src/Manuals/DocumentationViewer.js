@@ -3,12 +3,15 @@ import Gtk from "gi://Gtk";
 import Gio from "gi://Gio";
 import GLib from "gi://GLib";
 import WebKit from "gi://WebKit";
-import { decode } from "./util.js";
+import { decode } from "../util.js";
 import resource from "./DocumentationViewer.blp";
+
+import Shortcuts, { resource as shortcuts_resource } from "./Shortcuts.js";
+
 import {
   action_extensions,
   isDocumentationEnabled,
-} from "./Extensions/Extensions.js";
+} from "../Extensions/Extensions.js";
 
 const DocumentationPage = GObject.registerClass(
   {
@@ -59,6 +62,50 @@ export default function DocumentationViewer({ application }) {
   const browse_page = builder.get_object("browse_page");
   const search_page = builder.get_object("search_page");
   const search_entry = builder.get_object("search_entry");
+  const button_shortcuts = builder.get_object("button_shortcuts");
+
+  const shortcutsWindow =
+    Gtk.Builder.new_from_resource(shortcuts_resource).get_object(
+      "shortcuts-window",
+    );
+
+  button_shortcuts.connect("clicked", () => {
+    shortcutsWindow.present();
+  });
+
+  const onGoForward = () => {
+    webview.go_forward();
+  };
+
+  const onGoBack = () => {
+    webview.go_back();
+  };
+
+  const onZoomIn = () => {
+    if (webview.zoom_level < 2) webview.zoom_level += 0.25;
+  };
+
+  const onZoomOut = () => {
+    if (webview.zoom_level > 0.5) webview.zoom_level -= 0.25;
+  };
+
+  const onResetZoom = () => {
+    webview.zoom_level = 1;
+  };
+
+  const onFocusGlobalSearch = () => {
+    search_entry.grab_focus();
+  };
+
+  Shortcuts({
+    window,
+    onGoForward,
+    onGoBack,
+    onZoomIn,
+    onZoomOut,
+    onResetZoom,
+    onFocusGlobalSearch,
+  });
 
   const user_content_manager = webview.get_user_content_manager();
 
@@ -118,16 +165,24 @@ export default function DocumentationViewer({ application }) {
     webview.load_uri(uri);
   });
 
-  async function open() {
-    const root_model = Gio.ListStore.new(DocumentationPage);
-    browse_list_view.model = createBrowseSelectionModel(root_model, webview);
-
-    await scanLibraries(root_model, Gio.File.new_for_path("/usr/share/doc"));
-    browse_list_view.model.selected = 12;
-    await scanLibraries(root_model, Gio.File.new_for_path("/app/share/doc"));
-
-    const search_model = flattenModel(root_model);
-    filter_model.model = search_model;
+  const root_model = Gio.ListStore.new(DocumentationPage);
+  browse_list_view.model = createBrowseSelectionModel(root_model, webview);
+  let promise_load;
+  async function load() {
+    if (!promise_load)
+      promise_load = Promise.all([
+        scanLibraries(root_model, Gio.File.new_for_path("/usr/share/doc")),
+        scanLibraries(
+          root_model,
+          Gio.File.new_for_path("/usr/share/gtk-doc/html"),
+        ),
+        scanLibraries(root_model, Gio.File.new_for_path("/app/share/doc")),
+      ]).then(() => {
+        browse_list_view.model.selected = 12;
+        const search_model = flattenModel(root_model);
+        filter_model.model = search_model;
+      });
+    return promise_load;
   }
 
   const action_documentation = new Gio.SimpleAction({
@@ -141,9 +196,10 @@ export default function DocumentationViewer({ application }) {
     }
 
     window.present();
-    open().catch(console.error);
+    load().catch(console.error);
   });
   application.add_action(action_documentation);
+  application.set_accels_for_action("app.documentation", ["<Control>M"]);
 }
 
 async function loadLibrary(model, directory) {
@@ -228,7 +284,6 @@ function createBrowseSelectionModel(root_model, webview) {
   );
   const sort_model = Gtk.SortListModel.new(tree_model, sorter);
   const selection_model = Gtk.SingleSelection.new(sort_model);
-
   selection_model.connect("selection-changed", () => {
     const uri = selection_model.selected_item.item.uri;
     webview.load_uri(uri);
