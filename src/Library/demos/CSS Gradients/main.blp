@@ -1,5 +1,6 @@
 using Gtk 4.0;
 using Adw 1;
+using GtkSource 5;
 
 Adw.StatusPage {
   title: "CSS Gradients";
@@ -115,8 +116,7 @@ Adw.StatusPage {
 
       Adw.ComboRow combo_row_gradient_type {
         title: _("Gradient type");
-        model: 
-        StringList list {
+        model: StringList list {
           strings [_("Linear"), _("Radial"), _("Conic")]
         };
       }
@@ -124,8 +124,7 @@ Adw.StatusPage {
       Adw.SpinRow spin_row_angle {
         title: _("Angle");
         climb-rate: 0.2;
-        adjustment: 
-        Adjustment adjustment_angle {
+        adjustment: Adjustment adjustment_angle {
           lower: 0;
           upper: 360;
           step-increment: 10;
@@ -135,10 +134,10 @@ Adw.StatusPage {
 
       Adw.ActionRow {
         title: _("First color stop");
-        activatable-widget: color_dialog_button_first_color;
+        activatable-widget: button_color_1;
 
         [suffix]
-        ColorDialogButton color_dialog_button_first_color {
+        ColorDialogButton button_color_1 {
           valign: center;
           dialog: color_dialog;
           rgba: "#e01b24";
@@ -147,10 +146,10 @@ Adw.StatusPage {
 
       Adw.ActionRow {
         title: _("Second color stop");
-        activatable-widget: color_dialog_button_second_color;
+        activatable-widget: button_color_2;
 
         [suffix]
-        ColorDialogButton color_dialog_button_second_color {
+        ColorDialogButton button_color_2 {
           valign: center;
           dialog: color_dialog;
           rgba: "#3584e4";
@@ -159,10 +158,10 @@ Adw.StatusPage {
 
       Adw.ActionRow {
         title: _("Third color stop");
-        activatable-widget: color_dialog_button_third_color;
+        activatable-widget: button_color_3;
 
         [suffix]
-        ColorDialogButton color_dialog_button_third_color {
+        ColorDialogButton button_color_3 {
           valign: center;
           dialog: color_dialog;
           rgba: "#f6d32d";
@@ -173,32 +172,27 @@ Adw.StatusPage {
         title: _("Generated CSS");
 
         Overlay {
-          $GtkSourceView source_view {
-            height-request: "50";
-            sensitive: "false";
-            monospace: "true";
-            auto-indent: "true";
-            indent-width: "2";
-            insert-spaces-instead-of-tabs: "true";
-            tab-width: "2";
-            buffer: 
-            $GtkSourceBuffer gtksource_buffer {
-              highlight-syntax: "true";
-            };
-          }
-
           [overlay]
           Button button_copy_css {
-            margin-top: 6;
+            margin-bottom: 6;
             margin-end: 6;
-            valign: start;
+            valign: end;
             halign: end;
-            tooltip-text: _("Copy CSS");
+            tooltip-text: _("Copy");
             icon-name: "edit-copy-symbolic";
+            styles ["flat"]
+          }
 
-            styles [
-              "flat",
-            ]
+          GtkSource.View source_view {
+            top-margin: 6;
+            bottom-margin: 6;
+            left-margin: 6;
+            right-margin: 6;
+            editable: false;
+            monospace: true;
+            buffer: GtkSource.Buffer gtksource_buffer {
+              highlight-syntax: true;
+            };
           }
         }
       }
@@ -216,5 +210,4 @@ Adw.StatusPage {
   }
 }
 
-ColorDialog color_dialog {
-}
+ColorDialog color_dialog {}

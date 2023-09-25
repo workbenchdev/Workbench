@@ -10,60 +10,48 @@ const combo_row_gradient_type = workbench.builder.get_object(
 );
 const adjustment_angle = workbench.builder.get_object("adjustment_angle");
 const spin_row_angle = workbench.builder.get_object("spin_row_angle");
-const color_dialog_button_first_color = workbench.builder.get_object(
-  "color_dialog_button_first_color",
-);
-const color_dialog_button_second_color = workbench.builder.get_object(
-  "color_dialog_button_second_color",
-);
-const color_dialog_button_third_color = workbench.builder.get_object(
-  "color_dialog_button_third_color",
-);
+const button_color_1 = workbench.builder.get_object("button_color_1");
+const button_color_2 = workbench.builder.get_object("button_color_2");
+const button_color_3 = workbench.builder.get_object("button_color_3");
 const gtksource_buffer = workbench.builder.get_object("gtksource_buffer");
 const button_copy_css = workbench.builder.get_object("button_copy_css");
 
-const clipboard = Gdk.Display.get_default().get_clipboard();
+combo_row_gradient_type.connect("notify::selected", update);
+adjustment_angle.connect("value-changed", update);
+button_color_1.connect("notify::rgba", update);
+button_color_2.connect("notify::rgba", update);
+button_color_3.connect("notify::rgba", update);
 
-button_copy_css.connect("clicked", () => {
-  clipboard.set(gtksource_buffer.text);
-});
-
-combo_row_gradient_type.connect("notify::selected", () => {
+function update() {
   spin_row_angle.sensitive = combo_row_gradient_type.selected !== 1;
-  updateGradient();
-});
-
-adjustment_angle.connect("value-changed", () => {
-  updateGradient();
-});
-
-color_dialog_button_first_color.connect("notify::rgba", () => {
-  updateGradient();
-});
-
-color_dialog_button_second_color.connect("notify::rgba", () => {
-  updateGradient();
-});
-
-color_dialog_button_third_color.connect("notify::rgba", () => {
-  updateGradient();
-});
-
-function updateGradient() {
-  const css = getCss();
+  const css = generateCss();
   gtksource_buffer.set_text(css, -1);
   updateCssProvider(css);
 }
+update();
 
-function getCss() {
+function generateCss() {
   const angle_string = adjustment_angle.value;
-  const first_color_string = color_dialog_button_first_color.rgba.to_string();
-  const second_color_string = color_dialog_button_second_color.rgba.to_string();
-  const third_color_string = color_dialog_button_third_color.rgba.to_string();
+  const first_color_string = button_color_1.rgba.to_string();
+  const second_color_string = button_color_2.rgba.to_string();
+  const third_color_string = button_color_3.rgba.to_string();
 
-  switch (combo_row_gradient_type.selected) {
-    case 1:
-      return `
+  let css = "";
+
+  console.log(combo_row_gradient_type.selected);
+
+  if (combo_row_gradient_type.selected === 0) {
+    css = `
+.background-gradient {
+  background-image: linear-gradient(
+    ${angle_string}deg,
+    ${first_color_string},
+    ${second_color_string},
+    ${third_color_string}
+  );
+}`;
+  } else if (combo_row_gradient_type.selected === 1) {
+    css = `
 .background-gradient {
   background-image: radial-gradient(
     ${first_color_string},
@@ -72,8 +60,8 @@ function getCss() {
   );
 }
 `;
-    case 2:
-      return `
+  } else if (combo_row_gradient_type.selected === 2) {
+    css = `
 .background-gradient {
   background-image: conic-gradient(
     from ${angle_string}deg,
@@ -81,20 +69,10 @@ function getCss() {
     ${second_color_string},
     ${third_color_string}
   );
-}
-`;
-    default:
-      return `
-.background-gradient {
-  background-image: linear-gradient(
-    ${angle_string}deg,
-    ${first_color_string},
-    ${second_color_string},
-    ${third_color_string}
-  );
-}
-`;
+}`;
   }
+
+  return css.trimStart();
 }
 
 function updateCssProvider(css) {
@@ -113,6 +91,16 @@ function updateCssProvider(css) {
   );
 }
 
+/*
+ * code view
+ */
+
+const clipboard = Gdk.Display.get_default().get_clipboard();
+
+button_copy_css.connect("clicked", () => {
+  clipboard.set(gtksource_buffer.text);
+});
+
 const scheme_manager = GtkSource.StyleSchemeManager.get_default();
 const style_manager = Adw.StyleManager.get_default();
 style_manager.connect("notify::dark", () => {
@@ -125,11 +113,8 @@ function updateColorScheme() {
   );
   gtksource_buffer.set_style_scheme(scheme);
 }
+updateColorScheme();
 
 const language_manager = GtkSource.LanguageManager.get_default();
 const css_language = language_manager.get_language("css");
 gtksource_buffer.set_language(css_language);
-
-updateColorScheme();
-
-updateGradient();
