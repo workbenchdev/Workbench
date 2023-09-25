@@ -2,7 +2,7 @@ using Gtk 4.0;
 using Adw 1;
 
 Adw.StatusPage {
-  title: "Button";
+  title: _("Button");
   description: _("Allow people to perform actions by clicking");
 
   Box {
@@ -14,13 +14,13 @@ Adw.StatusPage {
 
       Button regular {
         name: "regular";
-        label: "Regular";
+        label: _("Regular");
         margin-end: 40;
       }
 
       Button flat {
         name: "flat";
-        label: "Flat";
+        label: _("Flat");
         margin-end: 40;
 
         styles [
@@ -30,7 +30,7 @@ Adw.StatusPage {
 
       Button suggested {
         name: "suggested";
-        label: "Suggested";
+        label: _("Suggested");
 
         styles [
           "suggested-action",
@@ -43,7 +43,7 @@ Adw.StatusPage {
 
       Button destructive {
         name: "destructive";
-        label: "Destructive";
+        label: _("Destructive");
         margin-end: 40;
 
         styles [
@@ -53,13 +53,13 @@ Adw.StatusPage {
 
       Button custom {
         name: "custom";
-        label: "Custom";
+        label: _("Custom");
         margin-end: 40;
       }
 
       Button disabled {
         name: "disabled";
-        label: "Disabled";
+        label: _("Disabled");
         sensitive: false;
       }
     }
@@ -95,7 +95,7 @@ Adw.StatusPage {
 
       Button pill {
         name: "pill";
-        label: "Pill";
+        label: _("Pill");
         margin-end: 60;
 
         styles [
@@ -127,17 +127,17 @@ Adw.StatusPage {
     }
 
     LinkButton {
-      label: "Tutorial";
+      label: _("Tutorial");
       uri: "https://developer.gnome.org/documentation/tutorials/beginners/components/button.html";
     }
 
     LinkButton {
-      label: "API Reference";
+      label: _("API Reference");
       uri: "https://docs.gtk.org/gtk4/class.Button.html";
     }
 
     LinkButton {
-      label: "Human Interface Guidelines";
+      label: _("Human Interface Guidelines");
       uri: "https://developer.gnome.org/hig/patterns/controls/buttons.html";
     }
   }

@@ -2,7 +2,7 @@ using Gtk 4.0;
 using Adw 1;
 
 Adw.StatusPage {
-  title: "About Window";
+  title: _("About Window");
   description: _("A window showing information about the application.");
 
   Box {
@@ -16,7 +16,7 @@ Adw.StatusPage {
     }
 
     LinkButton {
-      label: "API Reference";
+      label: _("API Reference");
       uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.4/class.AboutWindow.html";
     }
   }
