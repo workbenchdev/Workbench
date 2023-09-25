@@ -16,9 +16,25 @@ Adw.Window documentation_viewer {
       child: Adw.ToolbarView {
         [top]
         Adw.HeaderBar {
+          [start]
+          WindowControls {
+            side: end;
+          }
           title-widget: Adw.WindowTitle {
             title: bind documentation_viewer.title;
           };
+          [end]
+          Button button_forward {
+            icon-name: "go-next-symbolic";
+            tooltip-text: _("Forward");
+            styles ["flat"]
+          }
+          [end]
+          Button button_back {
+            icon-name: "go-previous-symbolic";
+            tooltip-text: _("Back");
+            styles ["flat"]
+          }
         }
 
         [bottom]
@@ -96,31 +112,21 @@ Adw.Window documentation_viewer {
 
     content: Adw.NavigationPage {
       child: Adw.ToolbarView {
+        extend-content-to-top-edge: true;
         [top]
         Adw.HeaderBar {
           show-title: false;
-          [start]
-          Button button_back {
-            icon-name: "go-previous-symbolic";
-            tooltip-text: _("Back");
-            styles ["flat"]
-          }
-
-          [start]
-          Button button_forward {
-            icon-name: "go-next-symbolic";
-            tooltip-text: _("Forward");
-            styles ["flat"]
-          }
+          show-end-title-buttons: false;
+          show-start-title-buttons: false;
         }
 
-        content: WebKit.WebView webview {
+        WebKit.WebView webview {
           settings: WebKit.Settings {
             enable-back-forward-navigation-gestures: true;
             enable-developer-extras: true;
             enable-smooth-scrolling: true;
           };
-        };
+        }
       };
     };
   };
