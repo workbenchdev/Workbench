@@ -16,23 +16,13 @@ Adw.StatusPage {
         styles ["boxed-list"]
         selection-mode: none;
 
-        Adw.ActionRow {
+        Adw.SwitchRow single_line_switch{
           title: _("Single Line");
-          activatable-widget: single_line_switch;
-
-          Switch single_line_switch {
-            valign: center;
-            active: true;
-          }
+          active: true;
         }
 
-        Adw.ActionRow {
+        Adw.SwitchRow markup_switch{
           title: _("Use Markup");
-          activatable-widget: markup_switch;
-
-          Switch markup_switch {
-            valign: center;
-          }
         }
 
         Adw.ComboRow wrap_row {
@@ -67,20 +57,15 @@ Adw.StatusPage {
           };
         }
 
-        Adw.ActionRow {
+        Adw.SpinRow xalign_spin_button{
           title: _("X Align");
-          activatable-widget: xalign_spin_button;
-
-          SpinButton xalign_spin_button {
-            valign: center;
-            value: 0.5;
-            digits: 1;
-            adjustment: Adjustment {
-              step-increment: 0.1;
-              lower: 0;
-              upper: 1;
-            };
-          }
+          value: 0.5;
+          digits: 1;
+          adjustment: Adjustment {
+            step-increment: 0.1;
+            lower: 0;
+            upper: 1;
+          };
         }
       }
     }
