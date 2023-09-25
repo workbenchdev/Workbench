@@ -14,15 +14,8 @@ Adw.PreferencesWindow pref_window {
       title: _("Color Settings");
       description: _("Change the color-scheme of the application.");
 
-      Adw.ActionRow {
+      Adw.SwitchRow dm_switch{
         title: _("Use Dark Mode");
-        activatable-widget: dm_switch;
-
-        [suffix]
-        Switch dm_switch {
-          halign: center;
-          valign: center;
-        }
       }
     }
 
@@ -30,21 +23,15 @@ Adw.PreferencesWindow pref_window {
       title: _("Text Settings");
       description: _("Customize the appearance of text in the application.");
 
-      Adw.ActionRow {
+      Adw.SpinRow {
         title: _("Font Size");
-
-        [suffix]
-        Gtk.SpinButton {
-          halign: center;
-          valign: center;
-          adjustment:
-          Gtk.Adjustment {
-            lower: 5;
-            upper: 20;
-            step-increment: 1;
-            value: 11;
-          };
-        }
+        adjustment:
+        Gtk.Adjustment {
+          lower: 5;
+          upper: 20;
+          step-increment: 1;
+          value: 11;
+        };
       }
 
       Adw.ActionRow {
@@ -105,15 +92,8 @@ Adw.PreferencesWindow pref_window {
         icon-name: "settings-symbolic";
       }
 
-      Adw.ActionRow {
+      Adw.SwitchRow {
         title: _("Run on Startup");
-        activatable-widget: startup_switch;
-
-        [suffix]
-        Switch startup_switch {
-          halign: center;
-          valign: center;
-        }
       }
 
       Adw.ActionRow {
@@ -134,26 +114,12 @@ Adw.PreferencesWindow pref_window {
       title: _("Data Settings");
       description: _("Manage user data related settings.");
 
-      Adw.ActionRow {
+      Adw.SwitchRow {
         title: _("Enable Telemetry");
-        activatable-widget: telemetry_switch;
-
-        [suffix]
-        Switch telemetry_switch{
-          halign: center;
-          valign: center;
-        }
       }
 
-      Adw.ActionRow {
+      Adw.SwitchRow {
         title: _("Enable Auto-Updates");
-        activatable-widget: update_switch;
-
-        [suffix]
-        Switch update_switch {
-          halign: center;
-          valign: center;
-        }
       }
 
       Adw.ActionRow subpage_row {
