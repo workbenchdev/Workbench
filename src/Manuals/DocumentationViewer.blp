@@ -43,9 +43,15 @@ Adw.Window documentation_viewer {
           margin-bottom: 6;
           margin-start: 6;
           margin-end: 6;
+          spacing: 6;
           SearchEntry search_entry {
             hexpand: true;
             placeholder-text: "Search Manuals";
+          }
+          Button button_shortcuts{
+            icon-name: "keyboard-shortcuts-symbolic";
+            tooltip-text: _("Keyboard Shortcuts (Ctrl+?)");
+            styles ["flat"]
           }
         }
 

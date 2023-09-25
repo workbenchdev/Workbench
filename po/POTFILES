@@ -73,3 +73,7 @@ troll/src/builder.js
 troll/src/main.js
 src/Extensions/Extensions.blp
 src/Extensions/Extensions.js
+src/Manuals/DocumentationViewer.blp
+src/Manuals/Shortcuts.blp
+src/Manuals/Shortcuts.js
+src/Manuals/DocumentationViewer.js
