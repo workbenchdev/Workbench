@@ -20,11 +20,9 @@ const style_classes = [
   "caption",
 ];
 
-const short_label =
-  `<span foreground="green">Lorem ipsum</span> dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore disputandum putant.`;
+const short_label = `<span foreground="green">Lorem ipsum</span> dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore disputandum putant.`;
 
-const long_label =
-  `     <span foreground="green">Lorem ipsum</span> dolor sit amet, consectetur elit,\n\
+const long_label = `     <span foreground="green">Lorem ipsum</span> dolor sit amet, consectetur elit,\n\
   sed do eiusmod tempor incididunt ut labore et dolore magnam aliquam quaerat voluptatem.\n\
   Ut enim mortis metu omnis quietae vitae status perturbatur,\n\
   et ut succumbere doloribus eosque humili animo inbecilloque ferre miserum est,\n\
