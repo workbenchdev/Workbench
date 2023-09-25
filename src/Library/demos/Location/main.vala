@@ -6,8 +6,8 @@ private Xdp.Parent parent;
 private Gtk.Revealer revealer;
 private Gtk.Button start_button;
 private Gtk.Button close_button;
-private Gtk.SpinButton distance_threshold;
-private Gtk.SpinButton time_threshold;
+private Gtk.SpinRow distance_threshold;
+private Gtk.SpinRow time_threshold;
 private Adw.ComboRow accuracy_button;
 
 private Gtk.Label latitude_label;
@@ -26,8 +26,8 @@ public void main () {
   revealer = (Gtk.Revealer) workbench.builder.get_object ("revealer");
   start_button = (Gtk.Button) workbench.builder.get_object ("start");
   close_button = (Gtk.Button) workbench.builder.get_object ("close");
-  distance_threshold = (Gtk.SpinButton) workbench.builder.get_object ("distance_threshold");
-  time_threshold = (Gtk.SpinButton) workbench.builder.get_object ("time_threshold");
+  distance_threshold = (Adw.SpinRow) workbench.builder.get_object ("distance_threshold");
+  time_threshold = (Adw.SpinRow) workbench.builder.get_object ("time_threshold");
   accuracy_button = (Adw.ComboRow) workbench.builder.get_object ("accuracy_button");
 
   latitude_label = (Gtk.Label) workbench.builder.get_object ("latitude");
@@ -42,12 +42,12 @@ public void main () {
   start_button.clicked.connect (start_session);
   close_button.clicked.connect (close_session);
 
-  time_threshold.value_changed.connect (() => {
+  time_threshold.adjustment.value_changed.connect (() => {
     message ("Time threshold changed");
     restart_session ();
   });
 
-  distance_threshold.value_changed.connect (() => {
+  distance_threshold.adjustment.value_changed.connect (() => {
     message ("Distance threshold changed");
     restart_session ();
   });
