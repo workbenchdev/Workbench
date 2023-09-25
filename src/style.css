@@ -12,12 +12,22 @@
   padding-right: 12px;
 }
 
-#toolbar_devtools {
-  border-bottom: solid 1px @borders;
-}
-
 #panel_code,
 #panel_style,
 #panel_ui {
   border-right: solid 1px @borders;
+  background-color: #fcfcfc;
+}
+
+/* Prevent dev banner on second toolbar */
+#panel_code > revealer,
+#panel_style > revealer,
+#panel_ui > revealer,
+#panel_preview > revealer,
+#panel_devtools > revealer {
+  background-image: none;
+}
+
+#toolbar_devtools {
+  background-color: #fcfcfc;
 }
