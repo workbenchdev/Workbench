@@ -2,7 +2,7 @@ using Gtk 4.0;
 using Adw 1;
 
 Adw.StatusPage {
-  title: "Platform Tools";
+  title: _("Platform Tools");
 
   Box {
     orientation: vertical;
@@ -12,7 +12,7 @@ Adw.StatusPage {
       halign: center;
 
       Button adwaita-1-demo {
-        label: "Adwaita Demo";
+        label: _("Adwaita Demo");
         action-name: "app.platform_tools";
         action-target: "'adwaita-1-demo'";
         styles ["pill"]
@@ -25,7 +25,7 @@ Adw.StatusPage {
       }
 
       Button gtk4-demo {
-        label: "GTK Demo";
+        label: _("GTK Demo");
         action-name: "app.platform_tools";
         action-target: "'gtk4-demo'";
         styles ["pill"]
@@ -38,7 +38,7 @@ Adw.StatusPage {
       }
 
       Button gtk4-widget-factory {
-        label: "GTK Widget Factory";
+        label: _("GTK Widget Factory");
         action-name: "app.platform_tools";
         action-target: "'gtk4-widget-factory'";
         styles ["pill"]
@@ -67,7 +67,7 @@ Adw.StatusPage {
       LinkButton {
         margin-top: 6;
         halign: center;
-        label: "The GTK Inspector";
+        label: _("The GTK Inspector");
         // https://gitlab.gnome.org/Teams/documentation/developer-www/-/issues/40
         uri: "https://blog.gtk.org/2017/04/05/the-gtk-inspector/";
       }

@@ -3,7 +3,7 @@ using Adw 1;
 
 Adw.ToastOverlay overlay {
   Adw.StatusPage {
-    title: "Toasts";
+    title: _("Toasts");
     description: "In-app notifications";
 
     Box {
@@ -11,29 +11,29 @@ Adw.ToastOverlay overlay {
       halign: center;
 
       Button button_simple {
-        label: "Simple";
+        label: _("Simple");
         margin-bottom: 30;
         styles ["pill"]
       }
 
       Button button_advanced {
-        label: "Advanced";
+        label: _("Advanced");
         margin-bottom: 30;
         styles ["pill"]
       }
 
       LinkButton {
-        label: "Tutorial";
+        label: _("Tutorial");
         uri: "https://developer.gnome.org/documentation/tutorials/beginners/getting_started/adding_toasts.html";
       }
 
       LinkButton {
-        label: "API Reference";
+        label: _("API Reference");
         uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.4/class.Toast.html";
       }
 
       LinkButton {
-        label: "Human Interface Guidelines";
+        label: _("Human Interface Guidelines");
         uri: "https://developer.gnome.org/hig/patterns/feedback/toasts.html";
       }
     }

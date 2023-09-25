@@ -2,7 +2,7 @@ using Gtk 4.0;
 using Adw 1;
 
 Adw.StatusPage demo {
-  title: "Actions";
+  title: _("Actions");
   description: _("A high-level interface used to describe a piece of functionality");
 
   Adw.Clamp {
@@ -158,12 +158,12 @@ Adw.StatusPage demo {
         halign: center;
 
         LinkButton {
-          label: "GJS Guide";
+          label: _("GJS Guide");
           uri: "https://gjs.guide/guides/gio/actions-and-menus.html";
         }
 
         LinkButton {
-          label: "GTK Documentation";
+          label: _("GTK Documentation");
           uri: "https://docs.gtk.org/gtk4/actions.html";
         }
       }

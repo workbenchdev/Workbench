@@ -1,0 +1,32 @@
+.linear {
+  background-image: linear-gradient(@red_3, @yellow_3, @blue_3);
+}
+
+.radial {
+  background-image: radial-gradient(@red_3, @yellow_3, @blue_3);
+}
+
+.conic {
+  background-image: conic-gradient(@red_3, @yellow_3, @blue_3, @red_3);
+}
+
+.repeating-linear {
+  background-image: repeating-linear-gradient(
+    @red_3,
+    @yellow_3 15%,
+    @blue_3 30%
+  );
+}
+
+.repeating-radial {
+  background-image: repeating-radial-gradient(
+    @red_3,
+    @yellow_3 15%,
+    @blue_3 30%
+  );
+}
+
+.gradient-card {
+  min-width: 90px;
+  min-height: 90px;
+}
