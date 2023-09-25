@@ -31,7 +31,7 @@ let locationAccuracy = Xdp.LocationAccuracy.Exact;
 let distanceThreshold = distance_threshold.value;
 let timeThreshold = time_threshold.value;
 
-time_threshold.connect("value-changed", () => {
+time_threshold.adjustment.connect("value-changed", () => {
   portal.location_monitor_stop();
   revealer.reveal_child = false;
   timeThreshold = time_threshold.value;
@@ -39,7 +39,7 @@ time_threshold.connect("value-changed", () => {
   startSession();
 });
 
-distance_threshold.connect("value-changed", () => {
+distance_threshold.adjustment.connect("value-changed", () => {
   portal.location_monitor_stop();
   revealer.reveal_child = false;
   distanceThreshold = distance_threshold.value;
