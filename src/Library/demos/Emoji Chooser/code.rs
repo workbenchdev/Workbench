@@ -1,6 +1,4 @@
 use crate::workbench;
-use gtk::prelude::*;
-use gtk::EmojiChooser;
 
 pub fn main() {
     let emoji_chooser: gtk::EmojiChooser = workbench::builder().object("emoji_chooser").unwrap();
