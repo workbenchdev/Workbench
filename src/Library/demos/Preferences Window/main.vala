@@ -2,7 +2,7 @@
 
 public void main () {
   var pref_window = (Adw.PreferencesWindow) workbench.builder.get_object ("pref_window");
-  var dm_switch = (Gtk.Switch) workbench.builder.get_object ("dm_switch");
+  var dm_switch = (Adw.SwitchRow) workbench.builder.get_object ("dm_switch");
   var subpage = (Adw.StatusPage) workbench.builder.get_object ("subpage");
   var subpage_row = (Adw.ActionRow) workbench.builder.get_object ("subpage_row");
   var subpage_button = (Gtk.Button) workbench.builder.get_object ("subpage_button");
