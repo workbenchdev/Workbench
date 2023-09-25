@@ -2,9 +2,7 @@ use crate::workbench;
 use adw::prelude::*;
 
 pub fn main() {
-    let subtitle_box: gtk::Box = workbench::builder()
-        .object("subtitle")
-        .expect("Subtitle box not found");
+    let subtitle_box: gtk::Box = workbench::builder().object("subtitle").unwrap();
 
     let button = gtk::Button::builder()
         .label("Press me")
@@ -32,3 +30,4 @@ fn greet() {
 
     dialog.present();
 }
+
