@@ -72,29 +72,18 @@ Box root_box {
             };
           }
 
-          Adw.ActionRow {
+          Adw.SwitchRow interpolate_switch {
             title: _("Interpolate Size");
-            activatable-widget: interpolate_switch;
-
-            Gtk.Switch interpolate_switch {
-              valign: center;
-            }
           }
 
-          Adw.ActionRow {
+          Adw.SpinRow transition_spin_button {
             title: _("Transition Duration");
-            activatable-widget: transition_spin_button;
-
-            Gtk.SpinButton transition_spin_button {
-              halign: center;
-              valign: center;
-              adjustment: Adjustment transition_adjustment {
-                step-increment: 10;
-                lower: 100;
-                upper: 1000;
-                value: 200;
-              };
-            }
+            adjustment: Adjustment transition_adjustment {
+              step-increment: 10;
+              lower: 100;
+              upper: 1000;
+              value: 200;
+            };
           }
         }
       };
