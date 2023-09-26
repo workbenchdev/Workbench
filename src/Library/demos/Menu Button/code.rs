@@ -1,9 +1,10 @@
 use crate::workbench;
+use adw::SwitchRow;
 use gtk::prelude::*;
-use gtk::{MenuButton, Switch};
+use gtk::MenuButton;
 
 pub fn main() {
-    let circular_switch: Switch = workbench::builder().object("circular_switch").unwrap();
+    let circular_switch: SwitchRow = workbench::builder().object("circular_switch").unwrap();
     let secondary_button: MenuButton = workbench::builder().object("secondary").unwrap();
 
     circular_switch.connect_active_notify(move |switch| {
