@@ -1,10 +1,10 @@
 import Gtk from "gi://Gtk";
 import resource from "./Shortcuts.blp";
 
-export { resource };
-
 export default function Shortcuts({
+  application,
   window,
+  button_shortcuts,
   onGoForward,
   onGoBack,
   onZoomIn,
@@ -12,15 +12,20 @@ export default function Shortcuts({
   onResetZoom,
   onFocusGlobalSearch,
 }) {
+  let window_shortcuts;
+
+  function open() {
+    if (!window_shortcuts) {
+      const builder = Gtk.Builder.new_from_resource(resource);
+      window_shortcuts = builder.get_object("window_shortcuts");
+      window_shortcuts.set_transient_for(window);
+      window_shortcuts.set_application(application);
+    }
+    window_shortcuts.present();
+  }
+
   const shortcuts = [
-    [
-      ["<Primary>question"],
-      () => {
-        const builder = Gtk.Builder.new_from_resource(resource);
-        const shortcutsWindow = builder.get_object("shortcuts-window");
-        shortcutsWindow.present();
-      },
-    ],
+    [["<Primary>question"], open],
     [["<Control>w"], () => window.close()],
     [["<Alt>Right"], onGoForward],
     [["<Alt>Left"], onGoBack],
@@ -29,6 +34,8 @@ export default function Shortcuts({
     [["<Control>0"], onResetZoom],
     [["<Control>K"], onFocusGlobalSearch],
   ];
+
+  button_shortcuts.connect("clicked", open);
 
   const shortcutController = new Gtk.ShortcutController();
   shortcuts.forEach(([accels, fn]) => {

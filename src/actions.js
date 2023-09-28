@@ -6,7 +6,6 @@ import Xdp from "gi://Xdp";
 import XdpGtk from "gi://XdpGtk4";
 
 import About from "./about.js";
-import shortcutsWindow from "./shortcutsWindow.js";
 import { portal, settings } from "./util.js";
 
 import IconLibrary from "./IconLibrary/main.js";
@@ -30,16 +29,6 @@ export default function Actions({ application }) {
     About({ application });
   });
   application.add_action(showAboutDialog);
-
-  const showShortCutsWindow = new Gio.SimpleAction({
-    name: "shortcuts",
-    parameter_type: null,
-  });
-  showShortCutsWindow.connect("activate", () => {
-    shortcutsWindow({ application });
-  });
-  application.add_action(showShortCutsWindow);
-  application.set_accels_for_action("app.shortcuts", ["<Control>question"]);
 
   const action_icon_library = new Gio.SimpleAction({
     name: "icon_library",
