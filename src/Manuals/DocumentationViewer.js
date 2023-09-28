@@ -6,7 +6,7 @@ import WebKit from "gi://WebKit";
 import { decode } from "../util.js";
 import resource from "./DocumentationViewer.blp";
 
-import Shortcuts, { resource as shortcuts_resource } from "./Shortcuts.js";
+import Shortcuts from "./Shortcuts.js";
 
 import {
   action_extensions,
@@ -64,15 +64,6 @@ export default function DocumentationViewer({ application }) {
   const search_entry = builder.get_object("search_entry");
   const button_shortcuts = builder.get_object("button_shortcuts");
 
-  const shortcutsWindow =
-    Gtk.Builder.new_from_resource(shortcuts_resource).get_object(
-      "shortcuts-window",
-    );
-
-  button_shortcuts.connect("clicked", () => {
-    shortcutsWindow.present();
-  });
-
   const onGoForward = () => {
     webview.go_forward();
   };
@@ -98,7 +89,9 @@ export default function DocumentationViewer({ application }) {
   };
 
   Shortcuts({
+    application,
     window,
+    button_shortcuts,
     onGoForward,
     onGoBack,
     onZoomIn,

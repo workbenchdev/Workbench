@@ -1,6 +1,7 @@
 using Gtk 4.0;
 
-ShortcutsWindow shortcuts-window {
+ShortcutsWindow window_shortcuts {
+  hide-on-close: true;
 
   ShortcutsSection {
     section-name: "shortcuts";
@@ -58,7 +59,7 @@ ShortcutsWindow shortcuts-window {
       title: _("General");
 
       ShortcutsShortcut {
-        title: _("Quit");
+        title: _("Close Manuals");
         accelerator: "<Control>W";
       }
 

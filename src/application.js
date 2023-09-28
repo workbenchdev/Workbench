@@ -9,6 +9,7 @@ import Library from "./Library/Library.js";
 import Extensions from "./Extensions/Extensions.js";
 import DocumentationViewer from "./Manuals/DocumentationViewer.js";
 import { Session, createSessionFromDemo, getSessions } from "./sessions.js";
+import ShortcutsWindow from "./shortcutsWindow.js";
 
 ensureDir(data_dir);
 
@@ -44,6 +45,8 @@ application.connect("startup", () => {
   DocumentationViewer({
     application,
   });
+
+  ShortcutsWindow({ application });
 
   restoreSessions();
 });
