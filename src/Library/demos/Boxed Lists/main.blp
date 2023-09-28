@@ -16,7 +16,7 @@ Adw.StatusPage {
         styles ["boxed-list"]
 
         Adw.ActionRow {
-          title: _("ActionRow can have a prefix child");
+          title: _("Action Row can have a prefix child");
 
           [prefix]
           CheckButton checkbox {
@@ -25,7 +25,7 @@ Adw.StatusPage {
         }
 
         Adw.ActionRow {
-          title: _("ActionRow can have a suffix child");
+          title: _("Action Row can have a suffix child");
           subtitle: _("The checkbox above controls the spinner");
 
           [suffix]
@@ -35,7 +35,7 @@ Adw.StatusPage {
         }
 
         Adw.ActionRow {
-          title: _("ActionRow can have a activatable widget");
+          title: _("Action Row can have a activatable widget");
           subtitle: _("Click on the row to activate it");
           activatable-widget: activatable_toggle;
 
@@ -44,6 +44,12 @@ Adw.StatusPage {
             icon-name: "hand-touch-symbolic";
             valign: center;
           }
+        }
+        
+        Adw.ActionRow {
+          styles["property"]
+          title: _("Property Row");
+          subtitle: _("Switch title and subtitle position");
         }
 
         Adw.EntryRow {
@@ -90,12 +96,12 @@ Adw.StatusPage {
 
       LinkButton {
         margin-top: 24;
-        label: _("API Reference");
+        label: "API Reference";
         uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1-latest/boxed-lists.html";
       }
 
       LinkButton {
-        label: _("Human Interface Guidelines");
+        label: "Human Interface Guidelines";
         uri: "https://developer.gnome.org/hig/patterns/containers/boxed-lists.html";
       }
     }
