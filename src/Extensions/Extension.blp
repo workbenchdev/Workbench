@@ -1,39 +1,35 @@
 using Gtk 4.0;
 
-template $Extension : Box {
-  orientation: vertical;
+template $Extension : ListBoxRow {
+  Box {
+    orientation: vertical;
 
-  CenterBox {
-    [start]
     Box {
-      spacing: 4;
+      height-request: 55;
+      valign: center;
+      halign: fill;
+      margin-start: 14;
+      margin-end: 14;
+
       Image image_enabled {
         icon-name: "test-pass-symbolic";
+        margin-end: 16;
         styles ["success"]
       }
 
-      Label label_title {
-        xalign: 0;
-        styles [
-          "heading"
-        ]
-      }
+      Label label_title {}
     }
 
-    [end]
-    ToggleButton toggle {
-      icon-name: "flatpak-symbolic";
-      styles ["flat", "circular"]
-    }
-  }
-
-  Revealer revealer {
-    reveal-child: bind toggle.active;
-
-    Box {
+    Box installation_guide {
+      visible: false;
+      margin-start: 14;
+      margin-end: 14;
+      margin-bottom: 14;
       orientation: vertical;
+
       Label label_hint {
-        margin-top: 8;
+        margin-top: 6;
+        wrap: true;
         xalign: 0;
         styles [
           "dim-label"
@@ -41,18 +37,14 @@ template $Extension : Box {
       }
 
       Label label_command {
-        margin-top: 2;
+        margin-top: 12;
         use-markup: true;
         wrap: true;
+        wrap-mode: word_char;
         selectable: true;
         xalign: 0;
 
-        styles [
-          "code",
-          "view",
-          "frame",
-          "monospace"
-        ]
+        styles ["command_snippet"]
       }
     }
   }
