@@ -63,11 +63,6 @@ generic_drop_target.connect("drop", async (self, drop, x, y) => {
   } catch (error) {
     console.log(error);
     drop.finish(false);
-=======
-    bin.child = onDrop(value);
-  } catch (err) {
-    console.error(err, "Unable to load preview");
->>>>>>> main
   }
 });
 
