@@ -16,7 +16,7 @@ Adw.StatusPage {
         styles ["boxed-list"]
 
         Adw.ActionRow {
-          title: _("Action Row can have a prefix child");
+          title: _("ActionRow can have a prefix child");
 
           [prefix]
           CheckButton checkbox {
@@ -25,7 +25,7 @@ Adw.StatusPage {
         }
 
         Adw.ActionRow {
-          title: _("Action Row can have a suffix child");
+          title: _("ActionRow can have a suffix child");
           subtitle: _("The checkbox above controls the spinner");
 
           [suffix]
@@ -96,12 +96,12 @@ Adw.StatusPage {
 
       LinkButton {
         margin-top: 24;
-        label: "API Reference";
+        label: _("API Reference");
         uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1-latest/boxed-lists.html";
       }
 
       LinkButton {
-        label: "Human Interface Guidelines";
+        label: _("Human Interface Guidelines");
         uri: "https://developer.gnome.org/hig/patterns/containers/boxed-lists.html";
       }
     }
