@@ -32,7 +32,7 @@ export default function Extensions({ application }) {
 
   extension_rust.enabled = isRustEnabled();
   extension_documentation.enabled = isDocumentationEnabled();
-  extension_vala.enabled = false;
+  extension_vala.enabled = isValaEnabled();
 
   for (let extension of [extension_rust, extension_documentation, extension_vala]) {
     if (!extension.enabled) {
