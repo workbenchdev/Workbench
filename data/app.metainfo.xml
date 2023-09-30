@@ -42,6 +42,22 @@
   </screenshots>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="45.1" date="2023-09-29">
+      <description>
+        <ul>
+          <li>Reduce Workbench download size</li>
+          <li>Add "Extensions" to enable Rust and Vala support<li>
+          <li>Add Keyboard Shortcuts to Manuals; the documentation viewer</li>
+          <li>Update and refresh UI</li>
+          <li>Add audio permission</li>
+          <li>Library: Port entries to new SpinRow and SwitchRow </li>
+          <li>Library: Add CSS gradientts demo</li>
+          <li>Library: Port Map entry to Rust</li>
+          <li>Library: Port Emoji Chooser to Rust</li>
+          <li>Library: Fix Souce View entry</li>
+        </ul>
+      </description>
+    </release>
     <release version="45" date="2023-09-22">
       <description>
         <ul>
