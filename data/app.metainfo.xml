@@ -46,7 +46,7 @@
       <description>
         <ul>
           <li>Reduce Workbench download size</li>
-          <li>Add "Extensions" to enable Rust and Vala support<li>
+          <li>Add "Extensions" to enable Rust and Vala support</li>
           <li>Add Keyboard Shortcuts to Manuals; the documentation viewer</li>
           <li>Update and refresh UI</li>
           <li>Add audio permission</li>
