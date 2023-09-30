@@ -25,8 +25,15 @@ export const action_extensions = new Gio.SimpleAction({
 });
 
 export default function Extensions({ application }) {
-  const { window, picture_illustration, extension_rust, extension_vala, extension_documentation, restart_hint, all_set_hint } =
-    build(Interface);
+  const {
+    window,
+    picture_illustration,
+    extension_rust,
+    extension_vala,
+    extension_documentation,
+    restart_hint,
+    all_set_hint,
+  } = build(Interface);
 
   picture_illustration.set_resource(illustration);
 
@@ -34,7 +41,11 @@ export default function Extensions({ application }) {
   extension_documentation.enabled = isDocumentationEnabled();
   extension_vala.enabled = isValaEnabled();
 
-  for (let extension of [extension_rust, extension_documentation, extension_vala]) {
+  for (let extension of [
+    extension_rust,
+    extension_documentation,
+    extension_vala,
+  ]) {
     if (!extension.enabled) {
       all_set_hint.set_visible(false);
       restart_hint.set_visible(true);
