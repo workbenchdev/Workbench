@@ -1,23 +1,26 @@
 using Gtk 4.0;
 
 template $Extension : ListBoxRow {
+  activatable: false;
+
   Box {
     orientation: vertical;
 
-    Box {
+    CenterBox {
       height-request: 55;
       valign: center;
       halign: fill;
       margin-start: 14;
       margin-end: 14;
 
+      [start]
+      Label label_title {}
+
+      [end]
       Image image_enabled {
         icon-name: "test-pass-symbolic";
-        margin-end: 16;
         styles ["success"]
       }
-
-      Label label_title {}
     }
 
     Box installation_guide {

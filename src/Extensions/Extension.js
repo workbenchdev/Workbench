@@ -63,13 +63,11 @@ export default GObject.registerClass(
         GObject.BindingFlags.SYNC_CREATE,
       );
 
-      this.bind_property_full(
+      this.bind_property(
         "enabled",
         this._installation_guide,
         "visible",
-        GObject.BindingFlags.SYNC_CREATE,
-        is_enabled => [!is_enabled],
-        null,
+        GObject.BindingFlags.SYNC_CREATE | GObject.BindingFlags.INVERT_BOOLEAN,
       );
 
       this.bind_property(
