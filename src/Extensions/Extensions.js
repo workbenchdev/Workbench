@@ -41,7 +41,7 @@ export default function Extensions({ application }) {
   extension_documentation.enabled = isDocumentationEnabled();
   extension_vala.enabled = isValaEnabled();
 
-  for (let extension of [
+  for (const extension of [
     extension_rust,
     extension_documentation,
     extension_vala,
