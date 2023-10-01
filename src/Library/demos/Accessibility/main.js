@@ -47,4 +47,3 @@ function toggleButton(button) {
   // Grab the focus
   button.grab_focus();
 }
-
