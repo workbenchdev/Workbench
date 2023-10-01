@@ -53,4 +53,3 @@ fn toggle_button(button: &adw::Bin) {
     // Grab the focus
     button.grab_focus();
 }
-
