@@ -24,15 +24,14 @@ button.add_controller(key_controller);
 
 function toggleButton(button) {
   let checked = (button.get_state_flags() & Gtk.StateFlags.CHECKED) !== 0;
-  let pressed = Gtk.AccessibleTristate.FALSE;
+  let pressed;
 
   // Invert the current state
+  checked = !checked;
   if (checked) {
-    checked = false;
-    pressed = Gtk.AccessibleTristate.FALSE;
-  } else {
-    checked = true;
     pressed = Gtk.AccessibleTristate.TRUE;
+  } else {
+    pressed = Gtk.AccessibleTristate.FALSE;
   }
 
   // Update the accessible state
