@@ -38,7 +38,7 @@ pub fn main() {
 
     let button_marker: gtk::ToggleButton = workbench::builder().object("button_marker").unwrap();
 
-    gesture.connect_pressed(clone!(@strong viewport => move |_, _, x, y| {
+    gesture.connect_pressed(clone!(@weak viewport => move |_, _, x, y| {
         if button_marker.is_active() {
             let location = viewport.widget_coords_to_location(&map_widget, x, y);
             marker.set_location(location.0, location.1);
@@ -51,7 +51,7 @@ pub fn main() {
     let button_go: gtk::Button = workbench::builder().object("button_go").unwrap();
 
     button_go.connect_clicked(
-        clone!(@strong entry_latitude, @strong entry_longitude, @strong map, @weak viewport => move |_| {
+        clone!(@weak entry_latitude, @weak entry_longitude, @weak map, @weak viewport => move |_| {
             go_to_location(&entry_latitude, &entry_longitude, &map, &viewport);
         }),
     );
