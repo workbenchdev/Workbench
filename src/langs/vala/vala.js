@@ -2,8 +2,11 @@ import Gio from "gi://Gio";
 import GLib from "gi://GLib";
 
 import LSPClient from "../../lsp/LSPClient.js";
+import { isValaEnabled } from "../../Extensions/Extensions.js";
 
 export function setup({ document }) {
+  if (!isValaEnabled()) return;
+
   const { file, code_view } = document;
 
   const api_file = Gio.File.new_for_path(
