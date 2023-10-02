@@ -39,22 +39,30 @@
     <screenshot>
       <image>https://raw.githubusercontent.com/sonnyp/Workbench/main/data/screenshot-library.png</image>
     </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/sonnyp/Workbench/main/data/screenshot-extensions.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/sonnyp/Workbench/main/data/screenshot-manuals.png</image>
+    </screenshot>
   </screenshots>
   <content_rating type="oars-1.1" />
   <releases>
     <release version="45.1" date="2023-09-29">
       <description>
         <ul>
-          <li>Reduce Workbench download size</li>
           <li>Add "Extensions" to enable Rust and Vala support</li>
           <li>Add Keyboard Shortcuts to Manuals; the documentation viewer</li>
           <li>Update and refresh UI</li>
           <li>Add audio permission</li>
-          <li>Library: Port entries to new SpinRow and SwitchRow </li>
+          <li>Make Workbench smaller and faster to download</li>
           <li>Library: Add CSS gradientts demo</li>
+          <li>Library: Add Proprty Row</li>
+          <li>Library: Update entries to use SpinRow and SwitchRow </li>
           <li>Library: Port Map entry to Rust</li>
           <li>Library: Port Emoji Chooser to Rust</li>
           <li>Library: Fix Souce View entry</li>
+          <li>Library: Use GLib.format_size() for file sizes</li>
         </ul>
       </description>
     </release>

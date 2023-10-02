@@ -37,9 +37,6 @@ function generateCss() {
   const third_color_string = button_color_3.rgba.to_string();
 
   let css = "";
-
-  console.log(combo_row_gradient_type.selected);
-
   if (combo_row_gradient_type.selected === 0) {
     css = `
 .background-gradient {
