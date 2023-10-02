@@ -48,6 +48,7 @@ ${getBlueprintVersion()}
     designers: [
       "Sonny Piers https://sonny.re",
       "Tobias Bernard <tbernard@gnome.org>",
+      "Brage Fuglseth https://bragefuglseth.dev",
     ],
     artists: [
       "Tobias Bernard <tbernard@gnome.org>",
