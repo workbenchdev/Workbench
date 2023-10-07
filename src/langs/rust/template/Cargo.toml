@@ -9,6 +9,7 @@ edition = "2021"
 libc = "0.2"
 rand = "0.8.5"
 url = "2.4.0"
+webkit6 = { version = "0.2.0", features = ["v2_42"] }
 
 
 [dependencies.gtk]
