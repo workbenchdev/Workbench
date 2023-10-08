@@ -37,7 +37,6 @@ async fn get_input_stream(url: &str) -> InputStream {
             message.reason_phrase()
         );
     }
-
     input_stream
 }
 
