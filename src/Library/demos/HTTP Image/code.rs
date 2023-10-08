@@ -39,4 +39,3 @@ async fn get_input_stream(url: &str) -> InputStream {
     }
     input_stream
 }
-
