@@ -13,6 +13,7 @@ Adw.Window documentation_viewer {
 
   content: Adw.NavigationSplitView split_view {
     sidebar: Adw.NavigationPage sidebar {
+      title: bind documentation_viewer.title;
       child: Adw.ToolbarView {
         [top]
         Adw.HeaderBar {
@@ -113,22 +114,13 @@ Adw.Window documentation_viewer {
     };
 
     content: Adw.NavigationPage {
-      child: Adw.ToolbarView {
-        extend-content-to-top-edge: true;
-        [top]
-        Adw.HeaderBar {
-          show-title: false;
-          show-end-title-buttons: false;
-          show-start-title-buttons: false;
-        }
-
-        WebKit.WebView webview {
-          settings: WebKit.Settings {
-            enable-back-forward-navigation-gestures: true;
-            enable-developer-extras: true;
-            enable-smooth-scrolling: true;
-          };
-        }
+      title: bind documentation_viewer.title;
+      child: WebKit.WebView webview {
+        settings: WebKit.Settings {
+          enable-back-forward-navigation-gestures: true;
+          enable-developer-extras: true;
+          enable-smooth-scrolling: true;
+        };
       };
     };
   };

@@ -86,6 +86,7 @@ export default function DocumentationViewer({ application }) {
 
   const onFocusGlobalSearch = () => {
     search_entry.grab_focus();
+    search_entry.select_region(0, -1);
   };
 
   Shortcuts({
@@ -162,7 +163,7 @@ export default function DocumentationViewer({ application }) {
   browse_list_view.model = createBrowseSelectionModel(root_model, webview);
   let promise_load;
   async function load() {
-    if (!promise_load)
+    if (!promise_load) {
       promise_load = Promise.all([
         scanLibraries(root_model, Gio.File.new_for_path("/usr/share/doc")),
         scanLibraries(
@@ -171,10 +172,10 @@ export default function DocumentationViewer({ application }) {
         ),
         scanLibraries(root_model, Gio.File.new_for_path("/app/share/doc")),
       ]).then(() => {
-        browse_list_view.model.selected = 12;
         const search_model = flattenModel(root_model);
         filter_model.model = search_model;
       });
+    }
     return promise_load;
   }
 
@@ -188,8 +189,17 @@ export default function DocumentationViewer({ application }) {
       return;
     }
 
+    // The window is already open
+    const mapped = window.get_mapped();
     window.present();
-    load().catch(console.error);
+    onFocusGlobalSearch();
+    load()
+      .then(() => {
+        if (!mapped) {
+          browse_list_view.model.selected = 12;
+        }
+      })
+      .catch(console.error);
   });
   application.add_action(action_documentation);
   application.set_accels_for_action("app.documentation", ["<Control>M"]);
