@@ -32,4 +32,3 @@ async function getInputStream(url) {
   }
   return input_stream;
 }
-
