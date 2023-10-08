@@ -358,6 +358,7 @@ dependencies = [
  "libc",
  "libshumate",
  "rand",
+ "soup3",
  "url",
  "webkit6",
 ]
