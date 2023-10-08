@@ -142,14 +142,16 @@ export default function DocumentationViewer({ application }) {
   const filter = filter_model.filter;
   filter.expression = expr;
 
-  search_entry.connect("search-changed", () => {
+  function onSearchChanged() {
     if (search_entry.text) {
       stack.visible_child = search_page;
       filter.search = search_entry.text;
     } else {
       stack.visible_child = browse_page;
     }
-  });
+  }
+
+  search_entry.connect("search-changed", onSearchChanged);
 
   const search_model = builder.get_object("search_model");
   const sorter = builder.get_object("search_sorter");
@@ -197,6 +199,8 @@ export default function DocumentationViewer({ application }) {
       .then(() => {
         if (!mapped) {
           browse_list_view.model.selected = 12;
+          search_entry.text = "";
+          onSearchChanged();
         }
       })
       .catch(console.error);

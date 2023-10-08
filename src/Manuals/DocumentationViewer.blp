@@ -60,9 +60,8 @@ Adw.Window documentation_viewer {
             width-request: 400;
 
             ListView browse_list_view {
-              enable-rubberband: true;
+              enable-rubberband: false;
               factory: BuilderListItemFactory {
-
                 template ListItem {
                   child: TreeExpander expander {
                     list-row: bind template.item;
@@ -84,8 +83,9 @@ Adw.Window documentation_viewer {
             width-request: 400;
 
             ListView search_list_view {
-              enable-rubberband: true;
+              enable-rubberband: false;
               model: SingleSelection search_model {
+                autoselect: false;
                 model: SortListModel {
                   sorter: StringSorter search_sorter {};
                   model: FilterListModel filter_model {
