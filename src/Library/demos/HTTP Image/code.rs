@@ -1,4 +1,6 @@
-// NOTE: the soup crate is called soup3 on crates.io
+// NOTE: soup is used here to stay consistent with the demos in the other languages
+// For real applications, you probably want to use a different HTTP library in Rust
+
 use crate::workbench;
 use gdk_pixbuf::Pixbuf;
 use gio::InputStream;
@@ -35,7 +37,5 @@ async fn get_input_stream(url: &str) -> InputStream {
             message.reason_phrase()
         );
     }
-
     input_stream
 }
-
