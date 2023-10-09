@@ -15,8 +15,8 @@ lint:
 # gettext
 	find po/ -type f -name "*po" -print0 | xargs -0 -n1 msgfmt -o /dev/null --check
 # Flatpak manifests
-	flatpak run --user --command=flatpak-builder-lint manifest org.flatpak.Builder --exceptions build-aux/re.sonny.Workbench.json
-	flatpak run --user --command=flatpak-builder-lint manifest org.flatpak.Builder --exceptions build-aux/re.sonny.Workbench.Devel.json
+	flatpak run --user --command=flatpak-builder-lint org.flatpak.Builder manifest --exceptions build-aux/re.sonny.Workbench.json
+	flatpak run --user --command=flatpak-builder-lint org.flatpak.Builder manifest --exceptions build-aux/re.sonny.Workbench.Devel.json
 
 unit:
 	flatpak run --user --filesystem=host:ro --command="gjs" org.gnome.Sdk//45 -m ./troll/tst/bin.js test/*.test.js
