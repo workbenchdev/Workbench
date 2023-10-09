@@ -78,6 +78,7 @@ export const languages = [
     types: ["text/x-vala"],
     document: null,
     placeholder: "// Sorry, this demo is not available in Vala yet.",
+    default_file: "main.vala",
   },
   {
     id: "rust",
@@ -87,6 +88,7 @@ export const languages = [
     types: ["text/x-rust"],
     document: null,
     placeholder: "// Sorry, this demo is not available in Rust yet.",
+    default_file: "code.rs",
   },
 ];
 
@@ -184,6 +186,12 @@ export function getDemo(name) {
   const demo = JSON.parse(readDemoFile(name, "main.json"));
   demo.name = name;
   return demo;
+}
+
+export function demoSupportsLanguage(demo, id) {
+  const language = getLanguage(id);
+  const demo_dir = demos_dir.get_child(demo.name);
+  return demo_dir.get_child(language.default_file).query_exists(null);
 }
 
 export function getNowForFilename() {
