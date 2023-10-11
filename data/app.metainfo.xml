@@ -57,7 +57,7 @@
           <li>Add audio permission</li>
           <li>Make Workbench smaller and faster to download</li>
           <li>Library: Add CSS gradientts demo</li>
-          <li>Library: Add Proprty Row</li>
+          <li>Library: Add Property Row</li>
           <li>Library: Update entries to use SpinRow and SwitchRow </li>
           <li>Library: Port Map entry to Rust</li>
           <li>Library: Port Emoji Chooser to Rust</li>
