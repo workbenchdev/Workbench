@@ -7,6 +7,7 @@ import Window from "../window.js";
 
 import resource from "./Library.blp";
 import { createSessionFromDemo } from "../sessions.js";
+import DemoRow from "./DemoRow.js";
 
 import illustration from "./library.svg";
 
@@ -21,50 +22,8 @@ export default function Library({ application }) {
 
   const demos = getDemos();
   demos.forEach((demo) => {
-    const widget = new Adw.ActionRow({
-      title: demo.name,
-      subtitle: demo.description,
-      activatable: true,
-    });
+    const widget = new DemoRow({demo: demo});
     if (demo.name === "Welcome") last_selected = widget;
-
-    const languages_box = new Gtk.Box({
-      orientation: Gtk.Orientation.HORIZONTAL,
-      spacing: 6,
-      margin_end: 6,
-    });
-    widget.add_suffix (languages_box);
-
-    languages_box.append(
-      new Gtk.Image({
-        icon_name: "text-x-javascript-symbolic",
-        tooltip_text: "JavaScript",
-      }),
-    );
-
-    if (demoSupportsLanguage(demo, "vala")) {
-      languages_box.append(
-        new Gtk.Image({
-          icon_name: "text-x-vala-symbolic",
-          tooltip_text: "Vala",
-        }),
-      );
-    }
-
-    if (demoSupportsLanguage(demo, "rust")) {
-      languages_box.append(
-        new Gtk.Image({
-          icon_name: "text-rust-symbolic",
-          tooltip_text: "Rust",
-        }),
-      );
-    }
-
-    widget.add_suffix(
-      new Gtk.Image({
-        icon_name: "go-next-symbolic",
-      }),
-    );
 
     widget.connect("activated", () => {
       last_selected = widget;

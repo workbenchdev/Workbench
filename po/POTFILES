@@ -77,3 +77,5 @@ src/Manuals/DocumentationViewer.blp
 src/Manuals/Shortcuts.blp
 src/Manuals/Shortcuts.js
 src/Manuals/DocumentationViewer.js
+src/Library/DemoRow.blp
+src/Library/DemoRow.js
