@@ -1,26 +1,26 @@
 import Gio from "gi://Gio";
 import GLib from "gi://GLib";
 import dbus_previewer from "../../Previewer/DBusPreviewer.js";
+import { decode, encode } from "../../util.js";
 
 export default function Compiler({ session }) {
   const { file } = session;
   const cacheDir = GLib.get_user_cache_dir();
   const targetPath = `${cacheDir}/rust_build_cache`;
-  const rustcVersionFilePath = `${targetPath}/rustc_version.txt`;
+  const rustcVersionFile = Gio.File.new_for_path(
+    `${targetPath}/rustc_version.txt`,
+  );
+
+  let rustcVersion;
+  let savedRustcVersion;
 
   async function compile() {
-    // Check if the rustc version file exists and has the correct content
-    const rustcVersion = await getRustcVersion();
-    const decoder = new TextDecoder("utf-8");
-    if (
-      !GLib.file_test(rustcVersionFilePath, GLib.FileTest.EXISTS) ||
-      decoder.decode(GLib.file_get_contents(rustcVersionFilePath, null)[1]) !==
-        rustcVersion
-    ) {
-      // If the file doesn't exist or rustc version doesn't match, perform cleanup
-      await cargoClean();
-      GLib.mkdir_with_parents(targetPath, 0o755);
-      GLib.file_set_contents(rustcVersionFilePath, rustcVersion);
+    rustcVersion ||= await getRustcVersion();
+    savedRustcVersion ||= await getSavedRustcVersion({ rustcVersionFile });
+
+    if (rustcVersion !== savedRustcVersion) {
+      await cargoClean({ file, targetPath });
+      await saveRustcVersion({ targetPath, rustcVersion, rustcVersionFile });
     }
 
     const cargo_launcher = new Gio.SubprocessLauncher();
@@ -53,27 +53,53 @@ export default function Compiler({ session }) {
     return true;
   }
 
-  function getRustcVersion() {
-    const cargo_launcher = Gio.SubprocessLauncher.new(
-      Gio.SubprocessFlags.STDOUT_PIPE,
-    );
-    cargo_launcher.set_cwd(file.get_path());
-    const rustcVersionProcess = cargo_launcher.spawnv(["rustc", "--version"]);
-    const stdout = rustcVersionProcess.communicate_utf8(null, null)[1];
-    return stdout;
-  }
-
-  async function cargoClean() {
-    const cargo_launcher = new Gio.SubprocessLauncher();
-    cargo_launcher.set_cwd(file.get_path());
-    const cargoCleanProcess = cargo_launcher.spawnv([
-      "cargo",
-      "clean",
-      "--target-dir",
-      targetPath,
-    ]);
-    await cargoCleanProcess.wait_async(null);
-  }
-
   return { compile, run };
+}
+
+async function getRustcVersion() {
+  const cargo_launcher = Gio.SubprocessLauncher.new(
+    Gio.SubprocessFlags.STDOUT_PIPE,
+  );
+  const rustcVersionProcess = cargo_launcher.spawnv(["rustc", "--version"]);
+  const stdout = rustcVersionProcess.communicate_utf8(null, null)[1];
+  return stdout;
+}
+
+async function saveRustcVersion({
+  targetPath,
+  rustcVersionFile,
+  rustcVersion,
+}) {
+  GLib.mkdir_with_parents(targetPath, 0o755);
+  await rustcVersionFile.replace_contents_async(
+    encode(rustcVersion),
+    null,
+    false,
+    Gio.FileCreateFlags.NONE,
+    null,
+  );
+}
+
+async function getSavedRustcVersion({ rustcVersionFile }) {
+  try {
+    const [contents] = await rustcVersionFile.load_contents_async(null);
+    return decode(contents);
+  } catch (err) {
+    if (err.code !== Gio.IOErrorEnum.NOT_FOUND) {
+      throw err;
+    }
+    return null;
+  }
+}
+
+async function cargoClean({ file, targetPath }) {
+  const cargo_launcher = new Gio.SubprocessLauncher();
+  cargo_launcher.set_cwd(file.get_path());
+  const cargoCleanProcess = cargo_launcher.spawnv([
+    "cargo",
+    "clean",
+    "--target-dir",
+    targetPath,
+  ]);
+  await cargoCleanProcess.wait_async(null);
 }
