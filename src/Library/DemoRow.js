@@ -1,4 +1,3 @@
-import Gio from "gi://Gio";
 import Adw from "gi://Adw";
 import Gtk from "gi://Gtk";
 import GObject from "gi://GObject";
@@ -7,7 +6,7 @@ import { demoSupportsLanguage } from "../util.js";
 import Template from "./DemoRow.blp" with { type: "uri" };
 
 class DemoRow extends Adw.PreferencesRow {
-  constructor({demo, ...params} = {}) {
+  constructor({ demo, ...params } = {}) {
     super(params);
 
     this._title_label.label = demo.name;
@@ -29,7 +28,7 @@ class DemoRow extends Adw.PreferencesRow {
       label: language_name,
       css_name: "button",
       valign: Gtk.Align.CENTER,
-      css_classes: [ "pill", "small" ]
+      css_classes: ["pill", "small"],
     });
   }
 
@@ -48,13 +47,13 @@ export default GObject.registerClass(
         "",
         "",
         GObject.ParamFlags.READWRITE | GObject.ParamFlags.CONSTRUCT_ONLY,
-        null
+        null,
       ),
     },
     Signals: {
       activated: {},
     },
-    InternalChildren: [ "title_label", "description_label", "languages_box" ]
+    InternalChildren: ["title_label", "description_label", "languages_box"],
   },
-  DemoRow
+  DemoRow,
 );

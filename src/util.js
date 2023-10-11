@@ -61,6 +61,7 @@ export const languages = [
     extensions: [".js", ".mjs"],
     types: ["text/javascript", "application/javascript"],
     document: null,
+    default_file: "main.js",
   },
   {
     id: "css",

@@ -1,8 +1,7 @@
 import Gio from "gi://Gio";
-import Adw from "gi://Adw";
 import Gtk from "gi://Gtk";
 
-import { demos_dir, getDemo, demoSupportsLanguage } from "../util.js";
+import { demos_dir, getDemo } from "../util.js";
 import Window from "../window.js";
 
 import resource from "./Library.blp";
@@ -22,7 +21,7 @@ export default function Library({ application }) {
 
   const demos = getDemos();
   demos.forEach((demo) => {
-    const widget = new DemoRow({demo: demo});
+    const widget = new DemoRow({ demo: demo });
     if (demo.name === "Welcome") last_selected = widget;
 
     widget.connect("activated", () => {
