@@ -216,8 +216,8 @@ export default function DocumentationViewer({ application }) {
     load()
       .then(() => {
         if (!mapped) {
-          browse_selection_model.selected = 12;
           collapseAllRows(browse_selection_model.model);
+          browse_selection_model.selected = 12;
           search_entry.text = "";
           onSearchChanged();
         }
