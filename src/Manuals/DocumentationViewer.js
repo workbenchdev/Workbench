@@ -178,7 +178,7 @@ export default function DocumentationViewer({ application }) {
   search_model.connect("selection-changed", () => {
     const uri = search_model.selected_item.uri;
     const sidebar_path = URI_TO_SIDEBAR_PATH[uri];
-    selectSidebarItem(browse_selection_model, sidebar_path, browse_list_view);
+    selectSidebarItem(browse_list_view, sidebar_path);
   });
 
   let promise_load;
