@@ -16,4 +16,4 @@ export CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTFLAGS="-C link-arg=-fuse-ld=/us
 export CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER=clang
 export CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_RUSTFLAGS="-C link-arg=-fuse-ld=/usr/lib/sdk/rust-stable/bin/mold"
 
-script --flush --quiet --return /var/tmp/workbench --command "@app_id@ $@"
+SHELL=/bin/sh script --flush --quiet --return /var/tmp/workbench --command "@app_id@ $@"
