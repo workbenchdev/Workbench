@@ -1,0 +1,49 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $EntryRow : Adw.PreferencesRow {
+  accessibility {
+    labelled-by: title_label;
+    described-by: description_label;
+  }
+  title: bind title_label.label;
+
+  Box contents {
+    orientation: horizontal;
+
+    Box labels_box {
+      margin-top: 6;
+      margin-start: 12;
+      margin-bottom: 6;
+      spacing: 3;
+      orientation: vertical;
+
+      Label title_label {
+        xalign: 0;
+        wrap: true;
+        wrap-mode: word_char;
+      }
+      Label description_label {
+        styles ["dim-label", "caption"]
+        xalign: 0;
+        wrap: true;
+        wrap-mode: word_char;
+        natural-wrap-mode: none;
+      }
+
+      Box languages_box {
+        orientation: horizontal;
+        spacing: 3;
+        margin-top: 3;
+      }
+    }
+
+    Image {
+      icon-name: "go-next-symbolic";
+      margin-end: 12;
+      margin-start: 6;
+      hexpand: true;
+      halign: end;
+    }
+  }
+}
