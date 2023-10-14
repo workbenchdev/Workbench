@@ -1,7 +1,7 @@
 import Gio from "gi://Gio";
 import Gtk from "gi://Gtk";
 
-import { demos_dir, getDemo } from "../util.js";
+import { demos_dir, getDemo, settings as global_settings } from "../util.js";
 import Window from "../window.js";
 
 import resource from "./Library.blp";
@@ -24,10 +24,14 @@ export default function Library({ application }) {
     const widget = new DemoRow({ demo: demo });
     if (demo.name === "Welcome") last_selected = widget;
 
-    widget.connect("activated", () => {
+    widget.connect("activated", (src, language_name) => {
       last_selected = widget;
 
-      openDemo({ application, demo_name: demo.name }).catch(console.error);
+      openDemo({
+        application,
+        demo_name: demo.name,
+        language_name: language_name,
+      }).catch(console.error);
     });
 
     builder.get_object(`library_${demo.category}`).add(widget);
@@ -69,9 +73,26 @@ function getDemos() {
   return demos;
 }
 
-async function openDemo({ application, demo_name }) {
+async function openDemo({ application, demo_name, language_name }) {
   const demo = getDemo(demo_name);
   const session = await createSessionFromDemo(demo);
+
+  if (language_name) {
+    switch (language_name.toLowerCase()) {
+      case "javascript":
+        session.settings.set_int("code-language", 0);
+        global_settings.set_int("recent-code-language", 0);
+        break;
+      case "vala":
+        session.settings.set_int("code-language", 1);
+        global_settings.set_int("recent-code-language", 1);
+        break;
+      case "rust":
+        session.settings.set_int("code-language", 2);
+        global_settings.set_int("recent-code-language", 2);
+        break;
+    }
+  }
 
   const is_js = session.settings.get_int("code-language") === 0;
 

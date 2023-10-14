@@ -1,5 +1,6 @@
 import Adw from "gi://Adw";
 import Gtk from "gi://Gtk";
+import Gio from "gi://Gio";
 import GObject from "gi://GObject";
 
 import { demoSupportsLanguage } from "../util.js";
@@ -21,19 +22,34 @@ class DemoRow extends Adw.PreferencesRow {
     if (demoSupportsLanguage(demo, "rust")) {
       this._languages_box.append(this.#createLanguageTag("Rust"));
     }
+
+    const action_group = new Gio.SimpleActionGroup();
+    const activate_action = new Gio.SimpleAction({
+      name: "activate",
+      parameter_type: null,
+    });
+
+    activate_action.connect("activate", () => {
+      this.emit("activated", null);
+    });
+    action_group.add_action(activate_action);
+
+    this.insert_action_group("demo-row", action_group);
+    this.action_name = "demo-row.activate";
   }
 
   #createLanguageTag(language_name) {
-    return new Gtk.Label({
+    const button = new Gtk.Button({
       label: language_name,
-      css_name: "button",
       valign: Gtk.Align.CENTER,
       css_classes: ["pill", "small"],
     });
-  }
 
-  on_pressed() {
-    this.emit("activated");
+    button.connect("clicked", () => {
+      this.emit("activated", language_name);
+    });
+
+    return button;
   }
 }
 
@@ -51,7 +67,9 @@ export default GObject.registerClass(
       ),
     },
     Signals: {
-      activated: {},
+      activated: {
+        param_types: [GObject.TYPE_STRING],
+      },
     },
     InternalChildren: ["title_label", "description_label", "languages_box"],
   },
