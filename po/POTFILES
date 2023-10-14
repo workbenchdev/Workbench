@@ -61,7 +61,6 @@ src/DocumentationViewer.blp
 src/DocumentationViewer.js
 src/langs/css/css.js
 src/langs/python/Builder.js
-src/langs/python/PythonDBusPreviewer.js
 
 src/langs/rust/Compiler.js
 troll/src/async.js
