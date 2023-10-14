@@ -13,7 +13,12 @@ import sys
 from abc import ABC
 from typing import ClassVar, Optional
 
-from gi.repository import GLib, Gio
+import gi
+
+gi.require_version("Gtk", "4.0")
+gi.require_version("Adw", "1")
+
+from gi.repository import GLib, Gio, Gtk, Adw
 from gi.repository.Gio import DBusConnection, DBusConnectionFlags
 
 DBUS_INTERFACE_XML = None  # set in main code at the end.
