@@ -203,7 +203,7 @@ class MainProxyDescriptor:
 
 
 # Getting `window` or `builder` will transparently forward to calls
-# `active_window()`/`active_builder()` methods of the previewer.
+# `active_window()`/`active_builder()` attributes of the previewer.
 # We do this to make the API in the demos a bit simpler.
 window = MainProxyDescriptor(lambda: Previewer.INSTANCE.active_window)
 builder = MainProxyDescriptor(lambda: Previewer.INSTANCE.active_builder)
