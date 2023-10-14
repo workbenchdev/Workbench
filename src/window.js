@@ -336,7 +336,7 @@ export default function Window({ application, session }) {
         compiler_vala = compiler_vala || ValaCompiler({ session });
         const success = await compiler_vala.compile();
         if (success) {
-          await previewer.useExternal();
+          await previewer.useExternal("vala");
           if (await compiler_vala.run()) {
             await previewer.open();
           } else {
@@ -352,7 +352,7 @@ export default function Window({ application, session }) {
         compiler_rust = compiler_rust || RustCompiler({ session });
         const success = await compiler_rust.compile();
         if (success) {
-          await previewer.useExternal();
+          await previewer.useExternal("rust");
           if (await compiler_rust.run()) {
             await previewer.open();
           } else {
@@ -361,14 +361,11 @@ export default function Window({ application, session }) {
         }
       } else if (language === "Python") {
         builder_python = builder_python || PythonBuilder({ session });
-        const success = await builder_python.build();
-        if (success) {
-          await previewer.useExternal();
-          if (await builder_python.run()) {
-            await previewer.open();
-          } else {
-            await previewer.useInternal();
-          }
+        await previewer.useExternal("python");
+        if (await builder_python.run()) {
+          await previewer.open();
+        } else {
+          await previewer.useInternal();
         }
       }
     } catch (err) {

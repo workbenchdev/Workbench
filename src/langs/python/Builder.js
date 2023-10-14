@@ -1,22 +1,17 @@
-import python_dbus_previewer from "./PythonDBusPreviewer.js";
+import dbus_previewer from "../../Previewer/DBusPreviewer.js";
 
 export default function PythonBuilder({ session }) {
-  async function build() {
-    // TODO?
-    return true;
-  }
-
   async function run() {
     try {
-      await python_dbus_previewer.run(session.file.get_path());
+      const proxy = await dbus_previewer.getProxy("python");
+      await proxy.RunAsync(session.file.get_uri());
     } catch (err) {
-      console.log(err);
-      logError(err);
+      console.error(err);
       return false;
     }
 
     return true;
   }
 
-  return { build, run };
+  return { run };
 }

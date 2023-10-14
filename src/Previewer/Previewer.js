@@ -238,9 +238,9 @@ export default function Previewer({
 
   const schedule_update = unstack(update, console.error);
 
-  async function useExternal() {
+  async function useExternal(language) {
     if (current !== external) {
-      await setPreviewer(external);
+      await setPreviewer(external, language);
     }
     stack.set_visible_child_name("close_window");
     await update(true);
@@ -253,7 +253,7 @@ export default function Previewer({
     await update(true);
   }
 
-  async function setPreviewer(previewer) {
+  async function setPreviewer(previewer, language) {
     if (handler_id_button_open) {
       button_open.disconnect(handler_id_button_open);
     }
@@ -294,7 +294,7 @@ export default function Previewer({
     });
 
     try {
-      await current.start();
+      await current.start(language);
     } catch (err) {
       console.error(err);
     }

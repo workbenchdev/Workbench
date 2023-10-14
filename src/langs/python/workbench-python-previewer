@@ -1,0 +1,2 @@
+#!/bin/sh
+python "@pkgdatadir@/python-previewer.py" "@pkgdatadir@/python_previewer.xml" "$@"
