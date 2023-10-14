@@ -21,6 +21,11 @@
   border: 1px solid @borders;
 }
 
+/*
+ * From Builder's stylesheet:
+ * https://gitlab.gnome.org/GNOME/gnome-builder/-/blob/main/src/libide/gui/style.css?ref_type=heads#L33
+ * Used to style the language tags for the demo entries in the Library
+ */
 button.pill.small {
   font-size: 0.83333em;
   border-radius: 99px;
