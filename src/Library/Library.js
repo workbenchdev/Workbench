@@ -6,7 +6,7 @@ import Window from "../window.js";
 
 import resource from "./Library.blp";
 import { createSessionFromDemo } from "../sessions.js";
-import DemoRow from "./DemoRow.js";
+import EntryRow from "./EntryRow.js";
 
 import illustration from "./library.svg";
 
@@ -21,16 +21,16 @@ export default function Library({ application }) {
 
   const demos = getDemos();
   demos.forEach((demo) => {
-    const widget = new DemoRow({ demo: demo });
+    const widget = new EntryRow({ demo: demo });
     if (demo.name === "Welcome") last_selected = widget;
 
-    widget.connect("activated", (src, language_name) => {
+    widget.connect("activated", (_self, language_name) => {
       last_selected = widget;
 
       openDemo({
         application,
         demo_name: demo.name,
-        language_name: language_name,
+        language_name,
       }).catch(console.error);
     });
 
