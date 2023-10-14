@@ -51,7 +51,7 @@ class EntryRow extends Adw.PreferencesRow {
     });
 
     button.connect("clicked", () => {
-      this.emit("activated", language.id);
+      this.emit("activated", language);
     });
 
     return button;
@@ -73,7 +73,7 @@ export default GObject.registerClass(
     },
     Signals: {
       activated: {
-        param_types: [GObject.TYPE_STRING],
+        param_types: [GObject.TYPE_JSOBJECT],
       },
     },
     InternalChildren: ["title_label", "description_label", "languages_box"],

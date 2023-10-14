@@ -1,7 +1,12 @@
 import Gio from "gi://Gio";
 import Gtk from "gi://Gtk";
 
-import { demos_dir, getDemo, settings as global_settings } from "../util.js";
+import {
+  demos_dir,
+  getDemo,
+  getLanguage,
+  settings as global_settings,
+} from "../util.js";
 import Window from "../window.js";
 
 import resource from "./Library.blp";
@@ -17,6 +22,9 @@ export default function Library({ application }) {
   const picture_illustration = builder.get_object("picture_illustration");
   picture_illustration.set_resource(illustration);
 
+  const dropdown_lang = builder.get_object("dropdown_lang");
+  dropdown_lang.get_first_child().add_css_class("flat");
+
   let last_selected;
 
   const demos = getDemos();
@@ -24,13 +32,13 @@ export default function Library({ application }) {
     const widget = new EntryRow({ demo: demo });
     if (demo.name === "Welcome") last_selected = widget;
 
-    widget.connect("activated", (_self, language_name) => {
+    widget.connect("activated", (_self, language) => {
       last_selected = widget;
 
       openDemo({
         application,
         demo_name: demo.name,
-        language_name,
+        language,
       }).catch(console.error);
     });
 
@@ -73,28 +81,24 @@ function getDemos() {
   return demos;
 }
 
-async function openDemo({ application, demo_name, language_name }) {
+const lang_javascript = getLanguage("javascript");
+
+async function openDemo({ application, demo_name, language }) {
   const demo = getDemo(demo_name);
   const session = await createSessionFromDemo(demo);
 
-  if (language_name) {
-    switch (language_name.toLowerCase()) {
-      case "javascript":
-        session.settings.set_int("code-language", 0);
-        global_settings.set_int("recent-code-language", 0);
-        break;
-      case "vala":
-        session.settings.set_int("code-language", 1);
-        global_settings.set_int("recent-code-language", 1);
-        break;
-      case "rust":
-        session.settings.set_int("code-language", 2);
-        global_settings.set_int("recent-code-language", 2);
-        break;
-    }
+  if (language) {
+    session.settings.set_int("code-language", language.index);
+    global_settings.set_int("recent-code-language", language.index);
+
+    // If the user explictely requested to open the demo
+    // in a specific language then that's probably what they are interested in
+    // therefor override the demo default and force show the code panel
+    session.settings.set_boolean("show-code", true);
   }
 
-  const is_js = session.settings.get_int("code-language") === 0;
+  const is_js =
+    session.settings.get_int("code-language") === lang_javascript.index;
 
   const { load } = Window({ application, session });
   await load({ run: demo.autorun && is_js });

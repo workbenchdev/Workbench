@@ -2,10 +2,11 @@ import Source from "gi://GtkSource";
 import Gio from "gi://Gio";
 import GLib from "gi://GLib";
 
-export default function Document({ session, code_view, file, lang }) {
+export default function Document({ session, code_view, lang }) {
   const { buffer } = code_view;
   let handler_id = null;
 
+  const file = session.file.get_child(lang.default_file);
   const source_file = new Source.File({
     location: file,
   });

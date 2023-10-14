@@ -12,12 +12,25 @@ Adw.PreferencesWindow library {
     Adw.PreferencesGroup {
       Picture picture_illustration {
         can-shrink: false;
-        margin-bottom: 30;
+        margin-bottom: 32;
       }
 
       Label {
         label: _("Learn, Test, Remix");
         styles ["title-1"]
+      }
+
+      DropDown dropdown_lang {
+        margin-top: 12;
+        halign: end;
+        model: StringList {
+          strings [
+            "All Languages",
+            "JavaScript",
+            "Vala",
+            "Rust"
+          ]
+        };
       }
     }
 
