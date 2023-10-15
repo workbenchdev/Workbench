@@ -52,7 +52,6 @@ const DocumentationPage = GObject.registerClass(
 
 const URI_TO_SIDEBAR_PATH = {};
 let sync_sidebar = false;
-
 export default function DocumentationViewer({ application }) {
   const builder = Gtk.Builder.new_from_resource(resource);
 
@@ -122,17 +121,18 @@ export default function DocumentationViewer({ application }) {
   );
   browse_list_view.model = browse_selection_model;
 
-  webview.connect("load-changed", (self, load_event) => {
-    if (load_event === WebKit.LoadEvent.FINISHED) {
-      const selected_item = browse_selection_model.selected_item.item;
-      if (webview.uri !== selected_item.uri) {
-        sync_sidebar = true;
-        const path = URI_TO_SIDEBAR_PATH[webview.uri];
-        if (!path) return;
-        selectSidebarItem(browse_list_view, path);
-      }
-    }
+  webview.connect("load-changed", () => {
     updateButtons();
+  });
+
+  webview.connect("notify::uri", () => {
+    const selected_item = browse_selection_model.selected_item.item;
+    if (webview.uri !== selected_item.uri) {
+      sync_sidebar = true;
+      const path = URI_TO_SIDEBAR_PATH[webview.uri];
+      if (!path) return;
+      selectSidebarItem(browse_page, path);
+    }
   });
 
   webview.get_back_forward_list().connect("changed", () => {
@@ -178,7 +178,7 @@ export default function DocumentationViewer({ application }) {
   search_model.connect("selection-changed", () => {
     const uri = search_model.selected_item.uri;
     const sidebar_path = URI_TO_SIDEBAR_PATH[uri];
-    selectSidebarItem(browse_list_view, sidebar_path);
+    selectSidebarItem(browse_page, sidebar_path);
   });
 
   let promise_load;
@@ -239,18 +239,23 @@ function collapseAllRows(model) {
   }
 }
 
-function selectSidebarItem(browse_list_view, path) {
+function selectSidebarItem(browse_page, path) {
+  const browse_list_view = browse_page.get_child();
   const selection_model = browse_list_view.model;
+  const adj = browse_page.get_vscrollbar().adjustment;
   collapseAllRows(selection_model.model);
-  for (const index of path) {
+  for (const index of path.slice(0, -1)) {
     const row = selection_model.model.get_row(index);
     row.expanded = true;
   }
-  browse_list_view.scroll_to(
-    path[path.length - 1],
-    Gtk.ListScrollFlags.SELECT,
-    null,
-  );
+  const index = path[path.length - 1];
+  browse_list_view.scroll_to(index, Gtk.ListScrollFlags.SELECT, null);
+  GLib.idle_add(GLib.PRIORITY_DEFAULT_IDLE, () => {
+    const top_edge = index * 38 - adj.value;
+    if (top_edge === adj.page_size) {
+      adj.value += 38;
+    }
+  });
 }
 
 async function loadLibrary(model, directory) {
