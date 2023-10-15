@@ -44,6 +44,7 @@ ${getBlueprintVersion()}
       "Lorenz Wildberg https://gitlab.gnome.org/lwildberg",
       "Andy Holmes https://gitlab.gnome.org/andyholmes",
       "Julian Hofer https://julianhofer.eu/",
+      "Marco Köpcke https://github.com/theCapypara",
     ],
     designers: [
       "Sonny Piers https://sonny.re",
@@ -54,7 +55,6 @@ ${getBlueprintVersion()}
       "Tobias Bernard <tbernard@gnome.org>",
       "Jakub Steiner https://jimmac.eu",
       "Brage Fuglseth https://bragefuglseth.dev",
-      "Marco Köpcke https://github.com/theCapypara",
     ],
   });
 
