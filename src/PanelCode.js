@@ -3,7 +3,7 @@ import GObject from "gi://GObject";
 
 import { setup as setupVala } from "./langs/vala/vala.js";
 import { setup as setupJavaScript } from "./langs/javascript/javascript.js";
-import { settings as global_settings } from "./util.js";
+import { settings as global_settings, makeDropdownFlat } from "./util.js";
 
 export default function PanelCode({
   builder,
@@ -17,9 +17,7 @@ export default function PanelCode({
   const stack_code = builder.get_object("stack_code");
 
   const dropdown_code_lang = builder.get_object("dropdown_code_lang");
-  // TODO: File a bug libadwaita
-  // flat does nothing on GtkDropdown or GtkComboBox or GtkComboBoxText
-  dropdown_code_lang.get_first_child().add_css_class("flat");
+  makeDropdownFlat(dropdown_code_lang);
 
   settings.bind(
     "show-code",
@@ -57,7 +55,7 @@ export default function PanelCode({
   setupJavaScript({ document: document_javascript });
 
   function switchLanguage() {
-    panel.language = dropdown_code_lang.selected_item.string;
+    panel.language = dropdown_code_lang.selected_item?.string;
     stack_code.visible_child_name = panel.language;
     previewer.useInternal().catch(console.error);
   }

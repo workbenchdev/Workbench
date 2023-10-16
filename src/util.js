@@ -37,6 +37,7 @@ export function getFlatpakInfo() {
   return keyFile;
 }
 
+// See dropdown_code_lang for index
 export const languages = [
   {
     id: "blueprint",
@@ -45,6 +46,7 @@ export const languages = [
     extensions: [".blp"],
     types: [],
     document: null,
+    default_file: "main.blp",
   },
   {
     id: "xml",
@@ -53,6 +55,7 @@ export const languages = [
     extensions: [".ui"],
     types: ["application/x-gtk-builder"],
     document: null,
+    default_file: "main.ui",
   },
   {
     id: "javascript",
@@ -62,6 +65,7 @@ export const languages = [
     types: ["text/javascript", "application/javascript"],
     document: null,
     default_file: "main.js",
+    index: 0,
   },
   {
     id: "css",
@@ -70,6 +74,7 @@ export const languages = [
     extensions: [".css"],
     types: ["text/css"],
     document: null,
+    default_file: "main.css",
   },
   {
     id: "vala",
@@ -80,6 +85,7 @@ export const languages = [
     document: null,
     placeholder: "// Sorry, this demo is not available in Vala yet.",
     default_file: "main.vala",
+    index: 1,
   },
   {
     id: "rust",
@@ -90,6 +96,7 @@ export const languages = [
     document: null,
     placeholder: "// Sorry, this demo is not available in Rust yet.",
     default_file: "code.rs",
+    index: 2,
   },
 ];
 
@@ -166,35 +173,11 @@ export const rust_template_dir = Gio.File.new_for_path(
   pkg.pkgdatadir,
 ).resolve_relative_path("langs/rust/template");
 
-export function readDemoFile(demo_name, file_name) {
-  const file = demos_dir.get_child(demo_name).get_child(file_name);
-
-  let str;
-
-  try {
-    str = decode(file.load_contents(null)[1]);
-  } catch (err) {
-    if (err.code !== Gio.IOErrorEnum.NOT_FOUND) {
-      throw err;
-    }
-    str = "";
-  }
-
-  return str;
-}
-
-export function getDemo(name) {
-  const demo = JSON.parse(readDemoFile(name, "main.json"));
-  demo.name = name;
-  return demo;
-}
-
-export function demoSupportsLanguage(demo, id) {
-  const language = getLanguage(id);
-  const demo_dir = demos_dir.get_child(demo.name);
-  return demo_dir.get_child(language.default_file).query_exists(null);
-}
-
 export function getNowForFilename() {
   return new GLib.DateTime().format("%Y-%m-%d %H-%M-%S");
+}
+
+// https://gitlab.gnome.org/GNOME/libadwaita/-/issues/746
+export function makeDropdownFlat(dropdown) {
+  dropdown.get_first_child().add_css_class("flat");
 }

@@ -14,6 +14,7 @@ import {
   data_dir,
   getNowForFilename,
   ensureDir,
+  makeDropdownFlat,
 } from "../util.js";
 
 import Internal from "./Internal.js";
@@ -47,9 +48,7 @@ export default function Previewer({
   let current;
 
   const dropdown_preview_align = builder.get_object("dropdown_preview_align");
-  // TODO: File a bug libadwaita
-  // flat does nothing on GtkDropdown or GtkComboBox or GtkComboBoxText
-  dropdown_preview_align.get_first_child().add_css_class("flat");
+  makeDropdownFlat(dropdown_preview_align);
 
   const internal = Internal({
     onWindowChange(open) {

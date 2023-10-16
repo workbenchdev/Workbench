@@ -47,7 +47,7 @@ export default function Window({ application, session }) {
     languages.map((lang) => [lang.id, { ...lang }]),
   );
 
-  const { file, settings } = session;
+  const { settings } = session;
 
   Vte.Terminal.new();
 
@@ -73,7 +73,6 @@ export default function Window({ application, session }) {
 
   const document_javascript = Document({
     code_view: builder.get_object("code_view_javascript"),
-    file: file.get_child("main.js"),
     lang: langs.javascript,
     session,
   });
@@ -81,7 +80,6 @@ export default function Window({ application, session }) {
 
   const document_vala = Document({
     code_view: builder.get_object("code_view_vala"),
-    file: file.get_child("main.vala"),
     lang: langs.vala,
     session,
   });
@@ -89,7 +87,6 @@ export default function Window({ application, session }) {
 
   const document_rust = Document({
     code_view: builder.get_object("code_view_rust"),
-    file: file.get_child("code.rs"),
     lang: langs.rust,
     session,
   });
@@ -97,7 +94,6 @@ export default function Window({ application, session }) {
 
   const document_blueprint = Document({
     code_view: builder.get_object("code_view_blueprint"),
-    file: file.get_child("main.blp"),
     lang: langs.blueprint,
     session,
   });
@@ -105,7 +101,6 @@ export default function Window({ application, session }) {
 
   const document_xml = Document({
     code_view: builder.get_object("code_view_xml"),
-    file: file.get_child("main.ui"),
     lang: langs.xml,
     session,
   });
@@ -113,7 +108,6 @@ export default function Window({ application, session }) {
 
   const document_css = Document({
     code_view: builder.get_object("code_view_css"),
-    file: file.get_child("main.css"),
     lang: langs.css,
     session,
   });
