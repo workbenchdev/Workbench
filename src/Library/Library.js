@@ -2,8 +2,8 @@ import Gio from "gi://Gio";
 import Gtk from "gi://Gtk";
 
 import {
+  decode,
   demos_dir,
-  getDemo,
   getLanguage,
   settings as global_settings,
 } from "../util.js";
@@ -21,9 +21,6 @@ export default function Library({ application }) {
 
   const picture_illustration = builder.get_object("picture_illustration");
   picture_illustration.set_resource(illustration);
-
-  const dropdown_lang = builder.get_object("dropdown_lang");
-  dropdown_lang.get_first_child().add_css_class("flat");
 
   let last_selected;
 
@@ -57,35 +54,27 @@ export default function Library({ application }) {
   application.set_accels_for_action("app.library", ["<Control><Shift>O"]);
 }
 
-function getDemos() {
-  const demos = [];
-
-  for (const child of demos_dir.enumerate_children(
-    "",
-    Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
-    null,
-  )) {
-    if (child.get_file_type() !== Gio.FileType.DIRECTORY) continue;
-
-    let demo;
-    try {
-      demo = getDemo(child.get_name());
-    } catch (err) {
-      console.debug(err);
-      continue;
+const getDemos = (() => {
+  let demos;
+  return function getDemos() {
+    if (!demos) {
+      const file = demos_dir.get_child("../index.json");
+      const [, data] = file.load_contents(null);
+      demos = JSON.parse(decode(data));
     }
+    return demos;
+  };
+})();
 
-    demos.push(demo);
-  }
-
-  return demos;
+export function getDemo(name) {
+  const demos = getDemos();
+  return demos.find((demo) => demo.name === name);
 }
 
 const lang_javascript = getLanguage("javascript");
-
 async function openDemo({ application, demo_name, language }) {
   const demo = getDemo(demo_name);
-  const session = await createSessionFromDemo(demo);
+  const session = createSessionFromDemo(demo);
 
   if (language) {
     session.settings.set_int("code-language", language.index);

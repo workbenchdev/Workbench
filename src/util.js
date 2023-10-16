@@ -173,35 +173,11 @@ export const rust_template_dir = Gio.File.new_for_path(
   pkg.pkgdatadir,
 ).resolve_relative_path("langs/rust/template");
 
-export function readDemoFile(demo_name, file_name) {
-  const file = demos_dir.get_child(demo_name).get_child(file_name);
-
-  let str;
-
-  try {
-    str = decode(file.load_contents(null)[1]);
-  } catch (err) {
-    if (err.code !== Gio.IOErrorEnum.NOT_FOUND) {
-      throw err;
-    }
-    str = "";
-  }
-
-  return str;
-}
-
-export function getDemo(name) {
-  const demo = JSON.parse(readDemoFile(name, "main.json"));
-  demo.name = name;
-  return demo;
-}
-
-export function demoSupportsLanguage(demo, id) {
-  const language = getLanguage(id);
-  const demo_dir = demos_dir.get_child(demo.name);
-  return demo_dir.get_child(language.default_file).query_exists(null);
-}
-
 export function getNowForFilename() {
   return new GLib.DateTime().format("%Y-%m-%d %H-%M-%S");
+}
+
+// https://gitlab.gnome.org/GNOME/libadwaita/-/issues/746
+export function makeDropdownFlat(dropdown) {
+  dropdown.get_first_child().add_css_class("flat");
 }
