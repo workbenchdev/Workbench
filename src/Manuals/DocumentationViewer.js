@@ -52,6 +52,8 @@ const DocumentationPage = GObject.registerClass(
 
 const URI_TO_SIDEBAR_PATH = {};
 let sync_sidebar = false;
+let scrolled_to = false;
+
 export default function DocumentationViewer({ application }) {
   const builder = Gtk.Builder.new_from_resource(resource);
 
@@ -131,7 +133,7 @@ export default function DocumentationViewer({ application }) {
       sync_sidebar = true;
       const path = URI_TO_SIDEBAR_PATH[webview.uri];
       if (!path) return;
-      selectSidebarItem(browse_page, path);
+      selectSidebarItem(browse_list_view, path);
     }
   });
 
@@ -150,6 +152,19 @@ export default function DocumentationViewer({ application }) {
 
   button_forward.connect("clicked", () => {
     webview.go_forward();
+  });
+
+  const adj = browse_page.get_vscrollbar().adjustment;
+  adj.connect("value-changed", () => {
+    if (scrolled_to) {
+      const index = browse_selection_model.selected;
+      const adj = browse_page.get_vscrollbar().adjustment;
+      const top_edge = index * 38 - adj.value;
+      if (top_edge === adj.page_size) {
+        adj.value += 38;
+      }
+      scrolled_to = false;
+    }
   });
 
   const expr = new Gtk.ClosureExpression(
@@ -178,7 +193,7 @@ export default function DocumentationViewer({ application }) {
   search_model.connect("selection-changed", () => {
     const uri = search_model.selected_item.uri;
     const sidebar_path = URI_TO_SIDEBAR_PATH[uri];
-    selectSidebarItem(browse_page, sidebar_path);
+    selectSidebarItem(browse_list_view, sidebar_path);
   });
 
   let promise_load;
@@ -239,10 +254,8 @@ function collapseAllRows(model) {
   }
 }
 
-function selectSidebarItem(browse_page, path) {
-  const browse_list_view = browse_page.get_child();
+function selectSidebarItem(browse_list_view, path) {
   const selection_model = browse_list_view.model;
-  const adj = browse_page.get_vscrollbar().adjustment;
   collapseAllRows(selection_model.model);
   for (const index of path.slice(0, -1)) {
     const row = selection_model.model.get_row(index);
@@ -250,12 +263,7 @@ function selectSidebarItem(browse_page, path) {
   }
   const index = path[path.length - 1];
   browse_list_view.scroll_to(index, Gtk.ListScrollFlags.SELECT, null);
-  GLib.idle_add(GLib.PRIORITY_DEFAULT_IDLE, () => {
-    const top_edge = index * 38 - adj.value;
-    if (top_edge === adj.page_size) {
-      adj.value += 38;
-    }
-  });
+  scrolled_to = true;
 }
 
 async function loadLibrary(model, directory) {
