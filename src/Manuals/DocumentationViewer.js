@@ -159,8 +159,12 @@ export default function DocumentationViewer({ application }) {
     if (scrolled_to) {
       const index = browse_selection_model.selected;
       const adj = browse_page.get_vscrollbar().adjustment;
-      const top_edge = index * 38 - adj.value;
-      if (top_edge === adj.page_size) {
+      const bottom_edge = (index + 1) * 38 - adj.value;
+      const top_edge = bottom_edge - 38;
+      // If row is not visible after scroll_to, adjust
+      if (bottom_edge === 0) {
+        adj.value -= 38;
+      } else if (top_edge === adj.page_size) {
         adj.value += 38;
       }
       scrolled_to = false;
@@ -262,7 +266,11 @@ function selectSidebarItem(browse_list_view, path) {
     row.expanded = true;
   }
   const index = path[path.length - 1];
-  browse_list_view.scroll_to(index, Gtk.ListScrollFlags.SELECT, null);
+  // If possible, overshoot scrolling by one row to ensure selected row is visible
+  index + 1 === selection_model.n_items
+    ? browse_list_view.scroll_to(index, Gtk.ListScrollFlags.NONE, null)
+    : browse_list_view.scroll_to(index + 1, Gtk.ListScrollFlags.NONE, null);
+  selection_model.selected = index;
   scrolled_to = true;
 }
 
