@@ -158,7 +158,6 @@ export default function DocumentationViewer({ application }) {
   adj.connect("value-changed", () => {
     if (scrolled_to) {
       const index = browse_selection_model.selected;
-      const adj = browse_page.get_vscrollbar().adjustment;
       const bottom_edge = (index + 1) * 38 - adj.value;
       const top_edge = bottom_edge - 38;
       // If row is not visible after scroll_to, adjust
@@ -260,12 +259,27 @@ function collapseAllRows(model) {
 
 function selectSidebarItem(browse_list_view, path) {
   const selection_model = browse_list_view.model;
-  collapseAllRows(selection_model.model);
-  for (const index of path.slice(0, -1)) {
-    const row = selection_model.model.get_row(index);
-    row.expanded = true;
+  const tree_model = selection_model.model;
+  let relative_index = 0;
+  let absolute_index = 0;
+  let skip = 0;
+  for (let i = 0; i < path.length; i++) {
+    while (relative_index < path[i]) {
+      const row = tree_model.get_row(absolute_index);
+      if (row.expanded) {
+        skip += row.children.get_n_items();
+      }
+      if (!skip) relative_index++;
+      else skip--;
+      absolute_index++;
+    }
+    if (i < path.length - 1) {
+      tree_model.get_row(absolute_index).expanded = true;
+      absolute_index++;
+      relative_index = 1;
+    }
   }
-  const index = path[path.length - 1];
+  const index = absolute_index;
   // If possible, overshoot scrolling by one row to ensure selected row is visible
   index + 1 === selection_model.n_items
     ? browse_list_view.scroll_to(index, Gtk.ListScrollFlags.NONE, null)
@@ -340,10 +354,7 @@ function flattenModel(
   for (const item of list_store) {
     if (item.search_name) flattened_model.append(item);
     if (item.children) {
-      flattenModel(item.children, flattened_model, [
-        ...path,
-        path[path.length - 1] + 1,
-      ]);
+      flattenModel(item.children, flattened_model, [...path, 1]);
     }
     URI_TO_SIDEBAR_PATH[item.uri] = path.slice();
     path[path.length - 1]++;
