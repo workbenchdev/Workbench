@@ -276,7 +276,6 @@ export default function Window({ application, session }) {
     previewer.stop();
     panel_ui.stop();
 
-    const { language } = panel_code;
     try {
       await panel_ui.update();
 
@@ -284,66 +283,7 @@ export default function Window({ application, session }) {
         await formatCode();
       }
 
-      if (language === "JavaScript") {
-        await previewer.update(true);
-
-        // We have to create a new file each time
-        // because gjs doesn't appear to use etag for module caching
-        // ?foo=Date.now() also does not work as expected
-        // TODO: File a bug
-        const [file_javascript] = Gio.File.new_tmp("workbench-XXXXXX.js");
-        await file_javascript.replace_contents_async(
-          new GLib.Bytes(document_javascript.code_view.buffer.text || " "),
-          null,
-          false,
-          Gio.FileCreateFlags.NONE,
-          null,
-        );
-        let exports;
-        try {
-          exports = await import(`file://${file_javascript.get_path()}`);
-        } catch (err) {
-          await previewer.update(true);
-          throw err;
-        } finally {
-          file_javascript
-            .delete_async(GLib.PRIORITY_DEFAULT, null)
-            .catch(console.error);
-        }
-        previewer.setSymbols(exports);
-      } else if (language === "Vala") {
-        if (!isValaEnabled()) {
-          action_extensions.activate(null);
-          return;
-        }
-
-        compiler_vala = compiler_vala || ValaCompiler({ session });
-        const success = await compiler_vala.compile();
-        if (success) {
-          await previewer.useExternal();
-          if (await compiler_vala.run()) {
-            await previewer.open();
-          } else {
-            await previewer.useInternal();
-          }
-        }
-      } else if (language === "Rust") {
-        if (!isRustEnabled()) {
-          action_extensions.activate(null);
-          return;
-        }
-
-        compiler_rust = compiler_rust || RustCompiler({ session });
-        const success = await compiler_rust.compile();
-        if (success) {
-          await previewer.useExternal();
-          if (await compiler_rust.run()) {
-            await previewer.open();
-          } else {
-            await previewer.useInternal();
-          }
-        }
-      }
+      await compile();
     } catch (err) {
       // prettier xml errors are not instances of Error
       if (err instanceof Error || err instanceof GLib.Error) {
@@ -358,6 +298,78 @@ export default function Window({ application, session }) {
 
     button_run.set_sensitive(true);
     term_console.scrollToEnd();
+  }
+
+  async function compile() {
+    const { language } = panel_code;
+
+    const lang = langs[language.toLowerCase()];
+    // Do nothing if there is no code to avoid compile errors
+    const text = lang.document.code_view.buffer.text.trim();
+    if (text === "") {
+      return;
+    }
+
+    if (language === "JavaScript") {
+      await previewer.update(true);
+
+      // We have to create a new file each time
+      // because gjs doesn't appear to use etag for module caching
+      // ?foo=Date.now() also does not work as expected
+      // TODO: File a bug
+      const [file_javascript] = Gio.File.new_tmp("workbench-XXXXXX.js");
+      await file_javascript.replace_contents_async(
+        new GLib.Bytes(text),
+        null,
+        false,
+        Gio.FileCreateFlags.NONE,
+        null,
+      );
+      let exports;
+      try {
+        exports = await import(`file://${file_javascript.get_path()}`);
+      } catch (err) {
+        await previewer.update(true);
+        throw err;
+      } finally {
+        file_javascript
+          .delete_async(GLib.PRIORITY_DEFAULT, null)
+          .catch(console.error);
+      }
+      previewer.setSymbols(exports);
+    } else if (language === "Vala") {
+      if (!isValaEnabled()) {
+        action_extensions.activate(null);
+        return;
+      }
+
+      compiler_vala = compiler_vala || ValaCompiler({ session });
+      const success = await compiler_vala.compile();
+      if (success) {
+        await previewer.useExternal();
+        if (await compiler_vala.run()) {
+          await previewer.open();
+        } else {
+          await previewer.useInternal();
+        }
+      }
+    } else if (language === "Rust") {
+      if (!isRustEnabled()) {
+        action_extensions.activate(null);
+        return;
+      }
+
+      compiler_rust = compiler_rust || RustCompiler({ session });
+      const success = await compiler_rust.compile();
+      if (success) {
+        await previewer.useExternal();
+        if (await compiler_rust.run()) {
+          await previewer.open();
+        } else {
+          await previewer.useInternal();
+        }
+      }
+    }
   }
 
   const action_run = new Gio.SimpleAction({

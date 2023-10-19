@@ -68,21 +68,13 @@ async function loadSourceBuffer({ source_file, buffer, lang }) {
     buffer,
     file: source_file,
   });
-  let success;
   try {
-    success = await file_loader.load_async(GLib.PRIORITY_DEFAULT, null, null);
+    await file_loader.load_async(GLib.PRIORITY_DEFAULT, null, null);
   } catch (err) {
-    if (err.code === Gio.IOErrorEnum.NOT_FOUND) {
-      if (lang.placeholder) {
-        buffer.set_text(lang.placeholder, -1);
-      }
-      success = true;
-    } else {
+    if (err.code !== Gio.IOErrorEnum.NOT_FOUND) {
       throw err;
     }
   }
 
-  if (success) {
-    buffer.set_modified(false);
-  }
+  buffer.set_modified(false);
 }
