@@ -303,9 +303,10 @@ export default function Window({ application, session }) {
   async function compile() {
     const { language } = panel_code;
 
-    const buffer = langs[language.toLowerCase()].document.code_view.buffer;
+    const lang = langs[language.toLowerCase()];
     // Do nothing if there is no code to avoid compile errors
-    if (buffer.text.trim() === "") {
+    const text = lang.document.code_view.buffer.text.trim();
+    if (text === "") {
       return;
     }
 
@@ -318,7 +319,7 @@ export default function Window({ application, session }) {
       // TODO: File a bug
       const [file_javascript] = Gio.File.new_tmp("workbench-XXXXXX.js");
       await file_javascript.replace_contents_async(
-        new GLib.Bytes(document_javascript.code_view.buffer.text || " "),
+        new GLib.Bytes(text),
         null,
         false,
         Gio.FileCreateFlags.NONE,
