@@ -463,7 +463,7 @@ async function setGtk4PreferDark(dark) {
 }
 
 async function onCloseSession({ session, window }) {
-  if (session.is_project()) {
+  if (session.isProject()) {
     window.destroy();
     return;
   }

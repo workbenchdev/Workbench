@@ -6,7 +6,6 @@ import {
   demos_dir,
   getLanguage,
   settings as global_settings,
-  languages,
 } from "../util.js";
 import Window from "../window.js";
 
@@ -86,10 +85,8 @@ async function openDemo({ application, demo_name, language }) {
     session.settings.set_boolean("show-code", true);
   }
 
-  const code_languge = session.settings.get_int("code-language");
-  const lang = languages.find((lang) => lang.index === code_languge);
-
   // Override the user preferred language if the demo doesn't support it
+  const lang = session.getCodeLanguage();
   if (demo.languages.length > 0 && !demo.languages.includes(lang.id)) {
     session.settings.set_int(
       "code-language",
@@ -97,7 +94,7 @@ async function openDemo({ application, demo_name, language }) {
     );
   }
 
-  const run = demo.autorun && lang.id === "javascript";
+  const run = demo.autorun && session.getCodeLanguage().id === "javascript";
   const { load } = Window({ application, session });
   await load({ run });
 }
