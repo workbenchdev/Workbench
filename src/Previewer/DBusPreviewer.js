@@ -7,7 +7,7 @@ const interface_info = nodeInfo.interfaces[0];
 
 const guid = Gio.dbus_generate_guid();
 const server = Gio.DBusServer.new_sync(
-  "unix:abstract=re.sonny.Workbench.vala_previewer", // FIXME: abstract socket sucks
+  "unix:path=/var/tmp/workbench_preview_dbus_socket",
   Gio.DBusServerFlags.AUTHENTICATION_REQUIRE_SAME_USER,
   guid,
   null,
@@ -21,7 +21,7 @@ server.start();
 
 async function startProcess() {
   sub_process = Gio.Subprocess.new(
-    ["workbench-vala-previewer", server.get_client_address()],
+    ["workbench-previewer-module", server.get_client_address()],
     Gio.SubprocessFlags.NONE,
   );
 
@@ -56,8 +56,8 @@ async function startProcess() {
     Gio.DBusProxyFlags.NONE,
     interface_info,
     null,
-    "/re/sonny/workbench/vala_previewer", // object path
-    "re.sonny.Workbench.vala_previewer", // interface name
+    "/re/sonny/workbench/previewer_module", // object path
+    "re.sonny.Workbench.previewer_module", // interface name
     null,
   );
 

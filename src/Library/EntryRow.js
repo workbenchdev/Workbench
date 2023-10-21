@@ -31,9 +31,9 @@ class EntryRow extends Adw.PreferencesRow {
   }
 
   #createLanguageTags(demo) {
-    ["javascript", "vala", "rust"].forEach((id) => {
+    demo.languages.forEach((id) => {
       const language = getLanguage(id);
-      if (!demo.languages.includes(language.id)) return;
+      if (!language) return;
       const language_tag = this.#createLanguageTag(language);
       this._languages_box.append(language_tag);
     });
