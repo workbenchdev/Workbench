@@ -1,6 +1,4 @@
 #!/usr/bin/env python
-# Some of this code is based on the mpris interface implementation of GNOME Music,
-# see: https://gitlab.gnome.org/GNOME/gnome-music/-/blob/e15e8c43/gnomemusic/mpris.py
 """
 This is the previewer for Python demos. It connects via DBus back to
 Workbench and loads demos.
@@ -8,232 +6,285 @@ Workbench and loads demos.
 This module also provides itself to demos via importing "workbench"
 with the fields defined in __all__.
 """
-import re
+from __future__ import annotations
+
+import importlib.util
+import os
 import sys
-from abc import ABC
-from typing import ClassVar, Optional
+from types import ModuleType
+from typing import cast
 
 import gi
 
+from gdbus_ext import DBusTemplate
+
+gi.require_version("Gdk", "4.0")
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
+gi.require_version("Graphene", "1.0")
 
-from gi.repository import GLib, Gio, Gtk, Adw
+from gi.repository import GLib, Gdk, Gtk, Adw, Graphene, Gio
 from gi.repository.Gio import DBusConnection, DBusConnectionFlags
-
-DBUS_INTERFACE_XML = None  # set in main code at the end.
 
 
 # Table of Contents
 # =================
 #
-# 0. DBus boilerplate
 # 1. DBus object for Workbench communication
-# 2. API for demos
-# 3. main entrypoint
-
-
-# 0. DBus boilerplate
-# -------------------
-
-# Source: https://gitlab.gnome.org/GNOME/gnome-music/-/blob/e15e8c43/gnomemusic/mpris.py
-# Slightly modified on reading the XML string and how the connection is handled.
-class DBusInterface(ABC):
-    def __init__(self, connection: DBusConnection, interface_xml: str, name: str, path: str):
-        self._path = path
-        self._signals = None
-        self._con = connection
-
-        Gio.bus_own_name_on_connection(
-            self._con, name, Gio.BusNameOwnerFlags.NONE, None, None)
-
-        method_outargs = {}
-        method_inargs = {}
-        signals = {}
-        for interface in Gio.DBusNodeInfo.new_for_xml(interface_xml).interfaces:
-
-            for method in interface.methods:
-                method_outargs[method.name] = "(" + "".join(
-                    [arg.signature for arg in method.out_args]) + ")"
-                method_inargs[method.name] = tuple(
-                    arg.signature for arg in method.in_args)
-
-            for signal in interface.signals:
-                args = {arg.name: arg.signature for arg in signal.args}
-                signals[signal.name] = {
-                    'interface': interface.name, 'args': args}
-
-            self._con.register_object(
-                object_path=self._path, interface_info=interface,
-                method_call_closure=self._on_method_call)
-
-        self._method_inargs = method_inargs
-        self._method_outargs = method_outargs
-        self._signals = signals
-
-    def _on_method_call(
-        self, connection, sender, object_path, interface_name, method_name,
-            parameters, invocation):
-        """GObject.Closure to handle incoming method calls.
-
-        :param Gio.DBusConnection connection: D-Bus connection
-        :param str sender: bus name that invoked the method
-        :param srt object_path: object path the method was invoked on
-        :param str interface_name: name of the D-Bus interface
-        :param str method_name: name of the method that was invoked
-        :param GLib.Variant parameters: parameters of the method invocation
-        :param Gio.DBusMethodInvocation invocation: invocation
-        """
-        args = list(parameters.unpack())
-        for i, sig in enumerate(self._method_inargs[method_name]):
-            if sig == 'h':
-                msg = invocation.get_message()
-                fd_list = msg.get_unix_fd_list()
-                args[i] = fd_list.get(args[i])
-
-        method_snake_name = DBusInterface.camelcase_to_snake_case(method_name)
-        try:
-            result = getattr(self, method_snake_name)(*args)
-        except ValueError as e:
-            invocation.return_dbus_error(interface_name, str(e))
-            return
-
-        # out_args is at least (signature1). We therefore always wrap the
-        # result as a tuple.
-        # Reference:
-        # https://bugzilla.gnome.org/show_bug.cgi?id=765603
-        result = (result,)
-
-        out_args = self._method_outargs[method_name]
-        if out_args != '()':
-            variant = GLib.Variant(out_args, result)
-            invocation.return_value(variant)
-        else:
-            invocation.return_value(None)
-
-    def _dbus_emit_signal(self, signal_name, values):
-        if self._signals is None:
-            return
-
-        signal = self._signals[signal_name]
-        parameters = []
-        for arg_name, arg_signature in signal['args'].items():
-            value = values[arg_name]
-            parameters.append(GLib.Variant(arg_signature, value))
-
-        variant = GLib.Variant.new_tuple(*parameters)
-        self._con.emit_signal(
-            None, self._path, signal['interface'], signal_name, variant)
-
-    @staticmethod
-    def camelcase_to_snake_case(name):
-        s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
-        return '_' + re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower()
+# 2. Python loader to load modules by URI
+# 3. API for demos
+# 4. main entrypoint
 
 
 # 1. DBus object for Workbench communication
 # ------------------------------------------
 
-class Previewer(DBusInterface):
-    INSTANCE: ClassVar[Optional["Previewer"]] = None
 
-    active_window: None  # todo
-    active_builder: None  # todo
+@DBusTemplate(filename=sys.argv[1])
+class Previewer:
+    window: Gtk.Window | None
+    builder: Gtk.Builder | None
+    target: Gtk.Widget | None
+    css: Gtk.CssProvider | None
+    uri = str | None
+    style_manager: Adw.StyleManager
 
-    def __new__(cls, *args, **kwargs):
-        # This is a singleton.
-        if cls.INSTANCE is not None:
-            raise AttributeError("multiple Previewer instances can not be created")
-        cls.INSTANCE = super().__new__(cls)
-        return cls.INSTANCE
+    def __init__(self):
+        self.style_manager = Adw.StyleManager.get_default()
+        self.css = None
+        self.window = None
+        self.builder = None
+        self.target = None
+        self.uri = None
 
-    def __init__(self, conn):
-        name = "re.sonny.Workbench.python_previewer"
-        path = '/re/sonny/workbench/python_previewer'
-        super().__init__(conn, DBUS_INTERFACE_XML, name, path)
+    @DBusTemplate.Method()
+    def update_ui(self, content: str, target_id: str, original_id: str = ""):
+        self.builder = Gtk.Builder.new_from_string(content, len(content))
+        target = self.builder.get_object(target_id)
+        if target is None:
+            print(
+                f"Widget with target_id='{target_id}' could not be found.",
+                file=sys.stderr,
+            )
+            return
 
-    def _update_ui(self, content: str, target_id: str, original_id: str):
-        raise NotImplementedError()
+        self.target = cast(Gtk.Widget, target)
 
-    def _update_css(self, content: str):
-        raise NotImplementedError()
+        if original_id != "":
+            self.builder.expose_object(original_id, target)
 
-    def _run(self, uri: str):
-        raise NotImplementedError()
+        # Not a Root/Window
+        if not isinstance(self.target, Gtk.Root):
+            self.ensure_window()
+            self.window.set_child(self.target)
+            return
 
-    def _close_window(self):
-        raise NotImplementedError()
+        # Set target as window directly
+        if self.window is None or self.window.__class__ != self.target.__class__:
+            self.set_window(cast(Gtk.Window, self.target))
 
-    def _open_window(self, width: int, height: int):
-        raise NotImplementedError()
+        if isinstance(self.target, Adw.Window) or isinstance(
+            self.target, Adw.ApplicationWindow
+        ):
+            child = self.target.get_content()
+            self.target.set_content(None)
+            # self.window is also either Adw.Window or Adw.ApplicationWindow.
+            self.window.set_content(child)  # type: ignore
+        elif isinstance(self.target, Gtk.Window):
+            child = self.target.get_child()
+            self.target.set_child(None)
+            self.window.set_child(child)
 
-    def _screenshot(self, path: int) -> bool:
-        raise NotImplementedError()
+        # Toplevel windows returned by these functions will stay around
+        # until the user explicitly destroys them with gtk_window_destroy().
+        # https://docs.gtk.org/gtk4/class.Builder.html
+        if isinstance(self.target, Gtk.Window):
+            self.target.destroy()
 
-    def _enable_inspector(self, enabled: bool):
-        raise NotImplementedError()
+    @DBusTemplate.Method()
+    def update_css(self, content: str):
+        if self.css is not None:
+            Gtk.StyleContext.remove_provider_for_display(
+                Gdk.Display.get_default(), self.css
+            )
+        self.css = Gtk.CssProvider()
+        self.css.connect("parsing-error", self.on_css_parsing_error)
+        self.css.load_from_data(content, len(content))
+        Gtk.StyleContext.add_provider_for_display(
+            Gdk.Display.get_default(), self.css, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+        )
 
-    def _set_color_scheme(self, value: int):
-        raise NotImplementedError()
+    @DBusTemplate.Method()
+    def run(self, filename: str, uri: str):
+        # TODO:
+        #  Once https://peps.python.org/pep-0554/ is part of Python's stdlib (and that release is part of a
+        #  GNOME Flatpak Platform), we should use subintepreters to sandbox the demos.
+        #  This will also allow us to destroy the interpreter and thus (hopefully) properly unload the module.
+        self.uri = uri
 
-    def _indow_open(self, open: bool):
-        raise NotImplementedError()
+        module_name = "__workbench__module__"
+        if module_name in sys.modules:
+            # this will NOT unload the previous module, unless it can be GC.
+            del sys.modules[module_name]
+        spec = importlib.util.spec_from_file_location(
+            module_name, os.path.join(filename, "main.py")
+        )
+        assert spec is not None
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
 
-    def _css_parser_error(self, message: str, start_line: int, start_char: int, end_line: int, end_char: int):
-        raise NotImplementedError()
+    @DBusTemplate.Method()
+    def close_window(self):
+        if self.window is not None:
+            self.window.close()
+
+    @DBusTemplate.Method()
+    def open_window(self, width: int, height: int):
+        self.window.set_default_size(width, height)
+        self.window.present()
+        self.window_open(True)
+
+    @DBusTemplate.Method()
+    def screenshot(self, path: str) -> bool:
+        paintable = Gtk.WidgetPaintable(self.target)
+        width = self.target.get_allocated_width()
+        height = self.target.get_allocated_height()
+        snapshot = Gtk.Snapshot()
+        paintable.snapshot(snapshot, width, height)
+        node = snapshot.to_node()
+        if node is None:
+            print(f"Could not get node snapshot, width: {width}, height: {height}")
+            return False
+        renderer = self.target.get_native().get_renderer()
+        # For some unholy reason PyGObject has no high level constructor for Graphene types.
+        rect = Graphene.rect_alloc()
+        rect.origin = Graphene.Point.zero()
+        size = Graphene.Size.alloc()
+        size.width = float(width)
+        size.height = float(height)
+        rect.size = size
+        texture = renderer.render_texture(node, rect)
+        texture.save_to_png(path)
+        return True
+
+    @DBusTemplate.Method()
+    def enable_inspector(self, enabled: bool):
+        Gtk.Window.set_interactive_debugging(enabled)
+
+    @DBusTemplate.Signal()
+    def window_open(self, open: bool):
+        ...
+
+    @DBusTemplate.Signal()
+    def css_parser_error(
+        self,
+        message: str,
+        start_line: int,
+        start_char: int,
+        end_line: int,
+        end_char: int,
+    ):
+        ...
+
+    @DBusTemplate.Property()
+    def color_scheme(self) -> int:
+        return int(self.style_manager.get_color_scheme())
+
+    @color_scheme.setter
+    def color_scheme(self, value: int):
+        self.style_manager.set_color_scheme(Adw.ColorScheme(value))
+
+    def ensure_window(self):
+        if self.window is not None:
+            return
+        new_window = Gtk.Window(
+            # Ensure the header bar has the same height as the one on Workbench main window
+            titlebar=Gtk.HeaderBar(),
+            title="Preview",
+            default_width=600,
+            default_height=800,
+        )
+        self.set_window(new_window)
+
+    def set_window(self, the_window: Gtk.Window):
+        if self.window is not None:
+            self.window.destroy()
+        self.window = the_window
+        self.window.connect("close-request", self.on_window_closed)
+
+    def on_window_closed(self, *args):
+        self.window_open(False)
+        self.window = None
+        return False
+
+    def on_css_parsing_error(self, _css, section: Gtk.CssSection, error: GLib.Error):
+        start = section.get_start_location()
+        end = section.get_end_location()
+        self.css_parser_error(
+            error.message, start.lines, start.line_chars, end.lines, end.line_chars
+        )
+
+    def resolve(self, path: str):
+        return Gio.File.new_for_uri(self.uri).resolve_relative_path(path).get_uri()
 
 
-# 2. API for demos
+# 3. API for demos
 # ----------------
 
-class MainProxyDescriptor:
-    """
-    A data descriptor (https://docs.python.org/3/howto/descriptor.html)
-    that proxies to the given function via call.
-    """
 
-    def __init__(self, function):
-        self.function = function
+class WorkbenchModule(ModuleType):
+    def __init__(self, previewer: Previewer):
+        super().__init__(
+            "workbench",
+            """The workbench API. Use `window`, `builder` and `resolve` to interact with Workbench.""",
+        )
+        self._previewer = previewer
 
-    def __get__(self, instance, owner):
-        return self.function()
+    def __getattr__(self, name):
+        # Getting `window` or `builder` will transparently forward to calls
+        # `window`/`builder` attributes of the previewer.
 
-    def __set__(self, instance, value):
-        raise AttributeError("setting this value is not supported")
+        # We do this to make the API in the demos a bit simpler. Just using a normal module's dict and
+        # setting window/builder to the fields in previewer may later lead to problems
+        # when the values for those are replaced on the previewer. However, if we switch to subinterpreters,
+        # we can just generate this module in Previewer.run directly, then we can just
+        # put the window, builder and resolve reference in a normal module dict directly.
+        if name == "window":
+            return self._previewer.window
+        if name == "builder":
+            return self._previewer.builder
+        if name == "resolve":
+            return self._previewer.resolve
+        raise KeyError
 
 
-# Getting `window` or `builder` will transparently forward to calls
-# `active_window`/`active_builder` attributes of the previewer.
-# We do this to make the API in the demos a bit simpler.
-window = MainProxyDescriptor(lambda: Previewer.INSTANCE.active_window)
-builder = MainProxyDescriptor(lambda: Previewer.INSTANCE.active_builder)
-
-# This module only exposes these two attributes.
-# The module exposes itself to demos by registering as "workbench"
-# in sys.modules.
-__all__ = ["window", "builder"]
+# This module only exposes no attributes. This is to make sure demos
+# don't get weird ideas of trying to interact with the previewer.
+__all__ = []
 
 
 # 3. main entrypoint
 # ------------------
 
 if __name__ == "__main__":
-    # Add this module as "workbench" to the global imports.
-    sys.modules["workbench"] = sys.modules[__name__]
-
-    # Load the interface XML
-    with open(sys.argv[1], "r") as f:
-        DBUS_INTERFACE_XML = f.read()
-
     loop = GLib.MainLoop()
 
     connection = DBusConnection.new_for_address_sync(
-        sys.argv[2],
-        DBusConnectionFlags.AUTHENTICATION_CLIENT
+        sys.argv[2], DBusConnectionFlags.AUTHENTICATION_CLIENT
     )
 
-    # constructing this binds it to the bus.
-    obj = Previewer(connection)
+    previewer = Previewer()
+
+    # Add a workbench module as API to the global modules.
+    # We will not need to do this anymore when switching to subinterpreters.
+    sys.modules["workbench"] = WorkbenchModule(previewer)
+
+    DBusTemplate.register_object(
+        connection,
+        "re.sonny.Workbench.vala_previewer",
+        "/re/sonny/workbench/vala_previewer",
+        previewer,
+    )
 
     connection.set_exit_on_close(True)
     loop.run()

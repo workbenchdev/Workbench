@@ -43,7 +43,9 @@ async function startProcess(type) {
       "new-connection",
       (_self, connection) => {
         server.disconnect(_handler_id);
-        resolve(connection);
+        // FIXME: Just because the connection is established does not mean the Previewer has had time yet
+        //        to expose the object. Add a better way to detect if the object exists yet.
+        setTimeout(() => resolve(connection), 100);
         return true;
       },
     );

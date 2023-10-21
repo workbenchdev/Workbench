@@ -12,6 +12,8 @@ install
 *.flatpak
 .fenv
 .venv
+__pycache__
+*.pyc
 
 # IDEs / editors
 .idea

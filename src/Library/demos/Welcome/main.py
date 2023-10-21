@@ -6,7 +6,7 @@ from gi.repository import Gtk, Adw
 import workbench
 
 
-def greet():
+def greet(_widget):
     dialog = Adw.MessageDialog(body="Hello World!", transient_for=workbench.window)
 
     dialog.add_response("ok", "Ok")
