@@ -12,4 +12,4 @@ executable('workbench-crasher',
   install: true,
 )
 
-install_data('python_previewer.xml', install_dir: pkgdatadir)
+install_data('previewer.xml', install_dir: pkgdatadir)

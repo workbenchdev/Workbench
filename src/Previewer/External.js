@@ -84,7 +84,7 @@ export default function External({ output, builder, onWindowChange }) {
   const style_manager = Adw.StyleManager.get_default();
   function updateColorScheme() {
     try {
-      dbus_previewer.updateColorScheme(style_manager.color_scheme);
+      dbus_proxy.ColorScheme = style_manager.color_scheme;
     } catch (err) {
       console.debug(err);
     }

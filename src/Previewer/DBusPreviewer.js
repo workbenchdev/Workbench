@@ -1,50 +1,32 @@
 import Gio from "gi://Gio";
 
-import vala_previewer_xml from "./vala_previewer.xml" with { type: "string" };
-import python_previewer_xml from "./python_previewer.xml" with { type: "string" };
+import previewer_xml from "./previewer.xml" with { type: "string" };
 
 const PREVIEWER_TYPE_VALA = "vala";
 const PREVIEWER_TYPE_PYTHON = "python";
 
-function makeAndStartServer(type, previewer_xml) {
-  const nodeInfo = Gio.DBusNodeInfo.new_for_xml(previewer_xml);
-  const interface_info = nodeInfo.interfaces[0];
+const nodeInfo = Gio.DBusNodeInfo.new_for_xml(previewer_xml);
+const interface_info = nodeInfo.interfaces[0];
 
-  const guid = Gio.dbus_generate_guid();
-  const server = Gio.DBusServer.new_sync(
-    `unix:abstract=re.sonny.Workbench.${type}_previewer`, // FIXME: abstract socket sucks
-    Gio.DBusServerFlags.AUTHENTICATION_REQUIRE_SAME_USER,
-    guid,
-    null,
-    null,
-  );
-  server.start();
-  return [interface_info, server];
-}
+const guid = Gio.dbus_generate_guid();
+const server = Gio.DBusServer.new_sync(
+  "unix:abstract=re.sonny.Workbench.external_previewer", // FIXME: abstract socket sucks
+  Gio.DBusServerFlags.AUTHENTICATION_REQUIRE_SAME_USER,
+  guid,
+  null,
+  null,
+);
 
-const [VALA_INTERFACE_INFO, VALA_SERVER] = makeAndStartServer(
-  PREVIEWER_TYPE_VALA,
-  vala_previewer_xml,
-);
-const [PYTHON_INTERFACE_INFO, PYTHON_SERVER] = makeAndStartServer(
-  PREVIEWER_TYPE_PYTHON,
-  python_previewer_xml,
-);
+server.start();
 
 let current_proxy = null;
 let current_sub_process = null;
 let current_type = null;
 
 async function startProcess(type) {
-  let interface_info, server;
   switch (type) {
     case PREVIEWER_TYPE_VALA:
-      interface_info = VALA_INTERFACE_INFO;
-      server = VALA_SERVER;
-      break;
     case PREVIEWER_TYPE_PYTHON:
-      interface_info = PYTHON_INTERFACE_INFO;
-      server = PYTHON_SERVER;
       break;
     default:
       throw Error(`invalid dbus previewer type: ${type}`);
@@ -88,8 +70,9 @@ async function startProcess(type) {
     Gio.DBusProxyFlags.NONE,
     interface_info,
     null,
-    `/re/sonny/workbench/${type}_previewer`, // object path
-    `re.sonny.Workbench.${type}_previewer`, // interface name
+    // TODO: Rename dbus interface and object paths to be more generic (also in the XML!)
+    `/re/sonny/workbench/vala_previewer`, // object path
+    `re.sonny.Workbench.vala_previewer`, // interface name
     null,
   );
 
@@ -130,14 +113,6 @@ const dbus_previewer = {
     }
 
     current_sub_process = null;
-  },
-
-  updateColorScheme(color_scheme) {
-    if (current_type === "python") {
-      current_proxy.SetColorScheme(color_scheme);
-    } else {
-      current_proxy.ColorScheme = color_scheme;
-    }
   },
 };
 

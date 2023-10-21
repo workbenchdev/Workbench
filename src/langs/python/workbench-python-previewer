@@ -1,2 +1,2 @@
 #!/bin/sh
-python "@pkgdatadir@/python-previewer.py" "@pkgdatadir@/python_previewer.xml" "$@"
+PYTHONPATH="@pkgdatadir@" python "@pkgdatadir@/python-previewer.py" "@pkgdatadir@/previewer.xml" "$@"

@@ -7,9 +7,7 @@ import workbench
 
 
 def greet():
-    dialog = Adw.MessageDialog(
-        body="Hello World!",
-        transient_for=workbench.window)
+    dialog = Adw.MessageDialog(body="Hello World!", transient_for=workbench.window)
 
     dialog.add_response("ok", "Ok")
     dialog.connect("response", handle_response)
