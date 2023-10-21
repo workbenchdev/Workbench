@@ -158,7 +158,6 @@ export default function DocumentationViewer({ application }) {
   adj.connect("value-changed", () => {
     if (scrolled_to) {
       const index = browse_selection_model.selected;
-      const adj = browse_page.get_vscrollbar().adjustment;
       const bottom_edge = (index + 1) * 38 - adj.value;
       const top_edge = bottom_edge - 38;
       // If row is not visible after scroll_to, adjust
@@ -260,18 +259,39 @@ function collapseAllRows(model) {
 
 function selectSidebarItem(browse_list_view, path) {
   const selection_model = browse_list_view.model;
-  collapseAllRows(selection_model.model);
-  for (const index of path.slice(0, -1)) {
-    const row = selection_model.model.get_row(index);
-    row.expanded = true;
-  }
-  const index = path[path.length - 1];
+  const tree_model = selection_model.model;
+  const index = getItemIndex(tree_model, path);
   // If possible, overshoot scrolling by one row to ensure selected row is visible
   index + 1 === selection_model.n_items
     ? browse_list_view.scroll_to(index, Gtk.ListScrollFlags.NONE, null)
     : browse_list_view.scroll_to(index + 1, Gtk.ListScrollFlags.NONE, null);
   selection_model.selected = index;
   scrolled_to = true;
+}
+
+function getItemIndex(tree_model, path) {
+  let relative_index = 0; // Relative index of the item under its parent
+  let absolute_index = 0; // Index of the item in the entire model
+  let skip = 0; // Number of items to skip due to expanded rows
+
+  for (let i = 0; i < path.length; i++) {
+    while (relative_index < path[i]) {
+      const row = tree_model.get_row(absolute_index);
+      if (row.expanded) {
+        skip += row.children.get_n_items();
+      }
+      if (!skip) relative_index++; // Go to next sibling
+      else skip--;
+      absolute_index++;
+    }
+    // Check to ensure the last item is not expanded
+    if (i < path.length - 1) {
+      tree_model.get_row(absolute_index).expanded = true;
+      absolute_index++;
+      relative_index = 1;
+    }
+  }
+  return absolute_index;
 }
 
 async function loadLibrary(model, directory) {
@@ -340,10 +360,7 @@ function flattenModel(
   for (const item of list_store) {
     if (item.search_name) flattened_model.append(item);
     if (item.children) {
-      flattenModel(item.children, flattened_model, [
-        ...path,
-        path[path.length - 1] + 1,
-      ]);
+      flattenModel(item.children, flattened_model, [...path, 1]);
     }
     URI_TO_SIDEBAR_PATH[item.uri] = path.slice();
     path[path.length - 1]++;
