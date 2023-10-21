@@ -1,6 +1,6 @@
 namespace Workbench {
 
-  [DBus (name="re.sonny.Workbench.vala_previewer")]
+  [DBus (name="re.sonny.Workbench.previewer_module")]
   public class Previewer : Object {
     construct {
       this.notify["ColorScheme"].connect (() => {
@@ -233,7 +233,7 @@ namespace Workbench {
       loop.quit();
     });
 
-    connection.register_object ("/re/sonny/workbench/vala_previewer", previewer);
+    connection.register_object ("/re/sonny/workbench/previewer_module", previewer);
 
     loop.run();
   }

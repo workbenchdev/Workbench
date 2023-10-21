@@ -71,7 +71,6 @@ export function getDemo(name) {
   return demos.find((demo) => demo.name === name);
 }
 
-const lang_javascript = getLanguage("javascript");
 async function openDemo({ application, demo_name, language }) {
   const demo = getDemo(demo_name);
   const session = createSessionFromDemo(demo);
@@ -86,9 +85,16 @@ async function openDemo({ application, demo_name, language }) {
     session.settings.set_boolean("show-code", true);
   }
 
-  const is_js =
-    session.settings.get_int("code-language") === lang_javascript.index;
+  // Override the user preferred language if the demo doesn't support it
+  const lang = session.getCodeLanguage();
+  if (demo.languages.length > 0 && !demo.languages.includes(lang.id)) {
+    session.settings.set_int(
+      "code-language",
+      getLanguage(demo.languages[0]).index,
+    );
+  }
 
+  const run = demo.autorun && session.getCodeLanguage().id === "javascript";
   const { load } = Window({ application, session });
-  await load({ run: demo.autorun && is_js });
+  await load({ run });
 }
