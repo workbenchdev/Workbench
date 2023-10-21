@@ -53,7 +53,7 @@ Adw.Window documentation_viewer {
         }
 
         content: Stack stack {
-          transition-type: crossfade;
+          transition-type: none;
 
           ScrolledWindow browse_page {
             vexpand: true;
@@ -84,30 +84,32 @@ Adw.Window documentation_viewer {
 
             ListView search_list_view {
               enable-rubberband: false;
-              model: SingleSelection search_model {
-                autoselect: false;
-                model: SortListModel {
-                  sorter: StringSorter search_sorter {};
-                  model: FilterListModel filter_model {
-                    filter: StringFilter filter {
-                      match-mode: substring;
-                    };
-                  };
-                };
-              };
-
               factory: BuilderListItemFactory {
                 template ListItem {
-                  child: Inscription {
-                    hexpand: true;
-                    nat-chars: 10;
-                    text-overflow: ellipsize_end;
-                    text: bind template.item as <$DocumentationPage>.search_name;
-                  };
+                  child: Box {
+                      Inscription {
+                        hexpand: true;
+                        nat-chars: 25;
+                        text-overflow: ellipsize_end;
+                        text: bind template.item as <$DocumentationPage>.search_name;
+                      }
+                      Button {
+                        valign: center;
+                        label: bind template.item as <$DocumentationPage>.tag;
+                        styles ["pill", "small"]
+                      }
+                    };
                 }
               };
               styles ["navigation-sidebar"]
             }
+          }
+
+          Adw.StatusPage status_page {
+            title: "No Results Found";
+            description: "Try a different search term";
+            icon-name: "loupe-symbolic";
+            styles ["compact"]
           }
         };
       };
