@@ -1,6 +1,7 @@
 bin_conf = configuration_data()
 bin_conf.set('pkgdatadir', pkgdatadir)
 
+install_data('gdbus_ext.py', install_dir: pkgdatadir)
 install_data('python-previewer.py', install_dir: pkgdatadir)
 
 configure_file(
