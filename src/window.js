@@ -6,7 +6,7 @@ import Adw from "gi://Adw";
 import Vte from "gi://Vte";
 
 import * as xml from "./langs/xml/xml.js";
-import { languages } from "./util.js";
+import { buildRuntimePath, languages } from "./util.js";
 import Document from "./Document.js";
 import PanelUI from "./PanelUI.js";
 import PanelCode from "./PanelCode.js";
@@ -317,7 +317,8 @@ export default function Window({ application, session }) {
       // because gjs doesn't appear to use etag for module caching
       // ?foo=Date.now() also does not work as expected
       // TODO: File a bug
-      const [file_javascript] = Gio.File.new_tmp("workbench-XXXXXX.js");
+      const path = buildRuntimePath(`workbench-${Date.now()}`);
+      const file_javascript = Gio.File.new_for_path(path);
       await file_javascript.replace_contents_async(
         new GLib.Bytes(text),
         null,
