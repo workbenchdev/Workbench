@@ -260,32 +260,38 @@ function collapseAllRows(model) {
 function selectSidebarItem(browse_list_view, path) {
   const selection_model = browse_list_view.model;
   const tree_model = selection_model.model;
-  let relative_index = 0;
-  let absolute_index = 0;
-  let skip = 0;
-  for (let i = 0; i < path.length; i++) {
-    while (relative_index < path[i]) {
-      const row = tree_model.get_row(absolute_index);
-      if (row.expanded) {
-        skip += row.children.get_n_items();
-      }
-      if (!skip) relative_index++;
-      else skip--;
-      absolute_index++;
-    }
-    if (i < path.length - 1) {
-      tree_model.get_row(absolute_index).expanded = true;
-      absolute_index++;
-      relative_index = 1;
-    }
-  }
-  const index = absolute_index;
+  const index = getItemIndex(tree_model, path);
   // If possible, overshoot scrolling by one row to ensure selected row is visible
   index + 1 === selection_model.n_items
     ? browse_list_view.scroll_to(index, Gtk.ListScrollFlags.NONE, null)
     : browse_list_view.scroll_to(index + 1, Gtk.ListScrollFlags.NONE, null);
   selection_model.selected = index;
   scrolled_to = true;
+}
+
+function getItemIndex(tree_model, path) {
+  let relative_index = 0; // Relative index of the item under its parent
+  let absolute_index = 0; // Index of the item in the entire model
+  let skip = 0; // Number of items to skip due to expanded rows
+
+  for (let i = 0; i < path.length; i++) {
+    while (relative_index < path[i]) {
+      const row = tree_model.get_row(absolute_index);
+      if (row.expanded) {
+        skip += row.children.get_n_items();
+      }
+      if (!skip) relative_index++; // Go to next sibling
+      else skip--;
+      absolute_index++;
+    }
+    // Check to ensure the last item is not expanded
+    if (i < path.length - 1) {
+      tree_model.get_row(absolute_index).expanded = true;
+      absolute_index++;
+      relative_index = 1;
+    }
+  }
+  return absolute_index;
 }
 
 async function loadLibrary(model, directory) {
