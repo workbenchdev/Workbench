@@ -281,8 +281,8 @@ if __name__ == "__main__":
 
     DBusTemplate.register_object(
         connection,
-        "re.sonny.Workbench.vala_previewer",
-        "/re/sonny/workbench/vala_previewer",
+        "re.sonny.Workbench.previewer_module",
+        "/re/sonny/workbench/previewer_module",
         previewer,
     )
 

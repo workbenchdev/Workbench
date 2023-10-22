@@ -103,7 +103,8 @@ export const languages = [
     extensions: [".py"],
     types: ["text/x-python"],
     document: null,
-    placeholder: "# Sorry, this demo is not available in Python yet.",
+    default_file: "main.py",
+    index: 3,
   },
 ];
 

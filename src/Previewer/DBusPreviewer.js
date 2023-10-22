@@ -26,16 +26,20 @@ let current_sub_process = null;
 let current_type = null;
 
 async function startProcess(type) {
+  let executable_name;
   switch (type) {
     case PREVIEWER_TYPE_VALA:
+      executable_name = "workbench-previewer-module";
+      break;
     case PREVIEWER_TYPE_PYTHON:
+      executable_name = "workbench-python-previewer";
       break;
     default:
       throw Error(`invalid dbus previewer type: ${type}`);
   }
 
   current_sub_process = Gio.Subprocess.new(
-    ["workbench-previewer-module", server.get_client_address()],
+    [executable_name, server.get_client_address()],
     Gio.SubprocessFlags.NONE,
   );
   current_type = type;

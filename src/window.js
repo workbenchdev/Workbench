@@ -378,14 +378,14 @@ export default function Window({ application, session }) {
         } else {
           await previewer.useInternal();
         }
-      } else if (language === "Python") {
-        builder_python = builder_python || PythonBuilder({ session });
-        await previewer.useExternal("python");
-        if (await builder_python.run()) {
-          await previewer.open();
-        } else {
-          await previewer.useInternal();
-        }
+      }
+    } else if (language === "Python") {
+      builder_python = builder_python || PythonBuilder({ session });
+      await previewer.useExternal("python");
+      if (await builder_python.run()) {
+        await previewer.open();
+      } else {
+        await previewer.useInternal();
       }
     }
   }
