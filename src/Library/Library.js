@@ -1,7 +1,12 @@
 import Gio from "gi://Gio";
 import Gtk from "gi://Gtk";
 
-import { demos_dir, getDemo, settings as global_settings } from "../util.js";
+import {
+  decode,
+  demos_dir,
+  getLanguage,
+  settings as global_settings,
+} from "../util.js";
 import Window from "../window.js";
 
 import resource from "./Library.blp";
@@ -24,13 +29,13 @@ export default function Library({ application }) {
     const widget = new EntryRow({ demo: demo });
     if (demo.name === "Welcome") last_selected = widget;
 
-    widget.connect("activated", (_self, language_name) => {
+    widget.connect("activated", (_self, language) => {
       last_selected = widget;
 
       openDemo({
         application,
         demo_name: demo.name,
-        language_name,
+        language,
       }).catch(console.error);
     });
 
@@ -49,53 +54,47 @@ export default function Library({ application }) {
   application.set_accels_for_action("app.library", ["<Control><Shift>O"]);
 }
 
-function getDemos() {
-  const demos = [];
-
-  for (const child of demos_dir.enumerate_children(
-    "",
-    Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
-    null,
-  )) {
-    if (child.get_file_type() !== Gio.FileType.DIRECTORY) continue;
-
-    let demo;
-    try {
-      demo = getDemo(child.get_name());
-    } catch (err) {
-      console.debug(err);
-      continue;
+const getDemos = (() => {
+  let demos;
+  return function getDemos() {
+    if (!demos) {
+      const file = demos_dir.get_child("../index.json");
+      const [, data] = file.load_contents(null);
+      demos = JSON.parse(decode(data));
     }
+    return demos;
+  };
+})();
 
-    demos.push(demo);
-  }
-
-  return demos;
+export function getDemo(name) {
+  const demos = getDemos();
+  return demos.find((demo) => demo.name === name);
 }
 
-async function openDemo({ application, demo_name, language_name }) {
+async function openDemo({ application, demo_name, language }) {
   const demo = getDemo(demo_name);
-  const session = await createSessionFromDemo(demo);
+  const session = createSessionFromDemo(demo);
 
-  if (language_name) {
-    switch (language_name.toLowerCase()) {
-      case "javascript":
-        session.settings.set_int("code-language", 0);
-        global_settings.set_int("recent-code-language", 0);
-        break;
-      case "vala":
-        session.settings.set_int("code-language", 1);
-        global_settings.set_int("recent-code-language", 1);
-        break;
-      case "rust":
-        session.settings.set_int("code-language", 2);
-        global_settings.set_int("recent-code-language", 2);
-        break;
-    }
+  if (language) {
+    session.settings.set_int("code-language", language.index);
+    global_settings.set_int("recent-code-language", language.index);
+
+    // If the user explictely requested to open the demo
+    // in a specific language then that's probably what they are interested in
+    // therefor override the demo default and force show the code panel
+    session.settings.set_boolean("show-code", true);
   }
 
-  const is_js = session.settings.get_int("code-language") === 0;
+  // Override the user preferred language if the demo doesn't support it
+  const lang = session.getCodeLanguage();
+  if (demo.languages.length > 0 && !demo.languages.includes(lang.id)) {
+    session.settings.set_int(
+      "code-language",
+      getLanguage(demo.languages[0]).index,
+    );
+  }
 
+  const run = demo.autorun && session.getCodeLanguage().id === "javascript";
   const { load } = Window({ application, session });
-  await load({ run: demo.autorun && is_js });
+  await load({ run });
 }

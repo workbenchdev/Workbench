@@ -10,6 +10,7 @@ import {
   rust_template_dir,
   settings as global_settings,
   encode,
+  languages,
 } from "./util.js";
 
 export const sessions_dir = data_dir.get_child("sessions");
@@ -142,8 +143,13 @@ export class Session {
     });
   }
 
-  is_project() {
+  isProject() {
     return !this.file.get_parent().equal(sessions_dir);
+  }
+
+  getCodeLanguage() {
+    const code_languge = this.settings.get_int("code-language");
+    return languages.find((lang) => lang.index === code_languge);
   }
 }
 

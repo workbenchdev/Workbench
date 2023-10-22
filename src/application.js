@@ -3,9 +3,9 @@ import Gio from "gi://Gio";
 
 import Window from "./window.js";
 import Actions from "./actions.js";
-import { settings, data_dir, ensureDir, getDemo } from "./util.js";
+import { settings, data_dir, ensureDir } from "./util.js";
 import { overrides } from "./overrides.js";
-import Library from "./Library/Library.js";
+import Library, { getDemo } from "./Library/Library.js";
 import Extensions from "./Extensions/Extensions.js";
 import DocumentationViewer from "./Manuals/DocumentationViewer.js";
 import { Session, createSessionFromDemo, getSessions } from "./sessions.js";
@@ -91,7 +91,8 @@ function restoreSessions() {
 }
 
 function newWindow() {
-  const session = createSessionFromDemo(getDemo("Welcome"));
+  const demo = getDemo("Welcome");
+  const session = createSessionFromDemo(demo);
   const { load, window } = Window({
     application,
     session,

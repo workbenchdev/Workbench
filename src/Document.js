@@ -2,10 +2,11 @@ import Source from "gi://GtkSource";
 import Gio from "gi://Gio";
 import GLib from "gi://GLib";
 
-export default function Document({ session, code_view, file, lang }) {
+export default function Document({ session, code_view, lang }) {
   const { buffer } = code_view;
   let handler_id = null;
 
+  const file = session.file.get_child(lang.default_file);
   const source_file = new Source.File({
     location: file,
   });
@@ -67,21 +68,13 @@ async function loadSourceBuffer({ source_file, buffer, lang }) {
     buffer,
     file: source_file,
   });
-  let success;
   try {
-    success = await file_loader.load_async(GLib.PRIORITY_DEFAULT, null, null);
+    await file_loader.load_async(GLib.PRIORITY_DEFAULT, null, null);
   } catch (err) {
-    if (err.code === Gio.IOErrorEnum.NOT_FOUND) {
-      if (lang.placeholder) {
-        buffer.set_text(lang.placeholder, -1);
-      }
-      success = true;
-    } else {
+    if (err.code !== Gio.IOErrorEnum.NOT_FOUND) {
       throw err;
     }
   }
 
-  if (success) {
-    buffer.set_modified(false);
-  }
+  buffer.set_modified(false);
 }

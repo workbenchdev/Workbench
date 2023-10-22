@@ -1,6 +1,7 @@
 import Gio from "gi://Gio";
 
 import previewer_xml from "./previewer.xml" with { type: "string" };
+import { buildRuntimePath } from "../util.js";
 
 const PREVIEWER_TYPE_VALA = "vala";
 const PREVIEWER_TYPE_PYTHON = "python";
@@ -9,8 +10,9 @@ const nodeInfo = Gio.DBusNodeInfo.new_for_xml(previewer_xml);
 const interface_info = nodeInfo.interfaces[0];
 
 const guid = Gio.dbus_generate_guid();
+const path = buildRuntimePath(`workbench_preview_dbus_socket_${Date.now()}`);
 const server = Gio.DBusServer.new_sync(
-  "unix:abstract=re.sonny.Workbench.external_previewer", // FIXME: abstract socket sucks
+  `unix:path=${path}`,
   Gio.DBusServerFlags.AUTHENTICATION_REQUIRE_SAME_USER,
   guid,
   null,
@@ -33,7 +35,7 @@ async function startProcess(type) {
   }
 
   current_sub_process = Gio.Subprocess.new(
-    [`workbench-${type}-previewer`, server.get_client_address()],
+    ["workbench-previewer-module", server.get_client_address()],
     Gio.SubprocessFlags.NONE,
   );
   current_type = type;
@@ -72,9 +74,8 @@ async function startProcess(type) {
     Gio.DBusProxyFlags.NONE,
     interface_info,
     null,
-    // TODO: Rename dbus interface and object paths to be more generic (also in the XML!)
-    `/re/sonny/workbench/vala_previewer`, // object path
-    `re.sonny.Workbench.vala_previewer`, // interface name
+    "/re/sonny/workbench/previewer_module", // object path
+    "re.sonny.Workbench.previewer_module", // interface name
     null,
   );
 

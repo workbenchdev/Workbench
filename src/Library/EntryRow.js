@@ -3,7 +3,7 @@ import Gtk from "gi://Gtk";
 import Gio from "gi://Gio";
 import GObject from "gi://GObject";
 
-import { demoSupportsLanguage, getLanguage } from "../util.js";
+import { getLanguage } from "../util.js";
 import Template from "./EntryRow.blp" with { type: "uri" };
 
 class EntryRow extends Adw.PreferencesRow {
@@ -31,13 +31,9 @@ class EntryRow extends Adw.PreferencesRow {
   }
 
   #createLanguageTags(demo) {
-    const language = getLanguage("javascript");
-    const language_tag = this.#createLanguageTag(language);
-    this._languages_box.append(language_tag);
-
-    ["vala", "rust"].forEach((id) => {
+    demo.languages.forEach((id) => {
       const language = getLanguage(id);
-      if (!demoSupportsLanguage(demo, language.id)) return;
+      if (!language) return;
       const language_tag = this.#createLanguageTag(language);
       this._languages_box.append(language_tag);
     });
@@ -51,7 +47,7 @@ class EntryRow extends Adw.PreferencesRow {
     });
 
     button.connect("clicked", () => {
-      this.emit("activated", language.id);
+      this.emit("activated", language);
     });
 
     return button;
@@ -73,7 +69,7 @@ export default GObject.registerClass(
     },
     Signals: {
       activated: {
-        param_types: [GObject.TYPE_STRING],
+        param_types: [GObject.TYPE_JSOBJECT],
       },
     },
     InternalChildren: ["title_label", "description_label", "languages_box"],

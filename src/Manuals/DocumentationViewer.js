@@ -50,6 +50,10 @@ const DocumentationPage = GObject.registerClass(
   class DocumentationPage extends GObject.Object {},
 );
 
+const URI_TO_SIDEBAR_PATH = {};
+let sync_sidebar = false;
+let scrolled_to = false;
+
 export default function DocumentationViewer({ application }) {
   const builder = Gtk.Builder.new_from_resource(resource);
 
@@ -112,8 +116,25 @@ export default function DocumentationViewer({ application }) {
   );
   user_content_manager.add_style_sheet(stylesheet);
 
+  const root_model = Gio.ListStore.new(DocumentationPage);
+  const browse_selection_model = createBrowseSelectionModel(
+    root_model,
+    webview,
+  );
+  browse_list_view.model = browse_selection_model;
+
   webview.connect("load-changed", () => {
     updateButtons();
+  });
+
+  webview.connect("notify::uri", () => {
+    const selected_item = browse_selection_model.selected_item.item;
+    if (webview.uri !== selected_item.uri) {
+      sync_sidebar = true;
+      const path = URI_TO_SIDEBAR_PATH[webview.uri];
+      if (!path) return;
+      selectSidebarItem(browse_list_view, path);
+    }
   });
 
   webview.get_back_forward_list().connect("changed", () => {
@@ -131,6 +152,22 @@ export default function DocumentationViewer({ application }) {
 
   button_forward.connect("clicked", () => {
     webview.go_forward();
+  });
+
+  const adj = browse_page.get_vscrollbar().adjustment;
+  adj.connect("value-changed", () => {
+    if (scrolled_to) {
+      const index = browse_selection_model.selected;
+      const bottom_edge = (index + 1) * 38 - adj.value;
+      const top_edge = bottom_edge - 38;
+      // If row is not visible after scroll_to, adjust
+      if (bottom_edge === 0) {
+        adj.value -= 38;
+      } else if (top_edge === adj.page_size) {
+        adj.value += 38;
+      }
+      scrolled_to = false;
+    }
   });
 
   const expr = new Gtk.ClosureExpression(
@@ -158,11 +195,10 @@ export default function DocumentationViewer({ application }) {
   sorter.expression = expr;
   search_model.connect("selection-changed", () => {
     const uri = search_model.selected_item.uri;
-    webview.load_uri(uri);
+    const sidebar_path = URI_TO_SIDEBAR_PATH[uri];
+    selectSidebarItem(browse_list_view, sidebar_path);
   });
 
-  const root_model = Gio.ListStore.new(DocumentationPage);
-  browse_list_view.model = createBrowseSelectionModel(root_model, webview);
   let promise_load;
   async function load() {
     if (!promise_load) {
@@ -198,7 +234,8 @@ export default function DocumentationViewer({ application }) {
     load()
       .then(() => {
         if (!mapped) {
-          browse_list_view.model.selected = 12;
+          collapseAllRows(browse_selection_model.model);
+          browse_selection_model.selected = 12;
           search_entry.text = "";
           onSearchChanged();
         }
@@ -207,6 +244,54 @@ export default function DocumentationViewer({ application }) {
   });
   application.add_action(action_documentation);
   application.set_accels_for_action("app.documentation", ["<Control>M"]);
+}
+
+function sortFunc(doc1, doc2) {
+  return doc1.name.localeCompare(doc2.name);
+}
+
+function collapseAllRows(model) {
+  for (let i = 0; i < model.n_items; i++) {
+    const row = model.get_row(i);
+    row.expanded = false;
+  }
+}
+
+function selectSidebarItem(browse_list_view, path) {
+  const selection_model = browse_list_view.model;
+  const tree_model = selection_model.model;
+  const index = getItemIndex(tree_model, path);
+  // If possible, overshoot scrolling by one row to ensure selected row is visible
+  index + 1 === selection_model.n_items
+    ? browse_list_view.scroll_to(index, Gtk.ListScrollFlags.NONE, null)
+    : browse_list_view.scroll_to(index + 1, Gtk.ListScrollFlags.NONE, null);
+  selection_model.selected = index;
+  scrolled_to = true;
+}
+
+function getItemIndex(tree_model, path) {
+  let relative_index = 0; // Relative index of the item under its parent
+  let absolute_index = 0; // Index of the item in the entire model
+  let skip = 0; // Number of items to skip due to expanded rows
+
+  for (let i = 0; i < path.length; i++) {
+    while (relative_index < path[i]) {
+      const row = tree_model.get_row(absolute_index);
+      if (row.expanded) {
+        skip += row.children.get_n_items();
+      }
+      if (!skip) relative_index++; // Go to next sibling
+      else skip--;
+      absolute_index++;
+    }
+    // Check to ensure the last item is not expanded
+    if (i < path.length - 1) {
+      tree_model.get_row(absolute_index).expanded = true;
+      absolute_index++;
+      relative_index = 1;
+    }
+  }
+  return absolute_index;
 }
 
 async function loadLibrary(model, directory) {
@@ -225,7 +310,7 @@ async function loadLibrary(model, directory) {
       children: getChildren(index, directory),
     });
 
-    model.append(page);
+    model.insert_sorted(page, sortFunc);
   } catch (error) {
     if (!error.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.NOT_FOUND)) throw error;
   }
@@ -267,10 +352,18 @@ async function scanLibraries(model, base_dir) {
   return Promise.allSettled(libraries);
 }
 
-function flattenModel(list_store, flattened_model = newListStore()) {
+function flattenModel(
+  list_store,
+  flattened_model = newListStore(),
+  path = [0],
+) {
   for (const item of list_store) {
     if (item.search_name) flattened_model.append(item);
-    if (item.children) flattenModel(item.children, flattened_model);
+    if (item.children) {
+      flattenModel(item.children, flattened_model, [...path, 1]);
+    }
+    URI_TO_SIDEBAR_PATH[item.uri] = path.slice();
+    path[path.length - 1]++;
   }
   return flattened_model;
 }
@@ -282,16 +375,13 @@ function createBrowseSelectionModel(root_model, webview) {
     false,
     (item) => item.children,
   );
-  const sorter = Gtk.TreeListRowSorter.new(
-    Gtk.CustomSorter.new((a, b) => {
-      const name1 = a.name;
-      const name2 = b.name;
-      return name1.localeCompare(name2);
-    }),
-  );
-  const sort_model = Gtk.SortListModel.new(tree_model, sorter);
-  const selection_model = Gtk.SingleSelection.new(sort_model);
+  const selection_model = Gtk.SingleSelection.new(tree_model);
   selection_model.connect("selection-changed", () => {
+    // If selection changed to sync the sidebar, dont load_uri again
+    if (sync_sidebar) {
+      sync_sidebar = false;
+      return;
+    }
     const uri = selection_model.selected_item.item.uri;
     webview.load_uri(uri);
   });
@@ -345,12 +435,13 @@ function getChildren(index, dir) {
       location = subsections[symbol.type_name][symbol.type];
     }
     if (location)
-      location.append(
+      location.insert_sorted(
         new DocumentationPage({
           name: symbol.name,
           search_name: getSearchNameForDocument(symbol, index.meta),
           uri: `${dir.get_uri()}/${getLinkForDocument(symbol)}`,
         }),
+        sortFunc,
       );
   }
 
@@ -359,33 +450,35 @@ function getChildren(index, dir) {
   const sections_model = newListStore();
   for (const section in sections) {
     if (sections[section].get_n_items() > 0)
-      sections_model.append(
+      sections_model.insert_sorted(
         new DocumentationPage({
           name: SECTION_TYPES[section][0],
           uri: `${index_html}${SECTION_TYPES[section][1]}`,
           children: sections[section],
         }),
+        sortFunc,
       );
   }
   return sections_model;
 }
 
 const REQUIRED = ["class", "interface", "record", "domain"];
-
 function createSubsections(subsections, sections) {
   for (const type of REQUIRED) {
     for (const item of sections[type]) {
       const model = newListStore();
       const name = item.name;
       for (const subsection in subsections[name]) {
-        if (subsections[name][subsection].get_n_items() > 0)
-          model.append(
+        if (subsections[name][subsection].get_n_items() > 0) {
+          model.insert_sorted(
             new DocumentationPage({
               name: SUBSECTION_TYPES[subsection][0],
               uri: `${item.uri}${SUBSECTION_TYPES[subsection][1]}`,
               children: subsections[name][subsection],
             }),
+            sortFunc,
           );
+        }
       }
       item.children = model;
     }
