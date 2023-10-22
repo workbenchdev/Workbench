@@ -22,8 +22,9 @@ gi.require_version("Gdk", "4.0")
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 gi.require_version("Graphene", "1.0")
+gi.require_version('Gsk', '4.0')
 
-from gi.repository import GLib, Gdk, Gtk, Adw, Graphene, Gio
+from gi.repository import GLib, Gdk, Gtk, Adw, Graphene, Gio, Gsk
 from gi.repository.Gio import DBusConnection, DBusConnectionFlags
 
 
@@ -146,7 +147,7 @@ class Previewer:
 
     @DBusTemplate.Method()
     def screenshot(self, path: str) -> bool:
-        paintable = Gtk.WidgetPaintable(self.target)
+        paintable = Gtk.WidgetPaintable(widget=self.target)
         width = self.target.get_allocated_width()
         height = self.target.get_allocated_height()
         snapshot = Gtk.Snapshot()
