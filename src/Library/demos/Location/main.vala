@@ -6,8 +6,8 @@ private Xdp.Parent parent;
 private Gtk.Revealer revealer;
 private Gtk.Button start_button;
 private Gtk.Button close_button;
-private Gtk.SpinRow distance_threshold;
-private Gtk.SpinRow time_threshold;
+private Adw.SpinRow distance_threshold;
+private Adw.SpinRow time_threshold;
 private Adw.ComboRow accuracy_button;
 
 private Gtk.Label latitude_label;
@@ -42,12 +42,12 @@ public void main () {
   start_button.clicked.connect (start_session);
   close_button.clicked.connect (close_session);
 
-  time_threshold.adjustment.value_changed.connect (() => {
+  time_threshold.notify["value"].connect (() => {
     message ("Time threshold changed");
     restart_session ();
   });
 
-  distance_threshold.adjustment.value_changed.connect (() => {
+  distance_threshold.notify["value"].connect (() => {
     message ("Distance threshold changed");
     restart_session ();
   });
