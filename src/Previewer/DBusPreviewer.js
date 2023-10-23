@@ -1,13 +1,15 @@
 import Gio from "gi://Gio";
 
 import previewer_xml from "./previewer.xml" with { type: "string" };
+import { buildRuntimePath } from "../util.js";
 
 const nodeInfo = Gio.DBusNodeInfo.new_for_xml(previewer_xml);
 const interface_info = nodeInfo.interfaces[0];
 
 const guid = Gio.dbus_generate_guid();
+const path = buildRuntimePath(`workbench_preview_dbus_socket_${Date.now()}`);
 const server = Gio.DBusServer.new_sync(
-  "unix:path=/var/tmp/workbench_preview_dbus_socket",
+  `unix:path=${path}`,
   Gio.DBusServerFlags.AUTHENTICATION_REQUIRE_SAME_USER,
   guid,
   null,

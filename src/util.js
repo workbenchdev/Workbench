@@ -179,3 +179,11 @@ export function getNowForFilename() {
 export function makeDropdownFlat(dropdown) {
   dropdown.get_first_child().add_css_class("flat");
 }
+
+export function buildRuntimePath(...args) {
+  return GLib.build_filenamev([
+    GLib.getenv("XDG_RUNTIME_DIR"),
+    GLib.getenv("FLATPAK_ID"),
+    ...args,
+  ]);
+}
