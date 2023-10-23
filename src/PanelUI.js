@@ -142,6 +142,10 @@ export default function PanelUI({
     }
   }
 
+  function is_xml_selected() {
+    return lang === lang_xml;
+  }
+
   const dropdown_selected_signal = listenProperty(
     dropdown_ui_lang,
     "selected",
@@ -194,6 +198,7 @@ export default function PanelUI({
   panel.start = start;
   panel.stop = stop;
   panel.update = update;
+  panel.is_xml_selected = is_xml_selected;
   panel.panel = panel_ui;
 
   return panel;

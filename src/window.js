@@ -262,9 +262,11 @@ export default function Window({ application, session }) {
     }
 
     if (panel_ui.panel.visible) {
-      await format(langs.xml.document.code_view, (text) => {
-        return xml.format(text, 2);
-      });
+      if (panel_ui.is_xml_selected()) {
+        await format(langs.xml.document.code_view, (text) => {
+          return xml.format(text, 2);
+        });
+      }
     }
   }
 
