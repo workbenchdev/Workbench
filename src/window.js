@@ -197,12 +197,14 @@ export default function Window({ application, session }) {
       return;
     }
 
+    if (buffer.text === code) {
+      return;
+    }
+
     const { cursor_position } = buffer;
 
     code_view.replaceText(code, false);
     buffer.place_cursor(buffer.get_iter_at_offset(cursor_position));
-
-    return code;
   }
 
   function formatRustCode(text) {
