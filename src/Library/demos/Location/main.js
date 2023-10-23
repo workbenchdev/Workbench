@@ -113,4 +113,3 @@ close.connect("clicked", () => {
   revealer.reveal_child = false;
   console.log("Session closed");
 });
-
