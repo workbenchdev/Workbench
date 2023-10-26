@@ -57,7 +57,9 @@ web_view.connect("load-changed", (view, load_event) => {
 
 web_view.connect("load-failed", (view, load_event, fail_url, error) => {
   // Loading failed as a result of calling stop_loading
-  if (error.matches(WebKit.NetworkError, WebKit.NetworkError.CANCELLED)) return;
+  if (error.matches?.(WebKit.NetworkError, WebKit.NetworkError.CANCELLED)) {
+    return;
+  }
 
   web_view.load_alternate_html(
     error_page(fail_url, error.message),
