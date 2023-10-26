@@ -15,9 +15,12 @@ export default function External({ output, builder, onWindowChange }) {
       .handleDiagnostics([getCssDiagnostic(error)]);
   };
 
-  async function start() {
+  async function start(language) {
+    if (language === "rust") {
+      language = "vala"; // Rust uses the Vala previewer.
+    }
     try {
-      dbus_proxy = await dbus_previewer.getProxy();
+      dbus_proxy = await dbus_previewer.getProxy(language);
     } catch (err) {
       console.error(err);
     }

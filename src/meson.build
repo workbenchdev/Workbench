@@ -35,6 +35,7 @@ configure_file(
 
 install_data('langs/vala/workbench.vala', install_dir: pkgdatadir)
 subdir('Previewer')
+subdir('langs/python')
 
 gjspack = find_program('../troll/gjspack/bin/gjspack')
 gresource = custom_target('gjspack',

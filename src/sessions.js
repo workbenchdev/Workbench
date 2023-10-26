@@ -162,6 +162,7 @@ function migrateStateToSession() {
     ["state.js", "main.js"],
     ["state.vala", "main.vala"],
     ["state.rs", "main.rs"],
+    ["state.py", "main.py"],
     ["state.xml", "main.ui"],
   ];
 
