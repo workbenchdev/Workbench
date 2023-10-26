@@ -184,7 +184,7 @@ function migrateStateToSession() {
         null, // progress_callback
       );
     } catch (err) {
-      if (err.code !== Gio.IOErrorEnum.NOT_FOUND) {
+      if (!err.matches?.(Gio.IOErrorEnum, Gio.IOErrorEnum.NOT_FOUND)) {
         throw err;
       }
     }
