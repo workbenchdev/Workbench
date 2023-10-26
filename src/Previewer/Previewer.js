@@ -46,6 +46,7 @@ export default function Previewer({
   let panel_code;
 
   let current;
+  let current_external_language = null;
 
   const dropdown_preview_align = builder.get_object("dropdown_preview_align");
   makeDropdownFlat(dropdown_preview_align);
@@ -237,10 +238,11 @@ export default function Previewer({
 
   const schedule_update = unstack(update, console.error);
 
-  async function useExternal() {
-    if (current !== external) {
-      await setPreviewer(external);
+  async function useExternal(language) {
+    if (current !== external || language !== current_external_language) {
+      await setPreviewer(external, language);
     }
+    current_external_language = language;
     stack.set_visible_child_name("close_window");
     await update(true);
   }
@@ -252,7 +254,7 @@ export default function Previewer({
     await update(true);
   }
 
-  async function setPreviewer(previewer) {
+  async function setPreviewer(previewer, language) {
     if (handler_id_button_open) {
       button_open.disconnect(handler_id_button_open);
     }
@@ -293,7 +295,7 @@ export default function Previewer({
     });
 
     try {
-      await current.start();
+      await current.start(language);
     } catch (err) {
       console.error(err);
     }

@@ -161,6 +161,7 @@ Adw.ApplicationWindow window {
                       "JavaScript",
                       "Vala",
                       "Rust",
+                      "Python",
                     ]
                   };
                   tooltip-text: _("Switch Document");
@@ -189,6 +190,12 @@ Adw.ApplicationWindow window {
                 name: 'Rust';
                 child: $CodeView code_view_rust {
                   language_id: 'rust';
+                };
+              }
+              StackPage {
+                name: 'Python';
+                child: $CodeView code_view_python {
+                  language_id: 'python';
                 };
               }
             }

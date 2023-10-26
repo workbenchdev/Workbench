@@ -220,7 +220,7 @@ export default function Internal({
   }
 
   return {
-    async start() {},
+    async start(_language) {},
     open,
     close,
     stop,

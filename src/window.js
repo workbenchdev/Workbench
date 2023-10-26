@@ -20,6 +20,7 @@ import prettier_estree from "./lib/prettier-estree.js";
 import Previewer from "./Previewer/Previewer.js";
 import ValaCompiler from "./langs/vala/Compiler.js";
 import RustCompiler from "./langs/rust/Compiler.js";
+import PythonBuilder from "./langs/python/Builder.js";
 import ThemeSelector from "../troll/src/widgets/ThemeSelector.js";
 
 import resource from "./window.blp";
@@ -91,6 +92,13 @@ export default function Window({ application, session }) {
     session,
   });
   langs.rust.document = document_rust;
+
+  const document_python = Document({
+    code_view: builder.get_object("code_view_python"),
+    lang: langs.python,
+    session,
+  });
+  langs.python.document = document_python;
 
   const document_blueprint = Document({
     code_view: builder.get_object("code_view_blueprint"),
@@ -268,6 +276,7 @@ export default function Window({ application, session }) {
 
   let compiler_vala = null;
   let compiler_rust = null;
+  let builder_python = null;
 
   async function runCode({ format }) {
     button_run.set_sensitive(false);
@@ -347,7 +356,7 @@ export default function Window({ application, session }) {
       compiler_vala = compiler_vala || ValaCompiler({ session });
       const success = await compiler_vala.compile();
       if (success) {
-        await previewer.useExternal();
+        await previewer.useExternal("vala");
         if (await compiler_vala.run()) {
           await previewer.open();
         } else {
@@ -363,12 +372,20 @@ export default function Window({ application, session }) {
       compiler_rust = compiler_rust || RustCompiler({ session });
       const success = await compiler_rust.compile();
       if (success) {
-        await previewer.useExternal();
+        await previewer.useExternal("rust");
         if (await compiler_rust.run()) {
           await previewer.open();
         } else {
           await previewer.useInternal();
         }
+      }
+    } else if (language === "Python") {
+      builder_python = builder_python || PythonBuilder({ session });
+      await previewer.useExternal("python");
+      if (await builder_python.run()) {
+        await previewer.open();
+      } else {
+        await previewer.useInternal();
       }
     }
   }
@@ -420,6 +437,7 @@ export default function Window({ application, session }) {
       document_javascript.load(),
       document_rust.load(),
       document_vala.load(),
+      document_python.load(),
       document_blueprint.load(),
       document_xml.load(),
       document_css.load(),

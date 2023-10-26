@@ -96,6 +96,16 @@ export const languages = [
     default_file: "code.rs",
     index: 2,
   },
+  {
+    id: "python",
+    name: "Python",
+    panel: "code",
+    extensions: [".py"],
+    types: ["text/x-python"],
+    document: null,
+    default_file: "main.py",
+    index: 3,
+  },
 ];
 
 export function getLanguage(id) {

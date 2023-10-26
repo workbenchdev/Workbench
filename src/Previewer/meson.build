@@ -11,3 +11,5 @@ executable('workbench-crasher',
   # vala_args: [ '--gresourcesdir=' + meson.current_build_dir() ],
   install: true,
 )
+
+install_data('previewer.xml', install_dir: pkgdatadir)
