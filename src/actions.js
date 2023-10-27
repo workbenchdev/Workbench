@@ -135,6 +135,7 @@ async function open({ application, hint }) {
     if (!err.matches(Gtk.DialogError, Gtk.DialogError.DISMISSED)) {
       throw err;
     }
+    return;
   }
 
   application.open([file], hint);
