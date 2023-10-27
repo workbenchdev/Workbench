@@ -18,7 +18,7 @@ export function ensureDir(file) {
   try {
     file.make_directory_with_parents(null);
   } catch (err) {
-    if (err.code !== Gio.IOErrorEnum.EXISTS) {
+    if (!err.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.EXISTS)) {
       throw err;
     }
   }
@@ -29,7 +29,7 @@ export function getFlatpakInfo() {
   try {
     keyFile.load_from_file("/.flatpak-info", GLib.KeyFileFlags.NONE);
   } catch (err) {
-    if (err.code !== GLib.FileError.NOENT) {
+    if (!err.matches(GLib.FileError, GLib.FileError.NOENT)) {
       console.error(err);
     }
     return null;

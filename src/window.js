@@ -475,7 +475,9 @@ async function setGtk4PreferDark(dark) {
   try {
     settings.load_from_file(settings_path, GLib.KeyFileFlags.NONE);
   } catch (err) {
-    if (err.code !== GLib.FileError.NOENT) throw err;
+    if (!err.matches(GLib.FileError, GLib.FileError.NOENT)) {
+      throw err;
+    }
   }
   settings.set_boolean("Settings", "gtk-application-prefer-dark-theme", dark);
   settings.save_to_file(settings_path);
