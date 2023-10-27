@@ -7,6 +7,7 @@ import { decode } from "../util.js";
 import resource from "./DocumentationViewer.blp";
 
 import Shortcuts from "./Shortcuts.js";
+import { hasMatch, score } from "./fzy.js";
 
 import {
   action_extensions,
@@ -24,12 +25,28 @@ const DocumentationPage = GObject.registerClass(
         GObject.ParamFlags.READWRITE,
         "",
       ),
+      tag: GObject.ParamSpec.string(
+        "tag",
+        "tag",
+        "Tag of symbol",
+        GObject.ParamFlags.READWRITE,
+        "",
+      ),
       search_name: GObject.ParamSpec.string(
         "search_name",
         "search_name",
         "Name used to search the item in sidebar",
         GObject.ParamFlags.READWRITE,
         "",
+      ),
+      score: GObject.ParamSpec.double(
+        "score",
+        "score",
+        "Score assigned when searching an item in the sidebar",
+        GObject.ParamFlags.READWRITE,
+        Number.MIN_SAFE_INTEGER,
+        Number.MAX_SAFE_INTEGER,
+        Number.MIN_SAFE_INTEGER,
       ),
       uri: GObject.ParamSpec.string(
         "uri",
@@ -62,9 +79,11 @@ export default function DocumentationViewer({ application }) {
   const button_back = builder.get_object("button_back");
   const button_forward = builder.get_object("button_forward");
   const stack = builder.get_object("stack");
-  const browse_list_view = builder.get_object("browse_list_view");
+  const status_page = builder.get_object("status_page");
   const browse_page = builder.get_object("browse_page");
+  const browse_list_view = builder.get_object("browse_list_view");
   const search_page = builder.get_object("search_page");
+  const search_list_view = builder.get_object("search_list_view");
   const search_entry = builder.get_object("search_entry");
   const button_shortcuts = builder.get_object("button_shortcuts");
 
@@ -170,34 +189,20 @@ export default function DocumentationViewer({ application }) {
     }
   });
 
-  const expr = new Gtk.ClosureExpression(
-    GObject.TYPE_STRING,
-    (item) => item.search_name,
-    null,
-  );
-  const filter_model = builder.get_object("filter_model");
-  const filter = filter_model.filter;
-  filter.expression = expr;
-
   function onSearchChanged() {
     if (search_entry.text) {
       stack.visible_child = search_page;
-      filter.search = search_entry.text;
+      const selection_model = search_list_view.model;
+      selection_model.unselect_item(selection_model.selected);
+      selection_model.model.model.filter = createFilter(search_entry.text);
+      if (!selection_model.n_items) stack.visible_child = status_page;
+      search_list_view.scroll_to(0, Gtk.ListScrollFlags.NONE, null);
     } else {
       stack.visible_child = browse_page;
     }
   }
 
   search_entry.connect("search-changed", onSearchChanged);
-
-  const search_model = builder.get_object("search_model");
-  const sorter = builder.get_object("search_sorter");
-  sorter.expression = expr;
-  search_model.connect("selection-changed", () => {
-    const uri = search_model.selected_item.uri;
-    const sidebar_path = URI_TO_SIDEBAR_PATH[uri];
-    selectSidebarItem(browse_list_view, sidebar_path);
-  });
 
   let promise_load;
   async function load() {
@@ -211,7 +216,10 @@ export default function DocumentationViewer({ application }) {
         scanLibraries(root_model, Gio.File.new_for_path("/app/share/doc")),
       ]).then(() => {
         const search_model = flattenModel(root_model);
-        filter_model.model = search_model;
+        search_list_view.model = createSearchSelectionModel(
+          search_model,
+          browse_list_view,
+        );
       });
     }
     return promise_load;
@@ -305,6 +313,7 @@ async function loadLibrary(model, directory) {
     const namespace = `${index.meta.ns}-${index.meta.version}`;
     const page = new DocumentationPage({
       name: namespace,
+      tag: "namespace",
       search_name: namespace,
       uri: html_file.get_uri(),
       children: getChildren(index, directory),
@@ -388,6 +397,78 @@ function createBrowseSelectionModel(root_model, webview) {
   return selection_model;
 }
 
+function createSearchSelectionModel(model, browse_list_view) {
+  const filter_model = Gtk.FilterListModel.new(model, null);
+  const sorter = Gtk.CustomSorter.new((item1, item2) => {
+    return Math.sign(item2.score - item1.score);
+  });
+  const sort_model = new Gtk.SortListModel({
+    model: filter_model,
+    sorter: sorter,
+  });
+  const selection_model = Gtk.SingleSelection.new(sort_model);
+  selection_model.autoselect = false;
+  selection_model.can_unselect = true;
+  selection_model.connect("selection-changed", () => {
+    if (!selection_model.selected_item) return;
+    const uri = selection_model.selected_item.uri;
+    const sidebar_path = URI_TO_SIDEBAR_PATH[uri];
+    selectSidebarItem(browse_list_view, sidebar_path);
+  });
+  return selection_model;
+}
+
+const QUERY_TYPES = [
+  "additional",
+  "alias",
+  "bitfield",
+  "callback",
+  "class",
+  "constant",
+  "constructor",
+  "enum",
+  "error",
+  "function",
+  "interface",
+  "namespace",
+  "macro",
+  "method",
+  "property",
+  "signal",
+  "struct",
+  "union",
+  "vfunc",
+];
+
+const QUERY_PATTERN = new RegExp(
+  "^(" + QUERY_TYPES.join("|") + ")\\s*:\\s*",
+  "i",
+);
+
+function createFilter(search_term) {
+  const matches = search_term.match(QUERY_PATTERN);
+  let tag = null;
+
+  if (matches) {
+    tag = matches[1].toLowerCase();
+    search_term = search_term.substring(matches[0].length);
+  }
+
+  const needle = search_term.replace(/\s+/g, "");
+  const isCaseSensitive = needle.toLowerCase() !== needle;
+  const actualNeedle = isCaseSensitive ? needle : needle.toLowerCase();
+
+  return Gtk.CustomFilter.new((item) => {
+    const haystack = isCaseSensitive
+      ? item.search_name
+      : item.search_name.toLowerCase();
+    const match = hasMatch(actualNeedle, haystack);
+    const shouldKeep = match && (!tag || item.tag === tag);
+    if (shouldKeep) item.score = score(actualNeedle, haystack);
+    return shouldKeep;
+  });
+}
+
 const SECTION_TYPES = {
   class: ["Classes", "#classes"],
   content: ["Addition Documentation", "#extra"],
@@ -438,6 +519,7 @@ function getChildren(index, dir) {
       location.insert_sorted(
         new DocumentationPage({
           name: symbol.name,
+          tag: getTagForDocument(symbol),
           search_name: getSearchNameForDocument(symbol, index.meta),
           uri: `${dir.get_uri()}/${getLinkForDocument(symbol)}`,
         }),
@@ -564,5 +646,27 @@ function getLinkForDocument(doc) {
       return `union.${doc.name}.html`;
     case "vfunc":
       return `vfunc.${doc.type_name}.${doc.name}.html`;
+  }
+}
+
+function getTagForDocument(doc) {
+  switch (doc.type) {
+    case "method":
+    case "class_method":
+      return "method";
+    case "content":
+      return "additional";
+    case "ctor":
+      return "constructor";
+    case "domain":
+      return "error";
+    case "function_macro":
+      return "macro";
+    case "record":
+      return "struct";
+    case "type_func":
+      return "function";
+    default:
+      return doc.type;
   }
 }

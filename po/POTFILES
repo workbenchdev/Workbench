@@ -80,3 +80,5 @@ src/Manuals/Shortcuts.js
 src/Manuals/DocumentationViewer.js
 src/Library/EntryRow.blp
 src/Library/EntryRow.js
+
+src/Manuals/fzy.js
