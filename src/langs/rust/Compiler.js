@@ -85,7 +85,7 @@ async function getSavedRustcVersion({ rustcVersionFile }) {
     const [contents] = await rustcVersionFile.load_contents_async(null);
     return decode(contents);
   } catch (err) {
-    if (!err.matches?.(Gio.IOErrorEnum, Gio.IOErrorEnum.NOT_FOUND)) {
+    if (!err.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.NOT_FOUND)) {
       throw err;
     }
     return null;

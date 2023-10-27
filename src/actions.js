@@ -132,7 +132,7 @@ async function open({ application, hint }) {
       null,
     );
   } catch (err) {
-    if (!err.matches?.(Gtk.DialogError, Gtk.DialogError.DISMISSED)) {
+    if (!err.matches(Gtk.DialogError, Gtk.DialogError.DISMISSED)) {
       throw err;
     }
   }

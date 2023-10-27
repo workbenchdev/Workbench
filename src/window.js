@@ -475,7 +475,7 @@ async function setGtk4PreferDark(dark) {
   try {
     settings.load_from_file(settings_path, GLib.KeyFileFlags.NONE);
   } catch (err) {
-    if (!err.matches?.(GLib.FileError, GLib.FileError.NOENT)) {
+    if (!err.matches(GLib.FileError, GLib.FileError.NOENT)) {
       throw err;
     }
   }

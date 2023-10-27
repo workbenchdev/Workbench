@@ -71,7 +71,7 @@ async function loadSourceBuffer({ source_file, buffer, lang }) {
   try {
     await file_loader.load_async(GLib.PRIORITY_DEFAULT, null, null);
   } catch (err) {
-    if (!err.matches?.(Gio.IOErrorEnum, Gio.IOErrorEnum.NOT_FOUND)) {
+    if (!err.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.NOT_FOUND)) {
       throw err;
     }
   }
