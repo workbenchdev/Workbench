@@ -48,9 +48,14 @@ Adw.PreferencesWindow pref_window {
     Adw.PreferencesGroup {
       title: _("API References");
 
-      Box {
-        orientation: horizontal;
-        margin-top: 12;
+       FlowBox {
+          orientation: horizontal;
+          margin-top: 12;
+          row-spacing: 2;
+          column-spacing: 2;
+          homogeneous: true;
+          max-children-per-line: 4;
+          min-children-per-line: 1;
 
         LinkButton {
           label: _("PreferencesWindow");
