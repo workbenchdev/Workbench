@@ -87,19 +87,19 @@ Adw.Window documentation_viewer {
               factory: BuilderListItemFactory {
                 template ListItem {
                   child: Box {
-                      Inscription {
-                        valign: center;
-                        hexpand: true;
-                        nat-chars: 25;
-                        text-overflow: ellipsize_end;
-                        text: bind template.item as <$DocumentationPage>.search_name;
-                      }
-                      Button {
-                        valign: center;
-                        label: bind template.item as <$DocumentationPage>.tag;
-                        styles ["pill","small","doc-tag"]
-                      }
-                    };
+                    Inscription {
+                      valign: center;
+                      hexpand: true;
+                      nat-chars: 25;
+                      text-overflow: ellipsize_end;
+                      text: bind template.item as <$DocumentationPage>.search_name;
+                    }
+                    Button {
+                      valign: center;
+                      label: bind template.item as <$DocumentationPage>.tag;
+                      styles ["pill", "small", "doc-tag"]
+                    }
+                  };
                 }
               };
               styles ["navigation-sidebar"]
