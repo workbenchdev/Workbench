@@ -33,6 +33,10 @@ button.pill.small {
   padding: 1px 12px;
 }
 
+button.doc-tag:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
 #panel_code,
 #panel_style,
 #panel_ui {

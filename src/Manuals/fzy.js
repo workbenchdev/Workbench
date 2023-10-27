@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2014 John Hawthorn
+//
+// SPDX-License-Identifier: MIT
+
 const SCORE_MIN = Number.MIN_SAFE_INTEGER;
 const SCORE_MAX = Number.MAX_SAFE_INTEGER;
 

@@ -88,6 +88,7 @@ Adw.Window documentation_viewer {
                 template ListItem {
                   child: Box {
                       Inscription {
+                        valign: center;
                         hexpand: true;
                         nat-chars: 25;
                         text-overflow: ellipsize_end;
@@ -96,7 +97,7 @@ Adw.Window documentation_viewer {
                       Button {
                         valign: center;
                         label: bind template.item as <$DocumentationPage>.tag;
-                        styles ["pill", "small"]
+                        styles ["pill","small","doc-tag"]
                       }
                     };
                 }
@@ -106,8 +107,8 @@ Adw.Window documentation_viewer {
           }
 
           Adw.StatusPage status_page {
-            title: "No Results Found";
-            description: "Try a different search term";
+            title: _("No Results Found");
+            description: _("Try a different search term");
             icon-name: "loupe-symbolic";
             styles ["compact"]
           }
