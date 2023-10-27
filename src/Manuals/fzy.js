@@ -1,6 +1,7 @@
 // SPDX-FileCopyrightText: 2014 John Hawthorn
 //
 // SPDX-License-Identifier: MIT
+// https://github.com/jhawthorn/fzy.js
 
 const SCORE_MIN = Number.MIN_SAFE_INTEGER;
 const SCORE_MAX = Number.MAX_SAFE_INTEGER;
