@@ -13,6 +13,7 @@ export default GObject.registerClass(
       "installation_guide",
       "label_hint",
       "label_command",
+      "button",
     ],
     Properties: {
       title: GObject.ParamSpec.string(
@@ -28,6 +29,13 @@ export default GObject.registerClass(
         "",
         GObject.ParamFlags.READWRITE,
         false,
+      ),
+      button_text: GObject.ParamSpec.string(
+        "button-text",
+        "",
+        "",
+        GObject.ParamFlags.READWRITE,
+        "",
       ),
       hint: GObject.ParamSpec.string(
         "hint",
@@ -49,6 +57,21 @@ export default GObject.registerClass(
     constructor(properties = {}) {
       super(properties);
 
+      this._button.connect("clicked", () => {
+        let appid = "appstream://org.freedesktop.Sdk.Extension."
+        switch (this.title) {
+          case "Rust":
+            appid += "rust-stable"
+            break;
+          case "Vala":
+            appid += "vala"
+            break;
+          default:
+            return;
+        }
+        Gtk.show_uri(null, appid, null);
+      });
+
       this.bind_property(
         "title",
         this._label_title,
@@ -68,6 +91,20 @@ export default GObject.registerClass(
         this._installation_guide,
         "visible",
         GObject.BindingFlags.SYNC_CREATE | GObject.BindingFlags.INVERT_BOOLEAN,
+      );
+
+      this.bind_property(
+        "enabled",
+        this._button,
+        "visible",
+        GObject.BindingFlags.SYNC_CREATE | GObject.BindingFlags.INVERT_BOOLEAN,
+      );
+
+      this.bind_property(
+        "button-text",
+        this._button,
+        "label",
+        GObject.BindingFlags.SYNC_CREATE,
       );
 
       this.bind_property(

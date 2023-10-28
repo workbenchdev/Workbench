@@ -33,6 +33,14 @@ template $Extension: ListBoxRow {
       margin-bottom: 14;
       orientation: vertical;
 
+      Button button {
+        halign: center;
+        styles [
+          "pill",
+          "suggested-action"
+        ]
+      }
+
       Label label_hint {
         wrap: true;
         xalign: 0;
