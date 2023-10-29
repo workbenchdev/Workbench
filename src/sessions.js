@@ -47,6 +47,7 @@ export function createSession(name = getNowForFilename()) {
 export function createSessionFromDemo(demo) {
   const session = createSession();
   const demo_dir = demos_dir.get_child(demo.name);
+  session.setName(demo.name);
 
   copy_directory(demo_dir, session);
   copy_directory(rust_template_dir, session);
@@ -93,6 +94,7 @@ export async function deleteSession(session) {
 
 export async function saveSessionAsProject(session, destination) {
   await destination.make_directory_async(GLib.PRIORITY_DEFAULT, null);
+  session.setName(destination.get_basename());
 
   for await (const file_info of session.file.enumerate_children(
     "",
@@ -127,9 +129,9 @@ export class Session {
   settings = null;
   file = null;
   name = null;
+  id = null;
 
   constructor(file) {
-    this.name = file.get_basename();
     this.file = file;
     const backend = Gio.keyfile_settings_backend_new(
       this.file.get_child("settings").get_path(),
@@ -141,6 +143,23 @@ export class Session {
       schema_id: `${pkg.name}.Session`,
       path: "/re/sonny/Workbench/",
     });
+
+    const fileBasename = this.file.get_basename();
+    this.id = fileBasename;
+
+    const sessionName = this.settings.get_string("name");
+    // If sessionName is empty, it means either the session is new or it has not
+    // been ported to use the name schema key.
+    if (sessionName === "") {
+      this.setName(fileBasename);
+    } else {
+      this.name = sessionName;
+    }
+  }
+
+  setName(name) {
+    this.settings.set_string("name", name);
+    this.name = name;
   }
 
   isProject() {
