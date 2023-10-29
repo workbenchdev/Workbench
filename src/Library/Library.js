@@ -1,5 +1,4 @@
 import Gio from "gi://Gio";
-import Gtk from "gi://Gtk";
 
 import {
   decode,
@@ -9,17 +8,18 @@ import {
 } from "../util.js";
 import Window from "../window.js";
 
-import resource from "./Library.blp";
+import resource from "./Library.blp" with { type: "uri" };
 import { createSessionFromDemo } from "../sessions.js";
 import EntryRow from "./EntryRow.js";
 
 import illustration from "./library.svg";
 
-export default function Library({ application }) {
-  const builder = Gtk.Builder.new_from_resource(resource);
-  const window = builder.get_object("library");
+import { build } from "../../troll/src/builder.js";
 
-  const picture_illustration = builder.get_object("picture_illustration");
+export default function Library({ application }) {
+  const objects = build(resource);
+  const { window, picture_illustration } = objects;
+  window.application = application;
   picture_illustration.set_resource(illustration);
 
   let last_selected;
@@ -39,7 +39,7 @@ export default function Library({ application }) {
       }).catch(console.error);
     });
 
-    builder.get_object(`library_${demo.category}`).add(widget);
+    objects[`library_${demo.category}`].add(widget);
   });
 
   const action_library = new Gio.SimpleAction({
