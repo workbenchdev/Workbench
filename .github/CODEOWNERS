@@ -1,0 +1,8 @@
+* @sonnyp
+*.vala @lw64
+*.rs @Hofer-Julian
+Cargo.toml @Hofer-Julian
+Cargo.lock @Hofer-Julian
+*.c @andyholmes
+*.h @andyholmes
+*.py @theCapypara

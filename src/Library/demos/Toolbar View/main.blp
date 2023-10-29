@@ -1,0 +1,216 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.Window {
+  width-request: 360;
+  height-request: 640;
+  default-width: 640;
+  default-height: 640;
+
+  Adw.ToolbarView toolbar_view {
+    extend-content-to-bottom-edge: bind extend_bottom.active;
+    extend-content-to-top-edge: bind extend_top.active;
+    top-bar-style: bind barstyle_select.selected;
+    bottom-bar-style: bind barstyle_select.selected;
+    reveal-top-bars:  bind reveal_topbar.active;
+    reveal-bottom-bars: bind reveal_bottombar.active;
+
+    // In this demo we are using the API to set the header bars
+    // you can use the [top] and [bottom] child types directly instead
+    // [top]
+    // Adw.HeaderBar {
+      // title-widget: Adw.WindowTitle {
+        // title: _("Header Bar");
+      // };
+    // }
+
+
+    content: Adw.ViewStack stack {
+      Adw.ViewStackPage page_defualt {
+        name: "page_default";
+        title: _("Toolbar View");
+        icon-name: "toolbars-symbolic";
+        child: Adw.StatusPage{
+          Box {
+            halign: center;
+            orientation: vertical;
+            spacing: 18;
+            Label {
+              label: _("Toolbar View");
+              styles ["title-1"]
+            }
+            Label {
+              wrap: true;
+              label: _("A widget containing a page, as well as top and/or bottom bars.");
+            }
+            LinkButton {
+              label: _("API Reference");
+              uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.4/class.ToolbarView.html";
+            }
+            ListBox list_box {
+              styles ["boxed-list"]
+              selection-mode: none;
+              Adw.ComboRow topbar_select {
+                title: _("Top bar");
+                model: StringList {
+                  strings [_("Header Bar"),_("Tab Bar"),_("View Switcher Bar"),_("Action Bar"),_("PopOverMenu Bar"),_("Search Bar"),_("Gtk Box")]
+                };
+                selected: 0;
+              }
+              Adw.ComboRow bottombar_select {
+                title: _("Bottom bar");
+                model: StringList {
+                  strings [_("Header Bar"),_("Tab Bar"),_("View Switcher Bar"),_("Action Bar"),_("PopOverMenu Bar"),_("Search Bar"),_("Gtk Box")]
+                };
+                selected: 2;
+              }
+              Adw.ComboRow barstyle_select {
+                title: _("Style");
+                model: StringList {
+                  strings [_("Flat"), _("Raised"), _("Raised-Border")]
+                };
+              }
+              Adw.SwitchRow reveal_topbar {
+                title: _("Reveal Top Bar");
+                active: true;
+              }
+              Adw.SwitchRow reveal_bottombar {
+                title: _("Reveal Bottom Bar");
+                active: true;
+              }
+              Adw.SwitchRow extend_top {
+                title: _("Extend content behind top bar");
+                active: false;
+              }
+              Adw.SwitchRow extend_bottom {
+                title: _("Extend content behind bottom bar");
+                active: false;
+              }
+            }
+          }
+        };
+      }
+
+      Adw.ViewStackPage page1 {
+        name: "page1";
+        title: _("Page 1");
+        icon-name: "explore2-symbolic";
+        use-underline: true;
+        child: Adw.StatusPage{
+          title: _("Hello");
+          };
+        }
+
+      Adw.ViewStackPage page2 {
+        name: "page2";
+        title: _("Page 2");
+        icon-name: "explore2-symbolic";
+        use-underline: true;
+        child: Adw.StatusPage {
+          title: _("from");
+        };
+      }
+
+      Adw.ViewStackPage page3 {
+        name: "page3";
+        title: _("Page 3");
+        icon-name: "explore2-symbolic";
+        use-underline: true;
+        child: Adw.StatusPage {
+          title: _("Workbench");
+        };
+      }
+    };
+  }
+}
+
+Adw.HeaderBar header_bar {
+  title-widget: Adw.WindowTitle {
+    title: _("Header Bar");
+  };
+}
+
+ActionBar action_bar {
+  revealed: true;
+  valign: end;
+
+  [start]
+  Button start_widget {
+    icon-name: "call-start-symbolic";
+  }
+
+  [center]
+  DropDown {
+    model: StringList {
+      strings ["Center Widget","👁️", "❤️", "💼", "🪑"]
+    };
+  }
+
+  [end]
+  Button end_widget {
+    icon-name: "padlock2-symbolic";
+  }
+}
+
+Adw.ViewSwitcherBar switcher_bar {
+  stack: stack;
+  reveal: true;
+}
+
+PopoverMenuBar popover {
+  menu-model: menu_app;
+}
+
+menu menu_app {
+  section {
+    item {
+      label: _("Keyboard Shortcuts");
+      action: "app.shortcuts";
+    }
+
+    item {
+      label: _("About Workbench");
+      action: "app.about";
+    }
+  }
+}
+
+SearchBar search_bar {
+  search-mode-enabled: true;
+  show-close-button: true;
+  SearchEntry {
+    placeholder-text: _("Start Searching…");
+  }
+}
+
+Box gtk_box {
+  name: "gtk_box";
+  halign: fill;
+  height-request: 20;
+}
+
+Adw.TabBar tab_bar {
+  view: tab_view;
+}
+
+Adw.TabView tab_view {
+  Adw.TabPage main_tab_page {
+    title: _("First Page");
+    child: Adw.StatusPage {
+      hexpand: true;
+      vexpand: true;
+      title: _("Tab View");
+      description: _("A dynamic tabbed container");
+    };
+  }
+
+  Adw.TabPage main_tab_page2 {
+    title: _("Second Page");
+    child: Adw.StatusPage {
+      hexpand: true;
+      vexpand: true;
+      title: _("Tab View");
+      description: _("A dynamic tabbed container");
+    };
+  }
+}

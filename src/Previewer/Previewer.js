@@ -3,6 +3,7 @@ import Gdk from "gi://Gdk";
 import GObject from "gi://GObject";
 import GLib from "gi://GLib";
 import Gio from "gi://Gio";
+import { gettext as _ } from "gettext";
 
 import * as xml from "../langs/xml/xml.js";
 import * as postcss from "../lib/postcss.js";
@@ -13,6 +14,7 @@ import {
   data_dir,
   getNowForFilename,
   ensureDir,
+  makeDropdownFlat,
 } from "../util.js";
 
 import Internal from "./Internal.js";
@@ -39,15 +41,15 @@ export default function Previewer({
   application,
   term_console,
   settings,
+  session,
 }) {
   let panel_code;
 
   let current;
+  let current_external_language = null;
 
   const dropdown_preview_align = builder.get_object("dropdown_preview_align");
-  // TODO: File a bug libadwaita
-  // flat does nothing on GtkDropdown or GtkComboBox or GtkComboBoxText
-  dropdown_preview_align.get_first_child().add_css_class("flat");
+  makeDropdownFlat(dropdown_preview_align);
 
   const internal = Internal({
     onWindowChange(open) {
@@ -64,6 +66,7 @@ export default function Previewer({
     application,
     dropdown_preview_align,
     panel_ui,
+    session,
   });
   const external = External({
     onWindowChange(open) {
@@ -72,12 +75,13 @@ export default function Previewer({
         stack.set_visible_child_name("close_window");
       } else {
         stack.set_visible_child_name("open_window");
-        useInternal().catch(logError);
+        useInternal().catch(console.error);
       }
     },
     output,
     builder,
     panel_ui,
+    session,
   });
 
   const code_view_css = builder.get_object("code_view_css");
@@ -173,7 +177,7 @@ export default function Previewer({
       tree = xml.parse(text);
       ({ target_id, text, original_id, template } = targetBuildable(tree));
     } catch (err) {
-      // logError(err);
+      // console.error(err);
       console.debug(err);
     }
 
@@ -207,7 +211,7 @@ export default function Previewer({
         console.warn(err.message);
         return;
       }
-      logError(err);
+      console.error(err);
       return;
     }
 
@@ -232,12 +236,13 @@ export default function Previewer({
     symbols = null;
   }
 
-  const schedule_update = unstack(update, logError);
+  const schedule_update = unstack(update, console.error);
 
-  async function useExternal() {
-    if (current !== external) {
-      await setPreviewer(external);
+  async function useExternal(language) {
+    if (current !== external || language !== current_external_language) {
+      await setPreviewer(external, language);
     }
+    current_external_language = language;
     stack.set_visible_child_name("close_window");
     await update(true);
   }
@@ -249,7 +254,7 @@ export default function Previewer({
     await update(true);
   }
 
-  async function setPreviewer(previewer) {
+  async function setPreviewer(previewer, language) {
     if (handler_id_button_open) {
       button_open.disconnect(handler_id_button_open);
     }
@@ -259,11 +264,15 @@ export default function Previewer({
 
     try {
       await current?.closeInspector();
-    } catch {}
+    } catch {
+      /*  */
+    }
 
     try {
       await current?.stop();
-    } catch {}
+    } catch {
+      /*  */
+    }
 
     current = previewer;
 
@@ -272,7 +281,7 @@ export default function Previewer({
         await current.open();
         stack.set_visible_child_name("close_window");
       } catch (err) {
-        logError(err);
+        console.error(err);
       }
     });
 
@@ -281,19 +290,19 @@ export default function Previewer({
         await current.close();
         stack.set_visible_child_name("open_window");
       } catch (err) {
-        logError(err);
+        console.error(err);
       }
     });
 
     try {
-      await current.start();
+      await current.start(language);
     } catch (err) {
-      logError(err);
+      console.error(err);
     }
   }
 
   builder.get_object("button_screenshot").connect("clicked", () => {
-    screenshot({ application, window, current }).catch(logError);
+    screenshot({ application, window, current }).catch(console.error);
   });
 
   setPreviewer(internal);
@@ -435,7 +444,7 @@ function registerSignals({ tree, scope, symbols, template }) {
       scope[signal.handler] = makeSignalHandler(signal, { symbols, template });
     }
   } catch (err) {
-    logError(err);
+    console.error(err);
   }
 }
 

@@ -1,10 +1,10 @@
 import Gtk from "gi://Gtk";
 import Gdk from "gi://Gdk";
 import Gio from "gi://Gio";
+import { gettext as _ } from "gettext";
 
 const window = workbench.window;
 const ctrl_button = workbench.builder.get_object("ctrl_button");
-const click_button = workbench.builder.get_object("click_button");
 const stack = workbench.builder.get_object("stack");
 const pic1 = workbench.builder.get_object("pic1");
 const pic2 = workbench.builder.get_object("pic2");
@@ -12,16 +12,8 @@ const primary_button = workbench.builder.get_object("primary_button");
 const middle_button = workbench.builder.get_object("middle_button");
 const secondary_button = workbench.builder.get_object("secondary_button");
 
-const pic1_file = Gio.File.new_for_path(pkg.pkgdatadir).resolve_relative_path(
-  "Library/demos/Event Controllers/image1.png",
-);
-
-const pic2_file = Gio.File.new_for_path(pkg.pkgdatadir).resolve_relative_path(
-  "Library/demos/Event Controllers/image2.png",
-);
-
-pic1.file = pic1_file;
-pic2.file = pic2_file;
+pic1.file = Gio.File.new_for_uri(workbench.resolve("image1.png"));
+pic2.file = Gio.File.new_for_uri(workbench.resolve("image2.png"));
 
 let ctrl_pressed = false;
 

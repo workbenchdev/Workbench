@@ -1,0 +1,61 @@
+using Gtk 4.0;
+using Adw 1;
+
+Gtk.Window {
+  width-request: 360;
+  height-request: 200;
+  default-width: 640;
+  default-height: 480;
+  title: bind page.title;
+
+  Adw.StatusPage page {
+    title: _("Breakpoints");
+    description: _("Resize the window to see the breakpoint effect");
+    child: Box {
+      orientation: vertical;
+      spacing: 12;
+      valign: center;
+
+      Image image {
+        icon-size: large;
+        icon-name: "smile-symbolic";
+      }
+
+      Adw.BreakpointBin breakpoint_bin {
+        width-request: 200;
+        height-request: 50;
+
+        Adw.Breakpoint breakpoint {
+          condition ("max-width: 500sp")
+          setters {
+            breakpoint_bin.child: label_narrow;
+            image.icon-size: normal;
+          }
+        }
+
+        child: label_wide;
+      }
+
+      LinkButton {
+        margin-top: 24;
+        label: _("Breakpoint");
+        uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.4/class.Breakpoint.html";
+      }
+
+      LinkButton {
+        label: _("Breakpoint Bin");
+        uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.4/class.BreakpointBin.html";
+      }
+    };
+  }
+}
+
+Label label_narrow {
+  label: _("Narrow");
+  styles ["title-4"]
+}
+
+Label label_wide {
+  label: _("Wide");
+  styles ["title-1"]
+}

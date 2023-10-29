@@ -41,7 +41,6 @@ libworkbench_c_args = [
   '-Wno-missing-declarations',
 
   '-DWORKBENCH_COMPILATION',
-  '-DWORKBENCH_EXPORT=__attribute__((visibility("default"))) extern',
 ]
 libworkbench_link_args = []
 libworkbench_deps = [
@@ -74,7 +73,6 @@ install_headers(libworkbench_headers,
 
 libworkbench_enums = gnome.mkenums_simple('libworkbench-enums',
          sources: libworkbench_headers,
-       decorator: 'WORKBENCH_EXPORT',
   install_header: true,
      install_dir: join_paths(includedir, 'libworkbench'),
 )
@@ -87,7 +85,6 @@ libworkbench = shared_library('workbench-@0@'.format(libworkbench_api_version),
            dependencies: libworkbench_deps,
                  c_args: libworkbench_c_args,
               link_args: libworkbench_link_args,
-  gnu_symbol_visibility: 'hidden',
               soversion: meson.project_version(),
                 version: libworkbench_api_version,
                 install: true,

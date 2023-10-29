@@ -1,0 +1,79 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: _("Session Monitor and Inhibit");
+  description: _("Monitor the login session state and inhibit session state changes");
+
+  Adw.Clamp {
+    maximum-size: 380;
+
+    Box {
+      orientation: vertical;
+
+      Adw.EntryRow entry {
+        title: _("Reason");
+        styles ["card"]
+      }
+
+      Label {
+        margin-top: 12;
+        halign: start;
+        label: "Actions to inhibit that can end user's session";
+        styles ["dim-label"]
+      }
+
+      ListBox {
+        selection-mode: none;
+        Adw.SwitchRow switch_row_logout {
+          title: _("Logout");
+        }
+        Adw.SwitchRow switch_row_idle {
+          title: _("Idle");
+        }
+        styles ["boxed-list"]
+      }
+
+      Box {
+        margin-top: 12;
+        homogeneous: true;
+
+        Button button_start {
+          halign: center;
+          label: _("Start Session");
+          styles ["suggested-action", "pill"]
+        }
+
+        Button button_stop {
+          halign: center;
+          label: _("Stop Session");
+          sensitive: false;
+          styles ["destructive-action", "pill"]
+        }
+      }
+
+      Box {
+        margin-top: 24;
+        orientation: vertical;
+        halign: center;
+
+        Label {
+          label: _("API References");
+          styles ["title-2"]
+        }
+
+        Box {
+          LinkButton {
+            label: _("Session Monitor");
+            uri: "https://libportal.org/method.Portal.session_monitor_start.html";
+          }
+
+          LinkButton {
+            label: _("Session Inhibit");
+            uri: "https://libportal.org/method.Portal.session_inhibit.html";
+          }
+        }
+      }
+    }
+  }
+}

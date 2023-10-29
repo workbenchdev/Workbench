@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  CI:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: "recursive"
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "npm"
+
+      # See also https://github.com/flatpak/flatpak-github-actions
+      - uses: awalsh128/cache-apt-pkgs-action@latest
+        with:
+          packages: flatpak gettext # FIXME use flatpak sdk for msgfmt tests
+          version: 1.0
+
+      - name: Cache Flatpak dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.local/share/flatpak
+          key: 45
+
+      - run: make ci

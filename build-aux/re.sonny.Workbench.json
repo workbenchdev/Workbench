@@ -1,0 +1,61 @@
+{
+  "id": "re.sonny.Workbench",
+  "runtime": "org.gnome.Sdk",
+  "runtime-version": "45",
+  "sdk": "org.gnome.Sdk",
+  "sdk-extensions": [
+    "org.gnome.Sdk.Docs",
+    "org.freedesktop.Sdk.Extension.vala",
+    "org.freedesktop.Sdk.Extension.rust-stable",
+    "org.freedesktop.Sdk.Extension.llvm16"
+  ],
+  "build-options": {
+    "append-path": "/usr/lib/sdk/vala/bin:/usr/lib/sdk/rust-stable/bin",
+    "append-ld-library-path": "/usr/lib/sdk/vala/lib"
+  },
+  "command": "workbench",
+  "finish-args": [
+    "--share=ipc",
+    "--socket=fallback-x11",
+    "--socket=wayland",
+    "--device=dri",
+    "--share=network",
+    "--socket=pulseaudio"
+  ],
+  "cleanup": [
+    "/include",
+    "#/lib/pkgconfig",
+    "/man",
+    "#/share/doc",
+    "/share/gtk-doc",
+    "/share/man",
+    "#/share/pkgconfig",
+    "/share/installed-tests",
+    "*.la",
+    "*.a"
+  ],
+  "modules": [
+    "modules/gst-plugin-gtk4.json",
+    "modules/gi-docgen.json",
+    "modules/vte.json",
+    "modules/libshumate.json",
+    "modules/libportal.json",
+    "modules/libspelling.json",
+    "modules/GTKCssLanguageServer.json",
+    "modules/blueprint-compiler.json",
+    "modules/biome.json",
+    "modules/icon-development-kit.json",
+    "modules/python-black.json",
+    {
+      "name": "Workbench",
+      "buildsystem": "meson",
+      "config-opts": ["-Dprofile=default"],
+      "sources": [
+        {
+          "type": "dir",
+          "path": ".."
+        }
+      ]
+    }
+  ]
+}

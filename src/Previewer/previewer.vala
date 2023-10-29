@@ -1,6 +1,6 @@
 namespace Workbench {
 
-  [DBus (name="re.sonny.Workbench.vala_previewer")]
+  [DBus (name="re.sonny.Workbench.previewer_module")]
   public class Previewer : Object {
     construct {
       this.notify["ColorScheme"].connect (() => {
@@ -59,9 +59,15 @@ namespace Workbench {
       return true;
     }
 
-    public void update_ui (string content, string target_id, string original_id = "") {
-      this.builder = new Gtk.Builder.from_string (content, content.length);
+    // This registers GObjects so that they can be found by GtkBuilder
+    void ensure_types() {
+      typeof (Shumate.SimpleMap).ensure();
+      typeof (WebKit.WebView).ensure();
+    }
 
+    public void update_ui (string content, string target_id, string original_id = "") {
+      this.ensure_types();
+      this.builder = new Gtk.Builder.from_string (content, content.length);
       var target = this.builder.get_object (target_id) as Gtk.Widget;
       if (target == null) {
         stderr.printf (@"Widget with target_id='$target_id' could not be found.\n");
@@ -122,64 +128,42 @@ namespace Workbench {
       Gtk.StyleContext.add_provider_for_display (Gdk.Display.get_default (), this.css , Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
     }
 
-    // filename to loadable module or empty string ("") to just run it again
-    // also builder_symbol can be empty. Then the builder object is not handed over to the module
-    public void run (string filename, string run_symbol, string builder_symbol, string window_symbol) {
-      if (filename == "") {
-        if (this.module == null) {
-          stderr.printf ("No Module specified yet.\n");
-          return;
-        }
-      } else {
-        if (!Module.supported ()) {
-          stderr.printf ("This system does not support loadable modules.\n");
-          return;
-        }
-
-        if (this.module != null)
-          this.module.close ();
-        this.module = Module.open (filename, ModuleFlags.LAZY);
-        if (this.module == null) {
-          stderr.printf ("Module loading failed.\n");
-          return;
-        }
+    public void run (string filename, string uri) {
+      if (this.module != null) {
+        this.module.close ();
       }
 
-      if (builder_symbol != "") {
-        if (this.builder == null) {
-          stderr.printf ("No UI definition loaded yet.\n");
-          return;
-        }
-
-        void* function;
-        this.module.symbol (builder_symbol, out function);
-        if (function == null) {
-          stderr.printf (@"Module does not contain symbol '$builder_symbol'.\n");
-          return;
-        }
-
-        var set_builder = (BuilderFunction) function;
-        set_builder (this.builder);
-
-        this.module.symbol (window_symbol, out function);
-        if (function == null) {
-          stderr.printf (@"Module does not contain symbol '$window_symbol'.\n");
-          return;
-        }
-
-        var set_window = (WindowFunction) function;
-        set_window (this.window);
-      }
-
-      void* function;
-      this.module.symbol (run_symbol, out function);
-      if (function == null) {
-        stderr.printf (@"Function '$run_symbol' not found.\n");
+      this.module = Module.open (filename, ModuleFlags.LAZY);
+      if (this.module == null) {
+        stderr.printf ("Module loading failed.\n");
         return;
       }
 
-      var run = (RunFunction) function;
-      run ();
+      void* function;
+
+      this.module.symbol ("set_base_uri", out function);
+      var set_base_uri = (BaseUriFunction) function;
+      set_base_uri (uri);
+
+      this.module.symbol ("set_builder", out function);
+      var set_builder = (BuilderFunction) function;
+      if (this.builder != null) {
+        set_builder (this.builder);
+      }
+
+      this.module.symbol ("set_window", out function);
+      var set_window = (WindowFunction) function;
+      if (this.window != null) {
+        set_window (this.window);
+      }
+
+      this.module.symbol ("main", out function);
+      if (function == null) {
+        stderr.printf (@"Function 'main' not found.\n");
+        return;
+      }
+      var main_function = (MainFunction) function;
+      main_function ();
     }
 
     public void close_window () {
@@ -207,13 +191,16 @@ namespace Workbench {
     public signal void css_parser_error (string message, int start_line, int start_char, int end_line, int end_char);
 
     [CCode (has_target=false)]
-    private delegate void RunFunction ();
+    private delegate void MainFunction ();
 
     [CCode (has_target=false)]
     private delegate void BuilderFunction (Gtk.Builder builder);
 
     [CCode (has_target=false)]
     private delegate void WindowFunction (Gtk.Window window);
+
+    [CCode (has_target=false)]
+    private delegate void BaseUriFunction (string uri);
 
     private Gtk.Window? window;
     private Gtk.Widget? target;
@@ -224,6 +211,11 @@ namespace Workbench {
   }
 
   void main (string[] args) {
+    if (!Module.supported ()) {
+      stderr.printf ("This system does not support loadable modules.\n");
+      Process.exit (1);
+    }
+
     var loop = new MainLoop();
 
     Adw.init();
@@ -241,7 +233,7 @@ namespace Workbench {
       loop.quit();
     });
 
-    connection.register_object ("/re/sonny/workbench/vala_previewer", previewer);
+    connection.register_object ("/re/sonny/workbench/previewer_module", previewer);
 
     loop.run();
   }

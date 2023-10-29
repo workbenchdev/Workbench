@@ -34,13 +34,48 @@ Adw.StatusPage {
           }
         }
 
+        Adw.ActionRow {
+          title: _("Action Row can have a activatable widget");
+          subtitle: _("Click on the row to activate it");
+          activatable-widget: activatable_toggle;
+
+          [suffix]
+          ToggleButton activatable_toggle {
+            icon-name: "hand-touch-symbolic";
+            valign: center;
+          }
+        }
+        
+        Adw.ActionRow {
+          styles ["property"]
+          title: _("Property Row");
+          subtitle: _("Deemphasizes the row title and emphasizes subtitle instead");
+        }
+
         Adw.EntryRow {
           title: _("A row can be an entry");
         }
 
+        Adw.SwitchRow {
+          title: _("Switch Row");
+          subtitle: _("Simple on/off control");
+        }
+
+        Adw.SpinRow {
+          title: _("Spin Row");
+          subtitle: _("Increment or decrement a value");
+          climb-rate: 0.2;
+          adjustment: Adjustment {
+            lower: 0;
+            upper: 100;
+            step-increment: 1;
+            value: 50;
+          };
+        }
+
         Adw.ComboRow {
           title: _("Choose an item");
-          subtitle: _("ComboRow can have a drop down list");
+          subtitle: _("List of options from a drop down");
           model: StringList list {
             strings ["this", "is", "a", "string", "list"]
           };
@@ -61,12 +96,12 @@ Adw.StatusPage {
 
       LinkButton {
         margin-top: 24;
-        label: "API Reference";
-        uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1-latest/boxed-lists.html";
+        label: _("API Reference");
+        uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.4/boxed-lists.html";
       }
 
       LinkButton {
-        label: "Human Interface Guidelines";
+        label: _("Human Interface Guidelines");
         uri: "https://developer.gnome.org/hig/patterns/containers/boxed-lists.html";
       }
     }

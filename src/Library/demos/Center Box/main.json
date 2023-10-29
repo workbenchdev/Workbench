@@ -1,0 +1,6 @@
+{
+  "category": "layout",
+  "description": "Displays three child widgets, while keeping the middle centered",
+  "panels": ["ui", "preview"],
+  "autorun": true
+}

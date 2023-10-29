@@ -18,7 +18,7 @@ export function ensureDir(file) {
   try {
     file.make_directory_with_parents(null);
   } catch (err) {
-    if (err.code !== Gio.IOErrorEnum.EXISTS) {
+    if (!err.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.EXISTS)) {
       throw err;
     }
   }
@@ -29,14 +29,15 @@ export function getFlatpakInfo() {
   try {
     keyFile.load_from_file("/.flatpak-info", GLib.KeyFileFlags.NONE);
   } catch (err) {
-    if (err.code !== GLib.FileError.NOENT) {
-      logError(err);
+    if (!err.matches(GLib.FileError, GLib.FileError.NOENT)) {
+      console.error(err);
     }
     return null;
   }
   return keyFile;
 }
 
+// See dropdown_code_lang for index
 export const languages = [
   {
     id: "blueprint",
@@ -45,6 +46,7 @@ export const languages = [
     extensions: [".blp"],
     types: [],
     document: null,
+    default_file: "main.blp",
   },
   {
     id: "xml",
@@ -53,6 +55,7 @@ export const languages = [
     extensions: [".ui"],
     types: ["application/x-gtk-builder"],
     document: null,
+    default_file: "main.ui",
   },
   {
     id: "javascript",
@@ -61,6 +64,8 @@ export const languages = [
     extensions: [".js", ".mjs"],
     types: ["text/javascript", "application/javascript"],
     document: null,
+    default_file: "main.js",
+    index: 0,
   },
   {
     id: "css",
@@ -69,6 +74,7 @@ export const languages = [
     extensions: [".css"],
     types: ["text/css"],
     document: null,
+    default_file: "main.css",
   },
   {
     id: "vala",
@@ -77,7 +83,28 @@ export const languages = [
     extensions: [".vala"],
     types: ["text/x-vala"],
     document: null,
-    placeholder: "// Sorry, this demo is not available in Vala yet.",
+    default_file: "main.vala",
+    index: 1,
+  },
+  {
+    id: "rust",
+    name: "Rust",
+    panel: "code",
+    extensions: [".rs"],
+    types: ["text/x-rust"],
+    document: null,
+    default_file: "code.rs",
+    index: 2,
+  },
+  {
+    id: "python",
+    name: "Python",
+    panel: "code",
+    extensions: [".py"],
+    types: ["text/x-python"],
+    document: null,
+    default_file: "main.py",
+    index: 3,
   },
 ];
 
@@ -150,29 +177,23 @@ export const demos_dir = Gio.File.new_for_path(
   pkg.pkgdatadir,
 ).resolve_relative_path("Library/demos");
 
-export function readDemoFile(demo_name, file_name) {
-  const file = demos_dir.get_child(demo_name).get_child(file_name);
-
-  let str;
-
-  try {
-    str = decode(file.load_contents(null)[1]);
-  } catch (err) {
-    if (err.code !== Gio.IOErrorEnum.NOT_FOUND) {
-      throw err;
-    }
-    str = "";
-  }
-
-  return str;
-}
-
-export function getDemo(name) {
-  const demo = JSON.parse(readDemoFile(name, "main.json"));
-  demo.name = name;
-  return demo;
-}
+export const rust_template_dir = Gio.File.new_for_path(
+  pkg.pkgdatadir,
+).resolve_relative_path("langs/rust/template");
 
 export function getNowForFilename() {
   return new GLib.DateTime().format("%Y-%m-%d %H-%M-%S");
+}
+
+// https://gitlab.gnome.org/GNOME/libadwaita/-/issues/746
+export function makeDropdownFlat(dropdown) {
+  dropdown.get_first_child().add_css_class("flat");
+}
+
+export function buildRuntimePath(...args) {
+  return GLib.build_filenamev([
+    GLib.getenv("XDG_RUNTIME_DIR"),
+    GLib.getenv("FLATPAK_ID"),
+    ...args,
+  ]);
 }

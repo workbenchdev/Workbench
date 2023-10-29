@@ -1,6 +1,4 @@
-import Gtk from "gi://Gtk";
 import Gio from "gi://Gio";
-import GObject from "gi://GObject";
 import GLib from "gi://GLib";
 
 const demo = workbench.builder.get_object("demo");
@@ -13,7 +11,7 @@ const simple_action = new Gio.SimpleAction({
   name: "simple",
 });
 
-simple_action.connect("activate", (action, parameter) => {
+simple_action.connect("activate", (action) => {
   console.log(`${action.name} action activated`);
 });
 

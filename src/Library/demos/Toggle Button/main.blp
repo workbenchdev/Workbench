@@ -2,7 +2,7 @@ using Gtk 4.0;
 using Adw 1;
 
 Adw.StatusPage {
-  title: "Toggle Button";
+  title: _("Toggle Button");
   description: _("Represent active-state visually");
 
   Box {
@@ -27,7 +27,7 @@ Adw.StatusPage {
     }
 
     Label {
-      label: "Grouped";
+      label: _("Grouped");
       margin-bottom: 24;
     }
 
@@ -51,7 +51,7 @@ Adw.StatusPage {
     }
 
     Label {
-      label: "Independent";
+      label: _("Independent");
       margin-bottom: 24;
     }
 
@@ -62,28 +62,28 @@ Adw.StatusPage {
       Adw.ButtonContent {
         halign: center;
         valign: center;
-        label: "Console";
+        label: _("Console");
         icon-name: "terminal-symbolic";
       }
     }
 
     Label {
-      label: "With label";
+      label: _("With label");
       margin-bottom: 24;
     }
 
     LinkButton{
-      label: "Tutorial";
+      label: _("Tutorial");
       uri: "https://developer.gnome.org/documentation/tutorials/beginners/components/toggle.html";
     }
 
     LinkButton{
-      label: "API Reference";
+      label: _("API Reference");
       uri: "https://docs.gtk.org/gtk4/class.ToggleButton.html";
     }
 
     LinkButton{
-      label: "Human Interface Guidelines";
+      label: _("Human Interface Guidelines");
       uri: "https://developer.gnome.org/hig/patterns/controls/buttons.html";
     }
   }

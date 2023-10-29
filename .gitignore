@@ -11,8 +11,15 @@ install
 *.compiled
 *.flatpak
 .fenv
+.venv
+__pycache__
+*.pyc
+
+# IDEs / editors
+.idea
 
 # Project files
 src/Library/**/settings
 src/Library/**/workbench.vala
 src/Library/**/main.ui
+src/Library/**/libworkbenchcode.so

@@ -1,0 +1,40 @@
+{
+  "name": "icon-development-kit",
+  "buildsystem": "simple",
+  "build-commands": [
+    "mkdir -p /app/share/icon-development-kit",
+    "mkdir -p /app/share/icons/hicolor/scalable/actions/",
+    "yq -o=json _data/icons.yaml > /app/share/icon-development-kit/icons.json",
+    "cp -r img/symbolic/**/*.svg /app/share/icons/hicolor/scalable/actions/ || true"
+  ],
+  "sources": [
+    {
+      "type": "git",
+      "url": "https://gitlab.gnome.org/Teams/Design/icon-development-kit-www.git",
+      "commit": "e5877924b9bd0c6e25ff4d3aca71f4d9eef5c8b1"
+    }
+  ],
+  "modules": [
+    {
+      "name": "yq",
+      "buildsystem": "simple",
+      "build-commands": ["chmod +x yq", "cp yq /app/bin/yq"],
+      "sources": [
+        {
+          "type": "file",
+          "only-arches": ["x86_64"],
+          "url": "https://github.com/mikefarah/yq/releases/download/v4.33.3/yq_linux_amd64",
+          "sha256": "4ee662847c588c3ef2fec8bfb304e8739e3dbaba87ccb9a608d691c88f5b64dc",
+          "dest-filename": "yq"
+        },
+        {
+          "type": "file",
+          "only-arches": ["aarch64"],
+          "url": "https://github.com/mikefarah/yq/releases/download/v4.33.3/yq_linux_arm64",
+          "sha256": "15925a972d268bcb0a7aa2236c7e5925b7a3ba4b5569bb57e943db7e8c6f834f",
+          "dest-filename": "yq"
+        }
+      ]
+    }
+  ]
+}

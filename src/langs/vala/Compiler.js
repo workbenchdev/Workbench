@@ -1,9 +1,8 @@
 import Gio from "gi://Gio";
-import GLib from "gi://GLib";
 import dbus_previewer from "../../Previewer/DBusPreviewer.js";
 import { decode } from "../../util.js";
 
-export default function Compiler({ session }) {
+export default function ValaCompiler({ session }) {
   const { file } = session;
 
   const module_file = file.get_child("libworkbenchcode.so");
@@ -20,8 +19,6 @@ export default function Compiler({ session }) {
       console.debug(error);
       return;
     }
-
-    await module_file.delete_async(GLib.PRIORITY_DEFAULT, null).catch(() => {});
 
     const valac_launcher = new Gio.SubprocessLauncher();
     valac_launcher.set_cwd(file.get_path());
@@ -51,15 +48,10 @@ export default function Compiler({ session }) {
 
   async function run() {
     try {
-      const proxy = await dbus_previewer.getProxy();
-      await proxy.RunAsync(
-        module_file.get_path(),
-        "main",
-        "set_builder",
-        "set_window",
-      );
+      const proxy = await dbus_previewer.getProxy("vala");
+      await proxy.RunAsync(module_file.get_path(), session.file.get_uri());
     } catch (err) {
-      logError(err);
+      console.error(err);
       return false;
     }
 

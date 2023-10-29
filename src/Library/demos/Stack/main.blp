@@ -7,7 +7,7 @@ Box root_box {
   valign: center;
   Stack stack {
     interpolate-size: bind interpolate_switch.active;
-    transition-duration: bind transition_adjustment.value;
+    transition-duration: bind transition_spin_button.value;
     transition-type: bind transition_row.selected;
 
     StackPage page1 {
@@ -28,17 +28,17 @@ Box root_box {
           margin-top: 24;
 
           LinkButton {
-            label: _("Stack");
+            label: _("Stack API Reference");
             uri: "https://docs.gtk.org/gtk4/class.Stack.html";
           }
 
           LinkButton {
-            label: _("Stack Sidebar");
+            label: _("Stack Sidebar API Reference");
             uri: "https://docs.gtk.org/gtk4/class.StackSidebar.html";
           }
 
           LinkButton {
-            label: _("Stack Switcher");
+            label: _("Stack Switcher API Reference");
             uri: "https://docs.gtk.org/gtk4/class.StackSwitcher.html";
           }
         }
@@ -72,29 +72,18 @@ Box root_box {
             };
           }
 
-          Adw.ActionRow {
+          Adw.SwitchRow interpolate_switch {
             title: _("Interpolate Size");
-            activatable-widget: interpolate_switch;
-
-            Gtk.Switch interpolate_switch {
-              valign: center;
-            }
           }
 
-          Adw.ActionRow {
+          Adw.SpinRow transition_spin_button {
             title: _("Transition Duration");
-            activatable-widget: transition_spin_button;
-
-            Gtk.SpinButton transition_spin_button {
-              halign: center;
-              valign: center;
-              adjustment: Adjustment transition_adjustment {
-                step-increment: 10;
-                lower: 100;
-                upper: 1000;
-                value: 200;
-              };
-            }
+            adjustment: Adjustment {
+              step-increment: 10;
+              lower: 100;
+              upper: 1000;
+              value: 200;
+            };
           }
         }
       };

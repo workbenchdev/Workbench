@@ -3,8 +3,8 @@
 public void main() {
   var root_box = workbench.builder.get_object("root_box") as Gtk.Box;
   var carousel = workbench.builder.get_object("carousel") as Adw.Carousel;
-  var ls_switch = workbench.builder.get_object("ls_switch") as Gtk.Switch;
-  var sw_switch = workbench.builder.get_object("sw_switch") as Gtk.Switch;
+  var ls_switch = workbench.builder.get_object("ls_switch") as Adw.SwitchRow;
+  var sw_switch = workbench.builder.get_object("sw_switch") as Adw.SwitchRow;
   var indicator_row = workbench.builder.get_object("indicator_row") as Adw.ComboRow;
   var orientation_row = workbench.builder.get_object("orientation_row") as Adw.ComboRow;
   Adw.CarouselIndicatorDots? dots = null;
@@ -64,5 +64,4 @@ public void main() {
     }
   });
 }
-
 

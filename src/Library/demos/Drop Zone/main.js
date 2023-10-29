@@ -1,6 +1,5 @@
 import Gtk from "gi://Gtk";
 import Gio from "gi://Gio";
-import Adw from "gi://Adw";
 import Gdk from "gi://Gdk";
 import GObject from "gi://GObject";
 
@@ -26,7 +25,7 @@ file_drop_target.connect("drop", (self, value, x, y) => {
   try {
     bin.child = onDrop(value);
   } catch (err) {
-    logError(err, "Unable to load preview");
+    console.error(err, "Unable to load preview");
   }
   bin.remove_css_class("overlay-drag-area");
 });

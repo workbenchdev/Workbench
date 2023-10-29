@@ -27,7 +27,7 @@ public void on_button_clicked () {
     };
     dialog.add_link (
         "Documentation",
-        "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/main/class.AboutWindow.html"
+        "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.4/class.AboutWindow.html"
     );
     dialog.add_legal_section (
         "Fonts",
@@ -37,6 +37,6 @@ public void on_button_clicked () {
     );
 
     dialog.add_acknowledgement_section ("Special thanks to", { "My cat" } );
-    
+
     dialog.present();
 }

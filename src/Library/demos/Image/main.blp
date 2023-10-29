@@ -1,0 +1,99 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: _("Image");
+  description: _("Display images as icons");
+
+  Box {
+    halign: center;
+    orientation: vertical;
+    spacing: 18;
+
+    Box {
+      halign: center;
+      spacing: 24;
+
+      Image {
+        icon-size: normal;
+        icon-name: "bear-symbolic";
+      }
+
+      Image {
+        icon-size: normal;
+        icon-name: "sentiment-very-satisfied-symbolic";
+      }
+
+      Image {
+        icon-size: normal;
+        icon-name: "star-filled-rounded-symbolic";
+      }
+
+      Image {
+        icon-size: normal;
+        icon-name: "background-app-ghost-symbolic";
+      }
+    }
+
+    Box{
+      halign: center;
+      spacing: 24;
+
+      Image {
+        icon-size: large;
+        icon-name: "bear-symbolic";
+      }
+
+      Image {
+        icon-size: large;
+        icon-name: "sentiment-very-satisfied-symbolic";
+      }
+
+      Image {
+        icon-size: large;
+        icon-name: "star-filled-rounded-symbolic";
+      }
+
+      Image {
+        icon-size: large;
+        icon-name: "background-app-ghost-symbolic";
+      }
+    }
+
+    Box {
+      halign: center;
+      spacing: 24;
+
+      Image icon1 {
+        pixel-size: 128;
+        styles ["icon-dropshadow"]
+      }
+
+      Image icon2 {
+        pixel-size: 64;
+        styles ["icon-dropshadow"]
+      }
+
+      Image icon3 {
+        pixel-size: 32;
+        styles ["lowres-icon"]
+      }
+    }
+
+    Box {
+      orientation: vertical;
+      halign: center;
+      spacing: 6;
+
+      LinkButton {
+        uri: "https://docs.gtk.org/gtk4/class.Image.html";
+        label: _("API Reference");
+      }
+
+      LinkButton {
+        uri: "https://developer.gnome.org/hig/guidelines/ui-icons.html";
+        label: _("Human Interface Guidelines");
+      }
+    }
+  }
+}

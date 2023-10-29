@@ -8,17 +8,18 @@ Learn and prototype with GNOME technologies
 
 <a href='https://flathub.org/apps/re.sonny.Workbench'><img width='240' height='80' alt='Download on Flathub' src='https://dl.flathub.org/assets/badges/flathub-badge-en.svg'/></a>
 
-Workbench goal is to let you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a GTK user interface.
+Workbench lets you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a GTK user interface.
 
 Among other things, Workbench comes with
 
-- realtime GTK/CSS preview
-- library of examples and demos
-- JavaScript and Vala support
-- XML and Blueprint for describing user interface
-- syntax highlighting, undo/redo, autosave, session restore
-- code linter and formatter
-- terminal output
+- Live GTK/CSS preview
+- Library of 100+ examples
+- JavaScript, Rust, Python and Vala support
+- Declarative user interface syntax
+- Autosave, sessions and projects
+- Code linter and formatter
+- Offline documentation
+- Terminal output
 - 1000+ icons
 
 ℹ️ Workbench is made possible by Flatpak. Only Flathub Workbench is supported.
@@ -32,28 +33,9 @@ Among other things, Workbench comes with
 <details>
   <summary>Disable code formatting</summary>
 
-Workbench uses [Rome](https://rome.tools/) and [Prettier](https://prettier.io/) code formatters. If you need to exclude some code you can use special comments.
-
-[JavaScript](https://prettier.io/docs/en/ignore.html#javascript)
-
-```js
-// rome-ignore format
-matrix(
-  1, 0, 0,
-  0, 1, 0,
-  0, 0, 1
-);
-```
+[JavaScript](https://docs.rome.tools/formatter/#ignoring-code)
 
 [CSS](https://prettier.io/docs/en/ignore.html#css)
-
-```css
-/* prettier-ignore */
-.my    ugly rule
-{
-
-}
-```
 
 </details>
 
@@ -66,9 +48,9 @@ Use GNOME Builder to start a new project using the appropriate GNOME Application
 
 ## Credits
 
-Workbench would not be possible without
+Workbench is made of many components, thank you
 
-Flatpak, GTK, GLib, GtkSourceView, libadwaita, VTE, GJS, Blueprint, icon-development-kit, Vala
+Flatpak, GTK, GLib, GtkSourceView, libadwaita, VTE, GJS, Blueprint, icon-development-kit, Vala, GTKCssLanguageServer, gtk-rs
 
 and the GNOME community 🖤
 

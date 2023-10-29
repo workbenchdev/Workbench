@@ -1,0 +1,37 @@
+[package]
+name = "demo"
+version = "1.0.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+libc = "0.2"
+rand = "0.8.5"
+soup3 = { version = "0.5.0", features = ["v3_4"] }
+url = "2.4.0"
+webkit6 = { version = "0.2.0", features = ["v2_42"] }
+
+
+[dependencies.gtk]
+version = "0.7"
+package = "gtk4"
+features = ["gnome_45"]
+
+[dependencies.adw]
+version = "0.5"
+package = "libadwaita"
+features = ["v1_4", "gtk_v4_10"]
+
+[dependencies.ashpd]
+version = "0.6.2"
+features = ["gtk4"]
+
+[dependencies.shumate]
+version = "0.4.1"
+package = "libshumate"
+features = ["v1_1"]
+
+[lib]
+crate-type = ["cdylib"]
+path = "lib.rs"

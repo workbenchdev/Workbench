@@ -6,28 +6,16 @@ bin_conf.set('prefix', prefix)
 bin_conf.set('libdir', join_paths(get_option('prefix'), get_option('libdir')))
 bin_conf.set('datadir', datadir)
 bin_conf.set('pkgdatadir', pkgdatadir)
-bin_conf.set('sourcedir', meson.source_root())
+bin_conf.set('sourcedir', meson.project_source_root())
 
 blueprint_compiler = find_program(
   '/app/bin/blueprint-compiler',
 )
 
+meson.add_install_script('../build-aux/library-index.js', pkgdatadir)
+
 install_subdir('Library/demos', install_dir : join_paths(pkgdatadir, 'Library'))
-
-output = run_command('../build-aux/list-demo-blp-files.sh', check: true)
-blueprint_files = output.stdout().strip().split('\n')
-message('blueprint files: @0@'.format(blueprint_files))
-
-custom_target('blueprints',
-  input: blueprint_files,
-  output: '.',
-  install: true,
-  install_dir: pkgdatadir,
-  command: [
-    blueprint_compiler,
-    'batch-compile', '@OUTPUT@', '@CURRENT_SOURCE_DIR@', '@INPUT@'
-  ],
-)
+install_subdir('langs/rust/template', install_dir : join_paths(pkgdatadir, 'langs/rust'))
 
 configure_file(
   input: 'bin.js',
@@ -45,8 +33,9 @@ configure_file(
   install_dir: get_option('bindir')
 )
 
-install_data('langs/vala/workbench-api.vala', install_dir: pkgdatadir)
+install_data('langs/vala/workbench.vala', install_dir: pkgdatadir)
 subdir('Previewer')
+subdir('langs/python')
 
 gjspack = find_program('../troll/gjspack/bin/gjspack')
 gresource = custom_target('gjspack',
@@ -56,7 +45,7 @@ gresource = custom_target('gjspack',
     gjspack,
     '--appid=' + app_id,
     '--prefix', '/re/sonny/Workbench',
-    '--project-root', meson.source_root(),
+    '--project-root', meson.project_source_root(),
     '--resource-root', meson.project_source_root() / 'src',
     '--blueprint-compiler', blueprint_compiler,
     '--no-executable',

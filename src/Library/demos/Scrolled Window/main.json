@@ -1,0 +1,6 @@
+{
+  "category": "layout",
+  "description": "A container that makes its child scrollable",
+  "panels": ["ui", "preview"],
+  "autorun": true
+}

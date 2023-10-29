@@ -1,0 +1,46 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: _("Center Box");
+  description: _("Displays three child widgets, while keeping the middle one centered");
+
+  child: Box {
+    spacing: 24;
+    orientation: vertical;
+
+    Adw.Clamp {
+      maximum-size: bind width_adjustment.value;
+      child: CenterBox {
+        shrink-center-last: true;
+
+        [start]
+        Switch {
+          valign: center;
+        }
+
+        [center]
+        Entry {}
+
+        [end]
+        CheckButton {}
+      };
+    }
+
+    Scale width_scale {
+      orientation: horizontal;
+      halign: center;
+      width-request: 120;
+      adjustment: Adjustment width_adjustment {
+        lower: 200;
+        upper: 500;
+        value: 325;
+      };
+    }
+
+    LinkButton {
+      label: _("API Reference");
+      uri: "https://docs.gtk.org/gtk4/class.CenterBox.html";
+    }
+  };
+}

@@ -8,10 +8,12 @@ import "gi://Pango?version=1.0";
 
 import Gtk from "gi://Gtk";
 import Gio from "gi://Gio";
+import Adw from "gi://Adw";
 import Xdp from "gi://Xdp";
 import Source from "gi://GtkSource";
 import WebKit from "gi://WebKit";
 
+Gio._promisify(Adw.MessageDialog.prototype, "choose", "choose_finish");
 Gio._promisify(Xdp.Portal.prototype, "trash_file", "trash_file_finish");
 Gio._promisify(Xdp.Portal.prototype, "open_uri", "open_uri_finish");
 Gio._promisify(Xdp.Portal.prototype, "open_file", "open_file_finish");
@@ -85,4 +87,10 @@ Gio._promisify(
   Gio.File.prototype,
   "load_contents_async",
   "load_contents_finish",
+);
+
+Gio._promisify(
+  Gio.FileEnumerator.prototype,
+  "next_files_async",
+  "next_files_finish",
 );

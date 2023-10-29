@@ -1,0 +1,6 @@
+{
+  "category": "user_interface",
+  "description": "Style text using markup",
+  "panels": ["ui", "preview"],
+  "autorun": true
+}
