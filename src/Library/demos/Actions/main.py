@@ -14,9 +14,8 @@ demo.insert_action_group("demo", demo_group)
 simple_action = Gio.SimpleAction(name="simple")
 
 simple_action.connect(
-    "activate", lambda action, _: print(
-        f"{action.get_name()} action activated"
-    ),
+    "activate",
+    lambda action, _: print(f"{action.get_name()} action activated"),
 )
 
 demo_group.add_action(simple_action)
