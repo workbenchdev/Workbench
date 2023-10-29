@@ -19,15 +19,15 @@ carousel.connect("page-changed", lambda *_: print("Page Changed"))
 # Scroll Wheel Switch
 sw_switch.set_active(carousel.get_allow_scroll_wheel())
 
-sw_switch.connect("notify::active",
-    lambda *_: carousel.set_allow_scroll_wheel(sw_switch.get_active())
+sw_switch.connect(
+    "notify::active", lambda *_: carousel.set_allow_scroll_wheel(sw_switch.get_active())
 )
 
 # Long Swipe Switch
 ls_switch.set_active(carousel.get_allow_long_swipes())
 
-ls_switch.connect("notify::active",
-    lambda *_: carousel.set_allow_long_swipes(ls_switch.get_active())
+ls_switch.connect(
+    "notify::active", lambda *_: carousel.set_allow_long_swipes(ls_switch.get_active())
 )
 
 if indicator_row.get_selected() == 0:
@@ -50,6 +50,7 @@ def on_indicator_selected(_widget, _item):
 
     indicators.set_orientation(carousel.get_orientation())
     root_box.append(indicators)
+
 
 def on_orientation_selected(_widget, _item):
     if orientation_row.get_selected() == 0:
