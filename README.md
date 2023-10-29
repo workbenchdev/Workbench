@@ -14,7 +14,7 @@ Among other things, Workbench comes with
 
 - Live GTK/CSS preview
 - Library of 100+ examples
-- JavaScript, Python, Rust and Vala support
+- JavaScript, Rust, Python and Vala support
 - Declarative user interface syntax
 - Autosave, sessions and projects
 - Code linter and formatter
