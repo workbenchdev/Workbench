@@ -15,7 +15,7 @@ def open_about_window(_widget):
         developer_name="Angela Avery",
         version="1.2.3",
         comments=_(
-          "Typeset is an app that doesn’t exist and is used as an example content for About Window.",
+            "Typeset is an app that doesn’t exist and is used as an example content for About Window.",
         ),
         website="https://example.org",
         issue_url="https://example.org",
@@ -24,12 +24,12 @@ def open_about_window(_widget):
         license_type=Gtk.License.GPL_3_0_ONLY,
         developers=["Angela Avery <angela@example.org>"],
         artists=["GNOME Design Team"],
-        translator_credits=_("translator-credits")
+        translator_credits=_("translator-credits"),
     )
 
     dialog.add_link(
         _("Documentation"),
-        "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.4/class.AboutWindow.html"
+        "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.4/class.AboutWindow.html",
     )
 
     dialog.add_legal_section(
@@ -37,8 +37,8 @@ def open_about_window(_widget):
         None,
         Gtk.License.CUSTOM,
         _(
-          "This application uses font data from <a href='https://example.org'>somewhere</a>."
-        )
+            "This application uses font data from <a href='https://example.org'>somewhere</a>."
+        ),
     )
 
     dialog.add_acknowledgement_section(_("Special thanks to"), [_("My cat")])

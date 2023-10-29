@@ -20,10 +20,12 @@ button = workbench.builder.get_object("button")
 
 button.connect("clicked", lambda *_: on_clicked())
 
+
 def on_selected(_dialog, result):
     file = _dialog.open_finish(result)
     texture = Gdk.Texture.new_from_file(file)
     avatar_image.set_custom_image(texture)
+
 
 def on_clicked():
     file = dialog.open(workbench.window, None, on_selected)
