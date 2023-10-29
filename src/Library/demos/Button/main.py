@@ -18,6 +18,7 @@ button_ids = [
 def on_clicked(button):
     print(f"{button.get_name()} clicked")
 
+
 for id in button_ids:
     button = workbench.builder.get_object(id)
     button.connect("clicked", on_clicked)
