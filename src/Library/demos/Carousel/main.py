@@ -39,7 +39,7 @@ indicators.set_orientation(carousel.get_orientation())
 root_box.append(indicators)
 
 
-def on_indicator_selected(*args):
+def on_indicator_selected(_widget, _item):
     global indicators
     root_box.remove(indicators)
 
@@ -51,7 +51,7 @@ def on_indicator_selected(*args):
     indicators.set_orientation(carousel.get_orientation())
     root_box.append(indicators)
 
-def on_orientation_selected(*args):
+def on_orientation_selected(_widget, _item):
     if orientation_row.get_selected() == 0:
         root_box.set_orientation(Gtk.Orientation.VERTICAL)
         carousel.set_orientation(Gtk.Orientation.HORIZONTAL)
