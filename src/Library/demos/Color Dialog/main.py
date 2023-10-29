@@ -20,10 +20,11 @@ dialog_standard = Gtk.ColorDialog(
 color_dialog_button.set_dialog(dialog_standard)
 color_dialog_button.set_rgba(color)
 
-color_dialog_button.connect("notify::rgba",
+color_dialog_button.connect(
+    "notify::rgba",
     lambda *_: print(
         f"Color Dialog Button: The color selected is {color_dialog_button.get_rgba().to_string()}",
-    )
+    ),
 )
 
 dialog_custom = Gtk.ColorDialog(
@@ -32,11 +33,14 @@ dialog_custom = Gtk.ColorDialog(
     with_alpha=False,
 )
 
+
 def on_color_selected(_dialog, _result):
     color = _dialog.choose_rgba_finish(_result)
     print(f"Custom Button: The color selected is {color.to_string()}")
 
+
 def on_clicked(_button):
     dialog_custom.choose_rgba(workbench.window, None, None, on_color_selected)
+
 
 custom_button.connect("clicked", on_clicked)
