@@ -12,7 +12,6 @@ ls_switch = workbench.builder.get_object("ls_switch")
 sw_switch = workbench.builder.get_object("sw_switch")
 indicator_row = workbench.builder.get_object("indicator_row")
 orientation_row = workbench.builder.get_object("orientation_row")
-indicators = None
 
 carousel.connect("page-changed", lambda *_: print("Page Changed"))
 
