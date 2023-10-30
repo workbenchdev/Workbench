@@ -46,11 +46,22 @@ Use GNOME Builder to start a new project using the appropriate GNOME Application
 
 </details>
 
+## Code of conduct
+
+Workbench follows the [GNOME Code of Conduct](https://conduct.gnome.org/).
+
+- **Be friendly.** Use welcoming and inclusive language.
+- **Be empathetic.** Be respectful of differing viewpoints and experiences.
+- **Be respectful.** When we disagree, we do so in a polite and constructive manner.
+- **Be considerate.** Remember that decisions are often a difficult choice between competing priorities.
+- **Be patient and generous.** If someone asks for help it is because they need it.
+- **Try to be concise.** Read the discussion before commenting.
+
 ## Credits
 
-Workbench is made of many components, thank you
+Workbench is made of many components.
 
-Flatpak, GTK, GLib, GtkSourceView, libadwaita, VTE, GJS, Blueprint, icon-development-kit, Vala, GTKCssLanguageServer, gtk-rs
+Thank you Flatpak, GTK, GLib, GtkSourceView, libadwaita, VTE, GJS, Blueprint, icon-development-kit, Vala, GTKCssLanguageServer, gtk-rs, PyGObject
 
 and the GNOME community 🖤
 
