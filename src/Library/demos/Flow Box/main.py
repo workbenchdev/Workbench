@@ -34,4 +34,3 @@ def on_item_selected(_flowbox, item):
 
 
 flowbox.connect("child-activated", on_item_selected)
-
