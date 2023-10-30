@@ -27,34 +27,34 @@ def generateCss():
 
     css = ""
     if combo_row_gradient_type.get_selected() == 0:
-        css = """
-.background-gradient {
+        css = f"""
+.background-gradient {{
   background-image: linear-gradient(
-    ${angle_string}deg,
-    ${first_color_string},
-    ${second_color_string},
-    ${third_color_string}
+    {{angle_string}}deg,
+    {{first_color_string}},
+    {{second_color_string}},
+    {{third_color_string}}
   );
-}"""
+}}"""
     elif combo_row_gradient_type.get_selected() == 1:
-        css = """
-.background-gradient {
+        css = f"""
+.background-gradient {{
   background-image: radial-gradient(
-    ${first_color_string},
-    ${second_color_string},
-    ${third_color_string}
+    {{first_color_string}},
+    {{second_color_string}},
+    {{third_color_string}}
   );
-}"""
+}}"""
     elif combo_row_gradient_type.get_selected() == 2:
-        css = """
-.background-gradient {
+        css = f"""
+.background-gradient {{
   background-image: conic-gradient(
-    from ${angle_string}deg,
-    ${first_color_string},
-    ${second_color_string},
-    ${third_color_string}
+    from {{angle_string}}deg,
+    {{first_color_string}},
+    {{second_color_string}},
+    {{third_color_string}}
   );
-}"""
+}}"""
 
     return css.lstrip()
 
