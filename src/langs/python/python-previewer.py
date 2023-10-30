@@ -25,7 +25,7 @@ gi.require_version("Graphene", "1.0")
 gi.require_version("Gsk", "4.0")
 gi.require_version("GtkSource", "5")
 
-from gi.repository import GObject, GLib, Gdk, Gtk, Adw, Graphene, Gio, Gsk, GtkSource
+from gi.repository import GLib, Gdk, Gtk, Adw, Graphene, Gio, Gsk, GtkSource
 from gi.repository.Gio import DBusConnection, DBusConnectionFlags
 
 # Load non-GTK widget types

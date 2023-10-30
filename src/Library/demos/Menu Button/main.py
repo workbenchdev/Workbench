@@ -17,4 +17,3 @@ def update_css(_widget, _params):
 
 
 circular_switch.connect("notify::active", update_css)
-
