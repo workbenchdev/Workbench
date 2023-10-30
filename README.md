@@ -77,7 +77,7 @@ https://console.substack.com/p/console-112
 
 ---
 
-From [Marco Melorio](https://twitter.com/melix9999) creator of [Telgrand](https://github.com/melix99/telegrand)
+From [Marco Melorio](https://x.com/melix9999) creator of [Telgrand](https://github.com/melix99/telegrand)
 
 > GSoC coding period started on Monday, so this is a good time to blog about what I’ve started working on and what’s my milestone to finish the project. First off, I’ve created a simple mockup using Sonny Piers’ amazing Workbench app. This is the first step in knowing how we want the UI to look like, at least in the first iteration.
 
@@ -87,7 +87,7 @@ https://melix99.wordpress.com/2022/06/17/gsoc-update-1-planning/
 
 > Workbench has been great! It used to be hard to mess around with GTK but Workbench helps me to learn GTK.
 
-https://twitter.com/synthesizedecho/status/1528958932911280129
+https://x.com/synthesizedecho/status/1528958932911280129
 
 > Gone too wild playing with Workbench and Blueprint.
 
