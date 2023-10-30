@@ -19,7 +19,7 @@ gtksource_buffer = workbench.builder.get_object("gtksource_buffer")
 button_copy_css = workbench.builder.get_object("button_copy_css")
 
 
-def generateCss():
+def generate_css():
     angle_string = spin_row_angle.get_value()
     first_color_string = button_color_1.get_rgba().to_string()
     second_color_string = button_color_2.get_rgba().to_string()
@@ -59,7 +59,7 @@ def generateCss():
     return css.lstrip()
 
 
-def updateCssProvider(css):
+def update_css_provider(css):
     display = Gdk.Display.get_default()
 
     css_provider = Gtk.CssProvider()
@@ -73,9 +73,9 @@ def updateCssProvider(css):
 
 def update():
     spin_row_angle.set_sensitive(combo_row_gradient_type.get_selected() != 1)
-    css = generateCss()
+    css = generate_css()
     gtksource_buffer.set_text(css, -1)
-    updateCssProvider(css)
+    update_css_provider(css)
 
 
 combo_row_gradient_type.connect("notify::selected", update)
@@ -93,17 +93,17 @@ button_copy_css.connect("clicked", lambda: clipboard.set(gtksource_buffer.text))
 
 scheme_manager = GtkSource.StyleSchemeManager.get_default()
 style_manager = Adw.StyleManager.get_default()
-style_manager.connect("notify::dark", lambda: updateColorScheme())
+style_manager.connect("notify::dark", lambda: update_color_scheme())
 
 
-def updateColorScheme():
+def update_color_scheme():
     scheme = scheme_manager.get_scheme(
         "Adwaita-dark" if style_manager.get_dark() else "Adwaita"
     )
     gtksource_buffer.set_style_scheme(scheme)
 
 
-updateColorScheme()
+update_color_scheme()
 
 language_manager = GtkSource.LanguageManager.get_default()
 css_language = language_manager.get_language("css")
