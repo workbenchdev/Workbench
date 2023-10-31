@@ -87,6 +87,28 @@ export default function DocumentationViewer({ application }) {
   const search_entry = builder.get_object("search_entry");
   const button_shortcuts = builder.get_object("button_shortcuts");
 
+  const forward_backward_click = (isForward) => {
+    const gesture = new Gtk.GestureClick();
+    if (isForward) {
+      gesture.connect("pressed", () => {
+        webview.go_forward();
+      });
+      gesture.set_button(9);
+      return gesture;
+    }
+    gesture.connect("pressed", () => {
+      webview.go_back();
+    });
+    gesture.set_button(8);
+    return gesture;
+  };
+
+  window.add_controller(forward_backward_click(true));
+  window.add_controller(forward_backward_click(false));
+
+  webview.add_controller(forward_backward_click(true));
+  webview.add_controller(forward_backward_click(false));
+
   const onGoForward = () => {
     webview.go_forward();
   };
