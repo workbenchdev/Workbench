@@ -7,6 +7,8 @@ gi.require_version("GtkSource", "5")
 from gi.repository import Gtk, Gdk, Adw, GtkSource
 import workbench
 
+Adw.init()
+
 
 combo_row_gradient_type = workbench.builder.get_object(
     "combo_row_gradient_type",
@@ -30,29 +32,29 @@ def generate_css():
         css = f"""
 .background-gradient {{
   background-image: linear-gradient(
-    {{angle_string}}deg,
-    {{first_color_string}},
-    {{second_color_string}},
-    {{third_color_string}}
+    {angle_string}deg,
+    {first_color_string},
+    {second_color_string},
+    {third_color_string}
   );
 }}"""
     elif combo_row_gradient_type.get_selected() == 1:
         css = f"""
 .background-gradient {{
   background-image: radial-gradient(
-    {{first_color_string}},
-    {{second_color_string}},
-    {{third_color_string}}
+    {first_color_string},
+    {second_color_string},
+    {third_color_string}
   );
 }}"""
     elif combo_row_gradient_type.get_selected() == 2:
         css = f"""
 .background-gradient {{
   background-image: conic-gradient(
-    from {{angle_string}}deg,
-    {{first_color_string}},
-    {{second_color_string}},
-    {{third_color_string}}
+    from {angle_string}deg,
+    {first_color_string},
+    {second_color_string},
+    {third_color_string}
   );
 }}"""
 
@@ -71,7 +73,7 @@ def update_css_provider(css):
     )
 
 
-def update():
+def update(*args):
     spin_row_angle.set_sensitive(combo_row_gradient_type.get_selected() != 1)
     css = generate_css()
     gtksource_buffer.set_text(css, -1)
@@ -89,11 +91,16 @@ update()
 
 clipboard = Gdk.Display.get_default().get_clipboard()
 
-button_copy_css.connect("clicked", lambda: clipboard.set(gtksource_buffer.text))
+button_copy_css.connect(
+    "clicked",
+    lambda *args: clipboard.set(
+        gtksource_buffer.get_text(
+            gtksource_buffer.get_start_iter(), gtksource_buffer.get_end_iter(), False
+        )
+    ),
+)
 
 scheme_manager = GtkSource.StyleSchemeManager.get_default()
-style_manager = Adw.StyleManager.get_default()
-style_manager.connect("notify::dark", lambda: update_color_scheme())
 
 
 def update_color_scheme():
@@ -102,6 +109,9 @@ def update_color_scheme():
     )
     gtksource_buffer.set_style_scheme(scheme)
 
+
+style_manager = Adw.StyleManager.get_default()
+style_manager.connect("notify::dark", lambda *args: update_color_scheme)
 
 update_color_scheme()
 
