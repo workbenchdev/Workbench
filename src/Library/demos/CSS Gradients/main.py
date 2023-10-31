@@ -8,6 +8,7 @@ from gi.repository import Gtk, Gdk, Adw, GtkSource
 import workbench
 
 Adw.init()
+GtkSource.init()
 
 
 combo_row_gradient_type = workbench.builder.get_object(
