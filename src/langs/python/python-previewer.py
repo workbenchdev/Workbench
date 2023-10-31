@@ -23,9 +23,15 @@ gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
 gi.require_version("Graphene", "1.0")
 gi.require_version("Gsk", "4.0")
+gi.require_version("GtkSource", "5")
 
-from gi.repository import GLib, Gdk, Gtk, Adw, Graphene, Gio, Gsk
+from gi.repository import GLib, Gdk, Gtk, Adw, Graphene, Gio, Gsk, GtkSource
 from gi.repository.Gio import DBusConnection, DBusConnectionFlags
+
+# Make sure all libraries are properly initialized
+Gtk.init()
+Adw.init()
+GtkSource.init()
 
 
 # Table of Contents

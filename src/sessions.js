@@ -37,22 +37,26 @@ export function getSessions() {
   return sessions;
 }
 
-export function createSession(name = getNowForFilename()) {
-  const file = sessions_dir.get_child(name);
+function createSession(name) {
+  const id = getNowForFilename();
+  const file = sessions_dir.get_child(id);
   ensureDir(file);
   const session = new Session(file);
+  session.settings.set_string("name", name);
   return session;
 }
 
 export function createSessionFromDemo(demo) {
-  const session = createSession();
-  const demo_dir = demos_dir.get_child(demo.name);
+  const { name, panels } = demo;
+
+  const session = createSession(name);
+  const demo_dir = demos_dir.get_child(name);
 
   copy_directory(demo_dir, session);
   copy_directory(rust_template_dir, session);
 
-  const { panels } = demo;
   const { settings } = session;
+  settings.set_string("name", name);
   settings.set_boolean("show-code", panels.includes("code"));
   settings.set_boolean("show-style", panels.includes("style"));
   settings.set_boolean("show-ui", panels.includes("ui"));
@@ -92,6 +96,8 @@ export async function deleteSession(session) {
 }
 
 export async function saveSessionAsProject(session, destination) {
+  session.settings.set_string("name", destination.get_basename());
+
   await destination.make_directory_async(GLib.PRIORITY_DEFAULT, null);
 
   for await (const file_info of session.file.enumerate_children(
@@ -124,12 +130,10 @@ To open and run this; [install Workbench from Flathub](https://flathub.org/apps/
 }
 
 export class Session {
-  settings = null;
   file = null;
-  name = null;
+  settings = null;
 
   constructor(file) {
-    this.name = file.get_basename();
     this.file = file;
     const backend = Gio.keyfile_settings_backend_new(
       this.file.get_child("settings").get_path(),
@@ -141,6 +145,10 @@ export class Session {
       schema_id: `${pkg.name}.Session`,
       path: "/re/sonny/Workbench/",
     });
+  }
+
+  get name() {
+    return this.settings.get_string("name") || this.file.get_basename();
   }
 
   isProject() {
