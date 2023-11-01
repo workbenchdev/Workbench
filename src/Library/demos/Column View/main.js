@@ -1,6 +1,5 @@
 import Gtk from "gi://Gtk";
 import GLib from "gi://GLib";
-import Gio from "gi://Gio";
 import GObject from "gi://GObject";
 
 const column_view = workbench.builder.get_object("column_view");
@@ -8,13 +7,13 @@ const col1 = workbench.builder.get_object("col1");
 const col2 = workbench.builder.get_object("col2");
 const col3 = workbench.builder.get_object("col3");
 
-//Model
-const dir = Gio.File.new_for_path(pkg.pkgdatadir).resolve_relative_path(
-  "Library/demos",
-);
+const folder_button = workbench.builder.get_object("folder_button");
+folder_button.connect("clicked", () => {
+  selectFolder().catch(console.error);
+});
 
+//Model
 const data_model = new Gtk.DirectoryList({
-  file: dir,
   attributes: "standard::*,time::modified",
 });
 
@@ -98,3 +97,8 @@ factory_col3.connect("bind", (factory, list_item) => {
   const date = model_item.get_modification_date_time();
   label_widget.label = date.format("%F");
 });
+
+async function selectFolder() {
+  const file_dialog = new Gtk.FileDialog();
+  data_model.file = await file_dialog.select_folder(workbench.window, null);
+}
