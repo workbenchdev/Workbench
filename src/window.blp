@@ -195,7 +195,7 @@ Adw.ApplicationWindow window {
               StackPage {
                 name: 'Python';
                 child: $CodeView code_view_python {
-                  language_id: 'python';
+                  language_id: 'python3';
                 };
               }
             }
@@ -523,6 +523,12 @@ menu menu_app {
           label: _("Rust");
           action: "app.open_uri";
           target: "https://gtk-rs.org";
+        }
+
+        item {
+          label: _("Python");
+          action: "app.open_uri";
+          target: "https://pygobject.readthedocs.io";
         }
 
         item {

@@ -45,6 +45,7 @@
     "modules/blueprint-compiler.json",
     "modules/biome.json",
     "modules/icon-development-kit.json",
+    "modules/python-black.json",
     {
       "name": "Workbench",
       "buildsystem": "meson",

@@ -58,7 +58,8 @@ export default function Window({ application, session }) {
   if (__DEV__) {
     window.add_css_class("devel");
   }
-  window.set_application(application);
+  window.application = application;
+  window.title = `Workbench — ${session.name}`;
 
   // Popover menu theme switcher
   const button_menu = builder.get_object("button_menu");
@@ -242,6 +243,25 @@ export default function Window({ application, session }) {
     return stdout;
   }
 
+  function formatPythonCode(text) {
+    const blackLauncher = Gio.SubprocessLauncher.new(
+      Gio.SubprocessFlags.STDIN_PIPE |
+        Gio.SubprocessFlags.STDOUT_PIPE |
+        Gio.SubprocessFlags.STDERR_PIPE,
+    );
+
+    const blackProcess = blackLauncher.spawnv(["black", "--quiet", "-"]);
+
+    const [success, stdout, stderr] = blackProcess.communicate_utf8(text, null);
+
+    if (!success || stderr !== "") {
+      console.error(`Error running black: ${stderr}`);
+      return text;
+    }
+
+    return stdout;
+  }
+
   async function formatCode() {
     if (panel_code.panel.visible) {
       if (panel_code.language === "JavaScript") {
@@ -254,6 +274,10 @@ export default function Window({ application, session }) {
       } else if (panel_code.language === "Rust") {
         await format(langs.rust.document.code_view, (text) => {
           return formatRustCode(text);
+        });
+      } else if (panel_code.language === "Python") {
+        await format(langs.python.document.code_view, (text) => {
+          return formatPythonCode(text);
         });
       }
     }
