@@ -12,8 +12,9 @@ public void main () {
     0, 1, // Initial value, final value
     1500, // Duration (in milliseconds)
     target_timed // Animation target
-  );
-  animation_timed.easing = EASE_IN_OUT_CUBIC;
+  ) {
+    easing = EASE_IN_OUT_CUBIC
+  };
 
   button_timed.clicked.connect (() => animation_timed.play ());
   animation_timed.done.connect (() => animation_timed.reset ());
@@ -33,11 +34,11 @@ public void main () {
     0, 8.5, // Initial value, final value
     spring_params, // Spring params
     spring_target // Animation target
-  );
-
-  spring_animation.initial_velocity = 1.0;
-  spring_animation.epsilon = 0.001;
-  spring_animation.clamp = false;
+  ) {
+    initial_velocity = 1.0,
+    epsilon = 0.001,
+    clamp = false
+  };
 
   button_spring.clicked.connect (() => spring_animation.play ());
 }
