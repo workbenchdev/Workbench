@@ -13,7 +13,6 @@ button = workbench.builder.get_object("button")
 
 def on_selected(_portal, task):
     r, g, b = _portal.pick_color_finish(task)
-    print(r, g, b)
 
     color = Gdk.RGBA(r, g, b, 1.0)
     print(f"Selected color is: {color.to_string()}")
