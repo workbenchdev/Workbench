@@ -34,6 +34,7 @@ def callback1(scale):
     elif scale_value == scale_one.get_adjustment().get_lower():
         print("Minimum value reached")
 
+
 scale_one.connect("value-changed", callback1)
 
 
@@ -42,6 +43,7 @@ def callback2(scale):
     label = marks.get(scale_value)
     if label:
         print(f"Mark {label} reached")
+
 
 scale_two.connect("value-changed", callback2)
 
