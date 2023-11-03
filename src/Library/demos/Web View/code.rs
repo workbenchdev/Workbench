@@ -1,6 +1,6 @@
 use crate::workbench;
 use adw::prelude::*;
-use glib::{clone, timeout_future, MainContext, Priority};
+use glib::clone;
 use gtk::glib;
 use std::time::Duration;
 use webkit6::prelude::*;
@@ -59,26 +59,20 @@ pub fn main() {
         false
     });
 
-    let (sender, receiver) = MainContext::channel(Priority::default());
+    let (sender, receiver) = async_channel::unbounded();
     web_view.connect_notify(Some("estimated-load-progress"), move |web_view, _| {
-        sender.send(web_view.estimated_load_progress()).unwrap();
+        sender.try_send(web_view.estimated_load_progress()).unwrap();
     });
 
-    receiver.attach(
-        None,
-        clone!(@weak url_bar => @default-return glib::ControlFlow::Break,
-            move |load_progress| {
-                url_bar.set_progress_fraction(load_progress);
-                if url_bar.progress_fraction() == 1. {
-                  MainContext::default().spawn_local(async move {
-                    timeout_future(Duration::from_millis(500)).await;
-                    url_bar.set_progress_fraction(0.);
-                  });
-                }
-                glib::ControlFlow::Continue
+    glib::spawn_future_local(clone!(@weak url_bar => async move {
+        while let Ok(load_progress) = receiver.recv().await {
+            url_bar.set_progress_fraction(load_progress);
+            if url_bar.progress_fraction() == 1. {
+                glib::timeout_future(Duration::from_millis(500)).await;
+                url_bar.set_progress_fraction(0.);
             }
-        ),
-    );
+        }
+    }));
 }
 
 fn error_page(fail_url: &str, msg: &str) -> String {

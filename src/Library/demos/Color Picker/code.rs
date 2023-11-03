@@ -1,14 +1,13 @@
 use crate::workbench;
 use ashpd::desktop::screenshot::Color;
 use ashpd::WindowIdentifier;
-use glib::MainContext;
 use gtk::prelude::*;
 use gtk::{gdk, glib};
 
 pub fn main() {
     let button: gtk::Button = workbench::builder().object("button").unwrap();
     button.connect_clicked(|_| {
-        MainContext::default().spawn_local(async {
+        glib::spawn_future_local(async {
             if let Err(err) = pick_color().await {
                 eprintln!("Could not pick color: {err}")
             }

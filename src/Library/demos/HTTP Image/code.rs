@@ -9,7 +9,7 @@ use gtk::{gdk, gdk_pixbuf, gio, glib};
 use soup::prelude::*;
 
 pub fn main() {
-    glib::MainContext::default().spawn_local(async_main());
+    glib::spawn_future_local(async_main());
 }
 
 async fn async_main() {
