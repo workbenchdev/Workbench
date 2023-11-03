@@ -33,12 +33,15 @@ plerique autem se ipsos penitus perdiderunt, sic robustus animus et excelsus omn
 
 label.set_label(short_label)
 
-single_line_switch.connect(
-    "notify::active",
-    lambda *_: label.set_label(
-        long_label if not single_line_switch.get_active() else short_label
-    ),
-)
+
+def on_single_line_changed(*args):
+    if single_line_switch.get_active():
+        label.set_label(short_label)
+    else:
+        label.set_label(long_label)
+
+
+single_line_switch.connect("notify::active", on_single_line_changed)
 
 justification_row.connect(
     "notify::selected", lambda *_: label.set_justify(justification_row.get_selected())
