@@ -135,19 +135,19 @@ export function logBlueprintInfo(info) {
 }
 
 function createLSPClient({ code_view, file }) {
-  // const bin = "/app/bin/blueprint-compiler";
+  const bin = "/app/bin/blueprint-compiler";
   const uri = file.get_uri();
-  const bin = GLib.build_filenamev([
-    "/home/sonny/Projects/GNOME",
-    "blueprint-compiler/blueprint-compiler.py",
-  ]);
+  // const bin = GLib.build_filenamev([
+  //   "/home/sonny/Projects/GNOME",
+  //   "blueprint-compiler/blueprint-compiler.py",
+  // ]);
 
   const lspc = new LSPClient([bin, "lsp"], {
     rootUri: file.get_parent().get_uri(),
     uri,
     languageId: "blueprint",
     buffer: code_view.buffer,
-    quiet: false,
+    // quiet: false,
   });
 
   lspc.connect("exit", () => {
