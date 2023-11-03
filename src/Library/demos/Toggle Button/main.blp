@@ -12,7 +12,10 @@ Adw.StatusPage {
       orientation: horizontal;
       halign: center;
       margin-bottom: 6;
-      styles ["linked"]
+
+      styles [
+        "linked"
+      ]
 
       ToggleButton button_no_look {
         active: true;
@@ -31,7 +34,7 @@ Adw.StatusPage {
       margin-bottom: 24;
     }
 
-    Box  {
+    Box {
       orientation: horizontal;
       halign: center;
       spacing: 6;
@@ -72,17 +75,17 @@ Adw.StatusPage {
       margin-bottom: 24;
     }
 
-    LinkButton{
+    LinkButton {
       label: _("Tutorial");
       uri: "https://developer.gnome.org/documentation/tutorials/beginners/components/toggle.html";
     }
 
-    LinkButton{
+    LinkButton {
       label: _("API Reference");
       uri: "https://docs.gtk.org/gtk4/class.ToggleButton.html";
     }
 
-    LinkButton{
+    LinkButton {
       label: _("Human Interface Guidelines");
       uri: "https://developer.gnome.org/hig/patterns/controls/buttons.html";
     }

@@ -16,7 +16,10 @@ Adw.StatusPage page {
 
       Label {
         label: _("EventControllerKey Example");
-        styles ["heading"]
+
+        styles [
+          "heading"
+        ]
       }
 
       Gtk.Button ctrl_button {
@@ -32,7 +35,10 @@ Adw.StatusPage page {
 
       Label {
         label: _("GestureClick Example");
-        styles ["heading"]
+
+        styles [
+          "heading"
+        ]
       }
 
       Frame gesture_frame {
@@ -40,7 +46,10 @@ Adw.StatusPage page {
 
         Box {
           halign: center;
-          styles ["linked"]
+
+          styles [
+            "linked"
+          ]
 
           Button primary_button {
             label: _("Left");
@@ -69,7 +78,10 @@ Adw.StatusPage page {
 
       Label {
         label: _("GestureSwipe Example");
-        styles ["heading"]
+
+        styles [
+          "heading"
+        ]
       }
 
       Gtk.StackSwitcher {
@@ -89,6 +101,7 @@ Adw.StatusPage page {
           StackPage {
             title: _("Start");
             name: "pic1";
+
             child: Picture pic1 {
               can-shrink: true;
               content-fit: scale_down;
@@ -98,6 +111,7 @@ Adw.StatusPage page {
           StackPage {
             title: _("Finish");
             name: "pic2";
+
             child: Picture pic2 {
               can-shrink: true;
               content-fit: scale_down;

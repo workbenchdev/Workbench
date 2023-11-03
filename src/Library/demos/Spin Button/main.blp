@@ -11,9 +11,13 @@ Adw.StatusPage {
 
     Label {
       label: _("Select Time");
-      styles ["title-4"]
+
+      styles [
+        "title-4"
+      ]
     }
-    Box{
+
+    Box {
       halign: center;
       spacing: 6;
 
@@ -23,24 +27,26 @@ Adw.StatusPage {
         wrap: true;
         value: 0;
         climb-rate: 1;
-        adjustment:
-        Adjustment {
+
+        adjustment: Adjustment {
           lower: 0;
           upper: 23;
           step-increment: 1;
           value: 0;
         };
       }
+
       Label {
         label: ":";
       }
+
       SpinButton minutes {
         halign: center;
         orientation: vertical;
         wrap: true;
         climb-rate: 1;
-        adjustment:
-        Adjustment {
+
+        adjustment: Adjustment {
           lower: 0;
           upper: 59;
           step-increment: 1;

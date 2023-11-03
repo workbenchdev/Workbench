@@ -9,40 +9,39 @@ Adw.StatusPage {
     orientation: vertical;
     halign: center;
 
-      ProgressBar first {
-        fraction: 0.2;
-        show-text: true;
-        margin-bottom: 24;
-      }
+    ProgressBar first {
+      fraction: 0.2;
+      show-text: true;
+      margin-bottom: 24;
+    }
 
-      ProgressBar second {
-        inverted: true;
-        pulse-step: 0.25;
-        show-text: true;
-        text: "";
-        margin-bottom: 24;
-      }
+    ProgressBar second {
+      inverted: true;
+      pulse-step: 0.25;
+      show-text: true;
+      text: "";
+      margin-bottom: 24;
+    }
 
-      Label progress_tracker {
-        label: "";
-        margin-bottom: 12;
-      }
+    Label progress_tracker {
+      label: "";
+      margin-bottom: 12;
+    }
 
-      Button play {
-        halign: center;
-        margin-bottom: 24;
-        icon-name: "media-playback-start-symbolic";
-      }
+    Button play {
+      halign: center;
+      margin-bottom: 24;
+      icon-name: "media-playback-start-symbolic";
+    }
 
-      LinkButton {
-        label: _("API Reference");
-        uri: "https://docs.gtk.org/gtk4/class.ProgressBar.html";
-        }
+    LinkButton {
+      label: _("API Reference");
+      uri: "https://docs.gtk.org/gtk4/class.ProgressBar.html";
+    }
 
-      LinkButton{
-        label: _("Human Interface Guidelines");
-        uri: "https://developer.gnome.org/hig/patterns/feedback/progress-bars.html";
-        }
+    LinkButton {
+      label: _("Human Interface Guidelines");
+      uri: "https://developer.gnome.org/hig/patterns/feedback/progress-bars.html";
     }
   }
-
+}

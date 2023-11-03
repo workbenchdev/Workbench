@@ -31,13 +31,19 @@ Box {
           Label {
             halign: start;
             label: _("Network Metered");
-            styles ["title-4"]
+
+            styles [
+              "title-4"
+            ]
           }
 
           Label {
             halign: start;
             label: _("Check if your network is metered");
-            styles ["dim-label"]
+
+            styles [
+              "dim-label"
+            ]
           }
         }
 
@@ -81,7 +87,10 @@ Box {
               }
             }
           };
-          styles ["flat"]
+
+          styles [
+            "flat"
+          ]
         }
       }
 
@@ -100,13 +109,19 @@ Box {
             Label {
               halign: start;
               label: _("Network Connectivity");
-              styles ["title-4"]
+
+              styles [
+                "title-4"
+              ]
             }
 
             Label {
               halign: start;
               label: _("Check your network connectivity status");
-              styles ["dim-label"]
+
+              styles [
+                "dim-label"
+              ]
             }
           }
 
@@ -114,12 +129,13 @@ Box {
             valign: center;
             halign: end;
             icon-name: "lightbulb-symbolic";
+
             popover: Popover {
               Box {
                 margin-top: 6;
                 margin-bottom: 6;
                 margin-start: 6;
-                margin-end:6;
+                margin-end: 6;
 
                 Label {
                   label: _("You can try turning your network off/on");
@@ -127,16 +143,17 @@ Box {
               }
             };
 
-            styles ["flat"]
+            styles [
+              "flat"
+            ]
           }
         }
-
 
         Box {
           orientation: vertical;
           spacing: 12;
 
-          LevelBar level_bar{
+          LevelBar level_bar {
             mode: discrete;
             min-value: 0;
             max-value: 4;

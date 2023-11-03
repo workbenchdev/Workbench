@@ -1,13 +1,19 @@
 using Gtk 4.0;
 using GtkSource 5;
 
-template $CodeView : Gtk.Widget {
-  layout-manager: BinLayout {};
+template $CodeView: Gtk.Widget {
+  layout-manager: BinLayout {
+  };
+
   vexpand: true;
+
   ScrolledWindow scrolled_window {
     vexpand: true;
+
     GtkSource.View source_view {
-      buffer: GtkSource.Buffer {};
+      buffer: GtkSource.Buffer {
+      };
+
       monospace: true;
       auto-indent: true;
       highlight-current-line: true;

@@ -16,6 +16,7 @@ Adw.Window window {
 
     content: ScrolledWindow {
       hscrollbar-policy: never;
+
       Adw.Clamp {
         maximum-size: 600;
         tightening-threshold: 400;
@@ -27,7 +28,6 @@ Adw.Window window {
         Box {
           orientation: vertical;
           halign: fill;
-
           // Gtk.Picture needs to be wrapped in a box to behave properly
           Box {
             halign: center;
@@ -41,12 +41,18 @@ Adw.Window window {
           Label {
             label: _("Extensions");
             margin-bottom: 36;
-            styles ["title-1"]
+
+            styles [
+              "title-1"
+            ]
           }
 
           ListBox {
             selection-mode: none;
-            styles ["boxed-list"]
+
+            styles [
+              "boxed-list"
+            ]
 
             $Extension {
               title: _("JavaScript");
@@ -83,7 +89,10 @@ Adw.Window window {
             margin-top: 30;
             justify: center;
             wrap: true;
-            styles ["dim-label"]
+
+            styles [
+              "dim-label"
+            ]
           }
 
           Label all_set_hint {
@@ -91,7 +100,10 @@ Adw.Window window {
             margin-top: 30;
             justify: center;
             wrap: true;
-            styles ["dim-label"]
+
+            styles [
+              "dim-label"
+            ]
           }
         }
       }

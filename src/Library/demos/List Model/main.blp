@@ -8,6 +8,7 @@ Adw.StatusPage {
 
   Adw.Clamp {
     maximum-size: 640;
+
     Box {
       orientation: vertical;
       spacing: 24;
@@ -29,75 +30,79 @@ Adw.StatusPage {
         Gtk.StackPage {
           name: "listbox";
           title: _("List Box");
-          child:
-            Box {
-              ListBox list_box {
-                hexpand: true;
-                valign: start;
-                selection-mode: none;
-                styles ["boxed-list"]
-              }
-            };
+
+          child: Box {
+            ListBox list_box {
+              hexpand: true;
+              valign: start;
+              selection-mode: none;
+
+              styles [
+                "boxed-list"
+              ]
+            }
+          };
         }
 
         Gtk.StackPage {
           name: "flowbox";
           title: _("Flow Box");
-          child:
-            Frame {
-              hexpand: true;
-              valign: start;
-              FlowBox flow_box {
-                orientation: horizontal;
-                selection-mode: none;
-              }
-            };
-        }
 
+          child: Frame {
+            hexpand: true;
+            valign: start;
+
+            FlowBox flow_box {
+              orientation: horizontal;
+              selection-mode: none;
+            }
+          };
+        }
 
         Gtk.StackPage {
           name: "Filter";
           title: _("Edit");
-          child:
+
+          child: Box {
+            orientation: vertical;
+            spacing: 12;
+
             Box {
-              orientation: vertical;
-              spacing: 12;
+              halign: center;
 
-              Box {
-                halign: center;
-                styles ["linked"]
+              styles [
+                "linked"
+              ]
 
-                SearchEntry search_entry {
-                  placeholder-text: _("Start searching");
-                }
-
-                Button add {
-                  icon-name: "list-add-symbolic";
-                  tooltip-text: _("Add Item");
-                }
-
-                Button remove {
-                  icon-name: "list-remove-symbolic";
-                  tooltip-text: _("Remove Item");
-                  sensitive: false;
-                }
+              SearchEntry search_entry {
+                placeholder-text: _("Start searching");
               }
 
-              ListBox list_box_editable {
-                hexpand: true;
-                valign: start;
-                activate-on-single-click: true;
-                selection-mode: single;
-                styles ["boxed-list"]
+              Button add {
+                icon-name: "list-add-symbolic";
+                tooltip-text: _("Add Item");
               }
-            };
+
+              Button remove {
+                icon-name: "list-remove-symbolic";
+                tooltip-text: _("Remove Item");
+                sensitive: false;
+              }
+            }
+
+            ListBox list_box_editable {
+              hexpand: true;
+              valign: start;
+              activate-on-single-click: true;
+              selection-mode: single;
+
+              styles [
+                "boxed-list"
+              ]
+            }
+          };
         }
       }
     }
   }
 }
-
-
-
-
-

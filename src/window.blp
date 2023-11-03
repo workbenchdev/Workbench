@@ -20,6 +20,7 @@ Adw.ApplicationWindow window {
           label: _("_Library");
           use-underline: true;
         };
+
         action-name: "app.library";
         tooltip-text: _("Open Library of Demos and Examples (Ctrl+Shift+O)");
       }
@@ -44,7 +45,10 @@ Adw.ApplicationWindow window {
             }
           };
 
-          styles ["flat", "view-toggler"]
+          styles [
+            "flat",
+            "view-toggler"
+          ]
         }
 
         ToggleButton button_style {
@@ -61,7 +65,10 @@ Adw.ApplicationWindow window {
             }
           };
 
-          styles ["flat", "view-toggler"]
+          styles [
+            "flat",
+            "view-toggler"
+          ]
         }
 
         ToggleButton button_ui {
@@ -78,7 +85,10 @@ Adw.ApplicationWindow window {
             }
           };
 
-          styles ["flat", "view-toggler"]
+          styles [
+            "flat",
+            "view-toggler"
+          ]
         }
 
         ToggleButton button_preview {
@@ -95,7 +105,10 @@ Adw.ApplicationWindow window {
             }
           };
 
-          styles ["flat", "view-toggler"]
+          styles [
+            "flat",
+            "view-toggler"
+          ]
         }
       }
 
@@ -114,9 +127,13 @@ Adw.ApplicationWindow window {
           label: _("_Run");
           use-underline: true;
         };
+
         action-name: "win.run";
         tooltip-text: _("Run (Ctrl+⏎)");
-        styles ["suggested-action"]
+
+        styles [
+          "suggested-action"
+        ]
       }
     }
 
@@ -140,7 +157,11 @@ Adw.ApplicationWindow window {
 
             [top]
             CenterBox {
-              styles ["toolbar", "panel_header"]
+              styles [
+                "toolbar",
+                "panel_header"
+              ]
+
               height-request: 46;
 
               [start]
@@ -148,11 +169,16 @@ Adw.ApplicationWindow window {
                 Label {
                   label: _("<b>Code</b>");
                   use-markup: true;
-                  styles ["dim-label"]
+
+                  styles [
+                    "dim-label"
+                  ]
                 }
 
                 Separator {
-                  styles ["spacer"]
+                  styles [
+                    "spacer"
+                  ]
                 }
 
                 DropDown dropdown_code_lang {
@@ -164,6 +190,7 @@ Adw.ApplicationWindow window {
                       "Python",
                     ]
                   };
+
                   tooltip-text: _("Switch Document");
                 }
               }
@@ -174,26 +201,34 @@ Adw.ApplicationWindow window {
 
             Stack stack_code {
               hexpand: true;
+
               StackPage {
                 name: 'JavaScript';
+
                 child: $CodeView code_view_javascript {
                   language_id: 'js';
                 };
               }
+
               StackPage {
                 name: 'Vala';
+
                 child: $CodeView code_view_vala {
                   language_id: 'vala';
                 };
               }
+
               StackPage {
                 name: 'Rust';
+
                 child: $CodeView code_view_rust {
                   language_id: 'rust';
                 };
               }
+
               StackPage {
                 name: 'Python';
+
                 child: $CodeView code_view_python {
                   language_id: 'python3';
                 };
@@ -206,14 +241,21 @@ Adw.ApplicationWindow window {
 
             [top]
             CenterBox {
-              styles ["toolbar", "panel_header"]
+              styles [
+                "toolbar",
+                "panel_header"
+              ]
+
               height-request: 46;
 
               [start]
               Label {
                 label: _("<b>Style CSS</b>");
                 use-markup: true;
-                styles ["dim-label"]
+
+                styles [
+                  "dim-label"
+                ]
               }
             }
 
@@ -230,7 +272,11 @@ Adw.ApplicationWindow window {
 
             [top]
             CenterBox {
-              styles ["toolbar", "panel_header"]
+              styles [
+                "toolbar",
+                "panel_header"
+              ]
+
               height-request: 46;
 
               [start]
@@ -238,11 +284,16 @@ Adw.ApplicationWindow window {
                 Label {
                   label: _("<b>UI</b>");
                   use-markup: true;
-                  styles ["dim-label"]
+
+                  styles [
+                    "dim-label"
+                  ]
                 }
 
                 Separator {
-                  styles ["spacer"]
+                  styles [
+                    "spacer"
+                  ]
                 }
 
                 DropDown dropdown_ui_lang {
@@ -252,8 +303,10 @@ Adw.ApplicationWindow window {
                       "XML",
                     ]
                   };
+
                   tooltip-text: _("Convert and Switch Syntax");
                 }
+
                 Button button_ui_experimental_blueprint {
                   icon-name: "applications-science-symbolic";
                   tooltip-text: _("Information About Blueprint");
@@ -269,12 +322,15 @@ Adw.ApplicationWindow window {
 
               StackPage {
                 name: 'blueprint';
+
                 child: $CodeView code_view_blueprint {
                   language_id: 'blueprint';
                 };
               }
+
               StackPage {
                 name: 'xml';
+
                 child: $CodeView code_view_xml {
                   language_id: 'xml';
                 };
@@ -287,7 +343,11 @@ Adw.ApplicationWindow window {
 
             [top]
             CenterBox {
-              styles ["toolbar", "panel_header"]
+              styles [
+                "toolbar",
+                "panel_header"
+              ]
+
               height-request: 46;
 
               [start]
@@ -295,19 +355,25 @@ Adw.ApplicationWindow window {
                 halign: center;
                 valign: center;
                 label: _("Preview");
-                styles ["flat"]
+
+                styles [
+                  "flat"
+                ]
+
                 menu-model: preview_menu;
               }
 
               [center]
               DropDown dropdown_preview_align {
                 visible: false;
+
                 model: StringList {
                   strings [
                     _("Fill"),
                     _("Center"),
                   ]
                 };
+
                 tooltip-text: _("Select Preview Mode");
               }
 
@@ -315,6 +381,7 @@ Adw.ApplicationWindow window {
               Button button_screenshot {
                 icon-name: "re.sonny.Workbench-screenshot-symbolic";
                 tooltip-text: _("Screenshot Preview");
+
                 accessibility {
                   label: _("Screenshot Preview");
                 }
@@ -327,6 +394,7 @@ Adw.ApplicationWindow window {
             Stack stack_preview {
               StackPage {
                 name: "inline";
+
                 child: Box {
                   ScrolledWindow {
                     name: "workbench_output";
@@ -336,7 +404,10 @@ Adw.ApplicationWindow window {
                     child: Viewport output {
                       halign: fill;
                       valign: fill;
-                      styles ["background"]
+
+                      styles [
+                        "background"
+                      ]
                     };
                   }
 
@@ -347,6 +418,7 @@ Adw.ApplicationWindow window {
 
               StackPage {
                 name: "open_window";
+
                 child: Adw.StatusPage {
                   title: _("Windowed Preview");
                   description: _("This interface can only be previewed as a separate window.\nWe recommend using “Always on Top”.");
@@ -357,7 +429,11 @@ Adw.ApplicationWindow window {
 
                     Button button_open_preview_window {
                       label: _("Show Preview Window");
-                      styles ["pill", "suggested-action"]
+
+                      styles [
+                        "pill",
+                        "suggested-action"
+                      ]
                     }
                   }
                 };
@@ -365,6 +441,7 @@ Adw.ApplicationWindow window {
 
               StackPage {
                 name: "close_window";
+
                 child: Adw.StatusPage {
                   title: _("Windowed Preview");
                   description: _("This interface can only be previewed as a separate window.\nWe recommend using “Always on Top”.");
@@ -375,7 +452,10 @@ Adw.ApplicationWindow window {
 
                     Button button_close_preview_window {
                       label: _("Close Preview Window");
-                      styles ["pill"]
+
+                      styles [
+                        "pill"
+                      ]
                     }
                   }
                 };
@@ -403,16 +483,23 @@ Adw.ApplicationWindow window {
           [top]
           CenterBox toolbar_devtools {
             name: "toolbar_devtools";
-            styles ["toolbar", "panel_header"]
+
+            styles [
+              "toolbar",
+              "panel_header"
+            ]
+
             [start]
             Box {
               spacing: 6;
+
               ToggleButton button_console {
                 child: Adw.ButtonContent {
                   icon-name: "terminal-symbolic";
                   label: _("C_onsole");
                   use-underline: true;
                 };
+
                 action-name: "win.console";
                 tooltip-text: _("Show Logs (Ctrl+Shift+K)");
               }
@@ -423,6 +510,7 @@ Adw.ApplicationWindow window {
                   label: _("_Inspector");
                   use-underline: true;
                 };
+
                 tooltip-text: _("Open GTK Inspector (Ctrl+Shift+I)");
               }
             }
@@ -435,6 +523,7 @@ Adw.ApplicationWindow window {
                   label: _("Cl_ear");
                   use-underline: true;
                 };
+
                 action-name: "win.clear";
                 tooltip-text: _("Clear Console (Ctrl+K)");
               }
@@ -467,10 +556,15 @@ $Modal modal_blueprint_experimental {
     description: _("Future versions may have breaking syntax.");
     title: _("Blueprint is\nExperimental");
     icon-name: "re.sonny.Workbench-beaker";
+
     Button button_blueprint_documentation {
       halign: center;
       label: _("Documentation");
-      styles ["suggested-action", "pill"]
+
+      styles [
+        "suggested-action",
+        "pill"
+      ]
     }
   };
 }
@@ -491,6 +585,7 @@ menu menu_app {
 
     submenu {
       label: _("Bookmarks");
+
       section {
         label: _("Learn");
 
@@ -499,7 +594,6 @@ menu menu_app {
           action: "app.open_uri";
           target: "https://developer.gnome.org/documentation/index.html";
         }
-
 
         item {
           label: _("Human Interface Guidelines");
@@ -621,10 +715,12 @@ Adw.MessageDialog message_dialog_save_project {
     discard: _("Discard") destructive,
     save: _("Save") suggested disabled,
   ]
+
   close-response: "cancel";
   modal: true;
   heading: _("Save Project?");
   body: _("This session has not been saved. Unsaved sessions will be permanently lost.");
+
   extra-child: Box {
     margin-top: 12;
     orientation: vertical;
@@ -632,7 +728,10 @@ Adw.MessageDialog message_dialog_save_project {
 
     ListBox {
       selection-mode: none;
-      styles ["boxed-list"]
+
+      styles [
+        "boxed-list"
+      ]
 
       Adw.EntryRow row_project_name {
         title: _("Project Name");
@@ -644,7 +743,10 @@ Adw.MessageDialog message_dialog_save_project {
 
       ListBox {
         selection-mode: none;
-        styles ["boxed-list"]
+
+        styles [
+          "boxed-list"
+        ]
 
         Adw.ActionRow row_project_location {
           title: _("Location");
@@ -658,7 +760,12 @@ Adw.MessageDialog message_dialog_save_project {
         margin-top: 12;
         halign: start;
         label: _("The project will be created in a new subdirectory.");
-        styles ["dim-label", "caption"]
+
+        styles [
+          "dim-label",
+          "caption"
+        ]
+
         justify: left;
       }
     }
@@ -668,5 +775,8 @@ Adw.MessageDialog message_dialog_save_project {
 Button button_location {
   icon-name: "folder-symbolic";
   valign: center;
-  styles ["flat"]
+
+  styles [
+    "flat"
+  ]
 }

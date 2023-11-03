@@ -31,19 +31,22 @@ Adw.StatusPage {
           label: _("Battery");
         }
 
-        LevelBar bar_continuous{
-            mode: continuous;
-            margin-start:12;
-            margin-end:12;
-            margin-bottom: 24;
-            min-value:0;
-            max-value:100;
-            value: 50;
+        LevelBar bar_continuous {
+          mode: continuous;
+          margin-start: 12;
+          margin-end: 12;
+          margin-bottom: 24;
+          min-value: 0;
+          max-value: 100;
+          value: 50;
         }
-        styles ["card"]
+
+        styles [
+          "card"
+        ]
+
         margin-bottom: 24;
       }
-
 
       Label {
         label: _("Discrete");
@@ -53,13 +56,14 @@ Adw.StatusPage {
         placeholder-text: "Choose a Password";
         show-peek-icon: true;
       }
+
       LevelBar bar_discrete {
         mode: discrete;
         min-value: 0;
         max-value: 6;
       }
-      Label label_strength {
 
+      Label label_strength {
       }
     }
 

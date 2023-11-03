@@ -11,7 +11,7 @@ Adw.StatusPage {
       orientation: vertical;
 
       Box controls {
-        spacing:6;
+        spacing: 6;
         halign: center;
 
         Box {
@@ -26,11 +26,13 @@ Adw.StatusPage {
               placeholder-text: _("Longitude");
             }
 
-            Button button_go{
+            Button button_go {
               label: _("Go");
             }
 
-            styles ["linked"]
+            styles [
+              "linked"
+            ]
           }
         }
 
@@ -50,9 +52,14 @@ Adw.StatusPage {
             tooltip-text: _("Place Marker");
           }
 
-          styles ["linked"]
+          styles [
+            "linked"
+          ]
         }
-        styles ["toolbar"]
+
+        styles [
+          "toolbar"
+        ]
       }
 
       Shumate.SimpleMap map_widget {
@@ -71,6 +78,9 @@ Adw.StatusPage {
 Shumate.Marker marker {
   Image {
     icon-name: "map-marker-symbolic";
-    styles ["map-marker"]
+
+    styles [
+      "map-marker"
+    ]
   }
 }

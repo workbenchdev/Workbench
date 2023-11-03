@@ -10,19 +10,26 @@ Box welcome {
     icon-name: "re.sonny.Workbench";
     pixel-size: 196;
     margin-bottom: 30;
-    styles ["icon-dropshadow"]
+
+    styles [
+      "icon-dropshadow"
+    ]
   }
 
   Label {
     label: _("Welcome to Workbench");
     margin-bottom: 30;
-    styles ["title-1"]
+
+    styles [
+      "title-1"
+    ]
   }
 
   Box subtitle {
     orientation: vertical;
     halign: center;
     margin-bottom: 30;
+
     Label {
       label: "Learn and prototype with\nGNOME technologies";
       justify: center;
@@ -33,13 +40,16 @@ Box welcome {
     orientation: vertical;
     homogeneous: true;
     halign: center;
+
     Box {
       margin-bottom: 6;
+
       Image {
         icon-name: "update-symbolic";
         margin-end: 12;
         icon-size: normal;
       }
+
       Label {
         label: _("Edit Style or UI to update the Preview");
       }
@@ -47,18 +57,22 @@ Box welcome {
 
     Box {
       margin-bottom: 6;
+
       Image {
         icon-name: "media-playback-start-symbolic";
         margin-end: 12;
         icon-size: normal;
       }
+
       Label {
         label: _("Hit");
       }
+
       ShortcutsShortcut {
         accelerator: "<Control>Return";
         margin-start: 12;
       }
+
       Label {
         label: _("to format and run Code");
       }
@@ -66,11 +80,13 @@ Box welcome {
 
     Box {
       margin-bottom: 6;
+
       Image {
         icon-name: "media-floppy-symbolic";
         margin-end: 12;
         icon-size: normal;
       }
+
       Label {
         label: _("Changes are automatically saved and restored");
       }
@@ -78,11 +94,13 @@ Box welcome {
 
     Box {
       margin-bottom: 6;
+
       Image {
         icon-name: "library-symbolic";
         margin-end: 12;
         icon-size: normal;
       }
+
       Label {
         label: _("Browse the Library for demos and examples");
       }
@@ -90,11 +108,13 @@ Box welcome {
 
     Box {
       margin-bottom: 6;
+
       Image {
         icon-name: "user-bookmarks-symbolic";
         margin-end: 12;
         icon-size: normal;
       }
+
       Label {
         label: _("Checkout the Bookmarks menu to learn and get help");
       }

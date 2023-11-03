@@ -16,20 +16,23 @@ Adw.StatusPage {
         halign: center;
         icon-name: "open-menu-symbolic";
         menu-model: primary_button_menu;
-        primary: true; // May not work in Previewer
+        primary: true;
+        // May not work in Previewer
       }
 
       Label {
         label: _("Primary Menu Button");
-        styles ["title-4"]
+
+        styles [
+          "title-4"
+        ]
       }
 
-       Label {
+      Label {
         label: _("Displays an app-wide menu with standard features");
-
       }
 
-       MenuButton secondary {
+      MenuButton secondary {
         direction: bind direction_row.selected;
         halign: center;
         menu-model: secondary_button_menu;
@@ -38,7 +41,10 @@ Adw.StatusPage {
 
       Label {
         label: _("Secondary Menu Button");
-        styles ["title-4"]
+
+        styles [
+          "title-4"
+        ]
       }
 
       Label {
@@ -46,14 +52,24 @@ Adw.StatusPage {
       }
 
       ListBox {
-        styles ["boxed-list"]
+        styles [
+          "boxed-list"
+        ]
+
         margin-top: 18;
         selection-mode: none;
 
         Adw.ComboRow direction_row {
           title: _("Direction");
+
           model: StringList {
-            strings ["Up", "Down", "Left", "Right", "None"]
+            strings [
+              "Up",
+              "Down",
+              "Left",
+              "Right",
+              "None"
+            ]
           };
         }
 
@@ -64,12 +80,12 @@ Adw.StatusPage {
 
       LinkButton {
         label: _("Human Interface Guidelines");
-         uri: "https://developer.gnome.org/hig/patterns/controls/menus.html";
+        uri: "https://developer.gnome.org/hig/patterns/controls/menus.html";
       }
 
       LinkButton {
         label: _("Menu Button API Reference");
-         uri: "https://docs.gtk.org/gtk4/class.MenuButton.html";
+        uri: "https://docs.gtk.org/gtk4/class.MenuButton.html";
       }
     }
   }
@@ -79,6 +95,7 @@ menu primary_button_menu {
   section {
     submenu {
       label: _("Bookmarks");
+
       section {
         label: _("Learn");
 
@@ -87,7 +104,6 @@ menu primary_button_menu {
           action: "app.open_uri";
           target: "https://developer.gnome.org/documentation/index.html";
         }
-
 
         item {
           label: _("Human Interface Guidelines");
@@ -188,4 +204,3 @@ menu secondary_button_menu {
   item ("Item 2")
   item ("Item 3")
 }
-

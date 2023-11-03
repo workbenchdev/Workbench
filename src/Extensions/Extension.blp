@@ -1,6 +1,6 @@
 using Gtk 4.0;
 
-template $Extension : ListBoxRow {
+template $Extension: ListBoxRow {
   activatable: false;
 
   Box {
@@ -14,12 +14,16 @@ template $Extension : ListBoxRow {
       margin-end: 14;
 
       [start]
-      Label label_title {}
+      Label label_title {
+      }
 
       [end]
       Image image_enabled {
         icon-name: "test-pass-symbolic";
-        styles ["success"]
+
+        styles [
+          "success"
+        ]
       }
     }
 
@@ -33,6 +37,7 @@ template $Extension : ListBoxRow {
       Label label_hint {
         wrap: true;
         xalign: 0;
+
         styles [
           "dim-label"
         ]
@@ -46,7 +51,9 @@ template $Extension : ListBoxRow {
         selectable: true;
         xalign: 0;
 
-        styles ["command_snippet"]
+        styles [
+          "command_snippet"
+        ]
       }
     }
   }

@@ -10,13 +10,16 @@ Adw.StatusPage {
     halign: center;
     spacing: 42;
 
-    Box{
+    Box {
       orientation: vertical;
 
       Label {
         label: _("Dialog Button");
         margin-bottom: 12;
-        styles ["title-4"]
+
+        styles [
+          "title-4"
+        ]
       }
 
       FontDialogButton font_dialog_button {
@@ -26,27 +29,32 @@ Adw.StatusPage {
         use-size: true;
       }
 
-
       LinkButton {
         label: _("API Reference");
         uri: "https://docs.gtk.org/gtk4/class.FontDialogButton.html";
       }
     }
 
-    Box{
+    Box {
       orientation: vertical;
 
       Label {
         label: _("Dialog with Custom Button");
         margin-bottom: 12;
-        styles ["title-4"]
+
+        styles [
+          "title-4"
+        ]
       }
 
       Button custom_button {
         label: _("Select Font…");
         halign: center;
         margin-bottom: 12;
-        styles ["pill"]
+
+        styles [
+          "pill"
+        ]
       }
 
       LinkButton {
@@ -56,6 +64,3 @@ Adw.StatusPage {
     }
   }
 }
-
-
-
