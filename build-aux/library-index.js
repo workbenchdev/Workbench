@@ -47,14 +47,14 @@ for (const file_info of demos_dir.enumerate_children(
   if (demo_dir.get_child("main.js").query_exists(null)) {
     languages.push("javascript");
   }
-  if (demo_dir.get_child("main.py").query_exists(null)) {
-    languages.push("python");
-  }
   if (demo_dir.get_child("main.vala").query_exists(null)) {
     languages.push("vala");
   }
   if (demo_dir.get_child("code.rs").query_exists(null)) {
     languages.push("rust");
+  }
+  if (demo_dir.get_child("main.py").query_exists(null)) {
+    languages.push("python");
   }
   demo.languages = languages;
 
