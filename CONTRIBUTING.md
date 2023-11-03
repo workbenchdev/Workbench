@@ -119,6 +119,8 @@ Some guidelines:
 - Test your code before asking for review, for example by starting Workbench and opening the Library entry
 - Always review your own work before asking someone else
 
+See also [the list of Library entries](https://github.com/sonnyp/Workbench/wiki/Language-support-table) and some additional instructions on the Wiki.
+
 ## Learn
 
 Here is a compilation of resources to learn more about the GNOME platform.
