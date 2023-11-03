@@ -17,7 +17,7 @@ public void main () {
     always_ask = true
   };
 
-  launch_file.clicked.connect (on_launch_file);
+  launch_file.clicked.connect (on_launch_file.begin);
   file_launcher.notify["file"].connect (() => {
     try {
       FileInfo info = file_launcher.file.query_info ("standard::display-name", NONE, null);
@@ -27,11 +27,11 @@ public void main () {
     }
   });
 
-  file_location.clicked.connect (open_file_location);
-  change_file.clicked.connect (select_file);
+  file_location.clicked.connect (open_file_location.begin);
+  change_file.clicked.connect (select_file.begin);
 
   // URI Launcher
-  uri_launch.clicked.connect (launch_uri);
+  uri_launch.clicked.connect (launch_uri.begin);
   uri_details.changed.connect (() => {
     try {
       uri_launch.sensitive = Uri.is_valid (uri_details.text, NONE);
