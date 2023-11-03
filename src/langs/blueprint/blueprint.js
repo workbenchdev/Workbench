@@ -1,5 +1,4 @@
 import GLib from "gi://GLib";
-import Source from "gi://GtkSource";
 
 import LSPClient from "../../lsp/LSPClient.js";
 
@@ -41,7 +40,7 @@ export function setup({ document }) {
       });
       return blp;
     },
-    async format(text) {
+    async format() {
       // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_formatting
       const text_edits = await lspc.request("textDocument/formatting", {
         textDocument: {
@@ -56,29 +55,20 @@ export function setup({ document }) {
         },
       });
 
-      if (!text_edits || text_edits.length !== 1) return text;
-      const newText = text_edits[0].newText;
-      if (!newText) return text;
-
-      return newText;
+      applyTextEdits(text_edits, document.code_view.buffer);
     },
   };
 }
 
-export function applyTextEdits(text_edits, text) {
-  const buffer = new Source.Buffer({ text });
-
-  let new_text = text;
-  // let new_text = text;
-
+export function applyTextEdits(text_edits, buffer) {
+  buffer.begin_user_action();
   for (const text_edit of text_edits) {
-    new_text = applyTextEdit(text_edit, buffer, new_text);
+    applyTextEdit(text_edit, buffer);
   }
-
-  return new_text;
+  buffer.end_user_action();
 }
 
-function applyTextEdit({ range, newText }, buffer, text) {
+function applyTextEdit({ range, newText }, buffer) {
   const { start, end } = range;
   const [, start_iter] = buffer.get_iter_at_line_offset(
     start.line,
@@ -86,26 +76,8 @@ function applyTextEdit({ range, newText }, buffer, text) {
   );
   const [, end_iter] = buffer.get_iter_at_line_offset(end.line, end.character);
 
-  console.log(
-    text.slice(0, start_iter.get_offset()) +
-      newText +
-      text.slice(end_iter.get_offset()),
-  );
-
-  return (
-    text.slice(0, start_iter.get_offset()) +
-    newText +
-    text.slice(end_iter.get_offset())
-  );
-
-  // const bounds = new_buffer.get_bounds();
-
-  // const str =
-  //   new_buffer.get_slice(bounds[0], start_iter, false) +
-  //   newText +
-  //   new_buffer.get_slice(end_iter, bounds[1], false);
-  // console.log(str);
-  // new_buffer.text = str;
+  buffer.delete(start_iter, end_iter);
+  buffer.insert(start_iter, newText, -1);
 }
 
 const SYSLOG_IDENTIFIER = pkg.name;
