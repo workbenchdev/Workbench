@@ -42,7 +42,6 @@ rules:
   array-callback-return: [error] # https://eslint.org/docs/latest/rules/array-callback-return
   no-duplicate-imports: [error] # https://eslint.org/docs/latest/rules/no-duplicate-imports
   no-new-native-nonconstructor: [error] # https://eslint.org/docs/latest/rules/no-new-native-nonconstructor
-  # TODO: log and logError
   no-restricted-globals: # https://eslint.org/docs/rules/no-restricted-globals
     - error
     - window
