@@ -5,7 +5,7 @@ private Adw.Avatar avatar_image;
 public void main () {
   avatar_image = (Adw.Avatar) workbench.builder.get_object ("avatar_image");
   var button = (Gtk.Button) workbench.builder.get_object ("button");
-  button.clicked.connect (select_image);
+  button.clicked.connect (select_image.begin);
 }
 
 private async void select_image () {
