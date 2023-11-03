@@ -5,11 +5,12 @@ Adw.Window window {
   width-request: 800;
   height-request: 600;
   hide-on-close: true;
+  title: _("Workbench — Icon Library");
 
   Adw.ToastOverlay overlay {
-    Box {
-      orientation: vertical;
 
+    Adw.ToolbarView {
+      [top]
       Adw.HeaderBar {
         [title]
         Adw.Clamp {

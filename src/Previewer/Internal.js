@@ -5,6 +5,7 @@ import GObject from "gi://GObject";
 import Adw from "gi://Adw";
 
 import { once } from "../../troll/src/async.js";
+import { build } from "../../troll/src/builder.js";
 
 // eslint-disable-next-line no-restricted-globals
 const { addSignalMethods } = imports.signals;
@@ -36,7 +37,7 @@ export default function Internal({
         await panel_ui.update();
         await once(bus, "object_root", { timeout: 5000 });
       } catch (err) {
-        logError(err);
+        console.error(err);
         return;
       }
     }
@@ -80,6 +81,10 @@ export default function Internal({
         dropdown_preview_align.selected = 0;
         preview(object);
       },
+      build(params) {
+        console.warn("workbench.build is experimental");
+        return build(panel_ui.xml, params);
+      },
     };
 
     let obj;
@@ -122,7 +127,7 @@ export default function Internal({
         const prop_name = prop.get_name();
         // AdwWindow and AdwApplicationWindow have child and titlebar properties but do not support setting them
         // "Using gtk_window_get_titlebar() and gtk_window_set_titlebar() is not supported and will result in a crash."
-        // https://gnome.pages.gitlab.gnome.org/libadwaita/doc/main/class.Window.html
+        // https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.4/class.Window.html
         // https://github.com/sonnyp/Workbench/issues/130
         if (
           (object_preview instanceof Adw.Window ||
@@ -215,7 +220,7 @@ export default function Internal({
   }
 
   return {
-    async start() {},
+    async start(_language) {},
     open,
     close,
     stop,

@@ -44,10 +44,12 @@ ${getBlueprintVersion()}
       "Lorenz Wildberg https://gitlab.gnome.org/lwildberg",
       "Andy Holmes https://gitlab.gnome.org/andyholmes",
       "Julian Hofer https://julianhofer.eu/",
+      "Marco Köpcke https://github.com/theCapypara",
     ],
     designers: [
       "Sonny Piers https://sonny.re",
       "Tobias Bernard <tbernard@gnome.org>",
+      "Brage Fuglseth https://bragefuglseth.dev",
     ],
     artists: [
       "Tobias Bernard <tbernard@gnome.org>",
@@ -79,6 +81,8 @@ ${getBlueprintVersion()}
     "Muhammad Bilal https://github.com/mbilal234",
     "Onkar https://github.com/onkarrai06",
     "Sabrina Meindlhumer https://github.com/m-sabrina",
+    "Urtsi Santsi <urtsi.santsi@proton.me>",
+    "Roland Lötscher https://github.com/rolandlo",
     // Add yourself as
     // "John Doe",
     // or

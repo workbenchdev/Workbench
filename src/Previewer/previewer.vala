@@ -1,6 +1,6 @@
 namespace Workbench {
 
-  [DBus (name="re.sonny.Workbench.vala_previewer")]
+  [DBus (name="re.sonny.Workbench.previewer_module")]
   public class Previewer : Object {
     construct {
       this.notify["ColorScheme"].connect (() => {
@@ -59,9 +59,15 @@ namespace Workbench {
       return true;
     }
 
-    public void update_ui (string content, string target_id, string original_id = "") {
-      this.builder = new Gtk.Builder.from_string (content, content.length);
+    // This registers GObjects so that they can be found by GtkBuilder
+    void ensure_types() {
+      typeof (Shumate.SimpleMap).ensure();
+      typeof (WebKit.WebView).ensure();
+    }
 
+    public void update_ui (string content, string target_id, string original_id = "") {
+      this.ensure_types();
+      this.builder = new Gtk.Builder.from_string (content, content.length);
       var target = this.builder.get_object (target_id) as Gtk.Widget;
       if (target == null) {
         stderr.printf (@"Widget with target_id='$target_id' could not be found.\n");
@@ -227,7 +233,7 @@ namespace Workbench {
       loop.quit();
     });
 
-    connection.register_object ("/re/sonny/workbench/vala_previewer", previewer);
+    connection.register_object ("/re/sonny/workbench/previewer_module", previewer);
 
     loop.run();
   }

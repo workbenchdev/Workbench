@@ -1,12 +1,11 @@
 {
   "name": "blueprint-compiler",
   "buildsystem": "meson",
-  "builddir": true,
   "sources": [
     {
       "type": "git",
       "url": "https://gitlab.gnome.org/gregorni/blueprint-compiler.git",
-      "branch": "formatter"
+      "commit": "ceb70271fd2de49d3e769d08746985f84320dc66"
     }
   ]
 }

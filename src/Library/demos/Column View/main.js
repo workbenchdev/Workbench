@@ -1,4 +1,5 @@
 import Gtk from "gi://Gtk";
+import GLib from "gi://GLib";
 import Gio from "gi://Gio";
 import GObject from "gi://GObject";
 
@@ -79,13 +80,7 @@ factory_col2.connect("bind", (factory, list_item) => {
   const label_widget = list_item.get_child();
   const model_item = list_item.get_item();
   const size = model_item.get_size();
-  if (Math.floor(size / 1_000_000_000) > 0)
-    label_widget.label = `${(size / 1_000_000_000).toFixed(1)} GB`;
-  else if (Math.floor(size / 1_000_000) > 0)
-    label_widget.label = `${(size / 1_000_000).toFixed(1)} MB`;
-  else if (Math.floor(size / 1000) > 0)
-    label_widget.label = `${(size / 1000).toFixed(1)} kB`;
-  else label_widget.label = `${size / 1000} bytes`;
+  label_widget.label = GLib.format_size(size);
 });
 
 //Column 3

@@ -57,23 +57,18 @@ Adw.StatusPage {
           };
         }
 
-        Adw.ActionRow {
+        Adw.SwitchRow circular_switch {
           title: _("Circular");
-          activatable-widget: circular_switch;
-
-          Switch circular_switch {
-            valign: center;
-          }
         }
       }
 
       LinkButton {
-        label: "Human Interface Guidelines";
+        label: _("Human Interface Guidelines");
          uri: "https://developer.gnome.org/hig/patterns/controls/menus.html";
       }
 
       LinkButton {
-        label: "Menu Button API Reference";
+        label: _("Menu Button API Reference");
          uri: "https://docs.gtk.org/gtk4/class.MenuButton.html";
       }
     }
@@ -110,6 +105,12 @@ menu primary_button_menu {
           label: _("Vala");
           action: "app.open_uri";
           target: "https://wiki.gnome.org/Projects/Vala";
+        }
+
+        item {
+          label: _("Rust");
+          action: "app.open_uri";
+          target: "https://gtk-rs.org";
         }
 
         item {
@@ -187,3 +188,4 @@ menu secondary_button_menu {
   item ("Item 2")
   item ("Item 3")
 }
+

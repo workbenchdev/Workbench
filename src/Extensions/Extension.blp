@@ -1,0 +1,53 @@
+using Gtk 4.0;
+
+template $Extension : ListBoxRow {
+  activatable: false;
+
+  Box {
+    orientation: vertical;
+
+    CenterBox {
+      height-request: 55;
+      valign: center;
+      halign: fill;
+      margin-start: 14;
+      margin-end: 14;
+
+      [start]
+      Label label_title {}
+
+      [end]
+      Image image_enabled {
+        icon-name: "test-pass-symbolic";
+        styles ["success"]
+      }
+    }
+
+    Box installation_guide {
+      visible: false;
+      margin-start: 14;
+      margin-end: 14;
+      margin-bottom: 14;
+      orientation: vertical;
+
+      Label label_hint {
+        wrap: true;
+        xalign: 0;
+        styles [
+          "dim-label"
+        ]
+      }
+
+      Label label_command {
+        margin-top: 12;
+        use-markup: true;
+        wrap: true;
+        wrap-mode: word_char;
+        selectable: true;
+        xalign: 0;
+
+        styles ["command_snippet"]
+      }
+    }
+  }
+}

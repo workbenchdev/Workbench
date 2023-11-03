@@ -35,7 +35,7 @@ Adw.StatusPage {
         }
 
         Adw.ActionRow {
-          title: _("ActionRow can have a activatable widget");
+          title: _("Action Row can have a activatable widget");
           subtitle: _("Click on the row to activate it");
           activatable-widget: activatable_toggle;
 
@@ -44,6 +44,12 @@ Adw.StatusPage {
             icon-name: "hand-touch-symbolic";
             valign: center;
           }
+        }
+        
+        Adw.ActionRow {
+          styles ["property"]
+          title: _("Property Row");
+          subtitle: _("Deemphasizes the row title and emphasizes subtitle instead");
         }
 
         Adw.EntryRow {
@@ -90,12 +96,12 @@ Adw.StatusPage {
 
       LinkButton {
         margin-top: 24;
-        label: "API Reference";
-        uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1-latest/boxed-lists.html";
+        label: _("API Reference");
+        uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.4/boxed-lists.html";
       }
 
       LinkButton {
-        label: "Human Interface Guidelines";
+        label: _("Human Interface Guidelines");
         uri: "https://developer.gnome.org/hig/patterns/containers/boxed-lists.html";
       }
     }

@@ -3,7 +3,6 @@
 Gtk.Box root_box;
 Gtk.Stack stack;
 Adw.ComboRow navigation_row;
-Adw.ComboRow transition_row;
 Gtk.StackSwitcher? stack_switcher = null;
 Gtk.StackSidebar? stack_sidebar = null;
 Gtk.Separator? separator = null;
@@ -12,7 +11,6 @@ public void main() {
   root_box = (Gtk.Box) workbench.builder.get_object("root_box");
   stack = (Gtk.Stack) workbench.builder.get_object("stack");
   navigation_row = (Adw.ComboRow) workbench.builder.get_object("navigation_row");
-  transition_row = (Adw.ComboRow) workbench.builder.get_object("transition_row");
 
   on_navigation_row_changed();
 

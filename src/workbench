@@ -1,5 +1,20 @@
-#!/bin/sh
+#!/bin/bash
 
+export WEBKIT_DISABLE_DMABUF_RENDERER=1
+# export G_MESSAGES_DEBUG=@app_id@
 
-SHELL=/bin/sh script --flush --quiet --return /var/tmp/workbench --command "WEBKIT_DISABLE_DMABUF_RENDERER=1 @app_id@ $@"
-# SHELL=/bin/sh script --flush --quiet --return /var/tmp/workbench --command "G_MESSAGES_DEBUG=\"@app_id@\" WEBKIT_DISABLE_DMABUF_RENDERER=1 @app_id@ $@"
+# Required to allow pkgconfig to find pc files in /app/lib/pkgconfig
+export PKG_CONFIG_PATH=/app/lib/pkgconfig/:$PKG_CONFIG_PATH
+
+source /usr/lib/sdk/rust-stable/enable.sh
+source /usr/lib/sdk/vala/enable.sh
+source /usr/lib/sdk/llvm16/enable.sh
+
+# TODO: Figure out how to use gcc with mold so we can drop llvm
+export CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER=clang
+export CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTFLAGS="-C link-arg=-fuse-ld=/usr/lib/sdk/rust-stable/bin/mold"
+export CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER=clang
+export CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_RUSTFLAGS="-C link-arg=-fuse-ld=/usr/lib/sdk/rust-stable/bin/mold"
+
+mkdir -p $XDG_RUNTIME_DIR/$FLATPAK_ID
+SHELL=/bin/sh script --flush --quiet --return $XDG_RUNTIME_DIR/$FLATPAK_ID/typescript --command "@app_id@ $@"

@@ -1,11 +1,12 @@
 import Gtk from "gi://Gtk?version=4.0";
 import Gdk from "gi://Gdk";
-
 import Adw from "gi://Adw";
 import Gio from "gi://Gio";
 
+import { build } from "../../troll/src/builder.js";
+
 import IconWidget from "./IconWidget.js";
-import resource from "./main.blp";
+import resource from "./main.blp" with { type: "uri" };
 
 const toasts = new Set();
 
@@ -21,10 +22,8 @@ export default function IconLibrary() {
     dev_kit_icons,
   );
 
-  const builder = Gtk.Builder.new_from_resource(resource);
-
-  const overlay = builder.get_object("overlay");
-  const search_entry = builder.get_object("search_entry");
+  const { window, overlay, search_entry, flow_box_devkit, flow_box_platform } =
+    build(resource);
 
   function selectIcon(icon_name) {
     clipboard.set(icon_name);
@@ -40,9 +39,6 @@ export default function IconLibrary() {
     toasts.add(toast);
     overlay.add_toast(toast);
   }
-
-  const flow_box_devkit = builder.get_object("flow_box_devkit");
-  const flow_box_platform = builder.get_object("flow_box_platform");
 
   function filter_func({ icon_name }) {
     return icons[icon_name]?.some((tag) => tag.includes(search_entry.text));
@@ -84,7 +80,6 @@ export default function IconLibrary() {
   populateIconDevKit();
   populatePlatformIcons();
 
-  const window = builder.get_object("window");
   return window;
 }
 

@@ -17,7 +17,7 @@ Adw.Window {
 
   content: Adw.NavigationSplitView split_view {
     sidebar: Adw.NavigationPage {
-      title: "Sidebar";
+      title: _("Sidebar");
       tag: "sidebar";
       child: Adw.ToolbarView {
 
@@ -43,7 +43,7 @@ Adw.Window {
     };
 
     content: Adw.NavigationPage {
-      title: "Content";
+      title: _("Content");
       tag: "content";
       child: Adw.ToolbarView {
 
@@ -56,8 +56,8 @@ Adw.Window {
           title: _("Content");
 
           LinkButton {
-            label: "API Reference";
-            uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/main/class.NavigationSplitView.html";
+            label: _("API Reference");
+            uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.4/class.NavigationSplitView.html";
           }
         };
       };

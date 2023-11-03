@@ -24,4 +24,3 @@ pub fn main() {
     }));
     video.add_controller(click_gesture);
 }
-

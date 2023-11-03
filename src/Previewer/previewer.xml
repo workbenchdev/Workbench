@@ -1,5 +1,5 @@
 <node>
-  <interface name="re.sonny.Workbench.vala_previewer">
+  <interface name="re.sonny.Workbench.previewer_module">
     <method name="UpdateUi">
       <arg type="s" name="content" direction="in"/>
       <arg type="s" name="target_id" direction="in"/>

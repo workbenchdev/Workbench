@@ -33,5 +33,5 @@ async function onClicked() {
 }
 
 button.connect("clicked", () => {
-  onClicked().catch(logError);
+  onClicked().catch(console.error);
 });

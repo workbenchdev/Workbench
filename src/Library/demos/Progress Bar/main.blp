@@ -2,7 +2,7 @@ using Gtk 4.0;
 using Adw 1;
 
 Adw.StatusPage {
-  title: "Progress Bar";
+  title: _("Progress Bar");
   description: _("Display the progress of a long running operation");
 
   Box {
@@ -35,12 +35,12 @@ Adw.StatusPage {
       }
 
       LinkButton {
-        label: "API Reference";
+        label: _("API Reference");
         uri: "https://docs.gtk.org/gtk4/class.ProgressBar.html";
         }
 
       LinkButton{
-        label: "Human Interface Guidelines";
+        label: _("Human Interface Guidelines");
         uri: "https://developer.gnome.org/hig/patterns/feedback/progress-bars.html";
         }
     }

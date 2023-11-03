@@ -11,7 +11,7 @@ export function setup({ document }) {
     file,
   });
 
-  lspc.start().catch(logError);
+  lspc.start().catch(console.error);
 
   return {
     lspc,

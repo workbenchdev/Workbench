@@ -3,75 +3,64 @@ using Adw 1;
 
 Box root_box {
   orientation: vertical;
-	valign: center;
-	halign: center;
+  valign: center;
+  halign: center;
   spacing: 12;
 
-	Adw.Carousel carousel {
-		halign: center;
-		valign: center;
+  Adw.Carousel carousel {
+    halign: center;
+    valign: center;
     allow-long-swipes: true;
     allow-scroll-wheel: true;
     spacing: 12;
 
-		Adw.StatusPage {
-			title: _("Carousel");
-			description: _("Swipe or Scroll to Navigate");
-			icon-name: "carousel-symbolic";
+    Adw.StatusPage {
+      title: _("Carousel");
+      description: _("Swipe or Scroll to Navigate");
+      icon-name: "carousel-symbolic";
 
       LinkButton {
-        label: "API Reference";
-        uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.3/class.Carousel.html";
+        label: _("API Reference");
+        uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.4/class.Carousel.html";
         margin-top: 12;
       }
-
-		}
+    }
 
     Adw.Clamp {
       maximum-size: 700;
       halign: center;
       valign: center;
 
-			Adw.PreferencesGroup {
-				styles ["boxed-list"]
+      Adw.PreferencesGroup {
+        styles ["boxed-list"]
 
-				Adw.ComboRow orientation_row {
-					title: _("Carousel Orientation");
-			 		model: StringList {
-          	strings [_("Horizontal"), _("Vertical")]
-      	  };
-				}
+        Adw.ComboRow orientation_row {
+          title: _("Carousel Orientation");
+          model: StringList {
+            strings [_("Horizontal"), _("Vertical")]
+          };
+        }
 
-				Adw.ComboRow indicator_row {
-					title: _("Page Indicators");
-					model: StringList {
-          	strings [_("Dots"), _("Lines")]
-      	  };
-				}
+        Adw.ComboRow indicator_row {
+          title: _("Page Indicators");
+          model: StringList {
+            strings [_("Dots"), _("Lines")]
+          };
+        }
 
-				Adw.ActionRow {
-					title: _("Scroll Wheel");
-					activatable-widget: sw_switch;
+        Adw.SwitchRow sw_switch {
+          title: _("Allow Scroll Wheel");
+        }
 
-					Gtk.Switch sw_switch {
-						valign: center;
-					}
-				}
+        Adw.SwitchRow ls_switch {
+          title: _("Allow Long Swipes");
+        }
+      }
+    }
 
-				Adw.ActionRow {
-					title: _("Long Swipes");
-					activatable-widget: ls_switch;
-
-					Gtk.Switch ls_switch {
-						valign: center;
-					}
-				}
-			}
-		}
-
-		Adw.StatusPage {
-			title: _("Last Page");
-			description: _("You've reached the end of the carousel.");
-		}
-	}
+    Adw.StatusPage {
+      title: _("Last Page");
+      description: _("You've reached the end of the carousel.");
+    }
+  }
 }

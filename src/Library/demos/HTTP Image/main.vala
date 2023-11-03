@@ -4,15 +4,16 @@ public errordomain MessageError {
   FAILED;
 }
 
-private const string IMAGE_URL = "https://cataas.com/cat";
+// https://picsum.photos/
+private const string IMAGE_URL = "https://picsum.photos/800";
 
 public async void main () {
   try {
     var input_stream = yield get_input_stream (IMAGE_URL);
     var pixbuf = yield new Gdk.Pixbuf.from_stream_async (input_stream, null);
-
+    var texture = Gdk.Texture.for_pixbuf(pixbuf);
     var picture = (Gtk.Picture) workbench.builder.get_object ("picture");
-    picture.set_pixbuf (pixbuf);
+    picture.set_paintable (texture);
   } catch (Error e) {
     critical (e.message);
   }

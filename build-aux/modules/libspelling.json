@@ -4,9 +4,9 @@
   "config-opts": ["-Ddocs=true"],
   "sources": [
     {
-      "type": "git",
-      "url": "https://gitlab.gnome.org/chergert/libspelling.git",
-      "commit": "8a8b31b7af6edc1b92aa7f866e7dd8e48fd6a741"
+      "type": "archive",
+      "url": "https://download.gnome.org/sources/libspelling/0.2/libspelling-0.2.0.tar.xz",
+      "sha256": "fdc5609e02818eca6fc172ff164caa8e52dba638d7590130af3dfb1f28b53421"
     }
   ]
 }

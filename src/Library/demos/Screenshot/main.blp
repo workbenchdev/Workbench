@@ -2,7 +2,7 @@ using Gtk 4.0;
 using Adw 1;
 
 Adw.StatusPage {
-  title: "Screenshot";
+  title: _("Screenshot");
   description: _("Take a picture of the screen");
   margin-top: 48;
 
@@ -25,7 +25,7 @@ Adw.StatusPage {
     }
 
     LinkButton {
-      label: "API Reference";
+      label: _("API Reference");
       uri: "https://libportal.org/method.Portal.take_screenshot.html";
     }
   }

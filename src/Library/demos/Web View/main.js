@@ -56,14 +56,16 @@ web_view.connect("load-changed", (view, load_event) => {
 });
 
 web_view.connect("load-failed", (view, load_event, fail_url, error) => {
-  // Dont display error page if it is caused by stop_loading()
-  if (error.code !== WebKit.NetworkError.CANCELLED) {
-    web_view.load_alternate_html(
-      error_page(fail_url, error.message),
-      fail_url,
-      null,
-    );
+  // Loading failed as a result of calling stop_loading
+  if (error.matches(WebKit.NetworkError, WebKit.NetworkError.CANCELLED)) {
+    return;
   }
+
+  web_view.load_alternate_html(
+    error_page(fail_url, error.message),
+    fail_url,
+    null,
+  );
 });
 
 web_view.connect("notify::estimated-load-progress", () => {

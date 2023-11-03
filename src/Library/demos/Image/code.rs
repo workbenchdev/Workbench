@@ -16,4 +16,3 @@ pub fn main() {
     let tmp3: gtk::Image = workbench::builder().object("icon3").unwrap();
     tmp3.set_file(Some(&path));
 }
-

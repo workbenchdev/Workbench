@@ -113,10 +113,13 @@ Once you're satisfied with the result - you can send a pull request to include i
 Some guidelines:
 
 - Unless you don't want too - add your name to [the list of contributors](./src/about.js)
+- One pull request per Library entry
 - Use a short PR title - eg. "library: Add Video entry" - it will be used as commit message
 - If relevant, mention the related issue in the PR description
-- Test your code before asking for review, for example by starting Workbench and opening the Libary entry
+- Test your code before asking for review, for example by starting Workbench and opening the Library entry
 - Always review your own work before asking someone else
+
+See also [the list of Library entries](https://github.com/sonnyp/Workbench/wiki/Language-support-table) and some additional instructions on the Wiki.
 
 ## Learn
 

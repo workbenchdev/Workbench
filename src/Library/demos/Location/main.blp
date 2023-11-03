@@ -19,40 +19,31 @@ Adw.StatusPage {
 
         styles ["boxed-list"]
 
-        Adw.ActionRow {
+        Adw.SpinRow distance_threshold {
           title: _("Distance Threshold");
           subtitle: _("In meters");
-
-          SpinButton distance_threshold {
-            valign: center;
-            wrap: true;
+          wrap: true;
+          value: 0;
+          climb-rate: 1;
+          adjustment: Adjustment {
+            lower: 0;
+            upper: 100;
+            step-increment: 1;
             value: 0;
-            climb-rate: 1;
-            adjustment: Adjustment {
-              lower: 0;
-              upper: 100;
-              step-increment: 1;
-              value: 0;
-            };
-          }
+          };
         }
 
-        Adw.ActionRow {
+        Adw.SpinRow time_threshold {
           title: _("Time Threshold");
-          subtitle: _("In meters");
-
-          SpinButton time_threshold {
-            valign: center;
-            wrap: true;
+          subtitle: _("In seconds");
+          value: 0;
+          climb-rate: 1;
+          adjustment: Adjustment {
+            lower: 0;
+            upper: 100;
+            step-increment: 1;
             value: 0;
-            climb-rate: 1;
-            adjustment: Adjustment {
-                          lower: 0;
-                          upper: 100;
-                          step-increment: 1;
-                          value: 0;
-                        };
-          }
+          };
         }
 
         Adw.ComboRow accuracy_button {
@@ -165,13 +156,9 @@ Adw.StatusPage {
       }
 
       LinkButton {
-        label: "API Reference";
+        label: _("API Reference");
         uri: "https://libportal.org/method.Portal.location_monitor_start.html";
       }
     }
   }
 }
-
-
-
-

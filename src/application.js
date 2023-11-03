@@ -3,11 +3,13 @@ import Gio from "gi://Gio";
 
 import Window from "./window.js";
 import Actions from "./actions.js";
-import { settings, data_dir, ensureDir, getDemo } from "./util.js";
+import { settings, data_dir, ensureDir } from "./util.js";
 import { overrides } from "./overrides.js";
-import Library from "./Library/Library.js";
-import DocumentationViewer from "./DocumentationViewer.js";
+import Library, { getDemo } from "./Library/Library.js";
+import Extensions from "./Extensions/Extensions.js";
+import DocumentationViewer from "./Manuals/DocumentationViewer.js";
 import { Session, createSessionFromDemo, getSessions } from "./sessions.js";
+import ShortcutsWindow from "./shortcutsWindow.js";
 
 ensureDir(data_dir);
 
@@ -28,7 +30,7 @@ application.connect("open", (_self, files, hint) => {
     application,
     session,
   });
-  load({ run: false }).catch(logError);
+  load({ run: false }).catch(console.error);
 });
 
 application.connect("startup", () => {
@@ -36,9 +38,15 @@ application.connect("startup", () => {
     application,
   });
 
+  Extensions({
+    application,
+  });
+
   DocumentationViewer({
     application,
   });
+
+  ShortcutsWindow({ application });
 
   restoreSessions();
 });
@@ -77,19 +85,20 @@ function restoreSessions() {
         application,
         session,
       });
-      load({ run: false }).catch(logError);
+      load({ run: false }).catch(console.error);
     });
   }
 }
 
 function newWindow() {
-  const session = createSessionFromDemo(getDemo("Welcome"));
+  const demo = getDemo("Welcome");
+  const session = createSessionFromDemo(demo);
   const { load, window } = Window({
     application,
     session,
   });
   window.maximize();
-  load({ run: false }).catch(logError);
+  load({ run: false }).catch(console.error);
 }
 
 export default application;

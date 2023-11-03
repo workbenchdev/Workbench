@@ -2,8 +2,11 @@ import Gio from "gi://Gio";
 import GLib from "gi://GLib";
 
 import LSPClient from "../../lsp/LSPClient.js";
+import { isValaEnabled } from "../../Extensions/Extensions.js";
 
 export function setup({ document }) {
+  if (!isValaEnabled()) return;
+
   const { file, code_view } = document;
 
   const api_file = Gio.File.new_for_path(
@@ -22,10 +25,10 @@ export function setup({ document }) {
     file,
   });
 
-  lspc.start().catch(logError);
+  lspc.start().catch(console.error);
   code_view.buffer.connect("modified-changed", () => {
     if (!code_view.buffer.get_modified()) return;
-    lspc.didChange().catch(logError);
+    lspc.didChange().catch(console.error);
   });
 }
 

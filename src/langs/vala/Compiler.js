@@ -48,10 +48,10 @@ export default function ValaCompiler({ session }) {
 
   async function run() {
     try {
-      const proxy = await dbus_previewer.getProxy();
+      const proxy = await dbus_previewer.getProxy("vala");
       await proxy.RunAsync(module_file.get_path(), session.file.get_uri());
     } catch (err) {
-      logError(err);
+      console.error(err);
       return false;
     }
 

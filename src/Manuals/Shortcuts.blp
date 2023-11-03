@@ -1,0 +1,72 @@
+using Gtk 4.0;
+
+ShortcutsWindow window_shortcuts {
+  hide-on-close: true;
+
+  ShortcutsSection {
+    section-name: "shortcuts";
+    max-height: 7;
+
+    ShortcutsGroup {
+      title: _("Navigation");
+
+      ShortcutsShortcut {
+        title: _("Go back to the previous page");
+        accelerator: "<Alt>Left";
+      }
+
+      ShortcutsShortcut {
+        title: _("Go forward to the next page");
+        accelerator: "<Alt>Right";
+      }
+
+      ShortcutsShortcut {
+        title: _("Focus global search");
+        accelerator: "<Control>K";
+      }
+
+      ShortcutsShortcut {
+        shortcut-type: gesture_two_finger_swipe_right;
+        title: _("Go back to the previous page");
+      }
+
+      ShortcutsShortcut {
+        shortcut-type: gesture_two_finger_swipe_left;
+        title: _("Go forward to the next page");
+      }
+    }
+
+    ShortcutsGroup {
+      title: _("Zoom");
+
+      ShortcutsShortcut {
+        title: _("Zoom in");
+        accelerator: "<Control>plus";
+      }
+
+      ShortcutsShortcut {
+        title: _("Zoom out");
+        accelerator: "<Control>minus";
+      }
+
+      ShortcutsShortcut {
+        title: _("Reset zoom");
+        accelerator: "<Control>0";
+      }
+    }
+
+    ShortcutsGroup {
+      title: _("General");
+
+      ShortcutsShortcut {
+        title: _("Close Manuals");
+        accelerator: "<Control>W";
+      }
+
+      ShortcutsShortcut {
+        title: _("Shortcuts");
+        accelerator: "<Control>question";
+      }
+    }
+  }
+}

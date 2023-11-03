@@ -15,7 +15,7 @@
     <ul>
       <li>Live GTK/CSS preview</li>
       <li>Library of 100+ examples</li>
-      <li>JavaScript, Rust and Vala support</li>
+      <li>JavaScript, Rust, Python and Vala support</li>
       <li>Declarative user interface syntax</li>
       <li>Autosave, sessions and projects</li>
       <li>Code linter and formatter</li>
@@ -31,24 +31,78 @@
   <url type="vcs-browser">https://workbench.sonny.re/source</url>
   <screenshots>
     <screenshot type="default">
-      <image>
-        https://raw.githubusercontent.com/sonnyp/Workbench/main/data/screenshot.png
-      </image>
+      <image>https://raw.githubusercontent.com/sonnyp/Workbench/main/data/screenshot.png</image>
     </screenshot>
     <screenshot>
-      <image>
-        https://raw.githubusercontent.com/sonnyp/Workbench/main/data/screenshot-code.png
-      </image>
+      <image>https://raw.githubusercontent.com/sonnyp/Workbench/main/data/screenshot-code.png</image>
     </screenshot>
     <screenshot>
-      <image>
-        https://raw.githubusercontent.com/sonnyp/Workbench/main/data/screenshot-library.png
-      </image>
+      <image>https://raw.githubusercontent.com/sonnyp/Workbench/main/data/screenshot-library.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/sonnyp/Workbench/main/data/screenshot-extensions.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/sonnyp/Workbench/main/data/screenshot-manuals.png</image>
     </screenshot>
   </screenshots>
   <content_rating type="oars-1.1" />
   <releases>
-    <release version="45" date="2023-09-15">
+    <release version="45.3" date="2023-xx-xx">
+      <description>
+        <ul>
+          <li>Add Python support</li>
+          <li>Show which languages are available for each Library entry</li>
+          <li>Make Library faster to launch</li>
+          <li>Documentation viewer now sync the sidebar selection with navigation</li>
+          <li>Add fuzzy search to documentation viewer</li>
+          <li>Add search result tags to documentation viewer</li>
+          <li>Do not exit if Library is the last window open</li>
+          <li>Library allows opening an entry in a specific language</li>
+          <li>Library: Port entries to libadwaita SpinRow</li>
+          <li>Library: Port "Welcome" entry to Python</li>
+          <li>Library: Port "Actions" entry to Python</li>
+          <li>Library: Port "Spinner" entry to Python</li>
+          <li>Library: Fix "Preferences Window" adaptiveness</li>
+        </ul>
+      </description>
+    </release>
+    <release version="45.2" date="2023-10-11">
+      <description>
+        <ul>
+          <li>Rust: Fix the issue of compiling fails after updating Workbench</li>
+          <li>Manuals: Fix a couple of minor issues</li>
+          <li>Library: Port "Web View" entry to Rust</li>
+          <li>Library: Port "HTTP Image" entry to Rust</li>
+          <li>Library: Port "HTTP Image" entry to Rust</li>
+          <li>Library: Port "WebSocket Client" entry to Rust</li>
+          <li>Library: Port "Audio" entry to Vala</li>
+          <li>Library: Port "Video" entry to Vala</li>
+          <li>Library: Port "Picture" entry to Vala</li>
+          <li>Library: Port "Flow Box" entry to Vala</li>
+          <li>Library: Port "Box" entry to Vala</li>
+        </ul>
+      </description>
+    </release>
+    <release version="45.1" date="2023-10-02">
+      <description>
+        <ul>
+          <li>Add "Extensions" to enable Rust and Vala support</li>
+          <li>Add Keyboard Shortcuts to Manuals; the documentation viewer</li>
+          <li>Update and refresh UI</li>
+          <li>Add audio permission</li>
+          <li>Make Workbench smaller and faster to download</li>
+          <li>Library: Add CSS gradientts demo</li>
+          <li>Library: Add Property Row</li>
+          <li>Library: Update entries to use SpinRow and SwitchRow </li>
+          <li>Library: Port Map entry to Rust</li>
+          <li>Library: Port Emoji Chooser to Rust</li>
+          <li>Library: Fix Souce View entry</li>
+          <li>Library: Use GLib.format_size() for file sizes</li>
+        </ul>
+      </description>
+    </release>
+    <release version="45" date="2023-09-22">
       <description>
         <ul>
           <li>Use GNOME 45</li>
@@ -60,7 +114,7 @@
           <li>Add a workbench.resolve API</li>
           <li>Allow running Vala without UI code</li>
           <li>Update to Blueprint 0.10.0</li>
-          <li>Update to vte 0.72.2</li>
+          <li>Update to vte 0.74</li>
           <li>Update to libportal 0.7</li>
           <li>Update Icon Development Kit</li>
           <li>Replace Rome Language Server with Biome Language Server</li>
@@ -72,6 +126,7 @@
           <li>New Library entry: Location</li>
           <li>New Library entry: Checkboxes</li>
           <li>New Library entry: Radio Buttons</li>
+          <li>New Library entry: Accessibility</li>
           <li>New Library entry: List View</li>
           <li>New Library entry: Separator</li>
           <li>New Library entry: Link Button</li>
@@ -108,6 +163,7 @@
           <li>New Library entry: Save File</li>
           <li>New Library entry: Select Folder</li>
           <li>New Library entry: Spell Checker</li>
+          <li>New Library entry: HTTP Request</li>
         </ul>
       </description>
     </release>

@@ -1,0 +1,213 @@
+using Gtk 4.0;
+using Adw 1;
+using GtkSource 5;
+
+Adw.StatusPage {
+  title: _("CSS Gradients");
+  description: _("Generate an image that smoothly fades from one color to another.");
+
+  Box {
+    orientation: vertical;
+    halign: center;
+
+    Adw.Bin {
+      halign: center;
+      margin-bottom: 18;
+
+      Grid {
+        row-spacing: 18;
+        column-spacing: 18;
+        margin-top: 18;
+        margin-bottom: 18;
+        margin-start: 18;
+        margin-end: 18;
+
+        Frame {
+          layout {
+            row: "0";
+            column: "0";
+          }
+
+          styles [
+            "linear",
+            "circular",
+            "gradient-card",
+          ]
+        }
+
+        Frame {
+          layout {
+            row: "0";
+            column: "1";
+          }
+
+          styles [
+            "radial",
+            "gradient-card",
+          ]
+        }
+
+        Frame {
+          layout {
+            row: "0";
+            column: "2";
+          }
+
+          styles [
+            "conic",
+            "gradient-card",
+          ]
+        }
+
+        Frame {
+          layout {
+            row: "1";
+            column: "0";
+          }
+
+          styles [
+            "repeating-linear",
+            "circular",
+            "gradient-card",
+          ]
+        }
+
+        Frame {
+          layout {
+            row: "1";
+            column: "1";
+          }
+
+          styles [
+            "repeating-radial",
+            "gradient-card",
+          ]
+        }
+      }
+
+      styles [
+        "card",
+      ]
+    }
+
+    ListBox {
+      selection-mode: none;
+      margin-bottom: 12;
+
+      styles [
+        "boxed-list",
+      ]
+
+      Adw.ActionRow {
+        [suffix]
+        Frame {
+          valign: center;
+          width-request: 312;
+          height-request: 140;
+          margin-top: 18;
+          margin-bottom: 18;
+          margin-end: 6;
+
+          styles [
+            "background-gradient",
+          ]
+        }
+      }
+
+      Adw.ComboRow combo_row_gradient_type {
+        title: _("Gradient type");
+        model: StringList list {
+          strings [_("Linear"), _("Radial"), _("Conic")]
+        };
+      }
+
+      Adw.SpinRow spin_row_angle {
+        title: _("Angle");
+        climb-rate: 0.2;
+        adjustment: Adjustment {
+          lower: 0;
+          upper: 360;
+          step-increment: 10;
+          value: 90;
+        };
+      }
+
+      Adw.ActionRow {
+        title: _("First color stop");
+        activatable-widget: button_color_1;
+
+        [suffix]
+        ColorDialogButton button_color_1 {
+          valign: center;
+          dialog: color_dialog;
+          rgba: "#e01b24";
+        }
+      }
+
+      Adw.ActionRow {
+        title: _("Second color stop");
+        activatable-widget: button_color_2;
+
+        [suffix]
+        ColorDialogButton button_color_2 {
+          valign: center;
+          dialog: color_dialog;
+          rgba: "#3584e4";
+        }
+      }
+
+      Adw.ActionRow {
+        title: _("Third color stop");
+        activatable-widget: button_color_3;
+
+        [suffix]
+        ColorDialogButton button_color_3 {
+          valign: center;
+          dialog: color_dialog;
+          rgba: "#f6d32d";
+        }
+      }
+
+      Adw.ExpanderRow {
+        title: _("Generated CSS");
+
+        Overlay {
+          [overlay]
+          Button button_copy_css {
+            margin-bottom: 6;
+            margin-end: 6;
+            valign: end;
+            halign: end;
+            tooltip-text: _("Copy");
+            icon-name: "edit-copy-symbolic";
+            styles ["flat"]
+          }
+
+          GtkSource.View source_view {
+            top-margin: 6;
+            bottom-margin: 6;
+            left-margin: 6;
+            right-margin: 6;
+            editable: false;
+            monospace: true;
+            buffer: GtkSource.Buffer gtksource_buffer {
+              highlight-syntax: true;
+            };
+          }
+        }
+      }
+    }
+
+    LinkButton {
+      label: _("Using CSS gradients");
+      uri: "https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_images/Using_CSS_gradients";
+    }
+
+    LinkButton {
+      label: _("Specifications");
+      uri: "https://www.w3.org/TR/css-images-3/#gradients";
+    }
+  }
+}
+
+ColorDialog color_dialog {}

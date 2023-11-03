@@ -1,7 +1,7 @@
 using Gtk 4.0;
 
-ShortcutsWindow shortcuts_window {
-  modal: true;
+ShortcutsWindow window {
+  hide-on-close: true;
 
   ShortcutsSection {
     title: "Workbench";
@@ -19,6 +19,11 @@ ShortcutsWindow shortcuts_window {
       ShortcutsShortcut {
         accelerator: "<Control>O";
         title: _("Open Project");
+      }
+
+      ShortcutsShortcut {
+        accelerator: "<Control>M";
+        title: _("Open Manuals");
       }
 
       ShortcutsShortcut {
@@ -50,6 +55,11 @@ ShortcutsWindow shortcuts_window {
       ShortcutsShortcut {
         accelerator: "<Control><Shift>Z";
         title: _("Redo");
+      }
+
+      ShortcutsShortcut {
+        accelerator: "<Control>W";
+        title: _("Close Window");
       }
 
       ShortcutsShortcut {

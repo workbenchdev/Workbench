@@ -1,0 +1,100 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.Window window {
+  hide-on-close: true;
+  modal: false;
+  default-height: 750;
+  default-width: 600;
+  title: _("Workbench — Extensions");
+
+  Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar {
+      show-title: false;
+    }
+
+    content: ScrolledWindow {
+      hscrollbar-policy: never;
+      Adw.Clamp {
+        maximum-size: 600;
+        tightening-threshold: 400;
+        margin-start: 14;
+        margin-end: 14;
+        margin-top: 30;
+        margin-bottom: 30;
+
+        Box {
+          orientation: vertical;
+          halign: fill;
+
+          // Gtk.Picture needs to be wrapped in a box to behave properly
+          Box {
+            halign: center;
+
+            Picture picture_illustration {
+              can-shrink: false;
+              margin-bottom: 30;
+            }
+          }
+
+          Label {
+            label: _("Extensions");
+            margin-bottom: 36;
+            styles ["title-1"]
+          }
+
+          ListBox {
+            selection-mode: none;
+            styles ["boxed-list"]
+
+            $Extension {
+              title: _("JavaScript");
+              enabled: true;
+            }
+
+            $Extension {
+              title: _("Python");
+              enabled: true;
+            }
+
+            $Extension extension_rust {
+              title: _("Rust");
+              hint: _("To enable Rust support, run the following command in your Console or Terminal");
+              command: "flatpak install flathub org.freedesktop.Sdk.Extension.rust-stable//23.08 org.freedesktop.Sdk.Extension.llvm16//23.08";
+            }
+
+            $Extension extension_vala {
+              title: _("Vala");
+              hint: _("To enable Vala support, run the following command in your Console or Terminal");
+              command: "flatpak install flathub org.freedesktop.Sdk.Extension.vala//23.08";
+            }
+
+            $Extension extension_documentation {
+              title: _("Documentation");
+              hint: _("To enable documentation, run the following command in your Console or Terminal");
+              command: "flatpak install flathub org.gnome.Sdk.Docs//45";
+            }
+          }
+
+          Label restart_hint {
+            label: "To apply changes, restart Workbench once\nthe commands have completed";
+            visible: false;
+            margin-top: 30;
+            justify: center;
+            wrap: true;
+            styles ["dim-label"]
+          }
+
+          Label all_set_hint {
+            label: "You’re all set!";
+            margin-top: 30;
+            justify: center;
+            wrap: true;
+            styles ["dim-label"]
+          }
+        }
+      }
+    };
+  }
+}

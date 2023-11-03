@@ -144,14 +144,14 @@ export default class LSPClient {
         this.emit("exit");
         // this._start_process();
       })
-      .catch(logError);
+      .catch(console.error);
     this.stdin = this.proc.get_stdin_pipe();
     this.stdout = new Gio.DataInputStream({
       base_stream: this.proc.get_stdout_pipe(),
       close_base_stream: true,
     });
 
-    this._read().catch(logError);
+    this._read().catch(console.error);
   }
 
   async _read_headers() {
@@ -207,7 +207,7 @@ export default class LSPClient {
       this._onmessage(content);
     }
 
-    this._read().catch(logError);
+    this._read().catch(console.error);
   }
 
   _onmessage(message) {

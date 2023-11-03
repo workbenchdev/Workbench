@@ -15,11 +15,14 @@ export default function External({ output, builder, onWindowChange }) {
       .handleDiagnostics([getCssDiagnostic(error)]);
   };
 
-  async function start() {
+  async function start(language) {
+    if (language === "rust") {
+      language = "vala"; // Rust uses the Vala previewer.
+    }
     try {
-      dbus_proxy = await dbus_previewer.getProxy();
+      dbus_proxy = await dbus_previewer.getProxy(language);
     } catch (err) {
-      logError(err);
+      console.error(err);
     }
   }
 
@@ -51,7 +54,7 @@ export default function External({ output, builder, onWindowChange }) {
       .then(() => {
         return dbus_previewer.stop();
       })
-      .catch(logError);
+      .catch(console.error);
   }
 
   async function updateXML({ xml, target_id, original_id }) {
