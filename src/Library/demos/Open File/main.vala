@@ -4,8 +4,8 @@ public void main () {
   var button_single = (Gtk.Button) workbench.builder.get_object ("button_single");
   var button_multiple = (Gtk.Button) workbench.builder.get_object ("button_multiple");
 
-  button_single.clicked.connect (open_single);
-  button_multiple.clicked.connect (open_multiple);
+  button_single.clicked.connect (open_single.begin);
+  button_multiple.clicked.connect (open_multiple.begin);
 }
 
 private async void open_single () {
@@ -30,7 +30,7 @@ private async void open_multiple () {
   var file_dialog = new Gtk.FileDialog ();
   try {
     ListModel files = yield file_dialog.open_multiple (workbench.window, null);
-    message (@"No. of selected files: $(files.get_n_items ())");
+    message (@"Number of selected files: $(files.get_n_items ())");
   } catch (Error e) {
     critical (e.message);
   }
