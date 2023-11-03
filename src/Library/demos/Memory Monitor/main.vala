@@ -10,7 +10,10 @@ public void main () {
 
   var memory_monitor = MemoryMonitor.dup_default ();
   memory_monitor.low_memory_warning.connect ((level) => {
-    // Use inequalities for checking as new levels may be added in the future
+    /*
+     * Use inequalities for checking as new levels may be added in the future
+     * See https://valadoc.org/gio-2.0/GLib.MemoryMonitorWarningLevel.html
+     */
     if (level >= MemoryMonitorWarningLevel.LOW) {
       // Processes should free up unneeded resources
       message ("Warning Level: Low");
