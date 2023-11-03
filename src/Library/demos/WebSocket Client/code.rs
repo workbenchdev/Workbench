@@ -4,7 +4,7 @@
 use crate::workbench;
 use adw::prelude::*;
 use gio::Cancellable;
-use glib::{clone, MainContext, Priority};
+use glib::{clone, Priority};
 use gtk::{gio, glib};
 use soup::prelude::*;
 use soup::WebsocketConnection;
@@ -21,7 +21,7 @@ pub fn main() {
     let button_send: gtk::Button = workbench::builder().object("button_send").unwrap();
     let entry_url: gtk::Entry = workbench::builder().object("entry_url").unwrap();
 
-    let (sender, receiver) = MainContext::channel(Priority::default());
+    let (sender, receiver) = async_channel::unbounded();
 
     button_connect.connect_clicked(clone!(@strong sender => move |_| {
         let session = soup::Session::new();
@@ -36,35 +36,36 @@ pub fn main() {
             Cancellable::NONE,
             move |connection| {
                 if let Ok(connection) = connection {
-                    sender.send(Message::NewConnection(connection)).unwrap();
+                    sender.try_send(Message::NewConnection(connection)).unwrap();
                 }
             },
         );
     }));
 
     button_disconnect.connect_clicked(clone!(@strong sender => move |_| {
-        sender.send(Message::CloseConnection).unwrap();
+        sender.try_send(Message::CloseConnection).unwrap();
     }));
 
     button_send.connect_clicked(clone!(@strong sender => move |_| {
-        sender.send(Message::SendMessage).unwrap();
+        sender.try_send(Message::SendMessage).unwrap();
     }));
 
     let mut connection = None;
-    receiver.attach(None, move |message| {
-        match message {
-            Message::NewConnection(c) => {
-                on_websocket_connect(&c);
-                connection = Some(c);
-            }
-            Message::CloseConnection => {
-                connection.as_ref().map(|c| c.close(0, None));
-            }
-            Message::SendMessage => {
-                connection.as_ref().map(send_message);
-            }
-        };
-        glib::ControlFlow::Continue
+    glib::spawn_future_local(async move {
+        while let Ok(message) = receiver.recv().await {
+            match message {
+                Message::NewConnection(c) => {
+                    on_websocket_connect(&c);
+                    connection = Some(c);
+                }
+                Message::CloseConnection => {
+                    connection.as_ref().map(|c| c.close(0, None));
+                }
+                Message::SendMessage => {
+                    connection.as_ref().map(send_message);
+                }
+            };
+        }
     });
 }
 

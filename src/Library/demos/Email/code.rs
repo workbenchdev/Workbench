@@ -1,14 +1,13 @@
 use crate::workbench;
 use ashpd::desktop::email::EmailRequest;
 use ashpd::WindowIdentifier;
-use glib::MainContext;
 use gtk::glib;
 use gtk::prelude::*;
 
 pub fn main() {
     let button: gtk::Button = workbench::builder().object("button").unwrap();
     button.connect_clicked(|_| {
-        MainContext::default().spawn_local(async {
+        glib::spawn_future_local(async {
             if let Err(err) = send_email().await {
                 eprintln!("Could not send email: {err}")
             }
