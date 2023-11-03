@@ -18,6 +18,12 @@ Adw.StatusPage {
         uri: "https://docs.gtk.org/gtk4/class.ColumnView.html";
       }
 
+      Button folder_button {
+        styles ["suggested-action", "pill"]
+        label: "Select a folder";
+        halign: center;
+      }
+
       Frame {
         ColumnView column_view {
           show-column-separators: true;
