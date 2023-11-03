@@ -138,7 +138,7 @@ function createLSPClient({ code_view, file }) {
   const bin = "/app/bin/blueprint-compiler";
   const uri = file.get_uri();
   // const bin = GLib.build_filenamev([
-  //   "/home/sonny/Projects/GNOME",
+  //   pkg.sourcedir,
   //   "blueprint-compiler/blueprint-compiler.py",
   // ]);
 
