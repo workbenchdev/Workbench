@@ -12,19 +12,19 @@ lint:
 # ESLint
 	./node_modules/.bin/eslint --max-warnings=0 src
 # rustfmt
-	./fun rustfmt --check --edition 2021 src/**/*.rs
+	./build-aux/fun rustfmt --check --edition 2021 src/**/*.rs
 # black
-	./fun black --check src/**/*.py
+	./build-aux/fun black --check src/**/*.py
 # gettext
-	find po/ -type f -name "*po" -print0 | xargs -0 -n1 ./fun msgfmt -o /dev/null --check
+	find po/ -type f -name "*po" -print0 | xargs -0 -n1 ./build-aux/fun msgfmt -o /dev/null --check
 # Blueprint
-	find src/ -type f -name "*blp" -print0 | xargs -0 ./fun blueprint-compiler format
+	find src/ -type f -name "*blp" -print0 | xargs -0 ./build-aux/fun blueprint-compiler format
 # Flatpak manifests
 	flatpak run --user --command=flatpak-builder-lint org.flatpak.Builder manifest --exceptions build-aux/re.sonny.Workbench.json
 	flatpak run --user --command=flatpak-builder-lint org.flatpak.Builder manifest --exceptions build-aux/re.sonny.Workbench.Devel.json
 
 unit:
-	./fun gjs -m ./troll/tst/bin.js test/*.test.js
+	./build-aux/fun gjs -m ./troll/tst/bin.js test/*.test.js
 
 # https://github.com/ximion/appstream/issues/398#issuecomment-1129454985
 # flatpak run org.freedesktop.appstream.cli validate --override=release-time-missing=info --no-net data/app.metainfo.xml
@@ -39,6 +39,7 @@ unit:
 test: unit lint
 
 ci: setup unit lint
+	flatpak-builder --ccache --force-clean flatpak build-aux/re.sonny.Workbench.Devel.json
 
 # Note that if you have Sdk extensions installed they will be used
 # make sure to test without the sdk extensions installed

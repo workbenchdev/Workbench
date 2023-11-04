@@ -52,18 +52,51 @@
       <description>
         <ul>
           <li>Add Python support</li>
+          <li>Add Blueprint formatter support</li>
           <li>Show which languages are available for each Library entry</li>
+          <li>Allow opening Library entries in a specific language</li>
           <li>Make Library faster to launch</li>
+          <li>Each Workbench window has its own title</li>
           <li>Documentation viewer now sync the sidebar selection with navigation</li>
           <li>Add fuzzy search to documentation viewer</li>
           <li>Add search result tags to documentation viewer</li>
           <li>Do not exit if Library is the last window open</li>
-          <li>Library allows opening an entry in a specific language</li>
           <li>Library: Port entries to libadwaita SpinRow</li>
+          <li>Library: Fix "Preferences Window" adaptiveness</li>
+          <li>Library: Simplify "Column View" entry</li>
           <li>Library: Port "Welcome" entry to Python</li>
           <li>Library: Port "Actions" entry to Python</li>
           <li>Library: Port "Spinner" entry to Python</li>
-          <li>Library: Fix "Preferences Window" adaptiveness</li>
+          <li>Library: Port "Styling with CSS" entry to Python</li>
+          <li>Library: Port "Breakpoints" entry to Python</li>
+          <li>Library: Port "Overlay" entry to Python</li>
+          <li>Library: Port "Popovers" entry to Python</li>
+          <li>Library: Port "Emoji Chooser" entry to Python</li>
+          <li>Library: Port "Image" entry to Python</li>
+          <li>Library: Port "Separator" entry to Python</li>
+          <li>Library: Port "Menu Button" entry to Python</li>
+          <li>Library: Port "Radio Buttons" entry to Python</li>
+          <li>Library: Port "Link Button" entry to Python</li>
+          <li>Library: Port "About Window" entry to Python</li>
+          <li>Library: Port "Avatar" entry to Python</li>
+          <li>Library: Port "Button" entry to Python</li>
+          <li>Library: Port "Calendar" entry to Python</li>
+          <li>Library: Port "Checkboxes" entry to Python</li>
+          <li>Library: Port "Tooltip" entry to Python</li>
+          <li>Library: Port "Toggle Button" entry to Python</li>
+          <li>Library: Port "Carousel" entry to Python</li>
+          <li>Library: Port "CSS Gradients" entry to Python</li>
+          <li>Library: Port "Color Dialog" entry to Python</li>
+          <li>Library: Port "Memory Monitor" entry to Python</li>
+          <li>Library: Port "Animation" entry to Vala</li>
+          <li>Library: Port "Overlay Split View" entry to Vala</li>
+          <li>Library: Port "Text Colors" entry to Vala</li>
+          <li>Library: Port "Tab View" entry to Vala</li>
+          <li>Library: Port "Navigation View" entry to Vala</li>
+          <li>Library: Port "Open File" entry to Vala</li>
+          <li>Library: Port "Avatar" entry to Vala</li>
+          <li>Library: Port "Memory Monitor" entry to Vala</li>
+          <li>Library: Port "Launcher" entry to Vala</li>
         </ul>
       </description>
     </release>

@@ -26,8 +26,8 @@
   "lint-staged": {
     "*.{css,json,md,yaml,yml}": "prettier --write",
     "*.{js,cjs,mjs}": "eslint --fix",
-    "*.py": "./fun black",
-    "*.rs": "./fun rustfmt --edition 2021",
-    "*.blp": "./fun blueprint-compiler format --fix"
+    "*.py": "./build-aux/fun black",
+    "*.rs": "./build-aux/fun rustfmt --edition 2021",
+    "*.blp": "./build-aux/fun blueprint-compiler format --fix"
   }
 }
