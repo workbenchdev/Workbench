@@ -20,9 +20,10 @@ lint:
 	flatpak run --user --command=flatpak-builder-lint org.flatpak.Builder manifest --exceptions build-aux/re.sonny.Workbench.json
 	flatpak run --user --command=flatpak-builder-lint org.flatpak.Builder manifest --exceptions build-aux/re.sonny.Workbench.Devel.json
 # Blueprint
-# find src -type f -name "*blp" -print0 | xargs -0 blueprint-compiler format
-	find src -type f -name "*blp" -print0 | xargs -0 flatpak run --command=/app/bin/blueprint-compiler --filesystem=host:rw re.sonny.Workbench.Devel//master format
-
+# FIXME: No easy way to install for dev / CI
+# https://gitlab.gnome.org/jwestman/blueprint-compiler/-/merge_requests/155
+# find src -type f -name "*blp" -print0 | xargs -0 blueprint-compiler format # here
+# "*.blp": "blueprint-compiler format --fix" # package.json lint-staged
 unit:
 	flatpak run --user --filesystem=host:ro --command="gjs" org.gnome.Sdk//45 -m ./troll/tst/bin.js test/*.test.js
 
