@@ -8,6 +8,7 @@ Adw.StatusPage {
 
   Adw.Clamp {
     maximum-size: 240;
+
     Box {
       orientation: vertical;
       spacing: 18;
@@ -20,10 +21,12 @@ Adw.StatusPage {
       Box {
         orientation: horizontal;
         halign: center;
+
         LinkButton {
           label: _("List View API Reference");
           uri: "https://docs.gtk.org/gtk4/class.ListView.html";
         }
+
         LinkButton {
           label: _("Grid View API Reference");
           uri: "https://docs.gtk.org/gtk4/class.GridView.html";
@@ -32,7 +35,11 @@ Adw.StatusPage {
 
       Box {
         halign: center;
-        styles ["linked"]
+
+        styles [
+          "linked"
+        ]
+
         Button add {
           label: _("Add Item");
           tooltip-text: _("Add Item");
@@ -41,7 +48,7 @@ Adw.StatusPage {
         Button remove {
           label: _("Remove Item");
           tooltip-text: _("Remove Item");
-          }
+        }
       }
 
       Gtk.StackSwitcher {
@@ -56,10 +63,13 @@ Adw.StatusPage {
         Gtk.StackPage {
           name: "listview";
           title: _("List View");
-          child:  Frame {
+
+          child: Frame {
             valign: start;
+
             ListView list_view {
               enable-rubberband: true;
+
               factory: BuilderListItemFactory {
                 template ListItem {
                   child: Gtk.Box {
@@ -79,8 +89,10 @@ Adw.StatusPage {
         Gtk.StackPage {
           name: "gridview";
           title: _("Grid View");
-          child:  Frame {
+
+          child: Frame {
             valign: start;
+
             GridView grid_view {
               orientation: vertical;
               max-columns: 4;

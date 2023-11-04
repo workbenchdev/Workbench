@@ -18,7 +18,9 @@ Adw.StatusPage {
       Label {
         label: _("Split Button");
 
-        styles ["title-4"]
+        styles [
+          "title-4"
+        ]
       }
 
       Label {
@@ -80,7 +82,9 @@ Adw.StatusPage {
       Label {
         label: _("Button Content");
 
-        styles ["title-4"]
+        styles [
+          "title-4"
+        ]
       }
 
       Label {
@@ -161,6 +165,7 @@ Adw.StatusPage {
 Popover button_popover {
   Box {
     orientation: vertical;
+
     SearchEntry {
       placeholder-text: _("Search documents");
     }
@@ -170,6 +175,7 @@ Popover button_popover {
       icon-name: "clock-symbolic";
       width-request: 300;
       height-request: 300;
+
       styles [
         "compact",
         "dim-label",
@@ -193,6 +199,7 @@ menu button_run_menu {
 
   section {
     label: _("Settings");
+
     submenu {
       label: _("Accessibility");
       item ("High Contrast")

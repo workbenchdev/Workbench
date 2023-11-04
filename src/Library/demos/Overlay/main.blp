@@ -5,16 +5,16 @@ Adw.StatusPage {
   title: _("Overlay");
   description: _("Overlay widgets on top of a each other");
 
-  Adw.Clamp{
+  Adw.Clamp {
     Overlay {
       Picture picture {
       }
 
       [overlay]
-      Box toolbar{
+      Box toolbar {
         margin-start: 24;
         margin-end: 24;
-        margin-bottom:18;
+        margin-bottom: 18;
         valign: end;
 
         Button {
@@ -33,11 +33,11 @@ Adw.StatusPage {
           hexpand: true;
           orientation: horizontal;
           show-fill-level: true;
-          adjustment:
-          Adjustment {
+
+          adjustment: Adjustment {
             lower: 0;
             upper: 100;
-            value:50;
+            value: 50;
           };
         }
 

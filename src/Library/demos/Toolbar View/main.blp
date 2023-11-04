@@ -12,76 +12,116 @@ Adw.Window {
     extend-content-to-top-edge: bind extend_top.active;
     top-bar-style: bind barstyle_select.selected;
     bottom-bar-style: bind barstyle_select.selected;
-    reveal-top-bars:  bind reveal_topbar.active;
+    reveal-top-bars: bind reveal_topbar.active;
     reveal-bottom-bars: bind reveal_bottombar.active;
-
     // In this demo we are using the API to set the header bars
     // you can use the [top] and [bottom] child types directly instead
     // [top]
     // Adw.HeaderBar {
-      // title-widget: Adw.WindowTitle {
-        // title: _("Header Bar");
-      // };
+    //   title-widget: Adw.WindowTitle {
+    //     title: _("Header Bar");
+    //   };
     // }
-
-
     content: Adw.ViewStack stack {
       Adw.ViewStackPage page_defualt {
         name: "page_default";
         title: _("Toolbar View");
         icon-name: "toolbars-symbolic";
-        child: Adw.StatusPage{
+
+        child: Adw.StatusPage {
           Box {
             halign: center;
             orientation: vertical;
             spacing: 18;
+
             Label {
               label: _("Toolbar View");
-              styles ["title-1"]
+
+              styles [
+                "title-1"
+              ]
             }
+
             Label {
               wrap: true;
               label: _("A widget containing a page, as well as top and/or bottom bars.");
             }
+
             LinkButton {
               label: _("API Reference");
               uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.4/class.ToolbarView.html";
             }
+
             ListBox list_box {
-              styles ["boxed-list"]
+              styles [
+                "boxed-list"
+              ]
+
               selection-mode: none;
+
               Adw.ComboRow topbar_select {
                 title: _("Top bar");
+
                 model: StringList {
-                  strings [_("Header Bar"),_("Tab Bar"),_("View Switcher Bar"),_("Action Bar"),_("PopOverMenu Bar"),_("Search Bar"),_("Gtk Box")]
+                  strings [
+                    _("Header Bar"),
+                    _("Tab Bar"),
+                    _("View Switcher Bar"),
+                    _("Action Bar"),
+                    _("PopOverMenu Bar"),
+                    _("Search Bar"),
+                    _("Gtk Box")
+                  ]
                 };
+
                 selected: 0;
               }
+
               Adw.ComboRow bottombar_select {
                 title: _("Bottom bar");
+
                 model: StringList {
-                  strings [_("Header Bar"),_("Tab Bar"),_("View Switcher Bar"),_("Action Bar"),_("PopOverMenu Bar"),_("Search Bar"),_("Gtk Box")]
+                  strings [
+                    _("Header Bar"),
+                    _("Tab Bar"),
+                    _("View Switcher Bar"),
+                    _("Action Bar"),
+                    _("PopOverMenu Bar"),
+                    _("Search Bar"),
+                    _("Gtk Box")
+                  ]
                 };
+
                 selected: 2;
               }
+
               Adw.ComboRow barstyle_select {
                 title: _("Style");
+
                 model: StringList {
-                  strings [_("Flat"), _("Raised"), _("Raised-Border")]
+                  strings [
+                    _("Flat"),
+                    _("Raised"),
+                    _("Raised-Border")
+                  ]
                 };
               }
+
               Adw.SwitchRow reveal_topbar {
                 title: _("Reveal Top Bar");
                 active: true;
               }
+
               Adw.SwitchRow reveal_bottombar {
                 title: _("Reveal Bottom Bar");
                 active: true;
               }
+
               Adw.SwitchRow extend_top {
                 title: _("Extend content behind top bar");
                 active: false;
               }
+
               Adw.SwitchRow extend_bottom {
                 title: _("Extend content behind bottom bar");
                 active: false;
@@ -96,16 +136,18 @@ Adw.Window {
         title: _("Page 1");
         icon-name: "explore2-symbolic";
         use-underline: true;
-        child: Adw.StatusPage{
+
+        child: Adw.StatusPage {
           title: _("Hello");
-          };
-        }
+        };
+      }
 
       Adw.ViewStackPage page2 {
         name: "page2";
         title: _("Page 2");
         icon-name: "explore2-symbolic";
         use-underline: true;
+
         child: Adw.StatusPage {
           title: _("from");
         };
@@ -116,6 +158,7 @@ Adw.Window {
         title: _("Page 3");
         icon-name: "explore2-symbolic";
         use-underline: true;
+
         child: Adw.StatusPage {
           title: _("Workbench");
         };
@@ -142,7 +185,13 @@ ActionBar action_bar {
   [center]
   DropDown {
     model: StringList {
-      strings ["Center Widget","👁️", "❤️", "💼", "🪑"]
+      strings [
+        "Center Widget",
+        "👁️",
+        "❤️",
+        "💼",
+        "🪑"
+      ]
     };
   }
 
@@ -178,6 +227,7 @@ menu menu_app {
 SearchBar search_bar {
   search-mode-enabled: true;
   show-close-button: true;
+
   SearchEntry {
     placeholder-text: _("Start Searching…");
   }
@@ -196,6 +246,7 @@ Adw.TabBar tab_bar {
 Adw.TabView tab_view {
   Adw.TabPage main_tab_page {
     title: _("First Page");
+
     child: Adw.StatusPage {
       hexpand: true;
       vexpand: true;
@@ -206,6 +257,7 @@ Adw.TabView tab_view {
 
   Adw.TabPage main_tab_page2 {
     title: _("Second Page");
+
     child: Adw.StatusPage {
       hexpand: true;
       vexpand: true;

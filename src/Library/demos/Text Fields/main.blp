@@ -20,7 +20,7 @@ Adw.Clamp {
       margin-bottom: 12;
     }
 
-    LinkButton{
+    LinkButton {
       label: _("Human Interface Guidelines");
       uri: "https://developer.gnome.org/hig/patterns/controls/text-fields.html";
       margin-bottom: 6;
@@ -74,7 +74,7 @@ Adw.Clamp {
           margin-bottom: 12;
         }
 
-        Entry entry_placeholder{
+        Entry entry_placeholder {
           placeholder-text: "Enter text here";
         }
       }
@@ -97,33 +97,32 @@ Adw.Clamp {
       }
 
       Box {
-          orientation: vertical;
+        orientation: vertical;
 
-          Label {
-            label: _("Progress Bar");
-            margin-bottom: 12;
+        Label {
+          label: _("Progress Bar");
+          margin-bottom: 12;
+        }
 
-          }
-
-          Entry entry_progress {
-            progress-fraction: 0;
-            primary-icon-name: "media-playback-start-symbolic";
-            primary-icon-tooltip-text: _("Play Animation");
-          }
+        Entry entry_progress {
+          progress-fraction: 0;
+          primary-icon-name: "media-playback-start-symbolic";
+          primary-icon-tooltip-text: _("Play Animation");
         }
       }
+    }
 
     Box {
       halign: center;
       margin-top: 18;
       margin-bottom: 18;
 
-      LinkButton{
+      LinkButton {
         label: _("Tutorial");
         uri: "https://developer.gnome.org/documentation/tutorials/beginners/components/entry.html";
       }
 
-      LinkButton{
+      LinkButton {
         label: _("API Reference");
         uri: "https://docs.gtk.org/gtk4/class.Entry.html";
       }
@@ -152,7 +151,6 @@ Adw.Clamp {
         "dim-label",
       ]
     }
-
 
     Entry entry_completion {
       margin-bottom: 12;
@@ -190,13 +188,13 @@ Adw.Clamp {
       ]
     }
 
-    PasswordEntry entry_password{
+    PasswordEntry entry_password {
       show-peek-icon: true;
       placeholder-text: "Enter password";
       margin-bottom: 12;
     }
 
-    PasswordEntry entry_confirm_password{
+    PasswordEntry entry_confirm_password {
       show-peek-icon: true;
       placeholder-text: "Confirm password";
       margin-bottom: 12;
@@ -210,12 +208,12 @@ Adw.Clamp {
       margin-top: 6;
       margin-bottom: 18;
 
-      LinkButton{
+      LinkButton {
         label: _("Tutorial");
         uri: "https://developer.gnome.org/documentation/tutorials/beginners/components/password_entry.html";
       }
 
-      LinkButton{
+      LinkButton {
         label: _("API Reference");
         uri: "https://docs.gtk.org/gtk4/class.PasswordEntry.html";
       }
@@ -239,18 +237,24 @@ Adw.Clamp {
       homogeneous: true;
       margin-bottom: 18;
 
-      Entry  {
+      Entry {
         placeholder-text: "accent";
         margin-start: 6;
         margin-end: 6;
-        styles ["accent"]
+
+        styles [
+          "accent"
+        ]
       }
 
       Entry {
         placeholder-text: "warning";
         margin-start: 6;
         margin-end: 6;
-        styles ["warning"]
+
+        styles [
+          "warning"
+        ]
       }
     }
 
@@ -262,27 +266,40 @@ Adw.Clamp {
         placeholder-text: "error";
         margin-start: 6;
         margin-end: 6;
-        styles ["error"]
+
+        styles [
+          "error"
+        ]
       }
 
       Entry {
         placeholder-text: "success";
         margin-start: 6;
         margin-end: 6;
-        styles ["success"]
+
+        styles [
+          "success"
+        ]
       }
     }
 
     Box {
       margin-bottom: 18;
-      styles ["linked"]
+
+      styles [
+        "linked"
+      ]
+
       halign: center;
+
       Entry {
         placeholder-text: "Street name and number";
       }
+
       Entry {
         placeholder-text: "City";
       }
+
       Entry {
         placeholder-text: "Country";
       }

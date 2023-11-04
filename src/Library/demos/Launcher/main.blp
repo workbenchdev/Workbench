@@ -7,6 +7,7 @@ Adw.StatusPage {
 
   Adw.Clamp {
     maximum-size: 640;
+
     Box {
       orientation: vertical;
       spacing: 24;
@@ -23,10 +24,12 @@ Adw.StatusPage {
         Gtk.StackPage {
           name: "file_launcher";
           title: _("File Launcher");
+
           child: Box {
             orientation: vertical;
             halign: center;
             spacing: 24;
+
             Box {
               halign: center;
               spacing: 6;
@@ -35,32 +38,52 @@ Adw.StatusPage {
 
               Button launch_file {
                 label: _("Launch");
-                styles ["suggested-action", "pill"]
+
+                styles [
+                  "suggested-action",
+                  "pill"
+                ]
               }
+
               Button file_location {
                 label: _("View in Files");
-                styles ["suggested-action", "pill"]
+
+                styles [
+                  "suggested-action",
+                  "pill"
+                ]
               }
             }
 
             Button change_file {
               label: _("Select File");
+
               child: Box {
                 halign: center;
                 orientation: vertical;
+
                 Label {
                   label: _("Select File");
-                  styles ["title-4"]
+
+                  styles [
+                    "title-4"
+                  ]
                 }
+
                 Label file_name {
                   label: _("workbench.txt");
-                  styles ["dim-label", "body"]
+
+                  styles [
+                    "dim-label",
+                    "body"
+                  ]
                 }
               };
             }
+
             LinkButton {
               label: _("API Reference");
-              uri : "https://docs.gtk.org/gtk4/class.FileLauncher.html";
+              uri: "https://docs.gtk.org/gtk4/class.FileLauncher.html";
             }
           };
         }
@@ -68,15 +91,22 @@ Adw.StatusPage {
         Gtk.StackPage {
           name: "uri_launcher";
           title: _("URI Launcher");
+
           child: Box {
             orientation: vertical;
             halign: center;
             spacing: 24;
+
             Box {
               halign: center;
+
               Button uri_launch {
                 label: _("Launch");
-                styles ["suggested-action", "pill"]
+
+                styles [
+                  "suggested-action",
+                  "pill"
+                ]
               }
             }
 
@@ -87,7 +117,7 @@ Adw.StatusPage {
 
             LinkButton {
               label: _("API Reference");
-              uri : "https://docs.gtk.org/gtk4/class.UriLauncher.html";
+              uri: "https://docs.gtk.org/gtk4/class.UriLauncher.html";
             }
           };
         }

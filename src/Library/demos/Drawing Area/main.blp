@@ -5,7 +5,7 @@ Adw.StatusPage {
   title: _("Drawing Area");
   description: _("Programmatically draw onto a surface.");
 
- Box {
+  Box {
     halign: center;
     orientation: vertical;
 
@@ -17,6 +17,7 @@ Adw.StatusPage {
     Scale scale {
       orientation: horizontal;
       draw-value: true;
+
       adjustment: Gtk.Adjustment {
         lower: -25;
         upper: 25;

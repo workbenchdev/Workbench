@@ -17,11 +17,13 @@ Adw.StatusPage {
 
         Adw.ActionRow {
           title: _("Enable the Screen Reader");
+
           accessibility {
             described-by: orca_shortcut;
           }
 
-          [suffix] ShortcutLabel orca_shortcut {
+          [suffix]
+          ShortcutLabel orca_shortcut {
             accelerator: "<Super><Alt>s";
             valign: center;
           }
@@ -29,11 +31,13 @@ Adw.StatusPage {
 
         Adw.ActionRow {
           title: _("Move to the next element");
+
           accessibility {
             described-by: next_shortcut;
           }
 
-          [suffix] ShortcutLabel next_shortcut {
+          [suffix]
+          ShortcutLabel next_shortcut {
             accelerator: "Tab";
             valign: center;
           }
@@ -41,11 +45,13 @@ Adw.StatusPage {
 
         Adw.ActionRow {
           title: _("Move to the previous element");
+
           accessibility {
             described-by: prev_shortcut;
           }
 
-          [suffix] ShortcutLabel prev_shortcut {
+          [suffix]
+          ShortcutLabel prev_shortcut {
             accelerator: "<Shift>Tab";
             valign: center;
           }
@@ -53,13 +59,16 @@ Adw.StatusPage {
 
         Adw.ActionRow {
           title: _("Activate the current element");
+
           accessibility {
             described-by: activate_shortcut;
           }
 
-          [suffix] ShortcutLabel activate_shortcut {
+          [suffix]
+          ShortcutLabel activate_shortcut {
             accelerator: "space";
             valign: center;
+
             accessibility {
               description: _("Spacebar");
             }
@@ -80,13 +89,19 @@ Adw.StatusPage {
           Label group_label {
             label: _("Related Elements");
             xalign: 0.0;
-            styles ["heading"]
+
+            styles [
+              "heading"
+            ]
           }
 
           Label group_description {
             label: _("This is a group of related elements");
             xalign: 0.0;
-            styles ["dim-label"]
+
+            styles [
+              "dim-label"
+            ]
           }
         }
 
@@ -94,11 +109,15 @@ Adw.StatusPage {
           orientation: vertical;
           spacing: 18;
           accessible-role: group;
+
           accessibility {
             labelled-by: group_label;
             described-by: group_description;
           }
-          styles ["card"]
+
+          styles [
+            "card"
+          ]
 
           Adw.Bin custom_button {
             css-name: "button";
@@ -107,10 +126,15 @@ Adw.StatusPage {
             halign: center;
             margin-top: 18;
             accessible-role: toggle_button;
+
             accessibility {
               labelled-by: custom_button_label;
             }
-            styles ["toggle", "pill"]
+
+            styles [
+              "toggle",
+              "pill"
+            ]
 
             Label custom_button_label {
               label: _("Custom Button");
@@ -121,7 +145,10 @@ Adw.StatusPage {
             halign: center;
             label: _("Standard Button");
             margin-bottom: 18;
-            styles ["pill"]
+
+            styles [
+              "pill"
+            ]
           }
         }
       }
@@ -130,6 +157,7 @@ Adw.StatusPage {
         orientation: vertical;
         halign: center;
         accessible-role: list;
+
         accessibility {
           label: _("Documentation");
           description: _("Links to accessibility documentation");

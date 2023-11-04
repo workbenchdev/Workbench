@@ -8,7 +8,10 @@ Box {
   margin-top: 48;
   margin-bottom: 48;
   orientation: vertical;
-  styles ["card"]
+
+  styles [
+    "card"
+  ]
 
   Adw.StatusPage {
     title: _("Action Bar");
@@ -17,20 +20,26 @@ Box {
     Box {
       orientation: vertical;
       spacing: 18;
-      vexpand:true;
+      vexpand: true;
 
       ToggleButton button {
         halign: center;
         active: false;
         label: _("Reveal");
-        styles ["pill", "suggested-action"]
+
+        styles [
+          "pill",
+          "suggested-action"
+        ]
       }
+
       LinkButton {
         label: _("API Reference");
         uri: "https://docs.gtk.org/gtk4/class.ActionBar.html";
       }
     }
   }
+
   ActionBar action_bar {
     revealed: true;
     valign: end;
@@ -43,15 +52,19 @@ Box {
     [center]
     DropDown {
       model: StringList {
-        strings ["Center Widget","👁️", "❤️", "💼", "🪑"]
-        };
+        strings [
+          "Center Widget",
+          "👁️",
+          "❤️",
+          "💼",
+          "🪑"
+        ]
+      };
     }
 
     [end]
     Button end_widget {
       icon-name: "padlock2-symbolic";
-      }
     }
+  }
 }
-
-

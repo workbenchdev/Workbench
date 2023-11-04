@@ -5,27 +5,33 @@ Adw.Window {
   default-height: 600;
   default-width: 800;
   title: _("Tab View Demo");
-  Adw.TabOverview overview{
+
+  Adw.TabOverview overview {
     enable-new-tab: true;
     view: tab_view;
+
     Box {
       orientation: vertical;
+
       Adw.HeaderBar {
-        Button button_new_tab{
+        Button button_new_tab {
           icon-name: "tab-new-filled-symbolic";
         }
+
         Button button_overview {
           icon-name: "grid-filled-symbolic";
         }
       }
+
       Adw.TabBar {
         view: tab_view;
       }
-      Adw.TabView tab_view{
-        Adw.TabPage main_tab_page{
+
+      Adw.TabView tab_view {
+        Adw.TabPage main_tab_page {
           title: _("Main Page");
-          child:
-          Adw.StatusPage {
+
+          child: Adw.StatusPage {
             hexpand: true;
             vexpand: true;
             title: _("Tab View");
@@ -34,24 +40,30 @@ Adw.Window {
             Box {
               spacing: 6;
               orientation: vertical;
+
               Label {
                 label: _("API References");
               }
-              Box{
+
+              Box {
                 halign: center;
+
                 LinkButton {
                   label: _("Tab View");
                   uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.4/class.TabView.html";
                 }
+
                 LinkButton {
                   label: _("Tab Bar");
                   uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.4/class.TabBar.html";
                 }
+
                 LinkButton {
                   label: _("Tab Overview");
                   uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.4/class.TabOverview.html";
                 }
               }
+
               LinkButton {
                 label: _("Human Interface Guidelines");
                 uri: "https://developer.gnome.org/hig/patterns/nav/tabs.html";
@@ -63,4 +75,3 @@ Adw.Window {
     }
   }
 }
-

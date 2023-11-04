@@ -10,6 +10,7 @@ Adw.Window {
 
   Adw.Breakpoint {
     condition ("max-width: 400sp")
+
     setters {
       split_view.collapsed: true;
     }
@@ -20,7 +21,6 @@ Adw.Window {
 
     [top]
     Adw.HeaderBar {
-
       [start]
       ToggleButton show_sidebar_button {
         icon-name: "dock-left";
@@ -44,7 +44,7 @@ Adw.Window {
       sidebar: Adw.StatusPage {
         title: _("Sidebar");
 
-       child: Box {
+        child: Box {
           orientation: vertical;
           halign: center;
           spacing: 18;
@@ -53,14 +53,20 @@ Adw.Window {
             label: _("Start");
             can-shrink: true;
             active: true;
-            styles ["pill"]
+
+            styles [
+              "pill"
+            ]
           }
 
           ToggleButton end_toggle {
             label: _("End");
             can-shrink: true;
             group: start_toggle;
-            styles ["pill"]
+
+            styles [
+              "pill"
+            ]
           }
         };
       };

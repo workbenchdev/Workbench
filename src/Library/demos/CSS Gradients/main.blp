@@ -116,14 +116,20 @@ Adw.StatusPage {
 
       Adw.ComboRow combo_row_gradient_type {
         title: _("Gradient type");
+
         model: StringList list {
-          strings [_("Linear"), _("Radial"), _("Conic")]
+          strings [
+            _("Linear"),
+            _("Radial"),
+            _("Conic")
+          ]
         };
       }
 
       Adw.SpinRow spin_row_angle {
         title: _("Angle");
         climb-rate: 0.2;
+
         adjustment: Adjustment {
           lower: 0;
           upper: 360;
@@ -180,7 +186,10 @@ Adw.StatusPage {
             halign: end;
             tooltip-text: _("Copy");
             icon-name: "edit-copy-symbolic";
-            styles ["flat"]
+
+            styles [
+              "flat"
+            ]
           }
 
           GtkSource.View source_view {
@@ -190,6 +199,7 @@ Adw.StatusPage {
             right-margin: 6;
             editable: false;
             monospace: true;
+
             buffer: GtkSource.Buffer gtksource_buffer {
               highlight-syntax: true;
             };
@@ -210,4 +220,5 @@ Adw.StatusPage {
   }
 }
 
-ColorDialog color_dialog {}
+ColorDialog color_dialog {
+}

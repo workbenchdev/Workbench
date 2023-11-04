@@ -11,6 +11,7 @@ Adw.StatusPage {
 
     Adw.Clamp {
       maximum-size: bind width_adjustment.value;
+
       child: CenterBox {
         shrink-center-last: true;
 
@@ -20,10 +21,12 @@ Adw.StatusPage {
         }
 
         [center]
-        Entry {}
+        Entry {
+        }
 
         [end]
-        CheckButton {}
+        CheckButton {
+        }
       };
     }
 
@@ -31,6 +34,7 @@ Adw.StatusPage {
       orientation: horizontal;
       halign: center;
       width-request: 120;
+
       adjustment: Adjustment width_adjustment {
         lower: 200;
         upper: 500;

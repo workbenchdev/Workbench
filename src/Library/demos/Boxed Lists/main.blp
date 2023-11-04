@@ -13,7 +13,10 @@ Adw.StatusPage {
 
       ListBox {
         selection-mode: none;
-        styles ["boxed-list"]
+
+        styles [
+          "boxed-list"
+        ]
 
         Adw.ActionRow {
           title: _("ActionRow can have a prefix child");
@@ -45,9 +48,12 @@ Adw.StatusPage {
             valign: center;
           }
         }
-        
+
         Adw.ActionRow {
-          styles ["property"]
+          styles [
+            "property"
+          ]
+
           title: _("Property Row");
           subtitle: _("Deemphasizes the row title and emphasizes subtitle instead");
         }
@@ -65,6 +71,7 @@ Adw.StatusPage {
           title: _("Spin Row");
           subtitle: _("Increment or decrement a value");
           climb-rate: 0.2;
+
           adjustment: Adjustment {
             lower: 0;
             upper: 100;
@@ -76,8 +83,15 @@ Adw.StatusPage {
         Adw.ComboRow {
           title: _("Choose an item");
           subtitle: _("List of options from a drop down");
+
           model: StringList list {
-            strings ["this", "is", "a", "string", "list"]
+            strings [
+              "this",
+              "is",
+              "a",
+              "string",
+              "list"
+            ]
           };
         }
 
@@ -88,6 +102,7 @@ Adw.StatusPage {
           Adw.ActionRow {
             title: _("First row");
           }
+
           Adw.ActionRow {
             title: _("Second row");
           }

@@ -8,22 +8,24 @@ Adw.StatusPage {
   Box {
     orientation: vertical;
     halign: center;
-    spacing:42;
+    spacing: 42;
 
-    Box{
-      orientation:vertical;
+    Box {
+      orientation: vertical;
 
       Label {
         label: _("Dialog Button");
-        margin-bottom:12;
-        styles ["title-4"]
+        margin-bottom: 12;
+
+        styles [
+          "title-4"
+        ]
       }
 
       ColorDialogButton color_dialog_button {
         halign: center;
-        margin-bottom:12;
+        margin-bottom: 12;
       }
-
 
       LinkButton {
         label: _("API Reference");
@@ -31,21 +33,27 @@ Adw.StatusPage {
       }
     }
 
-    Box{
+    Box {
       orientation: vertical;
 
       Label {
         label: _("Dialog with Custom Button");
-        margin-bottom:12;
-        styles ["title-4"]
+        margin-bottom: 12;
+
+        styles [
+          "title-4"
+        ]
       }
 
       Button custom_button {
         label: _("Select Color…");
-        margin-start:42;
-        margin-end:42;
-        margin-bottom:12;
-        styles ["pill"]
+        margin-start: 42;
+        margin-end: 42;
+        margin-bottom: 12;
+
+        styles [
+          "pill"
+        ]
       }
 
       LinkButton {
@@ -55,4 +63,3 @@ Adw.StatusPage {
     }
   }
 }
-

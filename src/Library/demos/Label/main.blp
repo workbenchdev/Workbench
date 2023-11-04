@@ -13,54 +13,88 @@ Adw.StatusPage {
       maximum-size: 450;
 
       ListBox {
-        styles ["boxed-list"]
+        styles [
+          "boxed-list"
+        ]
+
         selection-mode: none;
 
-        Adw.SwitchRow single_line_switch{
+        Adw.SwitchRow single_line_switch {
           title: _("Single Line");
           active: true;
         }
 
-        Adw.SwitchRow markup_switch{
+        Adw.SwitchRow markup_switch {
           title: _("Use Markup");
         }
 
         Adw.ComboRow wrap_row {
           title: _("Wrap Mode");
+
           model: StringList {
-            strings ["None", "Character", "Word", "Word & Character"]
+            strings [
+              "None",
+              "Character",
+              "Word",
+              "Word & Character"
+            ]
           };
         }
 
         Adw.ComboRow ellipsize_row {
           title: _("Ellipsize Mode");
+
           model: StringList {
-            strings ["None", "Start", "Middle", "End"]
+            strings [
+              "None",
+              "Start",
+              "Middle",
+              "End"
+            ]
           };
         }
-
 
         Adw.ComboRow style_row {
           title: _("Style Class");
+
           model: StringList {
-            strings ["None", "Title 1", "Title 2", "Title 3", "Title 4",
-            "Monospace", "Accent", "Success", "Warning", "Error",
-            "Heading", "Body", "Caption Heading", "Caption"]
+            strings [
+              "None",
+              "Title 1",
+              "Title 2",
+              "Title 3",
+              "Title 4",
+              "Monospace",
+              "Accent",
+              "Success",
+              "Warning",
+              "Error",
+              "Heading",
+              "Body",
+              "Caption Heading",
+              "Caption"
+            ]
           };
         }
-
 
         Adw.ComboRow justification_row {
           title: _("Justification");
+
           model: StringList {
-            strings [_("Left"), _("Right"), _("Center"), _("Fill")]
+            strings [
+              _("Left"),
+              _("Right"),
+              _("Center"),
+              _("Fill")
+            ]
           };
         }
 
-        Adw.SpinRow xalign_spin_button{
+        Adw.SpinRow xalign_spin_button {
           title: _("X Align");
           value: 0.5;
           digits: 1;
+
           adjustment: Adjustment {
             step-increment: 0.1;
             lower: 0;
@@ -75,7 +109,8 @@ Adw.StatusPage {
       uri: "https://docs.gtk.org/gtk4/class.Label.html";
     }
 
-    Separator {}
+    Separator {
+    }
 
     Label label {
       wrap: bind wrap_row.selected;
@@ -85,4 +120,3 @@ Adw.StatusPage {
     }
   }
 }
-

@@ -6,13 +6,13 @@ Adw.StatusPage {
   description: _("A container that makes its child scrollable");
 
   Adw.Clamp {
-    Box{
+    Box {
       hexpand: true;
       vexpand: true;
       spacing: 12;
       orientation: vertical;
 
-      Box{
+      Box {
         halign: center;
         spacing: 18;
 
@@ -24,12 +24,16 @@ Adw.StatusPage {
           margin-start: 6;
           homogeneous: true;
           halign: center;
-          styles ["linked"]
+
+          styles [
+            "linked"
+          ]
 
           ToggleButton toggle_orientation {
             label: _("Horizontal");
             active: true;
           }
+
           ToggleButton {
             label: _("Vertical");
             group: toggle_orientation;
@@ -40,8 +44,7 @@ Adw.StatusPage {
           label: _("Go To");
         }
 
-        Box{
-
+        Box {
           Button button_start {
             label: _("Start");
           }
@@ -49,11 +52,12 @@ Adw.StatusPage {
           Button button_end {
             label: _("End");
           }
-          styles ["linked"]
+
+          styles [
+            "linked"
+          ]
         }
       }
-
-
 
       ScrolledWindow scrolled_window {
         margin-bottom: 24;

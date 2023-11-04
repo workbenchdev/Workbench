@@ -295,6 +295,7 @@ export default function Window({ application, session }) {
       await format(langs.xml.document.code_view, (text) => {
         return xml.format(text, 2);
       });
+      await panel_ui.format();
     }
   }
 

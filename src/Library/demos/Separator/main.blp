@@ -33,19 +33,26 @@ Adw.StatusPage {
     }
 
     Label {
-      label:_("Separator with toolbar class");
-      styles ["title-4"]
+      label: _("Separator with toolbar class");
+
+      styles [
+        "title-4"
+      ]
     }
 
     Box {
       halign: center;
       margin-bottom: 24;
       spacing: 12;
-      styles ["toolbar"]
+
+      styles [
+        "toolbar"
+      ]
 
       Label {
         label: _("Welcome to Workbench");
       }
+
       Button {
         icon-name: "window-minimize-symbolic";
       }

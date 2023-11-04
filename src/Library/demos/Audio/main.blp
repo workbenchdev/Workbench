@@ -11,14 +11,19 @@ Adw.StatusPage {
 
     Adw.Clamp {
       maximum-size: 400;
-      MediaControls controls {}
+
+      MediaControls controls {
+      }
     }
 
     Box {
       margin-top: 12;
       orientation: horizontal;
       halign: center;
-      styles ["linked"]
+
+      styles [
+        "linked"
+      ]
 
       Button button_sound {
         label: _("Play sound");
@@ -46,4 +51,3 @@ Adw.StatusPage {
     }
   }
 }
-

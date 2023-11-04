@@ -13,13 +13,21 @@ Adw.ToastOverlay overlay {
       Box {
         halign: center;
         spacing: 6;
+
         Image {
           icon-name: "lightbulb-symbolic";
-          styles ["dim-label"]
+
+          styles [
+            "dim-label"
+          ]
         }
-        Label  {
+
+        Label {
           label: _("Try toggling Power Mode to \"Power Saver\" from Settings → Power\n or from Quick Toggles");
-          styles ["dim-label"]
+
+          styles [
+            "dim-label"
+          ]
         }
       }
 

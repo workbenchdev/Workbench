@@ -24,7 +24,7 @@
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "mesonbuild.mesonPath": "${workspaceFolder}/.flatpak/meson.sh",
   "mesonbuild.configureOnOpen": false,
-  "mesonbuild.buildFolder": "_build"
+  "mesonbuild.buildFolder": "_build",
+  "mesonbuild.mesonPath": "${workspaceFolder}/.flatpak/meson.sh"
 }

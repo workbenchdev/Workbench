@@ -17,17 +17,24 @@ Adw.StatusPage {
         margin-bottom: 30;
         spacing: 18;
 
-
         Adw.EntryRow entry {
           title: _("Reason");
-          styles ["card"]
+
+          styles [
+            "card"
+          ]
+
           halign: fill;
         }
 
         Button button {
           label: _("Request");
           halign: center;
-          styles ["suggested-action", "pill"]
+
+          styles [
+            "suggested-action",
+            "pill"
+          ]
         }
       }
 
@@ -39,10 +46,13 @@ Adw.StatusPage {
           selection-mode: none;
           margin-bottom: 18;
 
-          styles ["boxed-list"]
+          styles [
+            "boxed-list"
+          ]
 
           Gtk.ListBoxRow {
             activatable: false;
+
             Adw.Avatar avatar {
               hexpand: true;
               size: 80;

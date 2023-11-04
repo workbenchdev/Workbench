@@ -13,13 +13,17 @@ lint:
 # rustfmt
 	flatpak run --user --command=/usr/lib/sdk/rust-stable/bin/rustfmt --filesystem=host:ro org.gnome.Sdk//45 --check --edition 2021 src/**/*.rs
 # black
-	./black.sh --check src/**/*.py
+	./build-aux/black.sh --check src/**/*.py
 # gettext
 	find po/ -type f -name "*po" -print0 | xargs -0 -n1 msgfmt -o /dev/null --check
 # Flatpak manifests
 	flatpak run --user --command=flatpak-builder-lint org.flatpak.Builder manifest --exceptions build-aux/re.sonny.Workbench.json
 	flatpak run --user --command=flatpak-builder-lint org.flatpak.Builder manifest --exceptions build-aux/re.sonny.Workbench.Devel.json
-
+# Blueprint
+# FIXME: No easy way to install for dev / CI
+# https://gitlab.gnome.org/jwestman/blueprint-compiler/-/merge_requests/155
+# find src -type f -name "*blp" -print0 | xargs -0 blueprint-compiler format # here
+# "*.blp": "blueprint-compiler format --fix" # package.json lint-staged
 unit:
 	flatpak run --user --filesystem=host:ro --command="gjs" org.gnome.Sdk//45 -m ./troll/tst/bin.js test/*.test.js
 

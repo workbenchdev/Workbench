@@ -53,7 +53,9 @@ Adw.StatusPage {
                 title: _("Item 4");
               }
 
-              styles ["boxed-list"]
+              styles [
+                "boxed-list"
+              ]
             }
           }
         }
@@ -69,18 +71,22 @@ Adw.StatusPage {
           halign: center;
           label: _("Crossfade");
 
-          styles ["pill"]
+          styles [
+            "pill"
+          ]
         }
 
         Overlay {
-          Picture image1 {}
+          Picture image1 {
+          }
 
           [overlay]
           Revealer revealer_crossfade {
             transition-duration: 800;
             transition-type: crossfade;
 
-            Picture image2 {}
+            Picture image2 {
+            }
           }
         }
       }
