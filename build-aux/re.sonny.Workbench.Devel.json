@@ -7,10 +7,11 @@
     "org.gnome.Sdk.Docs",
     "org.freedesktop.Sdk.Extension.vala",
     "org.freedesktop.Sdk.Extension.rust-stable",
-    "org.freedesktop.Sdk.Extension.llvm16"
+    "org.freedesktop.Sdk.Extension.llvm16",
+    "org.freedesktop.Sdk.Extension.node18"
   ],
   "build-options": {
-    "append-path": "/usr/lib/sdk/vala/bin:/usr/lib/sdk/rust-stable/bin",
+    "append-path": "/usr/lib/sdk/vala/bin:/usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/node18/bin",
     "append-ld-library-path": "/usr/lib/sdk/vala/lib"
   },
   "command": "workbench",

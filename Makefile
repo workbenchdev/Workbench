@@ -10,7 +10,7 @@ setup:
 
 lint:
 # ESLint
-	flatpak run --user --command=/usr/lib/sdk/node18/bin/node --filesystem=host:ro org.gnome.Sdk//45 node_modules/.bin/eslint --max-warnings=0 src
+	./fun node node_modules/.bin/eslint --max-warnings=0 src
 # rustfmt
 	./fun rustfmt --check --edition 2021 src/**/*.rs
 # black
@@ -24,7 +24,7 @@ lint:
 	flatpak run --user --command=flatpak-builder-lint org.flatpak.Builder manifest --exceptions build-aux/re.sonny.Workbench.Devel.json
 
 unit:
-	flatpak run --user --filesystem=host:ro --command="gjs" org.gnome.Sdk//45 -m ./troll/tst/bin.js test/*.test.js
+	./fun gjs -m ./troll/tst/bin.js test/*.test.js
 
 # https://github.com/ximion/appstream/issues/398#issuecomment-1129454985
 # flatpak run org.freedesktop.appstream.cli validate --override=release-time-missing=info --no-net data/app.metainfo.xml
