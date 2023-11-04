@@ -12,6 +12,7 @@ pub fn main() {
         banner.set_revealed(false);
     });
 
+    // foo
     button_show_banner.connect_clicked(move |_| banner.set_revealed(true));
 }
 
