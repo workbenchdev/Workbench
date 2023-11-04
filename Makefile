@@ -13,12 +13,15 @@ lint:
 # rustfmt
 	flatpak run --user --command=/usr/lib/sdk/rust-stable/bin/rustfmt --filesystem=host:ro org.gnome.Sdk//45 --check --edition 2021 src/**/*.rs
 # black
-	./black.sh --check src/**/*.py
+	./build-aux/black.sh --check src/**/*.py
 # gettext
 	find po/ -type f -name "*po" -print0 | xargs -0 -n1 msgfmt -o /dev/null --check
 # Flatpak manifests
 	flatpak run --user --command=flatpak-builder-lint org.flatpak.Builder manifest --exceptions build-aux/re.sonny.Workbench.json
 	flatpak run --user --command=flatpak-builder-lint org.flatpak.Builder manifest --exceptions build-aux/re.sonny.Workbench.Devel.json
+# Blueprint
+# find src -type f -name "*blp" -print0 | xargs -0 blueprint-compiler format
+	find src -type f -name "*blp" -print0 | xargs -0 flatpak run --command=/app/bin/blueprint-compiler --filesystem=host:rw re.sonny.Workbench.Devel//master format
 
 unit:
 	flatpak run --user --filesystem=host:ro --command="gjs" org.gnome.Sdk//45 -m ./troll/tst/bin.js test/*.test.js

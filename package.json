@@ -27,7 +27,8 @@
   "lint-staged": {
     "*.{css,json,md,yaml,yml}": "prettier --write",
     "*.{js,cjs,mjs}": "eslint --fix",
-    "*.py": "./black.sh",
-    "*.rs": "flatpak run --user --command=/usr/lib/sdk/rust-stable/bin/rustfmt --filesystem=host org.gnome.Sdk//45 --edition 2021"
+    "*.py": "./build-aux/black.sh",
+    "*.rs": "flatpak run --user --command=/usr/lib/sdk/rust-stable/bin/rustfmt --filesystem=host org.gnome.Sdk//45 --edition 2021",
+    "*.blp": "flatpak run --command=/app/bin/blueprint-compiler --filesystem=host:rw re.sonny.Workbench.Devel//master format --fix"
   }
 }
