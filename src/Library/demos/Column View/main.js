@@ -44,7 +44,7 @@ const data_model = new Gio.ListStore({ item_type: Book });
 data_model.splice(0, 0, [
   new Book({
     title: "Winds from Afar",
-    author: "Kenij Miyazawa",
+    author: "Kenji Miyazawa",
     year: 1972,
   }),
   new Book({
