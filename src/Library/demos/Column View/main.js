@@ -1,5 +1,4 @@
 import Gtk from "gi://Gtk";
-import GLib from "gi://GLib";
 import Gio from "gi://Gio";
 import GObject from "gi://GObject";
 
@@ -8,51 +7,97 @@ const col1 = workbench.builder.get_object("col1");
 const col2 = workbench.builder.get_object("col2");
 const col3 = workbench.builder.get_object("col3");
 
-//Model
-const dir = Gio.File.new_for_path(pkg.pkgdatadir).resolve_relative_path(
-  "Library/demos",
+// Define our class for our custom model
+const Book = GObject.registerClass(
+  {
+    Properties: {
+      title: GObject.ParamSpec.string(
+        "title",
+        null,
+        null,
+        GObject.ParamFlags.READWRITE,
+        "",
+      ),
+      author: GObject.ParamSpec.string(
+        "author",
+        null,
+        null,
+        GObject.ParamFlags.READWRITE,
+        "",
+      ),
+      year: GObject.ParamSpec.int64(
+        "year",
+        null,
+        null,
+        GObject.ParamFlags.READWRITE,
+        Number.MIN_SAFE_INTEGER,
+        Number.MAX_SAFE_INTEGER,
+        0,
+      ),
+    },
+  },
+  class Book extends GObject.Object {},
 );
 
-const data_model = new Gtk.DirectoryList({
-  file: dir,
-  attributes: "standard::*,time::modified",
-});
-
-const sort_model = new Gtk.SortListModel({
-  model: data_model,
-  sorter: column_view.sorter,
-});
-
-column_view.model = new Gtk.SingleSelection({
-  model: sort_model,
-});
+// Create the model
+const data_model = new Gio.ListStore({ item_type: Book });
+data_model.splice(0, 0, [
+  new Book({
+    title: "Winds from Afar",
+    author: "Kenji Miyazawa",
+    year: 1972,
+  }),
+  new Book({
+    title: "Like Water for Chocolate",
+    author: "Laura Esquivel",
+    year: 1989,
+  }),
+  new Book({
+    title: "Works and Nights",
+    author: "Alejandra Pizarnik",
+    year: 1965,
+  }),
+  new Book({
+    title: "Understading Analysis",
+    author: "Stephen Abbott",
+    year: 2002,
+  }),
+  new Book({
+    title: "The Timeless Way of Building",
+    author: "Cristopher Alexander",
+    year: 1979,
+  }),
+  new Book({
+    title: "Bitter",
+    author: "Akwaeke Emezi",
+    year: 2022,
+  }),
+  new Book({
+    title: "Saying Yes",
+    author: "Griselda Gambaro",
+    year: 1981,
+  }),
+  new Book({
+    title: "Itinerary of a Dramatist",
+    author: "Rodolfo Usigli",
+    year: 1940,
+  }),
+]);
 
 col1.sorter = new Gtk.StringSorter({
-  expression: new Gtk.ClosureExpression(
-    GObject.TYPE_STRING,
-    (fileInfo) => fileInfo.get_display_name(),
-    null,
-  ),
+  expression: Gtk.PropertyExpression.new(Book, null, "title"),
 });
 
-col2.sorter = new Gtk.NumericSorter({
-  expression: new Gtk.ClosureExpression(
-    GObject.TYPE_INT,
-    (fileInfo) => fileInfo.get_size(),
-    null,
-  ),
+col2.sorter = new Gtk.StringSorter({
+  expression: Gtk.PropertyExpression.new(Book, null, "author"),
 });
 
 col3.sorter = new Gtk.NumericSorter({
-  expression: new Gtk.ClosureExpression(
-    GObject.TYPE_INT64,
-    (fileInfo) => fileInfo.get_modification_date_time().to_unix(),
-    null,
-  ),
+  expression: Gtk.PropertyExpression.new(Book, null, "year"),
 });
 
-//View
-//Column 1
+// View
+// Column 1
 const factory_col1 = col1.factory;
 factory_col1.connect("setup", (factory, list_item) => {
   const label = new Gtk.Label({
@@ -64,10 +109,10 @@ factory_col1.connect("setup", (factory, list_item) => {
 factory_col1.connect("bind", (factory, list_item) => {
   const label_widget = list_item.get_child();
   const model_item = list_item.get_item();
-  label_widget.label = model_item.get_display_name();
+  label_widget.label = model_item.title;
 });
 
-//Column 2
+// Column 2
 const factory_col2 = col2.factory;
 factory_col2.connect("setup", (factory, list_item) => {
   const label = new Gtk.Label({
@@ -79,11 +124,10 @@ factory_col2.connect("setup", (factory, list_item) => {
 factory_col2.connect("bind", (factory, list_item) => {
   const label_widget = list_item.get_child();
   const model_item = list_item.get_item();
-  const size = model_item.get_size();
-  label_widget.label = GLib.format_size(size);
+  label_widget.label = model_item.author;
 });
 
-//Column 3
+// Column 3
 const factory_col3 = col3.factory;
 factory_col3.connect("setup", (factory, list_item) => {
   const label = new Gtk.Label({
@@ -95,6 +139,14 @@ factory_col3.connect("setup", (factory, list_item) => {
 factory_col3.connect("bind", (factory, list_item) => {
   const label_widget = list_item.get_child();
   const model_item = list_item.get_item();
-  const date = model_item.get_modification_date_time();
-  label_widget.label = date.format("%F");
+  label_widget.label = model_item.year.toString();
+});
+
+const sort_model = new Gtk.SortListModel({
+  model: data_model,
+  sorter: column_view.sorter,
+});
+
+column_view.model = new Gtk.SingleSelection({
+  model: sort_model,
 });
