@@ -21,12 +21,11 @@
   },
   "type": "module",
   "scripts": {
-    "postinstall": "rollup -c rollup.config.js",
     "prepare": "husky install"
   },
   "lint-staged": {
-    "*.{css,json,md,yaml,yml}": "prettier --write",
-    "*.{js,cjs,mjs}": "eslint --fix",
+    "*.{css,json,md,yaml,yml}": "./fun node ./node_modules/.bin/prettier --write",
+    "*.{js,cjs,mjs}": "./fun node ./node_modules/.bin/eslint --fix",
     "*.py": "./fun black",
     "*.rs": "./fun rustfmt --edition 2021",
     "*.blp": "./fun blueprint-compiler format --fix"

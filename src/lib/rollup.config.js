@@ -5,45 +5,45 @@ import nodePolyfills from "rollup-plugin-node-polyfills";
 
 export default [
   {
-    input: "src/langs/xml/ltx.js",
+    input: "../langs/xml/ltx.js",
     output: {
-      file: "src/lib/ltx.js",
+      file: "ltx.js",
     },
     plugins: [nodePolyfills(), commonjs(), nodeResolve()],
   },
 
   {
-    input: "node_modules/prettier/standalone.mjs",
+    input: "../../node_modules/prettier/standalone.mjs",
     output: {
-      file: "src/lib/prettier.js",
+      file: "prettier.js",
     },
   },
 
   {
-    input: "node_modules/prettier/plugins/babel.mjs",
+    input: "../../node_modules/prettier/plugins/babel.mjs",
     output: {
-      file: "src/lib/prettier-babel.js",
+      file: "prettier-babel.js",
     },
   },
 
   {
-    input: "node_modules/prettier/plugins/estree.mjs",
+    input: "../../node_modules/prettier/plugins/estree.mjs",
     output: {
-      file: "src/lib/prettier-estree.js",
+      file: "prettier-estree.js",
     },
   },
 
   {
-    input: "node_modules/prettier/plugins/postcss.mjs",
+    input: "../../node_modules/prettier/plugins/postcss.mjs",
     output: {
-      file: "src/lib/prettier-postcss.js",
+      file: "prettier-postcss.js",
     },
   },
 
   {
-    input: "node_modules/postcss/lib/postcss.mjs",
+    input: "../../node_modules/postcss/lib/postcss.mjs",
     output: {
-      file: "src/lib/postcss.js",
+      file: "postcss.js",
     },
     plugins: [
       commonjs(),
