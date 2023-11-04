@@ -21,13 +21,13 @@
   },
   "type": "module",
   "scripts": {
-    "postinstall": "rollup -c rollup.config.js",
     "prepare": "husky install"
   },
   "lint-staged": {
     "*.{css,json,md,yaml,yml}": "prettier --write",
     "*.{js,cjs,mjs}": "eslint --fix",
-    "*.py": "./build-aux/black.sh",
-    "*.rs": "flatpak run --user --command=/usr/lib/sdk/rust-stable/bin/rustfmt --filesystem=host org.gnome.Sdk//45 --edition 2021"
+    "*.py": "./fun black",
+    "*.rs": "./fun rustfmt --edition 2021",
+    "*.blp": "./fun blueprint-compiler format --fix"
   }
 }

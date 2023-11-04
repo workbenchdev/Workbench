@@ -4,28 +4,27 @@ SHELL:=/bin/bash -O globstar
 
 setup:
 	flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-	flatpak install --or-update --user --noninteractive flathub org.gnome.Sdk//45 org.gnome.Sdk.Docs//45 org.flatpak.Builder org.freedesktop.Sdk.Extension.rust-stable//23.08 org.freedesktop.Sdk.Extension.node18//23.08 org.freedesktop.Sdk.Extension.vala//23.08 org.freedesktop.Sdk.Extension.llvm16//23.08
+	flatpak install --or-update --user --noninteractive flathub org.gnome.Sdk//45 org.gnome.Sdk.Docs//45 org.flatpak.Builder org.freedesktop.Sdk.Extension.rust-stable//23.08 org.freedesktop.Sdk.Extension.vala//23.08 org.freedesktop.Sdk.Extension.llvm16//23.08
 	npm install
+	flatpak-builder --ccache --force-clean --stop-at=gi-docgen flatpak build-aux/re.sonny.Workbench.Devel.json
 
 lint:
 # ESLint
-	flatpak run --user --command=/usr/lib/sdk/node18/bin/node --filesystem=host:ro org.gnome.Sdk//45 node_modules/.bin/eslint --max-warnings=0 src
+	./node_modules/.bin/eslint --max-warnings=0 src
 # rustfmt
-	flatpak run --user --command=/usr/lib/sdk/rust-stable/bin/rustfmt --filesystem=host:ro org.gnome.Sdk//45 --check --edition 2021 src/**/*.rs
+	./fun rustfmt --check --edition 2021 src/**/*.rs
 # black
-	./build-aux/black.sh --check src/**/*.py
+	./fun black --check src/**/*.py
 # gettext
-	find po/ -type f -name "*po" -print0 | xargs -0 -n1 msgfmt -o /dev/null --check
+	find po/ -type f -name "*po" -print0 | xargs -0 -n1 ./fun msgfmt -o /dev/null --check
+# Blueprint
+	find src/ -type f -name "*blp" -print0 | xargs -0 ./fun blueprint-compiler format
 # Flatpak manifests
 	flatpak run --user --command=flatpak-builder-lint org.flatpak.Builder manifest --exceptions build-aux/re.sonny.Workbench.json
 	flatpak run --user --command=flatpak-builder-lint org.flatpak.Builder manifest --exceptions build-aux/re.sonny.Workbench.Devel.json
-# Blueprint
-# FIXME: No easy way to install for dev / CI
-# https://gitlab.gnome.org/jwestman/blueprint-compiler/-/merge_requests/155
-# find src -type f -name "*blp" -print0 | xargs -0 blueprint-compiler format # here
-# "*.blp": "blueprint-compiler format --fix" # package.json lint-staged
+
 unit:
-	flatpak run --user --filesystem=host:ro --command="gjs" org.gnome.Sdk//45 -m ./troll/tst/bin.js test/*.test.js
+	./fun gjs -m ./troll/tst/bin.js test/*.test.js
 
 # https://github.com/ximion/appstream/issues/398#issuecomment-1129454985
 # flatpak run org.freedesktop.appstream.cli validate --override=release-time-missing=info --no-net data/app.metainfo.xml
@@ -48,7 +47,7 @@ sandbox: setup
 # flatpak remove --noninteractive org.gnome.Sdk.Docs//45 org.freedesktop.Sdk.Extension.rust-stable//23.08 org.freedesktop.Sdk.Extension.vala//23.08 org.freedesktop.Sdk.Extension.llvm16//23.08
 	flatpak run --command="bash" re.sonny.Workbench.Devel
 
-flatpak: setup
+flatpak:
 	flatpak-builder --ccache --force-clean flatpak build-aux/re.sonny.Workbench.Devel.json
 # This is what Flathub does - consider moving to lint
 	flatpak run --env=G_DEBUG=fatal-criticals --command=appstream-util org.flatpak.Builder validate flatpak/files/share/appdata/re.sonny.Workbench.Devel.appdata.xml
