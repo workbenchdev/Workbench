@@ -48,9 +48,9 @@ We provide a couple of tools to make the development process pleasant.
 
 ```sh
 # Ubuntu requirements
-# sudo apt install flatpak nodejs gettext make
+# sudo apt install flatpak flatpak-builder nodejs make
 # Fedora requirements
-# sudo dnf install flatpak nodejs gettext make
+# sudo dnf install flatpak flatpak-builder nodejs make
 
 cd Workbench
 make setup
