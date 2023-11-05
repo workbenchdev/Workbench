@@ -53,8 +53,8 @@ rules:
   no-unused-vars: # https://eslint.org/docs/latest/rules/no-unused-vars
     - error
     - vars: all
-      args: none
-      ignoreRestSiblings: false
+      args: all
+      argsIgnorePattern: "^_"
 
   # Suggestions
   # https://eslint.org/docs/latest/rules/#suggestions
