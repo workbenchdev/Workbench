@@ -128,7 +128,7 @@ export default function Internal({
         // AdwWindow and AdwApplicationWindow have child and titlebar properties but do not support setting them
         // "Using gtk_window_get_titlebar() and gtk_window_set_titlebar() is not supported and will result in a crash."
         // https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.4/class.Window.html
-        // https://github.com/sonnyp/Workbench/issues/130
+        // https://github.com/workbenchdev/Workbench/issues/130
         if (
           (object_preview instanceof Adw.Window ||
             object_preview instanceof Adw.ApplicationWindow) &&
@@ -200,7 +200,7 @@ export default function Internal({
 
     let style = css;
     if (!style) return;
-    // Workaround https://github.com/sonnyp/Workbench/issues/147
+    // Workaround https://github.com/workbenchdev/Workbench/issues/147
     if (style.match(/#$/g)) return;
 
     try {

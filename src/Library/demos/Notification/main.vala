@@ -1,2 +1,2 @@
 // Sorry, this demo is not available in Vala yet.
-// see https://github.com/sonnyp/Workbench/issues/110
+// see https://github.com/workbenchdev/Workbench/issues/110

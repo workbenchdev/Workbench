@@ -8,7 +8,7 @@ The following is the recommended setup:
 
 1. Install [GNOME Builder from Flathub](https://flathub.org/apps/details/org.gnome.Builder)
 2. Open Builder and select "Clone Repository..."
-3. Clone `https://github.com/sonnyp/Workbench.git` (or your fork)
+3. Clone `https://github.com/workbenchdev/Workbench.git` (or your fork)
 4. Press the Run ▶ button
 
 Make sure that you're building the development target `re.sonny.Workbench.Devel`.
@@ -74,7 +74,7 @@ Library examples and demos have 3 functions
 
 Pick a widget and make a Library demo for it within Workbench directly.
 
-Check [here for ideas](https://github.com/sonnyp/Workbench/issues/69) and [here for examples](https://github.com/sonnyp/Workbench/issues?q=label%3A%22Library+%F0%9F%93%9A%EF%B8%8F%22).
+Check [here for ideas](https://github.com/workbenchdev/Workbench/issues/69) and [here for examples](https://github.com/workbenchdev/Workbench/issues?q=label%3A%22Library+%F0%9F%93%9A%EF%B8%8F%22).
 
 Feel free to reach out and ask for a topic or feedback.
 
@@ -87,7 +87,7 @@ Some guidelines
 - Keep it concise and interactive
 - Add links to follow up on the topic covered
 - Follow the patterns of existing entries
-- Follow [the Style Guide](https://github.com/sonnyp/Workbench/wiki/Style-Guide)
+- Follow [the Style Guide](https://github.com/workbenchdev/Workbench/wiki/Style-Guide)
 
 ## Create Library entry
 
@@ -119,13 +119,13 @@ Some guidelines:
 - Test your code before asking for review, for example by starting Workbench and opening the Library entry
 - Always review your own work before asking someone else
 
-See also [the list of Library entries](https://github.com/sonnyp/Workbench/wiki/Language-support-table) and some additional instructions on the Wiki.
+See also [the list of Library entries](https://github.com/workbenchdev/Workbench/wiki/Language-support-table) and some additional instructions on the Wiki.
 
 ## Learn
 
 Here is a compilation of resources to learn more about the GNOME platform.
 
-- [Workbench](https://github.com/sonnyp/Workbench) 😉
+- [Workbench](https://github.com/workbenchdev/Workbench) 😉
 - [GObject](https://gjs.guide/guides/gobject/basics.html#gobject-construction)
 - [GTK4 + GJS Book](https://rmnvgr.gitlab.io/gtk4-gjs-book/)
 - [Asynchronous programming](https://gjs.guide/guides/gjs/asynchronous-programming.html)

@@ -24,7 +24,7 @@ export function overrides() {
   // GTypeName must be unique globally
   // there is no unregister equivalent to registerClass and
   // this is what GNOME Shell does too according to Verdre
-  // https://github.com/sonnyp/Workbench/issues/50
+  // https://github.com/workbenchdev/Workbench/issues/50
   // https://gitlab.gnome.org/GNOME/gnome-shell/-/issues/1011#note_451228
   // https://gitlab.gnome.org/GNOME/glib/-/issues/282#note_662735
   // https://gitlab.gnome.org/GNOME/glib/-/issues/2336

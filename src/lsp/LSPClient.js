@@ -188,7 +188,7 @@ export default class LSPClient {
 
   async _read_content(length) {
     // read_bytes is limited by some underlying max buffer size
-    // see https://github.com/sonnyp/Workbench/issues/240#issuecomment-1475387647
+    // see https://github.com/workbenchdev/Workbench/issues/240#issuecomment-1475387647
     // read_all is not supported in GJS so we do this instead
     // https://gitlab.gnome.org/GNOME/gjs/-/issues/501
     const uint8 = new Uint8Array(length);
