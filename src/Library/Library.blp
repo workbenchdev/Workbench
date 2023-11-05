@@ -1,10 +1,10 @@
 using Gtk 4.0;
 using Adw 1;
 
-Adw.PreferencesWindow library {
+Adw.PreferencesWindow window {
   hide-on-close: true;
   modal: false;
-  title: _("Library");
+  title: _("Workbench — Library");
   default-height: 700;
   default-width: 700;
 
@@ -12,12 +12,15 @@ Adw.PreferencesWindow library {
     Adw.PreferencesGroup {
       Picture picture_illustration {
         can-shrink: false;
-        margin-bottom: 30;
+        margin-bottom: 32;
       }
 
       Label {
         label: _("Learn, Test, Remix");
-        styles ["title-1"]
+
+        styles [
+          "title-1"
+        ]
       }
     }
 
@@ -59,10 +62,14 @@ Adw.PreferencesWindow library {
     Adw.PreferencesGroup {
       vexpand: true;
       valign: end;
+
       Label {
         label: _('All examples are dedicated to the public domain\nand <b>can be used freely</b> under the terms of <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a>.');
         use-markup: true;
-        styles ["caption"]
+
+        styles [
+          "caption"
+        ]
       }
     }
   }

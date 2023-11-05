@@ -12,6 +12,27 @@
   padding-right: 12px;
 }
 
+.command_snippet {
+  color: @view_fg_color;
+  background: @view_bg_color;
+  font-family: monospace;
+  border-radius: 6px;
+  padding: 6px;
+  border: 1px solid @borders;
+}
+
+/*
+ * From Builder's stylesheet:
+ * https://gitlab.gnome.org/GNOME/gnome-builder/-/blob/45d4ec9b6f1aa2236c9bb7dfb846b35f9b959618/src/libide/gui/style.css#L33
+ * Used to style the language tags for the demo entries in the Library
+ */
+button.pill.small {
+  font-size: 0.83333em;
+  border-radius: 99px;
+  margin: 0;
+  padding: 1px 12px;
+}
+
 #panel_code,
 #panel_style,
 #panel_ui {

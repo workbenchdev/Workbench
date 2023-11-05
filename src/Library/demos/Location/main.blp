@@ -17,48 +17,51 @@ Adw.StatusPage {
         selection-mode: none;
         margin-bottom: 18;
 
-        styles ["boxed-list"]
+        styles [
+          "boxed-list"
+        ]
 
-        Adw.ActionRow {
+        Adw.SpinRow distance_threshold {
           title: _("Distance Threshold");
           subtitle: _("In meters");
+          wrap: true;
+          value: 0;
+          climb-rate: 1;
 
-          SpinButton distance_threshold {
-            valign: center;
-            wrap: true;
+          adjustment: Adjustment {
+            lower: 0;
+            upper: 100;
+            step-increment: 1;
             value: 0;
-            climb-rate: 1;
-            adjustment: Adjustment {
-              lower: 0;
-              upper: 100;
-              step-increment: 1;
-              value: 0;
-            };
-          }
+          };
         }
 
-        Adw.ActionRow {
+        Adw.SpinRow time_threshold {
           title: _("Time Threshold");
-          subtitle: _("In meters");
+          subtitle: _("In seconds");
+          value: 0;
+          climb-rate: 1;
 
-          SpinButton time_threshold {
-            valign: center;
-            wrap: true;
+          adjustment: Adjustment {
+            lower: 0;
+            upper: 100;
+            step-increment: 1;
             value: 0;
-            climb-rate: 1;
-            adjustment: Adjustment {
-                          lower: 0;
-                          upper: 100;
-                          step-increment: 1;
-                          value: 0;
-                        };
-          }
+          };
         }
 
         Adw.ComboRow accuracy_button {
           title: _("Accuracy");
+
           model: Gtk.StringList {
-            strings [C_("Accuracy", "Exact"), C_("Accuracy", "Street"), C_("Accuracy", "Neighborhood"), C_("Accuracy", "City"), C_("Accuracy", "Country"), C_("Accuracy", "None")]
+            strings [
+              C_("Accuracy", "Exact"),
+              C_("Accuracy", "Street"),
+              C_("Accuracy", "Neighborhood"),
+              C_("Accuracy", "City"),
+              C_("Accuracy", "Country"),
+              C_("Accuracy", "None")
+            ]
           };
         }
       }
@@ -71,14 +74,22 @@ Adw.StatusPage {
         Button start {
           label: _("Start Session");
           halign: center;
-          styles ["suggested-action", "pill"]
+
+          styles [
+            "suggested-action",
+            "pill"
+          ]
         }
 
         Button close {
           label: _("Close Session");
           halign: center;
           sensitive: false;
-          styles ["destructive-action", "pill"]
+
+          styles [
+            "destructive-action",
+            "pill"
+          ]
         }
       }
 
@@ -90,7 +101,9 @@ Adw.StatusPage {
           selection-mode: none;
           margin-bottom: 18;
 
-          styles ["boxed-list"]
+          styles [
+            "boxed-list"
+          ]
 
           Adw.ActionRow {
             title: _("Latitude");
@@ -171,7 +184,3 @@ Adw.StatusPage {
     }
   }
 }
-
-
-
-

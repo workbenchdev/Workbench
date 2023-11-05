@@ -6,13 +6,19 @@ Adw.Clamp {
     margin-top: 30;
     margin-bottom: 12;
     orientation: vertical;
+
     Box {
       spacing: 6;
       orientation: vertical;
+
       Label {
         label: _("Animation");
-        styles ["title-1"]
+
+        styles [
+          "title-1"
+        ]
       }
+
       Label {
         label: _("Create timed or spring based animations");
       }
@@ -23,13 +29,13 @@ Adw.Clamp {
       orientation: vertical;
       homogeneous: true;
 
-      Box target_container{
+      Box target_container {
         vexpand: true;
         spacing: 12;
         orientation: vertical;
 
         Box {
-          spacing:24;
+          spacing: 24;
 
           Box {
             homogeneous: true;
@@ -39,14 +45,18 @@ Adw.Clamp {
               halign: start;
               label: _("Animation Target");
 
-              styles ["title-4"]
+              styles [
+                "title-4"
+              ]
             }
 
             Label {
               halign: start;
               label: _("Animate a widget property");
 
-              styles ["dim-label"]
+              styles [
+                "dim-label"
+              ]
             }
           }
 
@@ -56,24 +66,27 @@ Adw.Clamp {
             valign: center;
             icon-name: "play-large-symbolic";
 
-            styles ["circular"]
+            styles [
+              "circular"
+            ]
           }
         }
 
         Box {
           hexpand: true;
-          ProgressBar progress_bar{
+
+          ProgressBar progress_bar {
             hexpand: true;
           }
         }
       }
 
-      Box callback_target_container{
+      Box callback_target_container {
         spacing: 12;
         orientation: vertical;
 
         Box {
-          spacing:24;
+          spacing: 24;
 
           Box {
             homogeneous: true;
@@ -83,14 +96,18 @@ Adw.Clamp {
               halign: start;
               label: _("Callback Animation Target");
 
-              styles ["title-4"]
+              styles [
+                "title-4"
+              ]
             }
 
             Label {
               halign: start;
               label: _("Use callbacks to animate a custom property");
 
-              styles ["dim-label"]
+              styles [
+                "dim-label"
+              ]
             }
           }
 
@@ -100,14 +117,19 @@ Adw.Clamp {
             valign: center;
             icon-name: "play-large-symbolic";
 
-            styles ["circular"]
+            styles [
+              "circular"
+            ]
           }
         }
 
         Box {
           hexpand: true;
+
           Adw.Bin ball {
-            styles ["ball"]
+            styles [
+              "ball"
+            ]
           }
         }
       }
@@ -118,22 +140,32 @@ Adw.Clamp {
 
       Label {
         label: _("Tools");
-        styles ["title-2"]
+
+        styles [
+          "title-2"
+        ]
       }
+
       LinkButton {
         margin-bottom: 12;
         label: _("Elastic");
-        uri: "https://apps.gnome.org/app/app.drey.Elastic/";
+        uri: "https://apps.gnome.org/Elastic/";
       }
+
       Label {
         label: _("API References");
         margin-top: 12;
-        styles ["title-2"]
+
+        styles [
+          "title-2"
+        ]
       }
+
       LinkButton {
         label: _("Timed Animation");
         uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.4/class.TimedAnimation.html";
       }
+
       LinkButton {
         label: _("Spring Animation");
         uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.4/class.SpringAnimation.html";

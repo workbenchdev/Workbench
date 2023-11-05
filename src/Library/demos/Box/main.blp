@@ -11,6 +11,7 @@ Adw.Clamp {
       label: _("Box");
       margin-top: 12;
       margin-bottom: 12;
+
       styles [
         "title-1",
       ]
@@ -20,17 +21,17 @@ Adw.Clamp {
       label: _("A widget that arranges its child widgets into a single row or column");
     }
 
-    Box{
+    Box {
       halign: center;
       valign: end;
       margin-bottom: 12;
 
-      LinkButton{
+      LinkButton {
         label: _("Tutorial");
         uri: "https://developer.gnome.org/documentation/tutorials/beginners/components/box.html";
       }
 
-      LinkButton{
+      LinkButton {
         label: _("API Reference");
         uri: "https://docs.gtk.org/gtk4/class.Box.html";
       }
@@ -43,28 +44,31 @@ Adw.Clamp {
         hexpand: true;
         orientation: vertical;
         spacing: 12;
-        margin-bottom:24;
+        margin-bottom: 24;
 
         Box {
           halign: center;
           spacing: 18;
 
-          Button button_append{
+          Button button_append {
             label: _("Append Item");
+
             styles [
               "pill",
             ]
           }
 
-          Button button_prepend{
+          Button button_prepend {
             label: _("Prepend Item");
+
             styles [
               "pill",
             ]
           }
 
-          Button button_remove{
+          Button button_remove {
             label: _("Remove Item");
+
             styles [
               "pill",
             ]
@@ -72,74 +76,86 @@ Adw.Clamp {
         }
       }
 
+      Box {
+        halign: center;
+        spacing: 18;
+
         Box {
-          halign:center;
-          spacing:18;
+          spacing: 18;
 
-          Box{
-            spacing: 18;
-            Label {
-              label: _("orientation");
-            }
-
-            Box {
-              margin-start: 6;
-              homogeneous: true;
-              halign: center;
-              styles ["linked"]
-
-              ToggleButton toggle_orientation_horizontal {
-                label: _("horizontal");
-                active: true;
-              }
-              ToggleButton toggle_orientation_vertical {
-                label: _("vertical");
-                group: toggle_orientation_horizontal;
-              }
-            }
+          Label {
+            label: _("orientation");
           }
 
-          CheckButton highlight{
-            label: _("Highlight Box");
+          Box {
+            margin-start: 6;
+            homogeneous: true;
+            halign: center;
+
+            styles [
+              "linked"
+            ]
+
+            ToggleButton toggle_orientation_horizontal {
+              label: _("horizontal");
+              active: true;
+            }
+
+            ToggleButton toggle_orientation_vertical {
+              label: _("vertical");
+              group: toggle_orientation_horizontal;
+            }
           }
+        }
+
+        CheckButton highlight {
+          label: _("Highlight Box");
+        }
       }
 
       Grid {
-        margin-top:12;
-        margin-bottom:12;
-        margin-start:12;
-        row-spacing:18;
+        margin-top: 12;
+        margin-bottom: 12;
+        margin-start: 12;
+        row-spacing: 18;
         margin-end: 114;
 
         Box {
           tooltip-text: _("Horizontal Alignment");
           orientation: vertical;
+
           layout {
-            row:0;
-            column:1;
+            row: 0;
+            column: 1;
           }
+
           Label {
-            margin-top:12;
-            margin-bottom:12;
+            margin-top: 12;
+            margin-bottom: 12;
             label: _("halign");
           }
+
           Box {
             homogeneous: true;
             halign: center;
             spacing: 36;
-            ToggleButton halign_toggle_fill{
+
+            ToggleButton halign_toggle_fill {
               label: _("fill");
               active: true;
             }
-            ToggleButton halign_toggle_start{
+
+            ToggleButton halign_toggle_start {
               label: _("start");
               group: halign_toggle_fill;
             }
-            ToggleButton halign_toggle_center{
+
+            ToggleButton halign_toggle_center {
               label: _("center");
               group: halign_toggle_fill;
             }
-            ToggleButton halign_toggle_end{
+
+            ToggleButton halign_toggle_end {
               label: _("end");
               group: halign_toggle_fill;
             }
@@ -148,38 +164,59 @@ Adw.Clamp {
 
         Box {
           tooltip-text: _("Vertical Alignment");
+
           layout {
-            row:1;
-            column:0;
+            row: 1;
+            column: 0;
           }
+
           Label {
             label: _("valign");
-            styles ["rotate"]
+
+            styles [
+              "rotate"
+            ]
           }
+
           Box {
-            valign:center;
+            valign: center;
             orientation: vertical;
             spacing: 60;
 
-            ToggleButton valign_toggle_fill{
+            ToggleButton valign_toggle_fill {
               label: _("fill");
               active: true;
-              styles ["rotate"]
+
+              styles [
+                "rotate"
+              ]
             }
-            ToggleButton valign_toggle_start{
+
+            ToggleButton valign_toggle_start {
               label: _("start");
               group: valign_toggle_fill;
-              styles ["rotate"]
+
+              styles [
+                "rotate"
+              ]
             }
-            ToggleButton valign_toggle_center{
+
+            ToggleButton valign_toggle_center {
               label: _("center");
               group: valign_toggle_fill;
-              styles ["rotate"]
+
+              styles [
+                "rotate"
+              ]
             }
-            ToggleButton valign_toggle_end{
+
+            ToggleButton valign_toggle_end {
               label: _("end");
               group: valign_toggle_fill;
-              styles ["rotate"]
+
+              styles [
+                "rotate"
+              ]
             }
           }
         }
@@ -190,14 +227,14 @@ Adw.Clamp {
           has-frame: true;
 
           layout {
-            row:1;
-            column:1;
+            row: 1;
+            column: 1;
           }
-          Box interactive_box{
+
+          Box interactive_box {
           }
         }
       }
     }
   }
 }
-

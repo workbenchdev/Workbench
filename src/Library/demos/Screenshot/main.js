@@ -1,7 +1,7 @@
+import Adw from "gi://Adw";
+import Gio from "gi://Gio";
 import Xdp from "gi://Xdp";
 import XdpGtk from "gi://XdpGtk4";
-import Gio from "gi://Gio";
-import Adw from "gi://Adw";
 
 const portal = new Xdp.Portal();
 const parent = XdpGtk.parent_new_gtk(workbench.window);
@@ -25,7 +25,7 @@ async function takeScreenshot() {
   let uri;
   try {
     uri = await portal.take_screenshot(parent, flags, null);
-  } catch (err) {
+  } catch (_err) {
     showPermissionError();
     return;
   }

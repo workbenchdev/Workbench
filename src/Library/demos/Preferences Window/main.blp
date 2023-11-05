@@ -14,7 +14,7 @@ Adw.PreferencesWindow pref_window {
       title: _("Color Settings");
       description: _("Change the color-scheme of the application.");
 
-      Adw.SwitchRow dm_switch{
+      Adw.SwitchRow dm_switch {
         title: _("Use Dark Mode");
       }
     }
@@ -25,6 +25,7 @@ Adw.PreferencesWindow pref_window {
 
       Adw.SpinRow {
         title: _("Font Size");
+
         adjustment: Gtk.Adjustment {
           lower: 5;
           upper: 20;
@@ -40,7 +41,9 @@ Adw.PreferencesWindow pref_window {
         Gtk.ColorDialogButton {
           halign: center;
           valign: center;
-          dialog: ColorDialog {};
+
+          dialog: ColorDialog {
+          };
         }
       }
     }
@@ -48,9 +51,11 @@ Adw.PreferencesWindow pref_window {
     Adw.PreferencesGroup {
       title: _("API References");
 
-      Box {
+      FlowBox {
         orientation: horizontal;
         margin-top: 12;
+        max-children-per-line: 2;
+        min-children-per-line: 2;
 
         LinkButton {
           label: _("PreferencesWindow");
@@ -82,10 +87,10 @@ Adw.PreferencesWindow pref_window {
     Adw.PreferencesGroup {
       title: _("Interaction Settings");
       description: _("Change how the app behaves during user interaction.");
-
       // Adw.PreferencesGroup can have suffix widgets like Adw.ActionRows
+
       [header-suffix]
-      Button{
+      Button {
         halign: center;
         valign: center;
         icon-name: "settings-symbolic";
@@ -128,7 +133,10 @@ Adw.PreferencesWindow pref_window {
         [suffix]
         Gtk.Image {
           icon-name: "go-next-symbolic";
-          styles ["dim-label"]
+
+          styles [
+            "dim-label"
+          ]
         }
       }
     }
@@ -142,6 +150,10 @@ Adw.StatusPage subpage {
     label: _("Go back");
     halign: center;
     valign: center;
-    styles ["suggested-action", "pill"]
+
+    styles [
+      "suggested-action",
+      "pill"
+    ]
   }
 }

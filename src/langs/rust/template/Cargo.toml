@@ -6,9 +6,12 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+async-channel = "2.0.0"
 libc = "0.2"
 rand = "0.8.5"
+soup3 = { version = "0.5.0", features = ["v3_4"] }
 url = "2.4.0"
+webkit6 = { version = "0.2.0", features = ["v2_42"] }
 
 
 [dependencies.gtk]

@@ -1,10 +1,11 @@
 using Gtk 4.0;
 
-ShortcutsWindow window_shortcuts {
+ShortcutsWindow window {
   hide-on-close: true;
 
   ShortcutsSection {
     title: "Workbench";
+
     ShortcutsGroup {
       ShortcutsShortcut {
         accelerator: "<Control>Return";
@@ -41,6 +42,7 @@ ShortcutsWindow window_shortcuts {
         title: _("Clear Console");
       }
     }
+
     ShortcutsGroup {
       ShortcutsShortcut {
         accelerator: "<Control><Shift>I";

@@ -21,12 +21,16 @@
   },
   "type": "module",
   "scripts": {
-    "postinstall": "rollup -c rollup.config.js",
     "prepare": "husky install"
   },
   "lint-staged": {
     "*.{css,json,md,yaml,yml}": "prettier --write",
     "*.{js,cjs,mjs}": "eslint --fix",
-    "*.rs": "flatpak run --user --command=/usr/lib/sdk/rust-stable/bin/rustfmt --filesystem=host org.gnome.Sdk//45 --edition 2021"
+    "src/Library/demos/**/*.{js,cjs,mjs}": [
+      "./build-aux/fun biome check --apply-unsafe --config-path=src/langs/javascript/"
+    ],
+    "*.py": "./build-aux/fun black",
+    "*.rs": "./build-aux/fun rustfmt --edition 2021",
+    "*.blp": "./build-aux/fun blueprint-compiler format --fix"
   }
 }

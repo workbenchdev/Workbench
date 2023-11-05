@@ -14,13 +14,22 @@ Adw.StatusPage {
       label: _("From a StringList model");
       margin-top: 24;
       margin-bottom: 24;
-      styles["heading"]
+
+      styles [
+        "heading"
+      ]
     }
 
     DropDown drop_down {
       enable-search: true;
+
       model: StringList {
-        strings ["Grapes", "Apples", "Bananas", "Tomatoes"]
+        strings [
+          "Grapes",
+          "Apples",
+          "Bananas",
+          "Tomatoes"
+        ]
       };
     }
 
@@ -28,7 +37,10 @@ Adw.StatusPage {
       label: _("From a ListStore model");
       margin-top: 24;
       margin-bottom: 24;
-      styles["heading"]
+
+      styles [
+        "heading"
+      ]
     }
 
     DropDown advanced_drop_down {

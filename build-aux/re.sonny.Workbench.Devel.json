@@ -35,15 +35,16 @@
     "*.a"
   ],
   "modules": [
-    "modules/gst-plugin-gtk4.json",
+    "modules/python-black.json",
+    "modules/blueprint-compiler.json",
+    "modules/biome.json",
     "modules/gi-docgen.json",
+    "modules/gst-plugin-gtk4.json",
     "modules/vte.json",
     "modules/libshumate.json",
     "modules/libportal.json",
     "modules/libspelling.json",
     "modules/GTKCssLanguageServer.json",
-    "modules/blueprint-compiler.json",
-    "modules/biome.json",
     "modules/icon-development-kit.json",
     {
       "name": "Workbench",

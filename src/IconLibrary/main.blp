@@ -5,9 +5,9 @@ Adw.Window window {
   width-request: 800;
   height-request: 600;
   hide-on-close: true;
+  title: _("Workbench — Icon Library");
 
   Adw.ToastOverlay overlay {
-
     Adw.ToolbarView {
       [top]
       Adw.HeaderBar {
@@ -25,6 +25,7 @@ Adw.Window window {
       ScrolledWindow {
         hexpand: true;
         vexpand: true;
+
         Adw.Clamp {
           maximum-size: 800;
 
@@ -32,7 +33,10 @@ Adw.Window window {
             orientation: vertical;
 
             Label {
-              styles ["title-4"]
+              styles [
+                "title-4"
+              ]
+
               label: "Icon Development Kit";
               margin-bottom: 6;
               margin-top: 12;
@@ -50,7 +54,10 @@ Adw.Window window {
             }
 
             Label {
-              styles ["title-4"]
+              styles [
+                "title-4"
+              ]
+
               label: "Platform icons";
               margin-bottom: 6;
               margin-top: 12;

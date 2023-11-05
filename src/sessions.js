@@ -10,6 +10,7 @@ import {
   rust_template_dir,
   settings as global_settings,
   encode,
+  languages,
 } from "./util.js";
 
 export const sessions_dir = data_dir.get_child("sessions");
@@ -19,39 +20,38 @@ export function getSessions() {
 
   ensureDir(sessions_dir);
 
-  const session = migrateStateToSession();
-  if (session) {
-    sessions.push(session);
-  } else {
-    for (const file_info of sessions_dir.enumerate_children(
-      "",
-      Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
-      null,
-    )) {
-      if (file_info.get_file_type() !== Gio.FileType.DIRECTORY) continue;
-      sessions.push(new Session(sessions_dir.get_child(file_info.get_name())));
-    }
+  for (const file_info of sessions_dir.enumerate_children(
+    "",
+    Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
+    null,
+  )) {
+    if (file_info.get_file_type() !== Gio.FileType.DIRECTORY) continue;
+    sessions.push(new Session(sessions_dir.get_child(file_info.get_name())));
   }
 
   return sessions;
 }
 
-export function createSession(name = getNowForFilename()) {
-  const file = sessions_dir.get_child(name);
+function createSession(name) {
+  const id = getNowForFilename();
+  const file = sessions_dir.get_child(id);
   ensureDir(file);
   const session = new Session(file);
+  session.settings.set_string("name", name);
   return session;
 }
 
 export function createSessionFromDemo(demo) {
-  const session = createSession();
-  const demo_dir = demos_dir.get_child(demo.name);
+  const { name, panels } = demo;
+
+  const session = createSession(name);
+  const demo_dir = demos_dir.get_child(name);
 
   copy_directory(demo_dir, session);
   copy_directory(rust_template_dir, session);
 
-  const { panels } = demo;
   const { settings } = session;
+  settings.set_string("name", name);
   settings.set_boolean("show-code", panels.includes("code"));
   settings.set_boolean("show-style", panels.includes("style"));
   settings.set_boolean("show-ui", panels.includes("ui"));
@@ -91,6 +91,8 @@ export async function deleteSession(session) {
 }
 
 export async function saveSessionAsProject(session, destination) {
+  session.settings.set_string("name", destination.get_basename());
+
   await destination.make_directory_async(GLib.PRIORITY_DEFAULT, null);
 
   for await (const file_info of session.file.enumerate_children(
@@ -123,12 +125,10 @@ To open and run this; [install Workbench from Flathub](https://flathub.org/apps/
 }
 
 export class Session {
-  settings = null;
   file = null;
-  name = null;
+  settings = null;
 
   constructor(file) {
-    this.name = file.get_basename();
     this.file = file;
     const backend = Gio.keyfile_settings_backend_new(
       this.file.get_child("settings").get_path(),
@@ -142,48 +142,16 @@ export class Session {
     });
   }
 
-  is_project() {
+  get name() {
+    return this.settings.get_string("name") || this.file.get_basename();
+  }
+
+  isProject() {
     return !this.file.get_parent().equal(sessions_dir);
   }
-}
 
-function migrateStateToSession() {
-  if (global_settings.get_boolean("migrated")) return;
-
-  const state_files = [
-    ["state.blp", "main.blp"],
-    ["state.css", "main.css"],
-    ["state.js", "main.js"],
-    ["state.vala", "main.vala"],
-    ["state.rs", "main.rs"],
-    ["state.xml", "main.ui"],
-  ];
-
-  const found = state_files.find(([file]) =>
-    data_dir.get_child(file).query_exists(null),
-  );
-  if (!found) {
-    global_settings.set_boolean("migrated", true);
-    return;
+  getCodeLanguage() {
+    const code_languge = this.settings.get_int("code-language");
+    return languages.find((lang) => lang.index === code_languge);
   }
-
-  const session = createSession(`${getNowForFilename()} state`);
-  for (const state_file of state_files) {
-    try {
-      data_dir.get_child(state_file[0]).move(
-        session.file.get_child(state_file[1]), // destination
-        Gio.FileCopyFlags.BACKUP, // flags
-        null, // cancellable
-        null, // progress_callback
-      );
-    } catch (err) {
-      if (err.code !== Gio.IOErrorEnum.NOT_FOUND) {
-        throw err;
-      }
-    }
-  }
-
-  global_settings.set_boolean("migrated", true);
-
-  return session;
 }

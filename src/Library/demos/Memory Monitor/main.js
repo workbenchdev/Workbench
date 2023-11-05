@@ -7,7 +7,7 @@ cache.set("a", 1);
 cache.set("b", 2);
 cache.set("c", 3);
 
-memory_monitor.connect("low-memory-warning", (monitor, level) => {
+memory_monitor.connect("low-memory-warning", (_self, level) => {
   // Use inequalities for checking as new levels may be added in the future
   if (level >= Gio.MemoryMonitorWarningLevel.LOW) {
     // Processes should free up unneeded resources

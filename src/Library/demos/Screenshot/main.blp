@@ -11,7 +11,9 @@ Adw.StatusPage {
     halign: center;
 
     Box {
-      Picture picture {}
+      Picture picture {
+      }
+
       margin-bottom: 12;
       width-request: 256;
       height-request: 256;
@@ -21,7 +23,10 @@ Adw.StatusPage {
       label: _("Take Screenshot");
       margin-bottom: 42;
       halign: center;
-      styles ["suggested-action"]
+
+      styles [
+        "suggested-action"
+      ]
     }
 
     LinkButton {

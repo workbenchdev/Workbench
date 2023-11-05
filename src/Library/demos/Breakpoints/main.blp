@@ -11,6 +11,7 @@ Gtk.Window {
   Adw.StatusPage page {
     title: _("Breakpoints");
     description: _("Resize the window to see the breakpoint effect");
+
     child: Box {
       orientation: vertical;
       spacing: 12;
@@ -27,6 +28,7 @@ Gtk.Window {
 
         Adw.Breakpoint breakpoint {
           condition ("max-width: 500sp")
+
           setters {
             breakpoint_bin.child: label_narrow;
             image.icon-size: normal;
@@ -52,10 +54,16 @@ Gtk.Window {
 
 Label label_narrow {
   label: _("Narrow");
-  styles ["title-4"]
+
+  styles [
+    "title-4"
+  ]
 }
 
 Label label_wide {
   label: _("Wide");
-  styles ["title-1"]
+
+  styles [
+    "title-1"
+  ]
 }

@@ -1,6 +1,6 @@
+import Gio from "gi://Gio";
 import Xdp from "gi://Xdp";
 import XdpGtk from "gi://XdpGtk4";
-import Gio from "gi://Gio";
 
 Gio._promisify(
   Xdp.Portal.prototype,
@@ -31,7 +31,7 @@ let locationAccuracy = Xdp.LocationAccuracy.Exact;
 let distanceThreshold = distance_threshold.value;
 let timeThreshold = time_threshold.value;
 
-time_threshold.connect("value-changed", () => {
+time_threshold.connect("notify::value", () => {
   portal.location_monitor_stop();
   revealer.reveal_child = false;
   timeThreshold = time_threshold.value;
@@ -39,7 +39,7 @@ time_threshold.connect("value-changed", () => {
   startSession();
 });
 
-distance_threshold.connect("value-changed", () => {
+distance_threshold.connect("notify::value", () => {
   portal.location_monitor_stop();
   revealer.reveal_child = false;
   distanceThreshold = distance_threshold.value;
@@ -78,7 +78,7 @@ async function startSession() {
 portal.connect(
   "location-updated",
   (
-    portal,
+    _self,
     latitude,
     longitude,
     altitude,

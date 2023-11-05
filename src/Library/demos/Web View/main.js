@@ -1,6 +1,6 @@
-import WebKit from "gi://WebKit";
-import GObject from "gi://GObject";
 import GLib from "gi://GLib";
+import GObject from "gi://GObject";
+import WebKit from "gi://WebKit";
 
 const button_back = workbench.builder.get_object("button_back");
 const button_forward = workbench.builder.get_object("button_forward");
@@ -44,7 +44,7 @@ button_stop.connect("clicked", () => {
   web_view.stop_loading();
 });
 
-web_view.connect("load-changed", (view, load_event) => {
+web_view.connect("load-changed", (_self, load_event) => {
   switch (load_event) {
     case WebKit.LoadEvent.STARTED:
       console.log("Page loading started");
@@ -55,15 +55,17 @@ web_view.connect("load-changed", (view, load_event) => {
   }
 });
 
-web_view.connect("load-failed", (view, load_event, fail_url, error) => {
-  // Dont display error page if it is caused by stop_loading()
-  if (error.code !== WebKit.NetworkError.CANCELLED) {
-    web_view.load_alternate_html(
-      error_page(fail_url, error.message),
-      fail_url,
-      null,
-    );
+web_view.connect("load-failed", (_self, _load_event, fail_url, error) => {
+  // Loading failed as a result of calling stop_loading
+  if (error.matches(WebKit.NetworkError, WebKit.NetworkError.CANCELLED)) {
+    return;
   }
+
+  web_view.load_alternate_html(
+    error_page(fail_url, error.message),
+    fail_url,
+    null,
+  );
 });
 
 web_view.connect("notify::estimated-load-progress", () => {

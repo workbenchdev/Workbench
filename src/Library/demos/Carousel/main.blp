@@ -32,19 +32,29 @@ Box root_box {
       valign: center;
 
       Adw.PreferencesGroup {
-        styles ["boxed-list"]
+        styles [
+          "boxed-list"
+        ]
 
         Adw.ComboRow orientation_row {
           title: _("Carousel Orientation");
+
           model: StringList {
-            strings [_("Horizontal"), _("Vertical")]
+            strings [
+              _("Horizontal"),
+              _("Vertical")
+            ]
           };
         }
 
         Adw.ComboRow indicator_row {
           title: _("Page Indicators");
+
           model: StringList {
-            strings [_("Dots"), _("Lines")]
+            strings [
+              _("Dots"),
+              _("Lines")
+            ]
           };
         }
 

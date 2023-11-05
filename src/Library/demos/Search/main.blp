@@ -18,7 +18,7 @@ Adw.Window {
     SearchBar searchbar {
       key-capture-widget: container;
 
-      SearchEntry searchentry{
+      SearchEntry searchentry {
         search-delay: 100;
         placeholder-text: _("Search for fruits");
         width-request: 400;
@@ -33,19 +33,22 @@ Adw.Window {
         description: _("Allow items to be located by filtering");
         vexpand: true;
 
-
-        Box{
+        Box {
           orientation: vertical;
           spacing: 6;
+
           Label {
             label: _("API References");
           }
-          Box{
+
+          Box {
             halign: center;
+
             LinkButton {
               label: _("Search Entry API Reference");
               uri: "https://docs.gtk.org/gtk4/class.SearchEntry.html";
             }
+
             LinkButton {
               label: _("Search Bar API Reference");
               uri: "https://docs.gtk.org/gtk4/class.SearchBar";
@@ -64,6 +67,7 @@ Adw.Window {
         Adw.Clamp {
           margin-top: 24;
           margin-bottom: 24;
+
           ListBox listbox {
             valign: start;
             hexpand: true;
@@ -73,7 +77,6 @@ Adw.Window {
               "boxed-list",
             ]
           }
-
         }
       }
 

@@ -17,7 +17,9 @@ Adw.Clamp {
       Label {
         label: _("Web View");
 
-        styles ["title-1"]
+        styles [
+          "title-1"
+        ]
       }
 
       Label {
@@ -57,11 +59,15 @@ Adw.Clamp {
     Frame {
       margin-top: 18;
       margin-bottom: 18;
+
       WebKit.WebView web_view {
         zoom-level: 0.8;
         vexpand: true;
         hexpand: true;
-        styles ["view"]
+
+        styles [
+          "view"
+        ]
       }
     }
 

@@ -1,6 +1,6 @@
+import Gio from "gi://Gio";
 import Xdp from "gi://Xdp";
 import XdpGtk from "gi://XdpGtk4";
-import Gio from "gi://Gio";
 
 Gio._promisify(
   Xdp.Portal.prototype,
@@ -33,7 +33,7 @@ button_stop.connect("clicked", () => {
 
 portal.connect(
   "session-state-changed",
-  (self, screensaver_active, session_state) => {
+  (_self, screensaver_active, session_state) => {
     if (screensaver_active) {
       console.log("Screensaver is active");
     }

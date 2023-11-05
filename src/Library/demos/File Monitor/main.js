@@ -1,7 +1,7 @@
-import Gtk from "gi://Gtk";
-import Gio from "gi://Gio";
 import Adw from "gi://Adw";
 import GLib from "gi://GLib";
+import Gio from "gi://Gio";
+import Gtk from "gi://Gtk";
 
 Gio._promisify(Gtk.FileLauncher.prototype, "launch", "launch_finish");
 
@@ -40,7 +40,7 @@ view_file.connect("clicked", () => {
   file_launcher.launch(workbench.window, null).catch(console.error);
 });
 
-monitor_for_file.connect("changed", (monitor, file, other_file, event) => {
+monitor_for_file.connect("changed", (_self, _file, _other_file, event) => {
   if (event === Gio.FileMonitorEvent.CHANGES_DONE_HINT) {
     const toast = new Adw.Toast({
       title: "File modified",
@@ -50,7 +50,7 @@ monitor_for_file.connect("changed", (monitor, file, other_file, event) => {
   }
 });
 
-monitor_for_dir.connect("changed", (monitor, child, other_file, event) => {
+monitor_for_dir.connect("changed", (_self, child, other_file, event) => {
   const toast = new Adw.Toast({
     timeout: 2,
   });

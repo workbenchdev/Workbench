@@ -6,7 +6,7 @@ import Adw from "gi://Adw";
 import Vte from "gi://Vte";
 
 import * as xml from "./langs/xml/xml.js";
-import { languages } from "./util.js";
+import { buildRuntimePath, languages } from "./util.js";
 import Document from "./Document.js";
 import PanelUI from "./PanelUI.js";
 import PanelCode from "./PanelCode.js";
@@ -20,6 +20,7 @@ import prettier_estree from "./lib/prettier-estree.js";
 import Previewer from "./Previewer/Previewer.js";
 import ValaCompiler from "./langs/vala/Compiler.js";
 import RustCompiler from "./langs/rust/Compiler.js";
+import PythonBuilder from "./langs/python/Builder.js";
 import ThemeSelector from "../troll/src/widgets/ThemeSelector.js";
 
 import resource from "./window.blp";
@@ -47,7 +48,7 @@ export default function Window({ application, session }) {
     languages.map((lang) => [lang.id, { ...lang }]),
   );
 
-  const { file, settings } = session;
+  const { settings } = session;
 
   Vte.Terminal.new();
 
@@ -57,7 +58,8 @@ export default function Window({ application, session }) {
   if (__DEV__) {
     window.add_css_class("devel");
   }
-  window.set_application(application);
+  window.application = application;
+  window.title = `Workbench — ${session.name}`;
 
   // Popover menu theme switcher
   const button_menu = builder.get_object("button_menu");
@@ -73,7 +75,6 @@ export default function Window({ application, session }) {
 
   const document_javascript = Document({
     code_view: builder.get_object("code_view_javascript"),
-    file: file.get_child("main.js"),
     lang: langs.javascript,
     session,
   });
@@ -81,7 +82,6 @@ export default function Window({ application, session }) {
 
   const document_vala = Document({
     code_view: builder.get_object("code_view_vala"),
-    file: file.get_child("main.vala"),
     lang: langs.vala,
     session,
   });
@@ -89,15 +89,20 @@ export default function Window({ application, session }) {
 
   const document_rust = Document({
     code_view: builder.get_object("code_view_rust"),
-    file: file.get_child("code.rs"),
     lang: langs.rust,
     session,
   });
   langs.rust.document = document_rust;
 
+  const document_python = Document({
+    code_view: builder.get_object("code_view_python"),
+    lang: langs.python,
+    session,
+  });
+  langs.python.document = document_python;
+
   const document_blueprint = Document({
     code_view: builder.get_object("code_view_blueprint"),
-    file: file.get_child("main.blp"),
     lang: langs.blueprint,
     session,
   });
@@ -105,7 +110,6 @@ export default function Window({ application, session }) {
 
   const document_xml = Document({
     code_view: builder.get_object("code_view_xml"),
-    file: file.get_child("main.ui"),
     lang: langs.xml,
     session,
   });
@@ -113,7 +117,6 @@ export default function Window({ application, session }) {
 
   const document_css = Document({
     code_view: builder.get_object("code_view_css"),
-    file: file.get_child("main.css"),
     lang: langs.css,
     session,
   });
@@ -240,6 +243,25 @@ export default function Window({ application, session }) {
     return stdout;
   }
 
+  function formatPythonCode(text) {
+    const blackLauncher = Gio.SubprocessLauncher.new(
+      Gio.SubprocessFlags.STDIN_PIPE |
+        Gio.SubprocessFlags.STDOUT_PIPE |
+        Gio.SubprocessFlags.STDERR_PIPE,
+    );
+
+    const blackProcess = blackLauncher.spawnv(["black", "--quiet", "-"]);
+
+    const [success, stdout, stderr] = blackProcess.communicate_utf8(text, null);
+
+    if (!success || stderr !== "") {
+      console.error(`Error running black: ${stderr}`);
+      return text;
+    }
+
+    return stdout;
+  }
+
   async function formatCode() {
     if (panel_code.panel.visible) {
       if (panel_code.language === "JavaScript") {
@@ -252,6 +274,10 @@ export default function Window({ application, session }) {
       } else if (panel_code.language === "Rust") {
         await format(langs.rust.document.code_view, (text) => {
           return formatRustCode(text);
+        });
+      } else if (panel_code.language === "Python") {
+        await format(langs.python.document.code_view, (text) => {
+          return formatPythonCode(text);
         });
       }
     }
@@ -269,11 +295,13 @@ export default function Window({ application, session }) {
       await format(langs.xml.document.code_view, (text) => {
         return xml.format(text, 2);
       });
+      await panel_ui.format();
     }
   }
 
   let compiler_vala = null;
   let compiler_rust = null;
+  let builder_python = null;
 
   async function runCode({ format }) {
     button_run.set_sensitive(false);
@@ -282,7 +310,6 @@ export default function Window({ application, session }) {
     previewer.stop();
     panel_ui.stop();
 
-    const { language } = panel_code;
     try {
       await panel_ui.update();
 
@@ -290,66 +317,7 @@ export default function Window({ application, session }) {
         await formatCode();
       }
 
-      if (language === "JavaScript") {
-        await previewer.update(true);
-
-        // We have to create a new file each time
-        // because gjs doesn't appear to use etag for module caching
-        // ?foo=Date.now() also does not work as expected
-        // TODO: File a bug
-        const [file_javascript] = Gio.File.new_tmp("workbench-XXXXXX.js");
-        await file_javascript.replace_contents_async(
-          new GLib.Bytes(document_javascript.code_view.buffer.text || " "),
-          null,
-          false,
-          Gio.FileCreateFlags.NONE,
-          null,
-        );
-        let exports;
-        try {
-          exports = await import(`file://${file_javascript.get_path()}`);
-        } catch (err) {
-          await previewer.update(true);
-          throw err;
-        } finally {
-          file_javascript
-            .delete_async(GLib.PRIORITY_DEFAULT, null)
-            .catch(console.error);
-        }
-        previewer.setSymbols(exports);
-      } else if (language === "Vala") {
-        if (!isValaEnabled()) {
-          action_extensions.activate(null);
-          return;
-        }
-
-        compiler_vala = compiler_vala || ValaCompiler({ session });
-        const success = await compiler_vala.compile();
-        if (success) {
-          await previewer.useExternal();
-          if (await compiler_vala.run()) {
-            await previewer.open();
-          } else {
-            await previewer.useInternal();
-          }
-        }
-      } else if (language === "Rust") {
-        if (!isRustEnabled()) {
-          action_extensions.activate(null);
-          return;
-        }
-
-        compiler_rust = compiler_rust || RustCompiler({ session });
-        const success = await compiler_rust.compile();
-        if (success) {
-          await previewer.useExternal();
-          if (await compiler_rust.run()) {
-            await previewer.open();
-          } else {
-            await previewer.useInternal();
-          }
-        }
-      }
+      await compile();
     } catch (err) {
       // prettier xml errors are not instances of Error
       if (err instanceof Error || err instanceof GLib.Error) {
@@ -364,6 +332,87 @@ export default function Window({ application, session }) {
 
     button_run.set_sensitive(true);
     term_console.scrollToEnd();
+  }
+
+  async function compile() {
+    const { language } = panel_code;
+
+    const lang = langs[language.toLowerCase()];
+    // Do nothing if there is no code to avoid compile errors
+    const text = lang.document.code_view.buffer.text.trim();
+    if (text === "") {
+      return;
+    }
+
+    if (language === "JavaScript") {
+      await previewer.update(true);
+
+      // We have to create a new file each time
+      // because gjs doesn't appear to use etag for module caching
+      // ?foo=Date.now() also does not work as expected
+      // TODO: File a bug
+      const path = buildRuntimePath(`workbench-${Date.now()}`);
+      const file_javascript = Gio.File.new_for_path(path);
+      await file_javascript.replace_contents_async(
+        new GLib.Bytes(text),
+        null,
+        false,
+        Gio.FileCreateFlags.NONE,
+        null,
+      );
+      let exports;
+      try {
+        exports = await import(`file://${file_javascript.get_path()}`);
+      } catch (err) {
+        await previewer.update(true);
+        throw err;
+      } finally {
+        file_javascript
+          .delete_async(GLib.PRIORITY_DEFAULT, null)
+          .catch(console.error);
+      }
+      previewer.setSymbols(exports);
+    } else if (language === "Vala") {
+      if (!isValaEnabled()) {
+        action_extensions.activate(null);
+        return;
+      }
+
+      compiler_vala = compiler_vala || ValaCompiler({ session });
+      const success = await compiler_vala.compile();
+      if (success) {
+        await previewer.useExternal("vala");
+        if (await compiler_vala.run()) {
+          await previewer.open();
+        } else {
+          await previewer.useInternal();
+        }
+      }
+    } else if (language === "Rust") {
+      if (!isRustEnabled()) {
+        action_extensions.activate(null);
+        return;
+      }
+
+      compiler_rust = compiler_rust || RustCompiler({ session });
+      const success = await compiler_rust.compile();
+      if (success) {
+        await previewer.useExternal("rust");
+        if (await compiler_rust.run()) {
+          await previewer.open();
+        } else {
+          await previewer.useInternal();
+        }
+      }
+    } else if (language === "Python") {
+      builder_python = builder_python || PythonBuilder({ session });
+      await previewer.useExternal("python");
+      if (await builder_python.run()) {
+        await previewer.open();
+      } else {
+        await previewer.useInternal();
+      }
+    }
   }
 
   const action_run = new Gio.SimpleAction({
@@ -413,6 +462,7 @@ export default function Window({ application, session }) {
       document_javascript.load(),
       document_rust.load(),
       document_vala.load(),
+      document_python.load(),
       document_blueprint.load(),
       document_xml.load(),
       document_css.load(),
@@ -450,14 +500,16 @@ async function setGtk4PreferDark(dark) {
   try {
     settings.load_from_file(settings_path, GLib.KeyFileFlags.NONE);
   } catch (err) {
-    if (err.code !== GLib.FileError.NOENT) throw err;
+    if (!err.matches(GLib.FileError, GLib.FileError.NOENT)) {
+      throw err;
+    }
   }
   settings.set_boolean("Settings", "gtk-application-prefer-dark-theme", dark);
   settings.save_to_file(settings_path);
 }
 
 async function onCloseSession({ session, window }) {
-  if (session.is_project()) {
+  if (session.isProject()) {
     window.destroy();
     return;
   }

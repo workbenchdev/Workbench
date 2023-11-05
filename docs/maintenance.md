@@ -1,4 +1,4 @@
-## Maintainance
+## Maintenance
 
 Notes and instructions for maintainers.
 

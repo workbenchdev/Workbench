@@ -10,8 +10,7 @@ export default GObject.registerClass(
     InternalChildren: [
       "label_title",
       "image_enabled",
-      "revealer",
-      "toggle",
+      "installation_guide",
       "label_hint",
       "label_command",
     ],
@@ -46,7 +45,7 @@ export default GObject.registerClass(
       ),
     },
   },
-  class Extension extends Gtk.Box {
+  class Extension extends Gtk.ListBoxRow {
     constructor(properties = {}) {
       super(properties);
 
@@ -65,6 +64,13 @@ export default GObject.registerClass(
       );
 
       this.bind_property(
+        "enabled",
+        this._installation_guide,
+        "visible",
+        GObject.BindingFlags.SYNC_CREATE | GObject.BindingFlags.INVERT_BOOLEAN,
+      );
+
+      this.bind_property(
         "hint",
         this._label_hint,
         "label",
@@ -77,15 +83,6 @@ export default GObject.registerClass(
         "label",
         GObject.BindingFlags.SYNC_CREATE,
       );
-
-      // FIXME: report GJS bug
-      setTimeout(() => {
-        this._toggle.active = !this.enabled;
-
-        if (!this.hint || !this.command) {
-          this._toggle.visible = false;
-        }
-      }, 0);
     }
   },
 );

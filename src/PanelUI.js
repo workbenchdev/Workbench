@@ -3,7 +3,12 @@ import GObject from "gi://GObject";
 import Gtk from "gi://Gtk";
 
 import { LSPError } from "./lsp/LSP.js";
-import { unstack, listenProperty, getLanguage } from "./util.js";
+import {
+  unstack,
+  listenProperty,
+  getLanguage,
+  makeDropdownFlat,
+} from "./util.js";
 
 import {
   setup as setupBlueprint,
@@ -51,9 +56,7 @@ export default function PanelUI({
 
   const stack_ui = builder.get_object("stack_ui");
   const dropdown_ui_lang = builder.get_object("dropdown_ui_lang");
-  // TODO: File a bug libadwaita
-  // flat does nothing on GtkDropdown or GtkComboBox or GtkComboBoxText
-  dropdown_ui_lang.get_first_child().add_css_class("flat");
+  makeDropdownFlat(dropdown_ui_lang);
   dropdown_ui_lang.set_selected(settings.get_enum("user-interface-language"));
 
   const blueprint = setupBlueprint({
@@ -192,6 +195,7 @@ export default function PanelUI({
   panel.stop = stop;
   panel.update = update;
   panel.panel = panel_ui;
+  panel.format = blueprint.format;
 
   return panel;
 }

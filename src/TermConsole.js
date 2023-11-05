@@ -3,6 +3,7 @@ import GLib from "gi://GLib";
 import Gio from "gi://Gio";
 import Gdk from "gi://Gdk";
 import Adw from "gi://Adw";
+import { buildRuntimePath } from "./util.js";
 
 // https://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797
 const ERASE_ENTIRE_SCREEN = "\u001b[2J";
@@ -24,10 +25,13 @@ export default function TermConsole({
   // terminal.set_cursor_blink_mode(Vte.CursorBlinkMode.ON);
   // terminal.set_input_enabled(true);
 
+  // See src/workbench
+  const path = buildRuntimePath("typescript");
+
   terminal.spawn_async(
     Vte.PtyFlags.DEFAULT, // pty_flags
     null, // working_directory
-    ["/bin/tail", "--line=0", "--follow", "/var/tmp/workbench"], // argv
+    ["/bin/tail", "--line=0", "--follow", path], // argv
     [], // envv
     GLib.SpawnFlags.DEFAULT, // spawn_flags
     null,

@@ -9,10 +9,12 @@ Adw.Window documentation_viewer {
   default-width: 1024;
   default-height: 768;
   hide-on-close: true;
-  title: _("Manuals");
+  title: _("Workbench — Manuals");
 
   content: Adw.NavigationSplitView split_view {
     sidebar: Adw.NavigationPage sidebar {
+      title: bind documentation_viewer.title;
+
       child: Adw.ToolbarView {
         [top]
         Adw.HeaderBar {
@@ -20,51 +22,68 @@ Adw.Window documentation_viewer {
           WindowControls {
             side: end;
           }
+
           title-widget: Adw.WindowTitle {
             title: bind documentation_viewer.title;
           };
+
           [end]
           Button button_forward {
             icon-name: "go-next-symbolic";
             tooltip-text: _("Forward");
-            styles ["flat"]
+
+            styles [
+              "flat"
+            ]
           }
+
           [end]
           Button button_back {
             icon-name: "go-previous-symbolic";
             tooltip-text: _("Back");
-            styles ["flat"]
+
+            styles [
+              "flat"
+            ]
           }
         }
 
         [bottom]
         Box {
-          styles ["toolbar"]
+          styles [
+            "toolbar"
+          ]
+
           SearchEntry search_entry {
             hexpand: true;
             placeholder-text: _("Search Manuals");
           }
+
           Button button_shortcuts {
             icon-name: "keyboard-shortcuts-symbolic";
             tooltip-text: _("Keyboard Shortcuts (Ctrl+?)");
-            styles ["flat"]
+
+            styles [
+              "flat"
+            ]
           }
         }
 
         content: Stack stack {
-          transition-type: crossfade;
+          transition-type: none;
 
           ScrolledWindow browse_page {
             vexpand: true;
             width-request: 400;
 
             ListView browse_list_view {
-              enable-rubberband: true;
-              factory: BuilderListItemFactory {
+              enable-rubberband: false;
 
+              factory: BuilderListItemFactory {
                 template ListItem {
                   child: TreeExpander expander {
                     list-row: bind template.item;
+
                     child: Inscription {
                       hexpand: true;
                       nat-chars: 10;
@@ -74,7 +93,10 @@ Adw.Window documentation_viewer {
                   };
                 }
               };
-              styles ["navigation-sidebar"]
+
+              styles [
+                "navigation-sidebar"
+              ]
             }
           }
 
@@ -83,52 +105,61 @@ Adw.Window documentation_viewer {
             width-request: 400;
 
             ListView search_list_view {
-              enable-rubberband: true;
-              model: SingleSelection search_model {
-                model: SortListModel {
-                  sorter: StringSorter search_sorter {};
-                  model: FilterListModel filter_model {
-                    filter: StringFilter filter {
-                      match-mode: substring;
-                    };
-                  };
-                };
-              };
+              enable-rubberband: false;
 
               factory: BuilderListItemFactory {
                 template ListItem {
-                  child: Inscription {
-                    hexpand: true;
-                    nat-chars: 10;
-                    text-overflow: ellipsize_end;
-                    text: bind template.item as <$DocumentationPage>.search_name;
+                  child: Box {
+                    Inscription {
+                      valign: center;
+                      hexpand: true;
+                      nat-chars: 25;
+                      text-overflow: ellipsize_end;
+                      text: bind template.item as <$DocumentationPage>.search_name;
+                    }
+
+                    Button {
+                      valign: center;
+                      label: bind template.item as <$DocumentationPage>.tag;
+
+                      styles [
+                        "pill",
+                        "small",
+                        "doc-tag"
+                      ]
+                    }
                   };
                 }
               };
-              styles ["navigation-sidebar"]
+
+              styles [
+                "navigation-sidebar"
+              ]
             }
+          }
+
+          Adw.StatusPage status_page {
+            title: _("No Results Found");
+            description: _("Try a different search term");
+            icon-name: "loupe-symbolic";
+
+            styles [
+              "compact"
+            ]
           }
         };
       };
     };
 
     content: Adw.NavigationPage {
-      child: Adw.ToolbarView {
-        extend-content-to-top-edge: true;
-        [top]
-        Adw.HeaderBar {
-          show-title: false;
-          show-end-title-buttons: false;
-          show-start-title-buttons: false;
-        }
+      title: bind documentation_viewer.title;
 
-        WebKit.WebView webview {
-          settings: WebKit.Settings {
-            enable-back-forward-navigation-gestures: true;
-            enable-developer-extras: true;
-            enable-smooth-scrolling: true;
-          };
-        }
+      child: WebKit.WebView webview {
+        settings: WebKit.Settings {
+          enable-back-forward-navigation-gestures: true;
+          enable-developer-extras: true;
+          enable-smooth-scrolling: true;
+        };
       };
     };
   };

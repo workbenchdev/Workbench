@@ -1,5 +1,5 @@
-import Gtk from "gi://Gtk";
 import Gio from "gi://Gio";
+import Gtk from "gi://Gtk";
 
 Gio._promisify(Gtk.FileDialog.prototype, "save", "save_finish");
 const button = workbench.builder.get_object("button");

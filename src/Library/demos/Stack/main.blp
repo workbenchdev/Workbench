@@ -5,13 +5,15 @@ Box root_box {
   orientation: vertical;
   halign: center;
   valign: center;
+
   Stack stack {
     interpolate-size: bind interpolate_switch.active;
-    transition-duration: bind transition_adjustment.value;
+    transition-duration: bind transition_spin_button.value;
     transition-type: bind transition_row.selected;
 
     StackPage page1 {
       title: _("Page 1");
+
       child: Adw.StatusPage {
         title: _("Stack");
         description: _("A container which only shows one of its children at a time");
@@ -19,7 +21,10 @@ Box root_box {
         Label {
           label: _("Documentation");
           margin-top: 24;
-          styles ["title-2"]
+
+          styles [
+            "title-2"
+          ]
         }
 
         Box {
@@ -47,27 +52,52 @@ Box root_box {
 
     StackPage page2 {
       title: _("Page 2");
+
       child: Adw.StatusPage {
         Adw.PreferencesGroup {
-          styles ["boxed-list"]
+          styles [
+            "boxed-list"
+          ]
 
           Adw.ComboRow navigation_row {
             title: _("Navigation Widget");
+
             model: StringList {
-              strings ["Switcher", "Sidebar"]
+              strings [
+                "Switcher",
+                "Sidebar"
+              ]
             };
           }
 
           Adw.ComboRow transition_row {
             title: _("Transition Type");
+
             model: StringList {
               strings [
-                "None", "Cross-fade",
-                "Slide Right", "Slide Left", "Slide Up", "Slide Down", "Slide Left-Right", "Slide Up-Down",
-                "Over Up", "Over Down", "Over Left", "Over Right",
-                "Under Up", "Under Down", "Under Left", "Under Right",
-                "Over Up-Down", "Over Down-Up" , "Over Left-Right", "Over Right-Left",
-                "Rotate Left", "Rotate Right", "Rotate Left-Right"
+                "None",
+                "Cross-fade",
+                "Slide Right",
+                "Slide Left",
+                "Slide Up",
+                "Slide Down",
+                "Slide Left-Right",
+                "Slide Up-Down",
+                "Over Up",
+                "Over Down",
+                "Over Left",
+                "Over Right",
+                "Under Up",
+                "Under Down",
+                "Under Left",
+                "Under Right",
+                "Over Up-Down",
+                "Over Down-Up",
+                "Over Left-Right",
+                "Over Right-Left",
+                "Rotate Left",
+                "Rotate Right",
+                "Rotate Left-Right"
               ]
             };
           }
@@ -78,7 +108,8 @@ Box root_box {
 
           Adw.SpinRow transition_spin_button {
             title: _("Transition Duration");
-            adjustment: Adjustment transition_adjustment {
+
+            adjustment: Adjustment {
               step-increment: 10;
               lower: 100;
               upper: 1000;
@@ -91,9 +122,8 @@ Box root_box {
 
     StackPage {
       title: _("Page 3");
-      child:
 
-      Adw.StatusPage {
+      child: Adw.StatusPage {
         title: _("Last Page");
       };
     }

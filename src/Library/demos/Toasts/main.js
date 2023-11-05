@@ -1,6 +1,6 @@
 import Adw from "gi://Adw";
-import Gio from "gi://Gio";
 import GLib from "gi://GLib";
+import Gio from "gi://Gio";
 
 const overlay = workbench.builder.get_object("overlay");
 

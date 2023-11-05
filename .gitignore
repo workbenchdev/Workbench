@@ -11,6 +11,12 @@ install
 *.compiled
 *.flatpak
 .fenv
+.venv
+__pycache__
+*.pyc
+
+# IDEs / editors
+.idea
 
 # Project files
 src/Library/**/settings

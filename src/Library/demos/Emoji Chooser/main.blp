@@ -12,9 +12,14 @@ Adw.StatusPage {
     MenuButton button {
       halign: center;
       label: "😀️";
-      popover: EmojiChooser emoji_chooser {};
 
-      styles ["pill", "emoji"]
+      popover: EmojiChooser emoji_chooser {
+      };
+
+      styles [
+        "pill",
+        "emoji"
+      ]
     }
 
     LinkButton {

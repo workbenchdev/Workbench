@@ -5,6 +5,7 @@ import GObject from "gi://GObject";
 import Adw from "gi://Adw";
 
 import { once } from "../../troll/src/async.js";
+import { build } from "../../troll/src/builder.js";
 
 // eslint-disable-next-line no-restricted-globals
 const { addSignalMethods } = imports.signals;
@@ -79,6 +80,10 @@ export default function Internal({
         dropdown_preview_align.visible = false;
         dropdown_preview_align.selected = 0;
         preview(object);
+      },
+      build(params) {
+        console.warn("workbench.build is experimental");
+        return build(panel_ui.xml, params);
       },
     };
 
@@ -215,7 +220,7 @@ export default function Internal({
   }
 
   return {
-    async start() {},
+    async start(_language) {},
     open,
     close,
     stop,

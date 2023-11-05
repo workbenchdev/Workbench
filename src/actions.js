@@ -124,9 +124,19 @@ async function showScreenshot({ application, uri }) {
 
 async function open({ application, hint }) {
   const file_dialog = new Gtk.FileDialog();
-  const file = await file_dialog.select_folder(
-    application.get_active_window(),
-    null,
-  );
+
+  let file;
+  try {
+    file = await file_dialog.select_folder(
+      application.get_active_window(),
+      null,
+    );
+  } catch (err) {
+    if (!err.matches(Gtk.DialogError, Gtk.DialogError.DISMISSED)) {
+      throw err;
+    }
+    return;
+  }
+
   application.open([file], hint);
 }

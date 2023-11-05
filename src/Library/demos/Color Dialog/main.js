@@ -1,6 +1,6 @@
-import Gtk from "gi://Gtk";
 import Gdk from "gi://Gdk";
 import Gio from "gi://Gio";
+import Gtk from "gi://Gtk";
 
 Gio._promisify(Gtk.ColorDialog.prototype, "choose_rgba", "choose_rgba_finish");
 

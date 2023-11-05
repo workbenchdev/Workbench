@@ -18,7 +18,10 @@ Adw.StatusPage {
 
     Label {
       // Set styles to style using class selector .css_text
-      styles ["css_text"]
+      styles [
+        "css_text"
+      ]
+
       label: _("This widget is styled with a class selector");
       margin-bottom: 12;
     }
@@ -32,7 +35,11 @@ Adw.StatusPage {
     Box {
       name: "linked_box";
       margin-top: 24;
-      styles ["linked"]
+
+      styles [
+        "linked"
+      ]
+
       halign: center;
 
       Button {
@@ -51,7 +58,10 @@ Adw.StatusPage {
     Label {
       label: _("Documentation");
       margin-top: 24;
-      styles ["title-2"]
+
+      styles [
+        "title-2"
+      ]
     }
 
     Box {

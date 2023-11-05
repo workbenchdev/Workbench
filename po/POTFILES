@@ -60,6 +60,7 @@ src/sessions.js
 src/DocumentationViewer.blp
 src/DocumentationViewer.js
 src/langs/css/css.js
+src/langs/python/Builder.js
 
 src/langs/rust/Compiler.js
 troll/src/async.js
@@ -77,3 +78,7 @@ src/Manuals/DocumentationViewer.blp
 src/Manuals/Shortcuts.blp
 src/Manuals/Shortcuts.js
 src/Manuals/DocumentationViewer.js
+src/Library/EntryRow.blp
+src/Library/EntryRow.js
+
+src/Manuals/fzy.js

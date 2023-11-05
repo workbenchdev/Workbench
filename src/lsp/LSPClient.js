@@ -20,16 +20,22 @@ const clientInfo = {
 };
 
 export default class LSPClient {
-  constructor(argv, { rootUri, uri, languageId, buffer }) {
-    this.argv = argv;
+  constructor(
+    argv,
+    { rootUri, uri, languageId, buffer, env = {}, quiet = true },
+  ) {
+    this.ready = false;
     this.started = false;
     this.proc = null;
+    this.version = 0;
+
+    this.argv = argv;
     this.rootUri = rootUri;
     this.uri = uri;
     this.languageId = languageId;
-    this.version = 0;
     this.buffer = buffer;
-    this.ready = false;
+    this.env = env;
+    this.quiet = quiet;
 
     // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#clientCapabilities
     this.capabilities = {
@@ -132,12 +138,16 @@ export default class LSPClient {
   _start_process() {
     let flags =
       Gio.SubprocessFlags.STDIN_PIPE | Gio.SubprocessFlags.STDOUT_PIPE;
-    // vala-language-server and blueprint are pretty verbose
-    // https://github.com/vala-lang/vala-language-server/issues/274
-    // comment this to debug LSP
-    flags = flags | Gio.SubprocessFlags.STDERR_SILENCE;
+    if (this.quiet) {
+      flags = flags | Gio.SubprocessFlags.STDERR_SILENCE;
+    }
 
-    this.proc = Gio.Subprocess.new(this.argv, flags);
+    const subprocess_launcher = Gio.SubprocessLauncher.new(flags);
+    for (const [key, value] of Object.entries(this.env)) {
+      subprocess_launcher.setenv(key, value, true);
+    }
+
+    this.proc = subprocess_launcher.spawnv(this.argv);
     this.proc
       .wait_async(null)
       .then(() => {

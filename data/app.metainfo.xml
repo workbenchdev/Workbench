@@ -15,7 +15,7 @@
     <ul>
       <li>Live GTK/CSS preview</li>
       <li>Library of 100+ examples</li>
-      <li>JavaScript, Rust and Vala support</li>
+      <li>JavaScript, Rust, Python and Vala support</li>
       <li>Declarative user interface syntax</li>
       <li>Autosave, sessions and projects</li>
       <li>Code linter and formatter</li>
@@ -39,22 +39,99 @@
     <screenshot>
       <image>https://raw.githubusercontent.com/sonnyp/Workbench/main/data/screenshot-library.png</image>
     </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/sonnyp/Workbench/main/data/screenshot-extensions.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/sonnyp/Workbench/main/data/screenshot-manuals.png</image>
+    </screenshot>
   </screenshots>
   <content_rating type="oars-1.1" />
   <releases>
-    <release version="45.1" date="2023-09-29">
+    <release version="45.3" date="2023-xx-xx">
       <description translatable="no">
         <ul>
-          <li>Reduce Workbench download size</li>
+          <li>Add Python support</li>
+          <li>Add Blueprint formatter support</li>
+          <li>Show which languages are available for each Library entry</li>
+          <li>Allow opening Library entries in a specific language</li>
+          <li>Make Library faster to launch</li>
+          <li>Each Workbench window has its own title</li>
+          <li>Documentation viewer now sync the sidebar selection with navigation</li>
+          <li>Add fuzzy search to documentation viewer</li>
+          <li>Add search result tags to documentation viewer</li>
+          <li>Do not exit if Library is the last window open</li>
+          <li>Library: Port entries to libadwaita SpinRow</li>
+          <li>Library: Fix "Preferences Window" adaptiveness</li>
+          <li>Library: Simplify "Column View" entry</li>
+          <li>Library: Port "Welcome" entry to Python</li>
+          <li>Library: Port "Actions" entry to Python</li>
+          <li>Library: Port "Spinner" entry to Python</li>
+          <li>Library: Port "Styling with CSS" entry to Python</li>
+          <li>Library: Port "Breakpoints" entry to Python</li>
+          <li>Library: Port "Overlay" entry to Python</li>
+          <li>Library: Port "Popovers" entry to Python</li>
+          <li>Library: Port "Emoji Chooser" entry to Python</li>
+          <li>Library: Port "Image" entry to Python</li>
+          <li>Library: Port "Separator" entry to Python</li>
+          <li>Library: Port "Menu Button" entry to Python</li>
+          <li>Library: Port "Radio Buttons" entry to Python</li>
+          <li>Library: Port "Link Button" entry to Python</li>
+          <li>Library: Port "About Window" entry to Python</li>
+          <li>Library: Port "Avatar" entry to Python</li>
+          <li>Library: Port "Button" entry to Python</li>
+          <li>Library: Port "Calendar" entry to Python</li>
+          <li>Library: Port "Checkboxes" entry to Python</li>
+          <li>Library: Port "Tooltip" entry to Python</li>
+          <li>Library: Port "Toggle Button" entry to Python</li>
+          <li>Library: Port "Carousel" entry to Python</li>
+          <li>Library: Port "CSS Gradients" entry to Python</li>
+          <li>Library: Port "Color Dialog" entry to Python</li>
+          <li>Library: Port "Memory Monitor" entry to Python</li>
+          <li>Library: Port "Animation" entry to Vala</li>
+          <li>Library: Port "Overlay Split View" entry to Vala</li>
+          <li>Library: Port "Text Colors" entry to Vala</li>
+          <li>Library: Port "Tab View" entry to Vala</li>
+          <li>Library: Port "Navigation View" entry to Vala</li>
+          <li>Library: Port "Open File" entry to Vala</li>
+          <li>Library: Port "Avatar" entry to Vala</li>
+          <li>Library: Port "Memory Monitor" entry to Vala</li>
+          <li>Library: Port "Launcher" entry to Vala</li>
+        </ul>
+      </description>
+    </release>
+    <release version="45.2" date="2023-10-11">
+      <description translatable="no">
+        <ul>
+          <li>Rust: Fix the issue of compiling fails after updating Workbench</li>
+          <li>Manuals: Fix a couple of minor issues</li>
+          <li>Library: Port "Web View" entry to Rust</li>
+          <li>Library: Port "HTTP Image" entry to Rust</li>
+          <li>Library: Port "HTTP Image" entry to Rust</li>
+          <li>Library: Port "WebSocket Client" entry to Rust</li>
+          <li>Library: Port "Audio" entry to Vala</li>
+          <li>Library: Port "Video" entry to Vala</li>
+          <li>Library: Port "Picture" entry to Vala</li>
+          <li>Library: Port "Flow Box" entry to Vala</li>
+          <li>Library: Port "Box" entry to Vala</li>
+        </ul>
+      </description>
+    </release>
+    <release version="45.1" date="2023-10-02">
+      <description translatable="no">
+        <ul>
           <li>Add "Extensions" to enable Rust and Vala support</li>
           <li>Add Keyboard Shortcuts to Manuals; the documentation viewer</li>
           <li>Update and refresh UI</li>
           <li>Add audio permission</li>
-          <li>Library: Port entries to new SpinRow and SwitchRow </li>
+          <li>Make Workbench smaller and faster to download</li>
           <li>Library: Add CSS gradientts demo</li>
+          <li>Library: Add Property Row</li>
+          <li>Library: Update entries to use SpinRow and SwitchRow </li>
           <li>Library: Port Map entry to Rust</li>
           <li>Library: Port Emoji Chooser to Rust</li>
           <li>Library: Fix Souce View entry</li>
+          <li>Library: Use GLib.format_size() for file sizes</li>
         </ul>
       </description>
     </release>

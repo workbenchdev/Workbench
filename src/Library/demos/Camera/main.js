@@ -1,8 +1,8 @@
+import GObject from "gi://GObject";
 import Gio from "gi://Gio";
+import Gst from "gi://Gst";
 import Xdp from "gi://Xdp";
 import XdpGtk from "gi://XdpGtk4";
-import GObject from "gi://GObject";
-import Gst from "gi://Gst";
 
 Gst.init(null);
 Gio._promisify(Xdp.Portal.prototype, "access_camera", "access_camera_finish");
@@ -78,7 +78,7 @@ async function handleCamera() {
   // Set up the bus
   const bus = pipeline.get_bus();
   bus.add_signal_watch();
-  bus.connect("message", (self, message) => {
+  bus.connect("message", (_self, message) => {
     // Check the message type
     const message_type = message.type;
 

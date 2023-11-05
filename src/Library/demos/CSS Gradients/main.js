@@ -1,14 +1,13 @@
-import Gtk from "gi://Gtk";
-import Gdk from "gi://Gdk";
-import GtkSource from "gi://GtkSource";
 import Adw from "gi://Adw";
+import Gdk from "gi://Gdk";
+import Gtk from "gi://Gtk";
+import GtkSource from "gi://GtkSource";
 
 let css_provider;
 
 const combo_row_gradient_type = workbench.builder.get_object(
   "combo_row_gradient_type",
 );
-const adjustment_angle = workbench.builder.get_object("adjustment_angle");
 const spin_row_angle = workbench.builder.get_object("spin_row_angle");
 const button_color_1 = workbench.builder.get_object("button_color_1");
 const button_color_2 = workbench.builder.get_object("button_color_2");
@@ -17,7 +16,7 @@ const gtksource_buffer = workbench.builder.get_object("gtksource_buffer");
 const button_copy_css = workbench.builder.get_object("button_copy_css");
 
 combo_row_gradient_type.connect("notify::selected", update);
-adjustment_angle.connect("value-changed", update);
+spin_row_angle.connect("notify::value", update);
 button_color_1.connect("notify::rgba", update);
 button_color_2.connect("notify::rgba", update);
 button_color_3.connect("notify::rgba", update);
@@ -31,15 +30,12 @@ function update() {
 update();
 
 function generateCss() {
-  const angle_string = adjustment_angle.value;
+  const angle_string = spin_row_angle.value;
   const first_color_string = button_color_1.rgba.to_string();
   const second_color_string = button_color_2.rgba.to_string();
   const third_color_string = button_color_3.rgba.to_string();
 
   let css = "";
-
-  console.log(combo_row_gradient_type.selected);
-
   if (combo_row_gradient_type.selected === 0) {
     css = `
 .background-gradient {

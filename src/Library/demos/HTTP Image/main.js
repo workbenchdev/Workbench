@@ -1,7 +1,8 @@
-import Soup from "gi://Soup";
 import GLib from "gi://GLib";
-import Gio from "gi://Gio";
+import Gdk from "gi://Gdk";
 import GdkPixbuf from "gi://GdkPixbuf";
+import Gio from "gi://Gio";
+import Soup from "gi://Soup";
 
 // https://picsum.photos/
 const IMAGE_URL = "https://picsum.photos/800";
@@ -15,7 +16,8 @@ Gio._promisify(
 
 const input_stream = await getInputStream(IMAGE_URL);
 const pixbuf = await GdkPixbuf.Pixbuf.new_from_stream_async(input_stream, null);
-workbench.builder.get_object("picture").set_pixbuf(pixbuf);
+const texture = Gdk.Texture.new_for_pixbuf(pixbuf);
+workbench.builder.get_object("picture").set_paintable(texture);
 
 async function getInputStream(url) {
   const session = new Soup.Session();

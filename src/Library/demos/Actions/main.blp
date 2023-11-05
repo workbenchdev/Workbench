@@ -30,7 +30,9 @@ Adw.StatusPage demo {
               action-name: "demo.simple";
               label: _("Simple Action");
 
-              styles ["pill"]
+              styles [
+                "pill"
+              ]
             }
 
             MenuButton menu_button {
@@ -38,7 +40,9 @@ Adw.StatusPage demo {
               menu-model: bookmarks_menu;
               label: _("Bookmarks");
 
-              styles ["pill"]
+              styles [
+                "pill"
+              ]
             }
           }
         }
@@ -61,7 +65,9 @@ Adw.StatusPage demo {
               Label {
                 label: _("Toggle Action");
 
-                styles ["heading"]
+                styles [
+                  "heading"
+                ]
               }
 
               Switch switch {
@@ -78,7 +84,9 @@ Adw.StatusPage demo {
               Label {
                 label: _("Scale");
 
-                styles ["heading"]
+                styles [
+                  "heading"
+                ]
               }
 
               Box {
@@ -103,7 +111,9 @@ Adw.StatusPage demo {
                   label: _("200%");
                 }
 
-                styles ["linked"]
+                styles [
+                  "linked"
+                ]
               }
             }
           }
@@ -120,12 +130,13 @@ Adw.StatusPage demo {
             margin-bottom: 12;
             homogeneous: true;
 
-
             Label text {
               label: _("Text Align");
               halign: center;
 
-              styles ["heading"]
+              styles [
+                "heading"
+              ]
             }
 
             Box {

@@ -1,5 +1,5 @@
-import Gio from "gi://Gio";
 import GLib from "gi://GLib";
+import Gio from "gi://Gio";
 
 const demo = workbench.builder.get_object("demo");
 

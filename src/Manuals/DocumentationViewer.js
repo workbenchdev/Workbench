@@ -7,6 +7,7 @@ import { decode } from "../util.js";
 import resource from "./DocumentationViewer.blp";
 
 import Shortcuts from "./Shortcuts.js";
+import { hasMatch, score } from "./fzy.js";
 
 import {
   action_extensions,
@@ -24,12 +25,28 @@ const DocumentationPage = GObject.registerClass(
         GObject.ParamFlags.READWRITE,
         "",
       ),
+      tag: GObject.ParamSpec.string(
+        "tag",
+        "tag",
+        "Tag of symbol",
+        GObject.ParamFlags.READWRITE,
+        "",
+      ),
       search_name: GObject.ParamSpec.string(
         "search_name",
         "search_name",
         "Name used to search the item in sidebar",
         GObject.ParamFlags.READWRITE,
         "",
+      ),
+      score: GObject.ParamSpec.double(
+        "score",
+        "score",
+        "Score assigned when searching an item in the sidebar",
+        GObject.ParamFlags.READWRITE,
+        Number.MIN_SAFE_INTEGER,
+        Number.MAX_SAFE_INTEGER,
+        Number.MIN_SAFE_INTEGER,
       ),
       uri: GObject.ParamSpec.string(
         "uri",
@@ -50,6 +67,10 @@ const DocumentationPage = GObject.registerClass(
   class DocumentationPage extends GObject.Object {},
 );
 
+const URI_TO_SIDEBAR_PATH = {};
+let sync_sidebar = false;
+let scrolled_to = false;
+
 export default function DocumentationViewer({ application }) {
   const builder = Gtk.Builder.new_from_resource(resource);
 
@@ -58,9 +79,11 @@ export default function DocumentationViewer({ application }) {
   const button_back = builder.get_object("button_back");
   const button_forward = builder.get_object("button_forward");
   const stack = builder.get_object("stack");
-  const browse_list_view = builder.get_object("browse_list_view");
+  const status_page = builder.get_object("status_page");
   const browse_page = builder.get_object("browse_page");
+  const browse_list_view = builder.get_object("browse_list_view");
   const search_page = builder.get_object("search_page");
+  const search_list_view = builder.get_object("search_list_view");
   const search_entry = builder.get_object("search_entry");
   const button_shortcuts = builder.get_object("button_shortcuts");
 
@@ -86,6 +109,7 @@ export default function DocumentationViewer({ application }) {
 
   const onFocusGlobalSearch = () => {
     search_entry.grab_focus();
+    search_entry.select_region(0, -1);
   };
 
   Shortcuts({
@@ -111,8 +135,25 @@ export default function DocumentationViewer({ application }) {
   );
   user_content_manager.add_style_sheet(stylesheet);
 
+  const root_model = Gio.ListStore.new(DocumentationPage);
+  const browse_selection_model = createBrowseSelectionModel(
+    root_model,
+    webview,
+  );
+  browse_list_view.model = browse_selection_model;
+
   webview.connect("load-changed", () => {
     updateButtons();
+  });
+
+  webview.connect("notify::uri", () => {
+    const selected_item = browse_selection_model.selected_item.item;
+    if (webview.uri !== selected_item.uri) {
+      sync_sidebar = true;
+      const path = URI_TO_SIDEBAR_PATH[webview.uri];
+      if (!path) return;
+      selectSidebarItem(browse_list_view, path);
+    }
   });
 
   webview.get_back_forward_list().connect("changed", () => {
@@ -132,37 +173,40 @@ export default function DocumentationViewer({ application }) {
     webview.go_forward();
   });
 
-  const expr = new Gtk.ClosureExpression(
-    GObject.TYPE_STRING,
-    (item) => item.search_name,
-    null,
-  );
-  const filter_model = builder.get_object("filter_model");
-  const filter = filter_model.filter;
-  filter.expression = expr;
-
-  search_entry.connect("search-changed", () => {
-    if (search_entry.text) {
-      stack.visible_child = search_page;
-      filter.search = search_entry.text;
-    } else {
-      stack.visible_child = browse_page;
+  const adj = browse_page.get_vscrollbar().adjustment;
+  adj.connect("value-changed", () => {
+    if (scrolled_to) {
+      const index = browse_selection_model.selected;
+      const bottom_edge = (index + 1) * 38 - adj.value;
+      const top_edge = bottom_edge - 38;
+      // If row is not visible after scroll_to, adjust
+      if (bottom_edge === 0) {
+        adj.value -= 38;
+      } else if (top_edge === adj.page_size) {
+        adj.value += 38;
+      }
+      scrolled_to = false;
     }
   });
 
-  const search_model = builder.get_object("search_model");
-  const sorter = builder.get_object("search_sorter");
-  sorter.expression = expr;
-  search_model.connect("selection-changed", () => {
-    const uri = search_model.selected_item.uri;
-    webview.load_uri(uri);
-  });
+  function onSearchChanged() {
+    if (search_entry.text) {
+      stack.visible_child = search_page;
+      const selection_model = search_list_view.model;
+      selection_model.unselect_item(selection_model.selected);
+      selection_model.model.model.filter = createFilter(search_entry.text);
+      if (!selection_model.n_items) stack.visible_child = status_page;
+      search_list_view.scroll_to(0, Gtk.ListScrollFlags.NONE, null);
+    } else {
+      stack.visible_child = browse_page;
+    }
+  }
 
-  const root_model = Gio.ListStore.new(DocumentationPage);
-  browse_list_view.model = createBrowseSelectionModel(root_model, webview);
+  search_entry.connect("search-changed", onSearchChanged);
+
   let promise_load;
   async function load() {
-    if (!promise_load)
+    if (!promise_load) {
       promise_load = Promise.all([
         scanLibraries(root_model, Gio.File.new_for_path("/usr/share/doc")),
         scanLibraries(
@@ -171,10 +215,13 @@ export default function DocumentationViewer({ application }) {
         ),
         scanLibraries(root_model, Gio.File.new_for_path("/app/share/doc")),
       ]).then(() => {
-        browse_list_view.model.selected = 12;
         const search_model = flattenModel(root_model);
-        filter_model.model = search_model;
+        search_list_view.model = createSearchSelectionModel(
+          search_model,
+          browse_list_view,
+        );
       });
+    }
     return promise_load;
   }
 
@@ -188,11 +235,71 @@ export default function DocumentationViewer({ application }) {
       return;
     }
 
+    // The window is already open
+    const mapped = window.get_mapped();
     window.present();
-    load().catch(console.error);
+    onFocusGlobalSearch();
+    load()
+      .then(() => {
+        if (!mapped) {
+          collapseAllRows(browse_selection_model.model);
+          browse_selection_model.selected = 12;
+          search_entry.text = "";
+          onSearchChanged();
+        }
+      })
+      .catch(console.error);
   });
   application.add_action(action_documentation);
   application.set_accels_for_action("app.documentation", ["<Control>M"]);
+}
+
+function sortFunc(doc1, doc2) {
+  return doc1.name.localeCompare(doc2.name);
+}
+
+function collapseAllRows(model) {
+  for (let i = 0; i < model.n_items; i++) {
+    const row = model.get_row(i);
+    row.expanded = false;
+  }
+}
+
+function selectSidebarItem(browse_list_view, path) {
+  const selection_model = browse_list_view.model;
+  const tree_model = selection_model.model;
+  const index = getItemIndex(tree_model, path);
+  // If possible, overshoot scrolling by one row to ensure selected row is visible
+  index + 1 === selection_model.n_items
+    ? browse_list_view.scroll_to(index, Gtk.ListScrollFlags.NONE, null)
+    : browse_list_view.scroll_to(index + 1, Gtk.ListScrollFlags.NONE, null);
+  selection_model.selected = index;
+  scrolled_to = true;
+}
+
+function getItemIndex(tree_model, path) {
+  let relative_index = 0; // Relative index of the item under its parent
+  let absolute_index = 0; // Index of the item in the entire model
+  let skip = 0; // Number of items to skip due to expanded rows
+
+  for (let i = 0; i < path.length; i++) {
+    while (relative_index < path[i]) {
+      const row = tree_model.get_row(absolute_index);
+      if (row.expanded) {
+        skip += row.children.get_n_items();
+      }
+      if (!skip) relative_index++; // Go to next sibling
+      else skip--;
+      absolute_index++;
+    }
+    // Check to ensure the last item is not expanded
+    if (i < path.length - 1) {
+      tree_model.get_row(absolute_index).expanded = true;
+      absolute_index++;
+      relative_index = 1;
+    }
+  }
+  return absolute_index;
 }
 
 async function loadLibrary(model, directory) {
@@ -206,12 +313,13 @@ async function loadLibrary(model, directory) {
     const namespace = `${index.meta.ns}-${index.meta.version}`;
     const page = new DocumentationPage({
       name: namespace,
+      tag: "namespace",
       search_name: namespace,
       uri: html_file.get_uri(),
       children: getChildren(index, directory),
     });
 
-    model.append(page);
+    model.insert_sorted(page, sortFunc);
   } catch (error) {
     if (!error.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.NOT_FOUND)) throw error;
   }
@@ -253,10 +361,18 @@ async function scanLibraries(model, base_dir) {
   return Promise.allSettled(libraries);
 }
 
-function flattenModel(list_store, flattened_model = newListStore()) {
+function flattenModel(
+  list_store,
+  flattened_model = newListStore(),
+  path = [0],
+) {
   for (const item of list_store) {
     if (item.search_name) flattened_model.append(item);
-    if (item.children) flattenModel(item.children, flattened_model);
+    if (item.children) {
+      flattenModel(item.children, flattened_model, [...path, 1]);
+    }
+    URI_TO_SIDEBAR_PATH[item.uri] = path.slice();
+    path[path.length - 1]++;
   }
   return flattened_model;
 }
@@ -268,20 +384,89 @@ function createBrowseSelectionModel(root_model, webview) {
     false,
     (item) => item.children,
   );
-  const sorter = Gtk.TreeListRowSorter.new(
-    Gtk.CustomSorter.new((a, b) => {
-      const name1 = a.name;
-      const name2 = b.name;
-      return name1.localeCompare(name2);
-    }),
-  );
-  const sort_model = Gtk.SortListModel.new(tree_model, sorter);
-  const selection_model = Gtk.SingleSelection.new(sort_model);
+  const selection_model = Gtk.SingleSelection.new(tree_model);
   selection_model.connect("selection-changed", () => {
+    // If selection changed to sync the sidebar, dont load_uri again
+    if (sync_sidebar) {
+      sync_sidebar = false;
+      return;
+    }
     const uri = selection_model.selected_item.item.uri;
     webview.load_uri(uri);
   });
   return selection_model;
+}
+
+function createSearchSelectionModel(model, browse_list_view) {
+  const filter_model = Gtk.FilterListModel.new(model, null);
+  const sorter = Gtk.CustomSorter.new((item1, item2) => {
+    return Math.sign(item2.score - item1.score);
+  });
+  const sort_model = new Gtk.SortListModel({
+    model: filter_model,
+    sorter: sorter,
+  });
+  const selection_model = Gtk.SingleSelection.new(sort_model);
+  selection_model.autoselect = false;
+  selection_model.can_unselect = true;
+  selection_model.connect("selection-changed", () => {
+    if (!selection_model.selected_item) return;
+    const uri = selection_model.selected_item.uri;
+    const sidebar_path = URI_TO_SIDEBAR_PATH[uri];
+    selectSidebarItem(browse_list_view, sidebar_path);
+  });
+  return selection_model;
+}
+
+const QUERY_TYPES = [
+  "additional",
+  "alias",
+  "bitfield",
+  "callback",
+  "class",
+  "constant",
+  "constructor",
+  "enum",
+  "error",
+  "function",
+  "interface",
+  "namespace",
+  "macro",
+  "method",
+  "property",
+  "signal",
+  "struct",
+  "union",
+  "vfunc",
+];
+
+const QUERY_PATTERN = new RegExp(
+  "^(" + QUERY_TYPES.join("|") + ")\\s*:\\s*",
+  "i",
+);
+
+function createFilter(search_term) {
+  const matches = search_term.match(QUERY_PATTERN);
+  let tag = null;
+
+  if (matches) {
+    tag = matches[1].toLowerCase();
+    search_term = search_term.substring(matches[0].length);
+  }
+
+  const needle = search_term.replace(/\s+/g, "");
+  const isCaseSensitive = needle.toLowerCase() !== needle;
+  const actualNeedle = isCaseSensitive ? needle : needle.toLowerCase();
+
+  return Gtk.CustomFilter.new((item) => {
+    const haystack = isCaseSensitive
+      ? item.search_name
+      : item.search_name.toLowerCase();
+    const match = hasMatch(actualNeedle, haystack);
+    const shouldKeep = match && (!tag || item.tag === tag);
+    if (shouldKeep) item.score = score(actualNeedle, haystack);
+    return shouldKeep;
+  });
 }
 
 const SECTION_TYPES = {
@@ -331,12 +516,14 @@ function getChildren(index, dir) {
       location = subsections[symbol.type_name][symbol.type];
     }
     if (location)
-      location.append(
+      location.insert_sorted(
         new DocumentationPage({
           name: symbol.name,
+          tag: getTagForDocument(symbol),
           search_name: getSearchNameForDocument(symbol, index.meta),
           uri: `${dir.get_uri()}/${getLinkForDocument(symbol)}`,
         }),
+        sortFunc,
       );
   }
 
@@ -345,33 +532,35 @@ function getChildren(index, dir) {
   const sections_model = newListStore();
   for (const section in sections) {
     if (sections[section].get_n_items() > 0)
-      sections_model.append(
+      sections_model.insert_sorted(
         new DocumentationPage({
           name: SECTION_TYPES[section][0],
           uri: `${index_html}${SECTION_TYPES[section][1]}`,
           children: sections[section],
         }),
+        sortFunc,
       );
   }
   return sections_model;
 }
 
 const REQUIRED = ["class", "interface", "record", "domain"];
-
 function createSubsections(subsections, sections) {
   for (const type of REQUIRED) {
     for (const item of sections[type]) {
       const model = newListStore();
       const name = item.name;
       for (const subsection in subsections[name]) {
-        if (subsections[name][subsection].get_n_items() > 0)
-          model.append(
+        if (subsections[name][subsection].get_n_items() > 0) {
+          model.insert_sorted(
             new DocumentationPage({
               name: SUBSECTION_TYPES[subsection][0],
               uri: `${item.uri}${SUBSECTION_TYPES[subsection][1]}`,
               children: subsections[name][subsection],
             }),
+            sortFunc,
           );
+        }
       }
       item.children = model;
     }
@@ -457,5 +646,27 @@ function getLinkForDocument(doc) {
       return `union.${doc.name}.html`;
     case "vfunc":
       return `vfunc.${doc.type_name}.${doc.name}.html`;
+  }
+}
+
+function getTagForDocument(doc) {
+  switch (doc.type) {
+    case "method":
+    case "class_method":
+      return "method";
+    case "content":
+      return "additional";
+    case "ctor":
+      return "constructor";
+    case "domain":
+      return "error";
+    case "function_macro":
+      return "macro";
+    case "record":
+      return "struct";
+    case "type_func":
+      return "function";
+    default:
+      return doc.type;
   }
 }

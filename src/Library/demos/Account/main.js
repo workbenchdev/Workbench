@@ -1,7 +1,7 @@
+import Gdk from "gi://Gdk";
+import Gio from "gi://Gio";
 import Xdp from "gi://Xdp";
 import XdpGtk from "gi://XdpGtk4";
-import Gio from "gi://Gio";
-import Gdk from "gi://Gdk";
 
 Gio._promisify(
   Xdp.Portal.prototype,
