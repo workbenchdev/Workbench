@@ -21,9 +21,7 @@ public void main () {
   var col2 = (Gtk.ColumnViewColumn) workbench.builder.get_object ("col2");
   var col3 = (Gtk.ColumnViewColumn) workbench.builder.get_object ("col3");
 
-  // Create the data model
-  var data_model = new ListStore (typeof (Book));
-  data_model.splice (0, 0, {
+  Book[] books = {
     new Book ("Winds from Afar", "Kenji Miyazawa", 1972),
     new Book ("Like Water for Chocolate", "Laura Esquivel", 1989),
     new Book ("Works and Nights", "Alejandra Pizarnik", 1965),
@@ -32,7 +30,13 @@ public void main () {
     new Book ("Bitter", "Akwaeke Emezi", 2022),
     new Book ("Saying Yes", "Griselda Gambaro", 1981),
     new Book ("Itinerary of a Dramatist", "Rodolfo Usigli", 1940),
-  });
+  };
+
+  // Create the data model
+  var data_model = new ListStore (typeof (Book));
+  foreach (Book book in books) {
+    data_model.append (book);
+  }
 
   col1.sorter = new Gtk.StringSorter (
     new Gtk.PropertyExpression (typeof (Book), null, "title")
