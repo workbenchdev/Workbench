@@ -2,7 +2,7 @@ import Gio from "gi://Gio";
 
 import LSPClient from "../../lsp/LSPClient.js";
 
-import biome_configuration from "./biome.json" with { type: "bytes" };
+import biome_configuration from "./jsconfig.json" with { type: "bytes" };
 
 export function setup({ document }) {
   const { file, code_view } = document;
@@ -33,17 +33,22 @@ function createLSPClient({ file, code_view }) {
   const uri = file.get_uri();
 
   const lspc = new LSPClient(
+    // [
+    //   "biome",
+    //   "lsp-proxy",
+    //   // "--log-level=debug"
+    // ],
     [
-      "biome",
-      "lsp-proxy",
-      // "--log-level=debug"
+      "/usr/lib/sdk/node18/bin/node",
+      "/home/sonny/.local/bin/typescript-language-server",
+      "--stdio",
     ],
     {
       rootUri: file.get_parent().get_uri(),
       uri,
       languageId: "javascript",
       buffer: code_view.buffer,
-      // quiet: false,
+      quiet: false,
       // env: {
       //   BIOME_LOG_DIR: "/tmp/biome",
       // },
