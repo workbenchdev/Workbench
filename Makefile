@@ -9,8 +9,9 @@ setup:
 	flatpak-builder --ccache --force-clean --stop-at=gi-docgen flatpak build-aux/re.sonny.Workbench.Devel.json
 
 lint:
-# ESLint
+# JavaScript
 	./node_modules/.bin/eslint --max-warnings=0 src
+	./build-aux/fun biome ci --config-path=src/langs/javascript/ src/Library/demos/
 # rustfmt
 	./build-aux/fun rustfmt --check --edition 2021 src/**/*.rs
 # black

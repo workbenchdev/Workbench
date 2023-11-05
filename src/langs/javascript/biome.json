@@ -1,0 +1,19 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.3.3/schema.json",
+  "javascript": {
+    "globals": ["workbench"]
+  },
+  "formatter": {
+    "indentStyle": "space",
+    "indentWidth": 2
+  },
+  "linter": {
+    "rules": {
+      "recommended": false,
+      "correctness": {
+        "noUndeclaredVariables": "warn",
+        "noUnusedVariables": "warn"
+      }
+    }
+  }
+}

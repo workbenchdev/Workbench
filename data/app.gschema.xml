@@ -9,9 +9,6 @@
     <key name="color-scheme" type="i">
       <default>0</default>
     </key>
-    <key name="migrated" type="b">
-      <default>false</default>
-    </key>
     <key name="recent-code-language" type="i">
       <default>0</default>
     </key>

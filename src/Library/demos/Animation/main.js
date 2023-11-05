@@ -1,6 +1,6 @@
 import Adw from "gi://Adw";
-import Gsk from "gi://Gsk";
 import Graphene from "gi://Graphene";
+import Gsk from "gi://Gsk";
 
 const button_timed = workbench.builder.get_object("button_timed");
 const progress_bar = workbench.builder.get_object("progress_bar");

@@ -1,7 +1,7 @@
-import Gtk from "gi://Gtk";
 import Adw from "gi://Adw";
-import Gdk from "gi://Gdk";
 import GObject from "gi://GObject";
+import Gdk from "gi://Gdk";
+import Gtk from "gi://Gtk";
 
 const list = workbench.builder.get_object("list");
 const drop_target = Gtk.DropTarget.new(Gtk.ListBoxRow, Gdk.DragAction.MOVE);

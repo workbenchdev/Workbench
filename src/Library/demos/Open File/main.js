@@ -1,6 +1,6 @@
-import Gtk from "gi://Gtk";
-import Gio from "gi://Gio";
 import GLib from "gi://GLib";
+import Gio from "gi://Gio";
+import Gtk from "gi://Gtk";
 
 Gio._promisify(Gtk.FileDialog.prototype, "open", "open_finish");
 Gio._promisify(

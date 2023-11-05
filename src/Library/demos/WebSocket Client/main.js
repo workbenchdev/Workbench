@@ -1,6 +1,6 @@
-import Soup from "gi://Soup";
 import GLib from "gi://GLib";
 import Gio from "gi://Gio";
+import Soup from "gi://Soup";
 
 Gio._promisify(
   Soup.Session.prototype,

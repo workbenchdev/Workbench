@@ -1,6 +1,6 @@
+import Gio from "gi://Gio";
 import Xdp from "gi://Xdp";
 import XdpGtk from "gi://XdpGtk4";
-import Gio from "gi://Gio";
 
 Gio._promisify(
   Xdp.Portal.prototype,
@@ -78,7 +78,7 @@ async function startSession() {
 portal.connect(
   "location-updated",
   (
-    portal,
+    _self,
     latitude,
     longitude,
     altitude,

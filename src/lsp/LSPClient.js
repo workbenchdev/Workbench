@@ -20,16 +20,21 @@ const clientInfo = {
 };
 
 export default class LSPClient {
-  constructor(argv, { rootUri, uri, languageId, buffer, quiet = true }) {
-    this.argv = argv;
+  constructor(
+    argv,
+    { rootUri, uri, languageId, buffer, env = {}, quiet = true },
+  ) {
+    this.ready = false;
     this.started = false;
     this.proc = null;
+    this.version = 0;
+
+    this.argv = argv;
     this.rootUri = rootUri;
     this.uri = uri;
     this.languageId = languageId;
-    this.version = 0;
     this.buffer = buffer;
-    this.ready = false;
+    this.env = env;
     this.quiet = quiet;
 
     // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#clientCapabilities
@@ -137,7 +142,12 @@ export default class LSPClient {
       flags = flags | Gio.SubprocessFlags.STDERR_SILENCE;
     }
 
-    this.proc = Gio.Subprocess.new(this.argv, flags);
+    const subprocess_launcher = Gio.SubprocessLauncher.new(flags);
+    for (const [key, value] of Object.entries(this.env)) {
+      subprocess_launcher.setenv(key, value, true);
+    }
+
+    this.proc = subprocess_launcher.spawnv(this.argv);
     this.proc
       .wait_async(null)
       .then(() => {

@@ -9,7 +9,7 @@ clicker.connect("released", () => toggleButton(button));
 button.add_controller(clicker);
 
 const key_controller = new Gtk.EventControllerKey();
-key_controller.connect("key-released", (controller, keyval) => {
+key_controller.connect("key-released", (_controller, keyval) => {
   const keyvals = [
     Gdk.KEY_space,
     Gdk.KEY_KP_Space,

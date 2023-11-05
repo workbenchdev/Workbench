@@ -1,8 +1,8 @@
-import Soup from "gi://Soup";
 import GLib from "gi://GLib";
-import Gio from "gi://Gio";
-import GdkPixbuf from "gi://GdkPixbuf";
 import Gdk from "gi://Gdk";
+import GdkPixbuf from "gi://GdkPixbuf";
+import Gio from "gi://Gio";
+import Soup from "gi://Soup";
 
 // https://picsum.photos/
 const IMAGE_URL = "https://picsum.photos/800";

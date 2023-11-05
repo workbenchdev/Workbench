@@ -63,7 +63,7 @@ async function saveSourceBuffer({ source_file, buffer }) {
   }
 }
 
-async function loadSourceBuffer({ source_file, buffer, lang }) {
+async function loadSourceBuffer({ source_file, buffer }) {
   const file_loader = new Source.FileLoader({
     buffer,
     file: source_file,

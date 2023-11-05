@@ -20,18 +20,13 @@ export function getSessions() {
 
   ensureDir(sessions_dir);
 
-  const session = migrateStateToSession();
-  if (session) {
-    sessions.push(session);
-  } else {
-    for (const file_info of sessions_dir.enumerate_children(
-      "",
-      Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
-      null,
-    )) {
-      if (file_info.get_file_type() !== Gio.FileType.DIRECTORY) continue;
-      sessions.push(new Session(sessions_dir.get_child(file_info.get_name())));
-    }
+  for (const file_info of sessions_dir.enumerate_children(
+    "",
+    Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
+    null,
+  )) {
+    if (file_info.get_file_type() !== Gio.FileType.DIRECTORY) continue;
+    sessions.push(new Session(sessions_dir.get_child(file_info.get_name())));
   }
 
   return sessions;
@@ -159,46 +154,4 @@ export class Session {
     const code_languge = this.settings.get_int("code-language");
     return languages.find((lang) => lang.index === code_languge);
   }
-}
-
-function migrateStateToSession() {
-  if (global_settings.get_boolean("migrated")) return;
-
-  const state_files = [
-    ["state.blp", "main.blp"],
-    ["state.css", "main.css"],
-    ["state.js", "main.js"],
-    ["state.vala", "main.vala"],
-    ["state.rs", "main.rs"],
-    ["state.py", "main.py"],
-    ["state.xml", "main.ui"],
-  ];
-
-  const found = state_files.find(([file]) =>
-    data_dir.get_child(file).query_exists(null),
-  );
-  if (!found) {
-    global_settings.set_boolean("migrated", true);
-    return;
-  }
-
-  const session = createSession(`${getNowForFilename()} state`);
-  for (const state_file of state_files) {
-    try {
-      data_dir.get_child(state_file[0]).move(
-        session.file.get_child(state_file[1]), // destination
-        Gio.FileCopyFlags.BACKUP, // flags
-        null, // cancellable
-        null, // progress_callback
-      );
-    } catch (err) {
-      if (!err.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.NOT_FOUND)) {
-        throw err;
-      }
-    }
-  }
-
-  global_settings.set_boolean("migrated", true);
-
-  return session;
 }
