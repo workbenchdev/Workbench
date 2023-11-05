@@ -1,6 +1,6 @@
-import Gtk from "gi://Gtk";
 import Adw from "gi://Adw";
 import Gio from "gi://Gio";
+import Gtk from "gi://Gtk";
 
 Gio._promisify(Adw.MessageDialog.prototype, "choose", "choose_finish");
 

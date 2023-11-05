@@ -1,5 +1,5 @@
-import Gtk from "gi://Gtk";
 import Adw from "gi://Adw";
+import Gtk from "gi://Gtk";
 
 const stack = workbench.builder.get_object("stack");
 const list_box = workbench.builder.get_object("list_box");

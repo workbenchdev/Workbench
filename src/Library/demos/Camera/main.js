@@ -1,8 +1,8 @@
+import GObject from "gi://GObject";
 import Gio from "gi://Gio";
+import Gst from "gi://Gst";
 import Xdp from "gi://Xdp";
 import XdpGtk from "gi://XdpGtk4";
-import GObject from "gi://GObject";
-import Gst from "gi://Gst";
 
 Gst.init(null);
 Gio._promisify(Xdp.Portal.prototype, "access_camera", "access_camera_finish");

@@ -1,6 +1,6 @@
+import Gio from "gi://Gio";
 import Xdp from "gi://Xdp";
 import XdpGtk from "gi://XdpGtk4";
-import Gio from "gi://Gio";
 
 Gio._promisify(Xdp.Portal.prototype, "compose_email", "compose_email_finish");
 

@@ -1,6 +1,6 @@
-import WebKit from "gi://WebKit";
-import GObject from "gi://GObject";
 import GLib from "gi://GLib";
+import GObject from "gi://GObject";
+import WebKit from "gi://WebKit";
 
 const button_back = workbench.builder.get_object("button_back");
 const button_forward = workbench.builder.get_object("button_forward");

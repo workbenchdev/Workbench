@@ -1,7 +1,7 @@
-import Gtk from "gi://Gtk";
-import Gdk from "gi://Gdk";
-import GtkSource from "gi://GtkSource";
 import Adw from "gi://Adw";
+import Gdk from "gi://Gdk";
+import Gtk from "gi://Gtk";
+import GtkSource from "gi://GtkSource";
 
 let css_provider;
 

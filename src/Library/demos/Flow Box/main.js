@@ -1,5 +1,5 @@
-import Gtk from "gi://Gtk";
 import Adw from "gi://Adw";
+import Gtk from "gi://Gtk";
 
 const flowbox = workbench.builder.get_object("flowbox");
 

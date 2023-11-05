@@ -1,7 +1,7 @@
-import Gtk from "gi://Gtk";
+import { gettext as _ } from "gettext";
 import Gdk from "gi://Gdk";
 import Gio from "gi://Gio";
-import { gettext as _ } from "gettext";
+import Gtk from "gi://Gtk";
 
 const window = workbench.window;
 const ctrl_button = workbench.builder.get_object("ctrl_button");

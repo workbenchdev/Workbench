@@ -1,6 +1,6 @@
-import Gtk from "gi://Gtk";
-import Gio from "gi://Gio";
 import GObject from "gi://GObject";
+import Gio from "gi://Gio";
+import Gtk from "gi://Gtk";
 
 const column_view = workbench.builder.get_object("column_view");
 const col1 = workbench.builder.get_object("col1");

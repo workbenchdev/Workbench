@@ -1,6 +1,6 @@
+import { gettext as _ } from "gettext";
 import Adw from "gi://Adw";
 import Gtk from "gi://Gtk";
-import { gettext as _ } from "gettext";
 
 const parent = workbench.window;
 const button = workbench.builder.get_object("button");

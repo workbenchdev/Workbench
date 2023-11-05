@@ -1,7 +1,7 @@
-import Gtk from "gi://Gtk";
-import Gio from "gi://Gio";
 import Adw from "gi://Adw";
 import GLib from "gi://GLib";
+import Gio from "gi://Gio";
+import Gtk from "gi://Gtk";
 
 Gio._promisify(Gtk.FileLauncher.prototype, "launch", "launch_finish");
 

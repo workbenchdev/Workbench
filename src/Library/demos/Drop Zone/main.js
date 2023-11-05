@@ -1,7 +1,7 @@
-import Gtk from "gi://Gtk";
-import Gio from "gi://Gio";
-import Gdk from "gi://Gdk";
 import GObject from "gi://GObject";
+import Gdk from "gi://Gdk";
+import Gio from "gi://Gio";
+import Gtk from "gi://Gtk";
 
 const bin = workbench.builder.get_object("bin");
 
