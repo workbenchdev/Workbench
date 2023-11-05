@@ -14,7 +14,7 @@ const string_model = new Gtk.StringList({
 const model = new Gtk.SingleSelection({ model: string_model });
 
 const factory_for_grid_view = new Gtk.SignalListItemFactory();
-factory_for_grid_view.connect("setup", (_factory, listItem) => {
+factory_for_grid_view.connect("setup", (_self, listItem) => {
   const listBox = new Gtk.Box({
     width_request: 160,
     height_request: 160,
@@ -28,7 +28,7 @@ factory_for_grid_view.connect("setup", (_factory, listItem) => {
   listBox.append(label);
   listItem.set_child(listBox);
 });
-factory_for_grid_view.connect("bind", (_factory, listItem) => {
+factory_for_grid_view.connect("bind", (_self, listItem) => {
   const listBox = listItem.get_child();
   const modelItem = listItem.get_item();
   const labelWidget = listBox.get_last_child();

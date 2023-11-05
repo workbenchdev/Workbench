@@ -99,14 +99,14 @@ col3.sorter = new Gtk.NumericSorter({
 // View
 // Column 1
 const factory_col1 = col1.factory;
-factory_col1.connect("setup", (_factory, list_item) => {
+factory_col1.connect("setup", (_self, list_item) => {
   const label = new Gtk.Label({
     margin_start: 12,
     margin_end: 12,
   });
   list_item.set_child(label);
 });
-factory_col1.connect("bind", (_factory, list_item) => {
+factory_col1.connect("bind", (_self, list_item) => {
   const label_widget = list_item.get_child();
   const model_item = list_item.get_item();
   label_widget.label = model_item.title;
@@ -114,14 +114,14 @@ factory_col1.connect("bind", (_factory, list_item) => {
 
 // Column 2
 const factory_col2 = col2.factory;
-factory_col2.connect("setup", (_factory, list_item) => {
+factory_col2.connect("setup", (_self, list_item) => {
   const label = new Gtk.Label({
     margin_start: 12,
     margin_end: 12,
   });
   list_item.set_child(label);
 });
-factory_col2.connect("bind", (_factory, list_item) => {
+factory_col2.connect("bind", (_self, list_item) => {
   const label_widget = list_item.get_child();
   const model_item = list_item.get_item();
   label_widget.label = model_item.author;
@@ -129,14 +129,14 @@ factory_col2.connect("bind", (_factory, list_item) => {
 
 // Column 3
 const factory_col3 = col3.factory;
-factory_col3.connect("setup", (_factory, list_item) => {
+factory_col3.connect("setup", (_self, list_item) => {
   const label = new Gtk.Label({
     margin_start: 12,
     margin_end: 12,
   });
   list_item.set_child(label);
 });
-factory_col3.connect("bind", (_factory, list_item) => {
+factory_col3.connect("bind", (_self, list_item) => {
   const label_widget = list_item.get_child();
   const model_item = list_item.get_item();
   label_widget.label = model_item.year.toString();

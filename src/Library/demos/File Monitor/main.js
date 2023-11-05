@@ -40,7 +40,7 @@ view_file.connect("clicked", () => {
   file_launcher.launch(workbench.window, null).catch(console.error);
 });
 
-monitor_for_file.connect("changed", (_monitor, _file, _other_file, event) => {
+monitor_for_file.connect("changed", (_self, _file, _other_file, event) => {
   if (event === Gio.FileMonitorEvent.CHANGES_DONE_HINT) {
     const toast = new Adw.Toast({
       title: "File modified",
@@ -50,7 +50,7 @@ monitor_for_file.connect("changed", (_monitor, _file, _other_file, event) => {
   }
 });
 
-monitor_for_dir.connect("changed", (_monitor, child, other_file, event) => {
+monitor_for_dir.connect("changed", (_self, child, other_file, event) => {
   const toast = new Adw.Toast({
     timeout: 2,
   });

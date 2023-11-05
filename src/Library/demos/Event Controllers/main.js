@@ -20,23 +20,17 @@ let ctrl_pressed = false;
 // Key controller to detect when the Ctrl key is pressed and released
 const key_controller = new Gtk.EventControllerKey();
 window.add_controller(key_controller);
-key_controller.connect(
-  "key-pressed",
-  (_controller, keyval, _keycode, _state) => {
-    if (keyval === Gdk.KEY_Control_L || keyval === Gdk.KEY_Control_R) {
-      ctrl_pressed = true;
-    }
-  },
-);
+key_controller.connect("key-pressed", (_self, keyval, _keycode, _state) => {
+  if (keyval === Gdk.KEY_Control_L || keyval === Gdk.KEY_Control_R) {
+    ctrl_pressed = true;
+  }
+});
 
-key_controller.connect(
-  "key-released",
-  (_controller, keyval, _keycode, _state) => {
-    if (keyval === Gdk.KEY_Control_L || keyval === Gdk.KEY_Control_R) {
-      ctrl_pressed = false;
-    }
-  },
-);
+key_controller.connect("key-released", (_self, keyval, _keycode, _state) => {
+  if (keyval === Gdk.KEY_Control_L || keyval === Gdk.KEY_Control_R) {
+    ctrl_pressed = false;
+  }
+});
 
 ctrl_button.connect("clicked", () => {
   if (ctrl_pressed) {
@@ -53,8 +47,8 @@ const gesture_click = new Gtk.GestureClick({ button: 0 });
 
 window.add_controller(gesture_click);
 
-gesture_click.connect("pressed", (gesture, _n_press, _x, _y) => {
-  switch (gesture.get_current_button()) {
+gesture_click.connect("pressed", (_self, _n_press, _x, _y) => {
+  switch (gesture_click.get_current_button()) {
     case Gdk.BUTTON_PRIMARY:
       primary_button.add_css_class("suggested-action");
       break;
@@ -69,8 +63,8 @@ gesture_click.connect("pressed", (gesture, _n_press, _x, _y) => {
   }
 });
 
-gesture_click.connect("released", (gesture, _n_press, _x, _y) => {
-  switch (gesture.get_current_button()) {
+gesture_click.connect("released", (_self, _n_press, _x, _y) => {
+  switch (gesture_click.get_current_button()) {
     case Gdk.BUTTON_PRIMARY:
       primary_button.remove_css_class("suggested-action");
       break;
@@ -89,7 +83,7 @@ const gesture_swipe = new Gtk.GestureSwipe();
 
 stack.add_controller(gesture_swipe);
 
-gesture_swipe.connect("swipe", (_controller, vel_x, _vel_y) => {
+gesture_swipe.connect("swipe", (_self, vel_x, _vel_y) => {
   if (vel_x > 0) {
     stack.set_visible_child_name("pic1");
   } else {

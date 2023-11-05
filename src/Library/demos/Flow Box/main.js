@@ -7,7 +7,7 @@ for (let code = 128513; code <= 128591; code++) {
   addEmoji(flowbox, String.fromCodePoint(code));
 }
 
-flowbox.connect("child-activated", (_flowbox, item) => {
+flowbox.connect("child-activated", (_self, item) => {
   // FlowBoxChild -> AdwBin -> Label
   const emoji = item.child.child.label;
   console.log("Unicode:", emoji.codePointAt(0).toString(16));

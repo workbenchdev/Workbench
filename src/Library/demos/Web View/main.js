@@ -44,7 +44,7 @@ button_stop.connect("clicked", () => {
   web_view.stop_loading();
 });
 
-web_view.connect("load-changed", (_view, load_event) => {
+web_view.connect("load-changed", (_self, load_event) => {
   switch (load_event) {
     case WebKit.LoadEvent.STARTED:
       console.log("Page loading started");
@@ -55,7 +55,7 @@ web_view.connect("load-changed", (_view, load_event) => {
   }
 });
 
-web_view.connect("load-failed", (_view, _load_event, fail_url, error) => {
+web_view.connect("load-failed", (_self, _load_event, fail_url, error) => {
   // Loading failed as a result of calling stop_loading
   if (error.matches(WebKit.NetworkError, WebKit.NetworkError.CANCELLED)) {
     return;

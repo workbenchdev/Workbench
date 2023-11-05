@@ -78,7 +78,7 @@ async function startSession() {
 portal.connect(
   "location-updated",
   (
-    _portal,
+    _self,
     latitude,
     longitude,
     altitude,

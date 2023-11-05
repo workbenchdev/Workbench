@@ -15,7 +15,7 @@ const model = new Gtk.StringList({
 });
 let item = 1;
 
-model.connect("items-changed", (_list, position, removed, added) => {
+model.connect("items-changed", (_self, position, removed, added) => {
   console.log(
     `position: ${position}, Item removed? ${Boolean(
       removed,
