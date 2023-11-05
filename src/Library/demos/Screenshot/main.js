@@ -25,7 +25,7 @@ async function takeScreenshot() {
   let uri;
   try {
     uri = await portal.take_screenshot(parent, flags, null);
-  } catch (err) {
+  } catch (_err) {
     showPermissionError();
     return;
   }

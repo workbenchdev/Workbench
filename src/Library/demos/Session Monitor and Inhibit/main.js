@@ -33,7 +33,7 @@ button_stop.connect("clicked", () => {
 
 portal.connect(
   "session-state-changed",
-  (self, screensaver_active, session_state) => {
+  (_self, screensaver_active, session_state) => {
     if (screensaver_active) {
       console.log("Screensaver is active");
     }

@@ -13,7 +13,7 @@ const string_drop_target = Gtk.DropTarget.new(
 
 bin.add_controller(string_drop_target);
 
-string_drop_target.connect("drop", (self, value, x, y) => {
+string_drop_target.connect("drop", (_self, value, _x, _y) => {
   bin.child = createTextPreview(value);
   bin.remove_css_class("overlay-drag-area");
 });
@@ -21,7 +21,7 @@ string_drop_target.connect("drop", (self, value, x, y) => {
 // Drop Target for Files
 const file_drop_target = Gtk.DropTarget.new(Gio.File, Gdk.DragAction.COPY);
 bin.add_controller(file_drop_target);
-file_drop_target.connect("drop", (self, value, x, y) => {
+file_drop_target.connect("drop", (_self, value, _x, _y) => {
   try {
     bin.child = onDrop(value);
   } catch (err) {

@@ -30,7 +30,7 @@ map_widget.add_controller(gesture);
 
 const button_marker = workbench.builder.get_object("button_marker");
 
-gesture.connect("pressed", (_, n_press, x, y) => {
+gesture.connect("pressed", (_, _n_press, x, y) => {
   if (button_marker.active) {
     const location = viewport.widget_coords_to_location(map_widget, x, y);
     marker.set_location(location[0], location[1]);

@@ -78,7 +78,7 @@ async function handleCamera() {
   // Set up the bus
   const bus = pipeline.get_bus();
   bus.add_signal_watch();
-  bus.connect("message", (self, message) => {
+  bus.connect("message", (_self, message) => {
     // Check the message type
     const message_type = message.type;
 

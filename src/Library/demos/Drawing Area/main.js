@@ -19,7 +19,7 @@ for (let i = 0; i < 3; i++) {
   triangle_original[i] = temp;
 }
 
-drawingArea.set_draw_func((area, cr, width, height) => {
+drawingArea.set_draw_func((_area, cr, _width, _height) => {
   // Draw triangle in context
   cr.moveTo(150 + triangle[0][0], 150 + triangle[0][1]);
   cr.lineTo(150 + triangle[1][0], 150 + triangle[1][1]);
