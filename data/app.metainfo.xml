@@ -49,7 +49,7 @@
   <content_rating type="oars-1.1" />
   <releases>
     <release version="45.3" date="2023-xx-xx">
-      <description>
+      <description translatable="no">
         <ul>
           <li>Add Python support</li>
           <li>Add Blueprint formatter support</li>
@@ -101,7 +101,7 @@
       </description>
     </release>
     <release version="45.2" date="2023-10-11">
-      <description>
+      <description translatable="no">
         <ul>
           <li>Rust: Fix the issue of compiling fails after updating Workbench</li>
           <li>Manuals: Fix a couple of minor issues</li>
@@ -118,7 +118,7 @@
       </description>
     </release>
     <release version="45.1" date="2023-10-02">
-      <description>
+      <description translatable="no">
         <ul>
           <li>Add "Extensions" to enable Rust and Vala support</li>
           <li>Add Keyboard Shortcuts to Manuals; the documentation viewer</li>
@@ -136,7 +136,7 @@
       </description>
     </release>
     <release version="45" date="2023-09-22">
-      <description>
+      <description translatable="no">
         <ul>
           <li>Use GNOME 45</li>
           <li>Support Rust</li>
@@ -201,7 +201,7 @@
       </description>
     </release>
     <release version="44.2" date="2023-06-23">
-      <description>
+      <description translatable="no">
         <ul>
           <li>Improve Screenshot Preview</li>
           <li>Fix a bug causing preview to update on certain events</li>
@@ -240,7 +240,7 @@
       </description>
     </release>
     <release version="44.1" date="2023-05-17">
-      <description>
+      <description translatable="no">
         <ul>
           <li>Update icon-development-kit; adds 143 new icons</li>
           <li>Update to Blueprint to 0.8.1</li>
@@ -250,7 +250,7 @@
       </description>
     </release>
     <release version="44.0" date="2023-04-15">
-      <description>
+      <description translatable="no">
         <ul>
           <li>GNOME 44</li>
           <li>Workbench is now fully sandboxed and will be considered safe</li>
@@ -265,7 +265,7 @@
       </description>
     </release>
     <release version="43.3" date="2023-01-23">
-      <description>
+      <description translatable="no">
         <ul>
           <li>Switching between XML and Blueprint will now export</li>
           <li>Add support for JavaScript diagnostics and linting</li>
@@ -279,14 +279,14 @@
       </description>
     </release>
     <release version="43.2" date="2022-11-20">
-      <description>
+      <description translatable="no">
         <ul>
           <li>Fix application not starting</li>
         </ul>
       </description>
     </release>
     <release version="43.1" date="2022-11-18">
-      <description>
+      <description translatable="no">
         <ul>
           <li>Use Vala Language Server for diagnostics</li>
           <li>Move Icon Browser to the main application menu</li>
@@ -301,7 +301,7 @@
       </description>
     </release>
     <release version="43.0" date="2022-09-21">
-      <description>
+      <description translatable="no">
         <ul>
           <li>GNOME 43</li>
           <li>Display CSS errors inline</li>
@@ -314,7 +314,7 @@
       </description>
     </release>
     <release version="42.3" date="2022-08-22">
-      <description>
+      <description translatable="no">
         <ul>
           <li>Show tooltip hints in Blueprint UI code</li>
           <li>Improve XML formatter</li>
@@ -327,7 +327,7 @@
       </description>
     </release>
     <release version="42.2" date="2022-07-19">
-      <description>
+      <description translatable="no">
         <ul>
           <li>Underline errors in Blueprint UI code</li>
           <li>Fix bugs and crashes</li>
@@ -335,7 +335,7 @@
       </description>
     </release>
     <release version="42.1" date="2022-07-07">
-      <description>
+      <description translatable="no">
         <ul>
           <li
           >Add an Icon Browser to find the right icons for your prototypes</li>
@@ -357,7 +357,7 @@
       </description>
     </release>
     <release version="42.0" date="2022-06-04">
-      <description>
+      <description translatable="no">
         <p>Highlights</p>
         <ul>
           <li>Add Blueprint markup syntax for UI</li>
@@ -390,7 +390,7 @@
       </description>
     </release>
     <release version="1.2.0" date="2022-05-06">
-      <description>
+      <description translatable="no">
         <ul>
           <li>Add a Library of examples</li>
           <li>Add an example of WebSocket client</li>
@@ -410,7 +410,7 @@
       </description>
     </release>
     <release version="1.1.0" date="2022-03-24">
-      <description>
+      <description translatable="no">
         <ul>
           <li>Take a png screenshot of the preview</li>
           <li>The console is now resizable</li>
