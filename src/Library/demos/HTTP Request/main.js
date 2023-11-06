@@ -2,8 +2,11 @@ import GLib from "gi://GLib";
 import Gio from "gi://Gio";
 import Soup from "gi://Soup";
 
-Gio._promisify(Soup.Session.prototype, "send_async", "send_finish");
-Gio._promisify(Gio.OutputStream.prototype, "splice_async", "splice_finish");
+Gio._promisify(
+  Soup.Session.prototype,
+  "send_and_read_async",
+  "send_and_read_finish",
+);
 
 const http_session = new Soup.Session();
 const article_text_view = workbench.builder.get_object("article_text_view");
@@ -22,7 +25,7 @@ async function fetchWikipediaTodaysFeaturedArticle() {
   )}`;
   const message = Soup.Message.new("GET", url);
 
-  const input_stream = await http_session.send_async(
+  const bytes = await http_session.send_and_read_async(
     message,
     GLib.PRIORITY_DEFAULT,
     null,
@@ -33,25 +36,10 @@ async function fetchWikipediaTodaysFeaturedArticle() {
     return;
   }
 
-  const data = await readAsString(input_stream);
-  const json = JSON.parse(data);
+  const text_decoder = new TextDecoder("utf-8");
+  const decoded_text = text_decoder.decode(bytes.toArray().buffer);
+  const json = JSON.parse(decoded_text);
 
   article_text_view.buffer.set_text(json.tfa.extract, -1);
   article_title.label = json.tfa.titles.normalized;
-}
-
-async function readAsString(input_stream) {
-  const output_stream = Gio.MemoryOutputStream.new_resizable();
-
-  await output_stream.splice_async(
-    input_stream,
-    Gio.OutputStreamSpliceFlags.CLOSE_TARGET |
-      Gio.OutputStreamSpliceFlags.CLOSE_SOURCE,
-    GLib.PRIORITY_DEFAULT,
-    null,
-  );
-
-  const bytes = output_stream.steal_as_bytes();
-  const text_decoder = new TextDecoder("utf-8");
-  return text_decoder.decode(bytes.toArray().buffer);
 }
