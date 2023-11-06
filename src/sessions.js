@@ -32,25 +32,24 @@ export function getSessions() {
   return sessions;
 }
 
-function createSession(name) {
+function createSession() {
   const id = getNowForFilename();
   const file = sessions_dir.get_child(id);
   ensureDir(file);
   const session = new Session(file);
-  session.settings.set_string("name", name);
   return session;
 }
 
 export function createSessionFromDemo(demo) {
   const { name, panels } = demo;
 
-  const session = createSession(name);
+  const session = createSession();
   const demo_dir = demos_dir.get_child(name);
 
-  copy_directory(demo_dir, session);
-  copy_directory(rust_template_dir, session);
+  const { file, settings } = session;
+  copyDirectory(demo_dir, file);
+  copyDirectory(rust_template_dir, file);
 
-  const { settings } = session;
   settings.set_string("name", name);
   settings.set_boolean("show-code", panels.includes("code"));
   settings.set_boolean("show-style", panels.includes("style"));
@@ -65,17 +64,16 @@ export function createSessionFromDemo(demo) {
 }
 
 // There is no copy directory function
-function copy_directory(source, destination) {
+function copyDirectory(source, destination) {
   for (const file_info of source.enumerate_children(
     "",
     Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
     null,
   )) {
     if (file_info.get_file_type() === Gio.FileType.DIRECTORY) continue;
-
     const child = source.get_child(file_info.get_name());
     child.copy(
-      destination.file.get_child(child.get_basename()),
+      destination.get_child(child.get_basename()),
       Gio.FileCopyFlags.NONE,
       null,
       null,

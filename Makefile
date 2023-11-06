@@ -56,3 +56,12 @@ flatpak:
 	flatpak run --command="desktop-file-validate" --filesystem=host:ro org.freedesktop.Sdk//23.08 flatpak/files/share/applications/re.sonny.Workbench.Devel.desktop
 # appstreamcli validate --override=release-time-missing=info /path/to/your/app.metainfo.xml
 	flatpak-builder --run flatpak build-aux/re.sonny.Workbench.Devel.json bash
+
+# Sync with .gitignore
+clean:
+	rm -f src/Library/**/settings
+	rm -f src/Library/**/workbench.vala
+	rm -f src/Library/**/main.ui
+	rm -f src/Library/**/libworkbenchcode.so
+	rm -f src/Library/**/biome.json
+	rm -rf src/Library/**/__pycache__
