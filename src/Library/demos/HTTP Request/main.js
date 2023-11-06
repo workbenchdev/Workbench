@@ -37,7 +37,7 @@ async function fetchWikipediaTodaysFeaturedArticle() {
   }
 
   const text_decoder = new TextDecoder("utf-8");
-  const decoded_text = text_decoder.decode(bytes.toArray().buffer);
+  const decoded_text = text_decoder.decode(bytes.toArray());
   const json = JSON.parse(decoded_text);
 
   article_text_view.buffer.set_text(json.tfa.extract, -1);
