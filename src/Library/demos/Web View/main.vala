@@ -34,8 +34,6 @@ public void main () {
       case FINISHED:
         message ("Loading page finished");
         break;
-      case COMMITTED:
-      case REDIRECTED:
       default:
         break;
     }
