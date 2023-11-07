@@ -36,6 +36,7 @@ public void main () {
         break;
       case COMMITTED:
       case REDIRECTED:
+      default:
         break;
     }
   });
