@@ -125,7 +125,11 @@ namespace Workbench {
         this.css_parser_error(error.message, (int)start.lines, (int)start.line_chars, (int)end.lines, (int)end.line_chars);
       });
       this.css.load_from_data (content.data);
-      Gtk.StyleContext.add_provider_for_display (Gdk.Display.get_default (), this.css , Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+      Gtk.StyleContext.add_provider_for_display (
+        Gdk.Display.get_default (),
+        this.css,
+        // STYLE_PROVIDER_PRIORITY_THEME is 200; only values below that behave correctly
+        Gtk.STYLE_PROVIDER_PRIORITY_THEME - 1);
     }
 
     public void run (string filename, string uri) {
