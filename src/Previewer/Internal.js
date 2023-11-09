@@ -215,7 +215,8 @@ export default function Internal({
     Gtk.StyleContext.add_provider_for_display(
       output.get_display(),
       css_provider,
-      Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
+      // STYLE_PROVIDER_PRIORITY_THEME is 200; only values below that behave correctly
+      Gtk.STYLE_PROVIDER_PRIORITY_THEME - 1,
     );
   }
 
