@@ -2,7 +2,7 @@ import gi
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
-from gi.repository import Adw, Gtk, Gio
+from gi.repository import Adw, Gtk
 import workbench
 
 button_confirmation = workbench.builder.get_object("button_confirmation")
@@ -25,7 +25,7 @@ def on_response_selected_advanced(_dialog, task):
         print(f'Selected "{response}" response.')
 
 
-def createConfirmationDialog():
+def create_confirmation_dialog(*args):
     dialog = Adw.MessageDialog(
         heading="Replace File?",
         body="A file named `example.png` already exists. Do you want to replace it?",
@@ -43,7 +43,7 @@ def createConfirmationDialog():
     dialog.choose(None, on_response_selected)
 
 
-def createErrorDialog():
+def create_error_dialog(*args):
     dialog = Adw.MessageDialog(
         heading="Critical Error",
         body="You did something you should not have",
@@ -58,7 +58,7 @@ def createErrorDialog():
 
 
 # Creates a message dialog with an extra child
-def createAdvancedDialog():
+def create_advanced_dialog(*args):
     dialog = Adw.MessageDialog(
         heading="Login",
         body="A valid password is needed to continue",
@@ -79,6 +79,6 @@ def createAdvancedDialog():
     dialog.choose(None, on_response_selected_advanced)
 
 
-button_confirmation.connect("clicked", lambda *_: createConfirmationDialog())
-button_error.connect("clicked", lambda *_: createErrorDialog())
-button_advanced.connect("clicked", lambda *_: createAdvancedDialog())
+button_confirmation.connect("clicked", create_confirmation_dialog)
+button_error.connect("clicked", create_error_dialog)
+button_advanced.connect("clicked", create_advanced_dialog)
