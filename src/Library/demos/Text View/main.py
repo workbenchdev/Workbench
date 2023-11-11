@@ -22,7 +22,7 @@ buffer.set_text(
 )
 
 
-def handleCopy(_):
+def handle_copy(_):
     if buffer.get_has_selection():
         buffer.copy_clipboard(clipboard)
         print("Text copied to clipboard")
@@ -30,12 +30,12 @@ def handleCopy(_):
         print("No text selected to copy")
 
 
-def handlePaste(_):
+def handle_paste(_):
     buffer.paste_clipboard(clipboard, None, True)
     print("Text pasted")
 
 
-def handleCut(_):
+def handle_cut(_):
     if buffer.get_has_selection():
         buffer.cut_clipboard(clipboard, True)
         print("Text cut to clipboard")
@@ -43,9 +43,9 @@ def handleCut(_):
         print("No text selected to cut")
 
 
-copy.connect("clicked", handleCopy)
-paste.connect("clicked", handlePaste)
-cut.connect("clicked", handleCut)
+copy.connect("clicked", handle_copy)
+paste.connect("clicked", handle_paste)
+cut.connect("clicked", handle_cut)
 select.connect(
     "clicked",
     lambda _: buffer.select_range(buffer.get_start_iter(), buffer.get_end_iter()),
