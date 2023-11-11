@@ -1,10 +1,8 @@
 #!/usr/bin/env python
 """
 This is the previewer for Python demos. It connects via DBus back to
-Workbench and loads demos.
-
-This module also provides itself to demos via importing "workbench"
-with the fields defined in __all__.
+Workbench and loads demos, providing them with a "workbench" module for
+the Workbench API.
 """
 from __future__ import annotations
 
@@ -89,6 +87,7 @@ class Previewer:
         # Set target as window directly
         if self.window is None or self.window.__class__ != self.target.__class__:
             self.set_window(cast(Gtk.Window, self.target))
+            return
 
         if isinstance(self.target, Adw.Window) or isinstance(
             self.target, Adw.ApplicationWindow
