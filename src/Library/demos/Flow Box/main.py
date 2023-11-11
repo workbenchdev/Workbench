@@ -8,7 +8,7 @@ import workbench
 flowbox = workbench.builder.get_object("flowbox")
 
 
-def addEmoji(_flowbox, unicode):
+def add_emoji(_flowbox, unicode):
     item = Adw.Bin(
         child=Gtk.Label(
             vexpand=True,
@@ -24,7 +24,7 @@ def addEmoji(_flowbox, unicode):
 
 
 for code in range(128513, 128591):
-    addEmoji(flowbox, chr(code))
+    add_emoji(flowbox, chr(code))
 
 
 def on_item_selected(_flowbox, item):
