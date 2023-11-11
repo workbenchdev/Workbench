@@ -2,7 +2,7 @@ import gi
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
-from gi.repository import Gtk, Adw
+from gi.repository import Adw
 import workbench
 
 topbar_select: Adw.ComboRow = workbench.builder.get_object("topbar_select")
@@ -13,7 +13,7 @@ top_bar = None
 bottom_bar = None
 
 
-def changeTopBar(name):
+def change_top_bar(name):
     global top_bar
     new_top_bar = workbench.builder.get_object(name)
     if top_bar:
@@ -22,7 +22,7 @@ def changeTopBar(name):
     top_bar = new_top_bar
 
 
-def changeBottomBar(name):
+def change_bottom_bar(name):
     global bottom_bar
     new_bottom_bar = workbench.builder.get_object(name)
     if bottom_bar:
@@ -31,44 +31,44 @@ def changeBottomBar(name):
     bottom_bar = new_bottom_bar
 
 
-def selectTopBar():
+def select_top_bar(*args):
     match topbar_select.get_selected():
         case 0:
-            changeTopBar("header_bar")
+            change_top_bar("header_bar")
         case 1:
-            changeTopBar("tab_bar")
+            change_top_bar("tab_bar")
         case 2:
-            changeTopBar("switcher_bar")
+            change_top_bar("switcher_bar")
         case 3:
-            changeTopBar("action_bar")
+            change_top_bar("action_bar")
         case 4:
-            changeTopBar("popover")
+            change_top_bar("popover")
         case 5:
-            changeTopBar("search_bar")
+            change_top_bar("search_bar")
         case 6:
-            changeTopBar("gtk_box")
+            change_top_bar("gtk_box")
 
 
-def selectBottomBar():
+def select_bottom_bar(*args):
     match bottombar_select.get_selected():
         case 0:
-            changeBottomBar("header_bar")
+            change_bottom_bar("header_bar")
         case 1:
-            changeBottomBar("tab_bar")
+            change_bottom_bar("tab_bar")
         case 2:
-            changeBottomBar("switcher_bar")
+            change_bottom_bar("switcher_bar")
         case 3:
-            changeBottomBar("action_bar")
+            change_bottom_bar("action_bar")
         case 4:
-            changeBottomBar("popover")
+            change_bottom_bar("popover")
         case 5:
-            changeBottomBar("search_bar")
+            change_bottom_bar("search_bar")
         case 6:
-            changeBottomBar("gtk_box")
+            change_bottom_bar("gtk_box")
 
 
-topbar_select.connect("notify::selected-item", lambda _, __: selectTopBar())
-bottombar_select.connect("notify::selected-item", lambda _, __: selectBottomBar())
+topbar_select.connect("notify::selected-item", select_top_bar)
+bottombar_select.connect("notify::selected-item", select_bottom_bar)
 
-selectTopBar()
-selectBottomBar()
+select_top_bar()
+select_bottom_bar()
