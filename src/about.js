@@ -83,6 +83,7 @@ ${getBlueprintVersion()}
     "Sabrina Meindlhumer https://github.com/m-sabrina",
     "Urtsi Santsi <urtsi.santsi@proton.me>",
     "Roland Lötscher https://github.com/rolandlo",
+    "Gregor Niehl https://fosstodon.org/@gregorni",
     // Add yourself as
     // "John Doe",
     // or
