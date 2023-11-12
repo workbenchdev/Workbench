@@ -1,8 +1,7 @@
 import gi
 
 gi.require_version("Gtk", "4.0")
-gi.require_version("Adw", "1")
-from gi.repository import Gtk, Adw
+from gi.repository import Gtk
 import workbench
 
 hours: Gtk.SpinButton = workbench.builder.get_object("hours")
@@ -12,7 +11,7 @@ hours.set_text("00")
 minutes.set_text("00")
 
 
-def tellTime(hours, minutes):
+def tell_time(hours, minutes):
     return f"The time selected is {hours.get_text()}:{minutes.get_text()}"
 
 
@@ -22,8 +21,8 @@ def on_value_changed(spin_button):
     return True
 
 
-hours.connect("value-changed", lambda *args: print(tellTime(hours, minutes)))
-minutes.connect("value-changed", lambda *args: print(tellTime(hours, minutes)))
+hours.connect("value-changed", lambda *args: print(tell_time(hours, minutes)))
+minutes.connect("value-changed", lambda *args: print(tell_time(hours, minutes)))
 
 
 hours.connect("output", on_value_changed)
