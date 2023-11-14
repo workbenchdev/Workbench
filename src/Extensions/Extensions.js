@@ -30,7 +30,6 @@ export default function Extensions({ application }) {
     picture_illustration,
     extension_rust,
     extension_vala,
-    extension_documentation,
     restart_hint,
     all_set_hint,
   } = build(Interface);
@@ -38,14 +37,9 @@ export default function Extensions({ application }) {
   picture_illustration.set_resource(illustration);
 
   extension_rust.enabled = isRustEnabled();
-  extension_documentation.enabled = isDocumentationEnabled();
   extension_vala.enabled = isValaEnabled();
 
-  for (const extension of [
-    extension_rust,
-    extension_documentation,
-    extension_vala,
-  ]) {
+  for (const extension of [extension_rust, extension_vala]) {
     if (!extension.enabled) {
       all_set_hint.set_visible(false);
       restart_hint.set_visible(true);
@@ -77,8 +71,4 @@ export function isRustEnabled() {
 
 export function isValaEnabled() {
   return extensions.includes("org.freedesktop.Sdk.Extension.vala");
-}
-
-export function isDocumentationEnabled() {
-  return extensions.includes("org.gnome.Sdk.Docs");
 }
