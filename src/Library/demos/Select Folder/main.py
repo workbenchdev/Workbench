@@ -35,7 +35,7 @@ def on_multiple_selected(dialog, result):
 
 def select_multiple_folders(button):
     dialog_for_folders = Gtk.FileDialog()
-    folders = dialog_for_folders.select_multiple_folders(
+    dialog_for_folders.select_multiple_folders(
         workbench.window, None, on_multiple_selected
     )
 
