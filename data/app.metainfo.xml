@@ -19,7 +19,6 @@
       <li>Declarative user interface syntax</li>
       <li>Autosave, sessions and projects</li>
       <li>Code linter and formatter</li>
-      <li>Offline documentation</li>
       <li>Terminal output</li>
       <li>1000+ icons</li>
     </ul>
@@ -41,9 +40,6 @@
     </screenshot>
     <screenshot>
       <image>https://raw.githubusercontent.com/workbenchdev/Workbench/main/data/screenshot-extensions.png</image>
-    </screenshot>
-    <screenshot>
-      <image>https://raw.githubusercontent.com/workbenchdev/Workbench/main/data/screenshot-manuals.png</image>
     </screenshot>
   </screenshots>
   <content_rating type="oars-1.1" />
