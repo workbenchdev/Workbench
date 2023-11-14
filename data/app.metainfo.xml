@@ -49,14 +49,11 @@
         <ul>
           <li>Add Python support</li>
           <li>Add Blueprint formatter support</li>
-          <li>Replace Manuals with standalone app Biblioteca available on Flathub</li>
+          <li>Replace Manuals with "Biblioteca" available on Flathub</li>
           <li>Show which languages are available for each Library entry</li>
           <li>Allow opening Library entries in a specific language</li>
           <li>Make Library faster to launch</li>
           <li>Each Workbench window has its own title</li>
-          <li>Documentation viewer now sync the sidebar selection with navigation</li>
-          <li>Add fuzzy search to documentation viewer</li>
-          <li>Add search result tags to documentation viewer</li>
           <li>Do not exit if Library is the last window open</li>
           <li>Library: Port entries to libadwaita SpinRow</li>
           <li>Library: Fix "Preferences Window" adaptiveness</li>
