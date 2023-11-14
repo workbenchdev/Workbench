@@ -21,12 +21,12 @@ pub fn main() {
         dialog.open(
             Some(workbench::window()),
             None::<&gio::Cancellable>,
-            on_selected,
+            on_clicked,
         )
     });
 }
 
-fn on_selected(result: Result<gio::File, glib::Error>) {
+fn on_clicked(result: Result<gio::File, glib::Error>) {
     match result {
         Ok(file) => {
             let avatar_image: adw::Avatar = workbench::builder().object("avatar_image").unwrap();
