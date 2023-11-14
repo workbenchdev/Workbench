@@ -49,6 +49,7 @@
         <ul>
           <li>Add Python support</li>
           <li>Add Blueprint formatter support</li>
+          <li>Replace Manuals with standalone app Biblioteca available on Flathub</li>
           <li>Show which languages are available for each Library entry</li>
           <li>Allow opening Library entries in a specific language</li>
           <li>Make Library faster to launch</li>
