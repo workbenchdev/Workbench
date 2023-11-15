@@ -7,15 +7,28 @@ import workbench
 button = workbench.builder.get_object("button")
 
 
-def on_output_path_selected(_dialog, result):
-    # "save_finish" returns a Gio.File you can write to
-    file = _dialog.save_finish(result)
-    print(f"Save file to {file.get_path()}")
-
-
 def save_file(button):
     dialog = Gtk.FileDialog(initial_name="Workbench.txt")
-    dialog.save(workbench.window, None, on_output_path_selected)
+    dialog.save(parent=workbench.window, cancellable=None, callback=on_save)
+
+
+def on_save(dialog, result):
+    # "save_finish" returns a Gio.File you can write to
+    file = dialog.save_finish(result)
+    contents = "Hello from Workbench!".encode("UTF-8")
+    file.replace_contents_async(
+        contents,
+        etag=None,
+        make_backup=False,
+        flags=Gio.FileCreateFlags.NONE,
+        cancellable=None,
+        callback=on_replace_contents,
+    )
+
+
+def on_replace_contents(file, result):
+    file.replace_contents_finish(result)
+    print(f"File {file.get_basename()} saved")
 
 
 # Handle button click
