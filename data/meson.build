@@ -1,13 +1,7 @@
-desktop_file = i18n.merge_file(
-  input: configure_file(
-    input: 'app.desktop',
-    output: 'tmp.app.desktop',
-    configuration: { 'app_id': app_id }
-  ),
+desktop_file = configure_file(
+  input: 'app.desktop',
   output: '@0@.desktop'.format(app_id),
-  type: 'desktop',
-  po_dir: '../po',
-  install: true,
+  configuration: { 'app_id': app_id },
   install_dir: join_paths(get_option('datadir'), 'applications')
 )
 
@@ -25,15 +19,10 @@ configure_file(
   install_dir: join_paths(get_option('datadir'), 'dbus-1/services')
 )
 
-appstream_file = i18n.merge_file(
-  input: configure_file(
-    input: 'app.metainfo.xml',
-    output: 'tmp.app.metainfo.xml',
-    configuration: { 'app_id': app_id }
-  ),
+appstream_file = configure_file(
+  input: 'app.metainfo.xml',
   output: '@0@.metainfo.xml'.format(app_id),
-  po_dir: '../po',
-  install: true,
+  configuration: { 'app_id': app_id },
   install_dir: join_paths(get_option('datadir'), 'metainfo')
 )
 

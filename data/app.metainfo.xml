@@ -8,7 +8,6 @@
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0</project_license>
   <summary>Learn and prototype with GNOME technologies</summary>
-  <translation type="gettext">@app_id@</translation>
   <description>
     <p>Workbench lets you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a GTK user interface.</p>
     <p>Among other things, Workbench comes with</p>
@@ -26,7 +25,6 @@
   <url type="homepage">https://workbench.sonny.re</url>
   <url type="bugtracker">https://workbench.sonny.re/feedback</url>
   <url type="donation">https://workbench.sonny.re/donate</url>
-  <url type="translate">https://workbench.sonny.re/translate</url>
   <url type="vcs-browser">https://workbench.sonny.re/source</url>
   <screenshots>
     <screenshot type="default">

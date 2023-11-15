@@ -36,8 +36,6 @@ ${getBlueprintVersion()}
     website: "https://workbench.sonny.re",
     application_icon: pkg.name,
     issue_url: "https://github.com/workbenchdev/Workbench/issues",
-    // TRANSLATORS: eg. 'Translator Name <your.email@domain.com>' or 'Translator Name https://website.example'
-    translator_credits: _("translator-credits"),
     debug_info,
     developers: [
       "Sonny Piers https://sonny.re",

@@ -5,7 +5,6 @@ project('Workbench', ['vala', 'c', 'rust'],
 )
 
 gnome = import('gnome')
-i18n = import('i18n')
 
 if get_option('profile') == 'development'
 	app_id = 're.sonny.Workbench.Devel'
@@ -27,7 +26,6 @@ pkgdatadir = join_paths(datadir, app_id)
 
 subdir('data')
 subdir('src')
-subdir('po')
 
 gnome.post_install(
   glib_compile_schemas: true,

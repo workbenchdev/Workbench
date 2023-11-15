@@ -39,7 +39,7 @@ subdir('langs/python')
 
 gjspack = find_program('../troll/gjspack/bin/gjspack')
 custom_target('gjspack',
-  input: ['main.js', '../po/POTFILES'],
+  input: ['main.js'],
   output: app_id + '.src.gresource',
   command: [
     gjspack,
@@ -50,7 +50,6 @@ custom_target('gjspack',
     '--blueprint-compiler', blueprint_compiler,
     '--no-executable',
     '@INPUT0@',
-    '--potfiles', '@INPUT1@',
     '@OUTDIR@',
   ],
   install: true,

@@ -23,6 +23,10 @@ export default function Library({ application }) {
   window.application = application;
   picture_illustration.set_resource(illustration);
 
+  if (__DEV__) {
+    window.add_css_class("devel");
+  }
+
   let last_selected;
 
   window.connect("close-request", quitOnLastWindowClose);
