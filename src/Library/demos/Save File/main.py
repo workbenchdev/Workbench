@@ -7,10 +7,19 @@ import workbench
 button = workbench.builder.get_object("button")
 
 
-def on_output_path_selected(_dialog, result):
+def on_output_path_selected(dialog, result):
     # "save_finish" returns a Gio.File you can write to
-    file = _dialog.save_finish(result)
-    print(f"Save file to {file.get_path()}")
+    file = dialog.save_finish(result)
+
+    contents = "Hello from Workbench!".encode("UTF-8")
+    file.replace_contents(
+        contents,
+        etag=None,
+        make_backup=False,
+        flags=Gio.FileCreateFlags.NONE,
+        cancellable=None,
+    )
+    print(f"File {file.get_basename()} saved")
 
 
 def save_file(button):
