@@ -63,6 +63,7 @@
           <li>Library: Simplify "Column View" entry</li>
           <li>Library: Simplify "Status Page" entry</li>
           <li>Library: Modernize "HTTP Image" entry</li>
+          <li>Library: Make the "Save File" entry actually save a file</li>
           <li>Library: Port "Welcome" entry to Python</li>
           <li>Library: Port "Actions" entry to Python</li>
           <li>Library: Port "Spinner" entry to Python</li>
