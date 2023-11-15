@@ -5,6 +5,7 @@ import {
   demos_dir,
   getLanguage,
   settings as global_settings,
+  quitOnLastWindowClose,
 } from "../util.js";
 import Window from "../window.js";
 
@@ -23,6 +24,8 @@ export default function Library({ application }) {
   picture_illustration.set_resource(illustration);
 
   let last_selected;
+
+  window.connect("close-request", quitOnLastWindowClose);
 
   const demos = getDemos();
   demos.forEach((demo) => {

@@ -15,7 +15,6 @@ export default function ShortcutsWindow({ application }) {
     if (!window) {
       ({ window } = build(resource));
       window.set_transient_for(application.get_active_window());
-      window.set_application(application);
     }
     window.present();
   });

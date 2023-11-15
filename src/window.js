@@ -6,7 +6,7 @@ import Adw from "gi://Adw";
 import Vte from "gi://Vte";
 
 import * as xml from "./langs/xml/xml.js";
-import { buildRuntimePath, languages } from "./util.js";
+import { buildRuntimePath, languages, quitOnLastWindowClose } from "./util.js";
 import Document from "./Document.js";
 import PanelUI from "./PanelUI.js";
 import PanelCode from "./PanelCode.js";
@@ -508,18 +508,34 @@ async function setGtk4PreferDark(dark) {
   settings.save_to_file(settings_path);
 }
 
+function close(window) {
+  quitOnLastWindowClose(window);
+  window.destroy();
+}
+
 async function onCloseSession({ session, window }) {
   if (session.isProject()) {
-    window.destroy();
-    return;
+    return close(window);
   }
 
   if (!session.settings.get_boolean("edited")) {
     await deleteSession(session);
-    window.destroy();
-    return;
+    return close(window);
   }
 
+  const [response, location] = await promptSessionClose({ window });
+  if (response === "cancel") return;
+
+  if (response === "discard") {
+    await deleteSession(session);
+  } else if (response === "save") {
+    await saveSessionAsProject(session, location);
+  }
+
+  close(window);
+}
+
+async function promptSessionClose({ window }) {
   const builder = Gtk.Builder.new_from_resource(resource);
   const dialog = builder.get_object("message_dialog_save_project");
 
@@ -561,16 +577,8 @@ async function onCloseSession({ session, window }) {
   }
 
   const response = await dialog.choose(null);
-  if (response === "cancel") return;
-
-  if (response === "discard") {
-    await deleteSession(session);
-  } else if (response === "save") {
-    const destination = location.get_child_for_display_name(
-      row_project_name.text,
-    );
-    await saveSessionAsProject(session, destination);
-  }
-
-  window.destroy();
+  return [
+    response,
+    location?.get_child_for_display_name(row_project_name.text),
+  ];
 }
