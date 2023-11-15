@@ -2,8 +2,7 @@ using Gtk 4.0;
 using GtkSource 5;
 
 template $CodeView: Gtk.Widget {
-  layout-manager: BinLayout {
-  };
+  layout-manager: BinLayout {};
 
   vexpand: true;
 
@@ -11,8 +10,7 @@ template $CodeView: Gtk.Widget {
     vexpand: true;
 
     GtkSource.View source_view {
-      buffer: GtkSource.Buffer {
-      };
+      buffer: GtkSource.Buffer {};
 
       monospace: true;
       auto-indent: true;

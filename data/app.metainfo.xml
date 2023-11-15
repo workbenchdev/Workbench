@@ -42,7 +42,7 @@
   </screenshots>
   <content_rating type="oars-1.1" />
   <releases>
-    <release version="45.3" date="2023-xx-xx">
+    <release version="45.3" date="2023-11-16">
       <description translatable="no">
         <ul>
           <li>Add Python support</li>
