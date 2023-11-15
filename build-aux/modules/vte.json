@@ -2,7 +2,7 @@
   "name": "vte",
   "buildsystem": "meson",
   "config-opts": [
-    "-Ddocs=true",
+    "-Ddocs=false",
     "-Dgtk3=false",
     "-Dgtk4=true",
     "-Dvapi=true",
