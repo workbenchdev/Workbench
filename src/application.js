@@ -7,7 +7,6 @@ import { settings, data_dir, ensureDir } from "./util.js";
 import { overrides } from "./overrides.js";
 import Library, { getDemo } from "./Library/Library.js";
 import Extensions from "./Extensions/Extensions.js";
-import DocumentationViewer from "./Manuals/DocumentationViewer.js";
 import { Session, createSessionFromDemo, getSessions } from "./sessions.js";
 import ShortcutsWindow from "./shortcutsWindow.js";
 
@@ -39,10 +38,6 @@ application.connect("startup", () => {
   });
 
   Extensions({
-    application,
-  });
-
-  DocumentationViewer({
     application,
   });
 

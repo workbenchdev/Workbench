@@ -18,7 +18,6 @@ Among other things, Workbench comes with
 - Declarative user interface syntax
 - Autosave, sessions and projects
 - Code linter and formatter
-- Offline documentation
 - Terminal output
 - 1000+ icons
 
