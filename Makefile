@@ -65,3 +65,11 @@ clean:
 	rm -f src/Library/**/libworkbenchcode.so
 	rm -f src/Library/**/biome.json
 	rm -rf src/Library/**/__pycache__
+	rm re.sonny.Workbench.Devel.flatpak
+	rm re.sonny.Workbench.flatpak
+	rm -rf _build
+	rm -rf .flatpak
+	rm -rf .flatpak-builder
+	rm -rf flatpak
+	rm -rf flatpak-builder
+	rm -rf repo

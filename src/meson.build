@@ -38,7 +38,7 @@ subdir('Previewer')
 subdir('langs/python')
 
 gjspack = find_program('../troll/gjspack/bin/gjspack')
-gresource = custom_target('gjspack',
+custom_target('gjspack',
   input: ['main.js', '../po/POTFILES'],
   output: app_id + '.src.gresource',
   command: [
