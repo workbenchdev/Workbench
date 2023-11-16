@@ -74,6 +74,16 @@ export default function TermConsole({
   window.add_action(action_clear);
   application.set_accels_for_action("win.clear", ["<Control>K"]);
 
+  const action_console_copy = new Gio.SimpleAction({
+    name: "console_copy",
+    parameter_type: null,
+  });
+  action_console_copy.connect("activate", () => {
+    terminal.copy_clipboard_format(Vte.Format.TEXT);
+  });
+  window.add_action(action_console_copy);
+  application.set_accels_for_action("win.console_copy", ["<Control><Shift>C"]);
+
   style_manager.connect("notify::color-scheme", () =>
     updateTerminalColors(terminal),
   );
