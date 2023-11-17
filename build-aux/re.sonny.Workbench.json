@@ -4,7 +4,6 @@
   "runtime-version": "45",
   "sdk": "org.gnome.Sdk",
   "sdk-extensions": [
-    "org.gnome.Sdk.Docs",
     "org.freedesktop.Sdk.Extension.vala",
     "org.freedesktop.Sdk.Extension.rust-stable",
     "org.freedesktop.Sdk.Extension.llvm16"
@@ -26,7 +25,7 @@
     "/include",
     "#/lib/pkgconfig",
     "/man",
-    "#/share/doc",
+    "/share/doc",
     "/share/gtk-doc",
     "/share/man",
     "#/share/pkgconfig",
@@ -38,7 +37,6 @@
     "modules/python-black.json",
     "modules/blueprint-compiler.json",
     "modules/biome.json",
-    "modules/gi-docgen.json",
     "modules/gst-plugin-gtk4.json",
     "modules/vte.json",
     "modules/libshumate.json",

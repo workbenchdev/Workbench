@@ -192,7 +192,8 @@ export default function Previewer({
 
     if (settings.get_boolean("safe-mode")) {
       // console.time("detectCrash");
-      if (await detectCrash(text, target_id)) return;
+      const crashed = await detectCrash(text, target_id);
+      if (crashed) return;
       // console.timeEnd("detectCrash");
     }
 

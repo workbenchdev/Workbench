@@ -1,7 +1,7 @@
 {
   "name": "libspelling",
   "buildsystem": "meson",
-  "config-opts": ["-Ddocs=true"],
+  "config-opts": ["-Ddocs=false"],
   "sources": [
     {
       "type": "archive",

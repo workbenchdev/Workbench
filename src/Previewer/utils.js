@@ -142,7 +142,9 @@ export async function detectCrash(str, object_id) {
   const flags = Gio.SubprocessFlags.NONE;
   const proc = Gio.Subprocess.new(["workbench-crasher", str, object_id], flags);
 
-  const success = await proc.wait_check_async(null).catch((_err) => false);
+  const success = await proc.wait_check_async(null).catch((_err) => {
+    return false;
+  });
   return !success;
 }
 

@@ -4,6 +4,16 @@ This directory contains the Flatpak Manifest and other build utilities.
 
 ## Workbench Flatpak Manifests
 
+### gst-plugin-gtk4
+
+```sh
+wget https://crates.io/api/v1/crates/gst-plugin-gtk4/0.11.1/download
+unzip download
+cd download
+~/Projects/flathub/flatpak-builder-tools/cargo/flatpak-cargo-generator.py Cargo.lock
+# cp generated-sources.json to gst-plugin-gtk4-sources.json
+```
+
 ### Python Black Dependency
 
 `modules/python-black.json` contains the Flatpak modules to install [https://github.com/psf/black](black), the

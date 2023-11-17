@@ -4,11 +4,10 @@
   "sources": [
     {
       "type": "archive",
-      "url": "https://crates.io/api/v1/crates/gst-plugin-gtk4/0.11.0/download",
-      "dest-filename": "gst-plugin-gtk4-0.11.0.tar.gz",
-      "sha256": "c3ee0132150ee059c35642b51c5d663eadb9fa4d21f83a56dd584b03c1c45ffd"
+      "url": "https://crates.io/api/v1/crates/gst-plugin-gtk4/0.11.1/download",
+      "dest-filename": "gst-plugin-gtk4-0.11.1.tar.gz",
+      "sha256": "2ac4afae10b2ba4fd375e8a4e13ffe1e29b1b19831132317d89f03960c1a1d3c"
     },
-    /* Generated with flatpak-builder-tools */
     "gst-plugin-gtk4-sources.json"
   ],
   "build-commands": [

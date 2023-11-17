@@ -197,3 +197,17 @@ export function buildRuntimePath(...args) {
     ...args,
   ]);
 }
+
+export function quitOnLastWindowClose(self) {
+  const { application } = self;
+  const application_windows = [...application.get_windows()];
+  const is_last_window_open = application_windows
+    .filter((w) => w !== self)
+    .every((w) => !w.get_mapped());
+
+  if (is_last_window_open) {
+    application.quit();
+  }
+
+  return false;
+}

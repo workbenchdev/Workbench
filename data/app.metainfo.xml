@@ -8,7 +8,6 @@
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0</project_license>
   <summary>Learn and prototype with GNOME technologies</summary>
-  <translation type="gettext">@app_id@</translation>
   <description>
     <p>Workbench lets you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a GTK user interface.</p>
     <p>Among other things, Workbench comes with</p>
@@ -19,7 +18,6 @@
       <li>Declarative user interface syntax</li>
       <li>Autosave, sessions and projects</li>
       <li>Code linter and formatter</li>
-      <li>Offline documentation</li>
       <li>Terminal output</li>
       <li>1000+ icons</li>
     </ul>
@@ -27,7 +25,6 @@
   <url type="homepage">https://workbench.sonny.re</url>
   <url type="bugtracker">https://workbench.sonny.re/feedback</url>
   <url type="donation">https://workbench.sonny.re/donate</url>
-  <url type="translate">https://workbench.sonny.re/translate</url>
   <url type="vcs-browser">https://workbench.sonny.re/source</url>
   <screenshots>
     <screenshot type="default">
@@ -42,28 +39,29 @@
     <screenshot>
       <image>https://raw.githubusercontent.com/workbenchdev/Workbench/main/data/screenshot-extensions.png</image>
     </screenshot>
-    <screenshot>
-      <image>https://raw.githubusercontent.com/workbenchdev/Workbench/main/data/screenshot-manuals.png</image>
-    </screenshot>
   </screenshots>
   <content_rating type="oars-1.1" />
   <releases>
-    <release version="45.3" date="2023-xx-xx">
+    <release version="45.3" date="2023-11-16">
       <description translatable="no">
         <ul>
           <li>Add Python support</li>
           <li>Add Blueprint formatter support</li>
+          <li>Replace Manuals with "Biblioteca" available on Flathub</li>
           <li>Show which languages are available for each Library entry</li>
           <li>Allow opening Library entries in a specific language</li>
           <li>Make Library faster to launch</li>
           <li>Each Workbench window has its own title</li>
-          <li>Documentation viewer now sync the sidebar selection with navigation</li>
-          <li>Add fuzzy search to documentation viewer</li>
-          <li>Add search result tags to documentation viewer</li>
           <li>Do not exit if Library is the last window open</li>
+          <li>Improve JavaScript linting</li>
+          <li>Fix an issue with some libadwaita style classes not working</li>
           <li>Library: Port entries to libadwaita SpinRow</li>
           <li>Library: Fix "Preferences Window" adaptiveness</li>
+          <li>Library: Simplify "HTP Request" entry</li>
           <li>Library: Simplify "Column View" entry</li>
+          <li>Library: Simplify "Status Page" entry</li>
+          <li>Library: Modernize "HTTP Image" entry</li>
+          <li>Library: Make the "Save File" entry actually save a file</li>
           <li>Library: Port "Welcome" entry to Python</li>
           <li>Library: Port "Actions" entry to Python</li>
           <li>Library: Port "Spinner" entry to Python</li>
@@ -88,6 +86,36 @@
           <li>Library: Port "CSS Gradients" entry to Python</li>
           <li>Library: Port "Color Dialog" entry to Python</li>
           <li>Library: Port "Memory Monitor" entry to Python</li>
+          <li>Library: Port "Video" entry to Python</li>
+          <li>Library: Port "Text Fields" entry to Python</li>
+          <li>Library: Port "Toolbar View" entry to Python</li>
+          <li>Library: Port "Tab View" entry to Python</li>
+          <li>Library: Port "Text View" entry to Python</li>
+          <li>Library: Port "Text Colors" entry to Python</li>
+          <li>Library: Port "Search" entry to Python</li>
+          <li>Library: Port "Color Picker" entry to Python</li>
+          <li>Library: Port "Dialogs" entry to Python</li>
+          <li>Library: Port "Label" entry to Python</li>
+          <li>Library: Port "Open File" entry to Python</li>
+          <li>Library: Port "Flow Box" entry to Python</li>
+          <li>Library: Port "Revealer" entry to Python</li>
+          <li>Library: Port "Menu" entry to Python</li>
+          <li>Library: Port "Switch" entry to Python</li>
+          <li>Library: Port "Stack" entry to Python</li>
+          <li>Library: Port "Picture" entry to Python</li>
+          <li>Library: Port "Power Profile Monitor" entry to Python</li>
+          <li>Library: Port "Spin Button" entry to Python</li>
+          <li>Library: Port "Source View" entry to Python</li>
+          <li>Library: Port "Preferences Window" entry to Python</li>
+          <li>Library: Port "Clamp" entry to Python</li>
+          <li>Library: Port "Banner" entry to Python</li>
+          <li>Library: Port "Save File" entry to Python</li>
+          <li>Library: Port "Action Bar" entry to Python</li>
+          <li>Library: Port "Scale" entry to Python</li>
+          <li>Library: Port "Spell Checker" entry to Python</li>
+          <li>Library: Port "Select Folder" entry to Python</li>
+          <li>Library: Port "Avatar" entry to Rust</li>
+          <li>Library: Port "Actions" entry to Rust</li>
           <li>Library: Port "Animation" entry to Vala</li>
           <li>Library: Port "Overlay Split View" entry to Vala</li>
           <li>Library: Port "Text Colors" entry to Vala</li>
@@ -97,6 +125,10 @@
           <li>Library: Port "Avatar" entry to Vala</li>
           <li>Library: Port "Memory Monitor" entry to Vala</li>
           <li>Library: Port "Launcher" entry to Vala</li>
+          <li>Library: Port "Calendar" entry to Vala</li>
+          <li>Library: Port "Column View" entry to Vala</li>
+          <li>Library: Port "HTTP Request" entry to Vala</li>
+          <li>Library: Port "Web View" entry to Vala</li>
         </ul>
       </description>
     </release>
