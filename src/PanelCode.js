@@ -57,7 +57,14 @@ export default function PanelCode({
   function switchLanguage() {
     panel.language = dropdown_code_lang.selected_item?.string;
     stack_code.visible_child_name = panel.language;
-    previewer.useInternal().catch(console.error);
+    if (panel.language === "JavaScript") {
+      previewer.useInternal().catch(console.error);
+    } else {
+      // If we switch language to anything other than JS,
+      // we need the user to hit "Run" first to compile the code and/or
+      // init the demo in the external previewer.
+      previewer.hideShowPreviewerButton().catch(console.error);
+    }
   }
   switchLanguage();
 

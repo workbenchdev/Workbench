@@ -75,7 +75,6 @@ export default function Previewer({
         stack.set_visible_child_name("close_window");
       } else {
         stack.set_visible_child_name("open_window");
-        useInternal().catch(console.error);
       }
     },
     output,
@@ -277,6 +276,7 @@ export default function Previewer({
 
     current = previewer;
 
+    button_open.show();
     handler_id_button_open = button_open.connect("clicked", async () => {
       try {
         await current.open();
@@ -302,6 +302,10 @@ export default function Previewer({
     }
   }
 
+  async function hideShowPreviewerButton() {
+    button_open.hide();
+  }
+
   builder.get_object("button_screenshot").connect("clicked", () => {
     screenshot({ application, window, current }).catch(console.error);
   });
@@ -324,6 +328,7 @@ export default function Previewer({
     },
     useExternal,
     useInternal,
+    hideShowPreviewerButton,
     setPanelCode(v) {
       panel_code = v;
     },

@@ -216,11 +216,12 @@ class Previewer:
         if self.window is not None:
             self.window.destroy()
         self.window = the_window
+        # Make sure the preview can be re-opened by using the "Show Preview Window" button.
+        self.window.set_hide_on_close(True)
         self.window.connect("close-request", self.on_window_closed)
 
     def on_window_closed(self, *args):
         self.window_open(False)
-        self.window = None
         return False
 
     def on_css_parsing_error(self, _css, section: Gtk.CssSection, error: GLib.Error):

@@ -46,7 +46,12 @@ export default function External({ output, builder, onWindowChange }) {
       console.debug(err);
       return;
     }
-    stack.set_visible_child_name("open_window");
+    // only do this, if we were previously on "close_window", because it's possible
+    // we have just been replaced with the internal previewer, which may have
+    // already switched tro "inline"
+    if (stack.get_visible_child_name() === "close_window") {
+      stack.set_visible_child_name("open_window");
+    }
   }
 
   function stop() {

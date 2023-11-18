@@ -25,12 +25,13 @@ namespace Workbench {
     private void set_window(Gtk.Window window) {
       this.window?.destroy ();
       this.window = window;
+      // Make sure the preview can be re-opened by using the "Show Preview Window" button.
+      this.window.set_hide_on_close(true);
       this.window.close_request.connect (this.on_window_closed);
     }
 
     private bool on_window_closed () {
       this.window_open (false);
-      this.window = null;
       return false;
     }
 
