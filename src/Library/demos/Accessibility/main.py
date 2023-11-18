@@ -37,7 +37,7 @@ clicker.connect(
 custom_button.add_controller(clicker)
 
 
-def on_key_released(_controller, keyval):
+def on_key_released(_controller, keyval, _keycode, _state):
     keyvals = [
         Gdk.KEY_space,
         Gdk.KEY_KP_Space,
