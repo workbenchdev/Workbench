@@ -51,6 +51,8 @@ class Previewer:
     builder: Gtk.Builder | None
     target: Gtk.Widget | None
     css: Gtk.CssProvider | None
+    template: str | None
+    template_gtype_name: str | None
     uri = str | None
     style_manager: Adw.StyleManager
 
@@ -60,11 +62,22 @@ class Previewer:
         self.window = None
         self.builder = None
         self.target = None
+        self.template = None
+        self.template_gtype_name = None
         self.uri = None
 
     @DBusTemplate.Method()
-    def update_ui(self, content: str, target_id: str, original_id: str = ""):
+    def update_ui(
+        self,
+        content: str,
+        target_id: str,
+        original_id: str = "",
+        template_gtype_name: str = "",
+        template: str = "",
+    ):
         self.builder = Gtk.Builder.new_from_string(content, len(content))
+        self.template = template
+        self.template_gtype_name = template_gtype_name
         target = self.builder.get_object(target_id)
         if target is None:
             print(
@@ -233,6 +246,11 @@ class Previewer:
     def resolve(self, path: str):
         return Gio.File.new_for_uri(self.uri).resolve_relative_path(path).get_uri()
 
+    def preview(self, widget: Gtk.Widget):
+        self.target = widget
+        self.ensure_window()
+        self.window.set_child(widget)
+
 
 # 3. API for demos
 # ----------------
@@ -247,7 +265,7 @@ class WorkbenchModule(ModuleType):
         self._previewer = previewer
 
     def __getattr__(self, name):
-        # Getting `window` or `builder` will transparently forward to calls
+        # Getting `window` `builder`, etc. will transparently forward to calls
         # `window`/`builder` attributes of the previewer.
 
         # We do this to make the API in the demos a bit simpler. Just using a normal module's dict and
@@ -261,6 +279,12 @@ class WorkbenchModule(ModuleType):
             return self._previewer.builder
         if name == "resolve":
             return self._previewer.resolve
+        if name == "template":
+            return self._previewer.template
+        if name == "template_gtype_name":
+            return self._previewer.template_gtype_name
+        if name == "preview":
+            return self._previewer.preview
         raise KeyError
 
 

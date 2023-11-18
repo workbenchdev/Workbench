@@ -1,5 +1,6 @@
 import Adw from "gi://Adw";
 import dbus_previewer from "./DBusPreviewer.js";
+import { decode } from "../util.js";
 
 export default function External({ output, builder, onWindowChange }) {
   const stack = builder.get_object("stack_preview");
@@ -57,9 +58,21 @@ export default function External({ output, builder, onWindowChange }) {
       .catch(console.error);
   }
 
-  async function updateXML({ xml, target_id, original_id }) {
+  async function updateXML({
+    xml,
+    target_id,
+    original_id,
+    template_gtype_name,
+    template,
+  }) {
     try {
-      await dbus_proxy.UpdateUiAsync(xml, target_id, original_id || "");
+      await dbus_proxy.UpdateUiAsync(
+        xml,
+        target_id,
+        original_id || "",
+        template_gtype_name || "",
+        template ? decode(template) : "",
+      );
     } catch (err) {
       console.debug(err);
     }

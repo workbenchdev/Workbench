@@ -168,6 +168,7 @@ export default function Previewer({
     let tree;
     let original_id;
     let template;
+    let template_gtype_name;
 
     if (!text) {
       text = `<?xml version="1.0" encoding="UTF-8"?><interface><object class="GtkBox"></object></interface>";`;
@@ -175,7 +176,8 @@ export default function Previewer({
 
     try {
       tree = xml.parse(text);
-      ({ target_id, text, original_id, template } = targetBuildable(tree));
+      ({ target_id, text, original_id, template, template_gtype_name } =
+        targetBuildable(tree));
     } catch (err) {
       // console.error(err);
       console.debug(err);
@@ -224,17 +226,20 @@ export default function Previewer({
     }
     dropdown_preview_align.visible = !!template;
 
-    await current.updateXML({
+    const update_xml_params = {
       xml: text,
       builder,
       object_preview,
       target_id,
       original_id,
       template,
-    });
+      template_gtype_name,
+    };
+    await current.updateXML(update_xml_params);
     code_view_css.clearDiagnostics();
     await current.updateCSS(code_view_css.buffer.text);
     symbols = null;
+    return update_xml_params;
   }
 
   const schedule_update = unstack(update, console.error);
@@ -369,13 +374,11 @@ function getTemplate(tree) {
   const original = tree.toString();
   tree.remove(template);
 
+  // Insert a dummy target back in.
   const target_id = makeWorkbenchTargetId();
   const el = new xml.Element("object", {
-    class: parent,
+    class: "GtkBox",
     id: target_id,
-  });
-  template.children.forEach((child) => {
-    el.cnode(child);
   });
   tree.cnode(el);
 
@@ -384,6 +387,7 @@ function getTemplate(tree) {
     text: tree.toString(),
     original_id: undefined,
     template: encode(original),
+    template_gtype_name: template.attrs.class,
   };
 }
 
@@ -409,7 +413,13 @@ function targetBuildable(tree) {
   const target_id = makeWorkbenchTargetId();
   child.attrs.id = target_id;
 
-  return { target_id, text: tree.toString(), original_id, template: null };
+  return {
+    target_id,
+    text: tree.toString(),
+    original_id,
+    template: null,
+    template_gtype_name: null,
+  };
 }
 
 function makeSignalHandler(

@@ -33,3 +33,12 @@ pub(crate) fn resolve(path: impl AsRef<Path>) -> String {
             .to_string()
     }
 }
+
+#[allow(dead_code)]
+pub(crate) fn preview(widget: &impl IsA<gtk::Widget>) {
+    // TODO: We would now need to actually somehow communicate back to the
+    //       previewer.vala itself to set it's target and ensure_window...
+    // this.target = widget;
+    // this.ensure_window();
+    // this.window.set_child(widget);
+}

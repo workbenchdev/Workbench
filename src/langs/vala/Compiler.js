@@ -1,6 +1,7 @@
 import Gio from "gi://Gio";
 import dbus_previewer from "../../Previewer/DBusPreviewer.js";
 import { decode } from "../../util.js";
+import template_resource from "../../Previewer/TemplateResource.js";
 
 export default function ValaCompiler({ session }) {
   const { file } = session;
@@ -8,7 +9,7 @@ export default function ValaCompiler({ session }) {
   const module_file = file.get_child("libworkbenchcode.so");
   const file_vala = file.get_child("main.vala");
 
-  async function compile() {
+  async function compile(template) {
     let args;
 
     try {
@@ -19,6 +20,12 @@ export default function ValaCompiler({ session }) {
       console.debug(error);
       return;
     }
+
+    // We now also need to write and compile the resource file first.
+    const gresource_path =
+      await template_resource.generateTemplateResourceFile(file);
+    await template_resource.writeTemplateUi(file, template);
+    await compileGresource(gresource_path);
 
     const valac_launcher = new Gio.SubprocessLauncher();
     valac_launcher.set_cwd(file.get_path());
@@ -43,6 +50,23 @@ export default function ValaCompiler({ session }) {
 
     const result = valac.get_successful();
     valac_launcher.close();
+    return result;
+  }
+
+  async function compileGresource(gresource_path) {
+    const glib_compile_launcher = new Gio.SubprocessLauncher();
+    glib_compile_launcher.set_cwd(file.get_path());
+    const glib_compile = glib_compile_launcher.spawnv([
+      "glib-compile-resources",
+      gresource_path,
+      "--generate-source",
+      "--target=workbench.Resource.c",
+    ]);
+
+    await glib_compile.wait_async(null);
+
+    const result = glib_compile.get_successful();
+    glib_compile_launcher.close();
     return result;
   }
 

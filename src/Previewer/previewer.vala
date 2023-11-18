@@ -65,7 +65,10 @@ namespace Workbench {
       typeof (WebKit.WebView).ensure();
     }
 
-    public void update_ui (string content, string target_id, string original_id = "") {
+    public void update_ui (string content, string target_id, string original_id = "", string template_gtype_name = "", string template = "") {
+      // we don't use template: This is compiled as a gresource for Vala and for Rust it's read directly
+      // and compiled from a path to the UI file. See Rust/Vala compiler.
+
       this.ensure_types();
       this.builder = new Gtk.Builder.from_string (content, content.length);
       var target = this.builder.get_object (target_id) as Gtk.Widget;
@@ -186,6 +189,10 @@ namespace Workbench {
 
     public void enable_inspector (bool enabled) {
       Gtk.Window.set_interactive_debugging (enabled);
+    }
+
+    public void preview() {
+
     }
 
     public Adw.ColorScheme ColorScheme { get; set; default = Adw.ColorScheme.DEFAULT; }
