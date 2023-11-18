@@ -329,6 +329,9 @@ export default function Window({ application, session }) {
 
     previewer.start();
     panel_ui.start();
+    // We already cleared the console before starting.
+    // We don't want to clear the console again, as this would hide compile errors if any occurred.
+    await previewer.update(true, false);
 
     button_run.set_sensitive(true);
     term_console.scrollToEnd();
@@ -345,8 +348,6 @@ export default function Window({ application, session }) {
     }
 
     if (language === "JavaScript") {
-      await previewer.update(true);
-
       // We have to create a new file each time
       // because gjs doesn't appear to use etag for module caching
       // ?foo=Date.now() also does not work as expected

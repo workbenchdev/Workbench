@@ -161,7 +161,7 @@ export default function Previewer({
     if (settings.get_boolean("auto-preview")) schedule_update();
   });
   let symbols = null;
-  async function update(force = false) {
+  async function update(force = false, clearConsole = true) {
     if (!(force || settings.get_boolean("auto-preview"))) return;
     let text = panel_ui.xml.trim();
     let target_id;
@@ -203,7 +203,9 @@ export default function Previewer({
 
     registerSignals({ tree, scope, symbols, template });
 
-    term_console.clear();
+    if (clearConsole) {
+      term_console.clear();
+    }
 
     try {
       builder.add_from_string(text, -1);
