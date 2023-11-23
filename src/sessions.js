@@ -35,6 +35,13 @@ export function getSessions() {
   const recent_projects = settings.get_strv("recent-projects");
   for (const path of recent_projects) {
     const file = Gio.File.new_for_path(path);
+    if (
+      file.query_file_type(Gio.FileQueryInfoFlags.NONE, null) !==
+      Gio.FileType.DIRECTORY
+    ) {
+      removeFromRecentProjects();
+      continue;
+    }
     files.set(file.get_path(), file);
   }
 
@@ -166,5 +173,11 @@ export class Session {
 export function addToRecentProjects(path) {
   const recent_projects = new Set(settings.get_strv("recent-projects"));
   recent_projects.add(path);
+  settings.set_strv("recent-projects", [...recent_projects]);
+}
+
+export function removeFromRecentProjects(path) {
+  const recent_projects = new Set(settings.get_strv("recent-projects"));
+  recent_projects.delete(path);
   settings.set_strv("recent-projects", [...recent_projects]);
 }
