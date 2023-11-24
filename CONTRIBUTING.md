@@ -147,9 +147,11 @@ See also
 - [GJS Logging](https://gitlab.gnome.org/GNOME/gjs/-/blob/master/doc/Logging.md)
 - [Flatpak Debugging](https://docs.flatpak.org/en/latest/debugging.html)
 
-<!--
 ## Translation
 
+Workbench doesn't currently support translations for its user interface. GNOME documentation is only available in English and we do not want to mislead non-English speakers.
+
+<!--
 If you'd like to help translating Workbench into your language, please head over to [Weblate](https://hosted.weblate.org/engage/workbench/).
 
 <a href="https://hosted.weblate.org/engage/workbench/">

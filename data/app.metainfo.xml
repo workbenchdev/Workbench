@@ -42,6 +42,18 @@
   </screenshots>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="45.4" date="2023-xx-xx">
+      <description translatable="no">
+        <ul>
+          <li>Restore on-disk projects on startup</li>
+          <li>Library: Port "Accessibility" entry to Python</li>
+          <li>Library: Port "Account" entry to Python</li>
+          <li>Library: Port "Email" entry to Python</li>
+          <li>Library: Port "Overlay Split View" entry to Python</li>
+          <li>Library: Port "Wallpaper" entry to Python</li>
+        </ul>
+      </description>
+    </release>
     <release version="45.3" date="2023-11-16">
       <description translatable="no">
         <ul>
