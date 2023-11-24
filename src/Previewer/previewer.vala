@@ -128,8 +128,7 @@ namespace Workbench {
       Gtk.StyleContext.add_provider_for_display (
         Gdk.Display.get_default (),
         this.css,
-        // STYLE_PROVIDER_PRIORITY_THEME is 200; only values below that behave correctly
-        Gtk.STYLE_PROVIDER_PRIORITY_THEME - 1);
+        Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
     }
 
     public void run (string filename, string uri) {
