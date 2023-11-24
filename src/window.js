@@ -34,7 +34,11 @@ import "./icons/re.sonny.Workbench-screenshot-symbolic.svg" with { type: "icon" 
 
 import "./widgets/Modal.js";
 import "./widgets/CodeView.js";
-import { deleteSession, saveSessionAsProject } from "./sessions.js";
+import {
+  deleteSession,
+  removeFromRecentProjects,
+  saveSessionAsProject,
+} from "./sessions.js";
 import {
   action_extensions,
   isRustEnabled,
@@ -515,6 +519,7 @@ function close(window) {
 
 async function onCloseSession({ session, window }) {
   if (session.isProject()) {
+    removeFromRecentProjects(session.file.get_path());
     return close(window);
   }
 

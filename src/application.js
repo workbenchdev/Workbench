@@ -7,7 +7,12 @@ import { settings, data_dir, ensureDir } from "./util.js";
 import { overrides } from "./overrides.js";
 import Library, { getDemo } from "./Library/Library.js";
 import Extensions from "./Extensions/Extensions.js";
-import { Session, createSessionFromDemo, getSessions } from "./sessions.js";
+import {
+  Session,
+  addToRecentProjects,
+  createSessionFromDemo,
+  getSessions,
+} from "./sessions.js";
 import ShortcutsWindow from "./shortcutsWindow.js";
 
 ensureDir(data_dir);
@@ -25,6 +30,8 @@ application.connect("open", (_self, files, hint) => {
   if (!file || hint !== "project") return;
 
   const session = new Session(file);
+
+  addToRecentProjects(file.get_path());
   const { load } = Window({
     application,
     session,

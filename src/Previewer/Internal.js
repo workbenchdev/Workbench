@@ -215,8 +215,7 @@ export default function Internal({
     Gtk.StyleContext.add_provider_for_display(
       output.get_display(),
       css_provider,
-      // STYLE_PROVIDER_PRIORITY_THEME is 200; only values below that behave correctly
-      Gtk.STYLE_PROVIDER_PRIORITY_THEME - 1,
+      Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
     );
   }
 
@@ -245,7 +244,7 @@ export default function Internal({
 // https://github.com/prettier/prettier/issues/9114
 // We are not using https://github.com/pazams/postcss-scopify
 // because it's not compatible with postcss 8
-export function scopeStylesheet(style, id) {
+function scopeStylesheet(style, id) {
   const ast = postcss.parse(style);
   id = id || "workbench_output";
 
