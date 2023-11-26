@@ -63,7 +63,6 @@ clean:
 	rm -f src/Library/**/workbench.vala
 	rm -f src/Library/**/main.ui
 	rm -f src/Library/**/libworkbenchcode.so
-	rm -f src/Library/**/biome.json
 	rm -rf src/Library/**/__pycache__
 	rm -f re.sonny.Workbench.Devel.flatpak
 	rm -f re.sonny.Workbench.flatpak
