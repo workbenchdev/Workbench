@@ -141,6 +141,7 @@ To open and run this; [install Workbench from Flathub](https://flathub.org/apps/
 export class Session {
   file = null;
   settings = null;
+  id = Math.random().toString().substring(2);
 
   constructor(file) {
     this.file = file;
