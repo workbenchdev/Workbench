@@ -74,9 +74,7 @@ export default function TermConsole({
   window.add_action(action_clear);
   application.set_accels_for_action("win.clear", ["<Control>K"]);
 
-  style_manager.connect("notify::color-scheme", () =>
-    updateTerminalColors(terminal),
-  );
+  style_manager.connect("notify::dark", () => updateTerminalColors(terminal));
   updateTerminalColors(terminal);
 
   return {
