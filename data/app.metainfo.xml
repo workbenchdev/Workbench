@@ -46,6 +46,7 @@
       <description translatable="no">
         <ul>
           <li>Restore on-disk projects on startup</li>
+          <li>Prevent Style from affecting other windows</li>
           <li>Library: Port "Accessibility" entry to Python</li>
           <li>Library: Port "Account" entry to Python</li>
           <li>Library: Port "Email" entry to Python</li>
