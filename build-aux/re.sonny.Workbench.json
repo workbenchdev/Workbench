@@ -44,6 +44,7 @@
     "modules/libspelling.json",
     "modules/GTKCssLanguageServer.json",
     "modules/icon-development-kit.json",
+    "modules/webp-pixbuf-loader.json",
     {
       "name": "Workbench",
       "buildsystem": "meson",
