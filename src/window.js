@@ -201,7 +201,7 @@ export default function Window({ application, session }) {
   async function format(code_view, formatter) {
     let code;
 
-    const { buffer } = code_view;
+    const { buffer, source_view } = code_view;
 
     try {
       code = await formatter(buffer.text.trim());
@@ -211,11 +211,18 @@ export default function Window({ application, session }) {
     }
 
     const { cursor_position } = buffer;
+    const h_scroll_position = source_view.hadjustment.value;
+    const v_scroll_position = source_view.vadjustment.value;
 
     code_view.replaceText(code, false);
-    buffer.place_cursor(buffer.get_iter_at_offset(cursor_position));
 
-    return code;
+    // https://matrix.to/#/!aUhETchlgthwWVQzhi:matrix.org/$1701651785113NJUnw:gnome.org
+    GLib.idle_add(GLib.PRIORITY_DEFAULT_IDLE, () => {
+      source_view.hadjustment.value = h_scroll_position;
+      source_view.vadjustment.value = v_scroll_position;
+      const iter = buffer.get_iter_at_offset(cursor_position);
+      buffer.place_cursor(iter);
+    });
   }
 
   function formatRustCode(text) {
