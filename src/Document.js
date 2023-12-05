@@ -4,9 +4,32 @@ import GLib from "gi://GLib";
 
 export default function Document({ session, code_view, lang }) {
   const { buffer } = code_view;
-  let handler_id = null;
+  let modified_changed_handler_id = null;
+  let changed_signal_handler_id = null;
 
   const file = session.file.get_child(lang.default_file);
+
+  const file_monitor = file.monitor(Gio.FileMonitorFlags.NONE, null);
+
+  function watchFile() {
+    unwatchFile();
+    changed_signal_handler_id = file_monitor.connect(
+      "changed",
+      (_self, _file, _other_file, event_type) => {
+        const event_name = Object.entries(Gio.FileMonitorEvent).find(
+          ([_key, value]) => value === event_type,
+        )?.[0];
+        console.log("wow", event_name);
+      },
+    );
+  }
+
+  function unwatchFile() {
+    if (changed_signal_handler_id === null) return;
+    file_monitor.disconnect(changed_signal_handler_id);
+    changed_signal_handler_id = null;
+  }
+
   const source_file = new Source.File({
     location: file,
   });
@@ -14,9 +37,11 @@ export default function Document({ session, code_view, lang }) {
   start();
 
   function save() {
+    unwatchFile();
     saveSourceBuffer({ source_file, buffer })
       .catch(console.error)
       .finally(() => {
+        watchFile();
         try {
           session.settings.set_boolean("edited", true);
         } catch (err) {
@@ -27,17 +52,19 @@ export default function Document({ session, code_view, lang }) {
 
   function start() {
     stop();
-    handler_id = buffer.connect("modified-changed", () => {
+    modified_changed_handler_id = buffer.connect("modified-changed", () => {
       if (!buffer.get_modified()) return;
       save();
     });
+    watchFile();
   }
 
   function stop() {
-    if (handler_id !== null) {
-      buffer.disconnect(handler_id);
-      handler_id = null;
+    if (modified_changed_handler_id !== null) {
+      buffer.disconnect(modified_changed_handler_id);
+      modified_changed_handler_id = null;
     }
+    unwatchFile();
   }
 
   function load() {
