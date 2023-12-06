@@ -211,6 +211,9 @@ export default function Window({ application, session }) {
     }
 
     const { cursor_position } = buffer;
+    const iter_cursor = buffer.get_iter_at_offset(cursor_position);
+    const line_number = iter_cursor.get_line();
+    const line_offset = iter_cursor.get_line_offset();
     const h_scroll_position = source_view.hadjustment.value;
     const v_scroll_position = source_view.vadjustment.value;
 
@@ -220,7 +223,7 @@ export default function Window({ application, session }) {
     GLib.idle_add(GLib.PRIORITY_DEFAULT_IDLE, () => {
       source_view.hadjustment.value = h_scroll_position;
       source_view.vadjustment.value = v_scroll_position;
-      const iter = buffer.get_iter_at_offset(cursor_position);
+      const [, iter] = buffer.get_iter_at_line_offset(line_number, line_offset);
       buffer.place_cursor(iter);
     });
   }
