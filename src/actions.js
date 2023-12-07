@@ -8,8 +8,6 @@ import XdpGtk from "gi://XdpGtk4";
 import About from "./about.js";
 import { portal, settings } from "./util.js";
 
-import IconLibrary from "./IconLibrary/main.js";
-
 export default function Actions({ application }) {
   const quit = new Gio.SimpleAction({
     name: "quit",
@@ -29,16 +27,6 @@ export default function Actions({ application }) {
     About({ application });
   });
   application.add_action(showAboutDialog);
-
-  const action_icon_library = new Gio.SimpleAction({
-    name: "icon_library",
-  });
-  let window_icon_browser;
-  action_icon_library.connect("activate", (_self, _target) => {
-    window_icon_browser ??= IconLibrary();
-    window_icon_browser.present();
-  });
-  application.add_action(action_icon_library);
 
   const action_open_uri = new Gio.SimpleAction({
     name: "open_uri",

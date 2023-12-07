@@ -19,7 +19,6 @@ Among other things, Workbench comes with
 - Autosave, sessions and projects
 - Code linter and formatter
 - Terminal output
-- 1000+ icons
 
 ℹ️ Workbench is made possible by Flatpak. Only Flathub Workbench is supported.
 
