@@ -1,6 +1,0 @@
-{
-  "category": "user_interface",
-  "description": "Help people with disabilities to participate in substantial life activities",
-  "panels": ["code", "ui", "preview"],
-  "autorun": true
-}

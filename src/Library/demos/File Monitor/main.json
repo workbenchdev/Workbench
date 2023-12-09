@@ -1,6 +1,0 @@
-{
-  "category": "platform",
-  "description": "Obtains a file or directory monitor for the given file, depending on the type of the file.",
-  "panels": ["code", "preview"],
-  "autorun": true
-}

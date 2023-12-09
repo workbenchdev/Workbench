@@ -1,6 +1,0 @@
-{
-  "category": "controls",
-  "description": "Display structured menus with items, sections and submenus",
-  "panels": ["ui", "preview"],
-  "autorun": true
-}

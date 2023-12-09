@@ -1,6 +1,0 @@
-{
-  "category": "user_interface",
-  "description": "Animates the transition of its child from invisible to visible",
-  "panels": ["ui", "preview"],
-  "autorun": true
-}

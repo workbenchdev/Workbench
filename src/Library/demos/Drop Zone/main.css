@@ -1,6 +1,0 @@
-.overlay-drag-area {
-  box-shadow: none;
-  background-color: alpha(@accent_color, 0.35);
-  margin: 12px;
-  border-radius: 12px;
-}
