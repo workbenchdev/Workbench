@@ -55,7 +55,7 @@ application.connect("startup", () => {
 
 application.connect("activate", () => {
   if (application.is_remote) {
-    newWindow();
+    bootstrap();
   }
 });
 
@@ -80,7 +80,7 @@ function restoreSessions() {
   const sessions = getSessions();
 
   if (sessions.length < 1) {
-    newWindow();
+    bootstrap();
   } else {
     sessions.forEach((session) => {
       const { load } = Window({
@@ -92,7 +92,13 @@ function restoreSessions() {
   }
 }
 
-function newWindow() {
+function bootstrap() {
+  const first_run = settings.get_boolean("first-run");
+  if (!first_run) {
+    application.activate_action("library", null);
+    return;
+  }
+
   const demo = getDemo("Welcome");
   const session = createSessionFromDemo(demo);
   const { load, window } = Window({
@@ -101,6 +107,7 @@ function newWindow() {
   });
   window.maximize();
   load({ run: false }).catch(console.error);
+  settings.set_boolean("first-run", false);
 }
 
 export default application;
