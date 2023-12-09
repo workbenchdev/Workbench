@@ -1,6 +1,0 @@
-{
-  "category": "layout",
-  "description": "Overlay widgets on top of each other",
-  "panels": ["ui", "preview"],
-  "autorun": true
-}

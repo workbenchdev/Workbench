@@ -1,6 +1,0 @@
-{
-  "category": "navigation",
-  "description": "A content and sidebar view",
-  "panels": ["ui", "preview"],
-  "autorun": true
-}

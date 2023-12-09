@@ -1,6 +1,0 @@
-{
-  "category": "user_interface",
-  "description": "A Custom Widget using UI template",
-  "panels": ["code", "ui", "preview"],
-  "autorun": false
-}

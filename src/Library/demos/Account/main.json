@@ -1,6 +1,0 @@
-{
-  "category": "platform",
-  "description": "Request information about the user",
-  "panels": ["code", "preview"],
-  "autorun": true
-}

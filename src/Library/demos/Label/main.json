@@ -1,6 +1,0 @@
-{
-  "category": "layout",
-  "description": "Multipurpose text widget for a small amount of text",
-  "panels": ["code", "preview"],
-  "autorun": true
-}

@@ -1,6 +1,0 @@
-{
-  "category": "layout",
-  "description": "List and Grid views present a large dynamic list of model items",
-  "panels": ["ui", "preview"],
-  "autorun": true
-}

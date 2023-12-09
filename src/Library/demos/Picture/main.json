@@ -1,6 +1,0 @@
-{
-  "category": "user_interface",
-  "description": "Display images at their natural sizes",
-  "panels": ["ui", "preview"],
-  "autorun": true
-}
