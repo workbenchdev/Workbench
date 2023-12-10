@@ -51,6 +51,7 @@
           <li>Open the Library on start if there are no windows to restore</li>
           <li>Add WebP image format support</li>
           <li>Update to Biome 1.4.0</li>
+          <li>Update gst-plugin-gtk4 to 0.11.2</li>
           <li>Library: Port "Accessibility" entry to Python</li>
           <li>Library: Port "Account" entry to Python</li>
           <li>Library: Port "Email" entry to Python</li>
