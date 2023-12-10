@@ -27,6 +27,19 @@ Among other things, Workbench comes with
 
 > **“** It is an essential tool for those who develop applications with GTK **”** • **“** as someone who is learning GTK, Workbench is definitely a must have! **”** • **“** created a simple mockup using the amazing Workbench app **”** • **“** It used to be hard but Workbench helps me learn GTK. **”** • **“** I recommend it even to those who are new to GTK **”** • **“** This tool has simplified my life by saving my time drastically. **”** • **“** Gone too wild playing with Workbench **”**
 
+## Language support
+
+|            | Formatter | Seamless formatter | Linter | Library demos[1] |
+| ---------- | --------- | ------------------ | ------ | ---------------- |
+| JavaScript | ✅        |                    | ✅     | 92               |
+| Vala       |           |                    | ✅     | 51               |
+| Rust       | ✅        |                    |        | 43               |
+| Python     | ✅        |                    |        | 57               |
+| Blueprint  | ✅        | ✅                 | ✅     | n/a              |
+| CSS        | ✅        |                    | ✅     | n/a              |
+
+[1] As of 2023-12-05; counted with `~/go/bin/scc src/Library/demos/`
+
 ## Tips and tricks
 
 <details>

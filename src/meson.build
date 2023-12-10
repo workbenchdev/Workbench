@@ -14,7 +14,7 @@ blueprint_compiler = find_program(
 
 meson.add_install_script('../build-aux/library-index.js', pkgdatadir)
 
-install_subdir('Library/demos', install_dir : join_paths(pkgdatadir, 'Library'))
+install_subdir('Library/demos/demos', install_dir : join_paths(pkgdatadir, 'Library'))
 install_subdir('langs/rust/template', install_dir : join_paths(pkgdatadir, 'langs/rust'))
 
 configure_file(
@@ -34,6 +34,7 @@ configure_file(
 )
 
 install_data('langs/vala/workbench.vala', install_dir: pkgdatadir)
+install_data('langs/javascript/biome.json', install_dir: pkgdatadir)
 subdir('Previewer')
 subdir('langs/python')
 

@@ -11,25 +11,41 @@ import {
   settings as global_settings,
   encode,
   languages,
+  settings,
 } from "./util.js";
 
 export const sessions_dir = data_dir.get_child("sessions");
 
 export function getSessions() {
-  const sessions = [];
+  const files = new Map();
 
+  // Sessions
   ensureDir(sessions_dir);
-
   for (const file_info of sessions_dir.enumerate_children(
     "",
     Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
     null,
   )) {
     if (file_info.get_file_type() !== Gio.FileType.DIRECTORY) continue;
-    sessions.push(new Session(sessions_dir.get_child(file_info.get_name())));
+    const file = sessions_dir.get_child(file_info.get_name());
+    files.set(file.get_path(), file);
   }
 
-  return sessions;
+  // Projects
+  const recent_projects = settings.get_strv("recent-projects");
+  for (const path of recent_projects) {
+    const file = Gio.File.new_for_path(path);
+    if (
+      file.query_file_type(Gio.FileQueryInfoFlags.NONE, null) !==
+      Gio.FileType.DIRECTORY
+    ) {
+      removeFromRecentProjects();
+      continue;
+    }
+    files.set(file.get_path(), file);
+  }
+
+  return [...files.values()].map((file) => new Session(file));
 }
 
 function createSession() {
@@ -125,6 +141,7 @@ To open and run this; [install Workbench from Flathub](https://flathub.org/apps/
 export class Session {
   file = null;
   settings = null;
+  id = Math.random().toString().substring(2);
 
   constructor(file) {
     this.file = file;
@@ -152,4 +169,16 @@ export class Session {
     const code_languge = this.settings.get_int("code-language");
     return languages.find((lang) => lang.index === code_languge);
   }
+}
+
+export function addToRecentProjects(path) {
+  const recent_projects = new Set(settings.get_strv("recent-projects"));
+  recent_projects.add(path);
+  settings.set_strv("recent-projects", [...recent_projects]);
+}
+
+export function removeFromRecentProjects(path) {
+  const recent_projects = new Set(settings.get_strv("recent-projects"));
+  recent_projects.delete(path);
+  settings.set_strv("recent-projects", [...recent_projects]);
 }

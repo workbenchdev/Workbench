@@ -1,6 +1,0 @@
-{
-  "category": "platform",
-  "description": "Request the user location",
-  "panels": ["code", "preview"],
-  "autorun": true
-}

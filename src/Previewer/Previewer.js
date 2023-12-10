@@ -6,7 +6,6 @@ import Gio from "gi://Gio";
 import { gettext as _ } from "gettext";
 
 import * as xml from "../langs/xml/xml.js";
-import * as postcss from "../lib/postcss.js";
 
 import {
   encode,
@@ -331,29 +330,6 @@ export default function Previewer({
       symbols = _symbols;
     },
   };
-}
-
-// We are using postcss because it's also a dependency of prettier
-// it would be great to keep the ast around and pass that to prettier
-// so there is no need to re-parse but that's not supported yet
-// https://github.com/prettier/prettier/issues/9114
-// We are not using https://github.com/pazams/postcss-scopify
-// because it's not compatible with postcss 8
-export function scopeStylesheet(style) {
-  const ast = postcss.parse(style);
-
-  for (const node of ast.nodes) {
-    if (node.selector) {
-      node.selector = `#workbench_output ${node.selector}`;
-    }
-  }
-
-  let str = "";
-  postcss.stringify(ast, (s) => {
-    str += s;
-  });
-
-  return str;
 }
 
 function getTemplate(tree) {

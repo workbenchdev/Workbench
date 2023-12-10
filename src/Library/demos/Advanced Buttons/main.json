@@ -1,6 +1,0 @@
-{
-  "category": "controls",
-  "description": "Complex buttons with menus and icons",
-  "panels": ["ui", "preview"],
-  "autorun": true
-}

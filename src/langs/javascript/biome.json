@@ -11,7 +11,7 @@
     "rules": {
       "recommended": false,
       "correctness": {
-        "noUndeclaredVariables": "warn",
+        "noUndeclaredVariables": "error",
         "noUnusedVariables": "warn"
       }
     }

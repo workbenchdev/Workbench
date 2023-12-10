@@ -1,6 +1,0 @@
-{
-  "category": "platform",
-  "description": "Monitor Power Mode",
-  "panels": ["code", "preview"],
-  "autorun": true
-}

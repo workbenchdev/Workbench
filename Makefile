@@ -11,7 +11,6 @@ setup:
 lint:
 # JavaScript
 	./node_modules/.bin/eslint --max-warnings=0 src
-	./build-aux/fun biome ci --config-path=src/langs/javascript/ src/Library/demos/
 # rustfmt
 	./build-aux/fun rustfmt --check --edition 2021 src/**/*.rs
 # black
@@ -59,12 +58,6 @@ flatpak:
 
 # Sync with .gitignore
 clean:
-	rm -f src/Library/**/settings
-	rm -f src/Library/**/workbench.vala
-	rm -f src/Library/**/main.ui
-	rm -f src/Library/**/libworkbenchcode.so
-	rm -f src/Library/**/biome.json
-	rm -rf src/Library/**/__pycache__
 	rm -f re.sonny.Workbench.Devel.flatpak
 	rm -f re.sonny.Workbench.flatpak
 	rm -rf _build

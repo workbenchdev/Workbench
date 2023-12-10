@@ -1,8 +1,6 @@
-import Gio from "gi://Gio";
+import GLib from "gi://GLib";
 
 import LSPClient from "../../lsp/LSPClient.js";
-
-import biome_configuration from "./biome.json" with { type: "bytes" };
 
 export function setup({ document }) {
   const { file, code_view } = document;
@@ -12,16 +10,7 @@ export function setup({ document }) {
     file,
   });
 
-  (async () => {
-    try {
-      // This is the only way to configure Biome language server at the moment
-      // see https://github.com/biomejs/biome/issues/675
-      await createBiomeConfiguration(file.get_parent());
-    } catch (err) {
-      console.error(err);
-    }
-    await lspc.start();
-  })().catch(console.error);
+  lspc.start().catch(console.error);
 
   code_view.buffer.connect("modified-changed", () => {
     if (!code_view.buffer.get_modified()) return;
@@ -36,7 +25,8 @@ function createLSPClient({ file, code_view }) {
     [
       "biome",
       "lsp-proxy",
-      // "--log-level=debug"
+      // src/meson.build installs biome.json there
+      `--config-path=${GLib.build_filenamev([pkg.pkgdatadir])}`,
     ],
     {
       rootUri: file.get_parent().get_uri(),
@@ -72,14 +62,4 @@ function createLSPClient({ file, code_view }) {
   );
 
   return lspc;
-}
-
-function createBiomeConfiguration(file) {
-  return file.get_child("biome.json").replace_contents_async(
-    biome_configuration,
-    null, // etag
-    false, // make_backup
-    Gio.FileCreateFlags.NONE, //flags
-    null, // cancellable
-  );
 }

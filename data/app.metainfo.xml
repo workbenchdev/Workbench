@@ -42,6 +42,24 @@
   </screenshots>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="45.4" date="2023-xx-xx">
+      <description translatable="no">
+        <ul>
+          <li>Restore on-disk projects on startup</li>
+          <li>Prevent Style from affecting other windows</li>
+          <li>Fix Console style when toggling dark mode</li>
+          <li>Open the Library on start if there are no windows to restore</li>
+          <li>Add WebP image format support</li>
+          <li>Update to Biome 1.4.0</li>
+          <li>Update gst-plugin-gtk4 to 0.11.2</li>
+          <li>Library: Port "Accessibility" entry to Python</li>
+          <li>Library: Port "Account" entry to Python</li>
+          <li>Library: Port "Email" entry to Python</li>
+          <li>Library: Port "Overlay Split View" entry to Python</li>
+          <li>Library: Port "Wallpaper" entry to Python</li>
+        </ul>
+      </description>
+    </release>
     <release version="45.3" date="2023-11-16">
       <description translatable="no">
         <ul>

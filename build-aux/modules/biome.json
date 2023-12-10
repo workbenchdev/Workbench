@@ -7,15 +7,15 @@
       "type": "file",
       "dest-filename": "biome",
       "only-arches": ["aarch64"],
-      "url": "https://github.com/biomejs/biome/releases/download/cli%2Fv1.3.3/biome-linux-arm64",
-      "sha256": "3eac5c42c21f330a77f194ad10fd9cfa3e627512d999124405fb9e033223b6eb"
+      "url": "https://github.com/biomejs/biome/releases/download/cli%2Fv1.4.0/biome-linux-arm64",
+      "sha256": "9c944cd932476a5e6264f455ab3979a8ed870a72adffdebc3dbe9ef4e4240926"
     },
     {
       "type": "file",
       "dest-filename": "biome",
       "only-arches": ["x86_64"],
-      "url": "https://github.com/biomejs/biome/releases/download/cli%2Fv1.3.3/biome-linux-x64",
-      "sha256": "f15e955a935ec1e255a626c4501048612a271539483f76d8d392b0cc7e80b42a"
+      "url": "https://github.com/biomejs/biome/releases/download/cli%2Fv1.4.0/biome-linux-x64",
+      "sha256": "9d14e2a3ebf5350813d7d2b14b8b0b92d3e9cfa384bfbdc6a314b46cf3c8cc6c"
     }
   ]
 }

@@ -20,6 +20,11 @@ export default function Internal({
   panel_ui,
   session,
 }) {
+  const inline_css_scope_target = output.get_parent();
+  inline_css_scope_target.name = `workbench_output-${session.id}`;
+
+  let css_scope_target = inline_css_scope_target;
+
   const bus = {};
   addSignalMethods(bus);
 
@@ -174,8 +179,10 @@ export default function Internal({
     }
 
     if (!object_root.name) {
-      object_root.name = "workbench_output";
+      object_root.name = `workbench_output-${session.id}`;
     }
+
+    css_scope_target = object_root;
 
     return object_root;
   }
@@ -183,6 +190,7 @@ export default function Internal({
   function updateBuilderNonRoot(object_preview) {
     object_root?.destroy();
     object_root = null;
+    css_scope_target = inline_css_scope_target;
 
     stack.set_visible_child_name("inline");
     preview(object_preview);
@@ -204,7 +212,7 @@ export default function Internal({
     if (style.match(/#$/g)) return;
 
     try {
-      style = scopeStylesheet(style, object_root?.name);
+      style = scopeStylesheet(style, css_scope_target.name);
     } catch (err) {
       console.debug(err);
       // logError(err);
@@ -215,8 +223,7 @@ export default function Internal({
     Gtk.StyleContext.add_provider_for_display(
       output.get_display(),
       css_provider,
-      // STYLE_PROVIDER_PRIORITY_THEME is 200; only values below that behave correctly
-      Gtk.STYLE_PROVIDER_PRIORITY_THEME - 1,
+      Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
     );
   }
 
@@ -245,13 +252,11 @@ export default function Internal({
 // https://github.com/prettier/prettier/issues/9114
 // We are not using https://github.com/pazams/postcss-scopify
 // because it's not compatible with postcss 8
-export function scopeStylesheet(style, id) {
+function scopeStylesheet(style, id) {
   const ast = postcss.parse(style);
-  id = id || "workbench_output";
-
   for (const node of ast.nodes) {
     if (node.selector === "window") {
-      node.selector = `window#${id}`;
+      node.selector = `#${id}`;
     } else if (node.selector) {
       node.selector = `#${id} ${node.selector}`;
     }

@@ -1,6 +1,0 @@
-{
-  "category": "feedback",
-  "description": "Display the progress of a long running operation",
-  "panels": ["ui", "preview"],
-  "autorun": true
-}

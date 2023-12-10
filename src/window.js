@@ -34,7 +34,11 @@ import "./icons/re.sonny.Workbench-screenshot-symbolic.svg" with { type: "icon" 
 
 import "./widgets/Modal.js";
 import "./widgets/CodeView.js";
-import { deleteSession, saveSessionAsProject } from "./sessions.js";
+import {
+  deleteSession,
+  removeFromRecentProjects,
+  saveSessionAsProject,
+} from "./sessions.js";
 import {
   action_extensions,
   isRustEnabled,
@@ -197,7 +201,7 @@ export default function Window({ application, session }) {
   async function format(code_view, formatter) {
     let code;
 
-    const { buffer } = code_view;
+    const { buffer, source_view } = code_view;
 
     try {
       code = await formatter(buffer.text.trim());
@@ -207,11 +211,21 @@ export default function Window({ application, session }) {
     }
 
     const { cursor_position } = buffer;
+    const iter_cursor = buffer.get_iter_at_offset(cursor_position);
+    const line_number = iter_cursor.get_line();
+    const line_offset = iter_cursor.get_line_offset();
+    const h_scroll_position = source_view.hadjustment.value;
+    const v_scroll_position = source_view.vadjustment.value;
 
     code_view.replaceText(code, false);
-    buffer.place_cursor(buffer.get_iter_at_offset(cursor_position));
 
-    return code;
+    // https://matrix.to/#/!aUhETchlgthwWVQzhi:matrix.org/$1701651785113NJUnw:gnome.org
+    GLib.idle_add(GLib.PRIORITY_DEFAULT_IDLE, () => {
+      source_view.hadjustment.value = h_scroll_position;
+      source_view.vadjustment.value = v_scroll_position;
+      const [, iter] = buffer.get_iter_at_line_offset(line_number, line_offset);
+      buffer.place_cursor(iter);
+    });
   }
 
   function formatRustCode(text) {
@@ -515,6 +529,7 @@ function close(window) {
 
 async function onCloseSession({ session, window }) {
   if (session.isProject()) {
+    removeFromRecentProjects(session.file.get_path());
     return close(window);
   }
 
