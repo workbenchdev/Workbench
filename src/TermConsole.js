@@ -68,7 +68,6 @@ export default function TermConsole({
 
   const action_clear = new Gio.SimpleAction({
     name: "clear",
-    parameter_type: null,
   });
   action_clear.connect("activate", clear);
   window.add_action(action_clear);
@@ -76,13 +75,21 @@ export default function TermConsole({
 
   const action_console_copy = new Gio.SimpleAction({
     name: "console_copy",
-    parameter_type: null,
   });
   action_console_copy.connect("activate", () => {
     terminal.copy_clipboard_format(Vte.Format.TEXT);
   });
   window.add_action(action_console_copy);
   application.set_accels_for_action("win.console_copy", ["<Control><Shift>C"]);
+
+  const action_console_select_all = new Gio.SimpleAction({
+    name: "console_select_all",
+  });
+  action_console_select_all.connect("activate", () => {
+    terminal.select_all();
+  });
+  window.add_action(action_console_select_all);
+  application.set_accels_for_action("win.console_select_all", ["<Control><Shift>A"]);
 
   style_manager.connect("notify::dark", () => updateTerminalColors(terminal));
   updateTerminalColors(terminal);
