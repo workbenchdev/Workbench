@@ -153,4 +153,3 @@ function updateTerminalColors(terminal) {
 
   terminal.set_colors(fg, bg, palette);
 }
-

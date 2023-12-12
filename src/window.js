@@ -609,4 +609,3 @@ async function promptSessionClose({ window }) {
     location?.get_child_for_display_name(row_project_name.text),
   ];
 }
-
