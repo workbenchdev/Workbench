@@ -75,6 +75,7 @@ export default function TermConsole({
 
   const action_console_copy = new Gio.SimpleAction({
     name: "console_copy",
+    enabled: false,
   });
   action_console_copy.connect("activate", () => {
     terminal.copy_clipboard_format(Vte.Format.TEXT);
@@ -92,6 +93,14 @@ export default function TermConsole({
   application.set_accels_for_action("win.console_select_all", [
     "<Control><Shift>A",
   ]);
+
+  terminal.connect("selection_changed", () => {
+    action_console_copy.enabled = terminal.get_has_selection();
+  });
+
+  terminal.connect("contents_changed", () => {
+    action_console_copy.enabled = terminal.get_has_selection();
+  });
 
   style_manager.connect("notify::dark", () => updateTerminalColors(terminal));
   updateTerminalColors(terminal);
