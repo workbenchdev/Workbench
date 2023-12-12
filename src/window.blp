@@ -534,6 +534,16 @@ Adw.ApplicationWindow window {
                 scrollback-lines: 512;
               }
             }
+
+            GestureClick gesture_console_click {
+              button: 3;
+            }
+
+            PopoverMenu popover_menu_console {
+              menu-model: menu_console;
+              has-arrow: false;
+              halign: start;
+            }
           }
         }
       }
@@ -768,4 +778,23 @@ Button button_location {
   styles [
     "flat"
   ]
+}
+
+menu menu_console {
+  section {
+    item {
+      label: _("Copy");
+      action: "win.console_copy";
+    }
+
+    item {
+      label: _("Select All");
+      action: "win.console_select_all";
+    }
+
+    item {
+      label: _("Clear");
+      action: "win.clear";
+    }
+  }
 }
