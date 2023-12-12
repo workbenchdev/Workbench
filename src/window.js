@@ -1,5 +1,6 @@
 import Gtk from "gi://Gtk";
 import GLib from "gi://GLib";
+import Gdk from "gi://Gdk";
 import GObject from "gi://GObject";
 import Gio from "gi://Gio";
 import Adw from "gi://Adw";
@@ -464,6 +465,17 @@ export default function Window({ application, session }) {
   window.add_action(settings.create_action("safe-mode"));
   window.add_action(settings.create_action("auto-preview"));
 
+  const gesture_console_click = builder.get_object("gesture_console_click");
+  const popover_menu_console = builder.get_object("popover_menu_console");
+
+  gesture_console_click.connect("pressed", (_, __, x, y) => {
+    const position = new Gdk.Rectangle();
+    position.x = x;
+    position.y = y;
+    popover_menu_console.set_pointing_to(position);
+    popover_menu_console.popup();
+  });
+
   window.present();
 
   const documents = Object.values(langs).map((lang) => lang.document);
@@ -597,3 +609,4 @@ async function promptSessionClose({ window }) {
     location?.get_child_for_display_name(row_project_name.text),
   ];
 }
+

@@ -89,7 +89,9 @@ export default function TermConsole({
     terminal.select_all();
   });
   window.add_action(action_console_select_all);
-  application.set_accels_for_action("win.console_select_all", ["<Control><Shift>A"]);
+  application.set_accels_for_action("win.console_select_all", [
+    "<Control><Shift>A",
+  ]);
 
   style_manager.connect("notify::dark", () => updateTerminalColors(terminal));
   updateTerminalColors(terminal);
@@ -142,3 +144,4 @@ function updateTerminalColors(terminal) {
 
   terminal.set_colors(fg, bg, palette);
 }
+
