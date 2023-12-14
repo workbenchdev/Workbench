@@ -468,10 +468,8 @@ export default function Window({ application, session }) {
   const gesture_console_click = builder.get_object("gesture_console_click");
   const popover_menu_console = builder.get_object("popover_menu_console");
 
-  gesture_console_click.connect("pressed", (_, __, x, y) => {
-    const position = new Gdk.Rectangle();
-    position.x = x;
-    position.y = y;
+  gesture_console_click.connect("pressed", (_gesture, _n_press, x, y) => {
+    const position = new Gdk.Rectangle({ x: x, y: y });
     popover_menu_console.set_pointing_to(position);
     popover_menu_console.popup();
   });
