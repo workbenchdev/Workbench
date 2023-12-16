@@ -1,8 +1,20 @@
 * @sonnyp
+
+# Vala
 *.vala @lw64
+/src/langs/vala/
+
+# Rust
 *.rs @Hofer-Julian
 Cargo.toml @Hofer-Julian
 Cargo.lock @Hofer-Julian
+src/langs/rust/* @Hofer-Julian
+/src/langs/rust/
+
+# C
 *.c @andyholmes
 *.h @andyholmes
+
+# Python
 *.py @theCapypara
+/src/langs/python/
