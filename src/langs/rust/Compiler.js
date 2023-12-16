@@ -19,7 +19,6 @@ export default function Compiler({ session }) {
   let savedRustcVersion;
 
   async function compile() {
-    console.log("copy!");
     copyDirectory(rust_template_dir, file);
 
     rustcVersion ||= await getRustcVersion();

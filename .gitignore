@@ -17,10 +17,3 @@ __pycache__
 
 # IDEs / editors
 .idea
-
-# Project files - sync with Makefile
-src/Library/**/settings
-src/Library/**/workbench.vala
-src/Library/**/main.ui
-src/Library/**/libworkbenchcode.so
-src/Library/**/__pycache__
