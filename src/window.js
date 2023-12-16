@@ -159,7 +159,9 @@ export default function Window({ application, session }) {
 
   previewer.setPanelCode(panel_code);
 
+  const stack_start_stop = builder.get_object("stack_start_stop");
   const button_run = builder.get_object("button_run");
+  const button_stop = builder.get_object("button_stop");
   const button_preview = builder.get_object("button_preview");
   const button_inspector = builder.get_object("button_inspector");
 
@@ -318,7 +320,7 @@ export default function Window({ application, session }) {
   let builder_python = null;
 
   async function runCode({ format }) {
-    button_run.set_sensitive(false);
+    stack_start_stop.visible_child = button_stop;
 
     term_console.clear();
     previewer.stop();
@@ -331,7 +333,7 @@ export default function Window({ application, session }) {
         await formatCode();
       }
 
-      await compile();
+      await start();
     } catch (err) {
       // prettier xml errors are not instances of Error
       if (err instanceof Error || err instanceof GLib.Error) {
@@ -344,11 +346,11 @@ export default function Window({ application, session }) {
     previewer.start();
     panel_ui.start();
 
-    button_run.set_sensitive(true);
+    // stack_start_stop.visible_child = button_run;
     term_console.scrollToEnd();
   }
 
-  async function compile() {
+  async function start() {
     const { language } = panel_code;
 
     const lang = langs[language.toLowerCase()];

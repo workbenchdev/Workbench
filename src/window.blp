@@ -121,19 +121,36 @@ Adw.ApplicationWindow window {
       }
 
       [end]
-      Button button_run {
-        child: Adw.ButtonContent {
-          icon-name: "media-playback-start-symbolic";
-          label: _("_Run");
-          use-underline: true;
-        };
+      Stack stack_start_stop {
+        Button button_run {
+          child: Adw.ButtonContent {
+            icon-name: "media-playback-start-symbolic";
+            label: _("_Run");
+            use-underline: true;
+          };
 
-        action-name: "win.run";
-        tooltip-text: _("Run (Ctrl+⏎)");
+          action-name: "win.run";
+          tooltip-text: _("Run (Ctrl+⏎)");
 
-        styles [
-          "suggested-action"
-        ]
+          styles [
+            "suggested-action"
+          ]
+        }
+
+        Button button_stop {
+          child: Adw.ButtonContent {
+            icon-name: "media-playback-stop-symbolic";
+            label: _("_Stop");
+            use-underline: true;
+          };
+
+          action-name: "win.stop";
+          // tooltip-text: _("Stop");
+
+          styles [
+            "suggested-action"
+          ]
+        }
       }
     }
 
@@ -418,18 +435,18 @@ Adw.ApplicationWindow window {
                   description: _("This interface can only be previewed as a separate window.\nWe recommend using “Always on Top”.");
                   icon-name: "multitasking-windows-symbolic";
 
-                  Box {
-                    halign: center;
+                  // Box {
+                  //   halign: center;
 
-                    Button button_open_preview_window {
-                      label: _("Show Preview Window");
+                  //   Button button_open_preview_window {
+                  //     label: _("Show Preview Window");
 
-                      styles [
-                        "pill",
-                        "suggested-action"
-                      ]
-                    }
-                  }
+                  //     styles [
+                  //       "pill",
+                  //       "suggested-action"
+                  //     ]
+                  //   }
+                  // }
                 };
               }
 
@@ -441,17 +458,17 @@ Adw.ApplicationWindow window {
                   description: _("This interface can only be previewed as a separate window.\nWe recommend using “Always on Top”.");
                   icon-name: "multitasking-windows-symbolic";
 
-                  Box {
-                    halign: center;
+                  // Box {
+                  //   halign: center;
 
-                    Button button_close_preview_window {
-                      label: _("Close Preview Window");
+                  //   Button button_close_preview_window {
+                  //     label: _("Close Preview Window");
 
-                      styles [
-                        "pill"
-                      ]
-                    }
-                  }
+                  //     styles [
+                  //       "pill"
+                  //     ]
+                  //   }
+                  // }
                 };
               }
             }

@@ -42,6 +42,11 @@ async function startProcess(type) {
     [executable_name, server.get_client_address()],
     Gio.SubprocessFlags.NONE,
   );
+
+  current_sub_process.wait_async(null).then(() => {
+    dbus_previewer.onStop?.();
+  });
+
   current_type = type;
 
   const connection = await new Promise((resolve) => {
@@ -83,12 +88,15 @@ async function startProcess(type) {
     null,
   );
 
-  proxy.connectSignal("CssParserError", (_proxy, _name_owner, ...args) => {
+  proxy.connectSignal("CssParserError", (_self, _name_owner, ...args) => {
     dbus_previewer.onCssParserError?.(...args);
   });
 
-  proxy.connectSignal("WindowOpen", (_proxy, _name_owner, ...args) => {
-    dbus_previewer.onWindowOpen?.(...args);
+  proxy.connectSignal("WindowOpen", (_self, _name_owner, [open]) => {
+    if (!open) {
+      dbus_previewer.stop().catch(console.error);
+    }
+    // dbus_previewer.onWindowOpen?.(open);
   });
 
   return proxy;
@@ -96,7 +104,8 @@ async function startProcess(type) {
 
 const dbus_previewer = {
   onCssParserError: null, // set in External.js
-  onWindowOpen: null, // set in External.js
+  // onWindowOpen: null, // set in External.js
+  onStop: null,
   async getProxy(type) {
     if (current_type !== type) {
       await this.stop();

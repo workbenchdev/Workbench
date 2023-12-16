@@ -1,13 +1,15 @@
 import Adw from "gi://Adw";
 import dbus_previewer from "./DBusPreviewer.js";
 
-export default function External({ output, builder, onWindowChange }) {
+export default function External({ output, builder, onWindowChange, onStop }) {
   const stack = builder.get_object("stack_preview");
   let dbus_proxy;
 
-  dbus_previewer.onWindowOpen = ([open]) => {
-    onWindowChange(open);
-  };
+  // dbus_previewer.onWindowOpen = (open) => {
+  //   onWindowChange(open);
+  // };
+
+  dbus_previewer.onStop = onStop;
 
   dbus_previewer.onCssParserError = (error) => {
     builder

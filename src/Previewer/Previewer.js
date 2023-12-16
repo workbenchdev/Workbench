@@ -51,14 +51,14 @@ export default function Previewer({
   makeDropdownFlat(dropdown_preview_align);
 
   const internal = Internal({
-    onWindowChange(open) {
-      if (current !== internal) return;
-      if (open) {
-        stack.set_visible_child_name("close_window");
-      } else {
-        stack.set_visible_child_name("open_window");
-      }
-    },
+    // onWindowChange(open) {
+    //   if (current !== internal) return;
+    //   if (open) {
+    //     stack.set_visible_child_name("close_window");
+    //   } else {
+    //     stack.set_visible_child_name("open_window");
+    //   }
+    // },
     output,
     builder,
     window,
@@ -67,16 +67,25 @@ export default function Previewer({
     panel_ui,
     session,
   });
+
+  const stack_start_stop = builder.get_object("stack_start_stop");
+  const button_run = builder.get_object("button_run");
+  // const button_stop = builder.get_object("button_stop");
+
   const external = External({
-    onWindowChange(open) {
-      if (current !== external) return;
-      if (open) {
-        stack.set_visible_child_name("close_window");
-      } else {
-        stack.set_visible_child_name("open_window");
-        useInternal().catch(console.error);
-      }
+    onStop() {
+      stack_start_stop.visible_child = button_run;
+      useInternal().catch(console.error);
     },
+    // onWindowChange(open) {
+    //   if (current !== external) return;
+    //   if (open) {
+    //     stack.set_visible_child_name("close_window");
+    //   } else {
+    //     stack.set_visible_child_name("open_window");
+    //     useInternal().catch(console.error);
+    //   }
+    // },
     output,
     builder,
     panel_ui,
@@ -87,12 +96,12 @@ export default function Previewer({
 
   let handler_id_ui = null;
   let handler_id_css = null;
-  let handler_id_button_open;
-  let handler_id_button_close;
+  // let handler_id_button_open;
+  // let handler_id_button_close;
 
   const stack = builder.get_object("stack_preview");
-  const button_open = builder.get_object("button_open_preview_window");
-  const button_close = builder.get_object("button_close_preview_window");
+  // const button_open = builder.get_object("button_open_preview_window");
+  // const button_close = builder.get_object("button_close_preview_window");
 
   settings.bind(
     "preview-align",
@@ -255,12 +264,12 @@ export default function Previewer({
   }
 
   async function setPreviewer(previewer, language) {
-    if (handler_id_button_open) {
-      button_open.disconnect(handler_id_button_open);
-    }
-    if (handler_id_button_close) {
-      button_close.disconnect(handler_id_button_close);
-    }
+    // if (handler_id_button_open) {
+    //   button_open.disconnect(handler_id_button_open);
+    // }
+    // if (handler_id_button_close) {
+    //   button_close.disconnect(handler_id_button_close);
+    // }
 
     try {
       await current?.closeInspector();
@@ -276,23 +285,23 @@ export default function Previewer({
 
     current = previewer;
 
-    handler_id_button_open = button_open.connect("clicked", async () => {
-      try {
-        await current.open();
-        stack.set_visible_child_name("close_window");
-      } catch (err) {
-        console.error(err);
-      }
-    });
+    // handler_id_button_open = button_open.connect("clicked", async () => {
+    //   try {
+    //     await current.open();
+    //     stack.set_visible_child_name("close_window");
+    //   } catch (err) {
+    //     console.error(err);
+    //   }
+    // });
 
-    handler_id_button_close = button_close.connect("clicked", async () => {
-      try {
-        await current.close();
-        stack.set_visible_child_name("open_window");
-      } catch (err) {
-        console.error(err);
-      }
-    });
+    // handler_id_button_close = button_close.connect("clicked", async () => {
+    //   try {
+    //     await current.close();
+    //     stack.set_visible_child_name("open_window");
+    //   } catch (err) {
+    //     console.error(err);
+    //   }
+    // });
 
     try {
       await current.start(language);
