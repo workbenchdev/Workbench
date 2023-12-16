@@ -2,14 +2,13 @@
 
 # Vala
 *.vala @lw64
-/src/langs/vala/
+/src/langs/vala/ @lw64
 
 # Rust
 *.rs @Hofer-Julian
 Cargo.toml @Hofer-Julian
 Cargo.lock @Hofer-Julian
-src/langs/rust/* @Hofer-Julian
-/src/langs/rust/
+/src/langs/rust/ @Hofer-Julian
 
 # C
 *.c @andyholmes
@@ -17,4 +16,4 @@ src/langs/rust/* @Hofer-Julian
 
 # Python
 *.py @theCapypara
-/src/langs/python/
+/src/langs/python/ @theCapypara
