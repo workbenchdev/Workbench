@@ -1,13 +1,9 @@
 import Adw from "gi://Adw";
 import dbus_previewer from "./DBusPreviewer.js";
 
-export default function External({ output, builder, onWindowChange, onStop }) {
+export default function External({ output, builder, onStop }) {
   const stack = builder.get_object("stack_preview");
   let dbus_proxy;
-
-  // dbus_previewer.onWindowOpen = (open) => {
-  //   onWindowChange(open);
-  // };
 
   dbus_previewer.onStop = onStop;
 
@@ -48,15 +44,10 @@ export default function External({ output, builder, onWindowChange, onStop }) {
       console.debug(err);
       return;
     }
-    stack.set_visible_child_name("open_window");
   }
 
   function stop() {
-    close()
-      .then(() => {
-        return dbus_previewer.stop();
-      })
-      .catch(console.error);
+    close().then(() => dbus_previewer.stop());
   }
 
   async function updateXML({ xml, target_id, original_id }) {

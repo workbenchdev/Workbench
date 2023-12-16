@@ -160,7 +160,7 @@ export default function Window({ application, session }) {
   previewer.setPanelCode(panel_code);
 
   const stack_start_stop = builder.get_object("stack_start_stop");
-  const button_run = builder.get_object("button_run");
+  // const button_run = builder.get_object("button_run");
   const button_stop = builder.get_object("button_stop");
   const button_preview = builder.get_object("button_preview");
   const button_inspector = builder.get_object("button_inspector");
@@ -320,8 +320,6 @@ export default function Window({ application, session }) {
   let builder_python = null;
 
   async function runCode({ format }) {
-    stack_start_stop.visible_child = button_stop;
-
     term_console.clear();
     previewer.stop();
     panel_ui.stop();
@@ -346,7 +344,6 @@ export default function Window({ application, session }) {
     previewer.start();
     panel_ui.start();
 
-    // stack_start_stop.visible_child = button_run;
     term_console.scrollToEnd();
   }
 
@@ -359,6 +356,8 @@ export default function Window({ application, session }) {
     if (text === "") {
       return;
     }
+
+    stack_start_stop.visible_child = button_stop;
 
     if (language === "JavaScript") {
       await previewer.update(true);
@@ -439,6 +438,10 @@ export default function Window({ application, session }) {
   });
   window.add_action(action_run);
   application.set_accels_for_action("win.run", ["<Control>Return"]);
+
+  button_stop.connect("clicked", () => {
+    previewer.stop();
+  });
 
   const action_format = new Gio.SimpleAction({
     name: "format",

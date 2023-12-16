@@ -19,6 +19,7 @@ export default function Internal({
   dropdown_preview_align,
   panel_ui,
   session,
+  onStop,
 }) {
   const inline_css_scope_target = output.get_parent();
   inline_css_scope_target.name = `workbench_output-${session.id}`;
@@ -51,12 +52,9 @@ export default function Internal({
     onWindowChange(true);
   }
 
-  async function close() {
-    object_root?.close();
-  }
-
   function stop() {
-    close();
+    console.log("stop");
+    object_root?.close();
     if (css_provider) {
       Gtk.StyleContext.remove_provider_for_display(
         output.get_display(),
@@ -66,6 +64,7 @@ export default function Internal({
     }
     object_root?.destroy();
     object_root = null;
+    onStop();
   }
 
   function preview(object) {
@@ -230,7 +229,6 @@ export default function Internal({
   return {
     async start(_language) {},
     open,
-    close,
     stop,
     updateXML,
     updateCSS,
