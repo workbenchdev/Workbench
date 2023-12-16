@@ -239,14 +239,20 @@ export default class LSPClient {
     const message = { ...json, jsonrpc: "2.0" };
 
     const str = JSON.stringify(message);
-    const length = encoder_utf8.encode(str).byteLength;
-    const bytes = new GLib.Bytes(`Content-Length: ${length}\r\n\r\n${str}`);
+    const body = encoder_utf8.encode(str);
+    const header = encoder_utf8.encode(
+      `Content-Length: ${body.byteLength}\r\n\r\n`,
+    );
+
+    const buffer = new Uint8Array(header.length + body.length);
+    buffer.set(header, 0);
+    buffer.set(body, header.length);
 
     if (this.stdin.clear_pending()) {
       this.stdin.flush();
     }
 
-    await this.stdin.write_bytes_async(bytes, GLib.PRIORITY_DEFAULT, null);
+    await this.stdin.write_all_async(buffer, GLib.PRIORITY_DEFAULT, null);
 
     this.emit("output", message);
   }
