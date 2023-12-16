@@ -105,6 +105,14 @@ export default function TermConsole({
   style_manager.connect("notify::dark", () => updateTerminalColors(terminal));
   updateTerminalColors(terminal);
 
+  const gesture_console_click = builder.get_object("gesture_console_click");
+  const popover_menu_console = builder.get_object("popover_menu_console");
+  gesture_console_click.connect("pressed", (_self, _n_press, x, y) => {
+    const position = new Gdk.Rectangle({ x, y });
+    popover_menu_console.set_pointing_to(position);
+    popover_menu_console.popup();
+  });
+
   return {
     clear,
     scrollToEnd,
