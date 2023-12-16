@@ -6,7 +6,12 @@ import Adw from "gi://Adw";
 import Vte from "gi://Vte";
 
 import * as xml from "./langs/xml/xml.js";
-import { buildRuntimePath, languages, quitOnLastWindowClose } from "./util.js";
+import {
+  buildRuntimePath,
+  getLanguage,
+  languages,
+  quitOnLastWindowClose,
+} from "./util.js";
 import Document from "./Document.js";
 import PanelUI from "./PanelUI.js";
 import PanelCode from "./PanelCode.js";
@@ -293,6 +298,8 @@ export default function Window({ application, session }) {
         await format(langs.python.document.code_view, (text) => {
           return formatPythonCode(text);
         });
+      } else if (panel_code.language === "Vala") {
+        await format(langs.vala.document.code_view, getLanguage("vala").format);
       }
     }
 

@@ -26,11 +26,9 @@
   "lint-staged": {
     "*.{css,json,md,yaml,yml}": "prettier --write",
     "*.{js,cjs,mjs}": "eslint --fix",
-    "src/Library/demos/**/*.{js,cjs,mjs}": [
-      "./build-aux/fun biome check --apply-unsafe --config-path=src/langs/javascript/"
-    ],
     "*.py": "./build-aux/fun black",
     "*.rs": "./build-aux/fun rustfmt --edition 2021",
-    "*.blp": "./build-aux/fun blueprint-compiler format --fix"
+    "*.blp": "./build-aux/fun blueprint-compiler format --fix",
+    "*.{vala,c,h}": "./build-aux/fun uncrustify -c - --replace --no-backup --set indent_with_tabs=0 --set nl_end_of_file=force --set nl_end_of_file_min=1 --set indent_columns=4"
   }
 }
