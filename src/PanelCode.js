@@ -3,6 +3,7 @@ import GObject from "gi://GObject";
 
 import { setup as setupVala } from "./langs/vala/vala.js";
 import { setup as setupJavaScript } from "./langs/javascript/javascript.js";
+import { setup as setupPython } from "./langs/python/python.js"
 import { settings as global_settings, makeDropdownFlat } from "./util.js";
 
 export default function PanelCode({
@@ -10,6 +11,7 @@ export default function PanelCode({
   previewer,
   document_vala,
   document_javascript,
+  document_python,
   settings,
 }) {
   const panel_code = builder.get_object("panel_code");
@@ -53,6 +55,7 @@ export default function PanelCode({
 
   setupVala({ document: document_vala });
   setupJavaScript({ document: document_javascript });
+  setupPython({ document: document_python });
 
   function switchLanguage() {
     panel.language = dropdown_code_lang.selected_item?.string;

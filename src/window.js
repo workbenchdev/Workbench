@@ -154,6 +154,7 @@ export default function Window({ application, session }) {
     previewer,
     document_vala,
     document_javascript,
+    document_python,
     settings,
   });
 
