@@ -1,6 +1,7 @@
 import GLib from "gi://GLib";
 
 import LSPClient from "../../lsp/LSPClient.js";
+import { applyTextEdits } from "../../lsp/sourceview.js";
 
 export function setup({ document }) {
   const { file, code_view } = document;
@@ -16,6 +17,27 @@ export function setup({ document }) {
     if (!code_view.buffer.get_modified()) return;
     lspc.didChange().catch(console.error);
   });
+
+  return {
+    lspc,
+    async format() {
+      // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_formatting
+      const text_edits = await lspc.request("textDocument/formatting", {
+        textDocument: {
+          uri: file.get_uri(),
+        },
+        options: {
+          tabSize: 2,
+          insertSpaces: true,
+          trimTrailingWhitespace: true,
+          insertFinalNewline: true,
+          trimFinalNewlines: true,
+        },
+      });
+
+      applyTextEdits(text_edits, document.code_view.buffer);
+    },
+  };
 }
 
 function createLSPClient({ file, code_view }) {

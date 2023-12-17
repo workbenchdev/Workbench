@@ -20,20 +20,6 @@ export default [
   },
 
   {
-    input: "../../node_modules/prettier/plugins/babel.mjs",
-    output: {
-      file: "prettier-babel.js",
-    },
-  },
-
-  {
-    input: "../../node_modules/prettier/plugins/estree.mjs",
-    output: {
-      file: "prettier-estree.js",
-    },
-  },
-
-  {
     input: "../../node_modules/prettier/plugins/postcss.mjs",
     output: {
       file: "prettier-postcss.js",

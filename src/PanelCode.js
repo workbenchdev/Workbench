@@ -52,7 +52,8 @@ export default function PanelCode({
   };
 
   setupVala({ document: document_vala });
-  setupJavaScript({ document: document_javascript });
+  const { format } = setupJavaScript({ document: document_javascript });
+  document_javascript.format = format;
 
   function switchLanguage() {
     panel.language = dropdown_code_lang.selected_item?.string;

@@ -14,9 +14,7 @@ import PanelStyle from "./PanelStyle.js";
 import Devtools from "./Devtools.js";
 
 import { format as prettier } from "./lib/prettier.js";
-import prettier_babel from "./lib/prettier-babel.js";
 import prettier_postcss from "./lib/prettier-postcss.js";
-import prettier_estree from "./lib/prettier-estree.js";
 import Previewer from "./Previewer/Previewer.js";
 import ValaCompiler from "./langs/vala/Compiler.js";
 import RustCompiler from "./langs/rust/Compiler.js";
@@ -279,12 +277,7 @@ export default function Window({ application, session }) {
   async function formatCode() {
     if (panel_code.panel.visible) {
       if (panel_code.language === "JavaScript") {
-        await format(langs.javascript.document.code_view, (text) => {
-          return prettier(text, {
-            parser: "babel",
-            plugins: [prettier_babel, prettier_estree],
-          });
-        });
+        await langs.javascript.document.format();
       } else if (panel_code.language === "Rust") {
         await format(langs.rust.document.code_view, (text) => {
           return formatRustCode(text);
