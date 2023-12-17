@@ -11,14 +11,12 @@ setup:
 lint:
 # JavaScript
 	./node_modules/.bin/eslint --max-warnings=0 src
-# rustfmt
+# Rust
 	./build-aux/fun rustfmt --check --edition 2021 src/**/*.rs
-# black
+# Python
 	./build-aux/fun black --check src/**/*.py
-# gettext
-# find po/ -type f -name "*po" -print0 | xargs -0 -n1 ./build-aux/fun msgfmt -o /dev/null --check
 # Blueprint
-	find src/ -type f -name "*blp" -print0 | xargs -0 ./build-aux/fun blueprint-compiler format
+	./build-aux/fun blueprint-compiler format src/**/*.blp
 # Vala
 	./build-aux/fun uncrustify -c - --check --set indent_with_tabs=0 --set nl_end_of_file=force --set nl_end_of_file_min=1 --set indent_columns=4 src/**/*.vala
 # Flatpak manifests
