@@ -45,6 +45,7 @@
     "modules/GTKCssLanguageServer.json",
     "modules/icon-development-kit.json",
     "modules/webp-pixbuf-loader.json",
+    "modules/python-ruff-lsp.json",
     {
       "name": "Workbench",
       "buildsystem": "meson",

@@ -1,0 +1,49 @@
+{
+    "name": "python3-ruff-lsp",
+    "buildsystem": "simple",
+    "build-commands": [
+        "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"ruff-lsp\" --no-build-isolation"
+    ],
+    "sources": [
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/f0/eb/fcb708c7bf5056045e9e98f62b93bd7467eb718b0202e7698eb11d66416c/attrs-23.1.0-py3-none-any.whl",
+            "sha256": "1f28b4522cdc2fb4256ac1a020c78acf9cba2c6b461ccd2c126f3aa8e8335d04"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/b3/0d/cd4a4071c7f38385dc5ba91286723b4d1090b87815db48216212c6c6c30e/cattrs-23.2.3-py3-none-any.whl",
+            "sha256": "0341994d94971052e9ee70662542699a3162ea1e0c62f7ce1b4a57f563685108"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/2d/5b/f18eb1823a4cee9bed70cdcc25eed5a75845367c42e63a79010a7c34f8a7/lsprotocol-2023.0.0-py3-none-any.whl",
+            "sha256": "e85fc87ee26c816adca9eb497bb3db1a7c79c477a11563626e712eaccf926a05"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/ec/1a/610693ac4ee14fcdf2d9bf3c493370e4f2ef7ae2e19217d7a237ff42367d/packaging-23.2-py3-none-any.whl",
+            "sha256": "8c491190033a9af7e1d931d0b5dacc2ef47509b34dd0de67ed209b5203fc88c7"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/36/31/3799444d3f072ffca1a35eb02a48f964384cc13f001125e87d9f0748687b/pygls-1.2.1-py3-none-any.whl",
+            "sha256": "7dcfcf12b6f15beb606afa46de2ed348b65a279c340ef2242a9a35c22eeafe94"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/50/a9/ec05a652115645c76cc61b8df95a410fe9e30c858d36bbad305010f292ff/ruff-0.1.8.tar.gz",
+            "sha256": "f7ee467677467526cfe135eab86a40a0e8db43117936ac4f9b469ce9cdb3fb62"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/d4/e0/502d8d919c29312a6d117ec8e80af4c06e9d0f62c9281ba27e65f9fc9409/ruff_lsp-0.0.48-py3-none-any.whl",
+            "sha256": "21a1c292631f323401362149c2299a7d9cf2b0296af62e8380cf1d23612bae1a"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/b7/f4/6a90020cd2d93349b442bfcb657d0dc91eee65491600b2cb1d388bc98e6b/typing_extensions-4.9.0-py3-none-any.whl",
+            "sha256": "af72aea155e91adfc61c3ae9e0e342dbc0cba726d6cba4b6c72c1f34e47291cd"
+        }
+    ]
+}
