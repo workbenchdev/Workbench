@@ -17,14 +17,32 @@ template $Extension: ListBoxRow {
       Label label_title {}
 
       [center]
-      Button button {
-        halign: center;
-        valign: center;
+      Box {
+        orientation: vertical;
+        spacing: 6;
+        margin-top: 6;
+        margin-bottom: 6;
 
-        styles [
-          "pill",
-          "suggested-action"
-        ]
+        Button button {
+          halign: center;
+          valign: center;
+
+          styles [
+            "pill",
+            "suggested-action"
+          ]
+        }
+
+        Button second_button {
+          halign: center;
+          valign: center;
+          visible: bind template.second-button-visible;
+
+          styles [
+            "pill",
+            "suggested-action"
+          ]
+        }
       }
 
       [end]
