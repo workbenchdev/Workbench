@@ -9,6 +9,7 @@ import Adw from "gi://Adw";
 
 import Template from "./CodeView.blp" with { type: "uri" };
 
+import "./Search.js";
 import WorkbenchHoverProvider from "../WorkbenchHoverProvider.js";
 import { registerClass } from "../overrides.js";
 import { getItersAtRange } from "../lsp/sourceview.js";
