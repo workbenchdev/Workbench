@@ -306,10 +306,14 @@ export default function Window({ application, session }) {
       compiler_vala = compiler_vala || ValaCompiler({ session });
       const success = await compiler_vala.compile();
       if (success) {
+        console.log("use external");
         await previewer.useExternal("vala");
+        console.log("run");
         if (await compiler_vala.run()) {
+          console.log("open");
           await previewer.open();
         } else {
+          console.log("use internal");
           await previewer.useInternal();
         }
       }

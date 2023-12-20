@@ -41,10 +41,8 @@ export default function Compiler({ session }) {
   }
 
   async function run() {
-    let proxy;
-
     try {
-      proxy = await dbus_previewer.getProxy("vala"); // rust uses the Vala previewer.
+      const proxy = await dbus_previewer.getProxy("vala"); // rust uses the Vala previewer.
       await proxy.RunAsync(
         `${targetPath}/debug/libdemo.so`,
         session.file.get_uri(),
@@ -53,8 +51,6 @@ export default function Compiler({ session }) {
       console.error(err);
       return false;
     }
-
-    console.log(proxy);
 
     return true;
   }

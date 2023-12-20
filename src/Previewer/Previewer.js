@@ -52,7 +52,7 @@ export default function Previewer({
 
   const internal = Internal({
     onStop() {
-      console.log("on stop internal");
+      console.log("stopping ouin ouin internal");
       stack_start_stop.visible_child = button_run;
       update(true);
     },
@@ -71,7 +71,7 @@ export default function Previewer({
 
   const external = External({
     onStop() {
-      console.log("on stop external");
+      console.log("stoping ouin ouin external");
       stack_start_stop.visible_child = button_run;
       useInternal().catch(console.error);
     },
@@ -125,6 +125,7 @@ export default function Previewer({
   }
 
   function stop() {
+    console.log("previewer stop");
     clean();
     current?.stop?.();
   }

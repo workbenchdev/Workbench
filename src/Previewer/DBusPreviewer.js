@@ -96,7 +96,6 @@ async function startProcess(type) {
     if (!open) {
       dbus_previewer.stop().catch(console.error);
     }
-    // dbus_previewer.onWindowOpen?.(open);
   });
 
   return proxy;
@@ -104,7 +103,6 @@ async function startProcess(type) {
 
 const dbus_previewer = {
   onCssParserError: null, // set in External.js
-  // onWindowOpen: null, // set in External.js
   onStop: null,
   async getProxy(type) {
     if (current_type !== type) {

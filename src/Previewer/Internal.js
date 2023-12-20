@@ -53,7 +53,6 @@ export default function Internal({
   }
 
   function stop() {
-    console.log("stop");
     object_root?.close();
     if (css_provider) {
       Gtk.StyleContext.remove_provider_for_display(
