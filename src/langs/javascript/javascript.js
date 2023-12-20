@@ -16,6 +16,8 @@ export function setup({ document }) {
     if (!code_view.buffer.get_modified()) return;
     lspc.didChange().catch(console.error);
   });
+
+  return lspc;
 }
 
 function createLSPClient({ file, code_view }) {

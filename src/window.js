@@ -5,18 +5,12 @@ import Gio from "gi://Gio";
 import Adw from "gi://Adw";
 import Vte from "gi://Vte";
 
-import * as xml from "./langs/xml/xml.js";
 import { buildRuntimePath, languages, quitOnLastWindowClose } from "./util.js";
-import Document from "./Document.js";
 import PanelUI from "./PanelUI.js";
 import PanelCode from "./PanelCode.js";
 import PanelStyle from "./PanelStyle.js";
 import Devtools from "./Devtools.js";
 
-import { format as prettier } from "./lib/prettier.js";
-import prettier_babel from "./lib/prettier-babel.js";
-import prettier_postcss from "./lib/prettier-postcss.js";
-import prettier_estree from "./lib/prettier-estree.js";
 import Previewer from "./Previewer/Previewer.js";
 import ValaCompiler from "./langs/vala/Compiler.js";
 import RustCompiler from "./langs/rust/Compiler.js";
@@ -44,6 +38,13 @@ import {
   isRustEnabled,
   isValaEnabled,
 } from "./Extensions/Extensions.js";
+import { JavaScriptDocument } from "./langs/javascript/JavaScriptDocument.js";
+import { BlueprintDocument } from "./langs/blueprint/BlueprintDocument.js";
+import { CssDocument } from "./langs/css/CssDocument.js";
+import { RustDocument } from "./langs/rust/RustDocument.js";
+import { PythonDocument } from "./langs/python/PythonDocument.js";
+import { XmlDocument } from "./langs/xml/XmlDocument.js";
+import { ValaDocument } from "./langs/vala/ValaDocument.js";
 
 const style_manager = Adw.StyleManager.get_default();
 
@@ -77,49 +78,49 @@ export default function Window({ application, session }) {
 
   const { term_console } = Devtools({ application, window, builder, settings });
 
-  const document_javascript = Document({
+  const document_javascript = new JavaScriptDocument({
     code_view: builder.get_object("code_view_javascript"),
     lang: langs.javascript,
     session,
   });
   langs.javascript.document = document_javascript;
 
-  const document_vala = Document({
+  const document_vala = new ValaDocument({
     code_view: builder.get_object("code_view_vala"),
     lang: langs.vala,
     session,
   });
   langs.vala.document = document_vala;
 
-  const document_rust = Document({
+  const document_rust = new RustDocument({
     code_view: builder.get_object("code_view_rust"),
     lang: langs.rust,
     session,
   });
   langs.rust.document = document_rust;
 
-  const document_python = Document({
+  const document_python = new PythonDocument({
     code_view: builder.get_object("code_view_python"),
     lang: langs.python,
     session,
   });
   langs.python.document = document_python;
 
-  const document_blueprint = Document({
+  const document_blueprint = new BlueprintDocument({
     code_view: builder.get_object("code_view_blueprint"),
     lang: langs.blueprint,
     session,
   });
   langs.blueprint.document = document_blueprint;
 
-  const document_xml = Document({
+  const document_xml = new XmlDocument({
     code_view: builder.get_object("code_view_xml"),
     lang: langs.xml,
     session,
   });
   langs.xml.document = document_xml;
 
-  const document_css = Document({
+  const document_css = new CssDocument({
     code_view: builder.get_object("code_view_css"),
     lang: langs.css,
     session,
@@ -152,9 +153,6 @@ export default function Window({ application, session }) {
   const panel_code = PanelCode({
     builder,
     previewer,
-    document_vala,
-    document_javascript,
-    document_python,
     settings,
   });
 
@@ -199,119 +197,30 @@ export default function Window({ application, session }) {
     previewer.openInspector().catch(console.error);
   });
 
-  async function format(code_view, formatter) {
-    let code;
-
-    const { buffer, source_view } = code_view;
-
-    try {
-      code = await formatter(buffer.text.trim());
-    } catch (err) {
-      console.error(err);
-      return;
-    }
-
-    const { cursor_position } = buffer;
-    const iter_cursor = buffer.get_iter_at_offset(cursor_position);
-    const line_number = iter_cursor.get_line();
-    const line_offset = iter_cursor.get_line_offset();
-    const h_scroll_position = source_view.hadjustment.value;
-    const v_scroll_position = source_view.vadjustment.value;
-
-    code_view.replaceText(code, false);
-
-    // https://matrix.to/#/!aUhETchlgthwWVQzhi:matrix.org/$1701651785113NJUnw:gnome.org
-    GLib.idle_add(GLib.PRIORITY_DEFAULT_IDLE, () => {
-      source_view.hadjustment.value = h_scroll_position;
-      source_view.vadjustment.value = v_scroll_position;
-      const [, iter] = buffer.get_iter_at_line_offset(line_number, line_offset);
-      buffer.place_cursor(iter);
-    });
-  }
-
-  function formatRustCode(text) {
-    const rustfmtLauncher = Gio.SubprocessLauncher.new(
-      Gio.SubprocessFlags.STDIN_PIPE |
-        Gio.SubprocessFlags.STDOUT_PIPE |
-        Gio.SubprocessFlags.STDERR_PIPE,
-    );
-
-    const rustfmtProcess = rustfmtLauncher.spawnv([
-      "rustfmt",
-      "--quiet",
-      "--emit",
-      "stdout",
-      "--edition",
-      "2021",
-    ]);
-
-    const [success, stdout, stderr] = rustfmtProcess.communicate_utf8(
-      text,
-      null,
-    );
-
-    if (!success || stderr !== "") {
-      console.error(`Error running rustfmt: ${stderr}`);
-      return text;
-    }
-
-    return stdout;
-  }
-
-  function formatPythonCode(text) {
-    const blackLauncher = Gio.SubprocessLauncher.new(
-      Gio.SubprocessFlags.STDIN_PIPE |
-        Gio.SubprocessFlags.STDOUT_PIPE |
-        Gio.SubprocessFlags.STDERR_PIPE,
-    );
-
-    const blackProcess = blackLauncher.spawnv(["black", "--quiet", "-"]);
-
-    const [success, stdout, stderr] = blackProcess.communicate_utf8(text, null);
-
-    if (!success || stderr !== "") {
-      console.error(`Error running black: ${stderr}`);
-      return text;
-    }
-
-    return stdout;
-  }
-
   async function formatCode() {
+    const documents = [];
+
     if (panel_code.panel.visible) {
       if (panel_code.language === "JavaScript") {
-        await format(langs.javascript.document.code_view, (text) => {
-          return prettier(text, {
-            parser: "babel",
-            plugins: [prettier_babel, prettier_estree],
-          });
-        });
+        documents.push(document_javascript);
       } else if (panel_code.language === "Rust") {
-        await format(langs.rust.document.code_view, (text) => {
-          return formatRustCode(text);
-        });
+        documents.push(document_rust);
       } else if (panel_code.language === "Python") {
-        await format(langs.python.document.code_view, (text) => {
-          return formatPythonCode(text);
-        });
+        documents.push(document_python);
       }
     }
 
     if (builder.get_object("panel_style").visible) {
-      await format(langs.css.document.code_view, (text) => {
-        return prettier(text, {
-          parser: "css",
-          plugins: [prettier_postcss],
-        });
-      });
+      documents.push(document_css);
     }
 
+    // TODO: only format the selected one
     if (panel_ui.panel.visible) {
-      await format(langs.xml.document.code_view, (text) => {
-        return xml.format(text, 2);
-      });
-      await panel_ui.format();
+      documents.push(document_xml);
+      documents.push(document_blueprint);
     }
+
+    return Promise.all(documents.map((document) => document.format()));
   }
 
   let compiler_vala = null;
