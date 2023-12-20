@@ -226,14 +226,15 @@ export default class LSPClient {
       if (content) {
         this._onmessage(content);
       }
+    } else {
+      // Wait for a bit, before recursively calling _read, so Garbage Collection
+      // can catch up.
+      // This only triggers, if there are no header's, so the delay is not really
+      // relevant.
+      await new Promise((resolve, _) => {
+        setTimeout(() => resolve(), 100);
+      });
     }
-
-    // Wait for a bit before recursively calling _read, so Gargbage Collection
-    // can catch up.
-    await new Promise((resolve, _) => {
-      setTimeout(() => resolve(), 100);
-   });
-
 
     this._read().catch(console.error);
   }
