@@ -10,7 +10,8 @@ export function setup({ document }) {
     file,
   });
 
-  lspc.start().catch(console.error);
+
+  return lspc;
 }
 
 function createLSPClient({ code_view, file }) {
@@ -18,7 +19,7 @@ function createLSPClient({ code_view, file }) {
 
   const lspc = new LSPClient(
     [
-      "ruff-lsp",
+      "pylsp"
     ],
     {
       rootUri: file.get_parent().get_uri(),
