@@ -203,18 +203,37 @@ export default class LSPClient {
       read += bytes.get_size();
     }
 
-    const str = decoder_utf8.decode(uint8);
-    return JSON.parse(str);
+    // When the LSP responds witha non-conformant JSON,
+    // the message get's logged.
+    const str = decoder_utf8.decode(uint8).trim();
+    try {
+       return JSON.parse(str);
+    } catch (e) {
+      console.debug("LSP responded with:", str);
+      throw e;
+    }
   }
 
   // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#baseProtocol
   async _read() {
     const headers = await this._read_headers();
 
-    const length = headers["Content-Length"];
-    const content = await this._read_content(length);
-    if (content) {
-      this._onmessage(content);
+    // IF the LSP does not send any headers,
+    // do not try to decode the message.
+    if(Object.keys(headers).length != 0) {
+      const length = headers["Content-Length"];
+      const content = await this._read_content(length);
+      if (content) {
+        this._onmessage(content);
+      }
+    } else {
+      // Wait for a bit, before recursively calling _read, so Garbage Collection
+      // can catch up.
+      // This only triggers, if there are no header's, so the delay is not really
+      // relevant.
+      await new Promise((resolve, _) => {
+        setTimeout(() => resolve(), 100);
+      });
     }
 
     this._read().catch(console.error);
