@@ -23,17 +23,12 @@ export function setup({ document }) {
 function createLSPClient({ code_view, file }) {
   const uri = file.get_uri();
 
-  const lspc = new LSPClient(
-    [
-      "pylsp"
-    ],
-    {
-      rootUri: file.get_parent().get_uri(),
-      uri,
-      languageId: "python3",
-      buffer: code_view.buffer,
-    },
-  );
+  const lspc = new LSPClient(["pylsp"], {
+    rootUri: file.get_parent().get_uri(),
+    uri,
+    languageId: "python3",
+    buffer: code_view.buffer,
+  });
 
   lspc.connect("exit", () => {
     console.debug("python language server exit");
