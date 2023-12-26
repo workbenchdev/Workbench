@@ -36,17 +36,14 @@ function createLSPClient({ code_view, file }) {
   );
 
   lspc.connect("exit", () => {
-    console.log("PYLSP EXIT")
     console.debug("python language server exit");
   });
 
   lspc.connect("output", (_self, message) => {
-    console.log("PYLSP OUT", message)
     console.debug(`python language server OUT:\n${JSON.stringify(message)}`);
   });
 
   lspc.connect("input", (_self, message) => {
-    console.log("PYLSP IN", message)
     console.debug(`python language server IN:\n${JSON.stringify(message)}`);
   });
 
@@ -57,7 +54,6 @@ function createLSPClient({ code_view, file }) {
       if (params.uri !== uri) {
         return;
       }
-      console.log("PYLSP DIAG", params)
       code_view.handleDiagnostics(params.diagnostics);
     },
   );
