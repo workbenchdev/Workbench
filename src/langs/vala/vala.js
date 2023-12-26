@@ -3,7 +3,6 @@ import GLib from "gi://GLib";
 
 import LSPClient from "../../lsp/LSPClient.js";
 import { isValaEnabled } from "../../Extensions/Extensions.js";
-import { getLanguage } from "../../util.js";
 
 export function setup({ document }) {
   if (!isValaEnabled()) return;
@@ -31,28 +30,6 @@ export function setup({ document }) {
     if (!code_view.buffer.get_modified()) return;
     lspc.didChange().catch(console.error);
   });
-
-  getLanguage("vala").format = async function format(text) {
-    // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_formatting
-    const text_edits = await lspc.request("textDocument/formatting", {
-      textDocument: {
-        uri: file.get_uri(),
-      },
-      options: {
-        tabSize: 4,
-        insertSpaces: true,
-        trimTrailingWhitespace: true,
-        insertFinalNewline: true,
-        trimFinalNewlines: true,
-      },
-    });
-
-    if (!text_edits || text_edits.length !== 1) return text;
-    const newText = text_edits[0].newText;
-    if (!newText) return text;
-
-    return newText;
-  };
 }
 
 function createLSPClient({ code_view, file }) {

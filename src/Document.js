@@ -2,18 +2,26 @@ import Source from "gi://GtkSource";
 import Gio from "gi://Gio";
 import GLib from "gi://GLib";
 
-export default function Document({ session, code_view, lang }) {
-  const { buffer } = code_view;
-  let handler_id = null;
+export default class Document {
+  handler_id = null;
 
-  const file = session.file.get_child(lang.default_file);
-  const source_file = new Source.File({
-    location: file,
-  });
+  constructor({ session, code_view, lang }) {
+    this.code_view = code_view;
+    this.buffer = code_view.buffer;
+    this.session = session;
+    this.source_view = code_view.source_view;
 
-  start();
+    const file = session.file.get_child(lang.default_file);
+    this.file = file;
+    this.source_file = new Source.File({
+      location: file,
+    });
 
-  function save() {
+    this.start();
+  }
+
+  save() {
+    const { source_file, buffer, session } = this;
     saveSourceBuffer({ source_file, buffer })
       .catch(console.error)
       .finally(() => {
@@ -25,26 +33,27 @@ export default function Document({ session, code_view, lang }) {
       });
   }
 
-  function start() {
-    stop();
-    handler_id = buffer.connect("modified-changed", () => {
-      if (!buffer.get_modified()) return;
-      save();
+  start() {
+    this.stop();
+    this.handler_id = this.buffer.connect("modified-changed", () => {
+      if (!this.buffer.get_modified()) return;
+      this.save();
     });
   }
 
-  function stop() {
-    if (handler_id !== null) {
-      buffer.disconnect(handler_id);
-      handler_id = null;
+  stop() {
+    if (this.handler_id !== null) {
+      this.buffer.disconnect(this.handler_id);
+      this.handler_id = null;
     }
   }
 
-  function load() {
-    return loadSourceBuffer({ source_file, buffer, lang });
+  load() {
+    const { source_file, buffer } = this;
+    return loadSourceBuffer({ source_file, buffer });
   }
 
-  return { start, stop, save, code_view, file, load };
+  format() {}
 }
 
 async function saveSourceBuffer({ source_file, buffer }) {
