@@ -65,7 +65,7 @@ const getDemos = (() => {
   let demos;
   return function getDemos() {
     if (!demos) {
-      const file = demos_dir.get_child("../index.json");
+      const file = demos_dir.get_child("index.json");
       const [, data] = file.load_contents(null);
       demos = JSON.parse(decode(data));
     }
