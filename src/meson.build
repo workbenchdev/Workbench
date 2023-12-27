@@ -39,7 +39,7 @@ subdir('Previewer')
 subdir('langs/python')
 
 gjspack = find_program('../troll/gjspack/bin/gjspack')
-custom_target('gjspack',
+custom_target('workbench gresource',
   input: ['main.js'],
   output: app_id + '.src.gresource',
   command: [
@@ -59,3 +59,31 @@ custom_target('gjspack',
 )
 
 subdir('libworkbench')
+
+# CLI
+configure_file(
+  input: 'cli/bin.js',
+  output: 'workbench-cli',
+  configuration: bin_conf,
+  install: true,
+  install_dir: get_option('bindir')
+)
+custom_target('workbench cli gresource',
+  input: ['cli/main.js'],
+  output: 're.sonny.Workbench.cli.src.gresource',
+  command: [
+    gjspack,
+    '--appid=re.sonny.Workbench.cli',
+    '--prefix', '/re/sonny/Workbench',
+    '--project-root', meson.project_source_root(),
+    '--resource-root', meson.project_source_root() / 'src',
+    '--blueprint-compiler', blueprint_compiler,
+    '--no-executable',
+    '@INPUT0@',
+    '@OUTDIR@',
+  ],
+  install: true,
+  install_dir: pkgdatadir,
+  build_always_stale: true,
+)
+

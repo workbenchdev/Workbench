@@ -25,9 +25,10 @@ export function setup({ document }) {
     file,
   });
 
+  const { buffer } = code_view;
   lspc.start().catch(console.error);
   code_view.buffer.connect("modified-changed", () => {
-    if (!code_view.buffer.get_modified()) return;
+    if (!buffer.get_modified()) return;
     lspc.didChange().catch(console.error);
   });
 

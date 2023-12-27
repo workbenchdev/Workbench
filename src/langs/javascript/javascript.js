@@ -1,9 +1,7 @@
-import GLib from "gi://GLib";
-
 import LSPClient from "../../lsp/LSPClient.js";
 
 export function setup({ document }) {
-  const { file, code_view } = document;
+  const { file, buffer, code_view } = document;
 
   const lspc = createLSPClient({
     code_view,
@@ -12,8 +10,8 @@ export function setup({ document }) {
 
   lspc.start().catch(console.error);
 
-  code_view.buffer.connect("modified-changed", () => {
-    if (!code_view.buffer.get_modified()) return;
+  buffer.connect("modified-changed", () => {
+    if (!buffer.get_modified()) return;
     lspc.didChange().catch(console.error);
   });
 
@@ -28,7 +26,7 @@ function createLSPClient({ file, code_view }) {
       "biome",
       "lsp-proxy",
       // src/meson.build installs biome.json there
-      `--config-path=${GLib.build_filenamev([pkg.pkgdatadir])}`,
+      `--config-path=${pkg.pkgdatadir}`,
     ],
     {
       rootUri: file.get_parent().get_uri(),

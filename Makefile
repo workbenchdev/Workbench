@@ -1,12 +1,15 @@
 SHELL:=/bin/bash -O globstar
-.PHONY: setup lint unit test ci sandbox flatpak
+.PHONY: setup build lint unit test ci sandbox flatpak
 .DEFAULT_GOAL := ci
 
 setup:
 	flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 	flatpak install --or-update --user --noninteractive flathub org.gnome.Sdk//45 org.flatpak.Builder org.freedesktop.Sdk.Extension.rust-stable//23.08 org.freedesktop.Sdk.Extension.vala//23.08 org.freedesktop.Sdk.Extension.llvm16//23.08
 	npm install
-	flatpak-builder --ccache --force-clean --stop-at=gst-plugin-gtk4 flatpak build-aux/re.sonny.Workbench.Devel.json
+	make build
+
+build:
+	flatpak-builder --disable-updates --build-only --ccache --force-clean flatpak build-aux/re.sonny.Workbench.Devel.json
 
 lint:
 # JavaScript
