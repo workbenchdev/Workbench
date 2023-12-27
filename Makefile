@@ -17,8 +17,6 @@ lint:
 	./build-aux/fun black --check src/**/*.py
 # Blueprint
 	./build-aux/fun blueprint-compiler format src/**/*.blp
-# Vala
-	./build-aux/fun uncrustify -c - --check --set indent_with_tabs=0 --set nl_end_of_file=force --set nl_end_of_file_min=1 --set indent_columns=4 src/**/*.vala
 # Flatpak manifests
 	flatpak run --user --command=flatpak-builder-lint org.flatpak.Builder manifest --exceptions build-aux/re.sonny.Workbench.json
 	flatpak run --user --command=flatpak-builder-lint org.flatpak.Builder manifest --exceptions build-aux/re.sonny.Workbench.Devel.json
