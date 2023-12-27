@@ -11,12 +11,14 @@ setup:
 lint:
 # JavaScript
 	./node_modules/.bin/eslint --max-warnings=0 src
-# Rust
+# rustfmt
 	./build-aux/fun rustfmt --check --edition 2021 src/**/*.rs
-# Python
+# black
 	./build-aux/fun black --check src/**/*.py
+# gettext
+# find po/ -type f -name "*po" -print0 | xargs -0 -n1 ./build-aux/fun msgfmt -o /dev/null --check
 # Blueprint
-	./build-aux/fun blueprint-compiler format src/**/*.blp
+	find src/ -type f -name "*blp" -print0 | xargs -0 ./build-aux/fun blueprint-compiler format
 # Flatpak manifests
 	flatpak run --user --command=flatpak-builder-lint org.flatpak.Builder manifest --exceptions build-aux/re.sonny.Workbench.json
 	flatpak run --user --command=flatpak-builder-lint org.flatpak.Builder manifest --exceptions build-aux/re.sonny.Workbench.Devel.json
