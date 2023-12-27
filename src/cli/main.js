@@ -88,13 +88,7 @@ async function formatting(buffer) {
     textDocument: {
       uri: file.get_uri(),
     },
-    options: {
-      tabSize: 2,
-      insertSpaces: true,
-      trimTrailingWhitespace: true,
-      insertFinalNewline: true,
-      trimFinalNewlines: true,
-    },
+    options: lang.options,
   });
 
   applyTextEdits(text_edits, buffer);
