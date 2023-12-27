@@ -11,91 +11,87 @@ import { once } from "../../troll/src/async.js";
 
 import LSPClient from "../lsp/LSPClient.js";
 import { applyTextEdits } from "../lsp/sourceview.js";
+import { languages } from "./info.js";
 
 Gtk.init();
 
-const formatting_options = {
-  tabSize: 2,
-  insertSpaces: true,
-  trimTrailingWhitespace: true,
-  insertFinalNewline: true,
-  trimFinalNewlines: true,
-};
-
-const languages = {
-  vala: {
-    args: ["vala-language-server"],
-    options: {
-      ...formatting_options,
-      tabSize: 4,
-    },
-  },
-  javascript: {
-    args: [
-      "biome",
-      "lsp-proxy",
-      // src/meson.build installs biome.json there
-      `--config-path=${GLib.build_filenamev([pkg.pkgdatadir])}`,
-      // `--config-path=${GLib.build_filenamev([
-      //   GLib.get_current_dir(),
-      //   "./src/languages/javascript",
-      // ])}`,
-    ],
-    options: formatting_options,
-  },
-  css: {
-    args: ["gtkcsslanguageserver"],
-    options: formatting_options,
-  },
-  blueprint: {
-    args: ["blueprint-compiler", "lsp"],
-    options: formatting_options,
-  },
-};
-
-// const loop = GLib.MainLoop.new(null, false);
-
-const [action, language, path] = ARGV;
-
-const lang = languages[language];
-
-const file = Gio.File.new_for_path(path);
-
-const buffer = new Gtk.TextBuffer();
-const lspc = createLSPClient({ buffer, file });
-
-export async function main() {
-  const [contents] = await file.load_contents_async(null);
-  const text = new TextDecoder().decode(contents);
-  buffer.text = text;
-
-  await lspc.start();
-  // await lspc.didChange();
-
-  let success;
-  if (action === "lint") {
-    success = await lint();
-  } else if (action === "format") {
-    success = await format();
+export async function main([action, language_id, ...filenames]) {
+  const lang = languages.find((language) => language.id === language_id);
+  if (!lang) {
+    console.error(`Unknown language "${language_id}"`);
+    return 1;
   }
 
-  return success ? 0 : 1;
+  const lspc = createLSPClient({ lang });
+  lspc._start_process();
+  await lspc._initialize();
+
+  let exit_code = 0;
+
+  for await (const filename of filenames) {
+    const success = await processFile({ filename, lang, lspc, action });
+    if (!success) {
+      exit_code = 1;
+    }
+  }
+
+  return exit_code;
 }
 
-async function formatting(buffer) {
+async function processFile({ filename, lang, lspc, action }) {
+  const file = Gio.File.new_for_path(filename);
+  const [contents] = await file.load_contents_async(null);
+  const text = new TextDecoder().decode(contents);
+  const buffer = new Gtk.TextBuffer({ text });
+
+  const uri = file.get_uri();
+  const languageId = lang.id;
+  const version = 0;
+
+  await lspc._notify("textDocument/didOpen", {
+    textDocument: {
+      uri,
+      languageId,
+      version,
+      text: buffer.text,
+    },
+  });
+
+  let success = false;
+
+  try {
+    if (action === "lint") {
+      success = await lint({ buffer, file, lang, lspc });
+    } else if (action === "format") {
+      success = await format({ buffer, file, lang, lspc });
+    }
+  } catch (err) {
+    console.error(err);
+  }
+
+  await lspc._notify("textDocument/didClose", {
+    textDocument: {
+      uri,
+    },
+  });
+
+  return success;
+}
+
+async function formatting({ buffer, file, lang, lspc }) {
   // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_formatting
-  const text_edits = await lspc.request("textDocument/formatting", {
+  const text_edits = await lspc._request("textDocument/formatting", {
     textDocument: {
       uri: file.get_uri(),
     },
-    options: lang.options,
+    options: lang.formatting_options,
   });
 
   applyTextEdits(text_edits, buffer);
 }
 
-async function format() {
-  await formatting(buffer);
+async function format({ buffer, file, lang, lspc }) {
+  await formatting({ buffer, file, lang, lspc });
 
   await file.replace_contents_async(
     new TextEncoder().encode(buffer.text),
@@ -108,7 +104,7 @@ async function format() {
   return true;
 }
 
-async function lint() {
+async function lint({ buffer, file, lang, lspc }) {
   const params = await once(
     lspc,
     "notification::textDocument/publishDiagnostics",
@@ -116,46 +112,45 @@ async function lint() {
 
   const [{ uri, diagnostics }] = params;
   if (uri !== file.get_uri()) {
-    console.log("Unknwon uri", uri);
+    console.error("Unknwon uri", uri);
     return false;
   }
 
   if (diagnostics.length > 0) {
-    console.log(diagnostics);
+    console.error(file.get_path(), JSON.stringify(diagnostics, null, 2));
     return false;
   }
 
   const buffer_tmp = new Gtk.TextBuffer({ text: buffer.text });
-  await formatting(buffer_tmp);
+  await formatting({ buffer: buffer_tmp, file, lang, lspc });
 
   if (buffer_tmp.text !== buffer.text) {
-    console.log("Formatting differs", file.get_path());
+    console.error(file.get_path(), "Formatting differs");
     return false;
   }
 
   return true;
 }
 
-function createLSPClient({ buffer, file }) {
-  const uri = file.get_uri();
+function createLSPClient({ lang }) {
+  const language_id = lang.id;
 
-  const lspc = new LSPClient(lang.args, {
-    rootUri: file.get_parent().get_uri(),
-    uri,
-    languageId: language,
-    buffer,
+  const lspc = new LSPClient(lang.language_server, {
+    rootUri: Gio.File.new_for_path(GLib.get_current_dir()).get_uri(),
+    languageId: language_id,
+    // quiet: false,
   });
   lspc.connect("exit", () => {
-    console.debug(`${language} language server exit`);
+    console.debug(`${language_id} language server exit`);
   });
   lspc.connect("output", (_self, message) => {
     console.debug(
-      `${language} language server OUT:\n${JSON.stringify(message)}`,
+      `${language_id} language server OUT:\n${JSON.stringify(message)}`,
     );
   });
   lspc.connect("input", (_self, message) => {
     console.debug(
-      `${language} language server IN:\n${JSON.stringify(message)}`,
+      `${language_id} language server IN:\n${JSON.stringify(message)}`,
     );
   });
 

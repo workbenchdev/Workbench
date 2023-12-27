@@ -14,6 +14,10 @@ const decoder_utf8 = new TextDecoder("utf8");
 const decoder_ascii = new TextDecoder("ascii");
 
 const processId = getPid();
+const clientInfo = {
+  name: pkg.name,
+  version: pkg.version,
+};
 
 export default class LSPClient {
   constructor(
@@ -67,10 +71,7 @@ export default class LSPClient {
     // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#initialize
     const result = await this._request("initialize", {
       processId,
-      clientInfo: {
-        name: pkg.name,
-        version: pkg.version,
-      },
+      clientInfo,
       capabilities,
       rootUri,
       locale: "en",

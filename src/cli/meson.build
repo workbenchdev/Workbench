@@ -12,39 +12,21 @@ blueprint_compiler = find_program(
   '/app/bin/blueprint-compiler',
 )
 
-meson.add_install_script('../build-aux/library-index.js', pkgdatadir)
-
-install_subdir('../demos/demos', install_dir : join_paths(pkgdatadir))
-install_subdir('langs/rust/template', install_dir : join_paths(pkgdatadir, 'langs/rust'))
+gjspack = find_program('../../troll/gjspack/bin/gjspack')
 
 configure_file(
   input: 'bin.js',
-  output: app_id,
+  output: 'workbench-cli',
   configuration: bin_conf,
   install: true,
   install_dir: get_option('bindir')
 )
-
-configure_file(
-  input: 'workbench',
-  output: 'workbench',
-  configuration: bin_conf,
-  install: true,
-  install_dir: get_option('bindir')
-)
-
-install_data('langs/vala/workbench.vala', install_dir: pkgdatadir)
-install_data('langs/javascript/biome.json', install_dir: pkgdatadir)
-subdir('Previewer')
-subdir('langs/python')
-
-gjspack = find_program('../troll/gjspack/bin/gjspack')
-custom_target('workbench gresource',
+custom_target('workbench cli gresource',
   input: ['main.js'],
-  output: app_id + '.src.gresource',
+  output: 're.sonny.Workbench.cli.src.gresource',
   command: [
     gjspack,
-    '--appid=' + app_id,
+    '--appid=re.sonny.Workbench.cli',
     '--prefix', '/re/sonny/Workbench',
     '--project-root', meson.project_source_root(),
     '--resource-root', meson.project_source_root() / 'src',
@@ -57,6 +39,3 @@ custom_target('workbench gresource',
   install_dir: pkgdatadir,
   build_always_stale: true,
 )
-
-subdir('cli')
-subdir('libworkbench')
