@@ -207,6 +207,8 @@ export default function Window({ application, session }) {
         documents.push(document_rust);
       } else if (panel_code.language === "Python") {
         documents.push(document_python);
+      } else if (panel_code.language === "Vala") {
+        documents.push(document_vala);
       }
     }
 
