@@ -26,6 +26,10 @@ lint:
 	flatpak run --user --command=flatpak-builder-lint org.flatpak.Builder manifest --exceptions build-aux/re.sonny.Workbench.json
 	flatpak run --user --command=flatpak-builder-lint org.flatpak.Builder manifest --exceptions build-aux/re.sonny.Workbench.Devel.json
 
+format:
+	./build-aux/fun workbench-cli format vala src/**/*.vala
+	./build-aux/fun workbench-cli format javascript src/**/*.js
+
 unit:
 	./build-aux/fun gjs -m ./troll/tst/bin.js test/*.test.js
 

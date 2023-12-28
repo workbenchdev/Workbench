@@ -12,6 +12,7 @@ imports.package.init({
   libdir: "@libdir@",
   datadir: "@datadir@",
 });
+console.log(pkg.name);
 setConsoleLogDomain(pkg.name);
 
 const resource = Gio.Resource.load(
