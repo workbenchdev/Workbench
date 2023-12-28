@@ -173,6 +173,7 @@ export default class LSPClient {
         GLib.PRIORITY_DEFAULT,
         null,
       );
+      console.log(bytes, "foo", decoder_ascii.decode(bytes).trim(), "bar");
       if (!bytes) break;
       const line = decoder_ascii.decode(bytes).trim();
       if (!line) break;

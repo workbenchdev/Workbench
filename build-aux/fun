@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 
 # fun stands for Flatpak Run
-flatpak-builder --run flatpak build-aux/re.sonny.Workbench.Devel.json "$@"
+flatpak-builder --env=G_MESSAGES_DEBUG=workbench-cli --run flatpak build-aux/re.sonny.Workbench.Devel.json "$@"
