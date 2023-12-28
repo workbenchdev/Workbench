@@ -84,17 +84,7 @@ export default class LSPClient {
   }
 
   async stop() {
-    await Promise.all(
-      [this.stdin, this.stdout].map(async (stream) => {
-        if (stream.is_closed()) return;
-        try {
-          await stream.close_async(GLib.PRIORITY_DEFAULT, null);
-        } catch (err) {
-          console.error(err);
-        }
-      }),
-    );
-
+    await Promise.all([closeStream(this.stdin), closeStream(this.stdout)]);
     // this.proc?.force_exit();
     this.proc.send_signal(15);
   }
@@ -298,4 +288,13 @@ addSignalMethods(LSPClient.prototype);
 
 function rid() {
   return Math.random().toString().substring(2);
+}
+
+async function closeStream(stream) {
+  try {
+    if (stream.is_closed()) return;
+    await stream.close_async(GLib.PRIORITY_DEFAULT, null);
+  } catch (err) {
+    console.error(err);
+  }
 }
