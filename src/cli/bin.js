@@ -3,17 +3,18 @@
 import Gio from "gi://Gio";
 import { exit, programArgs } from "system";
 import { setConsoleLogDomain } from "console";
+import GLib from "gi://GLib";
 
 // eslint-disable-next-line no-restricted-globals
 imports.package.init({
-  name: "re.sonny.Workbench.cli",
+  name: "@app_id@",
   version: "@version@",
   prefix: "@prefix@",
   libdir: "@libdir@",
   datadir: "@datadir@",
 });
-console.log(pkg.name);
 setConsoleLogDomain(pkg.name);
+GLib.set_application_name("workbench-cli");
 
 const resource = Gio.Resource.load(
   "/app/share/@app_id@/re.sonny.Workbench.cli.src.gresource",

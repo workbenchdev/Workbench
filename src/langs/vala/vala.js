@@ -1,5 +1,4 @@
 import Gio from "gi://Gio";
-import GLib from "gi://GLib";
 
 import LSPClient from "../../lsp/LSPClient.js";
 import { isValaEnabled } from "../../Extensions/Extensions.js";
@@ -9,10 +8,9 @@ export function setup({ document }) {
 
   const { file, code_view } = document;
 
-  const api_file = Gio.File.new_for_path(
-    GLib.build_filenamev([pkg.pkgdatadir, "workbench.vala"]),
+  const api_file = Gio.File.new_for_path(pkg.pkgdatadir).get_child(
+    "workbench.vala",
   );
-
   api_file.copy(
     file.get_parent().get_child("workbench.vala"),
     Gio.FileCopyFlags.OVERWRITE,

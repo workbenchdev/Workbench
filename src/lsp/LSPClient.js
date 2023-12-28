@@ -84,10 +84,17 @@ export default class LSPClient {
   }
 
   async stop() {
-    await Promise.all([
-      this.stdin.close_async(GLib.PRIORITY_DEFAULT, null).catch(console.error),
-      this.stdout.close_async(GLib.PRIORITY_DEFAULT, null).catch(console.error),
-    ]);
+    await Promise.all(
+      [this.stdin, this.stdout].map(async (stream) => {
+        if (stream.is_closed()) return;
+        try {
+          await stream.close_async(GLib.PRIORITY_DEFAULT, null);
+        } catch (err) {
+          console.error(err);
+        }
+      }),
+    );
+
     // this.proc?.force_exit();
     this.proc.send_signal(15);
   }
@@ -173,7 +180,6 @@ export default class LSPClient {
         GLib.PRIORITY_DEFAULT,
         null,
       );
-      console.log(bytes, "foo", decoder_ascii.decode(bytes).trim(), "bar");
       if (!bytes) break;
       const line = decoder_ascii.decode(bytes).trim();
       if (!line) break;

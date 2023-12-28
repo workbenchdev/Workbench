@@ -1,12 +1,30 @@
 import Gio from "gi://Gio";
+import Gtk from "gi://Gtk";
 
 import { applyTextEdits } from "../lsp/sourceview.js";
-import { openFiles } from "./util.js";
 
 export default async function format({ filenames, lang, lspc }) {
-  const documents = await openFiles({ filenames, lang, lspc });
+  const success = true;
 
-  for await (const { buffer, uri, file } of documents) {
+  for await (const filename of filenames) {
+    const file = Gio.File.new_for_path(filename);
+    const [contents] = await file.load_contents_async(null);
+    const text = new TextDecoder().decode(contents);
+    const buffer = new Gtk.TextBuffer({ text });
+
+    const uri = file.get_uri();
+    const languageId = lang.id;
+    let version = 0;
+
+    await lspc._notify("textDocument/didOpen", {
+      textDocument: {
+        uri,
+        languageId,
+        version: version++,
+        text: buffer.text,
+      },
+    });
+
     await formatting({ buffer, uri, lang, lspc });
 
     await file.replace_contents_async(
@@ -18,7 +36,7 @@ export default async function format({ filenames, lang, lspc }) {
     );
   }
 
-  return true;
+  return success;
 }
 
 export async function formatting({ buffer, uri, lang, lspc }) {

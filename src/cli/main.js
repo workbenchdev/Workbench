@@ -26,8 +26,6 @@ export async function main([action, language_id, ...filenames]) {
   lspc._start_process();
   await lspc._initialize();
 
-  console.log(filenames);
-
   let success = false;
 
   if (action === "lint") {
@@ -44,10 +42,23 @@ export async function main([action, language_id, ...filenames]) {
 function createLSPClient({ lang }) {
   const language_id = lang.id;
 
+  const current_dir = Gio.File.new_for_path(GLib.get_current_dir());
+  if (lang.id === "vala") {
+    const api_file = Gio.File.new_for_path(pkg.pkgdatadir).get_child(
+      "workbench.vala",
+    );
+    api_file.copy(
+      current_dir.get_child("workbench.vala"),
+      Gio.FileCopyFlags.OVERWRITE,
+      null,
+      null,
+    );
+  }
+
   const lspc = new LSPClient(lang.language_server, {
-    rootUri: Gio.File.new_for_path(GLib.get_current_dir()).get_uri(),
+    rootUri: current_dir.get_uri(),
     languageId: language_id,
-    // quiet: false,
+    quiet: true,
   });
   lspc.connect("exit", () => {
     console.debug(`${language_id} language server exit`);

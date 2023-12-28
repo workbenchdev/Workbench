@@ -1,19 +1,31 @@
 import Gtk from "gi://Gtk";
+import Gio from "gi://Gio";
 
-import { openFiles } from "./util.js";
 import { formatting } from "./format.js";
 
 export default async function lint({ filenames, lang, lspc }) {
-  const documents = await openFiles({ filenames, lang, lspc });
-
-  const diagnostic_payloads = await Promise.all(
-    documents.map((document) => waitForDiagnostics({ document, lspc })),
-  );
-
   let success = true;
 
-  for (const { document, diagnostics } of diagnostic_payloads) {
-    const { filename, uri, buffer } = document;
+  for await (const filename of filenames) {
+    const file = Gio.File.new_for_path(filename);
+    const [contents] = await file.load_contents_async(null);
+    const text = new TextDecoder().decode(contents);
+    const buffer = new Gtk.TextBuffer({ text });
+
+    const uri = file.get_uri();
+    const languageId = lang.id;
+    let version = 0;
+
+    await lspc._notify("textDocument/didOpen", {
+      textDocument: {
+        uri,
+        languageId,
+        version: version++,
+        text: buffer.text,
+      },
+    });
+
+    const diagnostics = await waitForDiagnostics({ uri, lspc });
 
     if (diagnostics.length > 0) {
       console.error(filename, JSON.stringify(diagnostics, null, 2));
@@ -31,14 +43,14 @@ export default async function lint({ filenames, lang, lspc }) {
   return success;
 }
 
-function waitForDiagnostics({ document, lspc }) {
+function waitForDiagnostics({ uri, lspc }) {
   return new Promise((resolve) => {
     const handler_id = lspc.connect(
       "notification::textDocument/publishDiagnostics",
-      (_self, { uri, diagnostics }) => {
-        if (uri !== document.uri) return;
+      (_self, params) => {
+        if (uri !== params.uri) return;
         lspc.disconnect(handler_id);
-        resolve({ document, diagnostics });
+        resolve(params.diagnostics);
       },
     );
   });
