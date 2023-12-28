@@ -10,9 +10,9 @@ import {
   rust_template_dir,
   settings as global_settings,
   encode,
-  languages,
   settings,
 } from "./util.js";
+import { languages } from "./common.js";
 
 export const sessions_dir = data_dir.get_child("sessions");
 

@@ -5,7 +5,8 @@ import Gio from "gi://Gio";
 import Adw from "gi://Adw";
 import Vte from "gi://Vte";
 
-import { buildRuntimePath, languages, quitOnLastWindowClose } from "./util.js";
+import { buildRuntimePath, quitOnLastWindowClose } from "./util.js";
+import { languages } from "./common.js";
 import PanelUI from "./PanelUI.js";
 import PanelCode from "./PanelCode.js";
 import PanelStyle from "./PanelStyle.js";

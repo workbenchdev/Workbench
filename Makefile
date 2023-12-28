@@ -14,24 +14,20 @@ build:
 lint:
 # JavaScript
 	./node_modules/.bin/eslint --max-warnings=0 src
-	./build-aux/fun workbench-cli lint javascript demos/**/*.js
+	./build-aux/fun workbench-cli ci javascript demos/**/*.js
 # Rust
 	./build-aux/fun rustfmt --check --edition 2021 src/**/*.rs
 # Python
 	./build-aux/fun black --check src/**/*.py
 # Blueprint
 	./build-aux/fun blueprint-compiler format src/**/*.blp
-	./build-aux/fun workbench-cli lint blueprint src/**/*.blp
-	./build-aux/fun workbench-cli lint blueprint demos/**/*.blp
+	./build-aux/fun workbench-cli ci blueprint src/**/*.blp
+	./build-aux/fun workbench-cli ci blueprint demos/**/*.blp
 # Vala
-	./build-aux/fun workbench-cli lint vala demos/**/*.vala
+	./build-aux/fun workbench-cli ci vala demos/**/*.vala
 # Flatpak manifests
 	flatpak run --user --command=flatpak-builder-lint org.flatpak.Builder manifest --exceptions build-aux/re.sonny.Workbench.json
 	flatpak run --user --command=flatpak-builder-lint org.flatpak.Builder manifest --exceptions build-aux/re.sonny.Workbench.Devel.json
-
-format:
-	./build-aux/fun workbench-cli format vala src/**/*.vala
-	./build-aux/fun workbench-cli format javascript src/**/*.js
 
 unit:
 	./build-aux/fun gjs -m ./troll/tst/bin.js test/*.test.js

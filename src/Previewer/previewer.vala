@@ -59,7 +59,7 @@ namespace Workbench {
             return true;
         }
 
-// This registers GObjects so that they can be found by GtkBuilder
+        // This registers GObjects so that they can be found by GtkBuilder
         void ensure_types () {
             typeof (Shumate.SimpleMap).ensure ();
             typeof (WebKit.WebView).ensure ();

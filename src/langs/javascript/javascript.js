@@ -1,12 +1,24 @@
-import LSPClient from "../../lsp/LSPClient.js";
+import { createLSPClient } from "../../common.js";
+import { getLanguage } from "../../util.js";
 
 export function setup({ document }) {
   const { file, buffer, code_view } = document;
 
   const lspc = createLSPClient({
-    code_view,
-    file,
+    lang: getLanguage("javascript"),
+    root_uri: file.get_parent().get_uri(),
   });
+  lspc.buffer = buffer;
+  lspc.uri = file.get_uri();
+  lspc.connect(
+    "notification::textDocument/publishDiagnostics",
+    (_self, params) => {
+      if (params.uri !== file.get_uri()) {
+        return;
+      }
+      code_view.handleDiagnostics(params.diagnostics);
+    },
+  );
 
   lspc.start().catch(console.error);
 
@@ -14,52 +26,6 @@ export function setup({ document }) {
     if (!buffer.get_modified()) return;
     lspc.didChange().catch(console.error);
   });
-
-  return lspc;
-}
-
-function createLSPClient({ file, code_view }) {
-  const uri = file.get_uri();
-
-  const lspc = new LSPClient(
-    [
-      "biome",
-      "lsp-proxy",
-      // src/meson.build installs biome.json there
-      `--config-path=${pkg.pkgdatadir}`,
-    ],
-    {
-      rootUri: file.get_parent().get_uri(),
-      uri,
-      languageId: "javascript",
-      buffer: code_view.buffer,
-      // quiet: false,
-      // env: {
-      //   BIOME_LOG_DIR: "/tmp/biome",
-      // },
-    },
-  );
-
-  lspc.connect("exit", () => {
-    console.debug("biome language server exit");
-  });
-  lspc.connect("output", (_self, message) => {
-    console.debug(`biome language server OUT:\n${JSON.stringify(message)}`);
-  });
-  lspc.connect("input", (_self, message) => {
-    console.debug(`biome language server IN:\n${JSON.stringify(message)}`);
-  });
-
-  // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_publishDiagnostics
-  lspc.connect(
-    "notification::textDocument/publishDiagnostics",
-    (_self, params) => {
-      if (params.uri !== uri) {
-        return;
-      }
-      code_view.handleDiagnostics(params.diagnostics);
-    },
-  );
 
   return lspc;
 }
