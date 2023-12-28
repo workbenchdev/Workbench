@@ -13,7 +13,7 @@ imports.package.init({
   libdir: "@libdir@",
   datadir: "@datadir@",
 });
-setConsoleLogDomain(pkg.name);
+setConsoleLogDomain("re.sonny.Workbench.cli");
 GLib.set_application_name("workbench-cli");
 
 const resource = Gio.Resource.load(

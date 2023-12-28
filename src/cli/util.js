@@ -24,7 +24,9 @@ export const languages = [
       "biome",
       "lsp-proxy",
       // src/meson.build installs biome.json there
-      `--config-path=${GLib.build_filenamev([pkg.pkgdatadir])}`,
+      __DEV__
+        ? `--config-path=src/langs/javascript`
+        : `--config-path=${GLib.build_filenamev([pkg.pkgdatadir])}`,
     ],
     formatting_options: {
       ...formatting_options,
@@ -50,3 +52,9 @@ export const languages = [
     },
   },
 ];
+
+if (__DEV__) {
+  languages.forEach((lang) => {
+    lang.language_server = ["./build-aux/fun", ...lang.language_server];
+  });
+}

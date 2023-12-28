@@ -1,5 +1,4 @@
-#!/usr/bin/env -S gjs -m
-
+/* eslint-disable no-restricted-globals */
 // G_MESSAGES_DEBUG=re.sonny.Workbench.cli ./src/cli.js blueprint
 
 import "../init.js";
@@ -18,7 +17,7 @@ Gtk.init();
 export async function main([action, language_id, ...filenames]) {
   const lang = languages.find((language) => language.id === language_id);
   if (!lang) {
-    console.error(`Unknown language "${language_id}"`);
+    printerr(`Unknown language "${language_id}"`);
     return 1;
   }
 
@@ -29,11 +28,13 @@ export async function main([action, language_id, ...filenames]) {
   let success = false;
 
   if (action === "lint") {
-    success = await lint({ filenames, lang, lspc });
-  } else if (action === "format") {
+    success = await lint({ filenames, lang, lspc, ci: false });
+  } else if (action === "ci") {
+    success = await lint({ filenames, lang, lspc, ci: true });
+  } else if (action === "form") {
     success = await format({ filenames, lang, lspc });
   } else {
-    console.error(`Unknown action "${action}"}`);
+    printerr(`Unknown action "${action}"}`);
   }
 
   return success ? 0 : 1;

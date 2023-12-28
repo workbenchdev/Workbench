@@ -31,7 +31,7 @@ export default async function format({ filenames, lang, lspc }) {
       new TextEncoder().encode(buffer.text),
       null,
       false,
-      Gio.FileCreateFlags.REPLACE_DESTINATION,
+      Gio.FileCreateFlags.NONE,
       null,
     );
   }

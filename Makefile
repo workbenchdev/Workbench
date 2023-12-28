@@ -21,6 +21,7 @@ lint:
 	./build-aux/fun black --check src/**/*.py
 # Blueprint
 	./build-aux/fun blueprint-compiler format src/**/*.blp
+	./build-aux/fun workbench-cli lint blueprint src/**/*.blp
 	./build-aux/fun workbench-cli lint blueprint demos/**/*.blp
 # Vala
 	./build-aux/fun workbench-cli lint vala demos/**/*.vala

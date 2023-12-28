@@ -1,9 +1,11 @@
+/* eslint-disable no-restricted-globals */
 import Gtk from "gi://Gtk";
 import Gio from "gi://Gio";
 
 import { formatting } from "./format.js";
+import { diagnostic_severities } from "../lsp/LSP.js";
 
-export default async function lint({ filenames, lang, lspc }) {
+export default async function lint({ filenames, lang, lspc, ci }) {
   let success = true;
 
   for await (const filename of filenames) {
@@ -28,14 +30,16 @@ export default async function lint({ filenames, lang, lspc }) {
     const diagnostics = await waitForDiagnostics({ uri, lspc });
 
     if (diagnostics.length > 0) {
-      console.error(filename, JSON.stringify(diagnostics, null, 2));
+      printerr(serializeDiagnostics({ file, diagnostics }));
       success = false;
-    } else {
+    }
+
+    if (ci) {
       const buffer_tmp = new Gtk.TextBuffer({ text: buffer.text });
       await formatting({ buffer: buffer_tmp, uri, lang, lspc });
       if (buffer_tmp.text === buffer.text) continue;
 
-      console.error(filename, "Formatting differs");
+      printerr(`\n${file.get_path()}\nFormatting differs\n`);
       success = false;
     }
   }
@@ -54,6 +58,26 @@ function waitForDiagnostics({ uri, lspc }) {
       },
     );
   });
+}
+
+function serializeDiagnostics({ file, diagnostics }) {
+  return (
+    `\n${file.get_path()}\n` +
+    diagnostics
+      .map(({ severity, range, message }) => {
+        return (
+          diagnostic_severities[severity] +
+          "  " +
+          range.start.line +
+          ":" +
+          range.start.character +
+          "  " +
+          message.split("\n")[0]
+        );
+      })
+      .join("\n") +
+    "\n"
+  );
 }
 
 // Vala Language Server does not support this
