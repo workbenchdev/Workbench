@@ -5,6 +5,8 @@ import { exit, programArgs } from "system";
 import { setConsoleLogDomain } from "console";
 import GLib from "gi://GLib";
 
+console.log(GLib.getenv("WAYLAND_DISPLAY"));
+
 // eslint-disable-next-line no-restricted-globals
 imports.package.init({
   name: "@app_id@",

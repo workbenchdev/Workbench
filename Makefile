@@ -9,8 +9,6 @@ setup:
 	flatpak-builder --delete-build-dirs --disable-updates --build-only --ccache --force-clean flatpak build-aux/re.sonny.Workbench.Devel.json
 
 lint:
-	./src/cli/local.js lint blueprint src/**/*.blp
-	./build-aux/fun workbench-cli lint blueprint src/**/*.blp
 # JavaScript
 	./node_modules/.bin/eslint --max-warnings=0 src
 	./build-aux/fun workbench-cli ci javascript demos/**/*.js

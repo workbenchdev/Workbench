@@ -5,6 +5,8 @@ import { exit, programArgs } from "system";
 import { setConsoleLogDomain } from "console";
 import GLib from "gi://GLib";
 
+console.log(GLib.getenv("WAYLAND_DISPLAY"));
+
 import { build as gjspack } from "../../troll/gjspack/src/gjspack.js";
 
 // eslint-disable-next-line no-restricted-globals
