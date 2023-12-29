@@ -10,7 +10,7 @@ setup:
 
 lint:
 	ps
-	cat nohup.out
+	cat /tmp/mutter.log
 # JavaScript
 	./node_modules/.bin/eslint --max-warnings=0 src
 # ./build-aux/fun workbench-cli ci javascript demos/**/*.js
