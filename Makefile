@@ -1,6 +1,7 @@
 SHELL:=/bin/bash -O globstar
 .PHONY: setup build lint unit test ci sandbox flatpak
 .DEFAULT_GOAL := ci
+WAYLAND_DISPLAY=$(WAYLAND_DISPLAY)
 
 setup:
 	flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
@@ -9,7 +10,7 @@ setup:
 	make build
 
 build:
-	flatpak-builder --disable-updates --build-only --ccache --force-clean flatpak build-aux/re.sonny.Workbench.Devel.json
+	flatpak-builder --delete-build-dirs --disable-updates --build-only --ccache --force-clean flatpak build-aux/re.sonny.Workbench.Devel.json
 
 lint:
 # JavaScript

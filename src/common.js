@@ -119,7 +119,7 @@ export function createLSPClient({ lang, root_uri }) {
   const lspc = new LSPClient(lang.language_server, {
     rootUri: root_uri,
     languageId: language_id,
-    quiet: false,
+    // quiet: false,
   });
   lspc.connect("exit", () => {
     console.debug(`${language_id} language server exit`);
