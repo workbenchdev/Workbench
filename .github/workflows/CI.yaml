@@ -27,12 +27,13 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.local/share/flatpak
-          key: 45
+          key: ${{ runner.os }}-dependencies
 
-      - name: Cache Flatpak build
+      - name: Cache flatpa-builder
         uses: actions/cache@v3
         with:
-          path: flatpak
+          path: .flatpak-builder
+          key: ${{ runner.os }}-flatpak-builder
 
       - run: nohup mutter --wayland --headless --virtual-monitor 1280x720 &
-      - run: WAYLAND_DISPLAY=wayland-1 make ci
+      - run: export WAYLAND_DISPLAY=wayland-1 && && make ci
