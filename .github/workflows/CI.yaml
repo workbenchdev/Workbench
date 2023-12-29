@@ -6,7 +6,7 @@ on:
 
 jobs:
   CI:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-23.10
     steps:
       - uses: actions/checkout@v3
         with:
