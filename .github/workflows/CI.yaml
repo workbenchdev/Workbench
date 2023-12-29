@@ -20,7 +20,11 @@ jobs:
       # See also https://github.com/flatpak/flatpak-github-actions
       - uses: awalsh128/cache-apt-pkgs-action@latest
         with:
-          packages: flatpak flatpak-builder mutter mutter-common gjs gnome-settings-daemon-common gnome-shell
+          # FIXME: without gnome-shell mutter will fail with
+          # Settings schema 'org.gnome.mutter' is not installed
+          # even though /usr/share/glib-2.0/schemas/org.gnome.mutter.gschema.xml
+          # exists and is provided by mutter-common
+          packages: flatpak flatpak-builder mutter gnome-shell
           version: 1.0
 
       # Restore caches

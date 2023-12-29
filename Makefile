@@ -10,6 +10,7 @@ setup:
 
 lint:
 	ps
+	dpkg -S /usr/share/glib-2.0/schemas/org.gnome.mutter.gschema.xml
 	cat /tmp/mutter.log
 # JavaScript
 	./node_modules/.bin/eslint --max-warnings=0 src
