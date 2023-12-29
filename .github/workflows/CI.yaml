@@ -20,7 +20,7 @@ jobs:
       # See also https://github.com/flatpak/flatpak-github-actions
       - uses: awalsh128/cache-apt-pkgs-action@latest
         with:
-          packages: flatpak flatpak-builder mutter mutter-common
+          packages: flatpak flatpak-builder mutter mutter-common gjs
           version: 1.0
 
       # Restore caches
@@ -39,7 +39,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-flatpak-builder-
 
-      - run: mutter --wayland --no-x11 --headless --wayland-display=wayland-0 --virtual-monitor 1280x720 &
+      - run: mutter --wayland --no-x11 --headless --wayland-display=wayland-0 --virtual-monitor 1280x720
       - run: make ci
 
       # Save caches
