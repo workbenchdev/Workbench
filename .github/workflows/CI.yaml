@@ -36,4 +36,4 @@ jobs:
           key: ${{ runner.os }}-flatpak-builder
 
       - run: nohup mutter --wayland --headless --virtual-monitor 1280x720 &
-      - run: export WAYLAND_DISPLAY=wayland-1 && && make ci
+      - run: export WAYLAND_DISPLAY=wayland-1 && make ci
