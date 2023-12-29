@@ -6,7 +6,7 @@ setup:
 	flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 	flatpak install --or-update --user --noninteractive flathub org.gnome.Sdk//45 org.flatpak.Builder org.freedesktop.Sdk.Extension.rust-stable//23.08 org.freedesktop.Sdk.Extension.vala//23.08 org.freedesktop.Sdk.Extension.llvm16//23.08
 	npm install
-	flatpak-builder --delete-build-dirs --disable-updates --build-only --ccache --force-clean --stop-at=gst-plugin-gtk4 flatpak build-aux/re.sonny.Workbench.Devel.json
+	flatpak-builder --delete-build-dirs --disable-updates --build-only --ccache --force-clean --stop-at=Workbench flatpak build-aux/re.sonny.Workbench.Devel.json
 
 lint:
 # JavaScript
@@ -37,7 +37,7 @@ unit:
 test: unit lint
 
 ci: setup unit lint
-	flatpak-builder --ccache --force-clean flatpak build-aux/re.sonny.Workbench.Devel.json
+	flatpak-builder --delete-build-dirs --disable-updates --build-only --ccache --force-clean flatpak build-aux/re.sonny.Workbench.Devel.json
 
 # Note that if you have Sdk extensions installed they will be used
 # make sure to test without the sdk extensions installed
