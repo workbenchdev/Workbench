@@ -1,7 +1,6 @@
 SHELL:=/bin/bash -O globstar
 .PHONY: setup build lint unit test ci sandbox flatpak
 .DEFAULT_GOAL := ci
-WAYLAND_DISPLAY=$(WAYLAND_DISPLAY)
 
 setup:
 	flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
