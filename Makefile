@@ -25,6 +25,9 @@ lint:
 	./build-aux/fun workbench-cli ci blueprint demos/**/*.blp
 # Vala
 	./build-aux/fun workbench-cli ci vala demos/**/*.vala
+# CSS
+	./build-aux/fun workbench-cli lint css src/**/*.css
+	./build-aux/fun workbench-cli lint css demos/**/*.css
 # Flatpak manifests
 	flatpak run --user --command=flatpak-builder-lint org.flatpak.Builder manifest --exceptions build-aux/re.sonny.Workbench.json
 	flatpak run --user --command=flatpak-builder-lint org.flatpak.Builder manifest --exceptions build-aux/re.sonny.Workbench.Devel.json

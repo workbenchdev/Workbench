@@ -7,8 +7,6 @@ on:
 jobs:
   CI:
     runs-on: ubuntu-22.04
-    env:
-      WAYLAND_DISPLAY: mutter-headless
     steps:
       - uses: actions/checkout@v3
         with:
@@ -37,6 +35,5 @@ jobs:
           path: .flatpak-builder
           key: ${{ runner.os }}-flatpak-builder
 
-      - run: |
-          nohup mutter --wayland --no-x11 --headless --wayland-display=mutter-headless --virtual-monitor 1280x720 &
-          make ci
+      - run: mutter --wayland --no-x11 --headless --wayland-display=wayland-0 --virtual-monitor 1280x720 &
+      - run: make ci
