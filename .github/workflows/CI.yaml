@@ -6,7 +6,7 @@ on:
 
 jobs:
   CI:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
         with:
@@ -27,6 +27,12 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.local/share/flatpak
-          key: 45
+          key: ${{ runner.os }}-flatpak-dependencies
+
+      - name: Cache flatpak-builder
+        uses: actions/cache@v3
+        with:
+          path: .flatpak-builder
+          key: ${{ runner.os }}-flatpak-builder
 
       - run: make ci
