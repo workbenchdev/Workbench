@@ -39,7 +39,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-flatpak-builder-
 
-      - run: mutter --wayland --no-x11 --headless --wayland-display=wayland-0 --virtual-monitor 1280x720
+      - run: mutter --wayland --no-x11 --headless --wayland-display=wayland-0 --virtual-monitor 1280x720 &
       - run: make ci
 
       # Save caches
