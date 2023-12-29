@@ -37,9 +37,10 @@ install_data('langs/vala/workbench.vala', install_dir: pkgdatadir)
 install_data('langs/javascript/biome.json', install_dir: pkgdatadir)
 subdir('Previewer')
 subdir('langs/python')
+subdir('langs/css')
 
 gjspack = find_program('../troll/gjspack/bin/gjspack')
-custom_target('gjspack',
+custom_target('workbench',
   input: ['main.js'],
   output: app_id + '.src.gresource',
   command: [

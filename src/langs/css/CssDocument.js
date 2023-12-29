@@ -1,14 +1,33 @@
-import { format as prettier } from "../../lib/prettier.js";
-import prettier_postcss from "../../lib/prettier-postcss.js";
-
 import Document from "../../Document.js";
+import { applyTextEdits } from "../../lsp/sourceview.js";
+import { setup } from "./css.js";
 
 export class CssDocument extends Document {
+  constructor(...args) {
+    super(...args);
+
+    this.lspc = setup({ document: this });
+  }
+
   async format() {
-    const code = await prettier(this.buffer.text, {
-      parser: "css",
-      plugins: [prettier_postcss],
+    // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_formatting
+    const text_edits = await this.lspc.request("textDocument/formatting", {
+      textDocument: {
+        uri: this.file.get_uri(),
+      },
+      options: {
+        tabSize: 2,
+        insertSpaces: true,
+        trimTrailingWhitespace: true,
+        insertFinalNewline: true,
+        trimFinalNewlines: true,
+      },
     });
-    this.code_view.replaceText(code, true);
+
+    // Biome doesn't support diff - it just returns one edit
+    // we don't want to loose the cursor position so we use this
+    const state = this.code_view.saveState();
+    applyTextEdits(text_edits, this.buffer);
+    await this.code_view.restoreState(state);
   }
 }
