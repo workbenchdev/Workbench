@@ -12,10 +12,6 @@ build:
 	flatpak-builder --delete-build-dirs --disable-updates --build-only --ccache --force-clean flatpak build-aux/re.sonny.Workbench.Devel.json
 
 lint:
-	ps
-	dpkg -S /usr/share/glib-2.0/schemas/org.gnome.mutter.gschema.xml
-	cat /tmp/mutter.log
-
 # JavaScript
 	./node_modules/.bin/eslint --max-warnings=0 src
 # ./build-aux/fun workbench-cli ci javascript demos/**/*.js
