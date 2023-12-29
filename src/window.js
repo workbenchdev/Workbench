@@ -138,7 +138,7 @@ export default function Window({ application, session }) {
     settings,
   });
 
-  PanelStyle({ builder, document_css, settings });
+  PanelStyle({ builder, settings });
 
   const previewer = Previewer({
     output,

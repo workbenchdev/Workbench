@@ -25,4 +25,6 @@ export function setup({ document }) {
     if (!buffer.get_modified()) return;
     lspc.didChange().catch(console.error);
   });
+
+  return lspc;
 }

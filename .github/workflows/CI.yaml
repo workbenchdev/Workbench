@@ -23,11 +23,19 @@ jobs:
           packages: flatpak flatpak-builder mutter mutter-common
           version: 1.0
 
-      - name: Cache Flatpak dependencies
-        uses: actions/cache@v3
+      # Restore caches
+      - name: Restore Flatpak dependencies
+        uses: actions/cache/restore@v3
         with:
           path: ~/.local/share/flatpak
-          key: ${{ runner.os }}-dependencies
+          key: ${{ runner.os }}-flatpak-dependencies-${{ github.run_id }}
+          restore-keys: ${{ runner.os }}-flatpak-dependencies-
+      - name: Restore .flatpak-builder
+        uses: actions/cache/restore@v3
+        with:
+          path: .flatpak-builder
+          key: ${{ runner.os }}-flatpak-builder-${{ github.run_id }}
+          restore-keys: ${{ runner.os }}-flatpak-builder-
 
       - name: Cache flatpak-builder
         uses: actions/cache@v3
@@ -37,3 +45,17 @@ jobs:
 
       - run: mutter --wayland --no-x11 --headless --wayland-display=wayland-0 --virtual-monitor 1280x720 &
       - run: make ci
+
+      # Save caches
+      - name: Save Flatpak dependencies
+        uses: actions/cache/save@v3
+        if: always()
+        with:
+          path: ~/.local/share/flatpak
+          key: ${{ runner.os }}-flatpak-dependencies-${{ github.run_id }}
+      - name: Save .flatpak-builder
+        uses: actions/cache/save@v3
+        if: always()
+        with:
+          path: .flatpak-builder
+          key: ${{ runner.os }}-flatpak-builder-${{ github.run_id }}
