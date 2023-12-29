@@ -17,15 +17,19 @@ jobs:
           node-version: 18
           cache: "npm"
 
+      - name: Install apt packages
+        run: |
+          sudo apt-get update
+          sudo apt-get install flatpak flatpak-builder mutter
       # See also https://github.com/flatpak/flatpak-github-actions
-      - uses: awalsh128/cache-apt-pkgs-action@latest
-        with:
-          # FIXME: without gnome-shell mutter will fail with
-          # Settings schema 'org.gnome.mutter' is not installed
-          # even though /usr/share/glib-2.0/schemas/org.gnome.mutter.gschema.xml
-          # exists and is provided by mutter-common
-          packages: flatpak flatpak-builder mutter gnome-shell
-          version: 1.0
+      # - uses: awalsh128/cache-apt-pkgs-action@latest
+      #   with:
+      #     # FIXME: without gnome-shell mutter will fail with
+      #     # Settings schema 'org.gnome.mutter' is not installed
+      #     # even though /usr/share/glib-2.0/schemas/org.gnome.mutter.gschema.xml
+      #     # exists and is provided by mutter-common
+      #     packages: flatpak flatpak-builder mutter gnome-shell
+      #     version: 1.0
 
       # Restore caches
       - name: Restore Flatpak dependencies
@@ -45,6 +49,7 @@ jobs:
 
       - run: mutter --wayland --no-x11 --headless --wayland-display=wayland-0 --virtual-monitor 1280x720 > /tmp/mutter.log 2>&1 &
       - run: make ci
+      - run: cat /tmp/mutter.log
 
       # Save caches
       - name: Save Flatpak dependencies
