@@ -29,11 +29,13 @@ jobs:
         with:
           path: ~/.local/share/flatpak
           key: ${{ runner.os }}-flatpak-dependencies-${{ github.run_id }}
+          restore-keys: ${{ runner.os }}-flatpak-dependencies-
       - name: Restore .flatpak-builder
         uses: actions/cache/restore@v3
         with:
           path: .flatpak-builder
           key: ${{ runner.os }}-flatpak-builder-${{ github.run_id }}
+          restore-keys: ${{ runner.os }}-flatpak-builder-
 
       - run: make ci
 
@@ -44,12 +46,9 @@ jobs:
         with:
           path: ~/.local/share/flatpak
           key: ${{ runner.os }}-flatpak-dependencies-${{ github.run_id }}
-          restore-keys: ${{ runner.os }}-flatpak-dependencies-
-
       - name: Save .flatpak-builder
         uses: actions/cache/save@v3
         if: always()
         with:
           path: .flatpak-builder
           key: ${{ runner.os }}-flatpak-builder-${{ github.run_id }}
-          restore-keys: ${{ runner.os }}-flatpak-builder-
