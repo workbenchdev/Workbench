@@ -20,7 +20,7 @@ jobs:
       # See also https://github.com/flatpak/flatpak-github-actions
       - uses: awalsh128/cache-apt-pkgs-action@latest
         with:
-          packages: flatpak flatpak-builder
+          packages: flatpak flatpak-builder mutter
           version: 1.0
 
       - name: Cache Flatpak dependencies
@@ -34,4 +34,5 @@ jobs:
         with:
           path: flatpak
 
-      - run: make ci
+      - run: nohup mutter --wayland --headless --virtual-monitor 1280x720 &
+      - run: WAYLAND_DISPLAY=wayland-1 make ci
