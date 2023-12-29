@@ -25,5 +25,5 @@ const formatted = await format(text, {
   plugins: [prettier_postcss],
 });
 
-// eslint-disable-next-line no-restricted-globals
-print(formatted);
+const stream = new Gio.UnixOutputStream({ fd: 1 });
+stream.write_all(formatted, null);
