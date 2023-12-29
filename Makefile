@@ -14,7 +14,6 @@ build:
 lint:
 # JavaScript
 	./node_modules/.bin/eslint --max-warnings=0 src
-# ./build-aux/fun workbench-cli ci javascript demos/**/*.js
 # Rust
 	./build-aux/fun rustfmt --check --edition 2021 src/**/*.rs
 # Python
@@ -22,12 +21,10 @@ lint:
 # Blueprint
 	./build-aux/fun blueprint-compiler format src/**/*.blp
 	./build-aux/fun workbench-cli ci blueprint src/**/*.blp
-# ./build-aux/fun workbench-cli ci blueprint demos/**/*.blp
 # Vala
 # ./build-aux/fun workbench-cli ci vala demos/**/*.vala
 # CSS
 	./build-aux/fun workbench-cli ci css src/**/*.css
-# ./build-aux/fun workbench-cli ci css demos/**/*.css
 # Flatpak manifests
 	flatpak run --user --command=flatpak-builder-lint org.flatpak.Builder manifest --exceptions build-aux/re.sonny.Workbench.json
 	flatpak run --user --command=flatpak-builder-lint org.flatpak.Builder manifest --exceptions build-aux/re.sonny.Workbench.Devel.json
