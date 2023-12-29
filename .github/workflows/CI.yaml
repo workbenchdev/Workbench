@@ -22,7 +22,7 @@ jobs:
       # See also https://github.com/flatpak/flatpak-github-actions
       - uses: awalsh128/cache-apt-pkgs-action@latest
         with:
-          packages: flatpak flatpak-builder mutter
+          packages: flatpak flatpak-builder mutter mutter-common
           version: 1.0
 
       - name: Cache Flatpak dependencies
