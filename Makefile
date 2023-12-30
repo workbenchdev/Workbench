@@ -11,6 +11,10 @@ setup:
 build:
 	flatpak-builder --delete-build-dirs --disable-updates --build-only --ccache --force-clean flatpak build-aux/re.sonny.Workbench.Devel.json
 
+cli:
+	 ./troll/gjspack/bin/gjspack src/cli/main.js --appid=re.sonny.Workbench.cli --prefix=/re/sonny/Workbench --resource-root=src/ --no-executable flatpak/files/share/re.sonny.Workbench.cli/
+	cp src/cli/bin.js flatpak/files/bin/workbench-cli
+
 lint:
 # JavaScript
 	./node_modules/.bin/eslint --max-warnings=0 src
@@ -45,6 +49,7 @@ unit:
 test: unit lint
 
 ci: setup unit lint
+	./build-aux/fun workbench-cli ci demos/demos/*
 
 # Note that if you have Sdk extensions installed they will be used
 # make sure to test without the sdk extensions installed

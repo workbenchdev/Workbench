@@ -7,6 +7,6 @@ It exposes the formatter and linter used in Workbench for the different language
 ## Hack
 
 ```sh
-./src/cli/local.js lint blueprint src/**/*.blp
-./src/cli/local.js lint javascript src/**/*.js
+make cli
+./build-aux/fun workbench-cli ci demos/demos/*
 ```

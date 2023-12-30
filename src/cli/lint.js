@@ -47,7 +47,7 @@ export default async function lint({ filenames, lang, lspc, ci }) {
   return success;
 }
 
-function waitForDiagnostics({ uri, lspc }) {
+export function waitForDiagnostics({ uri, lspc }) {
   return new Promise((resolve) => {
     const handler_id = lspc.connect(
       "notification::textDocument/publishDiagnostics",

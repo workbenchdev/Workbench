@@ -1,4 +1,4 @@
-#!@GJS@ -m
+#!/usr/bin/env -S gjs -m
 
 import Gio from "gi://Gio";
 import { exit, programArgs } from "system";
@@ -13,11 +13,14 @@ imports.package.init({
   libdir: "@libdir@",
   datadir: "@datadir@",
 });
-setConsoleLogDomain("re.sonny.Workbench.cli");
+
+const app_id = "re.sonny.Workbench.cli";
+
+setConsoleLogDomain(app_id);
 GLib.set_application_name("workbench-cli");
 
 const resource = Gio.Resource.load(
-  "/app/share/@app_id@/re.sonny.Workbench.cli.src.gresource",
+  `/app/share/${app_id}/${app_id}.src.gresource`,
 );
 resource._register();
 
