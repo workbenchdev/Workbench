@@ -54,7 +54,7 @@ export default class LSPClient {
     this.ready = true;
     this.emit("ready");
 
-    // For testing blueprint language server restart
+    // For testing language server restart
     // setTimeout(() => {
     //   this.stop()
     // }, 5000);
@@ -85,8 +85,8 @@ export default class LSPClient {
 
   async stop() {
     await Promise.all([
-      this.stdin.close_async(null),
-      this.stdout.close_async(null),
+      this.stdin.close_async(GLib.PRIORITY_DEFAULT, null).catch(console.error),
+      this.stdout.close_async(GLib.PRIORITY_DEFAULT, null).catch(console.error),
     ]);
     // this.proc?.force_exit();
     this.proc.send_signal(15);
@@ -204,19 +204,28 @@ export default class LSPClient {
     }
 
     const str = decoder_utf8.decode(uint8);
-    return JSON.parse(str);
+    try {
+      return JSON.parse(str);
+    } catch (err) {
+      await this.stop();
+    }
   }
 
   // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#baseProtocol
   async _read() {
     const headers = await this._read_headers();
 
-    const length = headers["Content-Length"];
-    const content = await this._read_content(length);
-    if (content) {
-      this._onmessage(content);
+    const length = headers?.["Content-Length"];
+    if (!length) {
+      return this.stop();
     }
 
+    const content = await this._read_content(length);
+    if (!content) {
+      return this.stop();
+    }
+
+    this._onmessage(content);
     this._read().catch(console.error);
   }
 

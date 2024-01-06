@@ -175,7 +175,7 @@ export function unstack(fn, onError = console.error) {
 
 export const demos_dir = Gio.File.new_for_path(
   pkg.pkgdatadir,
-).resolve_relative_path("Library/demos");
+).resolve_relative_path("demos");
 
 export const rust_template_dir = Gio.File.new_for_path(
   pkg.pkgdatadir,
