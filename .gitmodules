@@ -2,5 +2,5 @@
 	path = troll
 	url = https://github.com/sonnyp/troll.git
 [submodule "demos"]
-	path = src/Library/demos
+	path = demos
 	url = https://github.com/workbenchdev/demos.git

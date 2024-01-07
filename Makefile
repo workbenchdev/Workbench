@@ -6,19 +6,17 @@ setup:
 	flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 	flatpak install --or-update --user --noninteractive flathub org.gnome.Sdk//45 org.flatpak.Builder org.freedesktop.Sdk.Extension.rust-stable//23.08 org.freedesktop.Sdk.Extension.vala//23.08 org.freedesktop.Sdk.Extension.llvm16//23.08
 	npm install
-	flatpak-builder --ccache --force-clean --stop-at=gst-plugin-gtk4 flatpak build-aux/re.sonny.Workbench.Devel.json
+	flatpak-builder --delete-build-dirs --disable-updates --build-only --ccache --force-clean --stop-at=Workbench flatpak build-aux/re.sonny.Workbench.Devel.json
 
 lint:
 # JavaScript
 	./node_modules/.bin/eslint --max-warnings=0 src
-# rustfmt
+# Rust
 	./build-aux/fun rustfmt --check --edition 2021 src/**/*.rs
-# black
+# Python
 	./build-aux/fun black --check src/**/*.py
-# gettext
-# find po/ -type f -name "*po" -print0 | xargs -0 -n1 ./build-aux/fun msgfmt -o /dev/null --check
 # Blueprint
-	find src/ -type f -name "*blp" -print0 | xargs -0 ./build-aux/fun blueprint-compiler format
+	./build-aux/fun blueprint-compiler format src/**/*.blp
 # Flatpak manifests
 	flatpak run --user --command=flatpak-builder-lint org.flatpak.Builder manifest --exceptions build-aux/re.sonny.Workbench.json
 	flatpak run --user --command=flatpak-builder-lint org.flatpak.Builder manifest --exceptions build-aux/re.sonny.Workbench.Devel.json
@@ -39,7 +37,7 @@ unit:
 test: unit lint
 
 ci: setup unit lint
-	flatpak-builder --ccache --force-clean flatpak build-aux/re.sonny.Workbench.Devel.json
+	flatpak-builder --delete-build-dirs --disable-updates --build-only --ccache --force-clean flatpak build-aux/re.sonny.Workbench.Devel.json
 
 # Note that if you have Sdk extensions installed they will be used
 # make sure to test without the sdk extensions installed

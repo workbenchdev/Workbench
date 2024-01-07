@@ -1,19 +1,16 @@
-* @sonnyp
+/src/langs/javascript/ @sonnyp
+*.js @sonnyp
 
-# Vala
-*.vala @lw64
 /src/langs/vala/ @lw64
+*.vala @lw64
 
-# Rust
+/src/langs/rust/ @lw64
 *.rs @Hofer-Julian
 Cargo.toml @Hofer-Julian
 Cargo.lock @Hofer-Julian
-/src/langs/rust/ @Hofer-Julian
 
-# C
+/src/langs/python/ @theCapypara
+*.py @theCapypara
+
 *.c @andyholmes
 *.h @andyholmes
-
-# Python
-*.py @theCapypara
-/src/langs/python/ @theCapypara

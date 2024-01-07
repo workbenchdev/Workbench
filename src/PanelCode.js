@@ -1,17 +1,9 @@
 import Gio from "gi://Gio";
 import GObject from "gi://GObject";
 
-import { setup as setupVala } from "./langs/vala/vala.js";
-import { setup as setupJavaScript } from "./langs/javascript/javascript.js";
 import { settings as global_settings, makeDropdownFlat } from "./util.js";
 
-export default function PanelCode({
-  builder,
-  previewer,
-  document_vala,
-  document_javascript,
-  settings,
-}) {
+export default function PanelCode({ builder, previewer, settings }) {
   const panel_code = builder.get_object("panel_code");
   const button_code = builder.get_object("button_code");
   const stack_code = builder.get_object("stack_code");
@@ -50,9 +42,6 @@ export default function PanelCode({
   const panel = {
     panel: panel_code,
   };
-
-  setupVala({ document: document_vala });
-  setupJavaScript({ document: document_javascript });
 
   function switchLanguage() {
     panel.language = dropdown_code_lang.selected_item?.string;
