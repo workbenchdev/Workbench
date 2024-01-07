@@ -9,8 +9,8 @@
   <shortdesc>Learn and prototype with GNOME technologies</shortdesc>
   <description>Workbench goal is to let you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a custom GTK widget.</description>
 
-  <homepage rdf:resource="https://workbench.sonny.re" />
-  <bug-database rdf:resource="https://workbench.sonny.re/feedback" />
+  <homepage rdf:resource="https://github.com/workbenchdev/Workbench" />
+  <bug-database rdf:resource="https://github.com/workbenchdev/Workbench/issues" />
   <programming-language>JavaScript</programming-language>
   <programming-language>Vala</programming-language>
   <programming-language>C</programming-language>
