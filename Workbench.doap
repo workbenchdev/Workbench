@@ -38,5 +38,22 @@
         </foaf:OnlineAccount>
       </foaf:account>
     </foaf:Person>
+    <foaf:Person>
+      <foaf:name>julianhofer</foaf:name>
+      <foaf:mbox rdf:resource="mailto:julianhofer@gnome.org" />
+      <gnome:userid>julianhofer</gnome:userid>
+      <foaf:account>
+        <foaf:OnlineAccount>
+            <foaf:accountServiceHomepage rdf:resource="https://github.com/" />
+            <foaf:accountName>Hofer-Julian</foaf:accountName>
+        </foaf:OnlineAccount>
+      </foaf:account>
+      <foaf:account>
+        <foaf:OnlineAccount>
+          <foaf:accountServiceHomepage rdf:resource="https://gitlab.gnome.org"/>
+          <foaf:accountName>Hofer-Julian</foaf:accountName>
+        </foaf:OnlineAccount>
+      </foaf:account>
+    </foaf:Person>
   </maintainer>
 </Project>
