@@ -304,10 +304,12 @@ export default function Window({ application, session }) {
         return;
       }
 
+      await previewer.useExternal("vala");
+      const { template } = await previewer.update(true);
+
       compiler_vala = compiler_vala || ValaCompiler({ session });
-      const success = await compiler_vala.compile();
+      const success = await compiler_vala.compile(template);
       if (success) {
-        await previewer.useExternal("vala");
         if (await compiler_vala.run()) {
           await previewer.open();
         } else {
@@ -320,10 +322,12 @@ export default function Window({ application, session }) {
         return;
       }
 
+      await previewer.useExternal("rust");
+      const { template } = await previewer.update(true);
+
       compiler_rust = compiler_rust || RustCompiler({ session });
-      const success = await compiler_rust.compile();
+      const success = await compiler_rust.compile(template);
       if (success) {
-        await previewer.useExternal("rust");
         if (await compiler_rust.run()) {
           await previewer.open();
         } else {

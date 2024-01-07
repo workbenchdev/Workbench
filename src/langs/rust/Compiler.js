@@ -2,6 +2,7 @@ import Gio from "gi://Gio";
 import GLib from "gi://GLib";
 import dbus_previewer from "../../Previewer/DBusPreviewer.js";
 import { decode, encode } from "../../util.js";
+import template_resource from "../../Previewer/TemplateResource.js";
 
 export default function Compiler({ session }) {
   const { file } = session;
@@ -14,7 +15,7 @@ export default function Compiler({ session }) {
   let rustcVersion;
   let savedRustcVersion;
 
-  async function compile() {
+  async function compile(template) {
     rustcVersion ||= await getRustcVersion();
     savedRustcVersion ||= await getSavedRustcVersion({ rustcVersionFile });
 
@@ -22,6 +23,8 @@ export default function Compiler({ session }) {
       await cargoClean({ file, targetPath });
       await saveRustcVersion({ targetPath, rustcVersion, rustcVersionFile });
     }
+
+    await template_resource.writeTemplateUi(file, template);
 
     const cargo_launcher = new Gio.SubprocessLauncher();
     cargo_launcher.set_cwd(file.get_path());
