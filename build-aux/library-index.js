@@ -17,7 +17,7 @@ Gio._promisify(
 
 const demos_dir = Gio.File.new_for_path(
   GLib.getenv("MESON_SOURCE_ROOT"),
-).get_child("src/Library/demos/demos");
+).get_child("demos/demos");
 const demos = [];
 
 for (const file_info of demos_dir.enumerate_children(
@@ -65,7 +65,7 @@ const [pkgdatadir] = ARGV;
 
 GLib.mkdir_with_parents(pkgdatadir, 0o755);
 await Gio.File.new_for_path(pkgdatadir)
-  .get_child("Library/index.json")
+  .get_child("demos/index.json")
   .replace_contents_async(
     new TextEncoder().encode(JSON.stringify(demos)),
     null,
