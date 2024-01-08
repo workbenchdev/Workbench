@@ -1,6 +1,6 @@
 SHELL:=/bin/bash -O globstar
 .PHONY: setup build lint unit test ci sandbox flatpak
-.DEFAULT_GOAL := ci
+.DEFAULT_GOAL := test
 
 setup:
 	flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
@@ -24,11 +24,11 @@ lint:
 	./build-aux/fun black --check src/**/*.py
 # Blueprint
 	./build-aux/fun blueprint-compiler format src/**/*.blp
-	./build-aux/fun workbench-cli ci blueprint src/**/*.blp
+	./build-aux/fun workbench-cli check blueprint src/**/*.blp
 # Vala
-# ./build-aux/fun workbench-cli ci vala demos/**/*.vala
+# ./build-aux/fun workbench-cli check vala src/**/*.vala
 # CSS
-	./build-aux/fun workbench-cli ci css src/**/*.css
+	./build-aux/fun workbench-cli check css src/**/*.css
 # Flatpak manifests
 	flatpak run --user --command=flatpak-builder-lint org.flatpak.Builder manifest --exceptions build-aux/re.sonny.Workbench.json
 	flatpak run --user --command=flatpak-builder-lint org.flatpak.Builder manifest --exceptions build-aux/re.sonny.Workbench.Devel.json
@@ -47,9 +47,10 @@ unit:
 # flatpak run --env=G_DEBUG=fatal-criticals --command=appstream-util org.flatpak.Builder validate data/app.metainfo.xml
 
 test: unit lint
+	./build-aux/fun workbench-cli ci demos/demos/Welcome
 
-ci: setup unit lint
-	./build-aux/fun workbench-cli ci demos/demos/*
+ci: setup test
+	./build-aux/fun workbench-cli ci demos/demos/**
 
 # Note that if you have Sdk extensions installed they will be used
 # make sure to test without the sdk extensions installed

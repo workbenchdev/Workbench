@@ -18,7 +18,7 @@ export async function main([action, ...args]) {
   const current_dir = Gio.File.new_for_path(GLib.get_current_dir());
 
   if (action === "ci") {
-    const [, ...filenames] = args;
+    const filenames = args;
     const success = await ci({ filenames, current_dir });
     return success ? 0 : 1;
   }
