@@ -1,4 +1,5 @@
-* @sonnyp
+/src/langs/javascript/ @sonnyp
+*.js @sonnyp
 
 /src/langs/vala/ @lw64
 *.vala @lw64

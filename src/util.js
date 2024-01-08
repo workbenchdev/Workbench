@@ -2,6 +2,7 @@ import GLib from "gi://GLib";
 import Gio from "gi://Gio";
 import Xdp from "gi://Xdp";
 import GObject from "gi://GObject";
+import { languages } from "./common.js";
 
 export const portal = new Xdp.Portal();
 
@@ -36,77 +37,6 @@ export function getFlatpakInfo() {
   }
   return keyFile;
 }
-
-// See dropdown_code_lang for index
-export const languages = [
-  {
-    id: "blueprint",
-    name: "Blueprint",
-    panel: "ui",
-    extensions: [".blp"],
-    types: [],
-    document: null,
-    default_file: "main.blp",
-  },
-  {
-    id: "xml",
-    name: "GTK Builder",
-    panel: "ui",
-    extensions: [".ui"],
-    types: ["application/x-gtk-builder"],
-    document: null,
-    default_file: "main.ui",
-  },
-  {
-    id: "javascript",
-    name: "JavaScript",
-    panel: "code",
-    extensions: [".js", ".mjs"],
-    types: ["text/javascript", "application/javascript"],
-    document: null,
-    default_file: "main.js",
-    index: 0,
-  },
-  {
-    id: "css",
-    name: "CSS",
-    panel: "style",
-    extensions: [".css"],
-    types: ["text/css"],
-    document: null,
-    default_file: "main.css",
-  },
-  {
-    id: "vala",
-    name: "Vala",
-    panel: "code",
-    extensions: [".vala"],
-    types: ["text/x-vala"],
-    document: null,
-    default_file: "main.vala",
-    index: 1,
-  },
-  {
-    id: "rust",
-    name: "Rust",
-    panel: "code",
-    extensions: [".rs"],
-    types: ["text/x-rust"],
-    document: null,
-    default_file: "code.rs",
-    index: 2,
-  },
-  {
-    id: "python",
-    name: "Python",
-    panel: "code",
-    extensions: [".py"],
-    types: ["text/x-python"],
-    document: null,
-    default_file: "main.py",
-    index: 3,
-  },
-];
 
 export function getLanguage(id) {
   return languages.find(
@@ -177,9 +107,30 @@ export const demos_dir = Gio.File.new_for_path(
   pkg.pkgdatadir,
 ).resolve_relative_path("demos");
 
-export const rust_template_dir = Gio.File.new_for_path(
-  pkg.pkgdatadir,
-).resolve_relative_path("langs/rust/template");
+// There is no copy directory function
+export function copyDirectory(source, destination) {
+  for (const file_info of source.enumerate_children(
+    "",
+    Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
+    null,
+  )) {
+    if (file_info.get_file_type() === Gio.FileType.DIRECTORY) continue;
+    const child = source.get_child(file_info.get_name());
+
+    try {
+      child.copy(
+        destination.get_child(child.get_basename()),
+        Gio.FileCopyFlags.NONE,
+        null,
+        null,
+      );
+    } catch (err) {
+      if (!err.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.EXISTS)) {
+        throw err;
+      }
+    }
+  }
+}
 
 export function getNowForFilename() {
   return new GLib.DateTime().format("%Y-%m-%d %H-%M-%S");

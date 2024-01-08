@@ -13,7 +13,7 @@ export class BlueprintDocument extends Document {
     return this.lspc.didChange();
   }
   async compile() {
-    await this.lspc.didChange();
+    await this.update();
 
     let xml = null;
 

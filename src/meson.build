@@ -59,4 +59,5 @@ custom_target('workbench',
   build_always_stale: true,
 )
 
+subdir('cli')
 subdir('libworkbench')

@@ -5,7 +5,7 @@
   <name translatable="no">Workbench</name>
   <!-- developer_name tag deprecated with Appstream 1.0 -->
   <developer_name translatable="no">Sonny Piers</developer_name>
-  <developer id="gitlab.com">
+  <developer>
     <name translatable="no">Sonny Piers</name>
   </developer>
   <update_contact>sonnyp@gnome.org</update_contact>
@@ -60,7 +60,7 @@
           <li>Add WebP image format support</li>
           <li>Use Biome instead of prettier for JavaScript formatter</li>
           <li>Use GTKCssLanguageServer instead of prettier for CSS formatter</li>
-          <li>Update Biome to 1.4.0</li>
+          <li>Update Biome to 1.4.1</li>
           <li>Update gst-plugin-gtk4 to 0.11.2</li>
           <li>Update libshumate 1.1.2</li>
           <li>Library: Add "Context Menu" entry</li>
