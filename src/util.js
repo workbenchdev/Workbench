@@ -177,9 +177,30 @@ export const demos_dir = Gio.File.new_for_path(
   pkg.pkgdatadir,
 ).resolve_relative_path("demos");
 
-export const rust_template_dir = Gio.File.new_for_path(
-  pkg.pkgdatadir,
-).resolve_relative_path("langs/rust/template");
+// There is no copy directory function
+export function copyDirectory(source, destination) {
+  for (const file_info of source.enumerate_children(
+    "",
+    Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
+    null,
+  )) {
+    if (file_info.get_file_type() === Gio.FileType.DIRECTORY) continue;
+    const child = source.get_child(file_info.get_name());
+
+    try {
+      child.copy(
+        destination.get_child(child.get_basename()),
+        Gio.FileCopyFlags.NONE,
+        null,
+        null,
+      );
+    } catch (err) {
+      if (!err.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.EXISTS)) {
+        throw err;
+      }
+    }
+  }
+}
 
 export function getNowForFilename() {
   return new GLib.DateTime().format("%Y-%m-%d %H-%M-%S");

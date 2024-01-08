@@ -5,7 +5,7 @@
   <name translatable="no">Workbench</name>
   <!-- developer_name tag deprecated with Appstream 1.0 -->
   <developer_name translatable="no">Sonny Piers</developer_name>
-  <developer id="gitlab.com">
+  <developer>
     <name translatable="no">Sonny Piers</name>
   </developer>
   <update_contact>sonnyp@gnome.org</update_contact>
