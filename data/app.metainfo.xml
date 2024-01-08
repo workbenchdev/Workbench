@@ -59,7 +59,7 @@
           <li>Add WebP image format support</li>
           <li>Use Biome instead of prettier for JavaScript formatter</li>
           <li>Use GTKCssLanguageServer instead of prettier for CSS formatter</li>
-          <li>Update Biome to 1.4.0</li>
+          <li>Update Biome to 1.4.1</li>
           <li>Update gst-plugin-gtk4 to 0.11.2</li>
           <li>Update libshumate 1.1.2</li>
           <li>Library: Add "Context Menu" entry</li>

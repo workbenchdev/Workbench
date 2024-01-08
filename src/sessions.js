@@ -9,10 +9,10 @@ import {
   demos_dir,
   settings as global_settings,
   encode,
-  languages,
   settings,
   copyDirectory,
 } from "./util.js";
+import { languages } from "./common.js";
 
 export const sessions_dir = data_dir.get_child("sessions");
 
