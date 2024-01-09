@@ -3,8 +3,7 @@ import Gdk from "gi://Gdk";
 import Gtk from "gi://Gtk";
 import GtkSource from "gi://GtkSource";
 
-import Template from "./Search.blp" with { type: "uri" };
-import { registerClass } from "../overrides.js";
+import Template from "./CodeFind.blp" with { type: "uri" };
 
 class Search extends Gtk.Revealer {
   #previous_search_term = "";
@@ -198,9 +197,9 @@ class Search extends Gtk.Revealer {
   }
 }
 
-export default registerClass(
+export default GObject.registerClass(
   {
-    GTypeName: "Search",
+    GTypeName: "CodeFind",
     Template,
     InternalChildren: [
       "text_search_term",
