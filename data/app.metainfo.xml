@@ -55,6 +55,7 @@
           <li>Open the Library on start if there are no sessions to restore</li>
           <li>Restore scroll and cusor positions on format and Run</li>
           <li>Add "Copy" and "Select All" to Console</li>
+          <!-- <li>Add find text support</li> -->
           <li>Add Vala formatter support</li>
           <li>Add WebP image format support</li>
           <li>Use Biome instead of prettier for JavaScript formatter</li>
