@@ -159,7 +159,9 @@ export default function Window({ application, session }) {
 
   previewer.setPanelCode(panel_code);
 
-  const button_run = builder.get_object("button_run");
+  const stack_start_stop = builder.get_object("stack_start_stop");
+  // const button_run = builder.get_object("button_run");
+  const button_stop = builder.get_object("button_stop");
   const button_preview = builder.get_object("button_preview");
   const button_inspector = builder.get_object("button_inspector");
 
@@ -231,8 +233,6 @@ export default function Window({ application, session }) {
   let builder_python = null;
 
   async function runCode({ format }) {
-    button_run.set_sensitive(false);
-
     term_console.clear();
     previewer.stop();
     panel_ui.stop();
@@ -244,7 +244,7 @@ export default function Window({ application, session }) {
         await formatCode();
       }
 
-      await compile();
+      await start();
     } catch (err) {
       // prettier xml errors are not instances of Error
       if (err instanceof Error || err instanceof GLib.Error) {
@@ -257,11 +257,10 @@ export default function Window({ application, session }) {
     previewer.start();
     panel_ui.start();
 
-    button_run.set_sensitive(true);
     term_console.scrollToEnd();
   }
 
-  async function compile() {
+  async function start() {
     const { language } = panel_code;
 
     const lang = langs[language.toLowerCase()];
@@ -270,6 +269,8 @@ export default function Window({ application, session }) {
     if (text === "") {
       return;
     }
+
+    stack_start_stop.visible_child = button_stop;
 
     if (language === "JavaScript") {
       await previewer.update(true);
@@ -308,10 +309,14 @@ export default function Window({ application, session }) {
       compiler_vala = compiler_vala || ValaCompiler({ session });
       const success = await compiler_vala.compile();
       if (success) {
+        console.log("use external");
         await previewer.useExternal("vala");
+        console.log("run");
         if (await compiler_vala.run()) {
+          console.log("open");
           await previewer.open();
         } else {
+          console.log("use internal");
           await previewer.useInternal();
         }
       }
@@ -350,6 +355,10 @@ export default function Window({ application, session }) {
   });
   window.add_action(action_run);
   application.set_accels_for_action("win.run", ["<Control>Return"]);
+
+  button_stop.connect("clicked", () => {
+    previewer.stop();
+  });
 
   const action_format = new Gio.SimpleAction({
     name: "format",

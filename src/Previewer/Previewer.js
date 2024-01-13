@@ -51,13 +51,10 @@ export default function Previewer({
   makeDropdownFlat(dropdown_preview_align);
 
   const internal = Internal({
-    onWindowChange(open) {
-      if (current !== internal) return;
-      if (open) {
-        stack.set_visible_child_name("close_window");
-      } else {
-        stack.set_visible_child_name("open_window");
-      }
+    onStop() {
+      console.log("stopping ouin ouin internal");
+      stack_start_stop.visible_child = button_run;
+      update(true);
     },
     output,
     builder,
@@ -67,15 +64,16 @@ export default function Previewer({
     panel_ui,
     session,
   });
+
+  const stack_start_stop = builder.get_object("stack_start_stop");
+  const button_run = builder.get_object("button_run");
+  // const button_stop = builder.get_object("button_stop");
+
   const external = External({
-    onWindowChange(open) {
-      if (current !== external) return;
-      if (open) {
-        stack.set_visible_child_name("close_window");
-      } else {
-        stack.set_visible_child_name("open_window");
-        useInternal().catch(console.error);
-      }
+    onStop() {
+      console.log("stoping ouin ouin external");
+      stack_start_stop.visible_child = button_run;
+      useInternal().catch(console.error);
     },
     output,
     builder,
@@ -87,12 +85,6 @@ export default function Previewer({
 
   let handler_id_ui = null;
   let handler_id_css = null;
-  let handler_id_button_open;
-  let handler_id_button_close;
-
-  const stack = builder.get_object("stack_preview");
-  const button_open = builder.get_object("button_open_preview_window");
-  const button_close = builder.get_object("button_close_preview_window");
 
   settings.bind(
     "preview-align",
@@ -109,8 +101,19 @@ export default function Previewer({
   }
   setPreviewAlign();
 
+  function clean() {
+    if (handler_id_ui) {
+      panel_ui.disconnect(handler_id_ui);
+      handler_id_ui = null;
+    }
+    if (handler_id_css) {
+      code_view_css.disconnect(handler_id_css);
+      handler_id_css = null;
+    }
+  }
+
   function start() {
-    stop();
+    clean();
     if (handler_id_ui === null) {
       handler_id_ui = panel_ui.connect("updated", () => schedule_update());
     }
@@ -122,14 +125,9 @@ export default function Previewer({
   }
 
   function stop() {
-    if (handler_id_ui) {
-      panel_ui.disconnect(handler_id_ui);
-      handler_id_ui = null;
-    }
-    if (handler_id_css) {
-      code_view_css.disconnect(handler_id_css);
-      handler_id_css = null;
-    }
+    console.log("previewer stop");
+    clean();
+    current?.stop?.();
   }
 
   // Using this custom scope we make sure that previewing UI definitions
@@ -243,7 +241,6 @@ export default function Previewer({
       await setPreviewer(external, language);
     }
     current_external_language = language;
-    stack.set_visible_child_name("close_window");
     await update(true);
   }
 
@@ -255,13 +252,6 @@ export default function Previewer({
   }
 
   async function setPreviewer(previewer, language) {
-    if (handler_id_button_open) {
-      button_open.disconnect(handler_id_button_open);
-    }
-    if (handler_id_button_close) {
-      button_close.disconnect(handler_id_button_close);
-    }
-
     try {
       await current?.closeInspector();
     } catch {
@@ -275,25 +265,6 @@ export default function Previewer({
     }
 
     current = previewer;
-
-    handler_id_button_open = button_open.connect("clicked", async () => {
-      try {
-        await current.open();
-        stack.set_visible_child_name("close_window");
-      } catch (err) {
-        console.error(err);
-      }
-    });
-
-    handler_id_button_close = button_close.connect("clicked", async () => {
-      try {
-        await current.close();
-        stack.set_visible_child_name("open_window");
-      } catch (err) {
-        console.error(err);
-      }
-    });
-
     try {
       await current.start(language);
     } catch (err) {
@@ -314,9 +285,6 @@ export default function Previewer({
     update,
     open() {
       return current.open();
-    },
-    close() {
-      return current.close();
     },
     openInspector() {
       return current.openInspector();
