@@ -26,10 +26,10 @@
       <li>1000+ icons</li>
     </ul>
   </description>
-  <url type="homepage">https://workbench.sonny.re</url>
-  <url type="bugtracker">https://workbench.sonny.re/feedback</url>
-  <url type="donation">https://workbench.sonny.re/donate</url>
-  <url type="vcs-browser">https://workbench.sonny.re/source</url>
+  <url type="homepage">https://apps.gnome.org/Workbench</url>
+  <url type="bugtracker">https://github.com/workbenchdev/Workbench/issues</url>
+  <url type="donation">https://ko-fi.com/sonnyp</url>
+  <url type="vcs-browser">https://github.com/workbenchdev/Workbench</url>
   <screenshots>
     <screenshot type="default">
       <image>https://raw.githubusercontent.com/workbenchdev/Workbench/main/data/screenshot.png</image>
