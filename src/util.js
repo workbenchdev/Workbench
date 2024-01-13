@@ -2,7 +2,7 @@ import GLib from "gi://GLib";
 import Gio from "gi://Gio";
 import Xdp from "gi://Xdp";
 import GObject from "gi://GObject";
-import { languages } from "./common.js";
+import { getLanguage } from "./common.js";
 
 export const portal = new Xdp.Portal();
 
@@ -38,11 +38,7 @@ export function getFlatpakInfo() {
   return keyFile;
 }
 
-export function getLanguage(id) {
-  return languages.find(
-    (language) => language.id.toLowerCase() === id.toLowerCase(),
-  );
-}
+export { getLanguage };
 
 export function listenProperty(object, property, fn, { initial = false } = {}) {
   if (initial) {

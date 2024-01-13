@@ -106,11 +106,11 @@ export const languages = [
     index: 3,
   },
 ];
-if (!GLib.getenv("FLATPAK_ID")) {
-  languages.forEach((lang) => {
-    if (!lang.language_server) return;
-    lang.language_server = ["./build-aux/fun", ...lang.language_server];
-  });
+
+export function getLanguage(id) {
+  return languages.find(
+    (language) => language.id.toLowerCase() === id.toLowerCase(),
+  );
 }
 
 export function createLSPClient({ lang, root_uri }) {
