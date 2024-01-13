@@ -8,9 +8,9 @@ import Gio from "gi://Gio";
 import Gtk from "gi://Gtk";
 import Adw from "gi://Adw";
 
-import { createLSPClient, languages } from "../common.js";
+import { createLSPClient, languages, getLanguage } from "../common.js";
 import lint, { waitForDiagnostics } from "./lint.js";
-import format from "./format.js";
+import format, { formatting } from "./format.js";
 
 Gtk.init();
 
@@ -90,6 +90,27 @@ function createLSPClients({ root_uri }) {
   );
 }
 
+async function checkFile({ lspc, file, lang, uri }) {
+  const [contents] = await file.load_contents_async(null);
+  const text = new TextDecoder().decode(contents);
+  const buffer = new Gtk.TextBuffer({ text });
+
+  const buffer_tmp = new Gtk.TextBuffer({ text: buffer.text });
+  await formatting({ buffer: buffer_tmp, uri, lang, lspc });
+
+  if (buffer_tmp.text === buffer.text) {
+    print(`  ✅ checks`);
+    return true;
+  } else {
+    printerr(
+      `  ❌ formatting differs - open and run ${file
+        .get_parent()
+        .get_basename()} with Workbench to fix`,
+    );
+    return false;
+  }
+}
+
 async function ci({ filenames, current_dir }) {
   for (const filename of filenames) {
     const demo_dir = Gio.File.new_for_path(filename);
@@ -158,7 +179,6 @@ async function ci({ filenames, current_dir }) {
       print(`  ✅ compiles`);
 
       try {
-        // const { blp } =
         await lsp_clients.blueprint._request("x-blueprint/decompile", {
           text: xml,
         });
@@ -175,13 +195,21 @@ async function ci({ filenames, current_dir }) {
         ) {
           throw err;
         }
-
-        await lsp_clients.blueprint._notify("textDocument/didClose", {
-          textDocument: {
-            uri,
-          },
-        });
       }
+
+      const checks = await checkFile({
+        lspc: lsp_clients.blueprint,
+        file: file_blueprint,
+        lang: getLanguage("blueprint"),
+        uri,
+      });
+      if (!checks) return false;
+
+      await lsp_clients.blueprint._notify("textDocument/didClose", {
+        textDocument: {
+          uri,
+        },
+      });
 
       const tree = parse(xml);
       const template_el = tree.getChild("template");
@@ -223,8 +251,15 @@ async function ci({ filenames, current_dir }) {
         printerr(serializeDiagnostics({ diagnostics }));
         return false;
       }
-
       print(`  ✅ lints`);
+
+      const checks = await checkFile({
+        lspc: lsp_clients.css,
+        file: file_css,
+        lang: getLanguage("css"),
+        uri,
+      });
+      if (!checks) return false;
 
       await lsp_clients.css._notify("textDocument/didClose", {
         textDocument: {
@@ -261,8 +296,15 @@ async function ci({ filenames, current_dir }) {
         printerr(serializeDiagnostics({ diagnostics }));
         return false;
       }
-
       print(`  ✅ lints`);
+
+      const checks = await checkFile({
+        lspc: lsp_clients.javascript,
+        file: file_javascript,
+        lang: getLanguage("javascript"),
+        uri,
+      });
+      if (!checks) return false;
 
       const js_object_ids = getCodeObjectIds(text);
       for (const object_id of js_object_ids) {
@@ -341,8 +383,15 @@ async function ci({ filenames, current_dir }) {
         printerr(serializeDiagnostics({ diagnostics }));
         return false;
       }
-
       print(`  ✅ lints`);
+
+      const checks = await checkFile({
+        lspc: lsp_clients.vala,
+        file: file_vala,
+        lang: getLanguage("vala"),
+        uri,
+      });
+      if (!checks) return false;
 
       await lsp_clients.vala._notify("textDocument/didClose", {
         textDocument: {
