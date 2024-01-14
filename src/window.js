@@ -230,7 +230,7 @@ export default function Window({ application, session }) {
   let compiler_rust = null;
   let builder_python = null;
 
-  async function runCode({ format }) {
+  async function runCode() {
     button_run.set_sensitive(false);
 
     term_console.clear();
@@ -240,9 +240,7 @@ export default function Window({ application, session }) {
     try {
       await panel_ui.update();
 
-      if (format) {
-        await formatCode();
-      }
+      await formatCode();
 
       await compile();
     } catch (err) {
@@ -346,7 +344,7 @@ export default function Window({ application, session }) {
     name: "run",
   });
   action_run.connect("activate", () => {
-    runCode({ format: true }).catch(console.error);
+    runCode().catch(console.error);
   });
   window.add_action(action_run);
   application.set_accels_for_action("win.run", ["<Control>Return"]);
@@ -380,7 +378,7 @@ export default function Window({ application, session }) {
   window.present();
 
   const documents = Object.values(langs).map((lang) => lang.document);
-  async function load({ run }) {
+  async function load() {
     panel_ui.stop();
     previewer.stop();
     documents.forEach((document) => document.stop());
@@ -397,15 +395,11 @@ export default function Window({ application, session }) {
 
     await previewer.useInternal();
 
-    if (run) {
-      await runCode({ format: false });
-    } else {
-      term_console.clear();
-      panel_ui.start();
-      await panel_ui.update();
-      previewer.start();
-      await previewer.update(true);
-    }
+    term_console.clear();
+    panel_ui.start();
+    await panel_ui.update();
+    previewer.start();
+    await previewer.update(true);
 
     documents.forEach((document) => {
       document.start();
@@ -414,7 +408,7 @@ export default function Window({ application, session }) {
     term_console.scrollToEnd();
   }
 
-  return { load, window };
+  return { load, window, runCode };
 }
 
 async function setGtk4PreferDark(dark) {
