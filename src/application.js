@@ -36,7 +36,7 @@ application.connect("open", (_self, files, hint) => {
     application,
     session,
   });
-  load({ run: false }).catch(console.error);
+  load().catch(console.error);
 });
 
 application.connect("startup", () => {
@@ -59,7 +59,9 @@ application.connect("activate", () => {
   }
 });
 
-application.set_option_context_description("<https://workbench.sonny.re>");
+application.set_option_context_description(
+  "<https://apps.gnome.org/Workbench>",
+);
 
 Actions({ application });
 
@@ -87,7 +89,7 @@ function restoreSessions() {
         application,
         session,
       });
-      load({ run: false }).catch(console.error);
+      load().catch(console.error);
     });
   }
 }
@@ -106,7 +108,7 @@ function bootstrap() {
     session,
   });
   window.maximize();
-  load({ run: false }).catch(console.error);
+  load().catch(console.error);
   settings.set_boolean("first-run", false);
 }
 
