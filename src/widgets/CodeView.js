@@ -2,7 +2,7 @@ import GObject from "gi://GObject";
 import Source from "gi://GtkSource";
 import Gtk from "gi://Gtk";
 import Pango from "gi://Pango";
-import { rangeEquals, diagnostic_severities } from "../lsp/LSP.js";
+import { diagnostic_severities } from "../lsp/LSP.js";
 import Gdk from "gi://Gdk";
 import GLib from "gi://GLib";
 import Adw from "gi://Adw";
@@ -11,6 +11,9 @@ import Template from "./CodeView.blp" with { type: "uri" };
 
 import WorkbenchHoverProvider from "../WorkbenchHoverProvider.js";
 import { registerClass } from "../overrides.js";
+import { getItersAtRange } from "../lsp/sourceview.js";
+
+import "./CodeFind.js";
 
 Source.init();
 
@@ -22,6 +25,10 @@ class CodeView extends Gtk.Widget {
     super(params);
     this.source_view = this._source_view;
     this.buffer = this._source_view.buffer;
+    // TODO: Investigate why the Blueprint defintion does not behave as intended
+    // transition-type: slide_up;
+    // https://github.com/workbenchdev/Workbench/pull/853/files#r1443560736
+    this._code_find.transition_type = Gtk.RevealerTransitionType.SLIDE_UP;
 
     try {
       this.language = language_manager.get_language(language_id);
@@ -119,7 +126,39 @@ class CodeView extends Gtk.Widget {
     }
   }
 
-  replaceText(text, scroll_start = true) {
+  saveState() {
+    const { buffer, source_view } = this;
+    const { cursor_position } = buffer;
+    const iter_cursor = buffer.get_iter_at_offset(cursor_position);
+    const line_number = iter_cursor.get_line();
+    const line_offset = iter_cursor.get_line_offset();
+    const h_scroll_position = source_view.hadjustment.value;
+    const v_scroll_position = source_view.vadjustment.value;
+
+    return {
+      line_number,
+      line_offset,
+      h_scroll_position,
+      v_scroll_position,
+    };
+  }
+
+  restoreState(state) {
+    const { line_number, line_offset, h_scroll_position, v_scroll_position } =
+      state;
+
+    const { buffer, source_view } = this;
+
+    // https://matrix.to/#/!aUhETchlgthwWVQzhi:matrix.org/$1701651785113NJUnw:gnome.org
+    GLib.idle_add(GLib.PRIORITY_DEFAULT_IDLE, () => {
+      source_view.hadjustment.value = h_scroll_position;
+      source_view.vadjustment.value = v_scroll_position;
+      const [, iter] = buffer.get_iter_at_line_offset(line_number, line_offset);
+      buffer.place_cursor(iter);
+    });
+  }
+
+  replaceText(text, restore_state = false) {
     // this is against GtkSourceView not accounting an empty-string to empty-string change as user-edit
     if (text === "") {
       text = " ";
@@ -127,11 +166,18 @@ class CodeView extends Gtk.Widget {
 
     const { buffer } = this;
 
+    const state = restore_state && this.saveState();
+
     buffer.begin_user_action();
     buffer.delete(buffer.get_start_iter(), buffer.get_end_iter());
     buffer.insert(buffer.get_start_iter(), text, -1);
     buffer.end_user_action();
-    scroll_start && buffer.place_cursor(buffer.get_start_iter());
+
+    if (state) {
+      this.restoreState(state);
+    } else {
+      buffer.place_cursor(buffer.get_start_iter());
+    }
   }
 
   #updateStyle = () => {
@@ -158,7 +204,7 @@ export default registerClass(
     Signals: {
       changed: {},
     },
-    InternalChildren: ["source_view"],
+    InternalChildren: ["source_view", "code_find"],
   },
   CodeView,
 );
@@ -167,29 +213,6 @@ const language_manager = new Source.LanguageManager();
 language_manager.append_search_path(
   "resource:///re/sonny/Workbench/language-specs",
 );
-
-function getItersAtRange(buffer, { start, end }) {
-  let start_iter;
-  let end_iter;
-
-  // Apply the tag on the whole line
-  // if diagnostic start and end are equals such as
-  // Blueprint-Error 13:12 to 13:12 Could not determine what kind of syntax is meant here
-  if (rangeEquals(start, end)) {
-    [, start_iter] = buffer.get_iter_at_line(start.line);
-    [, end_iter] = buffer.get_iter_at_line(end.line);
-    end_iter.forward_to_line_end();
-    start_iter.forward_find_char((char) => char !== "", end_iter);
-  } else {
-    [, start_iter] = buffer.get_iter_at_line_offset(
-      start.line,
-      start.character,
-    );
-    [, end_iter] = buffer.get_iter_at_line_offset(end.line, end.character);
-  }
-
-  return [start_iter, end_iter];
-}
 
 function logLanguageServerDiagnostic(language, { range, message, severity }) {
   GLib.log_structured(language, GLib.LogLevelFlags.LEVEL_DEBUG, {

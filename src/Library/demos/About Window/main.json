@@ -1,6 +1,0 @@
-{
-  "category": "user_interface",
-  "description": "A window showing information about the application.",
-  "panels": ["code", "preview"],
-  "autorun": true
-}

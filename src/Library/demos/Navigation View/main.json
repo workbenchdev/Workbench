@@ -1,6 +1,0 @@
-{
-  "category": "navigation",
-  "description": "A page-based navigation container.",
-  "panels": ["ui", "preview"],
-  "autorun": true
-}

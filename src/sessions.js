@@ -7,29 +7,45 @@ import {
   ensureDir,
   getNowForFilename,
   demos_dir,
-  rust_template_dir,
   settings as global_settings,
   encode,
-  languages,
+  settings,
+  copyDirectory,
 } from "./util.js";
+import { languages } from "./common.js";
 
 export const sessions_dir = data_dir.get_child("sessions");
 
 export function getSessions() {
-  const sessions = [];
+  const files = new Map();
 
+  // Sessions
   ensureDir(sessions_dir);
-
   for (const file_info of sessions_dir.enumerate_children(
     "",
     Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
     null,
   )) {
     if (file_info.get_file_type() !== Gio.FileType.DIRECTORY) continue;
-    sessions.push(new Session(sessions_dir.get_child(file_info.get_name())));
+    const file = sessions_dir.get_child(file_info.get_name());
+    files.set(file.get_path(), file);
   }
 
-  return sessions;
+  // Projects
+  const recent_projects = settings.get_strv("recent-projects");
+  for (const path of recent_projects) {
+    const file = Gio.File.new_for_path(path);
+    if (
+      file.query_file_type(Gio.FileQueryInfoFlags.NONE, null) !==
+      Gio.FileType.DIRECTORY
+    ) {
+      removeFromRecentProjects();
+      continue;
+    }
+    files.set(file.get_path(), file);
+  }
+
+  return [...files.values()].map((file) => new Session(file));
 }
 
 function createSession() {
@@ -48,7 +64,6 @@ export function createSessionFromDemo(demo) {
 
   const { file, settings } = session;
   copyDirectory(demo_dir, file);
-  copyDirectory(rust_template_dir, file);
 
   settings.set_string("name", name);
   settings.set_boolean("show-code", panels.includes("code"));
@@ -61,24 +76,6 @@ export function createSessionFromDemo(demo) {
   );
 
   return session;
-}
-
-// There is no copy directory function
-function copyDirectory(source, destination) {
-  for (const file_info of source.enumerate_children(
-    "",
-    Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
-    null,
-  )) {
-    if (file_info.get_file_type() === Gio.FileType.DIRECTORY) continue;
-    const child = source.get_child(file_info.get_name());
-    child.copy(
-      destination.get_child(child.get_basename()),
-      Gio.FileCopyFlags.NONE,
-      null,
-      null,
-    );
-  }
 }
 
 export async function deleteSession(session) {
@@ -125,6 +122,7 @@ To open and run this; [install Workbench from Flathub](https://flathub.org/apps/
 export class Session {
   file = null;
   settings = null;
+  id = Math.random().toString().substring(2);
 
   constructor(file) {
     this.file = file;
@@ -152,4 +150,16 @@ export class Session {
     const code_languge = this.settings.get_int("code-language");
     return languages.find((lang) => lang.index === code_languge);
   }
+}
+
+export function addToRecentProjects(path) {
+  const recent_projects = new Set(settings.get_strv("recent-projects"));
+  recent_projects.add(path);
+  settings.set_strv("recent-projects", [...recent_projects]);
+}
+
+export function removeFromRecentProjects(path) {
+  const recent_projects = new Set(settings.get_strv("recent-projects"));
+  recent_projects.delete(path);
+  settings.set_strv("recent-projects", [...recent_projects]);
 }

@@ -5,18 +5,13 @@ import Gio from "gi://Gio";
 import Adw from "gi://Adw";
 import Vte from "gi://Vte";
 
-import * as xml from "./langs/xml/xml.js";
-import { buildRuntimePath, languages, quitOnLastWindowClose } from "./util.js";
-import Document from "./Document.js";
+import { buildRuntimePath, quitOnLastWindowClose } from "./util.js";
+import { languages } from "./common.js";
 import PanelUI from "./PanelUI.js";
 import PanelCode from "./PanelCode.js";
 import PanelStyle from "./PanelStyle.js";
 import Devtools from "./Devtools.js";
 
-import { format as prettier } from "./lib/prettier.js";
-import prettier_babel from "./lib/prettier-babel.js";
-import prettier_postcss from "./lib/prettier-postcss.js";
-import prettier_estree from "./lib/prettier-estree.js";
 import Previewer from "./Previewer/Previewer.js";
 import ValaCompiler from "./langs/vala/Compiler.js";
 import RustCompiler from "./langs/rust/Compiler.js";
@@ -34,12 +29,23 @@ import "./icons/re.sonny.Workbench-screenshot-symbolic.svg" with { type: "icon" 
 
 import "./widgets/Modal.js";
 import "./widgets/CodeView.js";
-import { deleteSession, saveSessionAsProject } from "./sessions.js";
+import {
+  deleteSession,
+  removeFromRecentProjects,
+  saveSessionAsProject,
+} from "./sessions.js";
 import {
   action_extensions,
   isRustEnabled,
   isValaEnabled,
 } from "./Extensions/Extensions.js";
+import { JavaScriptDocument } from "./langs/javascript/JavaScriptDocument.js";
+import { BlueprintDocument } from "./langs/blueprint/BlueprintDocument.js";
+import { CssDocument } from "./langs/css/CssDocument.js";
+import { RustDocument } from "./langs/rust/RustDocument.js";
+import { PythonDocument } from "./langs/python/PythonDocument.js";
+import { XmlDocument } from "./langs/xml/XmlDocument.js";
+import { ValaDocument } from "./langs/vala/ValaDocument.js";
 
 const style_manager = Adw.StyleManager.get_default();
 
@@ -73,49 +79,49 @@ export default function Window({ application, session }) {
 
   const { term_console } = Devtools({ application, window, builder, settings });
 
-  const document_javascript = Document({
+  const document_javascript = new JavaScriptDocument({
     code_view: builder.get_object("code_view_javascript"),
     lang: langs.javascript,
     session,
   });
   langs.javascript.document = document_javascript;
 
-  const document_vala = Document({
+  const document_vala = new ValaDocument({
     code_view: builder.get_object("code_view_vala"),
     lang: langs.vala,
     session,
   });
   langs.vala.document = document_vala;
 
-  const document_rust = Document({
+  const document_rust = new RustDocument({
     code_view: builder.get_object("code_view_rust"),
     lang: langs.rust,
     session,
   });
   langs.rust.document = document_rust;
 
-  const document_python = Document({
+  const document_python = new PythonDocument({
     code_view: builder.get_object("code_view_python"),
     lang: langs.python,
     session,
   });
   langs.python.document = document_python;
 
-  const document_blueprint = Document({
+  const document_blueprint = new BlueprintDocument({
     code_view: builder.get_object("code_view_blueprint"),
     lang: langs.blueprint,
     session,
   });
   langs.blueprint.document = document_blueprint;
 
-  const document_xml = Document({
+  const document_xml = new XmlDocument({
     code_view: builder.get_object("code_view_xml"),
     lang: langs.xml,
     session,
   });
   langs.xml.document = document_xml;
 
-  const document_css = Document({
+  const document_css = new CssDocument({
     code_view: builder.get_object("code_view_css"),
     lang: langs.css,
     session,
@@ -132,7 +138,7 @@ export default function Window({ application, session }) {
     settings,
   });
 
-  PanelStyle({ builder, document_css, settings });
+  PanelStyle({ builder, settings });
 
   const previewer = Previewer({
     output,
@@ -148,8 +154,6 @@ export default function Window({ application, session }) {
   const panel_code = PanelCode({
     builder,
     previewer,
-    document_vala,
-    document_javascript,
     settings,
   });
 
@@ -194,116 +198,39 @@ export default function Window({ application, session }) {
     previewer.openInspector().catch(console.error);
   });
 
-  async function format(code_view, formatter) {
-    let code;
-
-    const { buffer } = code_view;
-
-    try {
-      code = await formatter(buffer.text.trim());
-    } catch (err) {
-      console.error(err);
-      return;
-    }
-
-    const { cursor_position } = buffer;
-
-    code_view.replaceText(code, false);
-    buffer.place_cursor(buffer.get_iter_at_offset(cursor_position));
-
-    return code;
-  }
-
-  function formatRustCode(text) {
-    const rustfmtLauncher = Gio.SubprocessLauncher.new(
-      Gio.SubprocessFlags.STDIN_PIPE |
-        Gio.SubprocessFlags.STDOUT_PIPE |
-        Gio.SubprocessFlags.STDERR_PIPE,
-    );
-
-    const rustfmtProcess = rustfmtLauncher.spawnv([
-      "rustfmt",
-      "--quiet",
-      "--emit",
-      "stdout",
-      "--edition",
-      "2021",
-    ]);
-
-    const [success, stdout, stderr] = rustfmtProcess.communicate_utf8(
-      text,
-      null,
-    );
-
-    if (!success || stderr !== "") {
-      console.error(`Error running rustfmt: ${stderr}`);
-      return text;
-    }
-
-    return stdout;
-  }
-
-  function formatPythonCode(text) {
-    const blackLauncher = Gio.SubprocessLauncher.new(
-      Gio.SubprocessFlags.STDIN_PIPE |
-        Gio.SubprocessFlags.STDOUT_PIPE |
-        Gio.SubprocessFlags.STDERR_PIPE,
-    );
-
-    const blackProcess = blackLauncher.spawnv(["black", "--quiet", "-"]);
-
-    const [success, stdout, stderr] = blackProcess.communicate_utf8(text, null);
-
-    if (!success || stderr !== "") {
-      console.error(`Error running black: ${stderr}`);
-      return text;
-    }
-
-    return stdout;
-  }
-
   async function formatCode() {
+    const documents = [];
+
     if (panel_code.panel.visible) {
       if (panel_code.language === "JavaScript") {
-        await format(langs.javascript.document.code_view, (text) => {
-          return prettier(text, {
-            parser: "babel",
-            plugins: [prettier_babel, prettier_estree],
-          });
-        });
+        documents.push(document_javascript);
       } else if (panel_code.language === "Rust") {
-        await format(langs.rust.document.code_view, (text) => {
-          return formatRustCode(text);
-        });
+        documents.push(document_rust);
       } else if (panel_code.language === "Python") {
-        await format(langs.python.document.code_view, (text) => {
-          return formatPythonCode(text);
-        });
+        documents.push(document_python);
+      } else if (panel_code.language === "Vala") {
+        documents.push(document_vala);
       }
     }
 
     if (builder.get_object("panel_style").visible) {
-      await format(langs.css.document.code_view, (text) => {
-        return prettier(text, {
-          parser: "css",
-          plugins: [prettier_postcss],
-        });
-      });
+      documents.push(document_css);
     }
 
+    // TODO: only format the selected one
     if (panel_ui.panel.visible) {
-      await format(langs.xml.document.code_view, (text) => {
-        return xml.format(text, 2);
-      });
-      await panel_ui.format();
+      documents.push(document_xml);
+      documents.push(document_blueprint);
     }
+
+    return Promise.all(documents.map((document) => document.format()));
   }
 
   let compiler_vala = null;
   let compiler_rust = null;
   let builder_python = null;
 
-  async function runCode({ format }) {
+  async function runCode() {
     button_run.set_sensitive(false);
 
     term_console.clear();
@@ -313,9 +240,7 @@ export default function Window({ application, session }) {
     try {
       await panel_ui.update();
 
-      if (format) {
-        await formatCode();
-      }
+      await formatCode();
 
       await compile();
     } catch (err) {
@@ -419,7 +344,7 @@ export default function Window({ application, session }) {
     name: "run",
   });
   action_run.connect("activate", () => {
-    runCode({ format: true }).catch(console.error);
+    runCode().catch(console.error);
   });
   window.add_action(action_run);
   application.set_accels_for_action("win.run", ["<Control>Return"]);
@@ -453,7 +378,7 @@ export default function Window({ application, session }) {
   window.present();
 
   const documents = Object.values(langs).map((lang) => lang.document);
-  async function load({ run }) {
+  async function load() {
     panel_ui.stop();
     previewer.stop();
     documents.forEach((document) => document.stop());
@@ -470,15 +395,11 @@ export default function Window({ application, session }) {
 
     await previewer.useInternal();
 
-    if (run) {
-      await runCode({ format: false });
-    } else {
-      term_console.clear();
-      panel_ui.start();
-      await panel_ui.update();
-      previewer.start();
-      await previewer.update(true);
-    }
+    term_console.clear();
+    panel_ui.start();
+    await panel_ui.update();
+    previewer.start();
+    await previewer.update(true);
 
     documents.forEach((document) => {
       document.start();
@@ -487,7 +408,7 @@ export default function Window({ application, session }) {
     term_console.scrollToEnd();
   }
 
-  return { load, window };
+  return { load, window, runCode };
 }
 
 async function setGtk4PreferDark(dark) {
@@ -515,6 +436,7 @@ function close(window) {
 
 async function onCloseSession({ session, window }) {
   if (session.isProject()) {
+    removeFromRecentProjects(session.file.get_path());
     return close(window);
   }
 

@@ -14,7 +14,7 @@ blueprint_compiler = find_program(
 
 meson.add_install_script('../build-aux/library-index.js', pkgdatadir)
 
-install_subdir('Library/demos', install_dir : join_paths(pkgdatadir, 'Library'))
+install_subdir('../demos/demos', install_dir : join_paths(pkgdatadir))
 install_subdir('langs/rust/template', install_dir : join_paths(pkgdatadir, 'langs/rust'))
 
 configure_file(
@@ -34,11 +34,13 @@ configure_file(
 )
 
 install_data('langs/vala/workbench.vala', install_dir: pkgdatadir)
+install_data('langs/javascript/biome.json', install_dir: pkgdatadir)
 subdir('Previewer')
 subdir('langs/python')
+subdir('langs/css')
 
 gjspack = find_program('../troll/gjspack/bin/gjspack')
-custom_target('gjspack',
+custom_target('workbench',
   input: ['main.js'],
   output: app_id + '.src.gresource',
   command: [
@@ -57,4 +59,5 @@ custom_target('gjspack',
   build_always_stale: true,
 )
 
+subdir('cli')
 subdir('libworkbench')

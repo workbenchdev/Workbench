@@ -1,0 +1,19 @@
+{
+  "name": "webp-pixbuf-loader",
+  "buildsystem": "meson",
+  "config-opts": [
+    "-Dgdk_pixbuf_moduledir=/app/lib/gdk-pixbuf-2.0/2.10.0/loaders/"
+  ],
+  "sources": [
+    {
+      "type": "git",
+      "url": "https://github.com/aruiz/webp-pixbuf-loader.git",
+      "tag": "0.2.4",
+      "commit": "a35014104a226265e44fe30fcdb4df9305af3466"
+    }
+  ],
+  "post-install": [
+    "GDK_PIXBUF_MODULEDIR=/app/lib/gdk-pixbuf-2.0/2.10.0/loaders/ gdk-pixbuf-query-loaders > /app/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache",
+    "gdk-pixbuf-query-loaders >> /app/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache"
+  ]
+}

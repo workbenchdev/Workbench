@@ -1,6 +1,0 @@
-{
-  "category": "user_interface",
-  "description": "A window containing an application's preferences",
-  "panels": ["ui", "preview"],
-  "autorun": true
-}

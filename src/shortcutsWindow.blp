@@ -4,9 +4,9 @@ ShortcutsWindow window {
   hide-on-close: true;
 
   ShortcutsSection {
-    title: "Workbench";
-
     ShortcutsGroup {
+      title: _("Application");
+
       ShortcutsShortcut {
         accelerator: "<Control>Return";
         title: _("Run Code");
@@ -28,18 +28,6 @@ ShortcutsWindow window {
       }
 
       ShortcutsShortcut {
-        accelerator: "<Control><Shift>K";
-        title: _("Toggle Console");
-      }
-
-      ShortcutsShortcut {
-        accelerator: "<Control>K";
-        title: _("Clear Console");
-      }
-    }
-
-    ShortcutsGroup {
-      ShortcutsShortcut {
         accelerator: "<Control><Shift>I";
         title: _("Inspector");
       }
@@ -54,6 +42,10 @@ ShortcutsWindow window {
         title: _("Redo");
       }
 
+      // ShortcutsShortcut {
+      //   accelerator: "<Control>F";
+      //   title: _("Find");
+      // }
       ShortcutsShortcut {
         accelerator: "<Control>W";
         title: _("Close Window");
@@ -67,6 +59,30 @@ ShortcutsWindow window {
       ShortcutsShortcut {
         accelerator: "<Control>Q";
         title: _("Quit");
+      }
+    }
+
+    ShortcutsGroup {
+      title: _("Console");
+
+      ShortcutsShortcut {
+        accelerator: "<Control><Shift>K";
+        title: _("Toggle Console");
+      }
+
+      ShortcutsShortcut {
+        accelerator: "<Control><Shift>C";
+        title: _("Copy");
+      }
+
+      ShortcutsShortcut {
+        accelerator: "<Control><Shift>A";
+        title: _("Select All");
+      }
+
+      ShortcutsShortcut {
+        accelerator: "<Control>K";
+        title: _("Clear");
       }
     }
   }

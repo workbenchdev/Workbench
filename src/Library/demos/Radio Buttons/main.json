@@ -1,6 +1,0 @@
-{
-  "category": "controls",
-  "description": "Allow users to make a selection from a set of options.",
-  "panels": ["ui", "preview"],
-  "autorun": true
-}

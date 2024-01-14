@@ -1,32 +1,59 @@
 name: CI
 
+# See also https://github.com/flatpak/flatpak-github-actions
+
 on:
   pull_request:
     branches: [main]
 
 jobs:
   CI:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
         with:
-          submodules: "recursive"
+          submodules: recursive
 
       - uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: "npm"
 
-      # See also https://github.com/flatpak/flatpak-github-actions
-      - uses: awalsh128/cache-apt-pkgs-action@latest
-        with:
-          packages: flatpak flatpak-builder
-          version: 1.0
+      - name: Install host dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install flatpak flatpak-builder mutter
 
-      - name: Cache Flatpak dependencies
-        uses: actions/cache@v3
+      # Restore caches
+      - name: Restore Flatpak dependencies
+        uses: actions/cache/restore@v3
         with:
           path: ~/.local/share/flatpak
-          key: 45
+          key: ${{ runner.os }}-flatpak-dependencies-${{ github.run_id }}
+          restore-keys: |
+            ${{ runner.os }}-flatpak-dependencies-
+      - name: Restore .flatpak-builder
+        uses: actions/cache/restore@v3
+        with:
+          path: .flatpak-builder
+          key: ${{ runner.os }}-flatpak-builder-${{ github.run_id }}
+          restore-keys: |
+            ${{ runner.os }}-flatpak-builder-
 
+      - run: mutter --wayland --no-x11 --headless --wayland-display=wayland-0 --virtual-monitor 1280x720 > /tmp/mutter.log 2>&1 &
       - run: make ci
+      - run: cat /tmp/mutter.log
+
+      # Save caches
+      - name: Save Flatpak dependencies
+        uses: actions/cache/save@v3
+        if: always()
+        with:
+          path: ~/.local/share/flatpak
+          key: ${{ runner.os }}-flatpak-dependencies-${{ github.run_id }}
+      - name: Save .flatpak-builder
+        uses: actions/cache/save@v3
+        if: always()
+        with:
+          path: .flatpak-builder
+          key: ${{ runner.os }}-flatpak-builder-${{ github.run_id }}

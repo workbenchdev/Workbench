@@ -33,7 +33,7 @@ ${getBlueprintVersion()}
     copyright: "© 2022 Sonny Piers",
     license_type: Gtk.License.GPL_3_0_ONLY,
     version: pkg.version,
-    website: "https://workbench.sonny.re",
+    website: "https://apps.gnome.org/Workbench",
     application_icon: pkg.name,
     issue_url: "https://github.com/workbenchdev/Workbench/issues",
     debug_info,

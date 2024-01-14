@@ -29,14 +29,7 @@ appstream_file = configure_file(
 appstream_cli = find_program('appstreamcli', required: false)
 if appstream_cli.found()
   test('Validate metainfo file', appstream_cli,
-    args: ['validate', '--override=release-time-missing=info', '--no-net', appstream_file]
-  )
-endif
-
-appstreamcli = find_program('appstreamcli', required: false)
-if appstreamcli.found()
-  test('Validate appstream file', appstreamcli,
-    args: ['validate', appstream_file]
+    args: ['validate', '--override=release-time-missing=info', '--no-net', '--explain', appstream_file]
   )
 endif
 
