@@ -14,7 +14,6 @@ export default GObject.registerClass(
       "label_hint",
       "label_command",
       "button",
-      "second_button",
     ],
     Properties: {
       title: GObject.ParamSpec.string(
@@ -38,20 +37,6 @@ export default GObject.registerClass(
         GObject.ParamFlags.READWRITE,
         "",
       ),
-      second_button_text: GObject.ParamSpec.string(
-        "second-button-text",
-        "",
-        "",
-        GObject.ParamFlags.READWRITE,
-        "",
-      ),
-      second_button_visible: GObject.ParamSpec.boolean(
-        "second-button-visible",
-        "",
-        "",
-        GObject.ParamFlags.READWRITE,
-        false,
-      ),
       hint: GObject.ParamSpec.string(
         "hint",
         "",
@@ -73,24 +58,18 @@ export default GObject.registerClass(
       super(properties);
 
       this._button.connect("clicked", () => {
-        let appid = "appstream://org.freedesktop.Sdk.Extension.";
+        let appid = "appstream://org.freedesktop.Sdk.Extension."
         switch (this.title) {
           case "Rust":
-            appid += "rust-stable";
+            appid += "rust-stable"
             break;
           case "Vala":
-            appid += "vala";
+            appid += "vala"
             break;
           default:
             return;
         }
         Gtk.show_uri(null, appid, null);
-      });
-      this._second_button.connect("clicked", () => {
-        const appid = "appstream://org.freedesktop.Sdk.Extension.llvm16";
-        if (this.title === "Rust") {
-          Gtk.show_uri(null, appid, null);
-        }
       });
 
       this.bind_property(
@@ -122,22 +101,8 @@ export default GObject.registerClass(
       );
 
       this.bind_property(
-        "second-button-visible",
-        this._second_button,
-        "visible",
-        GObject.BindingFlags.SYNC_CREATE,
-      );
-
-      this.bind_property(
         "button-text",
         this._button,
-        "label",
-        GObject.BindingFlags.SYNC_CREATE,
-      );
-
-      this.bind_property(
-        "second-button-text",
-        this._second_button,
         "label",
         GObject.BindingFlags.SYNC_CREATE,
       );
