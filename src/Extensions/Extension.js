@@ -34,7 +34,7 @@ export default GObject.registerClass(
         "button-text",
         "",
         "",
-        GObject.ParamFlags.READWRITE,
+        GObject.ParamFlags.READWRITE | GObject.ParamFlags.CONSTRUCT,
         "",
       ),
       hint: GObject.ParamSpec.string(
@@ -58,13 +58,14 @@ export default GObject.registerClass(
       super(properties);
 
       this._button.connect("clicked", () => {
-        let appid = "appstream://org.freedesktop.Sdk.Extension."
+        let appid = "appstream://org.freedesktop.Sdk.Extension.";
         switch (this.title) {
+          // currently not used
           case "Rust":
-            appid += "rust-stable"
+            appid += "rust-stable";
             break;
           case "Vala":
-            appid += "vala"
+            appid += "vala";
             break;
           default:
             return;
@@ -120,6 +121,10 @@ export default GObject.registerClass(
         "label",
         GObject.BindingFlags.SYNC_CREATE,
       );
+
+      if (this.button_text === "") {
+        this._button.visible = false;
+      }
     }
   },
 );
