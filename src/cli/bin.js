@@ -14,7 +14,7 @@ imports.package.init({
   datadir: "@datadir@",
 });
 
-const app_id = "re.sonny.Workbench.cli";
+const app_id = "@app_id@.cli";
 
 setConsoleLogDomain(app_id);
 GLib.set_application_name("workbench-cli");

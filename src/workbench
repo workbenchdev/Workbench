@@ -22,4 +22,4 @@ export GDK_PIXBUF_MODULE_FILE=/app/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache
 LANG=en_US.UTF-8
 
 mkdir -p $XDG_RUNTIME_DIR/$FLATPAK_ID
-SHELL=/bin/sh script --flush --quiet --return $XDG_RUNTIME_DIR/$FLATPAK_ID/typescript --command "@app_id@ $@"
+@command@
