@@ -41,8 +41,8 @@ Gio._promisify(
 Gio._promisify(Gio.OutputStream.prototype, "close_async", "close_finish");
 Gio._promisify(
   Gio.OutputStream.prototype,
-  "write_bytes_async",
-  "write_bytes_finish",
+  "write_all_async",
+  "write_all_finish",
 );
 
 Gio._promisify(Gio.Subprocess.prototype, "wait_async", "wait_finish");

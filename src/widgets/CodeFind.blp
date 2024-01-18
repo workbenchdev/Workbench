@@ -1,0 +1,64 @@
+using Gtk 4.0;
+
+template $CodeFind: Revealer {
+  transition-type: slide_up;
+  reveal-child: false;
+
+  Box {
+    orientation: vertical;
+
+    Separator {}
+
+    Box {
+      spacing: 8;
+      halign: center;
+      margin-start: 8;
+      margin-end: 8;
+      margin-top: 8;
+      margin-bottom: 8;
+
+      Box {
+        valign: center;
+        width-request: 220;
+        css-name: "entry";
+
+        Image {
+          icon-name: 'edit-find-symbolic';
+        }
+
+        Text text_search_term {
+          hexpand: true;
+          vexpand: true;
+          width-chars: 10;
+          max-width-chars: 10;
+        }
+
+        Label label_info {
+          label: "";
+          xalign: 1;
+          opacity: 0.5;
+        }
+      }
+
+      Box {
+        valign: center;
+
+        styles [
+          "linked"
+        ]
+
+        Button button_previous {
+          icon-name: "up";
+          tooltip-text: _("Move to previous match (Ctrl+Shift+G)");
+          sensitive: false;
+        }
+
+        Button button_next {
+          icon-name: "down";
+          tooltip-text: _("Move to next match (Ctrl+G)");
+          sensitive: false;
+        }
+      }
+    }
+  }
+}

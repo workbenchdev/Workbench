@@ -29,16 +29,16 @@ Among other things, Workbench comes with
 
 ## Language support
 
-|            | Formatter | Seamless formatter | Linter | Library demos[1] |
-| ---------- | --------- | ------------------ | ------ | ---------------- |
-| JavaScript | ✅        |                    | ✅     | 92               |
-| Vala       |           |                    | ✅     | 51               |
-| Rust       | ✅        |                    |        | 43               |
-| Python     | ✅        |                    |        | 57               |
-| Blueprint  | ✅        | ✅                 | ✅     | n/a              |
-| CSS        | ✅        |                    | ✅     | n/a              |
+|            | Formatter | Linter | Library demos[1] |
+| ---------- | --------- | ------ | ---------------- |
+| JavaScript | ✅        | ✅     | 94               |
+| Python     | ✅        |        | 64               |
+| Vala       | ✅        | ✅     | 54               |
+| Rust       | ✅        |        | 45               |
+| Blueprint  | ✅        | ✅     |                  |
+| CSS        | ✅        | ✅     |                  |
 
-[1] As of 2023-12-05; counted with `~/go/bin/scc src/Library/demos/`
+[1] As of 2024-01-14 <!--counted with `~/go/bin/scc demos/demos`-->
 
 ## Tips and tricks
 

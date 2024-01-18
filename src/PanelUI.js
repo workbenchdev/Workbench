@@ -10,10 +10,7 @@ import {
   makeDropdownFlat,
 } from "./util.js";
 
-import {
-  setup as setupBlueprint,
-  logBlueprintError,
-} from "./langs/blueprint/blueprint.js";
+import { logBlueprintError } from "./langs/blueprint/blueprint.js";
 
 // eslint-disable-next-line no-restricted-globals
 const { addSignalMethods } = imports.signals;
@@ -59,15 +56,11 @@ export default function PanelUI({
   makeDropdownFlat(dropdown_ui_lang);
   dropdown_ui_lang.set_selected(settings.get_enum("user-interface-language"));
 
-  const blueprint = setupBlueprint({
-    document: document_blueprint,
-  });
-
   async function convertToXML() {
     term_console.clear();
     settings.set_boolean("show-console", true);
 
-    const xml = await blueprint.compile(buffer_blueprint.text);
+    const xml = await document_blueprint.compile(buffer_blueprint.text);
     code_view_xml.replaceText(xml);
   }
 
@@ -75,8 +68,7 @@ export default function PanelUI({
     term_console.clear();
     settings.set_boolean("show-console", true);
 
-    const blp = await blueprint.decompile(buffer_xml.text);
-
+    const blp = await document_blueprint.decompile(buffer_xml.text);
     code_view_blueprint.replaceText(blp);
   }
 
@@ -106,7 +98,7 @@ export default function PanelUI({
   // when loading demo
   async function update() {
     if (lang === lang_blueprint) {
-      onXML(await blueprint.compile());
+      onXML(await document_blueprint.compile());
     } else if (lang === lang_xml) {
       onXML(buffer_xml.text);
     }
@@ -118,7 +110,7 @@ export default function PanelUI({
   }
 
   const onBlueprint = unstack(function onBlueprint() {
-    return blueprint.compile().then(onXML);
+    return document_blueprint.compile().then(onXML);
   }, console.error);
 
   function start() {
@@ -195,7 +187,6 @@ export default function PanelUI({
   panel.stop = stop;
   panel.update = update;
   panel.panel = panel_ui;
-  panel.format = blueprint.format;
 
   return panel;
 }

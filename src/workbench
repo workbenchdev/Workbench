@@ -20,4 +20,4 @@ export CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_RUSTFLAGS="-C link-arg=-fuse-ld=/u
 LANG=en_US.UTF-8
 
 mkdir -p $XDG_RUNTIME_DIR/$FLATPAK_ID
-SHELL=/bin/sh script --flush --quiet --return $XDG_RUNTIME_DIR/$FLATPAK_ID/typescript --command "@app_id@ $@"
+@command@

@@ -68,14 +68,50 @@ export default function TermConsole({
 
   const action_clear = new Gio.SimpleAction({
     name: "clear",
-    parameter_type: null,
   });
   action_clear.connect("activate", clear);
   window.add_action(action_clear);
   application.set_accels_for_action("win.clear", ["<Control>K"]);
 
+  const action_console_copy = new Gio.SimpleAction({
+    name: "console_copy",
+    enabled: false,
+  });
+  action_console_copy.connect("activate", () => {
+    terminal.copy_clipboard_format(Vte.Format.TEXT);
+  });
+  window.add_action(action_console_copy);
+  application.set_accels_for_action("win.console_copy", ["<Control><Shift>C"]);
+
+  const action_console_select_all = new Gio.SimpleAction({
+    name: "console_select_all",
+  });
+  action_console_select_all.connect("activate", () => {
+    terminal.select_all();
+  });
+  window.add_action(action_console_select_all);
+  application.set_accels_for_action("win.console_select_all", [
+    "<Control><Shift>A",
+  ]);
+
+  terminal.connect("selection_changed", () => {
+    action_console_copy.enabled = terminal.get_has_selection();
+  });
+
+  terminal.connect("contents_changed", () => {
+    action_console_copy.enabled = terminal.get_has_selection();
+  });
+
   style_manager.connect("notify::dark", () => updateTerminalColors(terminal));
   updateTerminalColors(terminal);
+
+  const gesture_console_click = builder.get_object("gesture_console_click");
+  const popover_menu_console = builder.get_object("popover_menu_console");
+  gesture_console_click.connect("pressed", (_self, _n_press, x, y) => {
+    const position = new Gdk.Rectangle({ x, y });
+    popover_menu_console.set_pointing_to(position);
+    popover_menu_console.popup();
+  });
 
   return {
     clear,
