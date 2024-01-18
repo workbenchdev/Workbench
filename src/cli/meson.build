@@ -12,17 +12,17 @@ gjspack = find_program('../../troll/gjspack/bin/gjspack')
 
 configure_file(
   input: 'bin.js',
-  output: 'workbench-cli',
+  output: app_id + '.cli',
   configuration: bin_conf,
   install: true,
   install_dir: get_option('bindir')
 )
 custom_target('workbench-cli',
   input: ['main.js'],
-  output: 're.sonny.Workbench.cli.src.gresource',
+  output: app_id + '.cli.src.gresource',
   command: [
     gjspack,
-    '--appid=re.sonny.Workbench.cli',
+    '--appid=' + app_id + '.cli',
     '--prefix', '/re/sonny/Workbench',
     '--project-root', meson.project_source_root(),
     '--resource-root', meson.project_source_root() / 'src',
@@ -31,6 +31,6 @@ custom_target('workbench-cli',
     '@OUTDIR@',
   ],
   install: true,
-  install_dir: datadir / 're.sonny.Workbench.cli',
+  install_dir: datadir / app_id + '.cli',
   build_always_stale: true,
 )

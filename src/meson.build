@@ -7,6 +7,7 @@ bin_conf.set('libdir', join_paths(get_option('prefix'), get_option('libdir')))
 bin_conf.set('datadir', datadir)
 bin_conf.set('pkgdatadir', pkgdatadir)
 bin_conf.set('sourcedir', meson.project_source_root())
+bin_conf.set('command', 'SHELL=/bin/sh script --flush --quiet --return $XDG_RUNTIME_DIR/$FLATPAK_ID/typescript --command "' + app_id + ' $@"')
 
 blueprint_compiler = find_program(
   '/app/bin/blueprint-compiler',
@@ -29,6 +30,17 @@ configure_file(
   input: 'workbench',
   output: 'workbench',
   configuration: bin_conf,
+  install: true,
+  install_dir: get_option('bindir')
+)
+
+clibin_conf = configuration_data()
+clibin_conf.merge_from(bin_conf)
+clibin_conf.set('command', app_id + '.cli "$@"')
+configure_file(
+  input: 'workbench',
+  output: 'workbench-cli',
+  configuration: clibin_conf,
   install: true,
   install_dir: get_option('bindir')
 )
