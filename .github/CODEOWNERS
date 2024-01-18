@@ -4,7 +4,7 @@
 /src/langs/vala/ @lw64
 *.vala @lw64
 
-/src/langs/rust/ @lw64
+/src/langs/rust/ @Hofer-Julian
 *.rs @Hofer-Julian
 Cargo.toml @Hofer-Julian
 Cargo.lock @Hofer-Julian

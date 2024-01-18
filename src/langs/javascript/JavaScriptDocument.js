@@ -1,4 +1,4 @@
-import { setup as setupJavaScript } from "./javascript.js";
+import { setup } from "./javascript.js";
 
 import Document from "../../Document.js";
 import { applyTextEdits } from "../../lsp/sourceview.js";
@@ -7,7 +7,7 @@ export class JavaScriptDocument extends Document {
   constructor(...args) {
     super(...args);
 
-    this.lspc = setupJavaScript({ document: this });
+    this.lspc = setup({ document: this });
   }
 
   async format() {

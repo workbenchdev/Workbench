@@ -78,7 +78,7 @@ const window = new Adw.ApplicationWindow();
 
 function createLSPClients({ root_uri }) {
   return Object.fromEntries(
-    ["javascript", "blueprint", "css", "vala"].map((id) => {
+    ["javascript", "blueprint", "css", "vala", "rust"].map((id) => {
       const lang = languages.find((language) => language.id === id);
       const lspc = createLSPClient({
         lang,
@@ -394,6 +394,51 @@ async function ci({ filenames, current_dir }) {
       if (!checks) return false;
 
       await lsp_clients.vala._notify("textDocument/didClose", {
+        textDocument: {
+          uri,
+        },
+      });
+    }
+
+    const file_rust = demo_dir.get_child("code.rs");
+    if (file_rust.query_exists(null)) {
+      print(`  ${file_rust.get_path()}`);
+
+      const uri = file_rust.get_uri();
+      const languageId = "rust";
+      let version = 0;
+
+      const [contents] = await file_rust.load_contents_async(null);
+      const text = new TextDecoder().decode(contents);
+
+      await lsp_clients.rust._notify("textDocument/didOpen", {
+        textDocument: {
+          uri,
+          languageId,
+          version: version++,
+          text,
+        },
+      });
+
+      // const diagnostics = await waitForDiagnostics({
+      //   uri,
+      //   lspc: lsp_clients.rust,
+      // });
+      // if (diagnostics.length > 0) {
+      //   printerr(serializeDiagnostics({ diagnostics }));
+      //   return false;
+      // }
+      // print(`  ✅ lints`);
+
+      const checks = await checkFile({
+        lspc: lsp_clients.rust,
+        file: file_rust,
+        lang: getLanguage("rust"),
+        uri,
+      });
+      if (!checks) return false;
+
+      await lsp_clients.rust._notify("textDocument/didClose", {
         textDocument: {
           uri,
         },

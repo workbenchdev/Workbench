@@ -1,36 +1,30 @@
-import Gio from "gi://Gio";
+import { setup } from "./rust.js";
 
 import Document from "../../Document.js";
+import { applyTextEdits } from "../../lsp/sourceview.js";
 
 export class RustDocument extends Document {
+  constructor(...args) {
+    super(...args);
+
+    this.lspc = setup({ document: this });
+  }
+
   async format() {
-    const code = await formatRustCode(this.buffer.text);
-    this.code_view.replaceText(code, true);
+    // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_formatting
+    const text_edits = await this.lspc.request("textDocument/formatting", {
+      textDocument: {
+        uri: this.file.get_uri(),
+      },
+      options: {
+        tabSize: 2,
+        insertSpaces: true,
+        trimTrailingWhitespace: true,
+        insertFinalNewline: true,
+        trimFinalNewlines: true,
+      },
+    });
+
+    applyTextEdits(text_edits, this.buffer);
   }
-}
-
-function formatRustCode(text) {
-  const rustfmtLauncher = Gio.SubprocessLauncher.new(
-    Gio.SubprocessFlags.STDIN_PIPE |
-      Gio.SubprocessFlags.STDOUT_PIPE |
-      Gio.SubprocessFlags.STDERR_PIPE,
-  );
-
-  const rustfmtProcess = rustfmtLauncher.spawnv([
-    "rustfmt",
-    "--quiet",
-    "--emit",
-    "stdout",
-    "--edition",
-    "2021",
-  ]);
-
-  const [success, stdout, stderr] = rustfmtProcess.communicate_utf8(text, null);
-
-  if (!success || stderr !== "") {
-    console.error(`Error running rustfmt: ${stderr}`);
-    return text;
-  }
-
-  return stdout;
 }

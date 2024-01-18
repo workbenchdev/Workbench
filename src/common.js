@@ -94,6 +94,11 @@ export const languages = [
     document: null,
     default_file: "code.rs",
     index: 2,
+    language_server: ["rust-analyzer"],
+    formatting_options: {
+      ...formatting_options,
+      tabSize: 2,
+    },
   },
   {
     id: "python",
@@ -113,13 +118,15 @@ export function getLanguage(id) {
   );
 }
 
-export function createLSPClient({ lang, root_uri }) {
+export function createLSPClient({ lang, root_uri, quiet = true }) {
   const language_id = lang.id;
+
+  console.log(quiet);
 
   const lspc = new LSPClient(lang.language_server, {
     rootUri: root_uri,
     languageId: language_id,
-    // quiet: false,
+    quiet,
   });
   lspc.connect("exit", () => {
     console.debug(`${language_id} language server exit`);
