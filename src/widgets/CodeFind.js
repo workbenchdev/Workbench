@@ -42,17 +42,6 @@ class Search extends Gtk.Revealer {
       highlight: true,
     });
 
-    this.#search_context.connect("notify::occurrences-count", () => {
-      this.#updateInfo();
-    });
-
-    this.#buffer.connect("mark-set", (_buffer, _iter, mark) => {
-      const mark_name = mark.get_name();
-      if (mark_name === "insert" || mark_name === "selection_bound") {
-        this.#updateInfo();
-      }
-    });
-
     this._text_search_term.connect("notify", () => {
       this.#search_settings.search_text = this._text_search_term.text;
       const [, , iter] = this.#buffer.get_selection_bounds();
