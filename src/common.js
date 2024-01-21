@@ -94,7 +94,8 @@ export const languages = [
     document: null,
     default_file: "code.rs",
     index: 2,
-    language_server: ["rust-analyzer"],
+    // TODO: remove verbose
+    language_server: ["rust-analyzer", "--verbose"],
     formatting_options: {
       ...formatting_options,
       tabSize: 2,
@@ -120,8 +121,6 @@ export function getLanguage(id) {
 
 export function createLSPClient({ lang, root_uri, quiet = true }) {
   const language_id = lang.id;
-
-  console.log(quiet);
 
   const lspc = new LSPClient(lang.language_server, {
     rootUri: root_uri,
