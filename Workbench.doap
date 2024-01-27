@@ -38,8 +38,10 @@
         </foaf:OnlineAccount>
       </foaf:account>
     </foaf:Person>
+  </maintainer>
+  <maintainer>
     <foaf:Person>
-      <foaf:name>julianhofer</foaf:name>
+      <foaf:name>Julian Hofer</foaf:name>
       <foaf:mbox rdf:resource="mailto:julianhofer@gnome.org" />
       <gnome:userid>julianhofer</gnome:userid>
       <foaf:account>
