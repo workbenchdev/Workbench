@@ -26,8 +26,7 @@ ${getValaVersion()}
 ${getBlueprintVersion()}
 `.trim();
 
-  const dialog = new Adw.AboutWindow({
-    transient_for: application.get_active_window(),
+  const dialog = new Adw.AboutDialog({
     application_name: "Workbench",
     developer_name: "Sonny Piers",
     copyright: "© 2022 Sonny Piers",
@@ -89,7 +88,7 @@ ${getBlueprintVersion()}
     // or
     // "John Doe https://john.com",
   ]);
-  dialog.present();
+  dialog.present(application.active_window);
 
   return { dialog };
 }
