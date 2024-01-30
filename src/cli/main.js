@@ -148,18 +148,10 @@ async function ci({ filenames, current_dir }) {
         },
       });
 
-      let diagnostics = await waitForDiagnostics({
+      const diagnostics = await waitForDiagnostics({
         uri,
         lspc: lsp_clients.blueprint,
       });
-
-      diagnostics = diagnostics.filter((diagnostic) => {
-        return !diagnostic.message.startsWith(
-          // https://github.com/workbenchdev/demos/issues/42
-          "Adw.ViewSwitcherTitle is deprecated",
-        );
-      });
-
       if (diagnostics.length > 0) {
         printerr(serializeDiagnostics({ diagnostics }));
         return false;
@@ -367,19 +359,24 @@ async function ci({ filenames, current_dir }) {
         },
       });
 
-      const diagnostics = await waitForDiagnostics({
+      let diagnostics = await waitForDiagnostics({
         uri,
         lspc: lsp_clients.vala,
       });
-      if (
-        ![
-          // FIXME: https://github.com/workbenchdev/demos/issues/43
-          "List View Widgets",
-          // FIXME: deprecated features, no replacement?
-          "Text Fields",
-        ].includes(demo_dir.get_basename()) &&
-        diagnostics.length > 0
-      ) {
+
+      // FIXME: deprecated features, no replacement?
+      if (demo_dir.get_basename() === "Text Fields") {
+        const ignore_for_text_fields = [
+          "`Gtk.EntryCompletion' has been deprecated since 4.10",
+          "`Gtk.Entry.completion' has been deprecated since 4.10",
+          "`Gtk.ListStore' has been deprecated since 4.10",
+        ];
+        diagnostics = diagnostics.filter((diagnostic) => {
+          return !ignore_for_text_fields.includes(diagnostic.message);
+        });
+      }
+
+      if (diagnostics.length > 0) {
         printerr(serializeDiagnostics({ diagnostics }));
         return false;
       }
