@@ -708,7 +708,7 @@ menu preview_menu {
   item (_("Safe Mode"), "win.safe-mode")
 }
 
-Adw.MessageDialog message_dialog_save_project {
+Adw.AlertDialog alert_dialog_save_project {
   responses [
     cancel: _("Cancel"),
     discard: _("Discard") destructive,
@@ -716,7 +716,6 @@ Adw.MessageDialog message_dialog_save_project {
   ]
 
   close-response: "cancel";
-  modal: true;
   heading: _("Save Project?");
   body: _("This session has not been saved. Unsaved sessions will be permanently lost.");
 
