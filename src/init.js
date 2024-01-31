@@ -5,7 +5,6 @@ import "gi://Vte?version=3.91";
 import "gi://Soup?version=3.0";
 import "gi://WebKit?version=6.0";
 import "gi://Pango?version=1.0";
-import "gi://Workbench";
 
 import Gtk from "gi://Gtk";
 import Gio from "gi://Gio";

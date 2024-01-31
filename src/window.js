@@ -47,8 +47,6 @@ import { PythonDocument } from "./langs/python/PythonDocument.js";
 import { XmlDocument } from "./langs/xml/XmlDocument.js";
 import { ValaDocument } from "./langs/vala/ValaDocument.js";
 
-import Workbench from "gi://Workbench";
-
 const style_manager = Adw.StyleManager.get_default();
 
 export default function Window({ application, session }) {
