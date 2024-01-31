@@ -47,6 +47,7 @@ libworkbench_deps = [
   dependency('gio-2.0', version: '>= 2.76.0'),
   dependency('gtk4', version: '>= 4.10.0'),
   dependency('gtksourceview-5', version: '>= 5.8.0'),
+  dependency('libadwaita-1', version: '>= 1.5')
 ]
 
 if get_option('profile') != 'development'
@@ -60,11 +61,13 @@ libworkbench_headers = files([
   'workbench.h',
   'workbench-completion-provider.h',
   'workbench-completion-request.h',
+  'workbench-preview-window.h'
 ])
 
 libworkbench_sources = files([
   'workbench-completion-provider.c',
   'workbench-completion-request.c',
+  'workbench-preview-window.c'
 ])
 
 install_headers(libworkbench_headers,

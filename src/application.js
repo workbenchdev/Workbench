@@ -1,5 +1,6 @@
 import Adw from "gi://Adw";
 import Gio from "gi://Gio";
+import Gtk from "gi://Gtk";
 
 import Window from "./window.js";
 import Actions from "./actions.js";
@@ -14,6 +15,7 @@ import {
   getSessions,
 } from "./sessions.js";
 import ShortcutsWindow from "./shortcutsWindow.js";
+import Workbench from "gi://Workbench";
 
 ensureDir(data_dir);
 
@@ -40,6 +42,13 @@ application.connect("open", (_self, files, hint) => {
 });
 
 application.connect("startup", () => {
+  const preview_window = new Workbench.PreviewWindow();
+  const label = new Gtk.Label({
+    label: "cool",
+  });
+  preview_window.set_content(label);
+  preview_window.present();
+
   Library({
     application,
   });
