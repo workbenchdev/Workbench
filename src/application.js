@@ -1,6 +1,7 @@
 import Adw from "gi://Adw";
 import Gio from "gi://Gio";
 import Gtk from "gi://Gtk";
+import GLib from "gi://GLib";
 
 import Window from "./window.js";
 import Actions from "./actions.js";
@@ -16,6 +17,13 @@ import {
 } from "./sessions.js";
 import ShortcutsWindow from "./shortcutsWindow.js";
 import Workbench from "gi://Workbench";
+
+const resource = Gio.Resource.load(
+  `/app/share/${GLib.getenv(
+    "FLATPAK_ID",
+  )}/re.sonny.Workbench.libworkbench.gresource`,
+);
+Gio.resources_register(resource);
 
 ensureDir(data_dir);
 

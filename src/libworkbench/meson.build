@@ -114,3 +114,20 @@ gnome.generate_vapi(libworkbench_api_name,
        install: true,
    install_dir: vapidir,
 )
+
+blueprints = custom_target('blueprints',
+  input: files(
+    'workbench-preview-window.blp'
+  ),
+  output: '.',
+  command: [find_program('blueprint-compiler'), 'batch-compile', '@OUTPUT@', '@CURRENT_SOURCE_DIR@', '@INPUT@'],
+)
+
+resources = gnome.compile_resources(
+  're.sonny.Workbench.libworkbench',
+  're.sonny.Workbench.libworkbench.gresource.xml',
+  gresource_bundle: true,
+  install: true,
+  install_dir: pkgdatadir,
+  dependencies: blueprints,
+)

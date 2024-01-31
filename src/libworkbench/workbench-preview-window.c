@@ -34,7 +34,7 @@ workbench_preview_window_class_init (WorkbenchPreviewWindowClass *klass)
 
   object_class->dispose = workbench_preview_window_dispose;
 
-  gtk_widget_class_set_template_from_resource (widget_class, "/re/sonny/Workbench/libworkbench/workbench-preview-window.blp.ui");
+  gtk_widget_class_set_template_from_resource (widget_class, "/re/sonny/Workbench/libworkbench/workbench-preview-window.ui");
   gtk_widget_class_bind_template_child (widget_class, WorkbenchPreviewWindow, toolbar_view);
 }
 
