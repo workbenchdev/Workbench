@@ -17,7 +17,7 @@ export class RustDocument extends Document {
         uri: this.file.get_uri(),
       },
       options: {
-        tabSize: 2,
+        tabSize: 4,
         insertSpaces: true,
         trimTrailingWhitespace: true,
         insertFinalNewline: true,

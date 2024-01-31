@@ -98,7 +98,7 @@ export const languages = [
     language_server: ["rust-analyzer", "--verbose"],
     formatting_options: {
       ...formatting_options,
-      tabSize: 2,
+      tabSize: 4,
     },
   },
   {
