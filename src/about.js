@@ -26,14 +26,13 @@ ${getValaVersion()}
 ${getBlueprintVersion()}
 `.trim();
 
-  const dialog = new Adw.AboutWindow({
-    transient_for: application.get_active_window(),
+  const dialog = new Adw.AboutDialog({
     application_name: "Workbench",
     developer_name: "Sonny Piers",
     copyright: "© 2022 Sonny Piers",
     license_type: Gtk.License.GPL_3_0_ONLY,
     version: pkg.version,
-    website: "https://workbench.sonny.re",
+    website: "https://apps.gnome.org/Workbench",
     application_icon: pkg.name,
     issue_url: "https://github.com/workbenchdev/Workbench/issues",
     debug_info,
@@ -89,7 +88,7 @@ ${getBlueprintVersion()}
     // or
     // "John Doe https://john.com",
   ]);
-  dialog.present();
+  dialog.present(application.active_window);
 
   return { dialog };
 }

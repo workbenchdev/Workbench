@@ -54,7 +54,7 @@ export default class LSPClient {
     this.ready = true;
     this.emit("ready");
 
-    // For testing blueprint language server restart
+    // For testing language server restart
     // setTimeout(() => {
     //   this.stop()
     // }, 5000);
@@ -84,12 +84,10 @@ export default class LSPClient {
   }
 
   async stop() {
-    await Promise.all([
-      this.stdin.close_async(null),
-      this.stdout.close_async(null),
-    ]);
+    await Promise.all([closeStream(this.stdin), closeStream(this.stdout)]);
     // this.proc?.force_exit();
     this.proc.send_signal(15);
+    await this.proc.wait_async(null);
   }
 
   async send(...args) {
@@ -161,7 +159,7 @@ export default class LSPClient {
       close_base_stream: true,
     });
 
-    this._read().catch(console.error);
+    this._read().catch(onReadError);
   }
 
   async _read_headers() {
@@ -204,20 +202,29 @@ export default class LSPClient {
     }
 
     const str = decoder_utf8.decode(uint8);
-    return JSON.parse(str);
+    try {
+      return JSON.parse(str);
+    } catch (err) {
+      await this.stop();
+    }
   }
 
   // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#baseProtocol
   async _read() {
     const headers = await this._read_headers();
 
-    const length = headers["Content-Length"];
-    const content = await this._read_content(length);
-    if (content) {
-      this._onmessage(content);
+    const length = headers?.["Content-Length"];
+    if (!length) {
+      return this.stop();
     }
 
-    this._read().catch(console.error);
+    const content = await this._read_content(length);
+    if (!content) {
+      return this.stop();
+    }
+
+    this._onmessage(content);
+    this._read().catch(onReadError);
   }
 
   _onmessage(message) {
@@ -282,4 +289,28 @@ addSignalMethods(LSPClient.prototype);
 
 function rid() {
   return Math.random().toString().substring(2);
+}
+
+async function closeStream(stream) {
+  try {
+    if (stream.is_closed()) return;
+    await stream.close_async(GLib.PRIORITY_DEFAULT, null);
+  } catch (err) {
+    if (err.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.PENDING)) {
+      console.debug(err);
+    } else {
+      throw err;
+    }
+  }
+}
+
+function onReadError(err) {
+  if (
+    err.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.CLOSED) ||
+    err.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.PENDING)
+  ) {
+    console.debug(err);
+  } else {
+    console.error(err);
+  }
 }

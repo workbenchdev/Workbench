@@ -16,10 +16,8 @@ export CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_RUSTFLAGS="-C link-arg=-fuse-ld=/us
 export CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER=clang
 export CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_RUSTFLAGS="-C link-arg=-fuse-ld=/usr/lib/sdk/rust-stable/bin/mold"
 
-export GDK_PIXBUF_MODULE_FILE=/app/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache
-
 # We do not support translations but the AboutWindow is translated by default
 LANG=en_US.UTF-8
 
 mkdir -p $XDG_RUNTIME_DIR/$FLATPAK_ID
-SHELL=/bin/sh script --flush --quiet --return $XDG_RUNTIME_DIR/$FLATPAK_ID/typescript --command "@app_id@ $@"
+@command@

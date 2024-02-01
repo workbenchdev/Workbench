@@ -13,6 +13,8 @@ import WorkbenchHoverProvider from "../WorkbenchHoverProvider.js";
 import { registerClass } from "../overrides.js";
 import { getItersAtRange } from "../lsp/sourceview.js";
 
+import "./CodeFind.js";
+
 Source.init();
 
 const scheme_manager = Source.StyleSchemeManager.get_default();
@@ -23,6 +25,10 @@ class CodeView extends Gtk.Widget {
     super(params);
     this.source_view = this._source_view;
     this.buffer = this._source_view.buffer;
+    // TODO: Investigate why the Blueprint defintion does not behave as intended
+    // transition-type: slide_up;
+    // https://github.com/workbenchdev/Workbench/pull/853/files#r1443560736
+    this._code_find.transition_type = Gtk.RevealerTransitionType.SLIDE_UP;
 
     try {
       this.language = language_manager.get_language(language_id);
@@ -198,7 +204,7 @@ export default registerClass(
     Signals: {
       changed: {},
     },
-    InternalChildren: ["source_view"],
+    InternalChildren: ["source_view", "code_find"],
   },
   CodeView,
 );

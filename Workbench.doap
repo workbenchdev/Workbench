@@ -9,8 +9,8 @@
   <shortdesc>Learn and prototype with GNOME technologies</shortdesc>
   <description>Workbench goal is to let you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a custom GTK widget.</description>
 
-  <homepage rdf:resource="https://workbench.sonny.re" />
-  <bug-database rdf:resource="https://workbench.sonny.re/feedback" />
+  <homepage rdf:resource="https://apps.gnome.org/Workbench" />
+  <bug-database rdf:resource="https://github.com/workbenchdev/Workbench/issues" />
   <programming-language>JavaScript</programming-language>
   <programming-language>Vala</programming-language>
   <programming-language>C</programming-language>
@@ -35,6 +35,25 @@
         <foaf:OnlineAccount>
           <foaf:accountServiceHomepage rdf:resource="https://gitlab.gnome.org"/>
           <foaf:accountName>sonny</foaf:accountName>
+        </foaf:OnlineAccount>
+      </foaf:account>
+    </foaf:Person>
+  </maintainer>
+  <maintainer>
+    <foaf:Person>
+      <foaf:name>Julian Hofer</foaf:name>
+      <foaf:mbox rdf:resource="mailto:julianhofer@gnome.org" />
+      <gnome:userid>julianhofer</gnome:userid>
+      <foaf:account>
+        <foaf:OnlineAccount>
+            <foaf:accountServiceHomepage rdf:resource="https://github.com/" />
+            <foaf:accountName>Hofer-Julian</foaf:accountName>
+        </foaf:OnlineAccount>
+      </foaf:account>
+      <foaf:account>
+        <foaf:OnlineAccount>
+          <foaf:accountServiceHomepage rdf:resource="https://gitlab.gnome.org"/>
+          <foaf:accountName>Hofer-Julian</foaf:accountName>
         </foaf:OnlineAccount>
       </foaf:account>
     </foaf:Person>

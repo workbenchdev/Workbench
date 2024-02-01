@@ -1,24 +1,36 @@
 SHELL:=/bin/bash -O globstar
-.PHONY: setup lint unit test ci sandbox flatpak
-.DEFAULT_GOAL := ci
+.PHONY: setup build lint unit test ci sandbox flatpak
+.DEFAULT_GOAL := test
 
 setup:
 	flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-	flatpak install --or-update --user --noninteractive flathub org.gnome.Sdk//45 org.flatpak.Builder org.freedesktop.Sdk.Extension.rust-stable//23.08 org.freedesktop.Sdk.Extension.vala//23.08 org.freedesktop.Sdk.Extension.llvm16//23.08
+	flatpak remote-add --user --if-not-exists gnome-nightly https://nightly.gnome.org/gnome-nightly.flatpakrepo
+	flatpak install --or-update --user --noninteractive gnome-nightly org.gnome.Sdk//master
+	flatpak install --or-update --user --noninteractive flathub org.flatpak.Builder org.freedesktop.Sdk.Extension.rust-stable//23.08 org.freedesktop.Sdk.Extension.vala//23.08 org.freedesktop.Sdk.Extension.llvm16//23.08
 	npm install
-	flatpak-builder --ccache --force-clean --stop-at=gst-plugin-gtk4 flatpak build-aux/re.sonny.Workbench.Devel.json
+	make build
+
+build:
+	flatpak-builder --delete-build-dirs --disable-updates --build-only --ccache --force-clean flatpak build-aux/re.sonny.Workbench.Devel.json
+
+cli:
+	 ./troll/gjspack/bin/gjspack src/cli/main.js --appid=re.sonny.Workbench.cli --prefix=/re/sonny/Workbench --resource-root=src/ --no-executable flatpak/files/share/re.sonny.Workbench.cli/
+	cp src/cli/bin.js flatpak/files/bin/workbench-cli
 
 lint:
 # JavaScript
 	./node_modules/.bin/eslint --max-warnings=0 src
-# rustfmt
+# Rust
 	./build-aux/fun rustfmt --check --edition 2021 src/**/*.rs
-# black
+# Python
 	./build-aux/fun black --check src/**/*.py
-# gettext
-# find po/ -type f -name "*po" -print0 | xargs -0 -n1 ./build-aux/fun msgfmt -o /dev/null --check
 # Blueprint
-	find src/ -type f -name "*blp" -print0 | xargs -0 ./build-aux/fun blueprint-compiler format
+	./build-aux/fun blueprint-compiler format src/**/*.blp
+	./build-aux/fun workbench-cli check blueprint src/**/*.blp
+# Vala
+# ./build-aux/fun workbench-cli check vala src/**/*.vala
+# CSS
+	./build-aux/fun workbench-cli check css src/**/*.css
 # Flatpak manifests
 	flatpak run --user --command=flatpak-builder-lint org.flatpak.Builder manifest --exceptions build-aux/re.sonny.Workbench.json
 	flatpak run --user --command=flatpak-builder-lint org.flatpak.Builder manifest --exceptions build-aux/re.sonny.Workbench.Devel.json
@@ -37,9 +49,10 @@ unit:
 # flatpak run --env=G_DEBUG=fatal-criticals --command=appstream-util org.flatpak.Builder validate data/app.metainfo.xml
 
 test: unit lint
+	./build-aux/fun workbench-cli ci demos/demos/Welcome
 
-ci: setup unit lint
-	flatpak-builder --ccache --force-clean flatpak build-aux/re.sonny.Workbench.Devel.json
+ci: setup test
+	./build-aux/fun workbench-cli ci demos/demos/**
 
 # Note that if you have Sdk extensions installed they will be used
 # make sure to test without the sdk extensions installed

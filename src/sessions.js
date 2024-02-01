@@ -7,12 +7,12 @@ import {
   ensureDir,
   getNowForFilename,
   demos_dir,
-  rust_template_dir,
   settings as global_settings,
   encode,
-  languages,
   settings,
+  copyDirectory,
 } from "./util.js";
+import { languages } from "./common.js";
 
 export const sessions_dir = data_dir.get_child("sessions");
 
@@ -64,7 +64,6 @@ export function createSessionFromDemo(demo) {
 
   const { file, settings } = session;
   copyDirectory(demo_dir, file);
-  copyDirectory(rust_template_dir, file);
 
   settings.set_string("name", name);
   settings.set_boolean("show-code", panels.includes("code"));
@@ -77,24 +76,6 @@ export function createSessionFromDemo(demo) {
   );
 
   return session;
-}
-
-// There is no copy directory function
-function copyDirectory(source, destination) {
-  for (const file_info of source.enumerate_children(
-    "",
-    Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
-    null,
-  )) {
-    if (file_info.get_file_type() === Gio.FileType.DIRECTORY) continue;
-    const child = source.get_child(file_info.get_name());
-    child.copy(
-      destination.get_child(child.get_basename()),
-      Gio.FileCopyFlags.NONE,
-      null,
-      null,
-    );
-  }
 }
 
 export async function deleteSession(session) {
