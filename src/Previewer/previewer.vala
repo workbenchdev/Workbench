@@ -12,13 +12,7 @@ namespace Workbench {
             if (this.window != null) {
                 return;
             }
-            var window = new Gtk.Window () {
-                // Ensure the header bar has the same height as the one on Workbench main window
-                titlebar = new Gtk.HeaderBar (),
-                title = "Preview",
-                default_width = 600,
-                default_height = 800
-            };
+            var window = new Workbench.PreviewWindow ();
             this.set_window (window);
         }
 
@@ -83,7 +77,7 @@ namespace Workbench {
             // Not a Root/Window
             if (!(target is Gtk.Root)) {
                 this.ensure_window ();
-                this.window.child = target;
+                ((Workbench.PreviewWindow) this.window).set_content (target);
                 return;
             }
 
@@ -218,6 +212,14 @@ namespace Workbench {
             stderr.printf ("This system does not support loadable modules.\n");
             Process.exit (1);
         }
+
+        #if DEVEL
+        string devel = ".Devel";
+        #else
+        string devel = "";
+        #endif
+        Resource.load (@"/app/share/re.sonny.Workbench$devel/re.sonny.Workbench.libworkbench.gresource")._register ();
+
 
         var loop = new MainLoop ();
 

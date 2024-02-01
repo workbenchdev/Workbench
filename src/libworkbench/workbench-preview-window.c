@@ -38,13 +38,22 @@ workbench_preview_window_class_init (WorkbenchPreviewWindowClass *klass)
   gtk_widget_class_bind_template_child (widget_class, WorkbenchPreviewWindow, toolbar_view);
 }
 
-
-AdwWindow *
+/**
+ * workbench_preview_window_new: (constructor)
+ *
+ * Returns: (transfer full): Returns a PreviewWindow
+ */
+WorkbenchPreviewWindow *
 workbench_preview_window_new (void)
 {
   return g_object_new (WORKBENCH_TYPE_PREVIEW_WINDOW, NULL);
 }
 
+/**
+ * workbench_preview_window_get_content:
+ *
+ * Returns: (transfer none)
+ */
 GtkWidget *
 workbench_preview_window_get_content (WorkbenchPreviewWindow *self)
 {
@@ -53,6 +62,10 @@ workbench_preview_window_get_content (WorkbenchPreviewWindow *self)
   return adw_toolbar_view_get_content (self->toolbar_view);
 }
 
+/**
+ * workbench_preview_window_set_content:
+ * @content: (transfer full)
+ */
 void
 workbench_preview_window_set_content (WorkbenchPreviewWindow *self,
                                       GtkWidget      *content)

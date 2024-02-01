@@ -108,7 +108,7 @@ libworkbench_gir = gnome.generate_gir(libworkbench,
 )
 
 # Vala API Bindings
-gnome.generate_vapi(libworkbench_api_name,
+libworkbench_vapi = gnome.generate_vapi(libworkbench_api_name,
        sources: libworkbench_gir[0],
       packages: ['gio-2.0', 'gtk4', 'gtksourceview-5'],
        install: true,
