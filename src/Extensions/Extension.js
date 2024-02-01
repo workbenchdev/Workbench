@@ -30,8 +30,8 @@ export default GObject.registerClass(
         GObject.ParamFlags.READWRITE,
         false,
       ),
-      button_text: GObject.ParamSpec.string(
-        "button-text",
+      uri: GObject.ParamSpec.string(
+        "uri",
         "",
         "",
         GObject.ParamFlags.READWRITE | GObject.ParamFlags.CONSTRUCT,
@@ -57,21 +57,14 @@ export default GObject.registerClass(
     constructor(properties = {}) {
       super(properties);
 
-      this._button.connect("clicked", () => {
-        let appid = "appstream://org.freedesktop.Sdk.Extension.";
-        switch (this.title) {
-          // currently not used
-          case "Rust":
-            appid += "rust-stable";
-            break;
-          case "Vala":
-            appid += "vala";
-            break;
-          default:
-            return;
-        }
-        Gtk.show_uri(null, appid, null);
-      });
+      if (properties.uri) {
+        this._button.visible = true;
+        this._button.connect("clicked", () => {
+          new Gtk.UriLauncher({ uri: properties.uri })
+            .launch(this.get_root(), null)
+            .catch(console.error);
+        });
+      }
 
       this.bind_property(
         "title",
@@ -95,20 +88,6 @@ export default GObject.registerClass(
       );
 
       this.bind_property(
-        "enabled",
-        this._button,
-        "visible",
-        GObject.BindingFlags.SYNC_CREATE | GObject.BindingFlags.INVERT_BOOLEAN,
-      );
-
-      this.bind_property(
-        "button-text",
-        this._button,
-        "label",
-        GObject.BindingFlags.SYNC_CREATE,
-      );
-
-      this.bind_property(
         "hint",
         this._label_hint,
         "label",
@@ -121,10 +100,6 @@ export default GObject.registerClass(
         "label",
         GObject.BindingFlags.SYNC_CREATE,
       );
-
-      if (this.button_text === "") {
-        this._button.visible = false;
-      }
     }
   },
 );

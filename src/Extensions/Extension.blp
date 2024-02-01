@@ -16,17 +16,6 @@ template $Extension: ListBoxRow {
       [start]
       Label label_title {}
 
-      [center]
-      Button button {
-        halign: center;
-        valign: center;
-
-        styles [
-          "pill",
-          "suggested-action"
-        ]
-      }
-
       [end]
       Image image_enabled {
         icon-name: "test-pass-symbolic";
@@ -43,6 +32,13 @@ template $Extension: ListBoxRow {
       margin-end: 14;
       margin-bottom: 14;
       orientation: vertical;
+
+      Button button {
+        label: _("Install");
+        visible: false;
+        halign: start;
+        margin-bottom: 12;
+      }
 
       Label label_hint {
         wrap: true;

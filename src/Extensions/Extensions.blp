@@ -66,15 +66,15 @@ Adw.Window window {
 
             $Extension extension_rust {
               title: _("Rust");
-              hint: _("Run the following command in your Console or Terminal");
+              hint: _("Run the following command");
               command: "flatpak install flathub org.freedesktop.Sdk.Extension.rust-stable//23.08 org.freedesktop.Sdk.Extension.llvm16//23.08";
             }
 
             $Extension extension_vala {
               title: _("Vala");
-              button-text: _("Download Vala support");
-              hint: _("or run the following command in your Console or Terminal");
+              hint: _("or run the following command");
               command: "flatpak install flathub org.freedesktop.Sdk.Extension.vala//23.08";
+              uri: "appstream://org.freedesktop.Sdk.Extension.vala";
             }
           }
 

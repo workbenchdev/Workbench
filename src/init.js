@@ -19,11 +19,13 @@ Gio._promisify(Xdp.Portal.prototype, "open_uri", "open_uri_finish");
 Gio._promisify(Xdp.Portal.prototype, "open_file", "open_file_finish");
 Gio._promisify(Xdp.Portal.prototype, "open_directory", "open_directory_finish");
 Gio._promisify(Xdp.Portal.prototype, "save_files", "save_files_finish");
+
 Gio._promisify(
   Gtk.FileDialog.prototype,
   "select_folder",
   "select_folder_finish",
 );
+Gio._promisify(Gtk.UriLauncher.prototype, "launch", "launch_finish");
 
 Gio._promisify(
   Gio.InputStream.prototype,
