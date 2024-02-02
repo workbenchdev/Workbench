@@ -213,12 +213,8 @@ namespace Workbench {
             Process.exit (1);
         }
 
-        #if DEVEL
-        string devel = ".Devel";
-        #else
-        string devel = "";
-        #endif
-        Resource.load (@"/app/share/re.sonny.Workbench$devel/re.sonny.Workbench.libworkbench.gresource")._register ();
+        var app_id = GLib.Environment.get_variable("FLATPAK_ID");
+        Resource.load (@"/app/share/$app_id/re.sonny.Workbench.libworkbench.gresource")._register ();
 
 
         var loop = new MainLoop ();
