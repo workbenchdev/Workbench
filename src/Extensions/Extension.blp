@@ -33,6 +33,13 @@ template $Extension: ListBoxRow {
       margin-bottom: 14;
       orientation: vertical;
 
+      Button button {
+        label: _("Install");
+        visible: false;
+        halign: start;
+        margin-bottom: 12;
+      }
+
       Label label_hint {
         wrap: true;
         xalign: 0;
