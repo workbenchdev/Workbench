@@ -7,12 +7,15 @@ template $WorkbenchPreviewWindow: Adw.Window {
   default-height: 800;
   width-request: 360;
   height-request: 360;
+
   content: Adw.ToolbarView toolbar_view {
     top-bar-style: raised;
 
     [top]
     Adw.HeaderBar {
-      styles ["raised"]
+      styles [
+        "raised"
+      ]
     }
   };
 }
