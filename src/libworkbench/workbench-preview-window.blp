@@ -1,0 +1,21 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $WorkbenchPreviewWindow: Adw.Window {
+  title: _("Preview");
+  default-width: 600;
+  default-height: 800;
+  width-request: 360;
+  height-request: 360;
+
+  content: Adw.ToolbarView toolbar_view {
+    top-bar-style: raised;
+
+    [top]
+    Adw.HeaderBar {
+      styles [
+        "raised"
+      ]
+    }
+  };
+}
