@@ -13,7 +13,7 @@ pub(crate) fn builder() -> &'static gtk::Builder {
 }
 
 #[allow(dead_code)]
-pub(crate) fn window() -> &'static gtk::Window {
+pub(crate) fn window() -> &'static adw::Window {
     unsafe {
         crate::WINDOW
             .as_ref()
