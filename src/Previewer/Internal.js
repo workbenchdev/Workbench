@@ -3,6 +3,7 @@ import * as postcss from "../lib/postcss.js";
 import Graphene from "gi://Graphene";
 import GObject from "gi://GObject";
 import Adw from "gi://Adw";
+// import workbench from "gi://Workbench";
 
 import { once } from "../../troll/src/async.js";
 import { build } from "../../troll/src/builder.js";
@@ -47,12 +48,20 @@ export default function Internal({
       }
     }
 
-    object_root.present();
+    if (object_root instanceof Adw.Dialog) {
+      object_root.present(null);
+    } else {
+      object_root.present();
+    }
     onWindowChange(true);
   }
 
   async function close() {
-    object_root?.close();
+    if (object_root instanceof Adw.Dialog) {
+      object_root.force_close();
+    } else if (object_root instanceof Gtk.Window) {
+      object_root.close();
+    }
   }
 
   function stop() {
@@ -92,10 +101,18 @@ export default function Internal({
       },
     };
 
+    console.log("cool");
+
     let obj;
-    if (object_preview instanceof Gtk.Root) {
+    if (object_preview instanceof Adw.Dialog) {
+      console.log("Adw.Dialog");
+      obj = updateBuilderRoot(object_preview);
+    } else if (object_preview instanceof Gtk.Root) {
+      console.log("root");
       obj = updateBuilderRoot(object_preview);
     } else {
+      console.log(object_preview);
+      console.log("not root");
       obj = updateBuilderNonRoot(object_preview);
     }
 
@@ -106,10 +123,18 @@ export default function Internal({
 
   function setObjectRoot(object) {
     object_root = object;
-    object_root.connect("close-request", () => {
-      object_root = null;
-      onWindowChange(false);
-    });
+    if (object_root instanceof Adw.Dialog) {
+      object_root.connect("closed", () => {
+        object_root = null;
+        onWindowChange(false);
+      });
+    } else {
+      object_root.connect("closed", () => {
+        object_root = null;
+        onWindowChange(false);
+      });
+    }
+
     bus.emit("object_root");
   }
 
@@ -124,6 +149,7 @@ export default function Internal({
       object_root.destroy();
       setObjectRoot(object_preview);
     } else {
+      console.log("abc");
       for (const prop of object_root.constructor.list_properties()) {
         if (!(prop.flags & GObject.ParamFlags.WRITABLE)) continue;
         if (!(prop.flags & GObject.ParamFlags.READABLE)) continue;
@@ -173,7 +199,11 @@ export default function Internal({
       // Toplevel windows returned by these functions will stay around
       // until the user explicitly destroys them with gtk_window_destroy().
       // https://docs.gtk.org/gtk4/class.Builder.html
-      if (object_preview instanceof Gtk.Window) {
+      if (object_preview instanceof Adw.Dialog) {
+        // console.log("baw");
+        // c
+        // object_preview.destroy();
+      } else if (object_preview instanceof Gtk.Window) {
         object_preview.destroy();
       }
     }
@@ -188,7 +218,7 @@ export default function Internal({
   }
 
   function updateBuilderNonRoot(object_preview) {
-    object_root?.destroy();
+    object_root?.destroy?.();
     object_root = null;
     css_scope_target = inline_css_scope_target;
 

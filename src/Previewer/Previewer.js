@@ -365,6 +365,7 @@ function getTemplate(tree) {
 
 function findPreviewable(tree) {
   for (const child of tree.getChildren("object")) {
+    console.log("child", child);
     const class_name = child.attrs.class;
     if (!class_name) continue;
 
