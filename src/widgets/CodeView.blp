@@ -12,7 +12,9 @@ template $CodeView: Gtk.Widget {
     vexpand: true;
 
     GtkSource.View source_view {
-      buffer: GtkSource.Buffer {};
+      buffer: GtkSource.Buffer {
+        implicit-trailing-newline: false;
+      };
 
       monospace: true;
       auto-indent: true;
