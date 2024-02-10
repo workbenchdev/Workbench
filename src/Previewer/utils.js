@@ -26,13 +26,7 @@ export function getObjectClass(class_name) {
 
 export function isPreviewable(class_name) {
   const klass = getObjectClass(class_name);
-  console.log("klass", klass);
   if (!klass) return false;
-
-  console.log(
-    GObject.type_test_flags(klass, GObject.TypeFlags.ABSTRACT),
-    GObject.type_is_a(klass, Gtk.Widget),
-  );
 
   // GLib-GObject-ERROR: cannot create instance of abstract (non-instantiatable) type 'GtkWidget'
   if (GObject.type_test_flags(klass, GObject.TypeFlags.ABSTRACT)) return false;
@@ -62,7 +56,7 @@ function getKlass(el) {
   return getObjectClass(class_name);
 }
 
-function assertObjectBuildable(el_object, root) {
+function assertObjectBuildable(el_object, is_root) {
   const klass = getKlass(el_object);
   if (klass) {
     // GLib-GObject-ERROR: cannot create instance of abstract (non-instantiatable) type 'GtkWidget'
@@ -82,9 +76,16 @@ function assertObjectBuildable(el_object, root) {
     }
 
     // Gtk:ERROR:../gtk/gtkwidget.c:2448:gtk_widget_root: assertion failed: (priv->root == NULL)
-    if (!root && GObject.type_is_a(klass, Gtk.Root)) {
+    if (!is_root && GObject.type_is_a(klass, Gtk.Root)) {
       throw new Error(
-        `${klass.$gtype.name} is a GtkRoot. GtkRoot objects can only appear at the top-level.`,
+        `${klass.$gtype.name} is a GtkRoot. GtkRoot objects can only be used at the top-level.`,
+      );
+    }
+
+    // Adwaita-Trying to add AdwDialog 0x558667ff74d0 to GtkBox 0x558666bd17c0. Use adw_dialog_present() to show dialogs.
+    if (!is_root && GObject.type_is_a(klass, Adw.Dialog)) {
+      throw new Error(
+        `${klass.$gtype.name} is a AdwDialog. AdwDialog objects can only be used at the top-level.`,
       );
     }
 

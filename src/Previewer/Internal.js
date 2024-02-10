@@ -3,7 +3,6 @@ import * as postcss from "../lib/postcss.js";
 import Graphene from "gi://Graphene";
 import GObject from "gi://GObject";
 import Adw from "gi://Adw";
-// import workbench from "gi://Workbench";
 
 import { once } from "../../troll/src/async.js";
 import { build } from "../../troll/src/builder.js";
@@ -149,7 +148,6 @@ export default function Internal({
       object_root.destroy();
       setObjectRoot(object_preview);
     } else {
-      console.log("abc");
       for (const prop of object_root.constructor.list_properties()) {
         if (!(prop.flags & GObject.ParamFlags.WRITABLE)) continue;
         if (!(prop.flags & GObject.ParamFlags.READABLE)) continue;
@@ -158,7 +156,7 @@ export default function Internal({
         const prop_name = prop.get_name();
         // AdwWindow and AdwApplicationWindow have child and titlebar properties but do not support setting them
         // "Using gtk_window_get_titlebar() and gtk_window_set_titlebar() is not supported and will result in a crash."
-        // https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.4/class.Window.html
+        // https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.5/class.Window.html
         // https://github.com/workbenchdev/Workbench/issues/130
         if (
           (object_preview instanceof Adw.Window ||
@@ -196,14 +194,13 @@ export default function Internal({
         }
       }
 
+      if (object_preview instanceof Adw.Dialog) {
+        object_preview.force_close();
+      }
       // Toplevel windows returned by these functions will stay around
       // until the user explicitly destroys them with gtk_window_destroy().
       // https://docs.gtk.org/gtk4/class.Builder.html
-      if (object_preview instanceof Adw.Dialog) {
-        // console.log("baw");
-        // c
-        // object_preview.destroy();
-      } else if (object_preview instanceof Gtk.Window) {
+      else if (object_preview instanceof Gtk.Window) {
         object_preview.destroy();
       }
     }
