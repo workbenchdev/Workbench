@@ -52,7 +52,7 @@ export default function Internal({
   }
 
   async function close() {
-    object_root.close();
+    object_root?.close();
   }
 
   function stop() {
