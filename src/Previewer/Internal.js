@@ -3,7 +3,6 @@ import * as postcss from "../lib/postcss.js";
 import Graphene from "gi://Graphene";
 import GObject from "gi://GObject";
 import Adw from "gi://Adw";
-// import workbench from "gi://Workbench";
 
 import { once } from "../../troll/src/async.js";
 import { build } from "../../troll/src/builder.js";
@@ -48,11 +47,7 @@ export default function Internal({
       }
     }
 
-    if (object_root instanceof Adw.Dialog) {
-      object_root.present(null);
-    } else {
-      object_root.present();
-    }
+    object_root.present();
     onWindowChange(true);
   }
 
@@ -98,14 +93,7 @@ export default function Internal({
     };
 
     let obj;
-    if (object_preview instanceof Adw.Dialog) {
-      obj = updateBuilderRoot(object_preview);
-      // const window = new workbench.PreviewWindow();
-      // window.set_child(object_preview);
-      // obj = updateBuilderRoot(window);
-      // obj = new Gtk.Box();
-      // obj = updateBuilderNonRoot(object_preview.child);
-    } else if (object_preview instanceof Gtk.Root) {
+    if (object_preview instanceof Gtk.Root) {
       obj = updateBuilderRoot(object_preview);
     } else {
       obj = updateBuilderNonRoot(object_preview);
@@ -118,18 +106,10 @@ export default function Internal({
 
   function setObjectRoot(object) {
     object_root = object;
-    if (object_root instanceof Adw.Dialog) {
-      object_root.connect("closed", () => {
-        object_root = null;
-        onWindowChange(false);
-      });
-    } else {
-      object_root.connect("close-request", () => {
-        object_root = null;
-        onWindowChange(false);
-      });
-    }
-
+    object_root.connect("close-request", () => {
+      object_root = null;
+      onWindowChange(false);
+    });
     bus.emit("object_root");
   }
 
@@ -208,7 +188,7 @@ export default function Internal({
   }
 
   function updateBuilderNonRoot(object_preview) {
-    object_root?.destroy?.();
+    object_root?.destroy();
     object_root = null;
     css_scope_target = inline_css_scope_target;
 
