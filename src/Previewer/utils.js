@@ -28,7 +28,7 @@ export function isPreviewable(class_name) {
   const klass = getObjectClass(class_name);
   if (!klass) return false;
 
-  if (GObject.type_is_at(klass, Adw.Dialog)) return false;
+  if (GObject.type_is_a(klass, Adw.Dialog)) return false;
 
   // GLib-GObject-ERROR: cannot create instance of abstract (non-instantiatable) type 'GtkWidget'
   if (GObject.type_test_flags(klass, GObject.TypeFlags.ABSTRACT)) return false;
