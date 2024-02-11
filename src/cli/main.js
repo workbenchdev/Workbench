@@ -417,6 +417,10 @@ async function ci({ filenames, current_dir }) {
         },
       });
 
+      // FIXME: rust analyzer doesn't publish diagnostics if there are none
+      // probably we should switch to pulling diagnostics but unknown if supported
+      // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.18/specification/#textDocument_pullDiagnostics
+
       // const diagnostics = await waitForDiagnostics({
       //   uri,
       //   lspc: lsp_clients.rust,

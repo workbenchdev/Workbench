@@ -94,8 +94,7 @@ export const languages = [
     document: null,
     default_file: "code.rs",
     index: 2,
-    // TODO: remove verbose
-    language_server: ["rust-analyzer", "--verbose"],
+    language_server: ["rust-analyzer"],
     formatting_options: {
       ...formatting_options,
       tabSize: 4,
