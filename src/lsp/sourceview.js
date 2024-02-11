@@ -3,7 +3,7 @@ import { rangeEquals } from "./LSP.js";
 // Inspired by
 // https://gitlab.gnome.org/GNOME/gnome-builder/-/blob/cbcf02bf9ac957a004fa32a17a7586f32e899a48/src/libide/code/ide-buffer-manager.c#L899
 export function applyTextEdits(text_edits, buffer) {
-  if (text_edits === null) return;
+  if (!text_edits) return;
 
   buffer.begin_user_action();
 

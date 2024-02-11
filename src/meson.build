@@ -47,6 +47,7 @@ configure_file(
 
 install_data('langs/vala/workbench.vala', install_dir: pkgdatadir)
 install_data('langs/javascript/biome.json', install_dir: pkgdatadir)
+subdir('libworkbench')
 subdir('Previewer')
 subdir('langs/python')
 subdir('langs/css')
@@ -72,4 +73,3 @@ custom_target('workbench',
 )
 
 subdir('cli')
-subdir('libworkbench')
