@@ -1,3 +1,5 @@
+import Gio from "gi://Gio";
+
 import { createLSPClient } from "../../common.js";
 import { getLanguage } from "../../util.js";
 
@@ -29,3 +31,7 @@ export function setup({ document }) {
 
   return lspc;
 }
+
+export const rust_template_dir = Gio.File.new_for_path(
+  pkg.pkgdatadir,
+).resolve_relative_path("langs/rust/template");
