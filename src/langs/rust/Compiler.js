@@ -2,10 +2,7 @@ import Gio from "gi://Gio";
 import GLib from "gi://GLib";
 import dbus_previewer from "../../Previewer/DBusPreviewer.js";
 import { copyDirectory, decode, encode } from "../../util.js";
-
-const rust_template_dir = Gio.File.new_for_path(
-  pkg.pkgdatadir,
-).resolve_relative_path("langs/rust/template");
+import { rust_template_dir } from "./rust.js";
 
 export default function Compiler({ session }) {
   const { file } = session;

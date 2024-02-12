@@ -2,6 +2,7 @@
 
 export WEBKIT_DISABLE_DMABUF_RENDERER=1
 # export G_MESSAGES_DEBUG=@app_id@
+export GSK_RENDERER=gl
 
 # Required to allow pkgconfig to find pc files in /app/lib/pkgconfig
 export PKG_CONFIG_PATH=/app/lib/pkgconfig/:$PKG_CONFIG_PATH
