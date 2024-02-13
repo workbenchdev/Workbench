@@ -104,19 +104,23 @@ export const demos_dir = Gio.File.new_for_path(
 ).resolve_relative_path("demos");
 
 // There is no copy directory function
-export function copyDirectory(source, destination) {
-  for (const file_info of source.enumerate_children(
-    "",
+export async function copyDirectory(source, destination) {
+  const enumerator = await source.enumerate_children_async(
+    "standard::name",
     Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
+    GLib.PRIORITY_DEFAULT,
     null,
-  )) {
+  );
+
+  for await (const file_info of enumerator) {
     if (file_info.get_file_type() === Gio.FileType.DIRECTORY) continue;
     const child = source.get_child(file_info.get_name());
 
     try {
-      child.copy(
+      await child.copy_async(
         destination.get_child(child.get_basename()),
         Gio.FileCopyFlags.NONE,
+        GLib.PRIORITY_DEFAULT,
         null,
         null,
       );

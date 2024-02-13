@@ -154,7 +154,7 @@ export default function Window({ application, session }) {
   const panel_code = PanelCode({
     builder,
     previewer,
-    settings,
+    session,
   });
 
   previewer.setPanelCode(panel_code);

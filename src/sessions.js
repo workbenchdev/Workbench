@@ -13,7 +13,6 @@ import {
   copyDirectory,
 } from "./util.js";
 import { languages } from "./common.js";
-import { rust_template_dir } from "./langs/rust/rust.js";
 
 export const sessions_dir = data_dir.get_child("sessions");
 
@@ -57,16 +56,16 @@ function createSession() {
   return session;
 }
 
-export function createSessionFromDemo(demo) {
+export async function createSessionFromDemo(demo) {
   const { name, panels } = demo;
 
   const session = createSession();
   const demo_dir = demos_dir.get_child(name);
 
   const { file, settings } = session;
-  copyDirectory(demo_dir, file);
-  copyDirectory(rust_template_dir, file);
+  await copyDirectory(demo_dir, file);
 
+  settings.delay();
   settings.set_string("name", name);
   settings.set_boolean("show-code", panels.includes("code"));
   settings.set_boolean("show-style", panels.includes("style"));
@@ -76,6 +75,7 @@ export function createSessionFromDemo(demo) {
     "code-language",
     global_settings.get_int("recent-code-language"),
   );
+  settings.apply();
 
   return session;
 }
