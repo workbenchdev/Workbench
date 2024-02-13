@@ -1,7 +1,8 @@
 import Gio from "gi://Gio";
 import GLib from "gi://GLib";
 import dbus_previewer from "../../Previewer/DBusPreviewer.js";
-import { decode, encode } from "../../util.js";
+import { copyDirectory, decode, encode } from "../../util.js";
+import { rust_template_dir } from "./rust.js";
 
 export default function Compiler({ session }) {
   const { file } = session;
@@ -15,6 +16,8 @@ export default function Compiler({ session }) {
   let savedRustcVersion;
 
   async function compile() {
+    copyDirectory(rust_template_dir, file);
+
     rustcVersion ||= await getRustcVersion();
     savedRustcVersion ||= await getSavedRustcVersion({ rustcVersionFile });
 

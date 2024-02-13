@@ -47,6 +47,7 @@ libworkbench_deps = [
   dependency('gio-2.0', version: '>= 2.76.0'),
   dependency('gtk4', version: '>= 4.10.0'),
   dependency('gtksourceview-5', version: '>= 5.8.0'),
+  dependency('libadwaita-1', version: '>= 1.5')
 ]
 
 if get_option('profile') != 'development'
@@ -60,11 +61,13 @@ libworkbench_headers = files([
   'workbench.h',
   'workbench-completion-provider.h',
   'workbench-completion-request.h',
+  'workbench-preview-window.h'
 ])
 
 libworkbench_sources = files([
   'workbench-completion-provider.c',
   'workbench-completion-request.c',
+  'workbench-preview-window.c'
 ])
 
 install_headers(libworkbench_headers,
@@ -105,9 +108,26 @@ libworkbench_gir = gnome.generate_gir(libworkbench,
 )
 
 # Vala API Bindings
-gnome.generate_vapi(libworkbench_api_name,
+libworkbench_vapi = gnome.generate_vapi(libworkbench_api_name,
        sources: libworkbench_gir[0],
       packages: ['gio-2.0', 'gtk4', 'gtksourceview-5'],
        install: true,
    install_dir: vapidir,
+)
+
+blueprints = custom_target('blueprints',
+  input: files(
+    'workbench-preview-window.blp'
+  ),
+  output: '.',
+  command: [find_program('blueprint-compiler'), 'batch-compile', '@OUTPUT@', '@CURRENT_SOURCE_DIR@', '@INPUT@'],
+)
+
+resources = gnome.compile_resources(
+  're.sonny.Workbench.libworkbench',
+  're.sonny.Workbench.libworkbench.gresource.xml',
+  gresource_bundle: true,
+  install: true,
+  install_dir: pkgdatadir,
+  dependencies: blueprints,
 )

@@ -22,15 +22,33 @@ gi.require_version("Adw", "1")
 gi.require_version("Graphene", "1.0")
 gi.require_version("Gsk", "4.0")
 gi.require_version("GtkSource", "5")
+gi.require_version("WebKit", "6.0")
+gi.require_version("Workbench", "0")
 
-from gi.repository import GLib, Gdk, Gtk, Adw, Graphene, Gio, Gsk, GtkSource
+from gi.repository import (
+    GObject,
+    GLib,
+    Gdk,
+    Gtk,
+    Adw,
+    Graphene,
+    Gio,
+    GtkSource,
+    WebKit,
+    Workbench,
+)
 from gi.repository.Gio import DBusConnection, DBusConnectionFlags
 
 # Make sure all libraries are properly initialized
 Gtk.init()
 Adw.init()
 GtkSource.init()
+GObject.type_ensure(WebKit.WebView)
 
+resource = Gio.Resource.load(
+    f'/app/share/{os.environ["FLATPAK_ID"]}/re.sonny.Workbench.libworkbench.gresource'
+)
+Gio.resources_register(resource)
 
 # Table of Contents
 # =================
@@ -81,7 +99,7 @@ class Previewer:
         # Not a Root/Window
         if not isinstance(self.target, Gtk.Root):
             self.ensure_window()
-            self.window.set_child(self.target)
+            self.window.set_content(self.target)
             return
 
         # Set target as window directly
@@ -203,13 +221,7 @@ class Previewer:
     def ensure_window(self):
         if self.window is not None:
             return
-        new_window = Gtk.Window(
-            # Ensure the header bar has the same height as the one on Workbench main window
-            titlebar=Gtk.HeaderBar(),
-            title="Preview",
-            default_width=600,
-            default_height=800,
-        )
+        new_window = Workbench.PreviewWindow()
         self.set_window(new_window)
 
     def set_window(self, the_window: Gtk.Window):

@@ -13,6 +13,7 @@ export default GObject.registerClass(
       "installation_guide",
       "label_hint",
       "label_command",
+      "button",
     ],
     Properties: {
       title: GObject.ParamSpec.string(
@@ -28,6 +29,13 @@ export default GObject.registerClass(
         "",
         GObject.ParamFlags.READWRITE,
         false,
+      ),
+      uri: GObject.ParamSpec.string(
+        "uri",
+        "",
+        "",
+        GObject.ParamFlags.READWRITE | GObject.ParamFlags.CONSTRUCT,
+        "",
       ),
       hint: GObject.ParamSpec.string(
         "hint",
@@ -48,6 +56,15 @@ export default GObject.registerClass(
   class Extension extends Gtk.ListBoxRow {
     constructor(properties = {}) {
       super(properties);
+
+      if (properties.uri) {
+        this._button.visible = true;
+        this._button.connect("clicked", () => {
+          new Gtk.UriLauncher({ uri: properties.uri })
+            .launch(this.get_root(), null)
+            .catch(console.error);
+        });
+      }
 
       this.bind_property(
         "title",

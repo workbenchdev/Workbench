@@ -13,17 +13,19 @@ import Xdp from "gi://Xdp";
 import Source from "gi://GtkSource";
 import WebKit from "gi://WebKit";
 
-Gio._promisify(Adw.MessageDialog.prototype, "choose", "choose_finish");
+Gio._promisify(Adw.AlertDialog.prototype, "choose", "choose_finish");
 Gio._promisify(Xdp.Portal.prototype, "trash_file", "trash_file_finish");
 Gio._promisify(Xdp.Portal.prototype, "open_uri", "open_uri_finish");
 Gio._promisify(Xdp.Portal.prototype, "open_file", "open_file_finish");
 Gio._promisify(Xdp.Portal.prototype, "open_directory", "open_directory_finish");
 Gio._promisify(Xdp.Portal.prototype, "save_files", "save_files_finish");
+
 Gio._promisify(
   Gtk.FileDialog.prototype,
   "select_folder",
   "select_folder_finish",
 );
+Gio._promisify(Gtk.UriLauncher.prototype, "launch", "launch_finish");
 
 Gio._promisify(
   Gio.InputStream.prototype,

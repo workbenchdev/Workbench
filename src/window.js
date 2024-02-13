@@ -5,7 +5,8 @@ import Gio from "gi://Gio";
 import Adw from "gi://Adw";
 import Vte from "gi://Vte";
 
-import { buildRuntimePath, languages, quitOnLastWindowClose } from "./util.js";
+import { buildRuntimePath, quitOnLastWindowClose } from "./util.js";
+import { languages } from "./common.js";
 import PanelUI from "./PanelUI.js";
 import PanelCode from "./PanelCode.js";
 import PanelStyle from "./PanelStyle.js";
@@ -137,7 +138,7 @@ export default function Window({ application, session }) {
     settings,
   });
 
-  PanelStyle({ builder, document_css, settings });
+  PanelStyle({ builder, settings });
 
   const previewer = Previewer({
     output,
@@ -207,6 +208,8 @@ export default function Window({ application, session }) {
         documents.push(document_rust);
       } else if (panel_code.language === "Python") {
         documents.push(document_python);
+      } else if (panel_code.language === "Vala") {
+        documents.push(document_vala);
       }
     }
 
@@ -227,7 +230,7 @@ export default function Window({ application, session }) {
   let compiler_rust = null;
   let builder_python = null;
 
-  async function runCode({ format }) {
+  async function runCode() {
     button_run.set_sensitive(false);
 
     term_console.clear();
@@ -237,9 +240,7 @@ export default function Window({ application, session }) {
     try {
       await panel_ui.update();
 
-      if (format) {
-        await formatCode();
-      }
+      await formatCode();
 
       await compile();
     } catch (err) {
@@ -343,7 +344,7 @@ export default function Window({ application, session }) {
     name: "run",
   });
   action_run.connect("activate", () => {
-    runCode({ format: true }).catch(console.error);
+    runCode().catch(console.error);
   });
   window.add_action(action_run);
   application.set_accels_for_action("win.run", ["<Control>Return"]);
@@ -377,7 +378,7 @@ export default function Window({ application, session }) {
   window.present();
 
   const documents = Object.values(langs).map((lang) => lang.document);
-  async function load({ run }) {
+  async function load() {
     panel_ui.stop();
     previewer.stop();
     documents.forEach((document) => document.stop());
@@ -394,15 +395,11 @@ export default function Window({ application, session }) {
 
     await previewer.useInternal();
 
-    if (run) {
-      await runCode({ format: false });
-    } else {
-      term_console.clear();
-      panel_ui.start();
-      await panel_ui.update();
-      previewer.start();
-      await previewer.update(true);
-    }
+    term_console.clear();
+    panel_ui.start();
+    await panel_ui.update();
+    previewer.start();
+    await previewer.update(true);
 
     documents.forEach((document) => {
       document.start();
@@ -411,7 +408,7 @@ export default function Window({ application, session }) {
     term_console.scrollToEnd();
   }
 
-  return { load, window };
+  return { load, window, runCode };
 }
 
 async function setGtk4PreferDark(dark) {
@@ -462,10 +459,8 @@ async function onCloseSession({ session, window }) {
 
 async function promptSessionClose({ window }) {
   const builder = Gtk.Builder.new_from_resource(resource);
-  const dialog = builder.get_object("message_dialog_save_project");
-
-  dialog.set_transient_for(window);
-  dialog.present();
+  const dialog = builder.get_object("alert_dialog_save_project");
+  dialog.present(window);
 
   let location;
 
@@ -501,7 +496,7 @@ async function promptSessionClose({ window }) {
     updateSaveButton();
   }
 
-  const response = await dialog.choose(null);
+  const response = await dialog.choose(window, null);
   return [
     response,
     location?.get_child_for_display_name(row_project_name.text),

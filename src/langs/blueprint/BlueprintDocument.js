@@ -1,19 +1,19 @@
 import Document from "../../Document.js";
 import { applyTextEdits } from "../../lsp/sourceview.js";
 
-import { setup as setupBlueprint } from "./blueprint.js";
+import { setup } from "./blueprint.js";
 
 export class BlueprintDocument extends Document {
   constructor(...args) {
     super(...args);
 
-    this.lspc = setupBlueprint({ document: this });
+    this.lspc = setup({ document: this });
   }
   async update() {
     return this.lspc.didChange();
   }
   async compile() {
-    await this.lspc.didChange();
+    await this.update();
 
     let xml = null;
 

@@ -3,7 +3,7 @@ namespace workbench {
     public static Gtk.Window window;
     public static string uri;
     public string resolve (string path) {
-        return File.new_for_uri(workbench.uri).resolve_relative_path(path).get_uri();
+        return File.new_for_uri (workbench.uri).resolve_relative_path (path).get_uri ();
     }
 }
 

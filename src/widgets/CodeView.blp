@@ -2,7 +2,9 @@ using Gtk 4.0;
 using GtkSource 5;
 
 template $CodeView: Gtk.Widget {
-  layout-manager: BinLayout {};
+  layout-manager: BoxLayout {
+    orientation: vertical;
+  };
 
   vexpand: true;
 
@@ -10,7 +12,9 @@ template $CodeView: Gtk.Widget {
     vexpand: true;
 
     GtkSource.View source_view {
-      buffer: GtkSource.Buffer {};
+      buffer: GtkSource.Buffer {
+        implicit-trailing-newline: false;
+      };
 
       monospace: true;
       auto-indent: true;
@@ -23,5 +27,10 @@ template $CodeView: Gtk.Widget {
       smart-backspace: true;
       tab-width: 2;
     }
+  }
+
+  $CodeFind code_find {
+    vexpand: false;
+    source-view: source_view;
   }
 }

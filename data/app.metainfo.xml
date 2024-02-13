@@ -3,7 +3,11 @@
   <id>@app_id@</id>
   <launchable type="desktop-id">@app_id@.desktop</launchable>
   <name translatable="no">Workbench</name>
+  <!-- developer_name tag deprecated with Appstream 1.0 -->
   <developer_name translatable="no">Sonny Piers</developer_name>
+  <developer>
+    <name translatable="no">Sonny Piers</name>
+  </developer>
   <update_contact>sonnyp@gnome.org</update_contact>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0</project_license>
@@ -22,10 +26,10 @@
       <li>1000+ icons</li>
     </ul>
   </description>
-  <url type="homepage">https://workbench.sonny.re</url>
-  <url type="bugtracker">https://workbench.sonny.re/feedback</url>
-  <url type="donation">https://workbench.sonny.re/donate</url>
-  <url type="vcs-browser">https://workbench.sonny.re/source</url>
+  <url type="homepage">https://apps.gnome.org/Workbench</url>
+  <url type="bugtracker">https://github.com/workbenchdev/Workbench/issues</url>
+  <url type="donation">https://ko-fi.com/sonnyp</url>
+  <url type="vcs-browser">https://github.com/workbenchdev/Workbench</url>
   <screenshots>
     <screenshot type="default">
       <image>https://raw.githubusercontent.com/workbenchdev/Workbench/main/data/screenshot.png</image>
@@ -42,23 +46,46 @@
   </screenshots>
   <content_rating type="oars-1.1" />
   <releases>
-    <release version="45.4" date="2023-xx-xx">
+    <release version="45.4" date="2024-01-14">
       <description translatable="no">
         <ul>
-          <li>Restore on-disk projects on startup</li>
-          <li>Prevent Style from affecting other windows</li>
-          <li>Fix Console style when toggling dark mode</li>
-          <li>Open the Library on start if there are no windows to restore</li>
+          <li>Restore on-disk projects when starting Workbench</li>
+          <li>Open the Library on start if there are no sessions to restore</li>
+          <li>Restore scroll and cusor positions on format and Run</li>
+          <li>Add "Copy" and "Select All" to Console</li>
+          <!-- <li>Add find text support</li> -->
+          <li>Add Vala formatter support</li>
           <li>Add WebP image format support</li>
-          <li>Update to Biome 1.4.0</li>
+          <li>Use Biome instead of prettier as JavaScript formatter</li>
+          <li>Use GTKCssLanguageServer instead of prettier as CSS formatter</li>
+          <li>Fix Console style when toggling dark mode</li>
+          <li>Fix blank preview on demos with no code</li>
+          <li>Fix Style affecting other windows</li>
+          <li>Update Biome to 1.4.1</li>
           <li>Update gst-plugin-gtk4 to 0.11.2</li>
-          <li>Add "Copy" to Console</li>
-          <li>Add "Select All" to Console</li>
+          <li>Update libshumate 1.1.2</li>
+          <li>Library: Add "Context Menu" entry</li>
+          <li>Library: Add "HTTP Server" entry</li>
+          <li>Library: Fix "Open File" entry</li>
+          <li>Library: Replace deprecated ViewSwitcherTitle</li>
           <li>Library: Port "Accessibility" entry to Python</li>
           <li>Library: Port "Account" entry to Python</li>
           <li>Library: Port "Email" entry to Python</li>
           <li>Library: Port "Overlay Split View" entry to Python</li>
+          <li>Library: Port "Label Bars" entry to Python</li>
+          <li>Library: Port "Context Menu" entry to Python</li>
           <li>Library: Port "Wallpaper" entry to Python</li>
+          <li>Library: Port "Drop Zone" entry to Python</li>
+          <li>Library: Port "Column View" entry to Python</li>
+          <li>Library: Port "Screenshot" entry to Python</li>
+          <li>Library: Port "Event Controllers" entry to Python</li>
+          <li>Library: Port "Drag and Drop" entry to Python</li>
+          <li>Library: Port "Context Menu" entry to Vala</li>
+          <li>Library: Port "Search" entry to Vala</li>
+          <li>Library: Port "Grid" entry to Vala</li>
+          <li>Library: Port "Accessibility" entry to Vala</li>
+          <li>Library: Port "Animation" entry to Rust</li>
+          <li>Library: Port "Context Menu" entry to Rust</li>
         </ul>
       </description>
     </release>

@@ -65,7 +65,7 @@ const getDemos = (() => {
   let demos;
   return function getDemos() {
     if (!demos) {
-      const file = demos_dir.get_child("../index.json");
+      const file = demos_dir.get_child("index.json");
       const [, data] = file.load_contents(null);
       demos = JSON.parse(decode(data));
     }
@@ -92,16 +92,23 @@ async function openDemo({ application, demo_name, language }) {
     session.settings.set_boolean("show-code", true);
   }
 
+  const { autorun, languages } = demo;
+
   // Override the user preferred language if the demo doesn't support it
   const lang = session.getCodeLanguage();
-  if (demo.languages.length > 0 && !demo.languages.includes(lang.id)) {
+  if (languages.length > 0 && !languages.includes(lang.id)) {
     session.settings.set_int(
       "code-language",
       getLanguage(demo.languages[0]).index,
     );
   }
 
-  const run = demo.autorun && session.getCodeLanguage().id === "javascript";
-  const { load } = Window({ application, session });
-  await load({ run });
+  const { load, runCode } = Window({ application, session });
+  await load();
+
+  const code_language = session.getCodeLanguage();
+  const run = autorun && code_language.id === "javascript";
+  if (run) {
+    await runCode();
+  }
 }

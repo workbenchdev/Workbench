@@ -16,14 +16,20 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "rust-analyzer.server.path": "${workspaceFolder}/.flatpak/rust-analyzer.sh",
   "rust-analyzer.runnables.command": "${workspaceFolder}/.flatpak/cargo.sh",
-  "rust-analyzer.files.excludeDirs": [".flatpak"],
+  "rust-analyzer.files.excludeDirs": [
+    ".flatpak",
+    ".flatpak-builder",
+    "_build",
+    "build",
+    "builddir"
+  ],
   "[yaml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "vala.languageServerPath": "${workspaceFolder}/.flatpak/vala-language-server.sh",
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "vala.languageServerPath": "${workspaceFolder}/.flatpak/vala-language-server.sh",
   "mesonbuild.configureOnOpen": false,
   "mesonbuild.buildFolder": "_build",
   "mesonbuild.mesonPath": "${workspaceFolder}/.flatpak/meson.sh"

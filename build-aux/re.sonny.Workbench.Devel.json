@@ -1,7 +1,7 @@
 {
   "id": "re.sonny.Workbench.Devel",
   "runtime": "org.gnome.Sdk",
-  "runtime-version": "45",
+  "runtime-version": "master",
   "sdk": "org.gnome.Sdk",
   "sdk-extensions": [
     "org.freedesktop.Sdk.Extension.vala",
@@ -44,7 +44,6 @@
     "modules/libspelling.json",
     "modules/GTKCssLanguageServer.json",
     "modules/icon-development-kit.json",
-    "modules/webp-pixbuf-loader.json",
     "modules/python-python-lsp-server.json",
     {
       "name": "Workbench",

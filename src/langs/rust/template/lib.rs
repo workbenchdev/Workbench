@@ -9,7 +9,7 @@ use gtk::glib;
 use libc::{c_int, EXIT_FAILURE, EXIT_SUCCESS};
 
 static mut BUILDER: Option<gtk::Builder> = None;
-static mut WINDOW: Option<gtk::Window> = None;
+static mut WINDOW: Option<adw::Window> = None;
 static mut URI: Option<String> = None;
 
 #[no_mangle]
@@ -28,9 +28,9 @@ extern "C" fn set_builder(builder_ptr: *mut gtk::ffi::GtkBuilder) -> c_int {
 }
 
 #[no_mangle]
-extern "C" fn set_window(window_ptr: *mut gtk::ffi::GtkWindow) -> c_int {
+extern "C" fn set_window(window_ptr: *mut adw::ffi::AdwWindow) -> c_int {
     unsafe {
-        let window = gtk::Window::from_glib_full(window_ptr);
+        let window = adw::Window::from_glib_full(window_ptr);
         WINDOW = Some(window.clone());
     }
     EXIT_SUCCESS
