@@ -22,8 +22,12 @@ export function setup({ document }) {
       code_view.handleDiagnostics(params.diagnostics);
     },
   );
-
-  lspc.start().catch(console.error);
+  const cacheDir = GLib.get_user_cache_dir();
+  const rustAnalyzerCache = `${cacheDir}/rust_analyzer_cache`;
+  // It shouldn't be necessary to disable `useRustcWrapper`, stop doing that as soon as that issue is fixed
+  // https://github.com/rust-lang/rust-analyzer/issues/16565#issuecomment-1944354758
+  const initializationOptions = {"cargo": {"buildScripts": {"useRustcWrapper": false}}, "rust": {"analyzerTargetDir": rustAnalyzerCache}};
+  lspc.start(initializationOptions).catch(console.error);
 
   buffer.connect("modified-changed", () => {
     if (!buffer.get_modified()) return;
