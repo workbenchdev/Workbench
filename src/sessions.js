@@ -84,7 +84,13 @@ export async function deleteSession(session) {
   // There is no method to recursively delete a folder so we trash instead
   // https://github.com/flatpak/xdg-desktop-portal/issues/630 :/
   // portal.trash_file(file.get_path(), null).catch(console.error);
-  session.file.trash(null);
+  try {
+    session.file.trash(null);
+  } catch (err) {
+    if (!err.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.EXISTS)) {
+      throw err;
+    }
+  }
 }
 
 export async function saveSessionAsProject(session, destination) {
