@@ -80,7 +80,7 @@ export function getDemo(name) {
 
 async function openDemo({ application, demo_name, language }) {
   const demo = getDemo(demo_name);
-  const session = createSessionFromDemo(demo);
+  const session = await createSessionFromDemo(demo);
 
   if (language) {
     session.settings.set_int("code-language", language.index);

@@ -75,14 +75,11 @@ function setColorScheme() {
 setColorScheme();
 settings.connect("changed::color-scheme", setColorScheme);
 
-// We are not using async otherwise the app segfaults
-// does not like opening a window in a promise
-// TODO: make a reproducer and file a GJS bug
 function restoreSessions() {
   const sessions = getSessions();
 
   if (sessions.length < 1) {
-    bootstrap();
+    bootstrap().catch(console.error);
   } else {
     sessions.forEach((session) => {
       const { load } = Window({
@@ -94,7 +91,7 @@ function restoreSessions() {
   }
 }
 
-function bootstrap() {
+async function bootstrap() {
   const first_run = settings.get_boolean("first-run");
   if (!first_run) {
     application.activate_action("library", null);
@@ -102,7 +99,7 @@ function bootstrap() {
   }
 
   const demo = getDemo("Welcome");
-  const session = createSessionFromDemo(demo);
+  const session = await createSessionFromDemo(demo);
   const { load, window } = Window({
     application,
     session,

@@ -96,3 +96,5 @@ Gio._promisify(
   "next_files_async",
   "next_files_finish",
 );
+
+Gio._promisify(Gio.File.prototype, "copy_async", "copy_finish");
