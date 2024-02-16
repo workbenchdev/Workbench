@@ -22,6 +22,7 @@ gi.require_version("Adw", "1")
 gi.require_version("Graphene", "1.0")
 gi.require_version("Gsk", "4.0")
 gi.require_version("GtkSource", "5")
+gi.require_version("Shumate", "1.0")
 gi.require_version("WebKit", "6.0")
 gi.require_version("Workbench", "0")
 
@@ -34,6 +35,7 @@ from gi.repository import (
     Graphene,
     Gio,
     GtkSource,
+    Shumate,
     WebKit,
     Workbench,
 )
@@ -44,6 +46,7 @@ Gtk.init()
 Adw.init()
 GtkSource.init()
 GObject.type_ensure(WebKit.WebView)
+GObject.type_ensure(Shumate.SimpleMap)
 
 resource = Gio.Resource.load(
     f'/app/share/{os.environ["FLATPAK_ID"]}/re.sonny.Workbench.libworkbench.gresource'
