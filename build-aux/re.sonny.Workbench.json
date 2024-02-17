@@ -22,7 +22,6 @@
     "--socket=pulseaudio"
   ],
   "cleanup": [
-    "/include",
     "#/lib/pkgconfig",
     "/man",
     "/share/doc",
