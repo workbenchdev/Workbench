@@ -50,12 +50,12 @@ application.connect("startup", () => {
 
   ShortcutsWindow({ application });
 
-  restoreSessions();
+  restoreSessions().catch(console.error);
 });
 
 application.connect("activate", () => {
   if (application.is_remote) {
-    bootstrap();
+    bootstrap().catch(console.error);
   }
 });
 
@@ -75,8 +75,8 @@ function setColorScheme() {
 setColorScheme();
 settings.connect("changed::color-scheme", setColorScheme);
 
-function restoreSessions() {
-  const sessions = getSessions();
+async function restoreSessions() {
+  const sessions = await getSessions();
 
   if (sessions.length < 1) {
     bootstrap().catch(console.error);
