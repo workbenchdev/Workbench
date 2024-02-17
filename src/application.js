@@ -50,7 +50,7 @@ application.connect("startup", () => {
 
   ShortcutsWindow({ application });
 
-  restoreSessions();
+  restoreSessions().catch(console.error);
 });
 
 application.connect("activate", () => {
@@ -75,7 +75,7 @@ function setColorScheme() {
 setColorScheme();
 settings.connect("changed::color-scheme", setColorScheme);
 
-function restoreSessions() {
+async function restoreSessions() {
   const sessions = getSessions();
 
   if (sessions.length < 1) {
