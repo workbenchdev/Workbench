@@ -20,15 +20,17 @@ const demos_dir = Gio.File.new_for_path(
 ).get_child("demos/demos");
 const demos = [];
 
-for (const file_info of demos_dir.enumerate_children(
-  "",
+const enumerator = await demos_dir.enumerate_children_async(
+  `${Gio.FILE_ATTRIBUTE_STANDARD_NAME},${Gio.FILE_ATTRIBUTE_STANDARD_IS_HIDDEN}`,
   Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
+  GLib.PRIORITY_DEFAULT,
   null,
-)) {
+);
+for (const file_info of enumerator) {
+  if (file_info.get_is_hidden()) continue;
   if (file_info.get_file_type() !== Gio.FileType.DIRECTORY) continue;
 
-  const demo_name = file_info.get_name();
-  const demo_dir = demos_dir.get_child(demo_name);
+  const demo_dir = enumerator.get_child(file_info);
 
   let str;
   try {

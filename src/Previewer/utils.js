@@ -173,7 +173,7 @@ function getNamespaces() {
 
 function getSearchPathNamespaces(search_path) {
   const enumerator = Gio.File.new_for_path(search_path).enumerate_children(
-    "standard::name",
+    `${Gio.FILE_ATTRIBUTE_STANDARD_NAME},${Gio.FILE_ATTRIBUTE_STANDARD_IS_HIDDEN}`,
     Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
     null,
   );
@@ -181,6 +181,7 @@ function getSearchPathNamespaces(search_path) {
   const namespaces = [];
 
   for (const file_info of enumerator) {
+    if (file_info.get_is_hidden()) continue;
     const name = file_info.get_name();
     if (!name.endsWith(".typelib")) continue;
     const [namespace] = name.split("-");
