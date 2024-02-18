@@ -160,11 +160,11 @@ export class Session {
     const resource = await buildGresourceIcons(this.file);
     if (!resource) return;
     this.resource = resource;
-    Gio.resources_register(this.resource);
+    this.resource._register();
   }
 
   async unload() {
-    Gio.resources_unregister(this.resource);
+    this.resource?._unregister();
     this.resource = null;
   }
 
@@ -200,7 +200,7 @@ async function buildGresourceIcons(file) {
 
   try {
     enumerator = await dir.enumerate_children_async(
-      "standard::name,standard::is-hidden",
+      `${Gio.FILE_ATTRIBUTE_STANDARD_NAME},${Gio.FILE_ATTRIBUTE_STANDARD_IS_HIDDEN}`,
       Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
       GLib.PRIORITY_DEFAULT,
       null,
@@ -217,7 +217,7 @@ async function buildGresourceIcons(file) {
     if (file_info.get_file_type() === Gio.FileType.DIRECTORY) continue;
     if (file_info.get_is_hidden()) return;
 
-    const child = dir.get_child(file_info.get_name());
+    const child = enumerator.get_child(file_info);
     files.push(child);
   }
 

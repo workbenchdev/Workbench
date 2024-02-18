@@ -32,11 +32,17 @@ application.connect("open", (_self, files, hint) => {
   const session = new Session(file);
 
   addToRecentProjects(file.get_path());
-  const { load } = Window({
-    application,
-    session,
-  });
-  load().catch(console.error);
+
+  session
+    .load()
+    .then(() => {
+      const window = Window({
+        application,
+        session,
+      });
+      return window.load();
+    })
+    .catch(console.error);
 });
 
 application.connect("startup", () => {
@@ -81,13 +87,18 @@ async function restoreSessions() {
   if (sessions.length < 1) {
     bootstrap().catch(console.error);
   } else {
-    sessions.forEach((session) => {
-      const { load } = Window({
-        application,
-        session,
-      });
-      load().catch(console.error);
-    });
+    for (const session of sessions) {
+      session
+        .load()
+        .then(() => {
+          const window = Window({
+            application,
+            session,
+          });
+          return window.load();
+        })
+        .catch(console.error);
+    }
   }
 }
 

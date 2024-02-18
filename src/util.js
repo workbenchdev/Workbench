@@ -114,9 +114,8 @@ export async function copyDirectory(source, destination) {
 
   for await (const file_info of enumerator) {
     if (file_info.get_is_hidden()) continue;
-    if (file_info.get_file_type() === Gio.FileType.DIRECTORY) continue;
-    const child = enumerator.get_child(file_info);
 
+    const child = enumerator.get_child(file_info);
     const child_dest = destination.get_child(child.get_basename());
 
     if (file_info.get_file_type() === Gio.FileType.DIRECTORY) {
