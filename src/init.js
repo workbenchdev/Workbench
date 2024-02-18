@@ -1,10 +1,11 @@
 import "gi://Gtk?version=4.0";
 import "gi://GtkSource?version=5";
 import "gi://Adw?version=1";
-import "gi://Vte?version=3.91";
+import Vte from "gi://Vte?version=3.91";
 import "gi://Soup?version=3.0";
 import "gi://WebKit?version=6.0";
 import "gi://Pango?version=1.0";
+import GObject from "gi://GObject";
 
 import Gtk from "gi://Gtk";
 import Gio from "gi://Gio";
@@ -12,6 +13,8 @@ import Adw from "gi://Adw";
 import Xdp from "gi://Xdp";
 import Source from "gi://GtkSource";
 import WebKit from "gi://WebKit";
+
+GObject.type_ensure(Vte.Terminal);
 
 Gio._promisify(Adw.AlertDialog.prototype, "choose", "choose_finish");
 Gio._promisify(Xdp.Portal.prototype, "trash_file", "trash_file_finish");

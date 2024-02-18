@@ -3,7 +3,6 @@ import GLib from "gi://GLib";
 import GObject from "gi://GObject";
 import Gio from "gi://Gio";
 import Adw from "gi://Adw";
-import Vte from "gi://Vte";
 
 import { buildRuntimePath, quitOnLastWindowClose } from "./util.js";
 import { languages } from "./common.js";
@@ -55,8 +54,6 @@ export default function Window({ application, session }) {
   );
 
   const { settings } = session;
-
-  Vte.Terminal.new();
 
   const builder = Gtk.Builder.new_from_resource(resource);
 
