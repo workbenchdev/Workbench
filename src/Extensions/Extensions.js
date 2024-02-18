@@ -1,5 +1,4 @@
 import Gio from "gi://Gio";
-import GLib from "gi://GLib";
 
 import { build } from "../../troll/src/main.js";
 
@@ -8,16 +7,6 @@ import illustration from "./extensions.svg";
 import { settings } from "../util.js";
 
 import "./Extension.js";
-
-const extensions = (() => {
-  const keyfile = new GLib.KeyFile();
-
-  keyfile.load_from_file("/.flatpak-info", GLib.KeyFileFlags.NONE);
-
-  return keyfile
-    .get_string_list("Instance", "runtime-extensions")
-    .map((extension) => extension.split("=")[0]);
-})();
 
 export const action_extensions = new Gio.SimpleAction({
   name: "extensions",
@@ -62,13 +51,17 @@ export default function Extensions({ application }) {
   application.add_action(action_extensions);
 }
 
+let rust_enabled;
 export function isRustEnabled() {
-  return (
-    extensions.includes("org.freedesktop.Sdk.Extension.rust-stable") &&
-    extensions.includes("org.freedesktop.Sdk.Extension.llvm16")
-  );
+  rust_enabled ??=
+    Gio.File.new_for_path("/usr/lib/sdk/rust-stable").query_exists(null) &&
+    Gio.File.new_for_path("/usr/lib/sdk/llvm16").query_exists(null);
+  return rust_enabled;
 }
 
+let vala_enabled;
 export function isValaEnabled() {
-  return extensions.includes("org.freedesktop.Sdk.Extension.vala");
+  vala_enabled ??=
+    Gio.File.new_for_path("/usr/lib/sdk/vala").query_exists(null);
+  return vala_enabled;
 }
