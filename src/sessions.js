@@ -18,18 +18,21 @@ import { createElement as xml } from "./langs/xml/xml.js";
 
 export const sessions_dir = data_dir.get_child("sessions");
 
-export function getSessions() {
+export async function getSessions() {
   const files = new Map();
 
   // Sessions
   ensureDir(sessions_dir);
-  for (const file_info of sessions_dir.enumerate_children(
-    "",
+  const enumerator = await sessions_dir.enumerate_children_async(
+    `${Gio.FILE_ATTRIBUTE_STANDARD_NAME},${Gio.FILE_ATTRIBUTE_STANDARD_IS_HIDDEN}`,
     Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
+    GLib.PRIORITY_DEFAULT,
     null,
-  )) {
+  );
+  for await (const file_info of enumerator) {
+    if (file_info.get_is_hidden()) continue;
     if (file_info.get_file_type() !== Gio.FileType.DIRECTORY) continue;
-    const file = sessions_dir.get_child(file_info.get_name());
+    const file = enumerator.get_child(file_info);
     files.set(file.get_path(), file);
   }
 
@@ -41,7 +44,7 @@ export function getSessions() {
       file.query_file_type(Gio.FileQueryInfoFlags.NONE, null) !==
       Gio.FileType.DIRECTORY
     ) {
-      removeFromRecentProjects();
+      removeFromRecentProjects(path);
       continue;
     }
     files.set(file.get_path(), file);
@@ -100,13 +103,17 @@ export async function saveSessionAsProject(session, destination) {
 
   await destination.make_directory_async(GLib.PRIORITY_DEFAULT, null);
 
-  for await (const file_info of session.file.enumerate_children(
-    "",
+  const enumerator = await session.file.enumerate_children_async(
+    `${Gio.FILE_ATTRIBUTE_STANDARD_NAME},${Gio.FILE_ATTRIBUTE_STANDARD_IS_HIDDEN}`,
     Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
+    GLib.PRIORITY_DEFAULT,
     null,
-  )) {
-    await session.file.get_child(file_info.get_name()).move_async(
-      destination.get_child(file_info.get_name()), // destination
+  );
+  for await (const file_info of enumerator) {
+    if (file_info.get_is_hidden()) continue;
+    const file = enumerator.get_child(file_info);
+    await file.move_async(
+      destination.get_child(file.get_basename()), // destination
       Gio.FileCopyFlags.BACKUP, // flags
       GLib.PRIORITY_DEFAULT, // priority
       null, // cancellable

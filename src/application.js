@@ -55,7 +55,7 @@ application.connect("startup", () => {
 
 application.connect("activate", () => {
   if (application.is_remote) {
-    bootstrap();
+    bootstrap().catch(console.error);
   }
 });
 
@@ -76,7 +76,7 @@ setColorScheme();
 settings.connect("changed::color-scheme", setColorScheme);
 
 async function restoreSessions() {
-  const sessions = getSessions();
+  const sessions = await getSessions();
 
   if (sessions.length < 1) {
     bootstrap().catch(console.error);
