@@ -3,8 +3,11 @@ import GLib from "gi://GLib";
 
 import { createLSPClient } from "../../common.js";
 import { getLanguage } from "../../util.js";
+import { isRustEnabled } from "../../Extensions/Extensions.js";
 
 export function setup({ document }) {
+  if (!isRustEnabled()) return;
+
   const { file, buffer, code_view } = document;
 
   const lspc = createLSPClient({
