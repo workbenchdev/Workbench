@@ -39,7 +39,23 @@ application.connect("open", (_self, files, hint) => {
   load().catch(console.error);
 });
 
+let proc_biome;
+
 application.connect("startup", () => {
+  // biome lsp-proxy starts a background server
+  // it does not get stopped and leaves a process hanging
+  // so manage it manually instead
+  // See https://github.com/workbenchdev/Workbench/issues/828
+  const subprocess_launcher = Gio.SubprocessLauncher.new(
+    Gio.SubprocessFlags.STDERR_SILENCE,
+  );
+  proc_biome = subprocess_launcher.spawnv([
+    "biome",
+    "__run_server",
+    "--config-path",
+    pkg.pkgdatadir,
+  ]);
+
   Library({
     application,
   });
@@ -51,6 +67,10 @@ application.connect("startup", () => {
   ShortcutsWindow({ application });
 
   restoreSessions().catch(console.error);
+});
+
+application.connect("shutdown", () => {
+  proc_biome?.force_exit();
 });
 
 application.connect("activate", () => {
