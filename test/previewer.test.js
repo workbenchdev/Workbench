@@ -1,4 +1,4 @@
-import "./init.js";
+import "../src/init.js";
 
 import WebKit from "gi://WebKit";
 import Source from "gi://GtkSource";

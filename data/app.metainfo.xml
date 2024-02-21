@@ -46,7 +46,7 @@
   </screenshots>
   <content_rating type="oars-1.1" />
   <releases>
-    <release version="46.0" date="2024-03-xx">
+    <release version="46beta" date="2024-02-21">
       <description translatable="no">
         <ul>
           <li>Use GNOME 46</li>
@@ -55,6 +55,7 @@
           <li>Stop adding a superfluous newlines to end of files</li>
           <li>Optimize opening Library entries</li>
           <li>Open project windows maximized</li>
+          <li>Fix dangling bwrap processes after quitting Workbench</li>
           <li>Update Biome to 1.5.3</li>
           <li>Update gst-plugin-gtk4 to 0.12.1</li>
           <li>Update libshumate to 1.2</li>
@@ -535,4 +536,12 @@
   <custom>
     <value key="GnomeSoftware::key-colors">[(51, 209, 122)]</value>
   </custom>
+  <requires>
+    <display_length compare="ge">medium</display_length>
+  </requires>
+  <recommends>
+    <control>keyboard</control>
+    <control>pointing</control>
+    <control>touch</control>
+  </recommends>
 </component>

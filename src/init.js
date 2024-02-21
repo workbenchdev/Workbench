@@ -1,3 +1,4 @@
+import "gi://GIRepository?version=2.0";
 import "gi://Gtk?version=4.0";
 import "gi://GtkSource?version=5";
 import "gi://Adw?version=1";
