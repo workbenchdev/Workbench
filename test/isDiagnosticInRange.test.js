@@ -1,4 +1,4 @@
-import "./init.js";
+import "../src/init.js";
 
 import tst, { assert } from "../troll/tst/tst.js";
 
