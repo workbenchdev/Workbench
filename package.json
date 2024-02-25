@@ -20,9 +20,7 @@
     "rollup-plugin-node-polyfills": "^0.2.1"
   },
   "type": "module",
-  "scripts": {
-    "prepare": "husky install"
-  },
+  "scripts": {},
   "lint-staged": {
     "*.{json,md,yaml,yml}": "prettier --write",
     "*.{js,cjs,mjs}": "eslint --fix",

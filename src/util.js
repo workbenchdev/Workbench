@@ -6,10 +6,18 @@ import { getLanguage } from "./common.js";
 
 export const portal = new Xdp.Portal();
 
-export const settings = new Gio.Settings({
-  schema_id: pkg.name,
-  path: "/re/sonny/Workbench/",
-});
+export let settings;
+
+try {
+  settings = new Gio.Settings({
+    schema_id: pkg.name,
+    path: "/re/sonny/Workbench/",
+  });
+} catch (error) {
+  console.error("An error occurred while creating Gio.Settings: ", error);
+  // Handle the error or set a default value to settings
+  settings = null;
+}
 
 export const data_dir = Gio.File.new_for_path(
   GLib.build_filenamev([GLib.get_user_data_dir(), pkg.name]),

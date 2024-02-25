@@ -4,10 +4,11 @@ import dbus_previewer from "../../Previewer/DBusPreviewer.js";
 import { decode, encode } from "../../util.js";
 import { installRustLibraries } from "./rust.js";
 
+const cacheDir = GLib.get_user_cache_dir();
+export const targetPath = `${cacheDir}/rust_build_cache`;
+
 export default function Compiler({ session }) {
   const { file } = session;
-  const cacheDir = GLib.get_user_cache_dir();
-  const targetPath = `${cacheDir}/rust_build_cache`;
   const rustcVersionFile = Gio.File.new_for_path(
     `${targetPath}/rustc_version.txt`,
   );
