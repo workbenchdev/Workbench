@@ -114,12 +114,19 @@ export async function copyDirectory(source, destination) {
 
   for await (const file_info of enumerator) {
     if (file_info.get_is_hidden()) continue;
-    if (file_info.get_file_type() === Gio.FileType.DIRECTORY) continue;
+
     const child = enumerator.get_child(file_info);
+    const child_dest = destination.get_child(child.get_basename());
+
+    if (file_info.get_file_type() === Gio.FileType.DIRECTORY) {
+      await child_dest.make_directory_async(GLib.PRIORITY_DEFAULT, null);
+      await copyDirectory(child, child_dest);
+      continue;
+    }
 
     try {
       await child.copy_async(
-        destination.get_child(child.get_basename()),
+        child_dest,
         Gio.FileCopyFlags.NONE,
         GLib.PRIORITY_DEFAULT,
         null,
