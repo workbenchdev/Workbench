@@ -2,3 +2,4 @@
 ignore = [
   "E402"  # Module level import not at top of file -> gi imports may come after gi.require_version.
 ]
+select = [ "W", "E", "F", "ARG"]
