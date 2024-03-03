@@ -1,5 +1,6 @@
 [lint]
 ignore = [
-  "E402"  # Module level import not at top of file -> gi imports may come after gi.require_version.
+  "E402",  # Module level import not at top of file -> gi imports may come after gi.require_version.
+  "E501",  # Line too long. This is probably better enforced manually where it makes sense.
 ]
 select = [ "W", "E", "F", "ARG"]

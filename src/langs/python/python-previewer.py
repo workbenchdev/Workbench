@@ -232,7 +232,7 @@ class Previewer:
         self.window = the_window
         self.window.connect("close-request", self.on_window_closed)
 
-    def on_window_closed(self, *args):
+    def on_window_closed(self, *_args):
         self.window_open(False)
         self.window = None
         return False
