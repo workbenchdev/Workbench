@@ -46,7 +46,7 @@
     "modules/python-pyflakes.json",
     "modules/python-python-lsp-server.json",
     "modules/python-ruff.json",
-    "modules/python-ruff-lsp.json",
+    "modules/python-python-lsp-ruff.json",
     {
       "name": "Workbench",
       "buildsystem": "meson",
