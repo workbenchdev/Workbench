@@ -34,7 +34,6 @@
     "*.a"
   ],
   "modules": [
-    "modules/python-black.json",
     "modules/blueprint-compiler.json",
     "modules/biome.json",
     "modules/gst-plugin-gtk4.json",
@@ -44,8 +43,9 @@
     "modules/libspelling.json",
     "modules/GTKCssLanguageServer.json",
     "modules/icon-development-kit.json",
-    "modules/python-pyflakes.json",
     "modules/python-python-lsp-server.json",
+    "modules/python-ruff.json",
+    "modules/python-python-lsp-ruff.json",
     {
       "name": "Workbench",
       "buildsystem": "meson",

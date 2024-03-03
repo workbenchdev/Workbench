@@ -1,0 +1,64 @@
+{
+  "name": "python3-python-lsp-ruff",
+  "buildsystem": "simple",
+  "build-commands": [
+    "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"python-lsp-ruff\""
+  ],
+  "sources": [
+    {
+      "type": "file",
+      "url": "https://files.pythonhosted.org/packages/e1/c7/247d04257d391251f32a7179cb74b418954022f1e9e276b5933e6ac1d3b1/python_lsp_ruff-2.2.0-py3-none-any.whl",
+      "sha256": "fe0487c7997b38a59862c44e19cb815e24bb1b2f7cef4f1f32c61cf623a5ce94"
+    },
+    {
+      "type": "file",
+      "url": "https://files.pythonhosted.org/packages/b3/0d/cd4a4071c7f38385dc5ba91286723b4d1090b87815db48216212c6c6c30e/cattrs-23.2.3-py3-none-any.whl",
+      "sha256": "0341994d94971052e9ee70662542699a3162ea1e0c62f7ce1b4a57f563685108"
+    },
+    {
+      "type": "file",
+      "url": "https://files.pythonhosted.org/packages/8d/37/2351e48cb3309673492d3a8c59d407b75fb6630e560eb27ecd4da03adc9a/lsprotocol-2023.0.1-py3-none-any.whl",
+      "sha256": "c75223c9e4af2f24272b14c6375787438279369236cd568f596d4951052a60f2"
+    },
+    {
+      "type": "file",
+      "url": "https://files.pythonhosted.org/packages/91/f7/3b9c3a588e46bbdc2671d8fd07ecee118a672db50d72656b5726fbeffbcd/python_lsp_server-1.10.0-py3-none-any.whl",
+      "sha256": "1a9f338bd7cf3cdde5ae85a2bd93fd5be9e55249f6482d88f99fb6227215424a"
+    },
+    {
+      "type": "file",
+      "url": "https://files.pythonhosted.org/packages/e0/44/827b2a91a5816512fcaf3cc4ebc465ccd5d598c45cefa6703fcf4a79018f/attrs-23.2.0-py3-none-any.whl",
+      "sha256": "99b87a485a5820b23b879f04c2305b44b951b502fd64be915879d77a7e8fc6f1"
+    },
+    {
+      "type": "file",
+      "url": "https://files.pythonhosted.org/packages/20/9f/bc63f0f0737ad7a60800bfd472a4836661adae21f9c2535f3957b1e54ceb/jedi-0.19.1-py2.py3-none-any.whl",
+      "sha256": "e983c654fe5c02867aef4cdfce5a2fbb4a50adc0af145f70504238f18ef5e7e0"
+    },
+    {
+      "type": "file",
+      "url": "https://files.pythonhosted.org/packages/a5/5b/0cc789b59e8cc1bf288b38111d002d8c5917123194d45b29dcdac64723cc/pluggy-1.4.0-py3-none-any.whl",
+      "sha256": "7db9f7b503d67d1c5b95f59773ebb58a8c1c288129a88665838012cfb07b8981"
+    },
+    {
+      "type": "file",
+      "url": "https://files.pythonhosted.org/packages/cb/d9/656659d5b5d5f402b2b174cd0ba9bc827e07ce3c0bf88da65424baf64af8/python_lsp_jsonrpc-1.1.2-py3-none-any.whl",
+      "sha256": "7339c2e9630ae98903fdaea1ace8c47fba0484983794d6aafd0bd8989be2b03c"
+    },
+    {
+      "type": "file",
+      "url": "https://files.pythonhosted.org/packages/6e/54/6f2bdac7117e89a47de4511c9f01732a283457ab1bf856e1e51aa861619e/ujson-5.9.0.tar.gz",
+      "sha256": "89cc92e73d5501b8a7f48575eeb14ad27156ad092c2e9fc7e3cf949f07e75532"
+    },
+    {
+      "type": "file",
+      "url": "https://files.pythonhosted.org/packages/c1/cf/4eee59f6c4111b3e80cc32cf6bac483a90646f5c8693e84496c9855e8e38/docstring_to_markdown-0.15-py3-none-any.whl",
+      "sha256": "27afb3faedba81e34c33521c32bbd258d7fbb79eedf7d29bc4e81080e854aec0"
+    },
+    {
+      "type": "file",
+      "url": "https://files.pythonhosted.org/packages/05/63/8011bd08a4111858f79d2b09aad86638490d62fbf881c44e434a6dfca87b/parso-0.8.3-py2.py3-none-any.whl",
+      "sha256": "c001d4636cd3aecdaf33cbb40aebb59b094be2a74c556778ef5576c175e19e75"
+    }
+  ]
+}

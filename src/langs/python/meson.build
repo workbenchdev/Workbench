@@ -3,6 +3,7 @@ bin_conf.set('pkgdatadir', pkgdatadir)
 
 install_data('gdbus_ext.py', install_dir: pkgdatadir)
 install_data('python-previewer.py', install_dir: pkgdatadir)
+install_data('ruff.toml', install_dir: pkgdatadir)
 
 configure_file(
   input: 'workbench-python-previewer',
