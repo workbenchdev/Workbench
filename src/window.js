@@ -37,6 +37,7 @@ import {
   action_extensions,
   isRustEnabled,
   isValaEnabled,
+  Extensions
 } from "./Extensions/Extensions.js";
 import { JavaScriptDocument } from "./langs/javascript/JavaScriptDocument.js";
 import { BlueprintDocument } from "./langs/blueprint/BlueprintDocument.js";
@@ -63,6 +64,11 @@ export default function Window({ application, session }) {
   }
   window.application = application;
   window.title = `Workbench — ${session.name}`;
+
+  Extensions({
+    window,
+  });
+
 
   // Popover menu theme switcher
   const button_menu = builder.get_object("button_menu");

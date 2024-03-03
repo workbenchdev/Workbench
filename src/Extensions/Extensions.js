@@ -4,7 +4,6 @@ import { build } from "../../troll/src/main.js";
 
 import Interface from "./Extensions.blp" with { type: "uri" };
 import illustration from "./extensions.svg";
-import { settings } from "../util.js";
 
 import "./Extension.js";
 
@@ -13,9 +12,9 @@ export const action_extensions = new Gio.SimpleAction({
   parameter_type: null,
 });
 
-export default function Extensions({ application }) {
+export function Extensions({ window }) {
   const {
-    window,
+    dialog,
     picture_illustration,
     extension_rust,
     extension_vala,
@@ -36,22 +35,13 @@ export default function Extensions({ application }) {
   }
 
   action_extensions.connect("activate", () => {
-    settings.set_boolean("open-extensions", true);
-    window.present();
+    dialog.present(window);
   });
 
-  window.connect("close-request", () => {
-    settings.set_boolean("open-extensions", false);
-  });
-
-  if (settings.get_boolean("open-extensions")) {
-    window.present();
-  }
-
-  application.add_action(action_extensions);
+  window.add_action(action_extensions);
 }
 
-let rust_enabled;
+let rust_enabled = false;
 export function isRustEnabled() {
   rust_enabled ??=
     Gio.File.new_for_path("/usr/lib/sdk/rust-stable").query_exists(null) &&
@@ -59,7 +49,7 @@ export function isRustEnabled() {
   return rust_enabled;
 }
 
-let vala_enabled;
+let vala_enabled = false;
 export function isValaEnabled() {
   vala_enabled ??=
     Gio.File.new_for_path("/usr/lib/sdk/vala").query_exists(null);

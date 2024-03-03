@@ -12,9 +12,6 @@
     <key name="recent-code-language" type="i">
       <default>0</default>
     </key>
-    <key name="open-extensions" type="b">
-      <default>false</default>
-    </key>
     <key name="recent-projects" type="as">
       <default>[]</default>
     </key>

@@ -1,22 +1,22 @@
 using Gtk 4.0;
 using Adw 1;
 
-Adw.Window window {
-  hide-on-close: true;
-  modal: false;
-  default-height: 750;
-  default-width: 600;
-  title: _("Workbench — Extensions");
+Adw.Dialog dialog {
+  // hide-on-close: true;
+  // modal: false;
+  content-height: 750;
+  content-width: 600;
+  can-close: true;
+  title: _("Extensions");
 
   Adw.ToolbarView {
     [top]
     Adw.HeaderBar {
-      show-title: false;
+      // show-title: false;
     }
 
     content: ScrolledWindow {
       hscrollbar-policy: never;
-
       Adw.Clamp {
         maximum-size: 600;
         tightening-threshold: 400;
@@ -36,15 +36,6 @@ Adw.Window window {
               can-shrink: false;
               margin-bottom: 30;
             }
-          }
-
-          Label {
-            label: _("Extensions");
-            margin-bottom: 36;
-
-            styles [
-              "title-1"
-            ]
           }
 
           ListBox {
