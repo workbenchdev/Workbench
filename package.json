@@ -27,7 +27,7 @@
     "*.{json,md,yaml,yml}": "prettier --write",
     "*.{js,cjs,mjs}": "eslint --fix",
     "*.css": "./build-aux/fun workbench-cli format css",
-    "*.py": "./build-aux/fun ruff --config=src/langs/python/ruff.toml format",
+    "*.py": "./build-aux/fun ruff format --config=src/langs/python/ruff.toml",
     "*.rs": "./build-aux/fun rustfmt --edition 2021",
     "*.blp": "./build-aux/fun workbench-cli format blueprint",
     "*.vala": "./build-aux/fun workbench-cli format vala"
