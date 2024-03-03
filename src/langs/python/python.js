@@ -15,13 +15,12 @@ const LSP_CONFIG = {
   },
 };
 
-export async function setup({ document }) {
+export function setup({ document }) {
   const { file, buffer, code_view } = document;
 
   const lspc = createLSPClient({
     lang: getLanguage("python"),
     root_uri: file.get_parent().get_uri(),
-    quiet: true,
   });
 
   lspc.request("workspace/didChangeConfiguration", {

@@ -1,37 +1,34 @@
-import Gio from "gi://Gio";
+import { setup } from "./python.js";
 
 import Document from "../../Document.js";
-import { setup } from "./python.js";
+import { applyTextEdits } from "../../lsp/sourceview.js";
 
 export class PythonDocument extends Document {
   constructor(...args) {
     super(...args);
 
-    /// XXX: We should await setup, but we can't in a Constructor. This would require bigger refactoring.
     this.lspc = setup({ document: this });
   }
 
   async format() {
-    const code = await formatPythonCode(this.buffer.text);
-    this.code_view.replaceText(code, true);
+    // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_formatting
+    const text_edits = await this.lspc.request("textDocument/formatting", {
+      textDocument: {
+        uri: this.file.get_uri(),
+      },
+      options: {
+        tabSize: 4,
+        insertSpaces: true,
+        trimTrailingWhitespace: true,
+        insertFinalNewline: true,
+        trimFinalNewlines: true,
+      },
+    });
+
+    // lsp Ruff doesn't support diff - it just returns one edit
+    // we don't want to loose the cursor position so we use this
+    const state = this.code_view.saveState();
+    applyTextEdits(text_edits, this.buffer);
+    await this.code_view.restoreState(state);
   }
-}
-
-function formatPythonCode(text) {
-  const ruffLauncher = Gio.SubprocessLauncher.new(
-    Gio.SubprocessFlags.STDIN_PIPE |
-      Gio.SubprocessFlags.STDOUT_PIPE |
-      Gio.SubprocessFlags.STDERR_PIPE,
-  );
-
-  const ruffProcess = ruffLauncher.spawnv(["ruff", "format", "--quiet", "-"]);
-
-  const [success, stdout, stderr] = ruffProcess.communicate_utf8(text, null);
-
-  if (!success || stderr !== "") {
-    console.error(`Error running ruff format: ${stderr}`);
-    return text;
-  }
-
-  return stdout;
 }
