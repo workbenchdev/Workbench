@@ -4,6 +4,7 @@ This is the previewer for Python demos. It connects via DBus back to
 Workbench and loads demos, providing them with a "workbench" module for
 the Workbench API.
 """
+
 from __future__ import annotations
 
 import importlib.util
@@ -199,8 +200,7 @@ class Previewer:
         Gtk.Window.set_interactive_debugging(enabled)
 
     @DBusTemplate.Signal()
-    def window_open(self, open: bool):
-        ...
+    def window_open(self, open: bool): ...
 
     @DBusTemplate.Signal()
     def css_parser_error(
@@ -210,8 +210,7 @@ class Previewer:
         start_char: int,
         end_line: int,
         end_char: int,
-    ):
-        ...
+    ): ...
 
     @DBusTemplate.Property()
     def color_scheme(self) -> int:
