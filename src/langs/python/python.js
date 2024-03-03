@@ -7,7 +7,7 @@ export function setup({ document }) {
   const lspc = createLSPClient({
     lang: getLanguage("python"),
     root_uri: file.get_parent().get_uri(),
-    quiet: false,
+    quiet: true,
   });
   lspc.buffer = buffer;
   lspc.uri = file.get_uri();
