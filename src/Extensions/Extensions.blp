@@ -2,18 +2,13 @@ using Gtk 4.0;
 using Adw 1;
 
 Adw.Dialog dialog {
-  // hide-on-close: true;
-  // modal: false;
   content-height: 750;
   content-width: 600;
-  can-close: true;
   title: _("Extensions");
 
   Adw.ToolbarView {
     [top]
-    Adw.HeaderBar {
-      // show-title: false;
-    }
+    Adw.HeaderBar {}
 
     content: ScrolledWindow {
       hscrollbar-policy: never;

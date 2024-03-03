@@ -41,7 +41,7 @@ export function Extensions({ window }) {
   window.add_action(action_extensions);
 }
 
-let rust_enabled = false;
+let rust_enabled;
 export function isRustEnabled() {
   rust_enabled ??=
     Gio.File.new_for_path("/usr/lib/sdk/rust-stable").query_exists(null) &&
@@ -49,7 +49,7 @@ export function isRustEnabled() {
   return rust_enabled;
 }
 
-let vala_enabled = false;
+let vala_enabled;
 export function isValaEnabled() {
   vala_enabled ??=
     Gio.File.new_for_path("/usr/lib/sdk/vala").query_exists(null);
