@@ -7,7 +7,7 @@ export class PythonDocument extends Document {
   constructor(...args) {
     super(...args);
 
-    this.lspc = setup({ document: this });
+    this.lspcs = setup({ document: this });
   }
 
   async format() {
@@ -17,18 +17,18 @@ export class PythonDocument extends Document {
 }
 
 function formatPythonCode(text) {
-  const blackLauncher = Gio.SubprocessLauncher.new(
+  const ruffLauncher = Gio.SubprocessLauncher.new(
     Gio.SubprocessFlags.STDIN_PIPE |
       Gio.SubprocessFlags.STDOUT_PIPE |
       Gio.SubprocessFlags.STDERR_PIPE,
   );
 
-  const blackProcess = blackLauncher.spawnv(["black", "--quiet", "-"]);
+  const ruffProcess = ruffLauncher.spawnv(["ruff", "format", "--quiet", "-"]);
 
-  const [success, stdout, stderr] = blackProcess.communicate_utf8(text, null);
+  const [success, stdout, stderr] = ruffProcess.communicate_utf8(text, null);
 
   if (!success || stderr !== "") {
-    console.error(`Error running black: ${stderr}`);
+    console.error(`Error running ruff format: ${stderr}`);
     return text;
   }
 

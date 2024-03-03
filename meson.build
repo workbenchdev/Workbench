@@ -7,7 +7,7 @@ project('Workbench', ['vala', 'c', 'rust'],
 gnome = import('gnome')
 
 if get_option('profile') == 'development'
-	app_id = 're.sonny.Workbench.Devel'
+  app_id = 're.sonny.Workbench.Devel'
   vcs_tag = run_command('git', 'rev-parse', '--short', 'HEAD').stdout().strip()
   if vcs_tag == ''
     version_suffix = '-devel'
@@ -26,6 +26,9 @@ pkgdatadir = join_paths(datadir, app_id)
 
 subdir('data')
 subdir('src')
+
+# Needed for the Ruff Python LSP
+install_data('ruff.toml', install_dir: pkgdatadir)
 
 gnome.post_install(
   glib_compile_schemas: true,
