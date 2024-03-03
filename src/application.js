@@ -6,7 +6,6 @@ import Actions from "./actions.js";
 import { settings, data_dir, ensureDir } from "./util.js";
 import { overrides } from "./overrides.js";
 import Library, { getDemo } from "./Library/Library.js";
-import Extensions from "./Extensions/Extensions.js";
 import {
   Session,
   addToRecentProjects,
@@ -57,10 +56,6 @@ application.connect("startup", () => {
   ]);
 
   Library({
-    application,
-  });
-
-  Extensions({
     application,
   });
 
