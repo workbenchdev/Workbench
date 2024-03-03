@@ -12,6 +12,9 @@ import { createLSPClient, languages, getLanguage } from "../common.js";
 import lint, { waitForDiagnostics } from "./lint.js";
 import format, { formatting } from "./format.js";
 
+import { setupRustProject, installRustLibraries } from "../langs/rust/rust.js";
+import { targetPath } from "../langs/rust/Compiler.js";
+
 Gtk.init();
 
 export async function main([action, ...args]) {
@@ -399,51 +402,23 @@ async function ci({ filenames, current_dir }) {
 
     const file_rust = demo_dir.get_child("code.rs");
     if (file_rust.query_exists(null)) {
-      print(`  ${file_rust.get_path()}`);
+      await setupRustProject(demo_dir);
+      await installRustLibraries(demo_dir);
+      const cargo_launcher = new Gio.SubprocessLauncher();
+      cargo_launcher.set_cwd(demo_dir.get_path());
+      const cargo = cargo_launcher.spawnv([
+        "cargo",
+        "clippy",
+        "--locked",
+        "--verbose",
+        "--target-dir",
+        targetPath,
+      ]);
+      await cargo.wait_async(null);
 
-      const uri = file_rust.get_uri();
-      const languageId = "rust";
-      let version = 0;
-
-      const [contents] = await file_rust.load_contents_async(null);
-      const text = new TextDecoder().decode(contents);
-
-      await lsp_clients.rust._notify("textDocument/didOpen", {
-        textDocument: {
-          uri,
-          languageId,
-          version: version++,
-          text,
-        },
-      });
-
-      // FIXME: rust analyzer doesn't publish diagnostics if there are none
-      // probably we should switch to pulling diagnostics but unknown if supported
-      // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.18/specification/#textDocument_pullDiagnostics
-
-      // const diagnostics = await waitForDiagnostics({
-      //   uri,
-      //   lspc: lsp_clients.rust,
-      // });
-      // if (diagnostics.length > 0) {
-      //   printerr(serializeDiagnostics({ diagnostics }));
-      //   return false;
-      // }
-      // print(`  ✅ lints`);
-
-      const checks = await checkFile({
-        lspc: lsp_clients.rust,
-        file: file_rust,
-        lang: getLanguage("rust"),
-        uri,
-      });
+      const checks = cargo.get_successful();
+      cargo_launcher.close();
       if (!checks) return false;
-
-      await lsp_clients.rust._notify("textDocument/didClose", {
-        textDocument: {
-          uri,
-        },
-      });
     }
 
     await Promise.all(
