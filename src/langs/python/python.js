@@ -1,7 +1,21 @@
 import { createLSPClient } from "../../common.js";
 import { getLanguage } from "../../util.js";
 
-export function setup({ document }) {
+const LSP_CONFIG = {
+  pylsp: {
+    configurationSources: ["ruff"],
+    plugins: {
+      ruff: {
+        enabled: true,
+        formatEnabled: true,
+        executable: `${pkg.prefix}/bin/ruff`,
+        config: `${pkg.pkgdatadir}/ruff.toml`,
+      },
+    },
+  },
+};
+
+export async function setup({ document }) {
   const { file, buffer, code_view } = document;
 
   const lspc = createLSPClient({
@@ -9,6 +23,11 @@ export function setup({ document }) {
     root_uri: file.get_parent().get_uri(),
     quiet: true,
   });
+
+  lspc.request("workspace/didChangeConfiguration", {
+    settings: LSP_CONFIG,
+  });
+
   lspc.buffer = buffer;
   lspc.uri = file.get_uri();
   lspc.connect(

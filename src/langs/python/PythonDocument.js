@@ -7,7 +7,8 @@ export class PythonDocument extends Document {
   constructor(...args) {
     super(...args);
 
-    this.lspcs = setup({ document: this });
+    /// XXX: We should await setup, but we can't in a Constructor. This would require bigger refactoring.
+    this.lspc = setup({ document: this });
   }
 
   async format() {

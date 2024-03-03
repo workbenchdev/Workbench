@@ -109,22 +109,7 @@ export const languages = [
     document: null,
     default_file: "main.py",
     index: 3,
-    language_server: {
-      argv: ["pylsp", "-v"],
-      initialNotifyDidChangeConfiguration: {
-        pylsp: {
-          configurationSources: ["ruff"],
-          plugins: {
-            ruff: {
-              enabled: true,
-              formatEnabled: true,
-              executable: `${pkg.prefix}/bin/ruff`,
-              config: `${pkg.pkgdatadir}/ruff.toml`,
-            },
-          },
-        },
-      },
-    },
+    language_server: ["pylsp", "-v"],
     formatting_options: {
       ...formatting_options,
       tabSize: 4,
@@ -141,25 +126,10 @@ export function getLanguage(id) {
 export function createLSPClient({ lang, root_uri, quiet = true }) {
   const language_id = lang.id;
 
-  // language_server is either an array (then it's just argv) or an object with more info.
-  let argv;
-  let initializationOptions = undefined;
-  let initialNotifyDidChangeConfiguration = undefined;
-
-  if (Array.isArray(lang.language_server)) {
-    argv = lang.language_server;
-  } else {
-    argv = lang.language_server.argv;
-    initializationOptions = lang.language_server.initializationOptions;
-    initialNotifyDidChangeConfiguration =
-      lang.language_server.initialNotifyDidChangeConfiguration;
-  }
-
-  const lspc = new LSPClient(argv, {
+  const lspc = new LSPClient(lang.language_server, {
     rootUri: root_uri,
     languageId: language_id,
     quiet,
-    initializationOptions,
   });
   lspc.connect("exit", () => {
     console.debug(`${language_id} language server exit`);
@@ -174,12 +144,6 @@ export function createLSPClient({ lang, root_uri, quiet = true }) {
       `${language_id} language server IN:\n${JSON.stringify(message)}`,
     );
   });
-  if (initialNotifyDidChangeConfiguration !== undefined) {
-    /// XXX: We should await this, but this requires bigger refactoring.
-    lspc.request("workspace/didChangeConfiguration", {
-      settings: initialNotifyDidChangeConfiguration,
-    });
-  }
 
   return lspc;
 }

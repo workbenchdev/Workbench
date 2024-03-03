@@ -22,15 +22,7 @@ const clientInfo = {
 export default class LSPClient {
   constructor(
     argv,
-    {
-      rootUri,
-      uri,
-      languageId,
-      buffer,
-      env = {},
-      quiet = true,
-      initializationOptions = undefined,
-    },
+    { rootUri, uri, languageId, buffer, env = {}, quiet = true },
   ) {
     this.ready = false;
     this.started = false;
@@ -44,7 +36,6 @@ export default class LSPClient {
     this.buffer = buffer;
     this.env = env;
     this.quiet = quiet;
-    this.initializationOptions = initializationOptions;
 
     // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#clientCapabilities
     this.capabilities = {
@@ -84,7 +75,6 @@ export default class LSPClient {
       capabilities,
       rootUri,
       locale: "en",
-      initializationOptions: this.initializationOptions,
     });
 
     // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#initialized

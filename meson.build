@@ -27,9 +27,6 @@ pkgdatadir = join_paths(datadir, app_id)
 subdir('data')
 subdir('src')
 
-# Needed for the Ruff Python LSP
-install_data('ruff.toml', install_dir: pkgdatadir)
-
 gnome.post_install(
   glib_compile_schemas: true,
   gtk_update_icon_cache: true,
