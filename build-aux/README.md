@@ -14,24 +14,28 @@ cd gst-plugin-gtk4-0.11.1/
 # cp generated-sources.json to gst-plugin-gtk4-sources.json
 ```
 
-### Python Black Dependency
+### Python Modules
 
-`modules/python-black.json` contains the Flatpak modules to install [https://github.com/psf/black](black), the
-uncompromising Python code formatter.
+The `modules/python-*.json` files contain Flatpak modules to install Python dependencies.
 
-This file is partially auto-generated. Here is how to generate it:
+These files are (sometimes partially, see below) auto-generated. Here is how to generate it:
 
 1. Obtain an up-to-date copy of [flatpak-builder-tools](https://github.com/flatpak/flatpak-builder-tools).
 2. Make sure you have a Python virtualenv activated with the dependencies for the `pip` generator from the repo above.
-3. Run `python3 <...>/flatpak-builder-tools/pip/flatpak-pip-generator black -o modules/python-black --build-isolation`
+3. Run `python3 <...>/flatpak-builder-tools/pip/flatpak-pip-generator <package> -o modules/python-<package> --build-isolation`
 
-You will notice that Workbench will now not build. This is due to these issues:
+You will notice that Workbench will not build after auto-generating these files as described above.
+This is due to these issues:
 
 - https://github.com/flatpak/flatpak-builder-tools/issues/380
 - https://github.com/pypa/pip/issues/7863
 
 This means that the generated JSON file now needs its build dependencies manually added. Check the build dependencies
-of black and their dependencies and add them to the JSON as well. Brute-forcing the build to obtain missing packages
+of the package and their dependencies and add them to the JSON as well. Brute-forcing the build to obtain missing packages
 may help as does referencing old commits of the file. You can also use the generator command to generate dependencies
 for them and then merge it into the file by hand, but note that you will also need to manually collect their build
 dependencies too.
+
+In some cases you may also need to manually remove some packages the generator adds (such as `packaging` with `rope`,
+as the SDK and Runtime already contain a version of these packages that can not be replaced. Make sure the package
+you want to install is actually compatible with the version of that dependency in the SDK/Runtime.
