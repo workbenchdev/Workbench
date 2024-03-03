@@ -1,0 +1,24 @@
+{
+  "name": "python3-rope",
+  "buildsystem": "simple",
+  "build-commands": [
+    "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"rope\""
+  ],
+  "sources": [
+    {
+      "type": "file",
+      "url": "https://files.pythonhosted.org/packages/55/72/4898c44ee9ea6f43396fbc23d9bfaf3d06e01b83698bdf2e4c919deceb7c/platformdirs-4.2.0-py3-none-any.whl",
+      "sha256": "0614df2a2f37e1a662acbd8e2b25b92ccf8632929bc6d43467e17fe89c75e068"
+    },
+    {
+      "type": "file",
+      "url": "https://files.pythonhosted.org/packages/19/4f/e0b94fe3bd8d8b5ba63153465f7930a40d4645b2d161a1a67c7c6612d6cf/pytoolconfig-1.2.6-py3-none-any.whl",
+      "sha256": "e8b2e538f11dbabc4617884d45401e0105e2d7db920cb8ae6baa94d66126a8e3"
+    },
+    {
+      "type": "file",
+      "url": "https://files.pythonhosted.org/packages/da/d8/67eab7817826f23a26d2a1442d623c7ce4219e439e3dc7e25fc0bb25d2cb/rope-1.12.0-py3-none-any.whl",
+      "sha256": "01f06624159e6b2ec9b94412d519e8877a19eeabe392f469c36f7236df05d443"
+    }
+  ]
+}
