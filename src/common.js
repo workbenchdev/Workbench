@@ -109,6 +109,11 @@ export const languages = [
     document: null,
     default_file: "main.py",
     index: 3,
+    language_server: ["pylsp", "-v"],
+    formatting_options: {
+      ...formatting_options,
+      tabSize: 4,
+    },
   },
 ];
 

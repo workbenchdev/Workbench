@@ -1,0 +1,14 @@
+{
+  "name": "python3-pyflakes",
+  "buildsystem": "simple",
+  "build-commands": [
+    "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"pyflakes\""
+  ],
+  "sources": [
+    {
+      "type": "file",
+      "url": "https://files.pythonhosted.org/packages/d4/d7/f1b7db88d8e4417c5d47adad627a93547f44bdc9028372dbd2313f34a855/pyflakes-3.2.0-py2.py3-none-any.whl",
+      "sha256": "84b5be138a2dfbb40689ca07e2152deb896a65c3a3e24c251c5c62489568074a"
+    }
+  ]
+}
