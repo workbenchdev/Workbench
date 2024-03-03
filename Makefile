@@ -23,7 +23,8 @@ lint:
 # Rust
 	./build-aux/fun rustfmt --check --edition 2021 src/**/*.rs
 # Python
-	./build-aux/fun black --check src/**/*.py
+	./build-aux/fun ruff check --config=src/langs/python/ruff.toml src/**/*.py
+	./build-aux/fun ruff format --config=src/langs/python/ruff.toml --check src/**/*.py
 # Blueprint
 	./build-aux/fun blueprint-compiler format src/**/*.blp
 	./build-aux/fun workbench-cli check blueprint src/**/*.blp

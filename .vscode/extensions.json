@@ -9,6 +9,6 @@
     "prince781.vala",
     "bodil.blueprint-gtk",
     "dbaeumer.vscode-eslint",
-    "ms-python.black-formatter"
+    "charliermarsh.ruff"
   ]
 }

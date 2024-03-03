@@ -1,14 +1,32 @@
 import { createLSPClient } from "../../common.js";
 import { getLanguage } from "../../util.js";
 
+const LSP_CONFIG = {
+  pylsp: {
+    configurationSources: ["ruff"],
+    plugins: {
+      ruff: {
+        enabled: true,
+        formatEnabled: true,
+        executable: `${pkg.prefix}/bin/ruff`,
+        config: `${pkg.pkgdatadir}/ruff.toml`,
+      },
+    },
+  },
+};
+
 export function setup({ document }) {
   const { file, buffer, code_view } = document;
 
   const lspc = createLSPClient({
     lang: getLanguage("python"),
     root_uri: file.get_parent().get_uri(),
-    quiet: false,
   });
+
+  lspc.request("workspace/didChangeConfiguration", {
+    settings: LSP_CONFIG,
+  });
+
   lspc.buffer = buffer;
   lspc.uri = file.get_uri();
   lspc.connect(

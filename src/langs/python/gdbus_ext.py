@@ -21,6 +21,7 @@ The API is inspired by `Gtk.Template` and `GObject.Object`'s properties.
 
 The module exports a single class `DBusTemplate`, more information can be found in the docstring of that type.
 """
+
 from __future__ import annotations
 
 import os
