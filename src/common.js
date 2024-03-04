@@ -147,3 +147,17 @@ export function createLSPClient({ lang, root_uri, quiet = true }) {
 
   return lspc;
 }
+
+export const PYTHON_LSP_CONFIG = {
+  pylsp: {
+    configurationSources: ["ruff"],
+    plugins: {
+      ruff: {
+        enabled: true,
+        formatEnabled: true,
+        executable: `${pkg.prefix}/bin/ruff`,
+        config: `${pkg.pkgdatadir}/ruff.toml`,
+      },
+    },
+  },
+};
