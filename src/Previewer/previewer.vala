@@ -118,7 +118,7 @@ namespace Workbench {
                 var end = section.get_end_location ();
                 this.css_parser_error (error.message, (int) start.lines, (int) start.line_chars, (int) end.lines, (int) end.line_chars);
             });
-            this.css.load_from_data (content.data);
+            this.css.load_from_string (content);
             Gtk.StyleContext.add_provider_for_display (
                                                        Gdk.Display.get_default (),
                                                        this.css,

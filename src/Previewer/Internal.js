@@ -219,7 +219,7 @@ export default function Internal({
     }
 
     css_provider = new Gtk.CssProvider();
-    css_provider.load_from_data(style, -1);
+    css_provider.load_from_string(style);
     Gtk.StyleContext.add_provider_for_display(
       output.get_display(),
       css_provider,
