@@ -8,7 +8,12 @@ import Gio from "gi://Gio";
 import Gtk from "gi://Gtk";
 import Adw from "gi://Adw";
 
-import { createLSPClient, languages, getLanguage } from "../common.js";
+import {
+  createLSPClient,
+  languages,
+  getLanguage,
+  PYTHON_LSP_CONFIG,
+} from "../common.js";
 import lint, { waitForDiagnostics } from "./lint.js";
 import format, { formatting } from "./format.js";
 
@@ -51,6 +56,12 @@ export async function main([action, ...args]) {
   lspc._start_process();
   await lspc._initialize();
 
+  if (lang.id === "python") {
+    await lspc._request("workspace/didChangeConfiguration", {
+      settings: PYTHON_LSP_CONFIG,
+    });
+  }
+
   let success = false;
 
   if (action === "lint") {
@@ -78,7 +89,7 @@ const window = new Adw.ApplicationWindow();
 
 function createLSPClients({ root_uri }) {
   return Object.fromEntries(
-    ["javascript", "blueprint", "css", "vala", "rust"].map((id) => {
+    ["javascript", "blueprint", "css", "vala", "rust", "python"].map((id) => {
       const lang = languages.find((language) => language.id === id);
       const lspc = createLSPClient({
         lang,
@@ -391,6 +402,57 @@ async function ci({ filenames, current_dir }) {
       if (!checks) return false;
 
       await lsp_clients.vala._notify("textDocument/didClose", {
+        textDocument: {
+          uri,
+        },
+      });
+    }
+
+    const file_python = demo_dir.get_child("main.py");
+    if (file_python.query_exists(null)) {
+      print(`  ${file_python.get_path()}`);
+
+      const uri = file_python.get_uri();
+      const languageId = "python";
+      let version = 0;
+
+      const [contents] = await file_python.load_contents_async(null);
+      const text = new TextDecoder().decode(contents);
+
+      await lsp_clients.python._request("workspace/didChangeConfiguration", {
+        settings: PYTHON_LSP_CONFIG,
+      });
+
+      await lsp_clients.python._notify("textDocument/didOpen", {
+        textDocument: {
+          uri,
+          languageId,
+          version: version++,
+          text,
+        },
+      });
+
+      const diagnostics = await waitForDiagnostics({
+        uri,
+        lspc: lsp_clients.python,
+      });
+      console.log(diagnostics.length);
+
+      if (diagnostics.length > 0) {
+        printerr(serializeDiagnostics({ diagnostics }));
+        return false;
+      }
+      print(`  ✅ lints`);
+
+      const checks = await checkFile({
+        lspc: lsp_clients.python,
+        file: file_python,
+        lang: getLanguage("python"),
+        uri,
+      });
+      if (!checks) return false;
+
+      await lsp_clients.python._notify("textDocument/didClose", {
         textDocument: {
           uri,
         },

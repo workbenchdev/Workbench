@@ -137,7 +137,7 @@ class Previewer:
             )
         self.css = Gtk.CssProvider()
         self.css.connect("parsing-error", self.on_css_parsing_error)
-        self.css.load_from_data(content, len(content))
+        self.css.load_from_string(content)
         Gtk.StyleContext.add_provider_for_display(
             Gdk.Display.get_default(), self.css, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
         )
