@@ -83,6 +83,7 @@ ${getBlueprintVersion()}
     "Gregor Niehl https://fosstodon.org/@gregorni",
     "Bart Gravendeel https://monster.codeberg.page",
     "Bharat Tyagi https://github.com/BharatAtbrat",
+    "Jan Fooken https://git.janvhs.com",
     // Add yourself as
     // "John Doe",
     // or
