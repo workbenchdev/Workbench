@@ -374,7 +374,6 @@ async function ci({ filenames, current_dir }) {
         uri,
         lspc: lsp_clients.vala,
       });
-
       // FIXME: deprecated features, no replacement?
       if (demo_dir.get_basename() === "Text Fields") {
         const ignore_for_text_fields = [
@@ -436,8 +435,6 @@ async function ci({ filenames, current_dir }) {
         uri,
         lspc: lsp_clients.python,
       });
-      console.log(diagnostics.length);
-
       if (diagnostics.length > 0) {
         printerr(serializeDiagnostics({ diagnostics }));
         return false;
