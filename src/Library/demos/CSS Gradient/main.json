@@ -1,0 +1,6 @@
+{
+  "category": "controls",
+  "description": "Add an animated CSS gradient to spice up your widgets",
+  "panels": ["ui", "preview"],
+  "autorun": true
+}

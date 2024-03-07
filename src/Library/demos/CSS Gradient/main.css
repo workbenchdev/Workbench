@@ -1,0 +1,17 @@
+/* A static gradient background for the outer box */
+.psychedelic-bg {
+	background: linear-gradient(15deg, #001430, #242424, #140000);
+	background-size: 100% 100%;
+}
+/* The top window borders are normally removed if psychedelic-bg is used on the whole window */
+.psychedelic-bg headerbar {
+  border: none;
+  box-shadow: none;
+}
+
+/* A rainbow sliding gradient for the pill widget itself */
+.psychedelic-pill{
+	background: linear-gradient(-45deg, #ed7650, #e5307f, #24a4d2, #24d8af);
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+}
