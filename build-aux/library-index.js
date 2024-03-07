@@ -17,7 +17,7 @@ Gio._promisify(
 
 const demos_dir = Gio.File.new_for_path(
   GLib.getenv("MESON_SOURCE_ROOT"),
-).get_child("demos/demos");
+).get_child("demos/src");
 const demos = [];
 
 const enumerator = await demos_dir.enumerate_children_async(

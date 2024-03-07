@@ -8,5 +8,5 @@ It exposes the formatter and linter used in Workbench for the different language
 
 ```sh
 make cli
-./build-aux/fun workbench-cli ci demos/demos/*
+./build-aux/fun workbench-cli ci demos/src/*
 ```

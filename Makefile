@@ -50,10 +50,10 @@ unit:
 # flatpak run --env=G_DEBUG=fatal-criticals --command=appstream-util org.flatpak.Builder validate data/app.metainfo.xml
 
 test: unit lint
-	./build-aux/fun workbench-cli ci demos/demos/Welcome
+	./build-aux/fun workbench-cli ci demos/src/Welcome
 
 ci: setup test
-	./build-aux/fun workbench-cli ci demos/demos/*
+	./build-aux/fun workbench-cli ci demos/src/*
 
 # Note that if you have Sdk extensions installed they will be used
 # make sure to test without the sdk extensions installed
