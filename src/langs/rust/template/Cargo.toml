@@ -30,13 +30,13 @@ package = "libadwaita"
 features = ["v1_5"]
 
 [dependencies.ashpd]
-version = "0.7.0"
+version = "0.8.0"
 features = ["gtk4"]
 
 [dependencies.shumate]
 version = "0.5.0"
 package = "libshumate"
-features = ["v1_1"]
+features = ["v1_2"]
 
 [lib]
 crate-type = ["cdylib"]
