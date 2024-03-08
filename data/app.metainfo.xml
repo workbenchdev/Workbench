@@ -62,6 +62,7 @@
           <li>Fix dangling bwrap processes after quitting Workbench</li>
           <li>Modernize the Extensions window</li>
           <li>Update Biome to 1.6.0</li>
+          <li>Update libspelling to 0.2.1</li>
           <li>Update gst-plugin-gtk4 to 0.12.1</li>
           <li>Update libshumate to 1.2</li>
           <li>Update VTE to 0.76</li>
