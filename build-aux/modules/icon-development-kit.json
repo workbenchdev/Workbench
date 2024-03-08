@@ -11,7 +11,7 @@
     {
       "type": "git",
       "url": "https://gitlab.gnome.org/Teams/Design/icon-development-kit-www.git",
-      "commit": "5f831d4f808cb69833405e75203606d2465f5f41"
+      "commit": "c5fecee437afd64fa0aac5755af9259aaa24b667"
     }
   ],
   "modules": [

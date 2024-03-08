@@ -34,7 +34,7 @@ Among other things, Workbench comes with
 | JavaScript | ✅        | ✅     | 95               |
 | Python     | ✅        | ✅     | 89               |
 | Vala       | ✅        | ✅     | 59               |
-| Rust       | ✅        |        | 45               |
+| Rust       | ✅        | ✅     | 45               |
 | Blueprint  | ✅        | ✅     |                  |
 | CSS        | ✅        | ✅     |                  |
 

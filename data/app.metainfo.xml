@@ -48,23 +48,61 @@
   </screenshots>
   <content_rating type="oars-1.1" />
   <releases>
-    <release version="46beta" date="2024-02-21">
+    <release version="46beta" date="2024-03-08">
       <description translatable="no">
         <ul>
           <li>Use GNOME 46</li>
           <li>Add basic Rust diagnostics</li>
-          <li>Allow using the new libadwaita dialogs</li>
+          <li>Add basic Python diagnostics</li>
+          <li>Replace Python formatter Black with Ruff</li>
+          <li>Support libadwaita dialogs</li>
           <li>Stop adding a superfluous newlines to end of files</li>
           <li>Optimize opening Library entries</li>
           <li>Open project windows maximized</li>
           <li>Fix dangling bwrap processes after quitting Workbench</li>
-          <li>Update Biome to 1.5.3</li>
+          <li>Modernize the Extensions window</li>
+          <li>Update Biome to 1.6.0</li>
+          <li>Update libspelling to 0.2.1</li>
           <li>Update gst-plugin-gtk4 to 0.12.1</li>
           <li>Update libshumate to 1.2</li>
           <li>Update VTE to 0.76</li>
           <li>Update Blueprint</li>
           <li>Update GTKCssLanguageServer</li>
           <li>Update icon-development-kit</li>
+          <li>Library: Adapt demos to use GNOME 46 features</li>
+          <li>Library: Add FileFilter example to "Open File" demo</li>
+          <li>Library: Add "Snapshot" demo</li>
+          <li>Library: Port "Scrolled Window" demo to Python</li>
+          <li>Library: Port "HTTP Image" demo to Python</li>
+          <li>Library: Port "HTTP Request" demo to Python</li>
+          <li>Library: Port "HTTP Server" demo to Python</li>
+          <li>Library: Port "Font Dialog" demo to Python</li>
+          <li>Library: Port "Box" demo to Python</li>
+          <li>Library: Port "Frame" demo to Python</li>
+          <li>Library: Port "Grid" demo to Python</li>
+          <li>Library: Port "Web View" demo to Python</li>
+          <li>Library: Port "Network Monitor" demo to Python</li>
+          <li>Library: Port "Navigation View" demo to Python</li>
+          <li>Library: Port "Launcher" demo to Python</li>
+          <li>Library: Port "Audio" demo to Python</li>
+          <li>Library: Port "Map" demo to Python</li>
+          <li>Library: Port "File Monitor" demo to Python</li>
+          <li>Library: Port "WebSocket Client" demo to Python</li>
+          <li>Library: Port "Screencast" demo to Python</li>
+          <li>Library: Port "Progress Bar" demo to Python</li>
+          <li>Library: Port "Camera" demo to Python</li>
+          <li>Library: Port "Location" demo to Python</li>
+          <li>Library: Port "List Model" demo to Python</li>
+          <li>Library: Port "Drop Down" demo to Python</li>
+          <li>Library: Port "Drawing Area" demo to Python</li>
+          <li>Library: Port "Session Monitor and Inhibit" demo to Python</li>
+          <li>Library: Port "View Switcher" demo to Python</li>
+          <li>Library: Port "View Switcher" demo to Python</li>
+          <li>Library: Port "Checkboxes" demo to Vala</li>
+          <li>Library: Port "Action Bar" demo to Vala</li>
+          <li>Library: Port "Clamp" demo to Vala</li>
+          <li>Library: Port "Banner" demo to Vala</li>
+          <li>Library: Port "Emoji Chooser" demo to Vala</li>
         </ul>
       </description>
     </release>

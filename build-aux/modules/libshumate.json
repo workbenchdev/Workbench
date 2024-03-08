@@ -5,8 +5,8 @@
   "sources": [
     {
       "type": "archive",
-      "url": "https://download.gnome.org/sources/libshumate/1.2/libshumate-1.2.beta.tar.xz",
-      "sha256": "ec279f2d4a25aa29f9e25ee9a3be2bc6030fff46de75fe083bb3d3807651759f"
+      "url": "https://download.gnome.org/sources/libshumate/1.2/libshumate-1.2.rc2.tar.xz",
+      "sha256": "ad24ed819c2f4f5330857e1dc69e55405dd700cad14c3e764080bd305e453345"
     }
   ],
   "modules": [
@@ -29,8 +29,8 @@
       "sources": [
         {
           "type": "archive",
-          "url": "https://github.com/protobuf-c/protobuf-c/releases/download/v1.4.0/protobuf-c-1.4.0.tar.gz",
-          "sha256": "26d98ee9bf18a6eba0d3f855ddec31dbe857667d269bc0b6017335572f85bbcb"
+          "url": "https://github.com/protobuf-c/protobuf-c/releases/download/v1.5.0/protobuf-c-1.5.0.tar.gz",
+          "sha256": "7b404c63361ed35b3667aec75cc37b54298d56dd2bcf369de3373212cc06fd98"
         }
       ]
     }
