@@ -13,6 +13,7 @@
     "append-ld-library-path": "/usr/lib/sdk/vala/lib"
   },
   "command": "workbench",
+  "separate-locales": false,
   "finish-args": [
     "--share=ipc",
     "--socket=fallback-x11",
