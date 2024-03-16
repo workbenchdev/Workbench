@@ -380,6 +380,7 @@ async function ci({ filenames, current_dir }) {
           "`Gtk.EntryCompletion' has been deprecated since 4.10",
           "`Gtk.Entry.completion' has been deprecated since 4.10",
           "`Gtk.ListStore' has been deprecated since 4.10",
+          "`Gtk.TreeIter' has been deprecated since 4.10",
         ];
         diagnostics = diagnostics.filter((diagnostic) => {
           return !ignore_for_text_fields.includes(diagnostic.message);
