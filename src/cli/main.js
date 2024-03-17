@@ -7,6 +7,11 @@ import GLib from "gi://GLib";
 import Gio from "gi://Gio";
 import Gtk from "gi://Gtk";
 import Adw from "gi://Adw";
+import GObject from "gi://GObject";
+import Shumate from "gi://Shumate";
+
+import { parse } from "../langs/xml/xml.js";
+import { LSPError, diagnostic_severities } from "../lsp/LSP.js";
 
 import {
   createLSPClient,
@@ -17,7 +22,7 @@ import {
 import lint, { waitForDiagnostics } from "./lint.js";
 import format, { formatting } from "./format.js";
 
-Gtk.init();
+GObject.type_ensure(Shumate.SimpleMap);
 
 export async function main([action, ...args]) {
   const current_dir = Gio.File.new_for_path(GLib.get_current_dir());
@@ -76,13 +81,6 @@ export async function main([action, ...args]) {
 
   return success ? 0 : 1;
 }
-
-import { parse } from "../langs/xml/xml.js";
-import Shumate from "gi://Shumate";
-import { LSPError, diagnostic_severities } from "../lsp/LSP.js";
-
-// Why?
-new Shumate.Map();
 
 const application = new Adw.Application();
 const window = new Adw.ApplicationWindow();
