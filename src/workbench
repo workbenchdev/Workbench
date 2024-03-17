@@ -20,4 +20,3 @@ LANG=en_US.UTF-8
 
 mkdir -p $XDG_RUNTIME_DIR/$FLATPAK_ID
 @command@
-

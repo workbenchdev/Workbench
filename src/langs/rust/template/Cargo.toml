@@ -6,10 +6,10 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-async-channel = "2.2.0"
+async-channel = "2.0.0"
 libc = "0.2"
 rand = "0.8.5"
-url = "2.5.0"
+url = "2.4.0"
 
 [dependencies.soup3]
 version = "0.6.0"
@@ -20,7 +20,7 @@ version = "0.3.0"
 features = ["v2_42"]
 
 [dependencies.gtk]
-version = "0.8.1"
+version = "0.8.0"
 package = "gtk4"
 features = ["gnome_45"]
 
@@ -30,7 +30,7 @@ package = "libadwaita"
 features = ["v1_5"]
 
 [dependencies.ashpd]
-version = "0.8.1"
+version = "0.8.0"
 features = ["gtk4"]
 
 [dependencies.shumate]
