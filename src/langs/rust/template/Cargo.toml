@@ -22,7 +22,7 @@ features = ["v2_42"]
 [dependencies.gtk]
 version = "0.8.1"
 package = "gtk4"
-features = ["gnome_45"]
+features = ["gnome_46"]
 
 [dependencies.adw]
 version = "0.6.0"
