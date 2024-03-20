@@ -335,6 +335,7 @@ dependencies = [
  "gtk4",
  "libadwaita",
  "libc",
+ "libshumate",
  "rand",
  "soup3",
  "url",
@@ -983,6 +984,37 @@ name = "libc"
 version = "0.2.153"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9c198f91728a82281a64e1f4f9eeb25d82cb32a5de251c6bd1b5154d63a8e7bd"
+
+[[package]]
+name = "libshumate"
+version = "0.5.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "bd77c1202aaccef5460f4ca95b3b3c117f85986c942127e4e518c47058a6eaf6"
+dependencies = [
+ "gdk-pixbuf",
+ "gdk4",
+ "gio",
+ "glib",
+ "gtk4",
+ "libc",
+ "libshumate-sys",
+]
+
+[[package]]
+name = "libshumate-sys"
+version = "0.5.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ef5765221e416ebe7b5e9c5bd7e8dd09ca9e920b012474ca8f3da18f8e13c4a5"
+dependencies = [
+ "gdk-pixbuf-sys",
+ "gdk4-sys",
+ "gio-sys",
+ "glib-sys",
+ "gobject-sys",
+ "gtk4-sys",
+ "libc",
+ "system-deps",
+]
 
 [[package]]
 name = "linux-raw-sys"
