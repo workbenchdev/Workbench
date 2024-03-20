@@ -48,7 +48,7 @@
   </screenshots>
   <content_rating type="oars-1.1" />
   <releases>
-    <release version="46beta" date="2024-03-08">
+    <release version="46" date="2024-03-20">
       <description translatable="no">
         <ul>
           <li>Use GNOME 46</li>
