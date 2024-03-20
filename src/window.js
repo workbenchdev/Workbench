@@ -266,9 +266,25 @@ export default function Window({ application, session }) {
 
     const lang = langs[language.toLowerCase()];
     // Do nothing if there is no code to avoid compile errors
-    const text = lang.document.code_view.buffer.text.trim();
+    var text = lang.document.code_view.buffer.text.trim();
     if (text === "") {
-      return;
+      // Using placeholder empty main functions and empty comments as source when empty
+        if (language === "JavaScript") {
+          text = "//"
+        }
+        else if (language === "Vala") {
+          // Set Compiler input as
+          lang.document.code_view.buffer.text = "#! /usr/bin/env -S vala workbench.vala --pkg gtk4 --pkg libadwaita-1\npublic void main() {\n}\n"
+          // Janky; Run needs to be pressed twice before it starts to re-render the preview
+        }
+        else if (language === "Rust") {
+          // Set Compiler input as
+          lang.document.code_view.buffer.text = "pub fn main() {}"
+        }
+        else if (language === "Python") {
+          // Set interpreter input as '#'
+          lang.document.code_view.buffer.text = "# Empty"
+        }
     }
 
     if (language === "JavaScript") {
@@ -508,3 +524,4 @@ async function promptSessionClose({ window }) {
     location?.get_child_for_display_name(row_project_name.text),
   ];
 }
+
