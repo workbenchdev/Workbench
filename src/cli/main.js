@@ -9,6 +9,7 @@ import Gtk from "gi://Gtk";
 import Adw from "gi://Adw";
 import GObject from "gi://GObject";
 import Shumate from "gi://Shumate";
+import WebKit from "gi://WebKit";
 
 import { parse } from "../langs/xml/xml.js";
 import { LSPError, diagnostic_severities } from "../lsp/LSP.js";
@@ -23,6 +24,7 @@ import lint, { waitForDiagnostics } from "./lint.js";
 import format, { formatting } from "./format.js";
 
 GObject.type_ensure(Shumate.SimpleMap);
+GObject.type_ensure(WebKit.WebView);
 
 export async function main([action, ...args]) {
   const current_dir = Gio.File.new_for_path(GLib.get_current_dir());
