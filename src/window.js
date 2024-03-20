@@ -410,6 +410,10 @@ export default function Window({ application, session }) {
     term_console.scrollToEnd();
   }
 
+  // Hide Workbench own logs on start
+  // https://matrix.to/#/!pOGgkAueAsusiyFCTb:matrix.org/$17109266081ktyZv:gnome.org?via=gnome.org&via=matrix.org&via=matrix.cispa.de
+  term_console.clear();
+
   return { load, window, runCode };
 }
 
