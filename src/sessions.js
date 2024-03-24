@@ -109,7 +109,9 @@ export async function saveSessionAsProject(session, destination) {
   );
   for await (const file_info of enumerator) {
     if (file_info.get_is_hidden()) continue;
+    if (file_info.get_file_type() === Gio.FileType.DIRECTORY) continue;
     const file = enumerator.get_child(file_info);
+
     await file.move_async(
       destination.get_child(file.get_basename()), // destination
       Gio.FileCopyFlags.BACKUP, // flags
@@ -118,8 +120,6 @@ export async function saveSessionAsProject(session, destination) {
       null, // progress_callback
     );
   }
-
-  await session.file.delete_async(GLib.PRIORITY_DEFAULT, null);
 
   await destination.get_child("README.md").replace_contents_async(
     encode(
@@ -132,6 +132,8 @@ To open and run this; [install Workbench from Flathub](https://flathub.org/apps/
     Gio.FileCreateFlags.NONE, //flags
     null, // cancellable
   );
+
+  await session.file.delete_async(GLib.PRIORITY_DEFAULT, null);
 }
 
 export class Session {

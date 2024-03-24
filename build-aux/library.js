@@ -15,6 +15,11 @@ Gio._promisify(
   "replace_contents_finish",
 );
 
+Gio._promisify(Gio.File.prototype, "copy_async", "copy_finish");
+
+const [pkgdatadir] = ARGV;
+GLib.mkdir_with_parents(pkgdatadir, 0o755);
+
 const demos_dir = Gio.File.new_for_path(
   GLib.getenv("MESON_SOURCE_ROOT"),
 ).get_child("demos/src");
@@ -60,12 +65,16 @@ for (const file_info of enumerator) {
   }
   demo.languages = languages;
 
+  await copyDirectory(
+    demo_dir,
+    Gio.File.new_for_path(pkgdatadir)
+      .get_child("demos")
+      .get_child(demo_dir.get_basename()),
+  );
+
   demos.push(demo);
 }
 
-const [pkgdatadir] = ARGV;
-
-GLib.mkdir_with_parents(pkgdatadir, 0o755);
 await Gio.File.new_for_path(pkgdatadir)
   .get_child("demos/index.json")
   .replace_contents_async(
@@ -75,3 +84,47 @@ await Gio.File.new_for_path(pkgdatadir)
     Gio.FileCreateFlags.NONE,
     null,
   );
+
+export async function copyDirectory(source, destination) {
+  const enumerator = await source.enumerate_children_async(
+    `${Gio.FILE_ATTRIBUTE_STANDARD_NAME},${Gio.FILE_ATTRIBUTE_STANDARD_IS_HIDDEN}`,
+    Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
+    GLib.PRIORITY_DEFAULT,
+    null,
+  );
+
+  for await (const file_info of enumerator) {
+    if (file_info.get_is_hidden()) continue;
+    if (file_info.get_file_type() === Gio.FileType.DIRECTORY) continue;
+
+    const child = enumerator.get_child(file_info);
+    if (
+      [
+        "Cargo.lock",
+        "Cargo.toml",
+        "lib.rs",
+        "workbench.rs",
+        "workbench.vala",
+        "libworkbenchcode.so",
+        "settings",
+        "main.ui",
+      ].includes(child.get_basename())
+    ) {
+      continue;
+    }
+
+    try {
+      await child.copy_async(
+        destination.get_child(child.get_basename()), // destination
+        Gio.FileCopyFlags.NONE, // flags
+        GLib.PRIORITY_DEFAULT, // priority
+        null, // cancellable
+        null, // progress_callback
+      );
+    } catch (err) {
+      if (!err.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.EXISTS)) {
+        throw err;
+      }
+    }
+  }
+}
