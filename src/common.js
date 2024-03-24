@@ -131,19 +131,30 @@ export function createLSPClient({ lang, root_uri, quiet = true }) {
     languageId: language_id,
     quiet,
   });
-  lspc.connect("exit", () => {
-    console.debug(`${language_id} language server exit`);
-  });
-  lspc.connect("output", (_self, message) => {
-    console.debug(
-      `${language_id} language server OUT:\n${JSON.stringify(message)}`,
-    );
-  });
-  lspc.connect("input", (_self, message) => {
-    console.debug(
-      `${language_id} language server IN:\n${JSON.stringify(message)}`,
-    );
-  });
+
+  if (quiet === false) {
+    lspc.connect("exit", () => {
+      console.log(`${language_id} language server exit`);
+    });
+    lspc.connect("output", (_self, message) => {
+      console.log(
+        `${language_id} language server OUT:\n${JSON.stringify(
+          message,
+          null,
+          2,
+        )}`,
+      );
+    });
+    lspc.connect("input", (_self, message) => {
+      console.log(
+        `${language_id} language server IN:\n${JSON.stringify(
+          message,
+          null,
+          2,
+        )}`,
+      );
+    });
+  }
 
   return lspc;
 }
