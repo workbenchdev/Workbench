@@ -18,7 +18,6 @@ class Search extends Gtk.Revealer {
 
     this.#initSearch();
     this.#trackOccurrences();
-    this.#connectButtons();
     this.#addControllers();
   }
 
@@ -64,14 +63,16 @@ class Search extends Gtk.Revealer {
     });
   }
 
-  #connectButtons() {
-    this._button_previous.connect("clicked", () => {
-      this.#search(false);
-    });
+  onSearchPrevious() {
+    this.#search(false);
+  }
 
-    this._button_next.connect("clicked", () => {
-      this.#search(true);
-    });
+  onSearchNext() {
+    this.#search(true);
+  }
+
+  onClose() {
+    this.reveal_child = false;
   }
 
   #addControllers() {

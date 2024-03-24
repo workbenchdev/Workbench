@@ -10,12 +10,11 @@ template $CodeFind: Revealer {
     Separator {}
 
     Box {
-      spacing: 8;
+      styles [
+        "toolbar"
+      ]
+
       halign: center;
-      margin-start: 8;
-      margin-end: 8;
-      margin-top: 8;
-      margin-bottom: 8;
 
       Box {
         valign: center;
@@ -43,21 +42,31 @@ template $CodeFind: Revealer {
       Box {
         valign: center;
 
-        styles [
-          "linked"
-        ]
-
         Button button_previous {
           icon-name: "up";
           tooltip-text: _("Move to previous match (Ctrl+Shift+G)");
           sensitive: false;
+          clicked => $onSearchPrevious();
         }
 
         Button button_next {
           icon-name: "down";
           tooltip-text: _("Move to next match (Ctrl+G)");
           sensitive: false;
+          clicked => $onSearchNext();
         }
+      }
+
+      Button {
+        tooltip-text: _("Close Search");
+        icon-name: "window-close-symbolic";
+
+        styles [
+          "circular",
+          "small"
+        ]
+
+        clicked => $onClose();
       }
     }
   }
