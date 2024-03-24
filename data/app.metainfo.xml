@@ -66,7 +66,7 @@
           <li>Update gst-plugin-gtk4 to 0.12.1</li>
           <li>Update libshumate to 1.2</li>
           <li>Update VTE to 0.76</li>
-          <li>Update Blueprint</li>
+          <li>Update Blueprint to 0.12.0</li>
           <li>Update GTKCssLanguageServer</li>
           <li>Update icon-development-kit</li>
           <li>Library: Adapt demos to use GNOME 46 features</li>
