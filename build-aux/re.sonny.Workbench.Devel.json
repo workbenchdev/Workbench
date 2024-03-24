@@ -5,8 +5,7 @@
   "sdk": "org.gnome.Sdk",
   "sdk-extensions": [
     "org.freedesktop.Sdk.Extension.vala",
-    "org.freedesktop.Sdk.Extension.rust-stable",
-    "org.freedesktop.Sdk.Extension.llvm16"
+    "org.freedesktop.Sdk.Extension.rust-stable"
   ],
   "build-options": {
     "append-path": "/usr/lib/sdk/vala/bin:/usr/lib/sdk/rust-stable/bin",
