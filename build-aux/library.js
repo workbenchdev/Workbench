@@ -2,8 +2,7 @@
 
 import Gio from "gi://Gio";
 import GLib from "gi://GLib";
-
-const loop = new GLib.MainLoop(null, false);
+import { programArgs, exit } from "system";
 
 Gio._promisify(
   Gio.File.prototype,
@@ -19,7 +18,9 @@ Gio._promisify(
 
 Gio._promisify(Gio.File.prototype, "copy_async", "copy_finish");
 
-const [pkgdatadir] = ARGV;
+const loop = new GLib.MainLoop(null, false);
+
+const [pkgdatadir] = programArgs;
 GLib.mkdir_with_parents(
   Gio.File.new_for_path(pkgdatadir).get_child("demos").get_path(),
   0o755,
@@ -71,13 +72,6 @@ const demos = [];
     }
     demo.languages = languages;
 
-    console.log(
-      Gio.File.new_for_path(pkgdatadir)
-        .get_child("demos")
-        .get_child(demo_dir.get_basename())
-        .get_path(),
-    );
-
     await copyDemo(
       demo_dir,
       Gio.File.new_for_path(pkgdatadir)
@@ -99,15 +93,25 @@ const demos = [];
     );
 })()
   .catch((err) => {
-    throw err;
+    loop.quit();
+    console.error(err);
+    exit(1);
   })
-  .finally(() => {
+  .then(() => {
     loop.quit();
   });
 
 loop.run();
 
 async function copyDemo(source, destination) {
+  try {
+    destination.make_directory_with_parents(null);
+  } catch (err) {
+    if (!err.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.EXISTS)) {
+      throw err;
+    }
+  }
+
   const enumerator = await source.enumerate_children_async(
     `${Gio.FILE_ATTRIBUTE_STANDARD_NAME},${Gio.FILE_ATTRIBUTE_STANDARD_IS_HIDDEN}`,
     Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
