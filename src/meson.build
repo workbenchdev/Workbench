@@ -13,9 +13,8 @@ blueprint_compiler = find_program(
   '/app/bin/blueprint-compiler',
 )
 
-meson.add_install_script('../build-aux/library-index.js', pkgdatadir)
+meson.add_install_script('../build-aux/library.js', pkgdatadir)
 
-install_subdir('../demos/src', install_dir : join_paths(pkgdatadir, 'demos'), strip_directory: true)
 subdir('langs/rust/template')
 
 configure_file(

@@ -62,6 +62,7 @@ export async function installRustLibraries(destination) {
 
 async function copy(filename, source_dir, dest_dir, flags) {
   const file = source_dir.get_child(filename);
+
   try {
     await file.copy_async(
       dest_dir.get_child(file.get_basename()),
