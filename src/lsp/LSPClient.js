@@ -45,10 +45,10 @@ export default class LSPClient {
     };
   }
 
-  async start() {
+  async start(initializationOptions = {}) {
     this._start_process();
 
-    await this._initialize();
+    await this._initialize(initializationOptions);
     await this._didOpen();
 
     this.ready = true;
@@ -65,7 +65,7 @@ export default class LSPClient {
     return once(this, "ready");
   }
 
-  async _initialize() {
+  async _initialize(initializationOptions = {}) {
     const { capabilities, rootUri } = this;
 
     // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#initialize
@@ -74,6 +74,7 @@ export default class LSPClient {
       clientInfo,
       capabilities,
       rootUri,
+      initializationOptions,
       locale: "en",
     });
 
