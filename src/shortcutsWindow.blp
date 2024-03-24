@@ -33,20 +33,6 @@ ShortcutsWindow window {
       }
 
       ShortcutsShortcut {
-        accelerator: "<Control>Z";
-        title: _("Undo");
-      }
-
-      ShortcutsShortcut {
-        accelerator: "<Control><Shift>Z";
-        title: _("Redo");
-      }
-
-      // ShortcutsShortcut {
-      //   accelerator: "<Control>F";
-      //   title: _("Find");
-      // }
-      ShortcutsShortcut {
         accelerator: "<Control>W";
         title: _("Close Window");
       }
@@ -59,6 +45,40 @@ ShortcutsWindow window {
       ShortcutsShortcut {
         accelerator: "<Control>Q";
         title: _("Quit");
+      }
+    }
+
+    ShortcutsGroup {
+      title: _("Editor");
+
+      ShortcutsShortcut {
+        accelerator: "<Control>X";
+        title: _("Cut");
+      }
+
+      ShortcutsShortcut {
+        accelerator: "<Control>C";
+        title: _("Copy");
+      }
+
+      ShortcutsShortcut {
+        accelerator: "<Control>V";
+        title: _("Paste");
+      }
+
+      ShortcutsShortcut {
+        accelerator: "<Control>F";
+        title: _("Find");
+      }
+
+      ShortcutsShortcut {
+        accelerator: "<Control>Z";
+        title: _("Undo");
+      }
+
+      ShortcutsShortcut {
+        accelerator: "<Control><Shift>Z";
+        title: _("Redo");
       }
     }
 
