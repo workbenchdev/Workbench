@@ -3,7 +3,7 @@
   <id>@app_id@</id>
   <launchable type="desktop-id">@app_id@.desktop</launchable>
   <name translatable="no">Workbench</name>
-  <developer id="sonny.re">
+  <developer id="re.sonny">
     <name translatable="no">Sonny Piers</name>
   </developer>
   <update_contact>sonnyp@gnome.org</update_contact>
