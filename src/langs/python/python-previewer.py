@@ -175,8 +175,8 @@ class Previewer:
     @DBusTemplate.Method()
     def screenshot(self, path: str) -> bool:
         paintable = Gtk.WidgetPaintable(widget=self.target)
-        width = self.target.get_allocated_width()
-        height = self.target.get_allocated_height()
+        width = self.target.get_width()
+        height = self.target.get_height()
         snapshot = Gtk.Snapshot()
         paintable.snapshot(snapshot, width, height)
         node = snapshot.to_node()

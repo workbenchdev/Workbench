@@ -30,10 +30,7 @@ export default function External({ output, builder, onWindowChange }) {
     updateColorScheme();
     stack.set_visible_child_name("close_window");
     try {
-      await dbus_proxy.OpenWindowAsync(
-        output.get_allocated_width(),
-        output.get_allocated_height(),
-      );
+      await dbus_proxy.OpenWindowAsync(output.get_width(), output.get_height());
     } catch (err) {
       console.debug(err);
     }

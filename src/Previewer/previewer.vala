@@ -31,8 +31,8 @@ namespace Workbench {
         public bool screenshot (string path) {
             Gtk.Widget widget = this.target;
             var paintable = new Gtk.WidgetPaintable (widget);
-            int width = widget.get_allocated_width ();
-            int height = widget.get_allocated_height ();
+            int width = widget.get_width ();
+            int height = widget.get_height ();
             var snapshot = new Gtk.Snapshot ();
             paintable.snapshot (snapshot, width, height);
             Gsk.RenderNode? node = snapshot.to_node ();
@@ -214,7 +214,8 @@ namespace Workbench {
         }
 
         var app_id = GLib.Environment.get_variable("FLATPAK_ID");
-        Resource.load (@"/app/share/$app_id/re.sonny.Workbench.libworkbench.gresource")._register ();
+        var resource = Resource.load (@"/app/share/$app_id/re.sonny.Workbench.libworkbench.gresource");
+        GLib.resources_register (resource);
 
 
         var loop = new MainLoop ();

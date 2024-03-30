@@ -272,8 +272,8 @@ function scopeStylesheet(style, id) {
 
 function screenshot({ widget, path }) {
   const paintable = new Gtk.WidgetPaintable({ widget });
-  const width = widget.get_allocated_width();
-  const height = widget.get_allocated_height();
+  const width = widget.get_width();
+  const height = widget.get_height();
 
   const snapshot = Gtk.Snapshot.new();
   paintable.snapshot(snapshot, width, height);
