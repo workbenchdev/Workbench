@@ -57,15 +57,6 @@ export default GObject.registerClass(
     constructor(properties = {}) {
       super(properties);
 
-      if (properties.uri) {
-        this._button.visible = true;
-        this._button.connect("clicked", () => {
-          new Gtk.UriLauncher({ uri: properties.uri })
-            .launch(this.get_root(), null)
-            .catch(console.error);
-        });
-      }
-
       this.bind_property(
         "title",
         this._label_title,
