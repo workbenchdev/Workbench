@@ -33,15 +33,6 @@ template $Extension: ListBoxRow {
       margin-bottom: 14;
       orientation: vertical;
 
-      Label label_hint {
-        wrap: true;
-        xalign: 0;
-
-        styles [
-          "dim-label"
-        ]
-      }
-
       Label label_command {
         margin-top: 12;
         use-markup: true;
@@ -49,6 +40,7 @@ template $Extension: ListBoxRow {
         wrap-mode: word_char;
         selectable: true;
         xalign: 0;
+        label: _("Run the following command");
 
         styles [
           "command_snippet"

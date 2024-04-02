@@ -2,7 +2,8 @@ import Gio from "gi://Gio";
 
 import { build } from "../../troll/src/main.js";
 
-import Interface from "./Extensions.blp" with { type: "uri" };
+import Interface from "./Extensions.blp"
+;
 import illustration from "./extensions.svg";
 
 import "./Extension.js";

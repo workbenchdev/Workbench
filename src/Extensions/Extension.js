@@ -1,7 +1,7 @@
 import GObject from "gi://GObject";
 import Gtk from "gi://Gtk";
 
-import Template from "./Extension.blp" with { type: "uri" };
+import Template from "./Extension.blp";
 
 export default GObject.registerClass(
   {
@@ -11,9 +11,7 @@ export default GObject.registerClass(
       "label_title",
       "image_enabled",
       "installation_guide",
-      "label_hint",
       "label_command",
-      "button",
     ],
     Properties: {
       title: GObject.ParamSpec.string(
@@ -29,13 +27,6 @@ export default GObject.registerClass(
         "",
         GObject.ParamFlags.READWRITE,
         false,
-      ),
-      uri: GObject.ParamSpec.string(
-        "uri",
-        "",
-        "",
-        GObject.ParamFlags.READWRITE | GObject.ParamFlags.CONSTRUCT,
-        "",
       ),
       hint: GObject.ParamSpec.string(
         "hint",
@@ -76,13 +67,6 @@ export default GObject.registerClass(
         this._installation_guide,
         "visible",
         GObject.BindingFlags.SYNC_CREATE | GObject.BindingFlags.INVERT_BOOLEAN,
-      );
-
-      this.bind_property(
-        "hint",
-        this._label_hint,
-        "label",
-        GObject.BindingFlags.SYNC_CREATE,
       );
 
       this.bind_property(
