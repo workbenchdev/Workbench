@@ -1,7 +1,7 @@
 import GObject from "gi://GObject";
 import Gtk from "gi://Gtk";
 
-import Template from "./Extension.blp";
+import Template from "./Extension.blp" with { type: "uri" };
 
 export default GObject.registerClass(
   {
@@ -27,13 +27,6 @@ export default GObject.registerClass(
         "",
         GObject.ParamFlags.READWRITE,
         false,
-      ),
-      hint: GObject.ParamSpec.string(
-        "hint",
-        "",
-        "",
-        GObject.ParamFlags.READWRITE,
-        "",
       ),
       command: GObject.ParamSpec.string(
         "command",
