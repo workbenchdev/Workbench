@@ -81,7 +81,7 @@ ${getBlueprintVersion()}
     "Urtsi Santsi <urtsi.santsi@proton.me>",
     "Roland Lötscher https://github.com/rolandlo",
     "Gregor Niehl https://fosstodon.org/@gregorni",
-    "Bart Gravendeel https://monster.codeberg.page",
+    "Jamie Gravendeel https://jamie.garden",
     "Bharat Tyagi https://github.com/BharatAtbrat",
     "Jan Fooken https://git.janvhs.com",
     "Vladimir Vaskov https://github.com/Rirusha",
