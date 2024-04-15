@@ -173,6 +173,13 @@ class Previewer:
         self.window_open(True)
 
     @DBusTemplate.Method()
+    def add_icon_search_path(self, path: str):
+        icon_theme = Gtk.IconTheme.get_for_display(Gdk.Display.get_default())
+        search_paths = icon_theme.get_search_path()
+        search_paths.append(path)
+        icon_theme.set_search_path(search_paths)
+
+    @DBusTemplate.Method()
     def screenshot(self, path: str) -> bool:
         paintable = Gtk.WidgetPaintable(widget=self.target)
         width = self.target.get_width()

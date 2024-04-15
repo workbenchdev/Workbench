@@ -36,5 +36,8 @@
       <arg type="i" name="end_char"/>
     </signal>
     <property type="i" name="ColorScheme" access="readwrite"/>
+    <method name="AddIconSearchPath">
+      <arg type="s" name="path" direction="in"/>
+    </method>
   </interface>
 </node>
