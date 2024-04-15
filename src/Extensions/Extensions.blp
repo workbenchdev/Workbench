@@ -1,18 +1,14 @@
 using Gtk 4.0;
 using Adw 1;
 
-Adw.Window window {
-  hide-on-close: true;
-  modal: false;
-  default-height: 750;
-  default-width: 600;
-  title: _("Workbench — Extensions");
+Adw.Dialog dialog {
+  content-height: 750;
+  content-width: 600;
+  title: _("Extensions");
 
   Adw.ToolbarView {
     [top]
-    Adw.HeaderBar {
-      show-title: false;
-    }
+    Adw.HeaderBar {}
 
     content: ScrolledWindow {
       hscrollbar-policy: never;
@@ -38,15 +34,6 @@ Adw.Window window {
             }
           }
 
-          Label {
-            label: _("Extensions");
-            margin-bottom: 36;
-
-            styles [
-              "title-1"
-            ]
-          }
-
           ListBox {
             selection-mode: none;
 
@@ -66,15 +53,12 @@ Adw.Window window {
 
             $Extension extension_rust {
               title: _("Rust");
-              hint: _("Run the following command");
               command: "flatpak install flathub org.freedesktop.Sdk.Extension.rust-stable//23.08 org.freedesktop.Sdk.Extension.llvm16//23.08";
             }
 
             $Extension extension_vala {
               title: _("Vala");
-              hint: _("or run the following command");
               command: "flatpak install flathub org.freedesktop.Sdk.Extension.vala//23.08";
-              uri: "appstream://org.freedesktop.Sdk.Extension.vala";
             }
           }
 

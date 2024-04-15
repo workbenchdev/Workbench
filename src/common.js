@@ -109,6 +109,11 @@ export const languages = [
     document: null,
     default_file: "main.py",
     index: 3,
+    language_server: ["pylsp", "-v"],
+    formatting_options: {
+      ...formatting_options,
+      tabSize: 4,
+    },
   },
 ];
 
@@ -126,19 +131,44 @@ export function createLSPClient({ lang, root_uri, quiet = true }) {
     languageId: language_id,
     quiet,
   });
-  lspc.connect("exit", () => {
-    console.debug(`${language_id} language server exit`);
-  });
-  lspc.connect("output", (_self, message) => {
-    console.debug(
-      `${language_id} language server OUT:\n${JSON.stringify(message)}`,
-    );
-  });
-  lspc.connect("input", (_self, message) => {
-    console.debug(
-      `${language_id} language server IN:\n${JSON.stringify(message)}`,
-    );
-  });
+
+  if (quiet === false) {
+    lspc.connect("exit", () => {
+      console.log(`${language_id} language server exit`);
+    });
+    lspc.connect("output", (_self, message) => {
+      console.log(
+        `${language_id} language server OUT:\n${JSON.stringify(
+          message,
+          null,
+          2,
+        )}`,
+      );
+    });
+    lspc.connect("input", (_self, message) => {
+      console.log(
+        `${language_id} language server IN:\n${JSON.stringify(
+          message,
+          null,
+          2,
+        )}`,
+      );
+    });
+  }
 
   return lspc;
 }
+
+export const PYTHON_LSP_CONFIG = {
+  pylsp: {
+    configurationSources: ["ruff"],
+    plugins: {
+      ruff: {
+        enabled: true,
+        formatEnabled: true,
+        executable: `${pkg.prefix}/bin/ruff`,
+        config: `${pkg.pkgdatadir}/ruff.toml`,
+      },
+    },
+  },
+};

@@ -5,12 +5,10 @@ desktop_file = configure_file(
   install_dir: join_paths(get_option('datadir'), 'applications')
 )
 
-desktop_utils = find_program('desktop-file-validate', required: false)
-if desktop_utils.found()
-  test('Validate desktop file', desktop_utils,
-    args: [desktop_file]
-  )
-endif
+desktop_utils = find_program('desktop-file-validate', required: true)
+test('Validate desktop file', desktop_utils,
+  args: [desktop_file]
+)
 
 configure_file(
   input: 'app.service',
@@ -26,12 +24,10 @@ appstream_file = configure_file(
   install_dir: join_paths(get_option('datadir'), 'metainfo')
 )
 
-appstream_cli = find_program('appstreamcli', required: false)
-if appstream_cli.found()
-  test('Validate metainfo file', appstream_cli,
-    args: ['validate', '--override=release-time-missing=info', '--no-net', '--explain', appstream_file]
-  )
-endif
+appstream_cli = find_program('appstreamcli', required: true)
+test('Validate metainfo file', appstream_cli,
+  args: ['validate', '--override=release-time-missing=info', '--no-net', '--explain', appstream_file]
+)
 
 configure_file(
   input: 'app.gschema.xml',
@@ -40,11 +36,9 @@ configure_file(
   install_dir: join_paths(get_option('datadir'), 'glib-2.0/schemas')
 )
 
-compile_schemas = find_program('glib-compile-schemas', required: false)
-if compile_schemas.found()
-  test('Validate schema file', compile_schemas,
-    args: ['--strict', '--dry-run', meson.current_source_dir()]
-  )
-endif
+compile_schemas = find_program('glib-compile-schemas', required: true)
+test('Validate schema file', compile_schemas,
+  args: ['--strict', '--dry-run', meson.current_source_dir()]
+)
 
 install_subdir('icons/hicolor', install_dir : join_paths(get_option('datadir'), 'icons'))

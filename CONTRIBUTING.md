@@ -26,10 +26,10 @@ We provide a couple of tools to make the development process pleasant.
 
 ```sh
 # Ubuntu requirements
-# sudo apt install flatpak flatpak-builder nodejs make
+# sudo apt install flatpak flatpak-builder nodejs make gcc g++
 
 # Fedora requirements
-# sudo dnf install flatpak flatpak-builder nodejs make
+# sudo dnf install flatpak flatpak-builder nodejs make gcc gcc-c++
 
 cd Workbench
 make setup

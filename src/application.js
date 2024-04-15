@@ -6,7 +6,6 @@ import Actions from "./actions.js";
 import { settings, data_dir, ensureDir } from "./util.js";
 import { overrides } from "./overrides.js";
 import Library, { getDemo } from "./Library/Library.js";
-import Extensions from "./Extensions/Extensions.js";
 import {
   Session,
   addToRecentProjects,
@@ -45,18 +44,34 @@ application.connect("open", (_self, files, hint) => {
     .catch(console.error);
 });
 
-application.connect("startup", () => {
-  Library({
-    application,
-  });
+let proc_biome;
 
-  Extensions({
+application.connect("startup", () => {
+  // biome lsp-proxy starts a background server
+  // it does not get stopped and leaves a process hanging
+  // so manage it manually instead
+  // See https://github.com/workbenchdev/Workbench/issues/828
+  const subprocess_launcher = Gio.SubprocessLauncher.new(
+    Gio.SubprocessFlags.STDERR_SILENCE,
+  );
+  proc_biome = subprocess_launcher.spawnv([
+    "biome",
+    "__run_server",
+    "--config-path",
+    pkg.pkgdatadir,
+  ]);
+
+  Library({
     application,
   });
 
   ShortcutsWindow({ application });
 
   restoreSessions().catch(console.error);
+});
+
+application.connect("shutdown", () => {
+  proc_biome?.force_exit();
 });
 
 application.connect("activate", () => {

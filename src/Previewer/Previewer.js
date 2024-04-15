@@ -147,9 +147,7 @@ export default function Previewer({
           panel_code.language === "JavaScript" &&
           flags & Gtk.BuilderClosureFlags.SWAPPED
         ) {
-          console.warning(
-            'Signal flag "swapped" is unsupported in JavaScript.',
-          );
+          console.warn('Signal flag "swapped" is unsupported in JavaScript.');
         }
         return this[function_name] || this.noop;
       }

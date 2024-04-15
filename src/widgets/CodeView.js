@@ -30,6 +30,12 @@ class CodeView extends Gtk.Widget {
     // https://github.com/workbenchdev/Workbench/pull/853/files#r1443560736
     this._code_find.transition_type = Gtk.RevealerTransitionType.SLIDE_UP;
 
+    this._code_find.connect("notify::reveal-child", () => {
+      if (this._code_find.reveal_child === false) {
+        this.source_view.grab_focus();
+      }
+    });
+
     try {
       this.language = language_manager.get_language(language_id);
       this.buffer.set_language(this.language);

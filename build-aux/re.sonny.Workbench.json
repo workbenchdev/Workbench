@@ -1,7 +1,7 @@
 {
   "id": "re.sonny.Workbench",
   "runtime": "org.gnome.Sdk",
-  "runtime-version": "master",
+  "runtime-version": "46",
   "sdk": "org.gnome.Sdk",
   "sdk-extensions": [
     "org.freedesktop.Sdk.Extension.vala",
@@ -13,6 +13,7 @@
     "append-ld-library-path": "/usr/lib/sdk/vala/lib"
   },
   "command": "workbench",
+  "separate-locales": false,
   "finish-args": [
     "--share=ipc",
     "--socket=fallback-x11",
@@ -22,7 +23,7 @@
     "--socket=pulseaudio"
   ],
   "cleanup": [
-    "/include",
+    "#/include",
     "#/lib/pkgconfig",
     "/man",
     "/share/doc",
@@ -34,7 +35,6 @@
     "*.a"
   ],
   "modules": [
-    "modules/python-black.json",
     "modules/blueprint-compiler.json",
     "modules/biome.json",
     "modules/gst-plugin-gtk4.json",
@@ -44,6 +44,9 @@
     "modules/libspelling.json",
     "modules/GTKCssLanguageServer.json",
     "modules/icon-development-kit.json",
+    "modules/python-python-lsp-server.json",
+    "modules/python-ruff.json",
+    "modules/python-python-lsp-ruff.json",
     {
       "name": "Workbench",
       "buildsystem": "meson",

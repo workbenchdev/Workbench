@@ -1,0 +1,48 @@
+{
+  "name": "python3-ruff",
+  "buildsystem": "simple",
+  "build-commands": [
+    ". /usr/lib/sdk/rust-stable/enable.sh && pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"ruff\""
+  ],
+  "build-options": {
+    "env": {
+      "CARGO_HOME": "/run/build/python3-ruff/cargo",
+      "CARGO_NET_OFFLINE": "true"
+    }
+  },
+  "sources": [
+    {
+      "type": "file",
+      "url": "https://files.pythonhosted.org/packages/20/90/43a3aa35f037e91582ec7516a92084a71f84e89e39ef580813bed072b154/maturin-1.4.0.tar.gz",
+      "sha256": "ed12e1768094a7adeafc3a74ebdb8dc2201fa64c4e7e31f14cfc70378bf93790"
+    },
+    "sources/cargo-sources-maturin.json",
+    {
+      "type": "file",
+      "url": "https://files.pythonhosted.org/packages/ef/cc/93f7213b2ab5ed383f98ce8020e632ef256b406b8569606c3f160ed8e1c9/setuptools-68.2.2.tar.gz",
+      "sha256": "4ac1475276d2f1c48684874089fefcd83bd7162ddaafb81fac866ba0db282a87"
+    },
+    {
+      "type": "file",
+      "url": "https://files.pythonhosted.org/packages/c7/c3/55076fc728723ef927521abaa1955213d094933dc36d4a2008d5101e1af5/wheel-0.42.0-py3-none-any.whl",
+      "sha256": "177f9c9b0d45c47873b619f5b650346d632cdc35fb5e4d25058e09c9e581433d"
+    },
+    {
+      "type": "file",
+      "url": "https://files.pythonhosted.org/packages/f7/7f/8b1c33598b03ad612b8ced223f9ca54076b789fabf5a66ce37cc096d9cf7/setuptools_rust-1.9.0-py3-none-any.whl",
+      "sha256": "409caf49dcf7ad9bd510b4bf4011fbad504e745fae98f57fe1c06f3a97719638"
+    },
+    {
+      "type": "file",
+      "url": "https://files.pythonhosted.org/packages/6a/23/8146aad7d88f4fcb3a6218f41a60f6c2d4e3a72de72da1825dc7c8f7877c/semantic_version-2.10.0-py2.py3-none-any.whl",
+      "sha256": "de78a3b8e0feda74cabc54aab2da702113e33ac9d9eb9d2389bcf1f58b7d9177"
+    },
+
+    {
+      "type": "file",
+      "url": "https://files.pythonhosted.org/packages/61/b0/5fb64bc79464823ca94e566c9000143ddc11f9396c6e20202315059dd64f/ruff-0.3.0.tar.gz",
+      "sha256": "0886184ba2618d815067cf43e005388967b67ab9c80df52b32ec1152ab49f53a"
+    },
+    "sources/cargo-sources-ruff.json"
+  ]
+}

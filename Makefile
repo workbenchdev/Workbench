@@ -4,9 +4,8 @@ SHELL:=/bin/bash -O globstar
 
 setup:
 	flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-	flatpak remote-add --user --if-not-exists gnome-nightly https://nightly.gnome.org/gnome-nightly.flatpakrepo
-	flatpak install --or-update --user --noninteractive gnome-nightly org.gnome.Sdk//master
-	flatpak install --or-update --user --noninteractive flathub org.flatpak.Builder org.freedesktop.Sdk.Extension.rust-stable//23.08 org.freedesktop.Sdk.Extension.vala//23.08 org.freedesktop.Sdk.Extension.llvm16//23.08
+# flatpak remote-add --user --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
+	flatpak install --or-update --user --noninteractive flathub org.gnome.Sdk//46 org.flatpak.Builder org.freedesktop.Sdk.Extension.rust-stable//23.08 org.freedesktop.Sdk.Extension.vala//23.08 org.freedesktop.Sdk.Extension.llvm16//23.08
 	npm install
 	make build
 
@@ -23,7 +22,8 @@ lint:
 # Rust
 	./build-aux/fun rustfmt --check --edition 2021 src/**/*.rs
 # Python
-	./build-aux/fun black --check src/**/*.py
+	./build-aux/fun ruff check --config=src/langs/python/ruff.toml src/**/*.py
+	./build-aux/fun ruff format --config=src/langs/python/ruff.toml --check src/**/*.py
 # Blueprint
 	./build-aux/fun blueprint-compiler format src/**/*.blp
 	./build-aux/fun workbench-cli check blueprint src/**/*.blp
@@ -49,10 +49,10 @@ unit:
 # flatpak run --env=G_DEBUG=fatal-criticals --command=appstream-util org.flatpak.Builder validate data/app.metainfo.xml
 
 test: unit lint
-	./build-aux/fun workbench-cli ci demos/demos/Welcome
+	./build-aux/fun workbench-cli ci demos/src/Welcome
 
 ci: setup test
-	./build-aux/fun workbench-cli ci demos/demos/**
+	./build-aux/fun workbench-cli ci demos/src/*
 
 # Note that if you have Sdk extensions installed they will be used
 # make sure to test without the sdk extensions installed

@@ -81,6 +81,10 @@ ${getBlueprintVersion()}
     "Urtsi Santsi <urtsi.santsi@proton.me>",
     "Roland Lötscher https://github.com/rolandlo",
     "Gregor Niehl https://fosstodon.org/@gregorni",
+    "Jamie Gravendeel https://jamie.garden",
+    "Bharat Tyagi https://github.com/BharatAtbrat",
+    "Jan Fooken https://git.janvhs.com",
+    "Vladimir Vaskov https://github.com/Rirusha",
     // Add yourself as
     // "John Doe",
     // or
@@ -99,5 +103,5 @@ function getValaVersion() {
 }
 
 function getBlueprintVersion() {
-  return "Blueprint 80aaee37";
+  return "Blueprint d47955c5";
 }

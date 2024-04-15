@@ -3,7 +3,6 @@ import GLib from "gi://GLib";
 import GObject from "gi://GObject";
 import Gio from "gi://Gio";
 import Adw from "gi://Adw";
-import Vte from "gi://Vte";
 
 import { buildRuntimePath, quitOnLastWindowClose } from "./util.js";
 import { languages } from "./common.js";
@@ -38,6 +37,7 @@ import {
   action_extensions,
   isRustEnabled,
   isValaEnabled,
+  Extensions,
 } from "./Extensions/Extensions.js";
 import { JavaScriptDocument } from "./langs/javascript/JavaScriptDocument.js";
 import { BlueprintDocument } from "./langs/blueprint/BlueprintDocument.js";
@@ -56,8 +56,6 @@ export default function Window({ application, session }) {
 
   const { settings } = session;
 
-  Vte.Terminal.new();
-
   const builder = Gtk.Builder.new_from_resource(resource);
 
   const window = builder.get_object("window");
@@ -66,6 +64,10 @@ export default function Window({ application, session }) {
   }
   window.application = application;
   window.title = `Workbench — ${session.name}`;
+
+  Extensions({
+    window,
+  });
 
   // Popover menu theme switcher
   const button_menu = builder.get_object("button_menu");
@@ -407,6 +409,10 @@ export default function Window({ application, session }) {
 
     term_console.scrollToEnd();
   }
+
+  // Hide Workbench own logs on start
+  // https://matrix.to/#/!pOGgkAueAsusiyFCTb:matrix.org/$17109266081ktyZv:gnome.org?via=gnome.org&via=matrix.org&via=matrix.cispa.de
+  term_console.clear();
 
   return { load, window, runCode };
 }

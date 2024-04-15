@@ -103,7 +103,7 @@ export const demos_dir = Gio.File.new_for_path(
   pkg.pkgdatadir,
 ).resolve_relative_path("demos");
 
-// There is no copy directory function
+// not recursive, ignores child directories
 export async function copyDirectory(source, destination) {
   const enumerator = await source.enumerate_children_async(
     `${Gio.FILE_ATTRIBUTE_STANDARD_NAME},${Gio.FILE_ATTRIBUTE_STANDARD_IS_HIDDEN}`,
@@ -126,11 +126,11 @@ export async function copyDirectory(source, destination) {
 
     try {
       await child.copy_async(
-        child_dest,
-        Gio.FileCopyFlags.NONE,
-        GLib.PRIORITY_DEFAULT,
-        null,
-        null,
+        child_dest, // destination
+        Gio.FileCopyFlags.NONE, // flags
+        GLib.PRIORITY_DEFAULT, // priority
+        null, // cancellable
+        null, // progress_callback
       );
     } catch (err) {
       if (!err.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.EXISTS)) {

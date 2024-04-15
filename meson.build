@@ -1,5 +1,5 @@
 project('Workbench', ['vala', 'c', 'rust'],
-  version: '46.0',
+  version: '46.1',
   meson_version: '>= 0.59.0',
   license: 'GPL-3.0-only'
 )
@@ -7,7 +7,7 @@ project('Workbench', ['vala', 'c', 'rust'],
 gnome = import('gnome')
 
 if get_option('profile') == 'development'
-	app_id = 're.sonny.Workbench.Devel'
+  app_id = 're.sonny.Workbench.Devel'
   vcs_tag = run_command('git', 'rev-parse', '--short', 'HEAD').stdout().strip()
   if vcs_tag == ''
     version_suffix = '-devel'

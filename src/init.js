@@ -1,17 +1,14 @@
-import "gi://Gtk?version=4.0";
-import "gi://GtkSource?version=5";
-import "gi://Adw?version=1";
-import "gi://Vte?version=3.91";
-import "gi://Soup?version=3.0";
-import "gi://WebKit?version=6.0";
-import "gi://Pango?version=1.0";
-
+import "gi://GIRepository?version=2.0";
 import Gtk from "gi://Gtk";
-import Gio from "gi://Gio";
-import Adw from "gi://Adw";
-import Xdp from "gi://Xdp";
 import Source from "gi://GtkSource";
-import WebKit from "gi://WebKit";
+import Adw from "gi://Adw";
+import Vte from "gi://Vte";
+import GObject from "gi://GObject";
+import Gio from "gi://Gio";
+import Xdp from "gi://Xdp";
+
+Adw.init();
+GObject.type_ensure(Vte.Terminal);
 
 Gio._promisify(Adw.AlertDialog.prototype, "choose", "choose_finish");
 Gio._promisify(Xdp.Portal.prototype, "trash_file", "trash_file_finish");
@@ -72,12 +69,6 @@ Gio._promisify(Source.FileLoader.prototype, "load_async", "load_finish");
 
 Gio._promisify(Gio.DBusProxy, "new", "new_finish");
 Gio._promisify(Gio.DBusConnection.prototype, "close", "close_finish");
-
-Gio._promisify(
-  WebKit.WebView.prototype,
-  "evaluate_javascript",
-  "evaluate_javascript_finish",
-);
 
 Gio._promisify(
   Gio.File.prototype,

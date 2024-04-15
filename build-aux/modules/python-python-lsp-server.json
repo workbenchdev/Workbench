@@ -1,0 +1,69 @@
+{
+    "name": "python3-python-lsp-server",
+    "buildsystem": "simple",
+    "build-commands": [
+        "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"python-lsp-server\""
+    ],
+    "sources": [
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/be/4f/1b6eb5a6d92ae52f3798e9fdffd225f1bcd017172bb732743315390a9025/docstring_to_markdown-0.13-py3-none-any.whl",
+            "sha256": "aa487059d0883e70e54da25c7b230e918d9e4d40f23d6dfaa2b73e4225b2d7dd"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/20/9f/bc63f0f0737ad7a60800bfd472a4836661adae21f9c2535f3957b1e54ceb/jedi-0.19.1-py2.py3-none-any.whl",
+            "sha256": "e983c654fe5c02867aef4cdfce5a2fbb4a50adc0af145f70504238f18ef5e7e0"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/05/63/8011bd08a4111858f79d2b09aad86638490d62fbf881c44e434a6dfca87b/parso-0.8.3-py2.py3-none-any.whl",
+            "sha256": "c001d4636cd3aecdaf33cbb40aebb59b094be2a74c556778ef5576c175e19e75"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/05/b8/42ed91898d4784546c5f06c60506400548db3f7a4b3fb441cba4e5c17952/pluggy-1.3.0-py3-none-any.whl",
+            "sha256": "d89c696a773f8bd377d18e5ecda92b7a3793cbe66c87060a6fb58c7b6e1061f7"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/cb/d9/656659d5b5d5f402b2b174cd0ba9bc827e07ce3c0bf88da65424baf64af8/python_lsp_jsonrpc-1.1.2-py3-none-any.whl",
+            "sha256": "7339c2e9630ae98903fdaea1ace8c47fba0484983794d6aafd0bd8989be2b03c"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/83/49/355783384945708c604f4ad4c773d4ec93bc609b691698e5d8ecfc51d01c/python_lsp_server-1.9.0-py3-none-any.whl",
+            "sha256": "6b947cf9dc33d7bed9abc936bb173140fcf606b6eb50cf02e27d4cb09f10d3fb"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/6e/54/6f2bdac7117e89a47de4511c9f01732a283457ab1bf856e1e51aa861619e/ujson-5.9.0.tar.gz",
+            "sha256": "89cc92e73d5501b8a7f48575eeb14ad27156ad092c2e9fc7e3cf949f07e75532"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/ec/1a/610693ac4ee14fcdf2d9bf3c493370e4f2ef7ae2e19217d7a237ff42367d/packaging-23.2-py3-none-any.whl",
+            "sha256": "8c491190033a9af7e1d931d0b5dacc2ef47509b34dd0de67ed209b5203fc88c7"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/0e/a3/b9a8b0adfe672bf0df5901707aa929d30a97ee390ba651910186776746d2/setuptools_scm-8.0.4-py3-none-any.whl",
+            "sha256": "b47844cd2a84b83b3187a5782c71128c28b4c94cad8bfb871da2784a5cb54c4f"
+        },
+        {
+            "type": "file",
+            "url": "https://files.pythonhosted.org/packages/b7/f4/6a90020cd2d93349b442bfcb657d0dc91eee65491600b2cb1d388bc98e6b/typing_extensions-4.9.0-py3-none-any.whl",
+            "sha256": "af72aea155e91adfc61c3ae9e0e342dbc0cba726d6cba4b6c72c1f34e47291cd"
+        },
+        {
+           "type": "file",
+           "url": "https://files.pythonhosted.org/packages/bb/e1/ed2dd0850446b8697ad28d118df885ad04140c64ace06c4bd559f7c8a94f/setuptools-69.0.2-py3-none-any.whl",
+           "sha256": "1e8fdff6797d3865f37397be788a4e3cba233608e9b509382a2777d25ebde7f2"
+        },
+        {
+           "type": "file",
+           "url": "https://files.pythonhosted.org/packages/c7/c3/55076fc728723ef927521abaa1955213d094933dc36d4a2008d5101e1af5/wheel-0.42.0-py3-none-any.whl",
+           "sha256": "177f9c9b0d45c47873b619f5b650346d632cdc35fb5e4d25058e09c9e581433d"
+        }
+    ]
+}

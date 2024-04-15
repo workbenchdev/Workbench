@@ -3,13 +3,17 @@ import GLib from "gi://GLib";
 
 import { createLSPClient } from "../../common.js";
 import { getLanguage } from "../../util.js";
+import { isRustEnabled } from "../../Extensions/Extensions.js";
 
 export function setup({ document }) {
+  if (!isRustEnabled()) return;
+
   const { file, buffer, code_view } = document;
 
   const lspc = createLSPClient({
     lang: getLanguage("rust"),
     root_uri: file.get_parent().get_uri(),
+    quiet: true,
   });
   lspc.buffer = buffer;
   lspc.uri = file.get_uri();
@@ -58,6 +62,7 @@ export async function installRustLibraries(destination) {
 
 async function copy(filename, source_dir, dest_dir, flags) {
   const file = source_dir.get_child(filename);
+
   try {
     await file.copy_async(
       dest_dir.get_child(file.get_basename()),

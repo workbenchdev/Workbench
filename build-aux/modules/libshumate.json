@@ -1,12 +1,38 @@
 {
   "name": "libshumate",
   "buildsystem": "meson",
-  "config-opts": ["-Dgtk_doc=false", "-Dlibsoup3=true"],
+  "config-opts": ["-Dgtk_doc=false"],
   "sources": [
     {
       "type": "archive",
-      "url": "https://download.gnome.org/sources/libshumate/1.1/libshumate-1.1.2.tar.xz",
-      "sha256": "8f094f6e7e256ab192800516ff96617abeec2363b054aad6aeb17e0088c1fb2c"
+      "url": "https://download.gnome.org/sources/libshumate/1.2/libshumate-1.2.0.tar.xz",
+      "sha256": "4f8413a707cd00f84cee39ca49f58c48fc436f008ea80d6532ac37dafd0ba96b"
+    }
+  ],
+  "modules": [
+    {
+      "name": "protobuf",
+      "buildsystem": "autotools",
+      "config-opts": ["DIST_LANG=cpp"],
+      "cleanup": ["/bin/protoc*", "/lib/libprotoc*", "/lib/libprotobuf-lite*"],
+      "sources": [
+        {
+          "type": "archive",
+          "url": "https://github.com/protocolbuffers/protobuf/releases/download/v3.17.3/protobuf-all-3.17.3.tar.gz",
+          "sha256": "77ad26d3f65222fd96ccc18b055632b0bfedf295cb748b712a98ba1ac0b704b2"
+        }
+      ]
+    },
+    {
+      "name": "protobuf-c",
+      "buildsystem": "autotools",
+      "sources": [
+        {
+          "type": "archive",
+          "url": "https://github.com/protobuf-c/protobuf-c/releases/download/v1.5.0/protobuf-c-1.5.0.tar.gz",
+          "sha256": "7b404c63361ed35b3667aec75cc37b54298d56dd2bcf369de3373212cc06fd98"
+        }
+      ]
     }
   ]
 }

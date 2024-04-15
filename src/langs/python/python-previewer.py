@@ -4,6 +4,7 @@ This is the previewer for Python demos. It connects via DBus back to
 Workbench and loads demos, providing them with a "workbench" module for
 the Workbench API.
 """
+
 from __future__ import annotations
 
 import importlib.util
@@ -136,7 +137,7 @@ class Previewer:
             )
         self.css = Gtk.CssProvider()
         self.css.connect("parsing-error", self.on_css_parsing_error)
-        self.css.load_from_data(content, len(content))
+        self.css.load_from_string(content)
         Gtk.StyleContext.add_provider_for_display(
             Gdk.Display.get_default(), self.css, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
         )
@@ -174,8 +175,8 @@ class Previewer:
     @DBusTemplate.Method()
     def screenshot(self, path: str) -> bool:
         paintable = Gtk.WidgetPaintable(widget=self.target)
-        width = self.target.get_allocated_width()
-        height = self.target.get_allocated_height()
+        width = self.target.get_width()
+        height = self.target.get_height()
         snapshot = Gtk.Snapshot()
         paintable.snapshot(snapshot, width, height)
         node = snapshot.to_node()
@@ -199,8 +200,7 @@ class Previewer:
         Gtk.Window.set_interactive_debugging(enabled)
 
     @DBusTemplate.Signal()
-    def window_open(self, open: bool):
-        ...
+    def window_open(self, open: bool): ...
 
     @DBusTemplate.Signal()
     def css_parser_error(
@@ -210,8 +210,7 @@ class Previewer:
         start_char: int,
         end_line: int,
         end_char: int,
-    ):
-        ...
+    ): ...
 
     @DBusTemplate.Property()
     def color_scheme(self) -> int:
@@ -233,7 +232,7 @@ class Previewer:
         self.window = the_window
         self.window.connect("close-request", self.on_window_closed)
 
-    def on_window_closed(self, *args):
+    def on_window_closed(self, *_args):
         self.window_open(False)
         self.window = None
         return False

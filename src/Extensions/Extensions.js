@@ -1,32 +1,20 @@
 import Gio from "gi://Gio";
-import GLib from "gi://GLib";
 
 import { build } from "../../troll/src/main.js";
 
 import Interface from "./Extensions.blp" with { type: "uri" };
 import illustration from "./extensions.svg";
-import { settings } from "../util.js";
 
 import "./Extension.js";
-
-const extensions = (() => {
-  const keyfile = new GLib.KeyFile();
-
-  keyfile.load_from_file("/.flatpak-info", GLib.KeyFileFlags.NONE);
-
-  return keyfile
-    .get_string_list("Instance", "runtime-extensions")
-    .map((extension) => extension.split("=")[0]);
-})();
 
 export const action_extensions = new Gio.SimpleAction({
   name: "extensions",
   parameter_type: null,
 });
 
-export default function Extensions({ application }) {
+export function Extensions({ window }) {
   const {
-    window,
+    dialog,
     picture_illustration,
     extension_rust,
     extension_vala,
@@ -47,28 +35,23 @@ export default function Extensions({ application }) {
   }
 
   action_extensions.connect("activate", () => {
-    settings.set_boolean("open-extensions", true);
-    window.present();
+    dialog.present(window);
   });
 
-  window.connect("close-request", () => {
-    settings.set_boolean("open-extensions", false);
-  });
-
-  if (settings.get_boolean("open-extensions")) {
-    window.present();
-  }
-
-  application.add_action(action_extensions);
+  window.add_action(action_extensions);
 }
 
+let rust_enabled;
 export function isRustEnabled() {
-  return (
-    extensions.includes("org.freedesktop.Sdk.Extension.rust-stable") &&
-    extensions.includes("org.freedesktop.Sdk.Extension.llvm16")
-  );
+  rust_enabled ??=
+    Gio.File.new_for_path("/usr/lib/sdk/rust-stable").query_exists(null) &&
+    Gio.File.new_for_path("/usr/lib/sdk/llvm16").query_exists(null);
+  return rust_enabled;
 }
 
+let vala_enabled;
 export function isValaEnabled() {
-  return extensions.includes("org.freedesktop.Sdk.Extension.vala");
+  vala_enabled ??=
+    Gio.File.new_for_path("/usr/lib/sdk/vala").query_exists(null);
+  return vala_enabled;
 }

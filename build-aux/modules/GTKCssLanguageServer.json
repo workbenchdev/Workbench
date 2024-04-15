@@ -6,7 +6,7 @@
     {
       "type": "git",
       "url": "https://github.com/JCWasmx86/GTKCssLanguageServer",
-      "commit": "6475047e6d2632467838769332bc849941ab2aaa"
+      "commit": "dcbe75012d2d26fbca2729cee014e4860e31fa53"
     }
   ],
   "modules": [
