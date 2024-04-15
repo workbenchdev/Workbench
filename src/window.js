@@ -370,7 +370,6 @@ export default function Window({ application, session }) {
   application.set_accels_for_action("win.close", ["<Control>W"]);
 
   window.connect("close-request", () => {
-    console.log("close");
     onCloseSession({ session, window }).catch(console.error);
     return true;
   });
@@ -382,8 +381,6 @@ export default function Window({ application, session }) {
 
   const documents = Object.values(langs).map((lang) => lang.document);
   async function load() {
-    session.load();
-
     panel_ui.stop();
     previewer.stop();
     documents.forEach((document) => document.stop());
@@ -439,20 +436,19 @@ async function setGtk4PreferDark(dark) {
 }
 
 async function onCloseSession({ session, window }) {
-  function close() {
-    session.unload();
+  function close(window) {
     quitOnLastWindowClose(window);
     window.destroy();
   }
 
   if (session.isProject()) {
     removeFromRecentProjects(session.file.get_path());
-    return close(session, window);
+    return close(window);
   }
 
   if (!session.settings.get_boolean("edited")) {
     await deleteSession(session);
-    return close(session, window);
+    return close(window);
   }
 
   const [response, location] = await promptSessionClose({ window });
@@ -464,7 +460,7 @@ async function onCloseSession({ session, window }) {
     await saveSessionAsProject(session, location);
   }
 
-  close(session, window);
+  close(window);
 }
 
 async function promptSessionClose({ window }) {

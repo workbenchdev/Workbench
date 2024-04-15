@@ -1,8 +1,6 @@
 import Gio from "gi://Gio";
 import GLib from "gi://GLib";
 import { gettext as _ } from "gettext";
-import Gdk from "gi://Gdk";
-import Gtk from "gi://Gtk";
 
 import {
   data_dir,
@@ -17,8 +15,6 @@ import {
 import { languages } from "./common.js";
 
 export const sessions_dir = data_dir.get_child("sessions");
-
-const icon_theme = Gtk.IconTheme.get_for_display(Gdk.Display.get_default());
 
 export async function getSessions() {
   const files = new Map();
@@ -143,7 +139,6 @@ To open and run this; [install Workbench from Flathub](https://flathub.org/apps/
 export class Session {
   file = null;
   settings = null;
-  resource = null;
   id = Math.random().toString().substring(2);
 
   constructor(file) {
@@ -158,22 +153,6 @@ export class Session {
       schema_id: `${pkg.name}.Session`,
       path: "/re/sonny/Workbench/",
     });
-  }
-
-  async load() {
-    await this.loadIcons();
-  }
-
-  async loadIcons() {
-    const search_paths = new Set(icon_theme.get_search_path());
-    search_paths.add(this.file.get_child("icons").get_path());
-    icon_theme.set_search_path([...search_paths]);
-  }
-
-  async unload() {
-    const search_paths = new Set(icon_theme.get_search_path());
-    search_paths.delete(this.file.get_child("icons"));
-    icon_theme.set_search_path([...search_paths]);
   }
 
   get name() {

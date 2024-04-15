@@ -177,6 +177,13 @@ namespace Workbench {
             this.window_open (true);
         }
 
+        public async void add_icon_search_path (string path) {
+            var icon_theme = Gtk.IconTheme.get_for_display(Gdk.Display.get_default());
+            var search_paths = icon_theme.get_search_path();
+            search_paths += path;
+            icon_theme.set_search_path(search_paths);
+        }
+
         public void enable_inspector (bool enabled) {
             Gtk.Window.set_interactive_debugging (enabled);
         }

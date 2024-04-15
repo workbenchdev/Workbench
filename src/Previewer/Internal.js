@@ -3,12 +3,15 @@ import * as postcss from "../lib/postcss.js";
 import Graphene from "gi://Graphene";
 import GObject from "gi://GObject";
 import Adw from "gi://Adw";
+import Gdk from "gi://Gdk";
 
 import { once } from "../../troll/src/async.js";
 import { build } from "../../troll/src/builder.js";
 
 // eslint-disable-next-line no-restricted-globals
 const { addSignalMethods } = imports.signals;
+
+const icon_theme = Gtk.IconTheme.get_for_display(Gdk.Display.get_default());
 
 export default function Internal({
   onWindowChange,
@@ -55,6 +58,12 @@ export default function Internal({
     object_root?.close();
   }
 
+  async function start(_language) {
+    const search_paths = new Set(icon_theme.get_search_path());
+    search_paths.add(session.file.get_child("icons").get_path());
+    icon_theme.set_search_path([...search_paths]);
+  }
+
   function stop() {
     close();
     if (css_provider) {
@@ -66,6 +75,10 @@ export default function Internal({
     }
     object_root?.destroy();
     object_root = null;
+
+    const search_paths = new Set(icon_theme.get_search_path());
+    search_paths.delete(this.file.get_child("icons"));
+    icon_theme.set_search_path([...search_paths]);
   }
 
   function preview(object) {
@@ -228,7 +241,7 @@ export default function Internal({
   }
 
   return {
-    async start(_language) {},
+    start,
     open,
     close,
     stop,
