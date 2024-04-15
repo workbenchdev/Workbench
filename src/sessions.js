@@ -1,6 +1,8 @@
 import Gio from "gi://Gio";
 import GLib from "gi://GLib";
 import { gettext as _ } from "gettext";
+import Gdk from "gi://Gdk";
+import Gtk from "gi://Gtk";
 
 import {
   data_dir,
@@ -11,12 +13,12 @@ import {
   encode,
   settings,
   copyDirectory,
-  decode,
 } from "./util.js";
 import { languages } from "./common.js";
-import { createElement as xml } from "./langs/xml/xml.js";
 
 export const sessions_dir = data_dir.get_child("sessions");
+
+const icon_theme = Gtk.IconTheme.get_for_display(Gdk.Display.get_default());
 
 export async function getSessions() {
   const files = new Map();
@@ -159,15 +161,19 @@ export class Session {
   }
 
   async load() {
-    const resource = await buildGresourceIcons(this.file);
-    if (!resource) return;
-    this.resource = resource;
-    this.resource._register();
+    await this.loadIcons();
+  }
+
+  async loadIcons() {
+    const search_paths = new Set(icon_theme.get_search_path());
+    search_paths.add(this.file.get_child("icons").get_path());
+    icon_theme.set_search_path([...search_paths]);
   }
 
   async unload() {
-    this.resource?._unregister();
-    this.resource = null;
+    const search_paths = new Set(icon_theme.get_search_path());
+    search_paths.delete(this.file.get_child("icons"));
+    icon_theme.set_search_path([...search_paths]);
   }
 
   get name() {
@@ -194,68 +200,4 @@ export function removeFromRecentProjects(path) {
   const recent_projects = new Set(settings.get_strv("recent-projects"));
   recent_projects.delete(path);
   settings.set_strv("recent-projects", [...recent_projects]);
-}
-
-async function buildGresourceIcons(file) {
-  const dir = file.get_child("icons");
-  let enumerator;
-
-  try {
-    enumerator = await dir.enumerate_children_async(
-      `${Gio.FILE_ATTRIBUTE_STANDARD_NAME},${Gio.FILE_ATTRIBUTE_STANDARD_IS_HIDDEN}`,
-      Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
-      GLib.PRIORITY_DEFAULT,
-      null,
-    );
-  } catch (err) {
-    if (!err.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.NOT_FOUND)) {
-      throw err;
-    }
-    return;
-  }
-
-  const files = [];
-  for await (const file_info of enumerator) {
-    if (file_info.get_file_type() === Gio.FileType.DIRECTORY) continue;
-    if (file_info.get_is_hidden()) return;
-
-    const child = enumerator.get_child(file_info);
-    files.push(child);
-  }
-
-  if (files.length < 1) return;
-
-  const prefix = "/re/sonny/Workbench/icons/scalable/actions/";
-  const root = xml(
-    "gresources",
-    {},
-    xml(
-      "gresource",
-      { prefix },
-      files.map((file) => xml("file", {}, file.get_basename())),
-    ),
-  );
-  const gresource_xml = `<?xml version="1.0" encoding="UTF-8" ?>${root.toString()}`;
-
-  const [file_xml] = Gio.File.new_tmp("workbench-XXXXXX.gresource.xml");
-  file_xml.replace_contents(
-    gresource_xml, // contents
-    null, // etag
-    false, // make_backup
-    Gio.FileCreateFlags.NONE, // flags
-    null,
-  );
-
-  const [file_gresource] = Gio.File.new_tmp("workbench-XXXXXX.gresource");
-
-  const [, stdout, stderr, status] = GLib.spawn_command_line_sync(
-    `glib-compile-resources --target="${file_gresource.get_path()}" --sourcedir="${dir.get_path()}" "${file_xml.get_path()}"`,
-  );
-  console.debug(stdout);
-  if (status !== 0) {
-    throw new Error(decode(stderr));
-  }
-
-  const resource = Gio.resource_load(file_gresource.get_path());
-  return resource;
 }

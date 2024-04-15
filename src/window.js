@@ -240,6 +240,7 @@ export default function Window({ application, session }) {
     panel_ui.stop();
 
     try {
+      await session.loadIcons();
       await panel_ui.update();
 
       await formatCode();
