@@ -435,12 +435,12 @@ async function setGtk4PreferDark(dark) {
   settings.save_to_file(settings_path);
 }
 
-async function onCloseSession({ session, window }) {
-  function close(window) {
-    quitOnLastWindowClose(window);
-    window.destroy();
-  }
+function close(window) {
+  quitOnLastWindowClose(window);
+  window.destroy();
+}
 
+async function onCloseSession({ session, window }) {
   if (session.isProject()) {
     removeFromRecentProjects(session.file.get_path());
     return close(window);
