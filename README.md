@@ -31,14 +31,14 @@ Among other things, Workbench comes with
 
 |            | Formatter | Linter | Library demos[1] |
 | ---------- | --------- | ------ | ---------------- |
-| JavaScript | ✅        | ✅     | 95               |
-| Python     | ✅        | ✅     | 89               |
-| Vala       | ✅        | ✅     | 59               |
+| JavaScript | ✅        | ✅     | 98               |
+| Python     | ✅        | ✅     | 90               |
+| Vala       | ✅        | ✅     | 65               |
 | Rust       | ✅        | ✅     | 45               |
 | Blueprint  | ✅        | ✅     |                  |
 | CSS        | ✅        | ✅     |                  |
 
-[1] As of 2024-01-14 <!--counted with `~/go/bin/scc demos/src`-->
+[1] As of 2024-04-14 <!--counted with `~/go/bin/scc demos/src`-->
 
 ## Tips and tricks
 
