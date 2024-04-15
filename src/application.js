@@ -31,17 +31,11 @@ application.connect("open", (_self, files, hint) => {
   const session = new Session(file);
 
   addToRecentProjects(file.get_path());
-
-  session
-    .load()
-    .then(() => {
-      const window = Window({
-        application,
-        session,
-      });
-      return window.load();
-    })
-    .catch(console.error);
+  const { load } = Window({
+    application,
+    session,
+  });
+  load().catch(console.error);
 });
 
 let proc_biome;
@@ -102,18 +96,13 @@ async function restoreSessions() {
   if (sessions.length < 1) {
     bootstrap().catch(console.error);
   } else {
-    for (const session of sessions) {
-      session
-        .load()
-        .then(() => {
-          const window = Window({
-            application,
-            session,
-          });
-          return window.load();
-        })
-        .catch(console.error);
-    }
+    sessions.forEach((session) => {
+      const { load } = Window({
+        application,
+        session,
+      });
+      load().catch(console.error);
+    });
   }
 }
 

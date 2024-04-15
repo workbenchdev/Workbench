@@ -103,7 +103,6 @@ export const demos_dir = Gio.File.new_for_path(
   pkg.pkgdatadir,
 ).resolve_relative_path("demos");
 
-// not recursive, ignores child directories
 export async function copyDirectory(source, destination) {
   const enumerator = await source.enumerate_children_async(
     `${Gio.FILE_ATTRIBUTE_STANDARD_NAME},${Gio.FILE_ATTRIBUTE_STANDARD_IS_HIDDEN}`,
