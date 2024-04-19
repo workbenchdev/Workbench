@@ -6,10 +6,12 @@
   "sdk-extensions": [
     "org.freedesktop.Sdk.Extension.vala",
     "org.freedesktop.Sdk.Extension.rust-stable",
-    "org.freedesktop.Sdk.Extension.llvm16"
+    "org.freedesktop.Sdk.Extension.llvm16",
+    "org.freedesktop.Sdk.Extension.node18",
+    "org.freedesktop.Sdk.Extension.typescript"
   ],
   "build-options": {
-    "append-path": "/usr/lib/sdk/vala/bin:/usr/lib/sdk/rust-stable/bin",
+    "append-path": "/usr/lib/sdk/node18/bin:/usr/lib/sdk/typescript/bin:/usr/lib/sdk/vala/bin:/usr/lib/sdk/rust-stable/bin",
     "append-ld-library-path": "/usr/lib/sdk/vala/lib"
   },
   "command": "workbench",
