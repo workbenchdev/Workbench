@@ -37,6 +37,7 @@ import { RustDocument } from "./langs/rust/RustDocument.js";
 import { PythonDocument } from "./langs/python/PythonDocument.js";
 import { XmlDocument } from "./langs/xml/XmlDocument.js";
 import { ValaDocument } from "./langs/vala/ValaDocument.js";
+import { TypeScriptDocument } from "./langs/typescript/TypeScriptDocument.js";
 
 import resource from "./window.blp";
 
@@ -82,6 +83,13 @@ export default function Window({ application, session }) {
     session,
   });
   langs.javascript.document = document_javascript;
+
+  const document_typescript = new TypeScriptDocument({
+    code_view: builder.get_object("code_view_typescript"),
+    lang: langs.typescript,
+    session,
+  });
+  langs.typescript.document = document_typescript;
 
   const document_vala = new ValaDocument({
     code_view: builder.get_object("code_view_vala"),
@@ -201,6 +209,8 @@ export default function Window({ application, session }) {
     if (panel_code.panel.visible) {
       if (panel_code.language === "JavaScript") {
         documents.push(document_javascript);
+      } else if (panel_code.language === "TypeScript") {
+        documents.push(document_typescript);
       } else if (panel_code.language === "Rust") {
         documents.push(document_rust);
       } else if (panel_code.language === "Python") {
@@ -302,6 +312,34 @@ export default function Window({ application, session }) {
           .catch(console.error);
       }
       previewer.setSymbols(exports);
+    } else if (language === "TypeScript") {
+      await previewer.update(true);
+
+      // We have to create a new file each time
+      // because gjs doesn't appear to use etag for module caching
+      // ?foo=Date.now() also does not work as expected
+      // TODO: File a bug
+      const path = buildRuntimePath(`workbench-${Date.now()}`);
+      const file_typescript = Gio.File.new_for_path(path);
+      await file_typescript.replace_contents_async(
+        new GLib.Bytes(text),
+        null,
+        false,
+        Gio.FileCreateFlags.NONE,
+        null,
+      );
+      let exports;
+      try {
+        exports = await import(`file://${file_typescript.get_path()}`);
+      } catch (err) {
+        await previewer.update(true);
+        throw err;
+      } finally {
+        file_typescript
+          .delete_async(GLib.PRIORITY_DEFAULT, null)
+          .catch(console.error);
+      }
+      previewer.setSymbols(exports);
     } else if (language === "Vala") {
       compiler_vala = compiler_vala || ValaCompiler({ session });
       const success = await compiler_vala.compile();
@@ -394,6 +432,7 @@ export default function Window({ application, session }) {
 
     await Promise.all([
       document_javascript.load(),
+      document_typescript.load(),
       document_rust.load(),
       document_vala.load(),
       document_python.load(),

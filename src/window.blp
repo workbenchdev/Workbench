@@ -184,6 +184,7 @@ Adw.ApplicationWindow window {
                   model: StringList {
                     strings [
                       "JavaScript",
+                      "TypeScript",
                       "Vala",
                       "Rust",
                       "Python",
@@ -205,6 +206,14 @@ Adw.ApplicationWindow window {
 
                 child: $CodeView code_view_javascript {
                   language_id: 'js';
+                };
+              }
+
+              StackPage {
+                name: 'TypeScript';
+
+                child: $CodeView code_view_typescript {
+                  language_id: 'typescript';
                 };
               }
 

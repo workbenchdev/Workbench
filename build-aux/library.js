@@ -71,6 +71,9 @@ const demos = [];
     if (demo_dir.get_child("main.js").query_exists(null)) {
       languages.push("javascript");
     }
+    if (demo_dir.get_child("main.ts").query_exists(null)) {
+      languages.push("typescript");
+    }
     if (demo_dir.get_child("main.vala").query_exists(null)) {
       languages.push("vala");
     }
