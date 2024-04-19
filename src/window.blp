@@ -187,6 +187,7 @@ Adw.ApplicationWindow window {
                       "Vala",
                       "Rust",
                       "Python",
+                      "TypeScript",
                     ]
                   };
 
@@ -229,6 +230,14 @@ Adw.ApplicationWindow window {
 
                 child: $CodeView code_view_python {
                   language_id: 'python3';
+                };
+              }
+
+              StackPage {
+                name: 'TypeScript';
+
+                child: $CodeView code_view_typescript {
+                  language_id: 'typescript';
                 };
               }
             }

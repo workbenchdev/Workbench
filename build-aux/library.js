@@ -80,6 +80,9 @@ const demos = [];
     if (demo_dir.get_child("main.py").query_exists(null)) {
       languages.push("python");
     }
+    if (demo_dir.get_child("main.ts").query_exists(null)) {
+      languages.push("typescript");
+    }
     demo.languages = languages;
 
     await copyDemo(
