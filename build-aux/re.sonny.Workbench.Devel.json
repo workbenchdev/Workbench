@@ -43,6 +43,7 @@
     "modules/libportal.json",
     "modules/libspelling.json",
     "modules/GTKCssLanguageServer.json",
+    "modules/icon-development-kit.json",
     "modules/python-python-lsp-server.json",
     "modules/python-ruff.json",
     "modules/python-python-lsp-ruff.json",
