@@ -146,6 +146,8 @@ export class Session {
   file = null;
   settings = null;
   id = Math.random().toString().substring(2);
+  resource_icons = null;
+  resource_icons_file = null;
 
   constructor(file) {
     this.file = file;
@@ -167,21 +169,22 @@ export class Session {
 
   async loadIcons() {
     await this.unloadIcons();
-    const resource = await buildGResourceIcons(this.file);
-    if (!resource) return;
-    this.resource = resource;
+    const resource_icons_file = await buildGResourceIcons(this.file);
+    if (!resource_icons_file) return;
+    this.resource_icons_file = resource_icons_file;
+    this.resource_icons = Gio.resource_load(resource_icons_file.get_path());
 
     // Reload icons see https://github.com/sonnyp/gtk-resource-icons
     const resource_paths = new Set(icon_theme.resource_path);
     resource_paths.add("/re/sonny/Workbench/icons");
     icon_theme.set_resource_path([...resource_paths]);
 
-    this.resource._register();
+    this.resource_icons._register();
   }
 
   async unloadIcons() {
-    this.resource?._unregister();
-    this.resource = null;
+    this.resource_icons?._unregister();
+    this.resource_icons = null;
   }
 
   async unload() {
@@ -256,7 +259,9 @@ async function buildGResourceIcons(file) {
   );
   const gresource_xml = `<?xml version="1.0" encoding="UTF-8" ?>${root.toString()}`;
 
-  const [file_xml] = Gio.File.new_tmp("workbench-XXXXXX.gresource.xml");
+  const file_xml = file.get_child("icons.gresource.xml");
+  const file_gresource = file.get_child("icons.gresource");
+
   file_xml.replace_contents(
     gresource_xml, // contents
     null, // etag
@@ -264,8 +269,6 @@ async function buildGResourceIcons(file) {
     Gio.FileCreateFlags.NONE, // flags
     null,
   );
-
-  const [file_gresource] = Gio.File.new_tmp("workbench-XXXXXX.gresource");
 
   const [, stdout, stderr, status] = GLib.spawn_command_line_sync(
     `glib-compile-resources --target="${file_gresource.get_path()}" --sourcedir="${dir.get_path()}" "${file_xml.get_path()}"`,
@@ -275,6 +278,5 @@ async function buildGResourceIcons(file) {
     throw new Error(decode(stderr));
   }
 
-  const resource = Gio.resource_load(file_gresource.get_path());
-  return resource;
+  return file_gresource;
 }

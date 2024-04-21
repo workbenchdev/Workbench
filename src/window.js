@@ -26,6 +26,7 @@ import "./icons/re.sonny.Workbench-placeholder-symbolic.svg" with { type: "icon"
 import "./icons/re.sonny.Workbench-preview-symbolic.svg" with { type: "icon" };
 import "./icons/re.sonny.Workbench-ui-symbolic.svg" with { type: "icon" };
 import "./icons/re.sonny.Workbench-screenshot-symbolic.svg" with { type: "icon" };
+import "./icons/re.sonny.Workbench-multitasking-windows-symbolic.svg" with { type: "icon" };
 
 import "./widgets/Modal.js";
 import "./widgets/CodeView.js";

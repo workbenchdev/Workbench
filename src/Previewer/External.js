@@ -24,14 +24,6 @@ export default function External({ output, builder, onWindowChange, session }) {
     } catch (err) {
       console.error(err);
     }
-
-    try {
-      await dbus_proxy.AddIconSearchPathAsync(
-        session.file.get_child("icons").get_path(),
-      );
-    } catch (err) {
-      console.debug(err);
-    }
   }
 
   async function open() {

@@ -3,7 +3,6 @@ import * as postcss from "../lib/postcss.js";
 import Graphene from "gi://Graphene";
 import GObject from "gi://GObject";
 import Adw from "gi://Adw";
-import Gdk from "gi://Gdk";
 
 import { once } from "../../troll/src/async.js";
 import { build } from "../../troll/src/builder.js";
