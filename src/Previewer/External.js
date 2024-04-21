@@ -1,7 +1,7 @@
 import Adw from "gi://Adw";
 import dbus_previewer from "./DBusPreviewer.js";
 
-export default function External({ output, builder, onWindowChange, session }) {
+export default function External({ output, builder, onWindowChange }) {
   const stack = builder.get_object("stack_preview");
   let dbus_proxy;
 
@@ -23,14 +23,6 @@ export default function External({ output, builder, onWindowChange, session }) {
       dbus_proxy = await dbus_previewer.getProxy(language);
     } catch (err) {
       console.error(err);
-    }
-
-    try {
-      await dbus_proxy.AddIconSearchPathAsync(
-        session.file.get_child("icons").get_path(),
-      );
-    } catch (err) {
-      console.debug(err);
     }
   }
 

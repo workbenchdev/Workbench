@@ -4,7 +4,8 @@ using Vte 3.91;
 using GtkSource 5;
 
 Adw.ApplicationWindow window {
-  maximized: true;
+  default-width: 1920;
+  default-height: 1200;
 
   Adw.ToolbarView {
     top-bar-style: raised;
@@ -414,7 +415,7 @@ Adw.ApplicationWindow window {
                 child: Adw.StatusPage {
                   title: _("Windowed Preview");
                   description: _("This interface can only be previewed as a separate window.\nWe recommend using “Always on Top”.");
-                  icon-name: "multitasking-windows-symbolic";
+                  icon-name: "re.sonny.Workbench-multitasking-windows-symbolic";
 
                   Box {
                     halign: center;
@@ -437,7 +438,7 @@ Adw.ApplicationWindow window {
                 child: Adw.StatusPage {
                   title: _("Windowed Preview");
                   description: _("This interface can only be previewed as a separate window.\nWe recommend using “Always on Top”.");
-                  icon-name: "multitasking-windows-symbolic";
+                  icon-name: "re.sonny.Workbench-multitasking-windows-symbolic";
 
                   Box {
                     halign: center;

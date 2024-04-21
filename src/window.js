@@ -16,6 +16,7 @@ import ValaCompiler from "./langs/vala/Compiler.js";
 import RustCompiler from "./langs/rust/Compiler.js";
 import PythonBuilder from "./langs/python/Builder.js";
 import ThemeSelector from "../troll/src/widgets/ThemeSelector.js";
+import { persistWindowState } from "../troll/src/util.js";
 
 import resource from "./window.blp";
 
@@ -25,6 +26,7 @@ import "./icons/re.sonny.Workbench-placeholder-symbolic.svg" with { type: "icon"
 import "./icons/re.sonny.Workbench-preview-symbolic.svg" with { type: "icon" };
 import "./icons/re.sonny.Workbench-ui-symbolic.svg" with { type: "icon" };
 import "./icons/re.sonny.Workbench-screenshot-symbolic.svg" with { type: "icon" };
+import "./icons/re.sonny.Workbench-multitasking-windows-symbolic.svg" with { type: "icon" };
 
 import "./widgets/Modal.js";
 import "./widgets/CodeView.js";
@@ -64,6 +66,8 @@ export default function Window({ application, session }) {
   }
   window.application = application;
   window.title = `Workbench — ${session.name}`;
+
+  persistWindowState({ window, settings });
 
   Extensions({
     window,
@@ -240,10 +244,9 @@ export default function Window({ application, session }) {
     panel_ui.stop();
 
     try {
+      await session.loadIcons();
       await panel_ui.update();
-
       await formatCode();
-
       await compile();
     } catch (err) {
       // prettier xml errors are not instances of Error
@@ -381,6 +384,7 @@ export default function Window({ application, session }) {
 
   const documents = Object.values(langs).map((lang) => lang.document);
   async function load() {
+    await session.load(window);
     panel_ui.stop();
     previewer.stop();
     documents.forEach((document) => document.stop());
@@ -435,12 +439,14 @@ async function setGtk4PreferDark(dark) {
   settings.save_to_file(settings_path);
 }
 
-function close(window) {
-  quitOnLastWindowClose(window);
-  window.destroy();
-}
-
 async function onCloseSession({ session, window }) {
+  function close(window) {
+    quitOnLastWindowClose(window);
+    window.destroy();
+    session.unload().catch(console.error);
+  }
+
+  console.log("close");
   if (session.isProject()) {
     removeFromRecentProjects(session.file.get_path());
     return close(window);
