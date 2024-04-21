@@ -171,16 +171,17 @@ class Previewer:
         spec.loader.exec_module(module)
 
     def reload_icons(self, uri: str):
-        if (self.resource_icons is not None):
-            self.resource_icons._unregister ()
+        if self.resource_icons is not None:
+            self.resource_icons._unregister()
             self.resource_icons = None
 
         try:
-            self.resource_icons = Gio.Resource.load (Gio.File.new_for_uri(uri).get_child("icons.gresource").get_path())
-            self.resource_icons._register ()
+            self.resource_icons = Gio.Resource.load(
+                Gio.File.new_for_uri(uri).get_child("icons.gresource").get_path()
+            )
+            self.resource_icons._register()
         except Exception:
             pass
-
 
     @DBusTemplate.Method()
     def close_window(self):
