@@ -16,6 +16,12 @@ Gio._promisify(
   "replace_contents_finish",
 );
 
+Gio._promisify(
+  Gio.File.prototype,
+  "make_directory_async",
+  "make_directory_finish",
+);
+
 Gio._promisify(Gio.File.prototype, "copy_async", "copy_finish");
 
 const loop = new GLib.MainLoop(null, false);
@@ -121,10 +127,10 @@ async function copyDemo(source, destination) {
 
   for await (const file_info of enumerator) {
     if (file_info.get_is_hidden()) continue;
-    if (file_info.get_file_type() === Gio.FileType.DIRECTORY) continue;
 
     const child = enumerator.get_child(file_info);
     if (
+      // Sync with demos "make clean" and .gitignore
       [
         "Cargo.lock",
         "Cargo.toml",
@@ -134,14 +140,60 @@ async function copyDemo(source, destination) {
         "libworkbenchcode.so",
         "settings",
         "main.ui",
+        "icons.gresource",
+        "icons.gresource.xml",
       ].includes(child.get_basename())
     ) {
       continue;
     }
 
+    const child_dest = destination.get_child(child.get_basename());
+
+    if (file_info.get_file_type() === Gio.FileType.DIRECTORY) {
+      await child_dest.make_directory_async(GLib.PRIORITY_DEFAULT, null);
+      await copyDirectory(child, child_dest);
+      continue;
+    }
+
     try {
       await child.copy_async(
-        destination.get_child(child.get_basename()), // destination
+        child_dest, // destination
+        Gio.FileCopyFlags.NONE, // flags
+        GLib.PRIORITY_DEFAULT, // priority
+        null, // cancellable
+        null, // progress_callback
+      );
+    } catch (err) {
+      if (!err.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.EXISTS)) {
+        throw err;
+      }
+    }
+  }
+}
+
+export async function copyDirectory(source, destination) {
+  const enumerator = await source.enumerate_children_async(
+    `${Gio.FILE_ATTRIBUTE_STANDARD_NAME},${Gio.FILE_ATTRIBUTE_STANDARD_IS_HIDDEN}`,
+    Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
+    GLib.PRIORITY_DEFAULT,
+    null,
+  );
+
+  for await (const file_info of enumerator) {
+    if (file_info.get_is_hidden()) continue;
+
+    const child = enumerator.get_child(file_info);
+    const child_dest = destination.get_child(child.get_basename());
+
+    if (file_info.get_file_type() === Gio.FileType.DIRECTORY) {
+      await child_dest.make_directory_async(GLib.PRIORITY_DEFAULT, null);
+      await copyDirectory(child, child_dest);
+      continue;
+    }
+
+    try {
+      await child.copy_async(
+        child_dest, // destination
         Gio.FileCopyFlags.NONE, // flags
         GLib.PRIORITY_DEFAULT, // priority
         null, // cancellable
