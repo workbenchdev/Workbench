@@ -76,9 +76,8 @@ export default function PanelUI({
     "button_ui_experimental_blueprint",
   );
   button_ui_experimental_blueprint.connect("clicked", () => {
-    const modal = builder.get_object("modal_blueprint_experimental");
-    modal.set_transient_for(application.get_active_window());
-    modal.present();
+    const dialog = builder.get_object("dialog_blueprint_experimental");
+    dialog.present(application.get_active_window());
   });
   const button_blueprint_documentation = builder.get_object(
     "button_blueprint_documentation",

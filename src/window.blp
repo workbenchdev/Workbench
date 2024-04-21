@@ -550,11 +550,11 @@ Adw.ApplicationWindow window {
   }
 }
 
-$Modal modal_blueprint_experimental {
-  default-width: 368;
-  default-height: 480;
+Adw.Dialog dialog_blueprint_experimental {
+  content-width: 368;
+  content-height: 480;
 
-  child: Adw.StatusPage {
+  Adw.StatusPage {
     vexpand: true;
     description: _("Future versions may have breaking syntax");
     title: _("Blueprint is\nExperimental");
@@ -569,7 +569,7 @@ $Modal modal_blueprint_experimental {
         "pill"
       ]
     }
-  };
+  }
 }
 
 menu menu_app {

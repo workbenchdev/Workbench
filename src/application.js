@@ -14,6 +14,20 @@ import {
 } from "./sessions.js";
 import ShortcutsWindow from "./shortcutsWindow.js";
 
+import "./icons/re.sonny.Workbench-beaker.svg" with { type: "icon" };
+import "./icons/re.sonny.Workbench-code-symbolic.svg" with { type: "icon" };
+import "./icons/re.sonny.Workbench-placeholder-symbolic.svg" with { type: "icon" };
+import "./icons/re.sonny.Workbench-preview-symbolic.svg" with { type: "icon" };
+import "./icons/re.sonny.Workbench-ui-symbolic.svg" with { type: "icon" };
+import "./icons/re.sonny.Workbench-screenshot-symbolic.svg" with { type: "icon" };
+import "./icons/re.sonny.Workbench-multitasking-windows-symbolic.svg" with { type: "icon" };
+import "./icons/re.sonny.Workbench-down-symbolic.svg" with { type: "icon" };
+import "./icons/re.sonny.Workbench-eraser4-symbolic.svg" with { type: "icon" };
+import "./icons/re.sonny.Workbench-larger-brush-symbolic.svg" with { type: "icon" };
+import "./icons/re.sonny.Workbench-terminal-symbolic.svg" with { type: "icon" };
+import "./icons/re.sonny.Workbench-test-pass-symbolic.svg" with { type: "icon" };
+import "./icons/re.sonny.Workbench-up-symbolic.svg" with { type: "icon" };
+
 ensureDir(data_dir);
 
 const application = new Adw.Application({

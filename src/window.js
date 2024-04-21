@@ -18,24 +18,6 @@ import PythonBuilder from "./langs/python/Builder.js";
 import ThemeSelector from "../troll/src/widgets/ThemeSelector.js";
 import { persistWindowState } from "../troll/src/util.js";
 
-import resource from "./window.blp";
-
-import "./icons/re.sonny.Workbench-beaker.svg" with { type: "icon" };
-import "./icons/re.sonny.Workbench-code-symbolic.svg" with { type: "icon" };
-import "./icons/re.sonny.Workbench-placeholder-symbolic.svg" with { type: "icon" };
-import "./icons/re.sonny.Workbench-preview-symbolic.svg" with { type: "icon" };
-import "./icons/re.sonny.Workbench-ui-symbolic.svg" with { type: "icon" };
-import "./icons/re.sonny.Workbench-screenshot-symbolic.svg" with { type: "icon" };
-import "./icons/re.sonny.Workbench-multitasking-windows-symbolic.svg" with { type: "icon" };
-import "./icons/re.sonny.Workbench-down-symbolic.svg" with { type: "icon" };
-import "./icons/re.sonny.Workbench-eraser4-symbolic.svg" with { type: "icon" };
-import "./icons/re.sonny.Workbench-larger-brush-symbolic.svg" with { type: "icon" };
-import "./icons/re.sonny.Workbench-terminal-symbolic.svg" with { type: "icon" };
-import "./icons/re.sonny.Workbench-test-pass-symbolic.svg" with { type: "icon" };
-import "./icons/re.sonny.Workbench-up-symbolic.svg" with { type: "icon" };
-
-// FIXME Use AdwDialog
-import "./widgets/Modal.js";
 import "./widgets/CodeView.js";
 import {
   deleteSession,
@@ -55,6 +37,8 @@ import { RustDocument } from "./langs/rust/RustDocument.js";
 import { PythonDocument } from "./langs/python/PythonDocument.js";
 import { XmlDocument } from "./langs/xml/XmlDocument.js";
 import { ValaDocument } from "./langs/vala/ValaDocument.js";
+
+import resource from "./window.blp";
 
 const style_manager = Adw.StyleManager.get_default();
 
