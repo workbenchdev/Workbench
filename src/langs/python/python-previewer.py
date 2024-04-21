@@ -75,6 +75,7 @@ class Previewer:
     css: Gtk.CssProvider | None
     uri = str | None
     style_manager: Adw.StyleManager
+    resource_icons: GLib.Resource | None
 
     def __init__(self):
         self.style_manager = Adw.StyleManager.get_default()
@@ -83,6 +84,12 @@ class Previewer:
         self.builder = None
         self.target = None
         self.uri = None
+        self.resource_icons = None
+
+        icon_theme = Gtk.IconTheme.get_for_display(Gdk.Display.get_default())
+        resource_paths = icon_theme.get_resource_path()
+        resource_paths.append("/re/sonny/Workbench/icons")
+        icon_theme.set_resource_path(resource_paths)
 
     @DBusTemplate.Method()
     def update_ui(self, content: str, target_id: str, original_id: str = ""):
@@ -150,6 +157,8 @@ class Previewer:
         #  This will also allow us to destroy the interpreter and thus (hopefully) properly unload the module.
         self.uri = uri
 
+        self.reload_icons(uri)
+
         module_name = "__workbench__module__"
         if module_name in sys.modules:
             # this will NOT unload the previous module, unless it can be GC.
@@ -161,6 +170,19 @@ class Previewer:
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
 
+    def reload_icons(self, uri: str):
+        if self.resource_icons is not None:
+            self.resource_icons._unregister()
+            self.resource_icons = None
+
+        try:
+            self.resource_icons = Gio.Resource.load(
+                Gio.File.new_for_uri(uri).get_child("icons.gresource").get_path()
+            )
+            self.resource_icons._register()
+        except Exception:
+            pass
+
     @DBusTemplate.Method()
     def close_window(self):
         if self.window is not None:
@@ -171,13 +193,6 @@ class Previewer:
         self.window.set_default_size(width, height)
         self.window.present()
         self.window_open(True)
-
-    @DBusTemplate.Method()
-    def add_icon_search_path(self, path: str):
-        icon_theme = Gtk.IconTheme.get_for_display(Gdk.Display.get_default())
-        search_paths = icon_theme.get_search_path()
-        search_paths.append(path)
-        icon_theme.set_search_path(search_paths)
 
     @DBusTemplate.Method()
     def screenshot(self, path: str) -> bool:

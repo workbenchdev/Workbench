@@ -6,6 +6,11 @@ namespace Workbench {
             this.notify["ColorScheme"].connect (() => {
                 this.style_manager.color_scheme = this.ColorScheme;
             });
+
+            var icon_theme = Gtk.IconTheme.get_for_display(Gdk.Display.get_default());
+            var search_paths = icon_theme.get_resource_path();
+            search_paths += "/re/sonny/Workbench/icons";
+            icon_theme.set_resource_path(search_paths);
         }
 
         private void ensure_window () {
@@ -136,6 +141,8 @@ namespace Workbench {
                 return;
             }
 
+            this.reload_icons (uri);
+
             void* function;
 
             this.module.symbol ("set_base_uri", out function);
@@ -163,6 +170,17 @@ namespace Workbench {
             main_function ();
         }
 
+        public async void reload_icons (string uri) {
+            if (this.resource_icons != null) {
+                this.resource_icons._unregister ();
+                this.resource_icons = null;
+            }
+            try {
+                this.resource_icons = Resource.load (File.new_for_uri(uri).get_child("icons.gresource").get_path());
+                this.resource_icons._register ();
+            } catch {}
+        }
+
         public void close_window () {
             if (this.window == null) {
                 return;
@@ -175,13 +193,6 @@ namespace Workbench {
             this.window.default_height = height;
             this.window.present ();
             this.window_open (true);
-        }
-
-        public async void add_icon_search_path (string path) {
-            var icon_theme = Gtk.IconTheme.get_for_display(Gdk.Display.get_default());
-            var search_paths = icon_theme.get_search_path();
-            search_paths += path;
-            icon_theme.set_search_path(search_paths);
         }
 
         public void enable_inspector (bool enabled) {
@@ -212,6 +223,7 @@ namespace Workbench {
         private Module module;
         private Gtk.Builder? builder = null;
         private Adw.StyleManager style_manager = Adw.StyleManager.get_default ();
+        private GLib.Resource? resource_icons = null;
     }
 
     void main (string[] args) {
