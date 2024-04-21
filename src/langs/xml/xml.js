@@ -5,6 +5,7 @@ import {
   SaxLtx,
   parse,
   Element,
+  createElement,
 } from "../../lib/ltx.js";
 
 // adapted from ltx.stringify to work without Element and ignore whitespace
@@ -85,4 +86,4 @@ function format(str, indent = 2) {
   return s;
 }
 
-export { parse, Element, format };
+export { parse, Element, format, createElement };

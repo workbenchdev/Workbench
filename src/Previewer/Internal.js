@@ -11,7 +11,7 @@ import { build } from "../../troll/src/builder.js";
 // eslint-disable-next-line no-restricted-globals
 const { addSignalMethods } = imports.signals;
 
-const icon_theme = Gtk.IconTheme.get_for_display(Gdk.Display.get_default());
+// const icon_theme = Gtk.IconTheme.get_for_display(Gdk.Display.get_default());
 
 export default function Internal({
   onWindowChange,
@@ -59,9 +59,9 @@ export default function Internal({
   }
 
   async function start(_language) {
-    const search_paths = new Set(icon_theme.get_search_path());
-    search_paths.add(session.file.get_child("icons").get_path());
-    icon_theme.set_search_path([...search_paths]);
+    // const search_paths = new Set(icon_theme.get_search_path());
+    // search_paths.add(session.file.get_child("icons").get_path());
+    // icon_theme.set_search_path([...search_paths]);
   }
 
   function stop() {
@@ -76,9 +76,9 @@ export default function Internal({
     object_root?.destroy();
     object_root = null;
 
-    const search_paths = new Set(icon_theme.get_search_path());
-    search_paths.delete(this.file.get_child("icons"));
-    icon_theme.set_search_path([...search_paths]);
+    // const search_paths = new Set(icon_theme.get_search_path());
+    // search_paths.delete(this.file.get_child("icons"));
+    // icon_theme.set_search_path([...search_paths]);
   }
 
   function preview(object) {

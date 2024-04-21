@@ -243,10 +243,9 @@ export default function Window({ application, session }) {
     panel_ui.stop();
 
     try {
+      await session.loadIcons();
       await panel_ui.update();
-
       await formatCode();
-
       await compile();
     } catch (err) {
       // prettier xml errors are not instances of Error
@@ -384,6 +383,7 @@ export default function Window({ application, session }) {
 
   const documents = Object.values(langs).map((lang) => lang.document);
   async function load() {
+    await session.load(window);
     panel_ui.stop();
     previewer.stop();
     documents.forEach((document) => document.stop());
