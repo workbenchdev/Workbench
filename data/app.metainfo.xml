@@ -53,6 +53,7 @@
         <ul>
           <li>List editor shortcuts in Shortcuts</li>
           <li>Add "Find" to search for code in the current editor</li>
+          <li>Save and restore the session window state and dimensions</li>
         </ul>
       </description>
     </release>

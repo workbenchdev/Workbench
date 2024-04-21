@@ -16,6 +16,7 @@ import ValaCompiler from "./langs/vala/Compiler.js";
 import RustCompiler from "./langs/rust/Compiler.js";
 import PythonBuilder from "./langs/python/Builder.js";
 import ThemeSelector from "../troll/src/widgets/ThemeSelector.js";
+import { persistWindowState } from "../troll/src/util.js";
 
 import resource from "./window.blp";
 
@@ -64,6 +65,8 @@ export default function Window({ application, session }) {
   }
   window.application = application;
   window.title = `Workbench — ${session.name}`;
+
+  persistWindowState({ window, settings });
 
   Extensions({
     window,
