@@ -173,13 +173,12 @@ export class Session {
     if (!resource_icons_file) return;
     this.resource_icons_file = resource_icons_file;
     this.resource_icons = Gio.resource_load(resource_icons_file.get_path());
+    this.resource_icons._register();
 
     // Reload icons see https://github.com/sonnyp/gtk-resource-icons
     const resource_paths = new Set(icon_theme.resource_path);
     resource_paths.add("/re/sonny/Workbench/icons");
     icon_theme.set_resource_path([...resource_paths]);
-
-    this.resource_icons._register();
   }
 
   async unloadIcons() {

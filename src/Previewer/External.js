@@ -1,7 +1,7 @@
 import Adw from "gi://Adw";
 import dbus_previewer from "./DBusPreviewer.js";
 
-export default function External({ output, builder, onWindowChange, session }) {
+export default function External({ output, builder, onWindowChange }) {
   const stack = builder.get_object("stack_preview");
   let dbus_proxy;
 
