@@ -15,7 +15,7 @@ Adw.ApplicationWindow window {
       [start]
       Button button_library {
         child: Adw.ButtonContent {
-          icon-name: "library-symbolic";
+          icon-name: "re.sonny.Workbench-library-symbolic";
           label: _("_Library");
           use-underline: true;
         };
@@ -55,7 +55,7 @@ Adw.ApplicationWindow window {
             halign: center;
 
             Image {
-              icon-name: "larger-brush-symbolic";
+              icon-name: "re.sonny.Workbench-larger-brush-symbolic";
             }
 
             Label {
@@ -488,7 +488,7 @@ Adw.ApplicationWindow window {
 
               ToggleButton button_console {
                 child: Adw.ButtonContent {
-                  icon-name: "terminal-symbolic";
+                  icon-name: "re.sonny.Workbench-terminal-symbolic";
                   label: _("C_onsole");
                   use-underline: true;
                 };
@@ -512,7 +512,7 @@ Adw.ApplicationWindow window {
             Box {
               Button button_clear {
                 child: Adw.ButtonContent {
-                  icon-name: "eraser4-symbolic";
+                  icon-name: "re.sonny.Workbench-eraser4-symbolic";
                   label: _("Cl_ear");
                   use-underline: true;
                 };
@@ -650,11 +650,6 @@ menu menu_app {
           target: "https://matrix.to/#/#workbench:gnome.org";
         }
       }
-    }
-
-    item {
-      label: _("Icon Library");
-      action: "app.icon_library";
     }
 
     submenu {

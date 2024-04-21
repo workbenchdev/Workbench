@@ -228,7 +228,6 @@ async function buildGResourceIcons(file) {
       null,
     );
   } catch (err) {
-    console.log(err);
     if (!err.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.NOT_FOUND)) {
       throw err;
     }
