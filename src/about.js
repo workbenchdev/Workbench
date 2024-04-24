@@ -85,6 +85,7 @@ ${getBlueprintVersion()}
     "Bharat Tyagi https://github.com/BharatAtbrat",
     "Jan Fooken https://git.janvhs.com",
     "Vladimir Vaskov https://github.com/Rirusha",
+    "Devan P https://github.com/DevHyperCoder",
     // Add yourself as
     // "John Doe",
     // or
