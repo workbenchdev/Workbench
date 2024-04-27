@@ -63,6 +63,10 @@ const demos = [];
     const demo = JSON.parse(str);
     demo.name = file_info.get_name();
 
+    if (!isDemoCompatible(demo)) {
+      continue;
+    }
+
     const languages = [];
     if (demo_dir.get_child("main.js").query_exists(null)) {
       languages.push("javascript");
@@ -106,8 +110,6 @@ const demos = [];
   .then(() => {
     loop.quit();
   });
-
-loop.run();
 
 async function copyDemo(source, destination) {
   try {
@@ -171,7 +173,7 @@ async function copyDemo(source, destination) {
   }
 }
 
-export async function copyDirectory(source, destination) {
+async function copyDirectory(source, destination) {
   const enumerator = await source.enumerate_children_async(
     `${Gio.FILE_ATTRIBUTE_STANDARD_NAME},${Gio.FILE_ATTRIBUTE_STANDARD_IS_HIDDEN}`,
     Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
@@ -206,3 +208,28 @@ export async function copyDirectory(source, destination) {
     }
   }
 }
+
+const keyFile = new GLib.KeyFile();
+keyFile.load_from_file("/.flatpak-info", GLib.KeyFileFlags.NONE);
+// runtime/org.gnome.Sdk/x86_64/master
+const [, , , runtime_version] = keyFile
+  .get_string("Application", "runtime")
+  .split("/");
+
+function isDemoCompatible(demo) {
+  const demo_runtime_version = demo["runtime-version"];
+
+  if (demo_runtime_version === "master") {
+    return runtime_version === "master";
+  } else if (runtime_version === "master") {
+    return true;
+  } else if (!demo_runtime_version) {
+    return true;
+  }
+
+  console.log(+runtime_version, +demo_runtime_version);
+
+  return +runtime_version >= +demo_runtime_version;
+}
+
+loop.run();

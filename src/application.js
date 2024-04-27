@@ -27,6 +27,7 @@ import "./icons/re.sonny.Workbench-larger-brush-symbolic.svg" with { type: "icon
 import "./icons/re.sonny.Workbench-terminal-symbolic.svg" with { type: "icon" };
 import "./icons/re.sonny.Workbench-test-pass-symbolic.svg" with { type: "icon" };
 import "./icons/re.sonny.Workbench-up-symbolic.svg" with { type: "icon" };
+import "./icons/re.sonny.Workbench-library-symbolic.svg" with { type: "icon" };
 
 ensureDir(data_dir);
 
