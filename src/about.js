@@ -1,5 +1,4 @@
 import Gtk from "gi://Gtk";
-import { gettext as _ } from "gettext";
 import GLib from "gi://GLib";
 import Adw from "gi://Adw";
 
@@ -55,7 +54,7 @@ ${getBlueprintVersion()}
     ],
   });
 
-  dialog.add_credit_section(_("Contributors"), [
+  dialog.add_credit_section("Contributors", [
     "Akshay Warrier https://github.com/AkshayWarrier",
     "Ben Foote http://www.bengineeri.ng",
     "Brage Fuglseth https://bragefuglseth.dev",
