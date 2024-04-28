@@ -126,14 +126,22 @@ async function ci({ filenames, current_dir }) {
   for (const filename of filenames) {
     const demo_dir = Gio.File.new_for_path(filename);
 
+    print(`\n📂${demo_dir.get_path()}`);
+
+    const [compatible, required_runtime_version] = isDemoCompatible(demo_dir);
+    if (!compatible) {
+      print(
+        `  ⚠️ skipped - requires runtime version ${required_runtime_version}`,
+      );
+      continue;
+    }
+
     const lsp_clients = createLSPClients({ root_uri: demo_dir.get_uri() });
     await Promise.all(
       Object.entries(lsp_clients).map(([, lspc]) => {
         return lspc._initialize();
       }),
     );
-
-    print(`\n📂${demo_dir.get_path()}`);
 
     let template = null;
     const builder = new Gtk.Builder();
@@ -551,4 +559,38 @@ function serializeDiagnostics({ diagnostics }) {
       })
       .join("\n") + "\n"
   );
+}
+
+const keyFile = new GLib.KeyFile();
+keyFile.load_from_file("/.flatpak-info", GLib.KeyFileFlags.NONE);
+// runtime/org.gnome.Sdk/x86_64/master
+const [, , , runtime_version] = keyFile
+  .get_string("Application", "runtime")
+  .split("/");
+
+function isDemoCompatible(file) {
+  let str;
+  try {
+    str = new TextDecoder().decode(
+      file.get_child("main.json").load_contents(null)[1],
+    );
+  } catch (err) {
+    console.warn(err);
+    return true;
+  }
+
+  const demo = JSON.parse(str);
+  demo.name = file.get_basename();
+
+  const demo_runtime_version = demo["runtime-version"];
+
+  if (demo_runtime_version === "master") {
+    return [runtime_version === "master", demo_runtime_version];
+  } else if (runtime_version === "master") {
+    return [true, demo_runtime_version];
+  } else if (!demo_runtime_version) {
+    return [true, demo_runtime_version];
+  }
+
+  return [+runtime_version >= +demo_runtime_version, demo_runtime_version];
 }
