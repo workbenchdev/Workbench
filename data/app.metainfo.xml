@@ -23,26 +23,22 @@
       <li>Terminal output</li>
     </ul>
   </description>
-  <url type="homepage">https://apps.gnome.org/Workbench</url>
-  <url type="bugtracker">https://github.com/workbenchdev/Workbench/issues</url>
-  <url type="donation">https://ko-fi.com/sonnyp</url>
-  <url type="vcs-browser">https://github.com/workbenchdev/Workbench</url>
+  <url type="homepage">https://workbench.sonny.re</url>
+  <url type="bugtracker">https://workbench.sonny.re/feedback</url>
+  <url type="donation">https://workbench.sonny.re/donate</url>
+  <url type="vcs-browser">https://workbench.sonny.re/source</url>
   <screenshots>
     <screenshot type="default">
-      <image>https://raw.githubusercontent.com/workbenchdev/Workbench/main/data/screenshot.png</image>
-      <caption>Workbench welcome screen</caption>
+      <image>https://raw.githubusercontent.com/workbenchdev/Workbench/main/data/screenshots/welcome.png</image>
+      <caption>Welcome screen</caption>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/workbenchdev/Workbench/main/data/screenshot-code.png</image>
-      <caption>Workbench CSS Gradients demo</caption>
+      <image>https://raw.githubusercontent.com/workbenchdev/Workbench/main/data/screenshots/code.png</image>
+      <caption>Drawing Area demo</caption>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/workbenchdev/Workbench/main/data/screenshot-library.png</image>
-      <caption>Workbench Library window</caption>
-    </screenshot>
-    <screenshot>
-      <image>https://raw.githubusercontent.com/workbenchdev/Workbench/main/data/screenshot-extensions.png</image>
-      <caption>Workbench Extensions Window</caption>
+      <image>https://raw.githubusercontent.com/workbenchdev/Workbench/main/data/screenshots/library.png</image>
+      <caption>Library window</caption>
     </screenshot>
   </screenshots>
   <content_rating type="oars-1.1" />
@@ -52,7 +48,7 @@
         <ul>
           <li>List editor shortcuts in Shortcuts</li>
           <li>Add "Find" to search for code in the current editor</li>
-          <li>Save and restore the session window state and dimensions</li>
+          <li>Save and restore the session window dimensions</li>
         </ul>
       </description>
     </release>
@@ -580,11 +576,9 @@
     <kudo>ModernToolkit</kudo>
   </kudos>
   <branding>
-    <color type="primary">#33d17a</color>
+    <color type="primary" scheme_preference="light">#57e389</color>
+    <color type="primary" scheme_preference="dark">#26a269</color>
   </branding>
-  <custom>
-    <value key="GnomeSoftware::key-colors">[(51, 209, 122)]</value>
-  </custom>
   <requires>
     <display_length compare="ge">1024</display_length>
   </requires>
