@@ -228,6 +228,15 @@ export default function Window({ application, session }) {
   let builder_python = null;
 
   async function runCode() {
+    const { language } = panel_code;
+    if (language === "Vala" && !isValaEnabled()) {
+      action_extensions.activate(null);
+      return;
+    } else if (language === "Rust" && !isRustEnabled()) {
+      action_extensions.activate(null);
+      return;
+    }
+
     button_run.set_sensitive(false);
 
     term_console.clear();
@@ -294,11 +303,6 @@ export default function Window({ application, session }) {
       }
       previewer.setSymbols(exports);
     } else if (language === "Vala") {
-      if (!isValaEnabled()) {
-        action_extensions.activate(null);
-        return;
-      }
-
       compiler_vala = compiler_vala || ValaCompiler({ session });
       const success = await compiler_vala.compile();
       if (success) {
@@ -310,11 +314,6 @@ export default function Window({ application, session }) {
         }
       }
     } else if (language === "Rust") {
-      if (!isRustEnabled()) {
-        action_extensions.activate(null);
-        return;
-      }
-
       compiler_rust = compiler_rust || RustCompiler({ session });
       const success = await compiler_rust.compile();
       if (success) {

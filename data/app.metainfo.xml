@@ -43,12 +43,14 @@
   </screenshots>
   <content_rating type="oars-1.1" />
   <releases>
-    <release version="46.1" date="2024-xx-xx">
+    <release version="46.1" date="2024-04-xx">
       <description translatable="no">
         <ul>
-          <li>List editor shortcuts in Shortcuts</li>
           <li>Add "Find" to search for code in the current editor</li>
           <li>Save and restore the session window dimensions</li>
+          <li>Remove Icon Library, please refer to the Icon demo</li>
+          <li>List editor shortcuts in Shortcuts</li>
+          <li>Fix Vala and Rust extensions detection on "Run"</li>
         </ul>
       </description>
     </release>
