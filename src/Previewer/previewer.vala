@@ -7,10 +7,12 @@ namespace Workbench {
                 this.style_manager.color_scheme = this.ColorScheme;
             });
 
+            //  See application.js
             var icon_theme = Gtk.IconTheme.get_for_display(Gdk.Display.get_default());
-            var search_paths = icon_theme.get_resource_path();
-            search_paths += "/re/sonny/Workbench/icons";
-            icon_theme.set_resource_path(search_paths);
+            string[] resource_path = {"/org/gtk/libgtk/icons/", "/org/gnome/Adwaita/icons/", "/re/sonny/Workbench/icons/"};
+            icon_theme.resource_path = resource_path;
+            string [] search_path = {"/app/share/icons"};
+            icon_theme.search_path = search_path;
         }
 
         private void ensure_window () {

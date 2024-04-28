@@ -86,10 +86,14 @@ class Previewer:
         self.uri = None
         self.resource_icons = None
 
+        # see application.js
         icon_theme = Gtk.IconTheme.get_for_display(Gdk.Display.get_default())
-        resource_paths = icon_theme.get_resource_path()
-        resource_paths.append("/re/sonny/Workbench/icons")
-        icon_theme.set_resource_path(resource_paths)
+        icon_theme.set_resource_path([
+            "/org/gtk/libgtk/icons/",
+            "/org/gnome/Adwaita/icons/",
+            "/re/sonny/Workbench/icons/",
+        ])
+        icon_theme.set_search_path(["/app/share/icons"])
 
     @DBusTemplate.Method()
     def update_ui(self, content: str, target_id: str, original_id: str = ""):

@@ -305,7 +305,7 @@ Adw.ApplicationWindow window {
                 }
 
                 Button button_ui_experimental_blueprint {
-                  icon-name: "applications-science-symbolic";
+                  icon-name: "re.sonny.Workbench-applications-science-symbolic";
                   tooltip-text: _("Information About Blueprint");
                 }
               }
@@ -554,21 +554,28 @@ Adw.Dialog dialog_blueprint_experimental {
   content-width: 368;
   content-height: 480;
 
-  Adw.StatusPage {
-    vexpand: true;
-    description: _("Future versions may have breaking syntax");
-    title: _("Blueprint is\nExperimental");
-    icon-name: "re.sonny.Workbench-beaker";
+  Adw.ToolbarView {
+    extend-content-to-top-edge: true;
 
-    Button button_blueprint_documentation {
-      halign: center;
-      label: _("Documentation");
+    [top]
+    Adw.HeaderBar {}
 
-      styles [
-        "suggested-action",
-        "pill"
-      ]
-    }
+    content: Adw.StatusPage {
+      vexpand: true;
+      description: _("Future versions may have breaking syntax");
+      title: _("Blueprint is\nExperimental");
+      icon-name: "re.sonny.Workbench-beaker";
+
+      Button button_blueprint_documentation {
+        halign: center;
+        label: _("Documentation");
+
+        styles [
+          "suggested-action",
+          "pill"
+        ]
+      }
+    };
   }
 }
 

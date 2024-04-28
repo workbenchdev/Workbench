@@ -137,7 +137,7 @@ export class Session {
 
     // Reload icons see https://github.com/sonnyp/gtk-resource-icons
     const resource_paths = new Set(icon_theme.resource_path);
-    resource_paths.add("/re/sonny/Workbench/icons");
+    resource_paths.add("/re/sonny/Workbench/icons/");
     icon_theme.set_resource_path([...resource_paths]);
   }
 
