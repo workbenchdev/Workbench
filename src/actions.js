@@ -1,7 +1,6 @@
 import Gtk from "gi://Gtk";
 import Gio from "gi://Gio";
 import GLib from "gi://GLib";
-import Gdk from "gi://Gdk";
 import Xdp from "gi://Xdp";
 import XdpGtk from "gi://XdpGtk4";
 
@@ -33,23 +32,11 @@ export default function Actions({ application }) {
     parameter_type: new GLib.VariantType("s"),
   });
   action_open_uri.connect("activate", (_self, target) => {
-    // This is not using the portal but we silence the GVFS warnings
-    // in `log_handler.js`
-    Gtk.show_uri(
-      application.get_active_window(),
-      target.unpack(),
-      Gdk.CURRENT_TIME,
-    );
-    // an other option is to use libportal:
-    // const parent = XdpGtk.parent_new_gtk(application.get_active_window());
-    // portal
-    //   .open_uri(
-    //     parent,
-    //     target.unpack(),
-    //     Xdp.OpenUriFlags.NONE,
-    //     null, // cancellable
-    //   )
-    //   .catch(console.error);
+    new Gtk.UriLauncher({
+      uri: target.unpack(),
+    })
+      .launch(application.get_active_window(), null)
+      .catch(console.error);
   });
   application.add_action(action_open_uri);
 

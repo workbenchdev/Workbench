@@ -23,6 +23,7 @@ Gio._promisify(
   "select_folder_finish",
 );
 Gio._promisify(Gtk.UriLauncher.prototype, "launch", "launch_finish");
+Gio._promisify(Gtk.FileLauncher.prototype, "launch", "launch_finish");
 
 Gio._promisify(
   Gio.InputStream.prototype,

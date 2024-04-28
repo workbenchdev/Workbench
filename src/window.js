@@ -362,6 +362,19 @@ export default function Window({ application, session }) {
   window.add_action(action_close);
   application.set_accels_for_action("win.close", ["<Control>W"]);
 
+  const action_reveal = new Gio.SimpleAction({
+    name: "reveal",
+  });
+  action_reveal.connect("activate", () => {
+    new Gtk.FileLauncher({
+      file: session.file,
+    })
+      .launch(window, null)
+      .catch(console.error);
+  });
+  window.add_action(action_reveal);
+  application.set_accels_for_action("win.reveal", ["<Control>M"]);
+
   window.connect("close-request", () => {
     onCloseSession({ session, window }).catch(console.error);
     return true;

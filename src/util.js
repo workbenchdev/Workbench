@@ -104,21 +104,26 @@ export const demos_dir = Gio.File.new_for_path(
 ).resolve_relative_path("demos");
 
 export async function copyDirectory(source, destination) {
+  try {
+    destination.make_directory_with_parents(null);
+  } catch (err) {
+    if (!err.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.EXISTS)) {
+      throw err;
+    }
+  }
+
   const enumerator = await source.enumerate_children_async(
-    `${Gio.FILE_ATTRIBUTE_STANDARD_NAME},${Gio.FILE_ATTRIBUTE_STANDARD_IS_HIDDEN}`,
-    Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
+    Gio.FILE_ATTRIBUTE_STANDARD_TYPE,
+    Gio.FileQueryInfoFlags.NONE,
     GLib.PRIORITY_DEFAULT,
     null,
   );
 
   for await (const file_info of enumerator) {
-    if (file_info.get_is_hidden()) continue;
-
     const child = enumerator.get_child(file_info);
     const child_dest = destination.get_child(child.get_basename());
 
     if (file_info.get_file_type() === Gio.FileType.DIRECTORY) {
-      await child_dest.make_directory_async(GLib.PRIORITY_DEFAULT, null);
       await copyDirectory(child, child_dest);
       continue;
     }
@@ -126,7 +131,7 @@ export async function copyDirectory(source, destination) {
     try {
       await child.copy_async(
         child_dest, // destination
-        Gio.FileCopyFlags.NONE, // flags
+        Gio.FileCopyFlags.OVERWRITE, // flags
         GLib.PRIORITY_DEFAULT, // priority
         null, // cancellable
         null, // progress_callback
@@ -168,4 +173,17 @@ export function quitOnLastWindowClose(self) {
   }
 
   return false;
+}
+
+export function removeDirectory(file) {
+  // There is no method to recursively delete a folder so we trash instead
+  // https://github.com/flatpak/xdg-desktop-portal/issues/630 :/
+  // portal.trash_file(file.get_path(), null).catch(console.error);
+  try {
+    file.trash(null);
+  } catch (err) {
+    if (!err.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.EXISTS)) {
+      throw err;
+    }
+  }
 }

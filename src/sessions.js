@@ -2,7 +2,6 @@ import Gio from "gi://Gio";
 import GLib from "gi://GLib";
 import Gtk from "gi://Gtk";
 import Gdk from "gi://Gdk";
-import { gettext as _ } from "gettext";
 
 import {
   data_dir,
@@ -10,10 +9,10 @@ import {
   getNowForFilename,
   demos_dir,
   settings as global_settings,
-  encode,
   settings,
   copyDirectory,
   decode,
+  removeDirectory,
 } from "./util.js";
 import { languages } from "./common.js";
 import { createElement as xml } from "./langs/xml/xml.js";
@@ -86,60 +85,21 @@ export async function createSessionFromDemo(demo) {
   );
   settings.apply();
 
+  await createSessionFiles(file);
+
   return session;
 }
 
 export async function deleteSession(session) {
-  // There is no method to recursively delete a folder so we trash instead
-  // https://github.com/flatpak/xdg-desktop-portal/issues/630 :/
-  // portal.trash_file(file.get_path(), null).catch(console.error);
-  try {
-    session.file.trash(null);
-  } catch (err) {
-    if (!err.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.EXISTS)) {
-      throw err;
-    }
-  }
+  return removeDirectory(session.file);
 }
 
 export async function saveSessionAsProject(session, destination) {
   session.settings.set_string("name", destination.get_basename());
 
-  await destination.make_directory_async(GLib.PRIORITY_DEFAULT, null);
-
-  const enumerator = await session.file.enumerate_children_async(
-    `${Gio.FILE_ATTRIBUTE_STANDARD_NAME},${Gio.FILE_ATTRIBUTE_STANDARD_IS_HIDDEN}`,
-    Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
-    GLib.PRIORITY_DEFAULT,
-    null,
-  );
-  for await (const file_info of enumerator) {
-    if (file_info.get_is_hidden()) continue;
-    if (file_info.get_file_type() === Gio.FileType.DIRECTORY) continue;
-    const file = enumerator.get_child(file_info);
-
-    await file.move_async(
-      destination.get_child(file.get_basename()), // destination
-      Gio.FileCopyFlags.BACKUP, // flags
-      GLib.PRIORITY_DEFAULT, // priority
-      null, // cancellable
-      null, // progress_callback
-    );
-  }
-
-  await destination.get_child("README.md").replace_contents_async(
-    encode(
-      _(`This is a Workbench project.
-
-To open and run this; [install Workbench from Flathub](https://flathub.org/apps/re.sonny.Workbench) and open this project folder with it.`),
-    ),
-    null, // etag
-    false, // make_backup
-    Gio.FileCreateFlags.NONE, //flags
-    null, // cancellable
-  );
-
-  await session.file.delete_async(GLib.PRIORITY_DEFAULT, null);
+  await copyDirectory(session.file, destination);
+  await createSessionFiles(destination);
+  await deleteSession(session).catch(console.error);
 }
 
 export class Session {
@@ -277,4 +237,33 @@ async function buildGResourceIcons(file) {
   }
 
   return file_gresource;
+}
+
+async function createIconsDirectory(file) {
+  try {
+    await file
+      .get_child("icons")
+      .make_directory_async(GLib.PRIORITY_DEFAULT, null);
+  } catch (err) {
+    if (!err.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.EXISTS)) {
+      throw err;
+    }
+  }
+}
+
+async function createREADMEFile(file) {
+  await Gio.File.new_for_path(pkg.pkgdatadir)
+    .get_child("project-readme.md")
+    .copy_async(
+      file.get_child("README.md"), // destination
+      Gio.FileCopyFlags.OVERWRITE, // flags
+      GLib.PRIORITY_DEFAULT, // priority
+      null, // cancellable
+      null, // progress_callback
+      null, // callback
+    );
+}
+
+async function createSessionFiles(file) {
+  return Promise.all([createIconsDirectory(file), createREADMEFile(file)]);
 }

@@ -19,7 +19,6 @@ Among other things, Workbench comes with
 - Autosave, sessions and projects
 - Code linter and formatter
 - Terminal output
-- 1000+ icons
 
 ℹ️ Workbench is made possible by Flatpak. Only Flathub Workbench is supported.
 
@@ -31,14 +30,14 @@ Among other things, Workbench comes with
 
 |            | Formatter | Linter | Library demos[1] |
 | ---------- | --------- | ------ | ---------------- |
-| JavaScript | ✅        | ✅     | 98               |
-| Python     | ✅        | ✅     | 90               |
-| Vala       | ✅        | ✅     | 65               |
+| JavaScript | ✅        | ✅     | 100              |
+| Python     | ✅        | ✅     | 92               |
+| Vala       | ✅        | ✅     | 67               |
 | Rust       | ✅        | ✅     | 45               |
 | Blueprint  | ✅        | ✅     |                  |
 | CSS        | ✅        | ✅     |                  |
 
-[1] As of 2024-04-14 <!--counted with `~/go/bin/scc demos/src`-->
+[1] As of 2024-04-28 <!--counted with `~/go/bin/scc demos/src`-->
 
 ## Tips and tricks
 
