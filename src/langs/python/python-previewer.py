@@ -93,7 +93,7 @@ class Previewer:
             "/org/gnome/Adwaita/icons/",
             "/re/sonny/Workbench/icons/",
         ])
-        icon_theme.set_search_path(["/app/share/icons"])
+        icon_theme.set_search_path(["/usr/share/icons", "/app/share/icons"])
 
     @DBusTemplate.Method()
     def update_ui(self, content: str, target_id: str, original_id: str = ""):

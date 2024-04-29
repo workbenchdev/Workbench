@@ -30,7 +30,6 @@ import "./icons/re.sonny.Workbench-terminal-symbolic.svg" with { type: "icon" };
 import "./icons/re.sonny.Workbench-test-pass-symbolic.svg" with { type: "icon" };
 import "./icons/re.sonny.Workbench-up-symbolic.svg" with { type: "icon" };
 import "./icons/re.sonny.Workbench-library-symbolic.svg" with { type: "icon" };
-import "./icons/re.sonny.Workbench-applications-science-symbolic.svg" with { type: "icon" };
 
 const icon_theme = Gtk.IconTheme.get_for_display(Gdk.Display.get_default());
 icon_theme.resource_path = [
@@ -39,7 +38,7 @@ icon_theme.resource_path = [
   "/re/sonny/Workbench/icons/",
 ];
 // Remove hosts and useless search paths
-icon_theme.search_path = ["/app/share/icons"];
+icon_theme.search_path = ["/usr/share/icons", "/app/share/icons"];
 
 ensureDir(data_dir);
 

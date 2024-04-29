@@ -51,7 +51,7 @@
       </description>
     </release> -->
 
-    <release version="46.1" date="2024-04-xx">
+    <release version="46.1" date="2024-04-30">
       <description translatable="no">
         <ul>
           <li>Add "Find" to search for code in the current editor</li>
