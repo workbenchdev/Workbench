@@ -26,9 +26,10 @@ import {
 } from "./sessions.js";
 import {
   action_extensions,
-  isRustEnabled,
-  isValaEnabled,
   Extensions,
+  isRustEnabled,
+  isTypeScriptEnabled,
+  isValaEnabled,
 } from "./Extensions/Extensions.js";
 import { JavaScriptDocument } from "./langs/javascript/JavaScriptDocument.js";
 import { BlueprintDocument } from "./langs/blueprint/BlueprintDocument.js";
@@ -313,6 +314,11 @@ export default function Window({ application, session }) {
       }
       previewer.setSymbols(exports);
     } else if (language === "TypeScript") {
+      if (!isTypeScriptEnabled()) {
+        action_extensions.activate(null);
+        return;
+      }
+
       await previewer.update(true);
 
       // We have to create a new file each time
