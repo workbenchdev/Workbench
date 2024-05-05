@@ -120,7 +120,7 @@ export const languages = [
     name: "TypeScript",
     panel: "code",
     extensions: [".ts", ".mts"],
-    types: ["text/typescript", "application/typescript"],
+    types: [],
     document: null,
     default_file: "main.ts",
     index: 4,
