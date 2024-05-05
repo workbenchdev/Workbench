@@ -57,28 +57,6 @@ export const languages = [
     },
   },
   {
-    id: "typescript",
-    name: "TypeScript",
-    panel: "code",
-    extensions: [".ts", ".mts"],
-    types: ["text/typescript", "application/typescript"],
-    document: null,
-    default_file: "main.ts",
-    index: 4,
-    language_server: [
-      "biome",
-      "lsp-proxy",
-      // src/meson.build installs biome.json there
-      GLib.getenv("FLATPAK_ID")
-        ? `--config-path=${pkg.pkgdatadir}`
-        : `--config-path=src/langs/typescript`,
-    ],
-    formatting_options: {
-      ...formatting_options,
-      tabSize: 2,
-    },
-  },
-  {
     id: "css",
     name: "CSS",
     panel: "style",
@@ -137,6 +115,28 @@ export const languages = [
       tabSize: 4,
     },
   },
+  {
+    id: "typescript",
+    name: "TypeScript",
+    panel: "code",
+    extensions: [".ts", ".mts"],
+    types: ["text/typescript", "application/typescript"],
+    document: null,
+    default_file: "main.ts",
+    index: 4,
+    language_server: [
+      "biome",
+      "lsp-proxy",
+      // src/meson.build installs biome.json there
+      GLib.getenv("FLATPAK_ID")
+        ? `--config-path=${pkg.pkgdatadir}`
+        : `--config-path=src/langs/typescript`,
+    ],
+    formatting_options: {
+      ...formatting_options,
+      tabSize: 2,
+    },
+  },
 ];
 
 export function getLanguage(id) {
@@ -160,20 +160,24 @@ export function createLSPClient({ lang, root_uri, quiet = true }) {
     });
     lspc.connect("output", (_self, message) => {
       console.log(
-        `${language_id} language server OUT:\n${JSON.stringify(
-          message,
-          null,
-          2,
-        )}`,
+        `${language_id} language server OUT:\n${
+          JSON.stringify(
+            message,
+            null,
+            2,
+          )
+        }`,
       );
     });
     lspc.connect("input", (_self, message) => {
       console.log(
-        `${language_id} language server IN:\n${JSON.stringify(
-          message,
-          null,
-          2,
-        )}`,
+        `${language_id} language server IN:\n${
+          JSON.stringify(
+            message,
+            null,
+            2,
+          )
+        }`,
       );
     });
   }

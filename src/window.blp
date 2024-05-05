@@ -184,10 +184,10 @@ Adw.ApplicationWindow window {
                   model: StringList {
                     strings [
                       "JavaScript",
-                      "TypeScript",
                       "Vala",
                       "Rust",
                       "Python",
+                      "TypeScript",
                     ]
                   };
 
@@ -206,14 +206,6 @@ Adw.ApplicationWindow window {
 
                 child: $CodeView code_view_javascript {
                   language_id: 'js';
-                };
-              }
-
-              StackPage {
-                name: 'TypeScript';
-
-                child: $CodeView code_view_typescript {
-                  language_id: 'typescript';
                 };
               }
 
@@ -238,6 +230,14 @@ Adw.ApplicationWindow window {
 
                 child: $CodeView code_view_python {
                   language_id: 'python3';
+                };
+              }
+
+              StackPage {
+                name: 'TypeScript';
+
+                child: $CodeView code_view_typescript {
+                  language_id: 'typescript';
                 };
               }
             }
