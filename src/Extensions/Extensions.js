@@ -64,7 +64,7 @@ export function isValaEnabled() {
 let typescript_enabled;
 export function isTypeScriptEnabled() {
   typescript_enabled ??=
-    Gio.File.new_for_path("/usr/lib/sdk/typescript/bin").query_exists(null) &&
-    Gio.File.new_for_path("/usr/lib/sdk/node18/bin").query_exists(null);
+    Gio.File.new_for_path("/usr/lib/sdk/typescript").query_exists(null) &&
+    Gio.File.new_for_path("/usr/lib/sdk/node18").query_exists(null);
   return typescript_enabled;
 }
