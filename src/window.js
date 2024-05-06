@@ -246,6 +246,9 @@ export default function Window({ application, session }) {
     } else if (language === "Rust" && !isRustEnabled()) {
       action_extensions.activate(null);
       return;
+    } else if (language === "TypeScript" && !isTypeScriptEnabled()) {
+      action_extensions.activate(null);
+      return;
     }
 
     button_run.set_sensitive(false);
@@ -285,7 +288,7 @@ export default function Window({ application, session }) {
       return;
     }
 
-    if (language === "JavaScript") {
+    if (language === "JavaScript" || language === "TypeScript") {
       await previewer.update(true);
 
       // We have to create a new file each time
@@ -309,39 +312,6 @@ export default function Window({ application, session }) {
         throw err;
       } finally {
         file_javascript
-          .delete_async(GLib.PRIORITY_DEFAULT, null)
-          .catch(console.error);
-      }
-      previewer.setSymbols(exports);
-    } else if (language === "TypeScript") {
-      if (!isTypeScriptEnabled()) {
-        action_extensions.activate(null);
-        return;
-      }
-
-      await previewer.update(true);
-
-      // We have to create a new file each time
-      // because gjs doesn't appear to use etag for module caching
-      // ?foo=Date.now() also does not work as expected
-      // TODO: File a bug
-      const path = buildRuntimePath(`workbench-${Date.now()}`);
-      const file_typescript = Gio.File.new_for_path(path);
-      await file_typescript.replace_contents_async(
-        new GLib.Bytes(text),
-        null,
-        false,
-        Gio.FileCreateFlags.NONE,
-        null,
-      );
-      let exports;
-      try {
-        exports = await import(`file://${file_typescript.get_path()}`);
-      } catch (err) {
-        await previewer.update(true);
-        throw err;
-      } finally {
-        file_typescript
           .delete_async(GLib.PRIORITY_DEFAULT, null)
           .catch(console.error);
       }
