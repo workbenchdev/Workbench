@@ -29,9 +29,11 @@ export function Extensions({ window }) {
   extension_vala.enabled = isValaEnabled();
   extension_typescript.enabled = isTypeScriptEnabled();
 
-  for (
-    const extension of [extension_rust, extension_vala, extension_typescript]
-  ) {
+  for (const extension of [
+    extension_rust,
+    extension_vala,
+    extension_typescript,
+  ]) {
     if (!extension.enabled) {
       all_set_hint.set_visible(false);
       restart_hint.set_visible(true);
@@ -55,9 +57,8 @@ export function isRustEnabled() {
 
 let vala_enabled;
 export function isValaEnabled() {
-  vala_enabled ??= Gio.File.new_for_path("/usr/lib/sdk/vala").query_exists(
-    null,
-  );
+  vala_enabled ??=
+    Gio.File.new_for_path("/usr/lib/sdk/vala").query_exists(null);
   return vala_enabled;
 }
 
