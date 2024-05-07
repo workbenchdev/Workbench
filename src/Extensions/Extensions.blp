@@ -60,6 +60,11 @@ Adw.Dialog dialog {
               title: _("Vala");
               command: "flatpak install flathub org.freedesktop.Sdk.Extension.vala//23.08";
             }
+
+            $Extension extension_typescript {
+              title: _("TypeScript");
+              command: "flatpak install flathub org.freedesktop.Sdk.Extension.node18//23.08 org.freedesktop.Sdk.Extension.typescript//23.08";
+            }
           }
 
           Label restart_hint {
