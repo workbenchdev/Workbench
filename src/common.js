@@ -160,24 +160,20 @@ export function createLSPClient({ lang, root_uri, quiet = true }) {
     });
     lspc.connect("output", (_self, message) => {
       console.log(
-        `${language_id} language server OUT:\n${
-          JSON.stringify(
-            message,
-            null,
-            2,
-          )
-        }`,
+        `${language_id} language server OUT:\n${JSON.stringify(
+          message,
+          null,
+          2,
+        )}`,
       );
     });
     lspc.connect("input", (_self, message) => {
       console.log(
-        `${language_id} language server IN:\n${
-          JSON.stringify(
-            message,
-            null,
-            2,
-          )
-        }`,
+        `${language_id} language server IN:\n${JSON.stringify(
+          message,
+          null,
+          2,
+        )}`,
       );
     });
   }
