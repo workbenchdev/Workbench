@@ -88,11 +88,13 @@ class Previewer:
 
         # see application.js
         icon_theme = Gtk.IconTheme.get_for_display(Gdk.Display.get_default())
-        icon_theme.set_resource_path([
-            "/org/gtk/libgtk/icons/",
-            "/org/gnome/Adwaita/icons/",
-            "/re/sonny/Workbench/icons/",
-        ])
+        icon_theme.set_resource_path(
+            [
+                "/org/gtk/libgtk/icons/",
+                "/org/gnome/Adwaita/icons/",
+                "/re/sonny/Workbench/icons/",
+            ]
+        )
         icon_theme.set_search_path(["/usr/share/icons", "/app/share/icons"])
 
     @DBusTemplate.Method()
