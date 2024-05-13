@@ -15,6 +15,7 @@ import Previewer from "./Previewer/Previewer.js";
 import ValaCompiler from "./langs/vala/Compiler.js";
 import RustCompiler from "./langs/rust/Compiler.js";
 import PythonBuilder from "./langs/python/Builder.js";
+import TypeScriptCompiler from "./langs/typescript/Compiler.js";
 import ThemeSelector from "../troll/src/widgets/ThemeSelector.js";
 import { persistWindowState } from "../troll/src/util.js";
 
@@ -237,6 +238,7 @@ export default function Window({ application, session }) {
   let compiler_vala = null;
   let compiler_rust = null;
   let builder_python = null;
+  let compiler_typescript = null;
 
   async function runCode() {
     const { language } = panel_code;
@@ -288,7 +290,7 @@ export default function Window({ application, session }) {
       return;
     }
 
-    if (language === "JavaScript" || language === "TypeScript") {
+    if (language === "JavaScript") {
       await previewer.update(true);
 
       // We have to create a new file each time
@@ -345,6 +347,20 @@ export default function Window({ application, session }) {
         await previewer.open();
       } else {
         await previewer.useInternal();
+      }
+    } else if (language === "TypeScript") {
+      await previewer.update(true);
+
+      compiler_typescript =
+        compiler_typescript || TypeScriptCompiler({ session, previewer });
+      const success = await compiler_typescript.compile();
+      if (success) {
+        const symbols = await compiler_typescript.run();
+        if (symbols) {
+          previewer.setSymbols(symbols);
+        } else {
+          await previewer.update();
+        }
       }
     }
   }
