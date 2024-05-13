@@ -1,5 +1,7 @@
+import Gio from "gi://Gio";
+
 import { createLSPClient } from "../../common.js";
-import { getLanguage } from "../../util.js";
+import { getLanguage, copy } from "../../util.js";
 import { isTypeScriptEnabled } from "../../Extensions/Extensions.js";
 
 export function setup({ document }) {
@@ -32,4 +34,37 @@ export function setup({ document }) {
   });
 
   return lspc;
+}
+
+const typescript_template_dir = Gio.File.new_for_path(
+  pkg.pkgdatadir,
+).resolve_relative_path("langs/typescript/template");
+
+export async function setupTypeScriptProject(destination) {
+  const types_destination = destination.get_child("types");
+
+  if (!types_destination.query_exists(null)) {
+    types_destination.make_directory_with_parents(null);
+  }
+
+  return Promise.all([
+    copy(
+      "types/ambient.d.ts",
+      typescript_template_dir,
+      types_destination,
+      Gio.FileCopyFlags.NONE,
+    ),
+    copy(
+      "types/gi-module.d.ts",
+      typescript_template_dir,
+      types_destination,
+      Gio.FileCopyFlags.NONE,
+    ),
+    copy(
+      "tsconfig.json",
+      typescript_template_dir,
+      destination,
+      Gio.FileCopyFlags.NONE,
+    ),
+  ]);
 }
