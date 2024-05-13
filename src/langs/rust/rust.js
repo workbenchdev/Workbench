@@ -1,8 +1,7 @@
 import Gio from "gi://Gio";
-import GLib from "gi://GLib";
 
 import { createLSPClient } from "../../common.js";
-import { getLanguage } from "../../util.js";
+import { getLanguage, copy } from "../../util.js";
 import { isRustEnabled } from "../../Extensions/Extensions.js";
 
 export function setup({ document }) {
@@ -58,23 +57,4 @@ export async function installRustLibraries(destination) {
       Gio.FileCopyFlags.OVERWRITE,
     ),
   ]);
-}
-
-async function copy(filename, source_dir, dest_dir, flags) {
-  const file = source_dir.get_child(filename);
-
-  try {
-    await file.copy_async(
-      dest_dir.get_child(file.get_basename()),
-      flags,
-      GLib.PRIORITY_DEFAULT,
-      null,
-      null,
-      null,
-    );
-  } catch (err) {
-    if (!err.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.EXISTS)) {
-      throw err;
-    }
-  }
 }
