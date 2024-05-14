@@ -22,7 +22,7 @@ export default function Compiler({ session }) {
     // We have to create a new file each time
     // because gjs doesn't appear to use etag for module caching
     // ?foo=Date.now() also does not work as expected
-    // TODO: File a bug
+    // https://gitlab.gnome.org/GNOME/gjs/-/issues/618
     const path = buildRuntimePath(`workbench-${Date.now()}`);
     const compiled_dir = Gio.File.new_for_path(path);
     if (!compiled_dir.query_exists(null)) {
