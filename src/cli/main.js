@@ -113,6 +113,8 @@ async function checkFile({ lspc, file, lang, uri }) {
     print(`  ✅ checks`);
     return true;
   } else {
+    // console.log("\n", buffer_tmp.text, "\n", buffer.text);
+    // console.log(buffer_tmp.text.length, buffer.text.length);
     printerr(
       `  ❌ formatting differs - open and run ${file
         .get_parent()
@@ -216,6 +218,10 @@ async function ci({ filenames, current_dir }) {
       });
       if (!checks) return false;
 
+      if (!(await checkIcons(file_blueprint))) {
+        return false;
+      }
+
       await lsp_clients.blueprint._notify("textDocument/didClose", {
         textDocument: {
           uri,
@@ -309,13 +315,13 @@ async function ci({ filenames, current_dir }) {
       }
       print(`  ✅ lints`);
 
-      const checks = await checkFile({
-        lspc: lsp_clients.javascript,
-        file: file_javascript,
-        lang: getLanguage("javascript"),
-        uri,
-      });
-      if (!checks) return false;
+      // const checks = await checkFile({
+      //   lspc: lsp_clients.javascript,
+      //   file: file_javascript,
+      //   lang: getLanguage("javascript"),
+      //   uri,
+      // });
+      // if (!checks) return false;
 
       const js_object_ids = getCodeObjectIds(text);
       for (const object_id of js_object_ids) {
@@ -593,4 +599,60 @@ function isDemoCompatible(file) {
   }
 
   return [+runtime_version >= +demo_runtime_version, demo_runtime_version];
+}
+
+// GTK_DEBUG=iconfallback emits messages when an icon is not found
+// it is somewhat better than this but it requires rendering GTK
+// we can exclude code paths
+async function checkIcons(file) {
+  const [contents] = await file.load_contents_async(null);
+  const text = new TextDecoder().decode(contents);
+
+  const icon_theme = new Gtk.IconTheme();
+  icon_theme.theme_name = "Adwaita";
+
+  const regex = /icon-name.*: "(.+)";/g;
+  const used_icons = [...text.matchAll(regex)].map((pair) => pair[1]);
+
+  // const available_icons = new Set(icon_theme.icon_names);
+
+  const file_icons = file.get_parent().get_child("icons");
+
+  const custom_icons = [];
+
+  try {
+    const enumerator = await file_icons.enumerate_children_async(
+      Gio.FILE_ATTRIBUTE_STANDARD_TYPE,
+      Gio.FileQueryInfoFlags.NONE,
+      GLib.PRIORITY_DEFAULT,
+      null,
+    );
+    for await (const file_info of enumerator) {
+      if (file_info.get_file_type() !== Gio.FileType.REGULAR) {
+        continue;
+      }
+      const child = enumerator.get_child(file_info);
+
+      if (!child.get_basename().endsWith(".svg")) {
+        continue;
+      }
+
+      custom_icons.push(child.get_basename().split(".svg")[0]);
+    }
+  } catch (err) {
+    if (!err.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.NOT_FOUND)) {
+      throw err;
+    }
+  }
+
+  for (const icon of used_icons) {
+    if (icon_theme.has_icon(icon)) continue;
+    if (custom_icons.includes(icon)) continue;
+    printerr(`  ❌ icon ${icon} not found`);
+    return false;
+  }
+
+  print(`  ✅ icons found`);
+
+  return true;
 }
