@@ -4,7 +4,7 @@ import GObject from "gi://GObject";
 import Gio from "gi://Gio";
 import Adw from "gi://Adw";
 
-import { buildRuntimePath, quitOnLastWindowClose } from "./util.js";
+import { quitOnLastWindowClose } from "./util.js";
 import { languages } from "./common.js";
 import PanelUI from "./PanelUI.js";
 import PanelCode from "./PanelCode.js";
@@ -12,9 +12,11 @@ import PanelStyle from "./PanelStyle.js";
 import Devtools from "./Devtools.js";
 
 import Previewer from "./Previewer/Previewer.js";
+import JavascriptBuilder from "./langs/javascript/Builder.js";
 import ValaCompiler from "./langs/vala/Compiler.js";
 import RustCompiler from "./langs/rust/Compiler.js";
 import PythonBuilder from "./langs/python/Builder.js";
+import TypeScriptCompiler from "./langs/typescript/Compiler.js";
 import ThemeSelector from "../troll/src/widgets/ThemeSelector.js";
 import { persistWindowState } from "../troll/src/util.js";
 
@@ -234,9 +236,11 @@ export default function Window({ application, session }) {
     return Promise.all(documents.map((document) => document.format()));
   }
 
+  let builder_javascript = null;
   let compiler_vala = null;
   let compiler_rust = null;
   let builder_python = null;
+  let compiler_typescript = null;
 
   async function runCode() {
     const { language } = panel_code;
@@ -288,34 +292,17 @@ export default function Window({ application, session }) {
       return;
     }
 
-    if (language === "JavaScript" || language === "TypeScript") {
+    if (language === "JavaScript") {
       await previewer.update(true);
 
-      // We have to create a new file each time
-      // because gjs doesn't appear to use etag for module caching
-      // ?foo=Date.now() also does not work as expected
-      // TODO: File a bug
-      const path = buildRuntimePath(`workbench-${Date.now()}`);
-      const file_javascript = Gio.File.new_for_path(path);
-      await file_javascript.replace_contents_async(
-        new GLib.Bytes(text),
-        null,
-        false,
-        Gio.FileCreateFlags.NONE,
-        null,
-      );
-      let exports;
-      try {
-        exports = await import(`file://${file_javascript.get_path()}`);
-      } catch (err) {
-        await previewer.update(true);
-        throw err;
-      } finally {
-        file_javascript
-          .delete_async(GLib.PRIORITY_DEFAULT, null)
-          .catch(console.error);
+      builder_javascript = builder_javascript || JavascriptBuilder();
+
+      const symbols = await builder_javascript.run(text);
+      if (symbols) {
+        previewer.setSymbols(symbols);
+      } else {
+        await previewer.update();
       }
-      previewer.setSymbols(exports);
     } else if (language === "Vala") {
       compiler_vala = compiler_vala || ValaCompiler({ session });
       const success = await compiler_vala.compile();
@@ -345,6 +332,20 @@ export default function Window({ application, session }) {
         await previewer.open();
       } else {
         await previewer.useInternal();
+      }
+    } else if (language === "TypeScript") {
+      await previewer.update(true);
+
+      compiler_typescript =
+        compiler_typescript || TypeScriptCompiler({ session, previewer });
+      const success = await compiler_typescript.compile();
+      if (success) {
+        const symbols = await compiler_typescript.run();
+        if (symbols) {
+          previewer.setSymbols(symbols);
+        } else {
+          await previewer.update();
+        }
       }
     }
   }

@@ -8,6 +8,10 @@ export PKG_CONFIG_PATH=/app/lib/pkgconfig/:$PKG_CONFIG_PATH
 source /usr/lib/sdk/rust-stable/enable.sh 2> /dev/null
 source /usr/lib/sdk/vala/enable.sh 2> /dev/null
 source /usr/lib/sdk/llvm16/enable.sh 2> /dev/null
+source /usr/lib/sdk/node18/enable.sh 2> /dev/null
+
+## enabling the typescript extension
+export PATH=$PATH:/usr/lib/sdk/typescript/bin
 
 # TODO: Figure out how to use gcc with mold so we can drop llvm
 export CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER=clang

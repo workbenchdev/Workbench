@@ -88,8 +88,9 @@ export function unstack(fn, onError = console.error) {
 
     if (pending) return;
 
-    if (!latest_promise)
+    if (!latest_promise) {
       latest_promise = fn(...latest_arguments).catch(onError);
+    }
 
     pending = true;
     latest_promise.finally(() => {
@@ -181,6 +182,25 @@ export function removeDirectory(file) {
   // portal.trash_file(file.get_path(), null).catch(console.error);
   try {
     file.trash(null);
+  } catch (err) {
+    if (!err.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.EXISTS)) {
+      throw err;
+    }
+  }
+}
+
+export async function copy(filename, source_dir, dest_dir, flags) {
+  const file = source_dir.get_child(filename);
+
+  try {
+    await file.copy_async(
+      dest_dir.get_child(file.get_basename()),
+      flags,
+      GLib.PRIORITY_DEFAULT,
+      null,
+      null,
+      null,
+    );
   } catch (err) {
     if (!err.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.EXISTS)) {
       throw err;

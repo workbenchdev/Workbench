@@ -1,8 +1,9 @@
 import Gio from "gi://Gio";
 import GObject from "gi://GObject";
 
-import { settings as global_settings, makeDropdownFlat } from "./util.js";
+import { makeDropdownFlat, settings as global_settings } from "./util.js";
 import { setupRustProject } from "./langs/rust/rust.js";
+import { setupTypeScriptProject } from "./langs/typescript/typescript.js";
 
 export default function PanelCode({
   builder,
@@ -55,6 +56,10 @@ export default function PanelCode({
 
     if (panel.language.toLowerCase() === "rust") {
       setupRustProject(file).catch(console.error);
+    }
+
+    if (panel.language.toLowerCase() === "typescript") {
+      setupTypeScriptProject(file).catch(console.error);
     }
   }
   switchLanguage();
