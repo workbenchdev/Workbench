@@ -65,12 +65,11 @@ async function copy(filename, source_dir, dest_dir, flags) {
 
   try {
     await file.copy_async(
-      dest_dir.get_child(file.get_basename()),
-      flags,
-      GLib.PRIORITY_DEFAULT,
-      null,
-      null,
-      null,
+      dest_dir.get_child(file.get_basename()), // destination
+      flags, // flags
+      GLib.PRIORITY_DEFAULT, // priority
+      null, // cancellable
+      null, // progress_callback
     );
   } catch (err) {
     if (!err.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.EXISTS)) {
