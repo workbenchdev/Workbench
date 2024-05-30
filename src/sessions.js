@@ -260,7 +260,6 @@ async function createREADMEFile(file) {
       GLib.PRIORITY_DEFAULT, // priority
       null, // cancellable
       null, // progress_callback
-      null, // callback
     );
 }
 
