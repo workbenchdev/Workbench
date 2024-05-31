@@ -5,8 +5,8 @@
   "sources": [
     {
       "type": "archive",
-      "url": "https://download.gnome.org/sources/libshumate/1.2/libshumate-1.2.0.tar.xz",
-      "sha256": "4f8413a707cd00f84cee39ca49f58c48fc436f008ea80d6532ac37dafd0ba96b"
+      "url": "https://download.gnome.org/sources/libshumate/1.2/libshumate-1.2.2.tar.xz",
+      "sha256": "6f587579f7f2d60b38d3f4727eb1a8d2feac9cbdc018e53ff5f772a8608fa44b"
     }
   ],
   "modules": [
