@@ -8,6 +8,7 @@ export class ValaDocument extends Document {
     super(...args);
 
     this.lspc = setupVala({ document: this });
+    this.code_view.lspc = this.lspc;
   }
 
   async format() {

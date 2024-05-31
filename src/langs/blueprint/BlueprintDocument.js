@@ -8,6 +8,7 @@ export class BlueprintDocument extends Document {
     super(...args);
 
     this.lspc = setup({ document: this });
+    this.code_view.lspc = this.lspc;
   }
   async update() {
     return this.lspc.didChange();

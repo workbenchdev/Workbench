@@ -22,7 +22,7 @@ const scheme_manager = Source.StyleSchemeManager.get_default();
 const style_manager = Adw.StyleManager.get_default();
 
 class CodeView extends Gtk.Widget {
-  completion_results = null;
+  lspc = null;
 
   constructor({ language_id, ...params } = {}) {
     super(params);
@@ -44,6 +44,7 @@ class CodeView extends Gtk.Widget {
       this.buffer.set_language(this.language);
 
       this.#prepareHoverProvider();
+      // this.#prepareHover();
       this.#prepareCompletionProvider();
       this.#prepareSignals();
       this.#updateStyle();
@@ -198,26 +199,23 @@ class CodeView extends Gtk.Widget {
   };
 
   #onCompletionRequest = (_provider, request) => {
-    console.log(`completion-request: ${request.context.get_word()}`);
+    if (!this.lspc) {
+      request.state_changed(Workbench.RequestState.CANCELLED);
+      return;
+    }
 
-    const [success, start, end] = request.context.get_bounds();
+    const [success, , end] = request.context.get_bounds();
     if (!success) {
       request.state_changed(Workbench.RequestState.CANCELLED);
       return;
     }
 
-    const text = this.buffer.get_text(start, end, false);
-
-    this.blueprint.lspc
+    this.lspc
       .completion(end)
       .then((result) => {
-        this.completion_results = result;
-        console.log("results", result.length);
-        console.log(result[0]);
-        console.log(result[result.length - 1]);
-
+        const word = request.context.get_word();
         for (const completion_item of result) {
-          if (completion_item.insertText?.startsWith(text)) {
+          if (completion_item.insertText?.startsWith(word)) {
             request.add(new Proposal(completion_item));
           }
         }
@@ -236,17 +234,8 @@ class CodeView extends Gtk.Widget {
       this.#onCompletionRequest,
     );
 
-    // this.buffer.connect("notify::cursor-position", async (self) => {
-    //   if (!this.blueprint) return;
-    //   const iter_cursor = self.get_iter_at_offset(self.cursor_position);
-    //   try {
-    //     const result = await this.blueprint.hover(iter_cursor);
-    //     console.log(result);
-    //   } catch (err) {
-    //     logError(err);
-    //   }
-    // });
     const completion = this.source_view.get_completion();
+    completion.add_provider(completion_provider);
 
     // completion.connect("show", () => {
     //   console.log("completion show");
@@ -255,8 +244,17 @@ class CodeView extends Gtk.Widget {
     // completion.connect("hide", () => {
     //   console.log("completion hide");
     // });
+  }
 
-    completion.add_provider(completion_provider);
+  #prepareHover() {
+    this.buffer.connect("notify::cursor-position", (self) => {
+      if (!this.lspc) return;
+      const iter_cursor = self.get_iter_at_offset(self.cursor_position);
+      this.lspc
+        .hover(iter_cursor)
+        .then((result) => console.log(result))
+        .catch(console.error);
+    });
   }
 }
 

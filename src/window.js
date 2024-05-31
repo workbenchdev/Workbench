@@ -110,7 +110,6 @@ export default function Window({ application, session }) {
     session,
   });
   langs.blueprint.document = document_blueprint;
-  document_blueprint.code_view.blueprint = document_blueprint;
 
   const document_xml = new XmlDocument({
     code_view: builder.get_object("code_view_xml"),
@@ -125,7 +124,6 @@ export default function Window({ application, session }) {
     session,
   });
   langs.css.document = document_css;
-  document_css.code_view.css = document_css;
 
   const panel_ui = PanelUI({
     application,
