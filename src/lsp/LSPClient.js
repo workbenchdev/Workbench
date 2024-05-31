@@ -41,6 +41,7 @@ export default class LSPClient {
     this.capabilities = {
       textDocument: {
         publishDiagnostics: {},
+        completion: {},
       },
     };
   }
@@ -282,6 +283,32 @@ export default class LSPClient {
     return this._send({
       method,
       params,
+    });
+  }
+
+  async completion(iter_cursor) {
+    const { uri } = this;
+    return this.request("textDocument/completion", {
+      textDocument: {
+        uri,
+      },
+      position: {
+        line: iter_cursor.get_line(),
+        character: iter_cursor.get_line_offset() - 1,
+      },
+    });
+  }
+
+  async hover(iter_cursor) {
+    const { uri } = this;
+    return this.request("textDocument/hover", {
+      textDocument: {
+        uri,
+      },
+      position: {
+        line: iter_cursor.get_line(),
+        character: iter_cursor.get_line_offset() - 1,
+      },
     });
   }
 }

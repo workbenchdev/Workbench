@@ -2,10 +2,11 @@ import GObject from "gi://GObject";
 import Source from "gi://GtkSource";
 import Gtk from "gi://Gtk";
 import Pango from "gi://Pango";
-import { diagnostic_severities } from "../lsp/LSP.js";
+import { CompletionItemKind, diagnostic_severities } from "../lsp/LSP.js";
 import Gdk from "gi://Gdk";
 import GLib from "gi://GLib";
 import Adw from "gi://Adw";
+import Workbench from "gi://Workbench";
 
 import Template from "./CodeView.blp" with { type: "uri" };
 
@@ -21,6 +22,8 @@ const scheme_manager = Source.StyleSchemeManager.get_default();
 const style_manager = Adw.StyleManager.get_default();
 
 class CodeView extends Gtk.Widget {
+  completion_results = null;
+
   constructor({ language_id, ...params } = {}) {
     super(params);
     this.source_view = this._source_view;
@@ -41,6 +44,7 @@ class CodeView extends Gtk.Widget {
       this.buffer.set_language(this.language);
 
       this.#prepareHoverProvider();
+      this.#prepareCompletionProvider();
       this.#prepareSignals();
       this.#updateStyle();
     } catch (err) {
@@ -192,6 +196,68 @@ class CodeView extends Gtk.Widget {
     );
     this.buffer.set_style_scheme(scheme);
   };
+
+  #onCompletionRequest = (_provider, request) => {
+    console.log(`completion-request: ${request.context.get_word()}`);
+
+    const [success, start, end] = request.context.get_bounds();
+    if (!success) {
+      request.state_changed(Workbench.RequestState.CANCELLED);
+      return;
+    }
+
+    const text = this.buffer.get_text(start, end, false);
+
+    this.blueprint.lspc
+      .completion(end)
+      .then((result) => {
+        this.completion_results = result;
+        console.log("results", result.length);
+        console.log(result[0]);
+        console.log(result[result.length - 1]);
+
+        for (const completion_item of result) {
+          if (completion_item.insertText?.startsWith(text)) {
+            request.add(new Proposal(completion_item));
+          }
+        }
+      })
+      .catch(console.error)
+      .finally(() => {
+        request.state_changed(Workbench.RequestState.COMPLETE);
+      });
+  };
+
+  #prepareCompletionProvider() {
+    const completion_provider = new CompletionProvider();
+
+    completion_provider.connect(
+      "completion-request",
+      this.#onCompletionRequest,
+    );
+
+    // this.buffer.connect("notify::cursor-position", async (self) => {
+    //   if (!this.blueprint) return;
+    //   const iter_cursor = self.get_iter_at_offset(self.cursor_position);
+    //   try {
+    //     const result = await this.blueprint.hover(iter_cursor);
+    //     console.log(result);
+    //   } catch (err) {
+    //     logError(err);
+    //   }
+    // });
+    const completion = this.source_view.get_completion();
+
+    // completion.connect("show", () => {
+    //   console.log("completion show");
+    // });
+
+    // completion.connect("hide", () => {
+    //   console.log("completion hide");
+    // });
+
+    completion.add_provider(completion_provider);
+  }
 }
 
 export default registerClass(
@@ -242,3 +308,79 @@ function connect_signals(target, signals) {
 function disconnect_signals(target, handler_ids) {
   handler_ids.forEach((handler_id) => target.disconnect(handler_id));
 }
+
+const CompletionProvider = GObject.registerClass(
+  {
+    GTypeName: "CompletionProvider",
+    Implements: [Source.CompletionProvider],
+  },
+  class CompletionProvider extends Workbench.CompletionProvider {
+    vfunc_activate(context, proposal) {
+      context.get_buffer().begin_user_action();
+      const [success, start, end] = context.get_bounds();
+      if (success) context.get_buffer().delete(start, end);
+      context
+        .get_view()
+        .push_snippet(
+          Source.Snippet.new_parsed(proposal.get_typed_text()),
+          null,
+        );
+      context.get_buffer().end_user_action();
+    }
+
+    // TODO: implement refilter
+    // vfunc_refilter(_context, model) {
+    // console.log("refilter vfunc");
+    // }
+
+    vfunc_display(_context, proposal, cell) {
+      // const [, start, end] = context.get_bounds();
+      // const text = this.buffer.get_text(start, end, false);
+      // if (text.startsWith(context.get_word())) return null;
+
+      // log("display", proposal.label, cell.get_column());
+      switch (cell.get_column()) {
+        // case Source.CompletionColumn.ICON:
+        //   var image = new Gtk.Image ();
+        //   image_cache.request_paintable (emoji.url, (is_loaded, paintable) => {
+        //     image.paintable = paintable;
+        //   });
+        //   cell.set_widget (image);
+        //   break;
+        // case Source.CompletionColumn.ICON:
+        //   cell.set_icon_name("re.sonny.Workbench-symbolic");
+        //   break;
+        case Source.CompletionColumn.TYPED_TEXT:
+          cell.set_text(proposal.label);
+          break;
+        default:
+          cell.text = null;
+          break;
+      }
+      // log(context);
+      // log(proposals);
+    }
+  },
+);
+
+// class Proposal extends  {}
+const Proposal = GObject.registerClass(
+  {
+    Implements: [Source.CompletionProposal],
+  },
+  class Proposal extends GObject.Object {
+    constructor(completion_proposal) {
+      super();
+      Object.assign(this, completion_proposal);
+    }
+
+    vfunc_get_typed_text() {
+      let text = this.insertText || this.label;
+      // TODO: Blueprint language server should do this
+      if (this.kind === CompletionItemKind.Class) {
+        text += " {\n  $0\n}";
+      }
+      return text;
+    }
+  },
+);
