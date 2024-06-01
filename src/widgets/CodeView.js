@@ -2,7 +2,7 @@ import GObject from "gi://GObject";
 import Source from "gi://GtkSource";
 import Gtk from "gi://Gtk";
 import Pango from "gi://Pango";
-import { CompletionItemKind, diagnostic_severities } from "../lsp/LSP.js";
+import { diagnostic_severities } from "../lsp/LSP.js";
 import Gdk from "gi://Gdk";
 import GLib from "gi://GLib";
 import Adw from "gi://Adw";
@@ -374,7 +374,6 @@ const CompletionProvider = GObject.registerClass(
   },
 );
 
-// class Proposal extends  {}
 const Proposal = GObject.registerClass(
   {
     Implements: [Source.CompletionProposal],
@@ -399,12 +398,7 @@ const Proposal = GObject.registerClass(
     }
 
     vfunc_get_typed_text() {
-      let text = this.completion.insertText || this.completion.label;
-      // TODO: Blueprint language server should do this
-      if (this.completion.kind === CompletionItemKind.Class) {
-        text += " {\n  $0\n}";
-      }
-      return text;
+      return this.completion.insertText || this.completion.label;
     }
   },
 );
