@@ -7,6 +7,7 @@ import Gdk from "gi://Gdk";
 import GLib from "gi://GLib";
 import Adw from "gi://Adw";
 import Workbench from "gi://Workbench";
+import Gio from "gi://Gio";
 
 import Template from "./CodeView.blp" with { type: "uri" };
 
@@ -198,7 +199,7 @@ class CodeView extends Gtk.Widget {
     this.buffer.set_style_scheme(scheme);
   };
 
-  #onCompletionRequest = (_provider, request) => {
+  #onCompletionRequest = (provider, request) => {
     if (!this.lspc) {
       request.state_changed(Workbench.RequestState.CANCELLED);
       return;
@@ -213,16 +214,28 @@ class CodeView extends Gtk.Widget {
     this.lspc
       .completion(end)
       .then((result) => {
-        const word = request.context.get_word();
-        for (const completion_item of result) {
-          if (completion_item.insertText?.startsWith(word)) {
-            request.add(new Proposal(completion_item));
-          }
+        const model = Gio.ListStore.new(Proposal);
+        for (const item of result) {
+          model.append(new Proposal(item));
         }
-      })
-      .catch(console.error)
-      .finally(() => {
+
+        const expression = Gtk.PropertyExpression.new(Proposal, null, "label");
+        const filter = new Gtk.StringFilter({
+          expression,
+          ignore_case: true,
+          match_mode: Gtk.StringFilterMatchMode.PREFIX,
+          // search: word,
+        });
+        const filter_list_model = new Gtk.FilterListModel({ model, filter });
+        request.context.filter = filter;
+
         request.state_changed(Workbench.RequestState.COMPLETE);
+        request.context.set_proposals_for_provider(provider, filter_list_model);
+        provider.refilter(request.context, filter_list_model);
+      })
+      .catch((err) => {
+        request.state_changed(Workbench.RequestState.CANCELLED);
+        console.error(err);
       });
   };
 
@@ -326,10 +339,10 @@ const CompletionProvider = GObject.registerClass(
       context.get_buffer().end_user_action();
     }
 
-    // TODO: implement refilter
-    // vfunc_refilter(_context, model) {
-    // console.log("refilter vfunc");
-    // }
+    vfunc_refilter(context, _model) {
+      const word = context.get_word();
+      context.filter.search = word;
+    }
 
     vfunc_display(_context, proposal, cell) {
       // const [, start, end] = context.get_bounds();
@@ -365,17 +378,27 @@ const CompletionProvider = GObject.registerClass(
 const Proposal = GObject.registerClass(
   {
     Implements: [Source.CompletionProposal],
+    Properties: {
+      label: GObject.ParamSpec.string(
+        "label",
+        "Label",
+        "The label of the proposal",
+        GObject.ParamFlags.READABLE,
+        null,
+      ),
+    },
   },
   class Proposal extends GObject.Object {
     constructor(completion_proposal) {
       super();
-      Object.assign(this, completion_proposal);
+      this.label = completion_proposal.label;
+      this.completion = completion_proposal;
     }
 
     vfunc_get_typed_text() {
-      let text = this.insertText || this.label;
+      let text = this.completion.insertText || this.completion.label;
       // TODO: Blueprint language server should do this
-      if (this.kind === CompletionItemKind.Class) {
+      if (this.completion.kind === CompletionItemKind.Class) {
         text += " {\n  $0\n}";
       }
       return text;
