@@ -7,7 +7,6 @@ import Gdk from "gi://Gdk";
 import GLib from "gi://GLib";
 import Adw from "gi://Adw";
 import Workbench from "gi://Workbench";
-import Gio from "gi://Gio";
 
 import Template from "./CodeView.blp" with { type: "uri" };
 
@@ -214,24 +213,25 @@ class CodeView extends Gtk.Widget {
     this.lspc
       .completion(end)
       .then((result) => {
-        const model = Gio.ListStore.new(Proposal);
         for (const item of result) {
-          model.append(new Proposal(item));
+          request.add(new Proposal(item));
         }
 
         const expression = Gtk.PropertyExpression.new(Proposal, null, "label");
         const filter = new Gtk.StringFilter({
           expression,
-          ignore_case: true,
+          ignore_case: false,
           match_mode: Gtk.StringFilterMatchMode.PREFIX,
-          // search: word,
+          search: request.context.get_word(),
         });
-        const filter_list_model = new Gtk.FilterListModel({ model, filter });
+        const filter_list_model = new Gtk.FilterListModel({
+          model: request,
+          filter,
+        });
         request.context.filter = filter;
 
         request.state_changed(Workbench.RequestState.COMPLETE);
         request.context.set_proposals_for_provider(provider, filter_list_model);
-        provider.refilter(request.context, filter_list_model);
       })
       .catch((err) => {
         request.state_changed(Workbench.RequestState.CANCELLED);
@@ -391,8 +391,11 @@ const Proposal = GObject.registerClass(
   class Proposal extends GObject.Object {
     constructor(completion_proposal) {
       super();
-      this.label = completion_proposal.label;
       this.completion = completion_proposal;
+    }
+
+    get label() {
+      return this.completion.label;
     }
 
     vfunc_get_typed_text() {
