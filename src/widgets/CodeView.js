@@ -345,31 +345,29 @@ const CompletionProvider = GObject.registerClass(
     }
 
     vfunc_display(_context, proposal, cell) {
-      // const [, start, end] = context.get_bounds();
-      // const text = this.buffer.get_text(start, end, false);
-      // if (text.startsWith(context.get_word())) return null;
-
-      // log("display", proposal.label, cell.get_column());
       switch (cell.get_column()) {
         // case Source.CompletionColumn.ICON:
-        //   var image = new Gtk.Image ();
-        //   image_cache.request_paintable (emoji.url, (is_loaded, paintable) => {
-        //     image.paintable = paintable;
-        //   });
-        //   cell.set_widget (image);
-        //   break;
-        // case Source.CompletionColumn.ICON:
         //   cell.set_icon_name("re.sonny.Workbench-symbolic");
+        //   break;
+        // case Source.CompletionColumn.BEFORE:
+        //   cell.set_text("before");
         //   break;
         case Source.CompletionColumn.TYPED_TEXT:
           cell.set_text(proposal.label);
           break;
+        // case Source.CompletionColumn.AFTER:
+        // cell.set_text("after");
+        // break;
+        // case Source.CompletionColumn.COMMENT:
+        //   cell.set_text("comment");
+        //   break;
+        // case Source.CompletionColumn.DETAILS:
+        //   cell.set_text("details");
+        //   break;
         default:
           cell.text = null;
           break;
       }
-      // log(context);
-      // log(proposals);
     }
   },
 );
