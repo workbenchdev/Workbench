@@ -110,14 +110,14 @@ function assertObjectBuildable(el_object, is_root) {
         `${klass.$gtype.name} does not support the child property.`,
       );
     }
-  }
 
-  // Gtk-ERROR **: 23:19:54.204: GtkStackPage '<unnamed>' [0x55b094802eb0] is missing a child widget
-  if (GObject.type_is_a(klass, Gtk.StackPage)) {
-    const child = getChildProperty(el_object);
-    // log(child);
-    if (!child) {
-      throw new Error(`${klass.$gtype.name} is missing a child widget.`);
+    // Gtk-ERROR **: 23:19:54.204: GtkStackPage '<unnamed>' [0x55b094802eb0] is missing a child widget
+    if (GObject.type_is_a(klass, Gtk.StackPage)) {
+      const child = getChildProperty(el_object);
+      // log(child);
+      if (!child) {
+        throw new Error(`${klass.$gtype.name} is missing a child widget.`);
+      }
     }
   }
 
