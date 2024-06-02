@@ -16,6 +16,11 @@ template $CodeView: Gtk.Widget {
         implicit-trailing-newline: false;
       };
 
+      [internal-child completion]
+      GtkSource.Completion {
+        select-on-show: true;
+      }
+
       monospace: true;
       auto-indent: true;
       highlight-current-line: true;

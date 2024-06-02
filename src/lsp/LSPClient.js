@@ -41,6 +41,7 @@ export default class LSPClient {
     this.capabilities = {
       textDocument: {
         publishDiagnostics: {},
+        completion: {},
       },
     };
   }
@@ -76,6 +77,9 @@ export default class LSPClient {
       rootUri,
       locale: "en",
     });
+    const { serverInfo, capabilities: serverCapabilities } = result;
+    this.serverInfo = serverInfo;
+    this.serverCapabilities = serverCapabilities;
 
     // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#initialized
     await this._notify("initialized", {});
@@ -282,6 +286,40 @@ export default class LSPClient {
     return this._send({
       method,
       params,
+    });
+  }
+
+  // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_completion
+  async completion(iter_cursor) {
+    if (!this.serverCapabilities?.completionProvider) return [];
+    const { uri } = this;
+    const result = await this.request("textDocument/completion", {
+      textDocument: {
+        uri,
+      },
+      position: {
+        line: iter_cursor.get_line(),
+        character: iter_cursor.get_line_offset() - 1,
+      },
+    });
+
+    // "If a CompletionItem[] is provided it is interpreted to be complete. So it is the same as { isIncomplete: false, items }"
+    if (Array.isArray(result)) return result;
+
+    return result?.items || [];
+  }
+
+  async hover(iter_cursor) {
+    if (!this.serverCapabilities?.hoverProvider) return null;
+    const { uri } = this;
+    return this.request("textDocument/hover", {
+      textDocument: {
+        uri,
+      },
+      position: {
+        line: iter_cursor.get_line(),
+        character: iter_cursor.get_line_offset() - 1,
+      },
     });
   }
 }

@@ -6,6 +6,7 @@ import { diagnostic_severities } from "../lsp/LSP.js";
 import Gdk from "gi://Gdk";
 import GLib from "gi://GLib";
 import Adw from "gi://Adw";
+import Workbench from "gi://Workbench";
 
 import Template from "./CodeView.blp" with { type: "uri" };
 
@@ -21,6 +22,8 @@ const scheme_manager = Source.StyleSchemeManager.get_default();
 const style_manager = Adw.StyleManager.get_default();
 
 class CodeView extends Gtk.Widget {
+  lspc = null;
+
   constructor({ language_id, ...params } = {}) {
     super(params);
     this.source_view = this._source_view;
@@ -41,6 +44,8 @@ class CodeView extends Gtk.Widget {
       this.buffer.set_language(this.language);
 
       this.#prepareHoverProvider();
+      // this.#prepareHover();
+      this.#prepareCompletionProvider();
       this.#prepareSignals();
       this.#updateStyle();
     } catch (err) {
@@ -192,6 +197,78 @@ class CodeView extends Gtk.Widget {
     );
     this.buffer.set_style_scheme(scheme);
   };
+
+  #onCompletionRequest = (provider, request) => {
+    if (!this.lspc) {
+      request.state_changed(Workbench.RequestState.CANCELLED);
+      return;
+    }
+
+    const [success, , end] = request.context.get_bounds();
+    if (!success) {
+      request.state_changed(Workbench.RequestState.CANCELLED);
+      return;
+    }
+
+    this.lspc
+      .completion(end)
+      .then((result) => {
+        for (const item of result) {
+          request.add(new Proposal(item));
+        }
+
+        const expression = Gtk.PropertyExpression.new(Proposal, null, "label");
+        const filter = new Gtk.StringFilter({
+          expression,
+          ignore_case: false,
+          match_mode: Gtk.StringFilterMatchMode.PREFIX,
+          search: request.context.get_word(),
+        });
+        const filter_list_model = new Gtk.FilterListModel({
+          model: request,
+          filter,
+        });
+        request.context.filter = filter;
+
+        request.state_changed(Workbench.RequestState.COMPLETE);
+        request.context.set_proposals_for_provider(provider, filter_list_model);
+      })
+      .catch((err) => {
+        request.state_changed(Workbench.RequestState.CANCELLED);
+        console.error(err);
+      });
+  };
+
+  #prepareCompletionProvider() {
+    const completion_provider = new CompletionProvider();
+
+    completion_provider.connect(
+      "completion-request",
+      this.#onCompletionRequest,
+    );
+
+    const completion = this.source_view.get_completion();
+    completion.add_provider(completion_provider);
+
+    // completion.connect("show", () => {
+    //   console.log("completion show");
+    // });
+
+    // completion.connect("hide", () => {
+    //   console.log("completion hide");
+    // });
+  }
+
+  #prepareHover() {
+    this.buffer.connect("notify::cursor-position", (self) => {
+      if (!this.lspc) return;
+      const iter_cursor = self.get_iter_at_offset(self.cursor_position);
+      this.lspc
+        .hover(iter_cursor)
+        .then((result) => console.log(result))
+        .catch(console.error);
+    });
+  }
 }
 
 export default registerClass(
@@ -242,3 +319,84 @@ function connect_signals(target, signals) {
 function disconnect_signals(target, handler_ids) {
   handler_ids.forEach((handler_id) => target.disconnect(handler_id));
 }
+
+const CompletionProvider = GObject.registerClass(
+  {
+    GTypeName: "CompletionProvider",
+    Implements: [Source.CompletionProvider],
+  },
+  class CompletionProvider extends Workbench.CompletionProvider {
+    vfunc_activate(context, proposal) {
+      context.get_buffer().begin_user_action();
+      const [success, start, end] = context.get_bounds();
+      if (success) context.get_buffer().delete(start, end);
+      context
+        .get_view()
+        .push_snippet(
+          Source.Snippet.new_parsed(proposal.get_typed_text()),
+          null,
+        );
+      context.get_buffer().end_user_action();
+    }
+
+    vfunc_refilter(context, _model) {
+      const word = context.get_word();
+      context.filter.search = word;
+    }
+
+    vfunc_display(_context, proposal, cell) {
+      switch (cell.get_column()) {
+        // case Source.CompletionColumn.ICON:
+        //   cell.set_icon_name("re.sonny.Workbench-symbolic");
+        //   break;
+        // case Source.CompletionColumn.BEFORE:
+        //   cell.set_text("before");
+        //   break;
+        case Source.CompletionColumn.TYPED_TEXT:
+          cell.set_text(proposal.label);
+          break;
+        // case Source.CompletionColumn.AFTER:
+        // cell.set_text("after");
+        // break;
+        // case Source.CompletionColumn.COMMENT:
+        //   cell.set_text("comment");
+        //   break;
+        // case Source.CompletionColumn.DETAILS:
+        //   cell.set_text("details");
+        //   break;
+        default:
+          cell.text = null;
+          break;
+      }
+    }
+  },
+);
+
+const Proposal = GObject.registerClass(
+  {
+    Implements: [Source.CompletionProposal],
+    Properties: {
+      label: GObject.ParamSpec.string(
+        "label",
+        "Label",
+        "The label of the proposal",
+        GObject.ParamFlags.READABLE,
+        null,
+      ),
+    },
+  },
+  class Proposal extends GObject.Object {
+    constructor(completion_proposal) {
+      super();
+      this.completion = completion_proposal;
+    }
+
+    get label() {
+      return this.completion.label;
+    }
+
+    vfunc_get_typed_text() {
+      return this.completion.insertText || this.completion.label;
+    }
+  },
+);
