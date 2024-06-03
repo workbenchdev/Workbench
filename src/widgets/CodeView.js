@@ -2,11 +2,16 @@ import GObject from "gi://GObject";
 import Source from "gi://GtkSource";
 import Gtk from "gi://Gtk";
 import Pango from "gi://Pango";
-import { diagnostic_severities } from "../lsp/LSP.js";
+import {
+  CompletionItemKind,
+  completion_item_kinds,
+  diagnostic_severities,
+} from "../lsp/LSP.js";
 import Gdk from "gi://Gdk";
 import GLib from "gi://GLib";
 import Adw from "gi://Adw";
 import Workbench from "gi://Workbench";
+import { gettext as _ } from "gettext";
 
 import Template from "./CodeView.blp" with { type: "uri" };
 
@@ -15,6 +20,7 @@ import { registerClass } from "../overrides.js";
 import { getItersAtRange } from "../lsp/sourceview.js";
 
 import "./CodeFind.js";
+import { once } from "../../troll/src/async.js";
 
 Source.init();
 
@@ -213,9 +219,10 @@ class CodeView extends Gtk.Widget {
     this.lspc
       .completion(end)
       .then((result) => {
-        for (const item of result) {
-          request.add(new Proposal(item));
-        }
+        result
+          .map((item) => new Proposal(item))
+          .sort((a, b) => a.sortText.localeCompare(b.sortText))
+          .forEach((proposal) => request.add(proposal));
 
         const expression = Gtk.PropertyExpression.new(Proposal, null, "label");
         const filter = new Gtk.StringFilter({
@@ -327,16 +334,30 @@ const CompletionProvider = GObject.registerClass(
   },
   class CompletionProvider extends Workbench.CompletionProvider {
     vfunc_activate(context, proposal) {
-      context.get_buffer().begin_user_action();
+      const { completion } = context;
+      const { view } = completion;
+      const buffer = completion.get_buffer();
+
+      const promise = showCompletionAfterActivation({
+        completion,
+        proposal,
+        buffer,
+      });
+
+      buffer.begin_user_action();
       const [success, start, end] = context.get_bounds();
-      if (success) context.get_buffer().delete(start, end);
-      context
-        .get_view()
-        .push_snippet(
-          Source.Snippet.new_parsed(proposal.get_typed_text()),
-          null,
-        );
-      context.get_buffer().end_user_action();
+      if (success) buffer.delete(start, end);
+      view.push_snippet(
+        Source.Snippet.new_parsed(proposal.get_typed_text()),
+        null,
+      );
+      buffer.end_user_action();
+
+      promise
+        ?.then(() => {
+          view.emit("show-completion");
+        })
+        .catch(console.error);
     }
 
     vfunc_refilter(context, _model) {
@@ -344,7 +365,7 @@ const CompletionProvider = GObject.registerClass(
       context.filter.search = word;
     }
 
-    vfunc_display(_context, proposal, cell) {
+    vfunc_display(context, proposal, cell) {
       switch (cell.get_column()) {
         // case Source.CompletionColumn.ICON:
         //   cell.set_icon_name("re.sonny.Workbench-symbolic");
@@ -355,9 +376,17 @@ const CompletionProvider = GObject.registerClass(
         case Source.CompletionColumn.TYPED_TEXT:
           cell.set_text(proposal.label);
           break;
+        case Source.CompletionColumn.AFTER:
+          cell.set_text(
+            getProposalKindDisplay(
+              proposal,
+              context.completion.view.buffer.language.id,
+            ),
+          );
+          break;
         // case Source.CompletionColumn.AFTER:
-        // cell.set_text("after");
-        // break;
+        //   cell.set_text(proposal.deprecated ? _("Deprecated") : null);
+        //   break;
         // case Source.CompletionColumn.COMMENT:
         //   cell.set_text("comment");
         //   break;
@@ -368,6 +397,13 @@ const CompletionProvider = GObject.registerClass(
           cell.text = null;
           break;
       }
+    }
+
+    vfunc_is_trigger(iter, ch) {
+      if (ch !== ".") return false;
+      const success = iter.backward_char();
+      if (!success) return false;
+      return iter.ends_word();
     }
   },
 );
@@ -389,6 +425,9 @@ const Proposal = GObject.registerClass(
     constructor(completion_proposal) {
       super();
       this.completion = completion_proposal;
+      this.kind = completion_proposal.kind;
+      this.sortText = completion_proposal.sortText || completion_proposal.label;
+      this.deprecated = completion_proposal.deprecated === true;
     }
 
     get label() {
@@ -400,3 +439,27 @@ const Proposal = GObject.registerClass(
     }
   },
 );
+
+function getProposalKindDisplay(proposal, language_id) {
+  if (
+    proposal.kind === CompletionItemKind.Event &&
+    language_id === "blueprint"
+  ) {
+    return _("Signal");
+  }
+  return completion_item_kinds[proposal.kind] || null;
+}
+
+function showCompletionAfterActivation({ completion, proposal, buffer }) {
+  if (buffer.language.id !== "blueprint") return null;
+
+  if (
+    ![CompletionItemKind.Class, CompletionItemKind.Module].includes(
+      proposal.kind,
+    )
+  ) {
+    return null;
+  }
+
+  return once(completion, "hide");
+}

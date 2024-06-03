@@ -46,3 +46,9 @@ export const CompletionItemKind = {
   Operator: 24,
   TypeParameter: 25,
 };
+
+export const completion_item_kinds = Object.fromEntries(
+  Object.entries(CompletionItemKind).map(([key, value]) => {
+    return [value, key];
+  }),
+);

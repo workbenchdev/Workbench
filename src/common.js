@@ -19,6 +19,10 @@ export const languages = [
     types: [],
     document: null,
     default_file: "main.blp",
+    // language_server: [
+    //   "/home/sonny/Projects/GNOME/blueprint-compiler/blueprint-compiler.py",
+    //   "lsp",
+    // ],
     language_server: ["blueprint-compiler", "lsp"],
     formatting_options: {
       ...formatting_options,
