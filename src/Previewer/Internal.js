@@ -257,7 +257,7 @@ function scopeStylesheet(style, id) {
   for (const node of ast.nodes) {
     if (node.selector === "window") {
       node.selector = `#${id}`;
-    } else if (node.selector) {
+    } else if (!node.selector.startsWith(":")) {
       node.selector = `#${id} ${node.selector}`;
     }
   }
