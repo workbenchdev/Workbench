@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    // TODO: should probably be fixed to ES2023, or whatever standard is
+    // currently supported by the latest GJS
+    "target": "ESNext",
+    "outDir": "compiled_javascript",
+    "paths": {
+      "gi://*": ["./types/gi-module.d.ts"]
+    }
+  },
+  "include": ["main.ts", "types/ambient.d.ts", "types/gi-module.d.ts"]
+}

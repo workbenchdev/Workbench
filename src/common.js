@@ -119,6 +119,28 @@ export const languages = [
       tabSize: 4,
     },
   },
+  {
+    id: "typescript",
+    name: "TypeScript",
+    panel: "code",
+    extensions: [".ts", ".mts"],
+    types: [],
+    document: null,
+    default_file: "main.ts",
+    index: 4,
+    language_server: [
+      "biome",
+      "lsp-proxy",
+      // src/meson.build installs biome.json there
+      GLib.getenv("FLATPAK_ID")
+        ? `--config-path=${pkg.pkgdatadir}`
+        : `--config-path=src/langs/typescript`,
+    ],
+    formatting_options: {
+      ...formatting_options,
+      tabSize: 2,
+    },
+  },
 ];
 
 export function getLanguage(id) {
