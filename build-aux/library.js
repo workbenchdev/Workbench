@@ -155,7 +155,6 @@ async function copyDemo(source, destination) {
     const child_dest = destination.get_child(child.get_basename());
 
     if (file_info.get_file_type() === Gio.FileType.DIRECTORY) {
-      await child_dest.make_directory_async(GLib.PRIORITY_DEFAULT, null);
       await copyDirectory(child, child_dest);
       continue;
     }
@@ -177,6 +176,14 @@ async function copyDemo(source, destination) {
 }
 
 async function copyDirectory(source, destination) {
+  try {
+    await destination.make_directory_async(GLib.PRIORITY_DEFAULT, null);
+  } catch (err) {
+    if (!err.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.EXISTS)) {
+      throw err;
+    }
+  }
+
   const enumerator = await source.enumerate_children_async(
     `${Gio.FILE_ATTRIBUTE_STANDARD_NAME},${Gio.FILE_ATTRIBUTE_STANDARD_IS_HIDDEN}`,
     Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
@@ -191,7 +198,6 @@ async function copyDirectory(source, destination) {
     const child_dest = destination.get_child(child.get_basename());
 
     if (file_info.get_file_type() === Gio.FileType.DIRECTORY) {
-      await child_dest.make_directory_async(GLib.PRIORITY_DEFAULT, null);
       await copyDirectory(child, child_dest);
       continue;
     }

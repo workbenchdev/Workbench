@@ -4,3 +4,6 @@
 [submodule "demos"]
 	path = demos
 	url = https://github.com/workbenchdev/demos.git
+[submodule "blueprint-compiler"]
+	path = blueprint-compiler
+	url = https://gitlab.gnome.org/jwestman/blueprint-compiler.git

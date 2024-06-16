@@ -21,6 +21,7 @@ import { getItersAtRange } from "../lsp/sourceview.js";
 
 import "./CodeFind.js";
 import { once } from "../../troll/src/async.js";
+import { sortBlueprintProposals } from "../langs/blueprint/blueprint.js";
 
 Source.init();
 
@@ -221,7 +222,11 @@ class CodeView extends Gtk.Widget {
       .then((result) => {
         result
           .map((item) => new Proposal(item))
-          .sort((a, b) => a.sortText.localeCompare(b.sortText))
+          .sort(
+            this.language_id === "blueprint"
+              ? sortBlueprintProposals
+              : (a, b) => a.sortText.localeCompare(b.sortText),
+          )
           .forEach((proposal) => request.add(proposal));
 
         const expression = Gtk.PropertyExpression.new(Proposal, null, "label");
@@ -368,15 +373,9 @@ const CompletionProvider = GObject.registerClass(
     vfunc_display(context, proposal, cell) {
       switch (cell.get_column()) {
         // case Source.CompletionColumn.ICON:
-        //   cell.set_icon_name("re.sonny.Workbench-symbolic");
+        //   cell.set_icon_name("lang-class-symbolic");
         //   break;
-        // case Source.CompletionColumn.BEFORE:
-        //   cell.set_text("before");
-        //   break;
-        case Source.CompletionColumn.TYPED_TEXT:
-          cell.set_text(proposal.label);
-          break;
-        case Source.CompletionColumn.AFTER:
+        case Source.CompletionColumn.BEFORE:
           cell.set_text(
             getProposalKindDisplay(
               proposal,
@@ -384,18 +383,25 @@ const CompletionProvider = GObject.registerClass(
             ),
           );
           break;
-        // case Source.CompletionColumn.AFTER:
-        //   cell.set_text(proposal.deprecated ? _("Deprecated") : null);
-        //   break;
-        // case Source.CompletionColumn.COMMENT:
-        //   cell.set_text("comment");
-        //   break;
-        // case Source.CompletionColumn.DETAILS:
-        //   cell.set_text("details");
-        //   break;
-        default:
-          cell.text = null;
+        case Source.CompletionColumn.TYPED_TEXT:
+          if (proposal.deprecated) {
+            cell.set_markup(
+              `<span strikethrough="true">${proposal.label}</span>`,
+            );
+          } else {
+            cell.set_text(proposal.label);
+          }
           break;
+        case Source.CompletionColumn.AFTER:
+          cell.set_text(proposal.deprecated ? _("Deprecated") : null);
+          break;
+        case Source.CompletionColumn.COMMENT:
+          cell.set_text(proposal.detail);
+          break;
+        // case Source.CompletionColumn.DETAILS:
+        // cell.set_text(null);
+        // cell.set_text(proposal.documentation);
+        // break;
       }
     }
 
@@ -428,6 +434,8 @@ const Proposal = GObject.registerClass(
       this.kind = completion_proposal.kind;
       this.sortText = completion_proposal.sortText || completion_proposal.label;
       this.deprecated = completion_proposal.deprecated === true;
+      this.documentation = completion_proposal.documentation?.value || null;
+      this.detail = completion_proposal.detail || null;
     }
 
     get label() {
@@ -454,9 +462,11 @@ function showCompletionAfterActivation({ completion, proposal, buffer }) {
   if (buffer.language.id !== "blueprint") return null;
 
   if (
-    ![CompletionItemKind.Class, CompletionItemKind.Module].includes(
-      proposal.kind,
-    )
+    ![
+      CompletionItemKind.Class,
+      CompletionItemKind.Module,
+      CompletionItemKind.Property,
+    ].includes(proposal.kind)
   ) {
     return null;
   }

@@ -3,10 +3,8 @@
   "buildsystem": "meson",
   "sources": [
     {
-      "type": "git",
-      "url": "https://gitlab.gnome.org/jwestman/blueprint-compiler.git",
-      "commit": "66b43c36cf1017c878762007373964a096b3d2a5",
-      "tag": "v0.12.0"
+      "type": "dir",
+      "path": "../../blueprint-compiler"
     }
   ]
 }

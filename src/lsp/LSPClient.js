@@ -15,7 +15,7 @@ const decoder_ascii = new TextDecoder("ascii");
 
 const processId = getPid();
 const clientInfo = {
-  name: pkg.name,
+  name: "Workbench",
   version: pkg.version,
 };
 
