@@ -8,7 +8,7 @@
     "outDir": "compiled_javascript",
     "baseUrl": ".",
     "paths": {
-      "*": ["*", "types/*", "gi-types/*"]
+      "*": ["*", "types/*"]
     },
     "skipLibCheck": true
   },
