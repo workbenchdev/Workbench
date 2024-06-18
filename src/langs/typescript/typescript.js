@@ -1,7 +1,7 @@
 import Gio from "gi://Gio";
 
 import { createLSPClient } from "../../common.js";
-import { getLanguage, copy } from "../../util.js";
+import { copy, copyDirectory, ensureDir, getLanguage } from "../../util.js";
 import { isTypeScriptEnabled } from "../../Extensions/Extensions.js";
 
 export function setup({ document }) {
@@ -42,10 +42,10 @@ const typescript_template_dir = Gio.File.new_for_path(
 
 export async function setupTypeScriptProject(destination) {
   const types_destination = destination.get_child("types");
+  ensureDir(types_destination);
 
-  if (!types_destination.query_exists(null)) {
-    types_destination.make_directory_with_parents(null);
-  }
+  const gi_types_destination = destination.get_child("gi-types");
+  ensureDir(gi_types_destination);
 
   return Promise.all([
     copy(
@@ -54,11 +54,9 @@ export async function setupTypeScriptProject(destination) {
       types_destination,
       Gio.FileCopyFlags.NONE,
     ),
-    copy(
-      "types/gi-module.d.ts",
-      typescript_template_dir,
-      types_destination,
-      Gio.FileCopyFlags.NONE,
+    copyDirectory(
+      typescript_template_dir.get_child("gi-types"),
+      gi_types_destination,
     ),
     copy(
       "tsconfig.json",

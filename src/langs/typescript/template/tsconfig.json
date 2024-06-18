@@ -6,9 +6,11 @@
     // currently supported by the latest GJS
     "target": "ESNext",
     "outDir": "compiled_javascript",
+    "baseUrl": ".",
     "paths": {
-      "gi://*": ["./types/gi-module.d.ts"]
-    }
+      "*": ["*", "types/*", "gi-types/*"]
+    },
+    "skipLibCheck": true
   },
-  "include": ["main.ts", "types/ambient.d.ts", "types/gi-module.d.ts"]
+  "include": ["main.ts", "types/ambient.d.ts", "gi-types/gi.d.ts"]
 }
