@@ -128,14 +128,7 @@ export const languages = [
     document: null,
     default_file: "main.ts",
     index: 4,
-    language_server: [
-      "biome",
-      "lsp-proxy",
-      // src/meson.build installs biome.json there
-      GLib.getenv("FLATPAK_ID")
-        ? `--config-path=${pkg.pkgdatadir}`
-        : `--config-path=src/langs/typescript`,
-    ],
+    language_server: ["typescript-language-server", "--stdio"],
     formatting_options: {
       ...formatting_options,
       tabSize: 2,
