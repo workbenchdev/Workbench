@@ -120,16 +120,20 @@ export async function copyDirectory(source, destination) {
     null,
   );
 
+  const children = [];
+
   for await (const file_info of enumerator) {
     const child = enumerator.get_child(file_info);
     const child_dest = destination.get_child(child.get_basename());
 
     if (file_info.get_file_type() === Gio.FileType.DIRECTORY) {
-      await copyDirectory(child, child_dest);
+      const deep_children = await copyDirectory(child, child_dest);
+      children.push(...deep_children);
       continue;
     }
 
     try {
+      children.push(child_dest.get_uri());
       await child.copy_async(
         child_dest, // destination
         Gio.FileCopyFlags.OVERWRITE, // flags
@@ -143,6 +147,8 @@ export async function copyDirectory(source, destination) {
       }
     }
   }
+
+  return children;
 }
 
 export function getNowForFilename() {
@@ -191,10 +197,11 @@ export function removeDirectory(file) {
 
 export async function copy(filename, source_dir, dest_dir, flags) {
   const file = source_dir.get_child(filename);
+  const dest_file = dest_dir.get_child(file.get_basename());
 
   try {
     await file.copy_async(
-      dest_dir.get_child(file.get_basename()), // destination
+      dest_file, // destination
       flags, // flags
       GLib.PRIORITY_DEFAULT, // priority
       null, // cancellable
@@ -205,4 +212,6 @@ export async function copy(filename, source_dir, dest_dir, flags) {
       throw err;
     }
   }
+
+  return dest_file.get_uri();
 }
