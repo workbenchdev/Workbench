@@ -40,7 +40,7 @@ const typescript_template_dir = Gio.File.new_for_path(
   pkg.pkgdatadir,
 ).resolve_relative_path("langs/typescript/template");
 
-export async function setupTypeScriptProject(destination) {
+export async function setupTypeScriptProject(destination, document) {
   const types_destination = destination.get_child("types");
   ensureDir(types_destination);
 
@@ -64,5 +64,13 @@ export async function setupTypeScriptProject(destination) {
       destination,
       Gio.FileCopyFlags.NONE,
     ),
-  ]);
+  ]).then((uris) => {
+    // notify the language server that are these files were created in the
+    // workspace
+    document.lspc._notify("workspace/didCreateFile", {
+      files: uris.flat().map((uri) => ({
+        uri,
+      })),
+    });
+  });
 }
