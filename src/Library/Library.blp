@@ -30,6 +30,14 @@ Adw.Window window {
             "title-1"
           ]
         }
+
+        SearchEntry search_entry {
+          search-delay: 100;
+          placeholder-text: _("Search demos");
+          activates-default: true;
+          width-request: 400;
+          margin-top: 32;
+        }
       }
 
       Adw.PreferencesGroup library_uncategorized {}
