@@ -47,13 +47,10 @@ export default function Library({ application }) {
         language,
       }).catch(console.error);
     });
-    //  Add the demo categories to the map
     if (!category_map.has(demo.category)) {
       category_map.set(demo.category, objects[`library_${demo.category}`]);
     }
     objects[`library_${demo.category}`].add(widget);
-    //  Add demo names and their respective AdwPreferenceRows + categories
-    //  into a map
     widgets_map.set(demo.name, { widget, category: demo.category });
   });
 
@@ -61,24 +58,14 @@ export default function Library({ application }) {
     const search_term = search_entry.get_text().toLowerCase();
     const visible_categories = new Set();
 
-    widgets_map.forEach(({ widget, category }, demoName) => {
-      if (demoName.toLowerCase().includes(search_term)) {
-        widget.visible = true;
-        //  Add categories of the demos that pass the search criteria
-        visible_categories.add(category);
-      } else {
-        widget.visible = false;
-      }
+    widgets_map.forEach(({ widget, category }, demo_name) => {
+      const is_match = demo_name.toLowerCase().includes(search_term);
+      widget.visible = is_match;
+      if (is_match) visible_categories.add(category);
     });
 
-    category_map.forEach((categoryWidget, categoryName) => {
-      //  Iterate through category map and check if the category is present
-      //  in the set we created
-      if (visible_categories.has(categoryName)) {
-        categoryWidget.visible = true;
-      } else {
-        categoryWidget.visible = false;
-      }
+    category_map.forEach((category_widget, category_name) => {
+      category_widget.visible = visible_categories.has(category_name);
     });
   });
   const action_library = new Gio.SimpleAction({

@@ -18,9 +18,14 @@ Adw.Window window {
 
     content: Adw.PreferencesPage {
       Adw.PreferencesGroup {
-        Picture picture_illustration {
-          can-shrink: false;
-          margin-bottom: 32;
+        Box {
+          halign: center;
+          vexpand: false;
+
+          Picture picture_illustration {
+            can-shrink: false;
+            margin-bottom: 32;
+          }
         }
 
         Label {
