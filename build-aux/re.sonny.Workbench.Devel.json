@@ -22,7 +22,8 @@
     "--socket=wayland",
     "--device=dri",
     "--share=network",
-    "--socket=pulseaudio"
+    "--socket=pulseaudio",
+    "--env=GST_PLUGIN_PATH=/app/lib64/gstreamer-1.0"
   ],
   "cleanup": [
     "#/include",
