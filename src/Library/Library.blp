@@ -18,9 +18,14 @@ Adw.Window window {
 
     content: Adw.PreferencesPage {
       Adw.PreferencesGroup {
-        Picture picture_illustration {
-          can-shrink: false;
-          margin-bottom: 32;
+        Box {
+          halign: center;
+          vexpand: false;
+
+          Picture picture_illustration {
+            can-shrink: false;
+            margin-bottom: 32;
+          }
         }
 
         Label {
@@ -29,6 +34,14 @@ Adw.Window window {
           styles [
             "title-1"
           ]
+        }
+
+        SearchEntry search_entry {
+          search-delay: 100;
+          placeholder-text: _("Search demos");
+          activates-default: true;
+          width-request: 400;
+          margin-top: 32;
         }
       }
 
