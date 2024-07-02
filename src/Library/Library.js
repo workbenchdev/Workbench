@@ -38,7 +38,7 @@ export default function Library({ application }) {
     const widget = new EntryRow({ demo: demo });
     if (demo.name === "Welcome") last_selected = widget;
 
-    widget.connect("activated", (_self, language) => {
+    widget.connect("lang_activated", (_self, language) => {
       last_selected = widget;
 
       openDemo({
