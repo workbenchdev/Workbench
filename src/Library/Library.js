@@ -27,7 +27,7 @@ export default function Library({ application }) {
     window.add_css_class("devel");
   }
 
-  let last_selected;
+  let last_triggered;
 
   window.connect("close-request", quitOnLastWindowClose);
 
@@ -35,11 +35,11 @@ export default function Library({ application }) {
   const widgets_map = new Map();
   const category_map = new Map();
   demos.forEach((demo) => {
-    const widget = new EntryRow({ demo: demo });
-    if (demo.name === "Welcome") last_selected = widget;
+    const entry_row = new EntryRow({ demo: demo });
+    if (demo.name === "Welcome") last_triggered = entry_row;
 
-    widget.connect("lang_activated", (_self, language) => {
-      last_selected = widget;
+    entry_row.connect("triggered", (_self, language) => {
+      last_triggered = entry_row;
 
       openDemo({
         application,
@@ -50,8 +50,8 @@ export default function Library({ application }) {
     if (!category_map.has(demo.category)) {
       category_map.set(demo.category, objects[`library_${demo.category}`]);
     }
-    objects[`library_${demo.category}`].add(widget);
-    widgets_map.set(demo.name, { widget, category: demo.category });
+    objects[`library_${demo.category}`].add(entry_row);
+    widgets_map.set(demo.name, { entry_row, category: demo.category });
   });
 
   search_entry.connect("search-changed", () => {
@@ -74,7 +74,7 @@ export default function Library({ application }) {
   });
   action_library.connect("activate", () => {
     window.present();
-    last_selected?.grab_focus();
+    last_triggered?.grab_focus();
   });
   application.add_action(action_library);
   application.set_accels_for_action("app.library", ["<Control><Shift>O"]);

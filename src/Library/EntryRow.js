@@ -22,7 +22,7 @@ class EntryRow extends Adw.ActionRow {
     });
 
     activate_action.connect("activate", () => {
-      this.emit("lang_activated", null);
+      this.emit("triggered", null);
     });
     action_group.add_action(activate_action);
 
@@ -47,7 +47,7 @@ class EntryRow extends Adw.ActionRow {
     });
 
     button.connect("clicked", () => {
-      this.emit("lang_activated", language);
+      this.emit("triggered", language);
     });
 
     return button;
@@ -68,7 +68,7 @@ export default GObject.registerClass(
       ),
     },
     Signals: {
-      lang_activated: {
+      triggered: {
         param_types: [GObject.TYPE_JSOBJECT],
       },
     },
