@@ -32,7 +32,7 @@ We provide a couple of tools to make the development process pleasant.
 # sudo dnf install flatpak flatpak-builder nodejs make gcc gcc-c++
 
 cd Workbench
-make setup
+make
 ```
 
 Before submitting a PR, we recommend running tests locally with

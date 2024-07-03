@@ -19,7 +19,7 @@ import { build } from "../../troll/src/builder.js";
 
 export default function Library({ application }) {
   const objects = build(resource);
-  const { window, picture_illustration } = objects;
+  const { window, picture_illustration, search_entry } = objects;
   window.application = application;
   picture_illustration.set_resource(illustration);
 
@@ -27,17 +27,19 @@ export default function Library({ application }) {
     window.add_css_class("devel");
   }
 
-  let last_selected;
+  let last_triggered;
 
   window.connect("close-request", quitOnLastWindowClose);
 
   const demos = getDemos();
+  const widgets_map = new Map();
+  const category_map = new Map();
   demos.forEach((demo) => {
-    const widget = new EntryRow({ demo: demo });
-    if (demo.name === "Welcome") last_selected = widget;
+    const entry_row = new EntryRow({ demo: demo });
+    if (demo.name === "Welcome") last_triggered = entry_row;
 
-    widget.connect("activated", (_self, language) => {
-      last_selected = widget;
+    entry_row.connect("triggered", (_self, language) => {
+      last_triggered = entry_row;
 
       openDemo({
         application,
@@ -45,17 +47,34 @@ export default function Library({ application }) {
         language,
       }).catch(console.error);
     });
-
-    objects[`library_${demo.category}`].add(widget);
+    if (!category_map.has(demo.category)) {
+      category_map.set(demo.category, objects[`library_${demo.category}`]);
+    }
+    objects[`library_${demo.category}`].add(entry_row);
+    widgets_map.set(demo.name, { entry_row, category: demo.category });
   });
 
+  search_entry.connect("search-changed", () => {
+    const search_term = search_entry.get_text().toLowerCase();
+    const visible_categories = new Set();
+
+    widgets_map.forEach(({ entry_row, category }, demo_name) => {
+      const is_match = demo_name.toLowerCase().includes(search_term);
+      entry_row.visible = is_match;
+      if (is_match) visible_categories.add(category);
+    });
+
+    category_map.forEach((category_widget, category_name) => {
+      category_widget.visible = visible_categories.has(category_name);
+    });
+  });
   const action_library = new Gio.SimpleAction({
     name: "library",
     parameter_type: null,
   });
   action_library.connect("activate", () => {
     window.present();
-    last_selected?.grab_focus();
+    last_triggered?.grab_focus();
   });
   application.add_action(action_library);
   application.set_accels_for_action("app.library", ["<Control><Shift>O"]);
@@ -86,9 +105,9 @@ async function openDemo({ application, demo_name, language }) {
     session.settings.set_int("code-language", language.index);
     global_settings.set_int("recent-code-language", language.index);
 
-    // If the user explictely requested to open the demo
+    // If the user explicitly requested to open the demo
     // in a specific language then that's probably what they are interested in
-    // therefor override the demo default and force show the code panel
+    // therefore override the demo default and force show the code panel
     session.settings.set_boolean("show-code", true);
   }
 

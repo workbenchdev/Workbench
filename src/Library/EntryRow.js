@@ -6,7 +6,7 @@ import GObject from "gi://GObject";
 import { getLanguage } from "../util.js";
 import Template from "./EntryRow.blp" with { type: "uri" };
 
-class EntryRow extends Adw.PreferencesRow {
+class EntryRow extends Adw.ActionRow {
   constructor({ demo, ...params } = {}) {
     super(params);
 
@@ -22,7 +22,7 @@ class EntryRow extends Adw.PreferencesRow {
     });
 
     activate_action.connect("activate", () => {
-      this.emit("activated", null);
+      this.emit("triggered", null);
     });
     action_group.add_action(activate_action);
 
@@ -47,7 +47,7 @@ class EntryRow extends Adw.PreferencesRow {
     });
 
     button.connect("clicked", () => {
-      this.emit("activated", language);
+      this.emit("triggered", language);
     });
 
     return button;
@@ -68,7 +68,7 @@ export default GObject.registerClass(
       ),
     },
     Signals: {
-      activated: {
+      triggered: {
         param_types: [GObject.TYPE_JSOBJECT],
       },
     },

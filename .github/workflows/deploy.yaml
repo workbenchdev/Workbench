@@ -1,7 +1,10 @@
+name: Deploy
+
 on:
   push:
     branches: [main]
-name: Deploy
+  workflow_dispatch:
+
 jobs:
   flatpak:
     name: "Flatpak"

@@ -1,75 +1,97 @@
 using Gtk 4.0;
 using Adw 1;
 
-Adw.PreferencesWindow window {
+Adw.Window window {
   hide-on-close: true;
   modal: false;
   title: _("Workbench — Library");
   default-height: 700;
   default-width: 700;
 
-  Adw.PreferencesPage {
-    Adw.PreferencesGroup {
-      Picture picture_illustration {
-        can-shrink: false;
-        margin-bottom: 32;
+  Adw.ToolbarView toolbar_view {
+    [top]
+    Adw.HeaderBar header_bar {
+      title-widget: Adw.WindowTitle {
+        title: _("Workbench — Library");
+      };
+    }
+
+    content: Adw.PreferencesPage {
+      Adw.PreferencesGroup {
+        Box {
+          halign: center;
+          vexpand: false;
+
+          Picture picture_illustration {
+            can-shrink: false;
+            margin-bottom: 32;
+          }
+        }
+
+        Label {
+          label: _("Learn, Test, Remix");
+
+          styles [
+            "title-1"
+          ]
+        }
+
+        SearchEntry search_entry {
+          search-delay: 100;
+          placeholder-text: _("Search demos");
+          activates-default: true;
+          width-request: 400;
+          margin-top: 32;
+        }
       }
 
-      Label {
-        label: _("Learn, Test, Remix");
+      Adw.PreferencesGroup library_uncategorized {}
 
-        styles [
-          "title-1"
-        ]
+      Adw.PreferencesGroup library_tools {
+        title: _("Tools");
       }
-    }
 
-    Adw.PreferencesGroup library_uncategorized {}
-
-    Adw.PreferencesGroup library_tools {
-      title: _("Tools");
-    }
-
-    Adw.PreferencesGroup library_network {
-      title: _("Network");
-    }
-
-    Adw.PreferencesGroup library_controls {
-      title: _("Controls");
-    }
-
-    Adw.PreferencesGroup library_layout {
-      title: _("Layout");
-    }
-
-    Adw.PreferencesGroup library_feedback {
-      title: _("Feedback");
-    }
-
-    Adw.PreferencesGroup library_navigation {
-      title: _("Navigation");
-    }
-
-    Adw.PreferencesGroup library_user_interface {
-      title: _("User Interface");
-    }
-
-    Adw.PreferencesGroup library_platform {
-      title: _("Platform APIs");
-    }
-
-    Adw.PreferencesGroup {
-      vexpand: true;
-      valign: end;
-
-      Label {
-        label: _('All examples are dedicated to the public domain\nand <b>can be used freely</b> under the terms of <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 1.0</a>');
-        use-markup: true;
-
-        styles [
-          "caption"
-        ]
+      Adw.PreferencesGroup library_network {
+        title: _("Network");
       }
-    }
+
+      Adw.PreferencesGroup library_controls {
+        title: _("Controls");
+      }
+
+      Adw.PreferencesGroup library_layout {
+        title: _("Layout");
+      }
+
+      Adw.PreferencesGroup library_feedback {
+        title: _("Feedback");
+      }
+
+      Adw.PreferencesGroup library_navigation {
+        title: _("Navigation");
+      }
+
+      Adw.PreferencesGroup library_user_interface {
+        title: _("User Interface");
+      }
+
+      Adw.PreferencesGroup library_platform {
+        title: _("Platform APIs");
+      }
+
+      Adw.PreferencesGroup {
+        vexpand: true;
+        valign: end;
+
+        Label {
+          label: _("All examples are dedicated to the public domain\nand <b>can be used freely</b> under the terms of <a href=\"https://creativecommons.org/publicdomain/zero/1.0/\">CC0 1.0</a>");
+          use-markup: true;
+
+          styles [
+            "caption"
+          ]
+        }
+      }
+    };
   }
 }
