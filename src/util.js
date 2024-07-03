@@ -213,5 +213,5 @@ export async function copy(filename, source_dir, dest_dir, flags) {
     }
   }
 
-  return dest_file.get_uri();
+  return dest_file;
 }
