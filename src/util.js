@@ -120,20 +120,16 @@ export async function copyDirectory(source, destination) {
     null,
   );
 
-  const children = [];
-
   for await (const file_info of enumerator) {
     const child = enumerator.get_child(file_info);
     const child_dest = destination.get_child(child.get_basename());
 
     if (file_info.get_file_type() === Gio.FileType.DIRECTORY) {
-      const deep_children = await copyDirectory(child, child_dest);
-      children.push(...deep_children);
+      await copyDirectory(child, child_dest);
       continue;
     }
 
     try {
-      children.push(child_dest.get_uri());
       await child.copy_async(
         child_dest, // destination
         Gio.FileCopyFlags.OVERWRITE, // flags
@@ -147,8 +143,6 @@ export async function copyDirectory(source, destination) {
       }
     }
   }
-
-  return children;
 }
 
 export function getNowForFilename() {
