@@ -50,7 +50,7 @@ export async function setupTypeScriptProject(destination, document) {
 
   // Notify the language server that the tsconfig file was created
   // to initialized diagnostics and type checkings
-  document.lspc._notify("workspace/didCreateFile", {
+  await document.lspc.notify("workspace/didCreateFile", {
     files: [{ uri: destination_file.get_uri() }],
   });
 }
