@@ -10,6 +10,7 @@ export class TypeScriptDocument extends Document {
     this.lspc = setup({ document: this });
     this.code_view.lspc = this.lspc;
   }
+
   async format() {
     // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_formatting
     const text_edits = await this.lspc.request("textDocument/formatting", {
