@@ -1,7 +1,7 @@
 import Gio from "gi://Gio";
 
 import { createLSPClient } from "../../common.js";
-import { copy, getLanguage } from "../../util.js";
+import { getLanguage, copy } from "../../util.js";
 import { isTypeScriptEnabled } from "../../Extensions/Extensions.js";
 
 export function setup({ document }) {
