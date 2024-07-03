@@ -48,7 +48,8 @@ export async function setupTypeScriptProject(destination, document) {
     Gio.FileCopyFlags.NONE,
   );
 
-  // notify the language server that are the tsconfig file was created
+  // Notify the language server that the tsconfig file was created
+  // to initialized diagnostics and type checkings
   document.lspc._notify("workspace/didCreateFile", {
     files: [{ uri: destination_uri }],
   });
