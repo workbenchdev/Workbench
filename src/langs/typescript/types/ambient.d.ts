@@ -35,7 +35,7 @@ declare module "gettext" {
   ): string;
 }
 
-// TODO: uncomment correct typings
+// TODO: uncomment correct typings after we switch to `ts-for-gir`
 // declare const workbench: {
 //   window: Adw.ApplicationWindow;
 //   application: Adw.Application;
