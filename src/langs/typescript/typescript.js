@@ -1,7 +1,7 @@
 import Gio from "gi://Gio";
 
 import { createLSPClient } from "../../common.js";
-import { copy, copyDirectory, ensureDir, getLanguage } from "../../util.js";
+import { copy, getLanguage } from "../../util.js";
 import { isTypeScriptEnabled } from "../../Extensions/Extensions.js";
 
 export function setup({ document }) {
@@ -41,36 +41,15 @@ const typescript_template_dir = Gio.File.new_for_path(
 ).resolve_relative_path("langs/typescript/template");
 
 export async function setupTypeScriptProject(destination, document) {
-  const types_destination = destination.get_child("types");
-  ensureDir(types_destination);
+  const destination_uri = await copy(
+    "tsconfig.json",
+    typescript_template_dir,
+    destination,
+    Gio.FileCopyFlags.NONE,
+  );
 
-  const gi_types_destination = destination.get_child("gi-types");
-  ensureDir(gi_types_destination);
-
-  return Promise.all([
-    copy(
-      "types/ambient.d.ts",
-      typescript_template_dir,
-      types_destination,
-      Gio.FileCopyFlags.NONE,
-    ),
-    copyDirectory(
-      typescript_template_dir.get_child("gi-types"),
-      gi_types_destination,
-    ),
-    copy(
-      "tsconfig.json",
-      typescript_template_dir,
-      destination,
-      Gio.FileCopyFlags.NONE,
-    ),
-  ]).then((uris) => {
-    // notify the language server that are these files were created in the
-    // workspace
-    document.lspc._notify("workspace/didCreateFile", {
-      files: uris.flat().map((uri) => ({
-        uri,
-      })),
-    });
+  // notify the language server that are the tsconfig file was created
+  document.lspc._notify("workspace/didCreateFile", {
+    files: [{ uri: destination_uri }],
   });
 }
