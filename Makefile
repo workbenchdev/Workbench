@@ -1,18 +1,26 @@
 SHELL:=/bin/bash -O globstar
 .PHONY: setup build lint unit test ci sandbox flatpak
-.DEFAULT_GOAL := test
+.DEFAULT_GOAL := setup
 
 setup:
 	flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 	flatpak install --or-update --user --noninteractive flathub org.gnome.Sdk//46 org.flatpak.Builder org.freedesktop.Sdk.Extension.rust-stable//23.08 org.freedesktop.Sdk.Extension.vala//23.08 org.freedesktop.Sdk.Extension.llvm16//23.08 org.freedesktop.Sdk.Extension.node18//23.08 org.freedesktop.Sdk.Extension.typescript//23.08
-# flatpak remote-add --user --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
+	flatpak remote-add --user --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
+	flatpak install --or-update --user --noninteractive flathub-beta org.freedesktop.Sdk.Extension.rust-stable//24.08beta org.freedesktop.Sdk.Extension.vala//24.08beta org.freedesktop.Sdk.Extension.llvm18//24.08beta
+#  org.freedesktop.Sdk.Extension.node18//24.08beta org.freedesktop.Sdk.Extension.typescript//24.08beta
 	flatpak remote-add --user --if-not-exists gnome-nightly https://nightly.gnome.org/gnome-nightly.flatpakrepo
 	flatpak install --or-update --user --noninteractive gnome-nightly org.gnome.Sdk//master
-	npm install
-	make build
+	git submodule update --init
+	npm install --no-fund
+	@echo " ✅ You can use make stable or make devel to build Workbench"
 
-build:
+stable:
+	flatpak-builder --delete-build-dirs --disable-updates --build-only --ccache --force-clean flatpak build-aux/re.sonny.Workbench.json
+
+devel:
 	flatpak-builder --delete-build-dirs --disable-updates --build-only --ccache --force-clean flatpak build-aux/re.sonny.Workbench.Devel.json
+
+build: devel
 
 cli:
 	 ./troll/gjspack/bin/gjspack src/cli/main.js --appid=re.sonny.Workbench.cli --prefix=/re/sonny/Workbench --resource-root=src/ --no-executable flatpak/files/share/re.sonny.Workbench.cli/

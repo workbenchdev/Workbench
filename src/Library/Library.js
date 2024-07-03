@@ -58,9 +58,9 @@ export default function Library({ application }) {
     const search_term = search_entry.get_text().toLowerCase();
     const visible_categories = new Set();
 
-    widgets_map.forEach(({ widget, category }, demo_name) => {
+    widgets_map.forEach(({ entry_row, category }, demo_name) => {
       const is_match = demo_name.toLowerCase().includes(search_term);
-      widget.visible = is_match;
+      entry_row.visible = is_match;
       if (is_match) visible_categories.add(category);
     });
 
