@@ -50,7 +50,7 @@ export default function Library({ application }) {
     if (!category_map.has(demo.category)) {
       category_map.set(demo.category, objects[`library_${demo.category}`]);
     }
-    objects[`library_${demo.category}`].add(entry_row);
+    objects[`library_${demo.category}`].append(entry_row);
     widgets_map.set(demo.name, { entry_row, category: demo.category });
   });
 

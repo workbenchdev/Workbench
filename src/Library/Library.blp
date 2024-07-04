@@ -16,15 +16,22 @@ Adw.Window window {
       };
     }
 
-    content: Adw.PreferencesPage {
-      Adw.PreferencesGroup {
+    content: ScrolledWindow {
+      hscrollbar-policy: never;
+
+      child: Box {
+        spacing: 24;
+        margin-start: 72;
+        margin-end: 72;
+        orientation: vertical;
+
         Box {
           halign: center;
           vexpand: false;
 
           Picture picture_illustration {
             can-shrink: false;
-            margin-bottom: 32;
+            margin-top: 24;
           }
         }
 
@@ -41,57 +48,202 @@ Adw.Window window {
           placeholder-text: _("Search demos");
           activates-default: true;
           width-request: 400;
-          margin-top: 32;
         }
-      }
 
-      Adw.PreferencesGroup library_uncategorized {}
-
-      Adw.PreferencesGroup library_tools {
-        title: _("Tools");
-      }
-
-      Adw.PreferencesGroup library_network {
-        title: _("Network");
-      }
-
-      Adw.PreferencesGroup library_controls {
-        title: _("Controls");
-      }
-
-      Adw.PreferencesGroup library_layout {
-        title: _("Layout");
-      }
-
-      Adw.PreferencesGroup library_feedback {
-        title: _("Feedback");
-      }
-
-      Adw.PreferencesGroup library_navigation {
-        title: _("Navigation");
-      }
-
-      Adw.PreferencesGroup library_user_interface {
-        title: _("User Interface");
-      }
-
-      Adw.PreferencesGroup library_platform {
-        title: _("Platform APIs");
-      }
-
-      Adw.PreferencesGroup {
-        vexpand: true;
-        valign: end;
-
-        Label {
-          label: _("All examples are dedicated to the public domain\nand <b>can be used freely</b> under the terms of <a href=\"https://creativecommons.org/publicdomain/zero/1.0/\">CC0 1.0</a>");
-          use-markup: true;
+        ListBox library_uncategorized {
+          selection-mode: none;
 
           styles [
-            "caption"
+            "boxed-list"
           ]
+
+          ListBoxRow {
+            activatable: false;
+
+            Label {
+              label: _("Library Uncategorized");
+
+              styles [
+                "title-1"
+              ]
+            }
+          }
         }
-      }
+
+        ListBox library_tools {
+          selection-mode: none;
+
+          styles [
+            "boxed-list"
+          ]
+
+          ListBoxRow {
+            activatable: false;
+
+            Label {
+              label: _("Tools");
+
+              styles [
+                "title-1"
+              ]
+            }
+          }
+        }
+
+        ListBox library_network {
+          selection-mode: none;
+
+          styles [
+            "boxed-list"
+          ]
+
+          ListBoxRow {
+            activatable: false;
+
+            Label {
+              label: _("Network");
+
+              styles [
+                "title-1"
+              ]
+            }
+          }
+        }
+
+        ListBox library_controls {
+          selection-mode: none;
+
+          styles [
+            "boxed-list"
+          ]
+
+          ListBoxRow {
+            activatable: false;
+
+            Label {
+              label: _("Controls");
+
+              styles [
+                "title-1"
+              ]
+            }
+          }
+        }
+
+        ListBox library_layout {
+          selection-mode: none;
+
+          styles [
+            "boxed-list"
+          ]
+
+          ListBoxRow {
+            activatable: false;
+
+            Label {
+              label: _("Layout");
+
+              styles [
+                "title-1"
+              ]
+            }
+          }
+        }
+
+        ListBox library_feedback {
+          selection-mode: none;
+
+          styles [
+            "boxed-list"
+          ]
+
+          ListBoxRow {
+            activatable: false;
+
+            Label {
+              label: _("Feedback");
+
+              styles [
+                "title-1"
+              ]
+            }
+          }
+        }
+
+        ListBox library_navigation {
+          selection-mode: none;
+
+          styles [
+            "boxed-list"
+          ]
+
+          ListBoxRow {
+            activatable: false;
+
+            Label {
+              label: _("Navigation");
+
+              styles [
+                "title-1"
+              ]
+            }
+          }
+        }
+
+        ListBox library_user_interface {
+          selection-mode: none;
+
+          styles [
+            "boxed-list"
+          ]
+
+          ListBoxRow {
+            activatable: false;
+
+            Label {
+              label: _("User Interface");
+
+              styles [
+                "title-1"
+              ]
+            }
+          }
+        }
+
+        ListBox library_platform {
+          selection-mode: none;
+
+          styles [
+            "boxed-list"
+          ]
+
+          ListBoxRow {
+            activatable: false;
+
+            Label {
+              label: _("Platform APIs");
+
+              styles [
+                "title-1"
+              ]
+            }
+          }
+        }
+
+        Box {
+          halign: center;
+          margin-bottom: 24;
+
+          Label {
+            label: _("All examples are dedicated to the public domain\nand <b>can be used freely</b> under the terms of <a href=\"https://creativecommons.org/publicdomain/zero/1.0/\">CC0 1.0</a>");
+            use-markup: true;
+
+            styles [
+              "caption"
+            ]
+          }
+        }
+      };
     };
   }
 }
