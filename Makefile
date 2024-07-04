@@ -12,7 +12,7 @@ setup:
 	flatpak install --or-update --user --noninteractive gnome-nightly org.gnome.Sdk//master
 	git submodule update --init
 	npm install --no-fund
-	@echo " ✅ You can use make stable or make devel to build Workbench"
+	@echo "✅ You can use make stable or make devel to build Workbench"
 
 stable:
 	flatpak-builder --delete-build-dirs --disable-updates --build-only --ccache --force-clean flatpak build-aux/re.sonny.Workbench.json
