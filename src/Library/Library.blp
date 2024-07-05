@@ -19,230 +19,240 @@ Adw.Window window {
     content: ScrolledWindow {
       hscrollbar-policy: never;
 
-      child: Box {
-        spacing: 24;
-        margin-start: 72;
-        margin-end: 72;
-        orientation: vertical;
-        halign: center;
+      child: Adw.Clamp {
+        maximum-size: 550;
 
-        Box {
-          halign: center;
+        child: Box {
+          spacing: 24;
+          orientation: vertical;
 
-          Picture picture_illustration {
-            can-shrink: false;
-            margin-top: 24;
+          Box {
+            halign: center;
+            vexpand: false;
+
+            Picture picture_illustration {
+              can-shrink: false;
+              margin-top: 24;
+            }
           }
-        }
 
-        Label {
-          label: _("Learn, Test, Remix");
+          Label {
+            label: _("Learn, Test, Remix");
 
-          styles [
-            "title-1"
-          ]
-        }
+            styles [
+              "title-1"
+            ]
+          }
 
-        SearchEntry search_entry {
-          search-delay: 100;
-          placeholder-text: _("Search demos");
-          activates-default: true;
-          width-request: 400;
-        }
+          SearchEntry search_entry {
+            search-delay: 100;
+            placeholder-text: _("Search demos");
+            activates-default: true;
+            width-request: 400;
+          }
 
-        ListBox library_uncategorized {
-          selection-mode: none;
+          Box {
+            orientation: vertical;
 
-          styles [
-            "boxed-list"
-          ]
-
-          ListBoxRow {
-            activatable: false;
-
-            Label {
-              label: _("Library Uncategorized");
+            ListBox library_uncategorized {
+              selection-mode: none;
 
               styles [
-                "title-1"
+                "boxed-list"
               ]
             }
           }
-        }
 
-        ListBox library_tools {
-          selection-mode: none;
-
-          styles [
-            "boxed-list"
-          ]
-
-          ListBoxRow {
-            activatable: false;
+          Box {
+            orientation: vertical;
 
             Label {
               label: _("Tools");
+              halign: start;
+              margin-bottom: 12;
 
               styles [
-                "title-1"
+                "title-4"
+              ]
+            }
+
+            ListBox library_tools {
+              selection-mode: none;
+
+              styles [
+                "boxed-list"
               ]
             }
           }
-        }
 
-        ListBox library_network {
-          selection-mode: none;
-
-          styles [
-            "boxed-list"
-          ]
-
-          ListBoxRow {
-            activatable: false;
+          Box {
+            orientation: vertical;
 
             Label {
               label: _("Network");
+              halign: start;
+              margin-bottom: 12;
 
               styles [
-                "title-1"
+                "title-4"
+              ]
+            }
+
+            ListBox library_network {
+              selection-mode: none;
+
+              styles [
+                "boxed-list"
               ]
             }
           }
-        }
 
-        ListBox library_controls {
-          selection-mode: none;
-
-          styles [
-            "boxed-list"
-          ]
-
-          ListBoxRow {
-            activatable: false;
+          Box {
+            orientation: vertical;
 
             Label {
               label: _("Controls");
+              halign: start;
+              margin-bottom: 12;
 
               styles [
-                "title-1"
+                "title-4"
+              ]
+            }
+
+            ListBox library_controls {
+              selection-mode: none;
+
+              styles [
+                "boxed-list"
               ]
             }
           }
-        }
 
-        ListBox library_layout {
-          selection-mode: none;
-
-          styles [
-            "boxed-list"
-          ]
-
-          ListBoxRow {
-            activatable: false;
+          Box {
+            orientation: vertical;
 
             Label {
               label: _("Layout");
+              halign: start;
+              margin-bottom: 12;
 
               styles [
-                "title-1"
+                "title-4"
+              ]
+            }
+
+            ListBox library_layout {
+              selection-mode: none;
+
+              styles [
+                "boxed-list"
               ]
             }
           }
-        }
 
-        ListBox library_feedback {
-          selection-mode: none;
-
-          styles [
-            "boxed-list"
-          ]
-
-          ListBoxRow {
-            activatable: false;
+          Box {
+            orientation: vertical;
 
             Label {
               label: _("Feedback");
+              halign: start;
+              margin-bottom: 12;
 
               styles [
-                "title-1"
+                "title-4"
+              ]
+            }
+
+            ListBox library_feedback {
+              selection-mode: none;
+
+              styles [
+                "boxed-list"
               ]
             }
           }
-        }
 
-        ListBox library_navigation {
-          selection-mode: none;
-
-          styles [
-            "boxed-list"
-          ]
-
-          ListBoxRow {
-            activatable: false;
+          Box {
+            orientation: vertical;
 
             Label {
               label: _("Navigation");
+              halign: start;
+              margin-bottom: 12;
 
               styles [
-                "title-1"
+                "title-4"
+              ]
+            }
+
+            ListBox library_navigation {
+              selection-mode: none;
+
+              styles [
+                "boxed-list"
               ]
             }
           }
-        }
 
-        ListBox library_user_interface {
-          selection-mode: none;
-
-          styles [
-            "boxed-list"
-          ]
-
-          ListBoxRow {
-            activatable: false;
+          Box {
+            orientation: vertical;
 
             Label {
               label: _("User Interface");
+              halign: start;
+              margin-bottom: 12;
 
               styles [
-                "title-1"
+                "title-4"
+              ]
+            }
+
+            ListBox library_user_interface {
+              selection-mode: none;
+
+              styles [
+                "boxed-list"
               ]
             }
           }
-        }
 
-        ListBox library_platform {
-          selection-mode: none;
-
-          styles [
-            "boxed-list"
-          ]
-
-          ListBoxRow {
-            activatable: false;
+          Box {
+            orientation: vertical;
 
             Label {
               label: _("Platform APIs");
+              halign: start;
+              margin-bottom: 12;
 
               styles [
-                "title-1"
+                "title-4"
+              ]
+            }
+
+            ListBox library_platform {
+              selection-mode: none;
+
+              styles [
+                "boxed-list"
               ]
             }
           }
-        }
 
-        Box {
-          halign: center;
-          margin-bottom: 24;
+          Box {
+            halign: center;
+            margin-bottom: 24;
 
-          Label {
-            label: _("All examples are dedicated to the public domain\nand <b>can be used freely</b> under the terms of <a href=\"https://creativecommons.org/publicdomain/zero/1.0/\">CC0 1.0</a>");
-            use-markup: true;
+            Label {
+              label: _("All examples are dedicated to the public domain\nand <b>can be used freely</b> under the terms of <a href=\"https://creativecommons.org/publicdomain/zero/1.0/\">CC0 1.0</a>");
+              use-markup: true;
 
-            styles [
-              "caption"
-            ]
+              styles [
+                "caption"
+              ]
+            }
           }
-        }
+        };
       };
     };
   }
