@@ -8,8 +8,8 @@ setup:
 	flatpak remote-add --user --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
 	flatpak install --or-update --user --noninteractive flathub-beta org.freedesktop.Sdk.Extension.rust-stable//24.08beta org.freedesktop.Sdk.Extension.vala//24.08beta org.freedesktop.Sdk.Extension.llvm18//24.08beta
 #  org.freedesktop.Sdk.Extension.node18//24.08beta org.freedesktop.Sdk.Extension.typescript//24.08beta
-	flatpak remote-add --user --if-not-exists gnome-nightly https://nightly.gnome.org/gnome-nightly.flatpakrepo
-	flatpak install --or-update --user --noninteractive gnome-nightly org.gnome.Sdk//master
+# flatpak remote-add --user --if-not-exists gnome-nightly https://nightly.gnome.org/gnome-nightly.flatpakrepo
+# flatpak install --or-update --user --noninteractive gnome-nightly org.gnome.Sdk//master
 	git submodule update --init
 	npm install --no-fund
 	@echo "✅ You can use make stable or make devel to build Workbench"
