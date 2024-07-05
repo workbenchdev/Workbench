@@ -65,6 +65,8 @@ export default function Library({ application }) {
     });
 
     category_map.forEach((category_widget, category_name) => {
+      const label = objects[`label_${category_name}`];
+      if (label) label.visible = search_term === "";
       category_widget.visible = visible_categories.has(category_name);
     });
   });

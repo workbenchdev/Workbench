@@ -20,228 +20,193 @@ Adw.Window window {
       hscrollbar-policy: never;
 
       child: Adw.Clamp {
-        maximum-size: 550;
+        maximum-size: 576;
+        margin-end: 12;
+        margin-start: 12;
 
         child: Box {
-          spacing: 24;
           orientation: vertical;
+          spacing: 12;
 
           Box {
-            halign: center;
-            vexpand: false;
+            orientation: vertical;
 
-            Picture picture_illustration {
-              can-shrink: false;
-              margin-top: 24;
+            Box {
+              halign: center;
+              vexpand: false;
+
+              Picture picture_illustration {
+                can-shrink: false;
+                margin-bottom: 32;
+                margin-top: 24;
+              }
+            }
+
+            Label {
+              label: _("Learn, Test, Remix");
+
+              styles [
+                "title-1"
+              ]
+            }
+
+            SearchEntry search_entry {
+              search-delay: 100;
+              placeholder-text: _("Search demos");
+              activates-default: true;
+              width-request: 400;
+              margin-top: 32;
             }
           }
 
-          Label {
-            label: _("Learn, Test, Remix");
+          ListBox library_uncategorized {
+            selection-mode: none;
 
             styles [
-              "title-1"
+              "boxed-list"
             ]
           }
 
-          SearchEntry search_entry {
-            search-delay: 100;
-            placeholder-text: _("Search demos");
-            activates-default: true;
-            width-request: 400;
+          Label label_tools {
+            label: _("Tools");
+            halign: start;
+
+            styles [
+              "title-4"
+            ]
           }
 
-          Box {
-            orientation: vertical;
+          ListBox library_tools {
+            selection-mode: none;
 
-            ListBox library_uncategorized {
-              selection-mode: none;
-
-              styles [
-                "boxed-list"
-              ]
-            }
+            styles [
+              "boxed-list"
+            ]
           }
 
-          Box {
-            orientation: vertical;
+          Label label_network {
+            label: _("Network");
+            halign: start;
 
-            Label {
-              label: _("Tools");
-              halign: start;
-              margin-bottom: 12;
-
-              styles [
-                "title-4"
-              ]
-            }
-
-            ListBox library_tools {
-              selection-mode: none;
-
-              styles [
-                "boxed-list"
-              ]
-            }
+            styles [
+              "title-4"
+            ]
           }
 
-          Box {
-            orientation: vertical;
+          ListBox library_network {
+            selection-mode: none;
 
-            Label {
-              label: _("Network");
-              halign: start;
-              margin-bottom: 12;
-
-              styles [
-                "title-4"
-              ]
-            }
-
-            ListBox library_network {
-              selection-mode: none;
-
-              styles [
-                "boxed-list"
-              ]
-            }
+            styles [
+              "boxed-list"
+            ]
           }
 
-          Box {
-            orientation: vertical;
+          Label label_controls {
+            label: _("Controls");
+            halign: start;
 
-            Label {
-              label: _("Controls");
-              halign: start;
-              margin-bottom: 12;
-
-              styles [
-                "title-4"
-              ]
-            }
-
-            ListBox library_controls {
-              selection-mode: none;
-
-              styles [
-                "boxed-list"
-              ]
-            }
+            styles [
+              "title-4"
+            ]
           }
 
-          Box {
-            orientation: vertical;
+          ListBox library_controls {
+            selection-mode: none;
 
-            Label {
-              label: _("Layout");
-              halign: start;
-              margin-bottom: 12;
-
-              styles [
-                "title-4"
-              ]
-            }
-
-            ListBox library_layout {
-              selection-mode: none;
-
-              styles [
-                "boxed-list"
-              ]
-            }
+            styles [
+              "boxed-list"
+            ]
           }
 
-          Box {
-            orientation: vertical;
+          Label label_layout {
+            label: _("Layout");
+            halign: start;
 
-            Label {
-              label: _("Feedback");
-              halign: start;
-              margin-bottom: 12;
-
-              styles [
-                "title-4"
-              ]
-            }
-
-            ListBox library_feedback {
-              selection-mode: none;
-
-              styles [
-                "boxed-list"
-              ]
-            }
+            styles [
+              "title-4"
+            ]
           }
 
-          Box {
-            orientation: vertical;
+          ListBox library_layout {
+            selection-mode: none;
 
-            Label {
-              label: _("Navigation");
-              halign: start;
-              margin-bottom: 12;
-
-              styles [
-                "title-4"
-              ]
-            }
-
-            ListBox library_navigation {
-              selection-mode: none;
-
-              styles [
-                "boxed-list"
-              ]
-            }
+            styles [
+              "boxed-list"
+            ]
           }
 
-          Box {
-            orientation: vertical;
+          Label label_feedback {
+            label: _("Feedback");
+            halign: start;
 
-            Label {
-              label: _("User Interface");
-              halign: start;
-              margin-bottom: 12;
-
-              styles [
-                "title-4"
-              ]
-            }
-
-            ListBox library_user_interface {
-              selection-mode: none;
-
-              styles [
-                "boxed-list"
-              ]
-            }
+            styles [
+              "title-4"
+            ]
           }
 
-          Box {
-            orientation: vertical;
+          ListBox library_feedback {
+            selection-mode: none;
 
-            Label {
-              label: _("Platform APIs");
-              halign: start;
-              margin-bottom: 12;
+            styles [
+              "boxed-list"
+            ]
+          }
 
-              styles [
-                "title-4"
-              ]
-            }
+          Label label_navigation {
+            label: _("Navigation");
+            halign: start;
 
-            ListBox library_platform {
-              selection-mode: none;
+            styles [
+              "title-4"
+            ]
+          }
 
-              styles [
-                "boxed-list"
-              ]
-            }
+          ListBox library_navigation {
+            selection-mode: none;
+
+            styles [
+              "boxed-list"
+            ]
+          }
+
+          Label label_user_interface {
+            label: _("User Interface");
+            halign: start;
+
+            styles [
+              "title-4"
+            ]
+          }
+
+          ListBox library_user_interface {
+            selection-mode: none;
+
+            styles [
+              "boxed-list"
+            ]
+          }
+
+          Label label_platform {
+            label: _("Platform APIs");
+            halign: start;
+
+            styles [
+              "title-4"
+            ]
+          }
+
+          ListBox library_platform {
+            selection-mode: none;
+
+            styles [
+              "boxed-list"
+            ]
           }
 
           Box {
             halign: center;
             margin-bottom: 24;
+            margin-top: 12;
 
             Label {
               label: _("All examples are dedicated to the public domain\nand <b>can be used freely</b> under the terms of <a href=\"https://creativecommons.org/publicdomain/zero/1.0/\">CC0 1.0</a>");
