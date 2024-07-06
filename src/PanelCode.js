@@ -9,6 +9,7 @@ export default function PanelCode({
   builder,
   previewer,
   session: { settings, file },
+  langs,
 }) {
   const panel_code = builder.get_object("panel_code");
   const button_code = builder.get_object("button_code");
@@ -59,7 +60,9 @@ export default function PanelCode({
     }
 
     if (panel.language.toLowerCase() === "typescript") {
-      setupTypeScriptProject(file).catch(console.error);
+      setupTypeScriptProject(file, langs.typescript.document).catch(
+        console.error,
+      );
     }
   }
   switchLanguage();

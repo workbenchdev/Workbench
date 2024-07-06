@@ -40,31 +40,17 @@ const typescript_template_dir = Gio.File.new_for_path(
   pkg.pkgdatadir,
 ).resolve_relative_path("langs/typescript/template");
 
-export async function setupTypeScriptProject(destination) {
-  const types_destination = destination.get_child("types");
+export async function setupTypeScriptProject(destination, document) {
+  const destination_file = await copy(
+    "tsconfig.json",
+    typescript_template_dir,
+    destination,
+    Gio.FileCopyFlags.NONE,
+  );
 
-  if (!types_destination.query_exists(null)) {
-    types_destination.make_directory_with_parents(null);
-  }
-
-  return Promise.all([
-    copy(
-      "types/ambient.d.ts",
-      typescript_template_dir,
-      types_destination,
-      Gio.FileCopyFlags.NONE,
-    ),
-    copy(
-      "types/gi-module.d.ts",
-      typescript_template_dir,
-      types_destination,
-      Gio.FileCopyFlags.NONE,
-    ),
-    copy(
-      "tsconfig.json",
-      typescript_template_dir,
-      destination,
-      Gio.FileCopyFlags.NONE,
-    ),
-  ]);
+  // Notify the language server that the tsconfig file was created
+  // to initialized diagnostics and type checkings
+  await document.lspc.notify("workspace/didCreateFile", {
+    files: [{ uri: destination_file.get_uri() }],
+  });
 }

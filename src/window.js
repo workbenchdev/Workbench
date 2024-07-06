@@ -163,6 +163,7 @@ export default function Window({ application, session }) {
     builder,
     previewer,
     session,
+    langs,
   });
 
   previewer.setPanelCode(panel_code);

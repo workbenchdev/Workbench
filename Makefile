@@ -61,7 +61,7 @@ unit:
 test: unit lint
 	./build-aux/fun workbench-cli ci demos/src/Welcome
 
-ci: setup test
+ci: setup build test
 	./build-aux/fun workbench-cli ci demos/src/*
 
 # Note that if you have Sdk extensions installed they will be used

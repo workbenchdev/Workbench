@@ -191,10 +191,11 @@ export function removeDirectory(file) {
 
 export async function copy(filename, source_dir, dest_dir, flags) {
   const file = source_dir.get_child(filename);
+  const dest_file = dest_dir.get_child(file.get_basename());
 
   try {
     await file.copy_async(
-      dest_dir.get_child(file.get_basename()), // destination
+      dest_file, // destination
       flags, // flags
       GLib.PRIORITY_DEFAULT, // priority
       null, // cancellable
@@ -205,4 +206,6 @@ export async function copy(filename, source_dir, dest_dir, flags) {
       throw err;
     }
   }
+
+  return dest_file;
 }

@@ -8,6 +8,7 @@ export class TypeScriptDocument extends Document {
     super(...args);
 
     this.lspc = setup({ document: this });
+    this.code_view.lspc = this.lspc;
   }
 
   async format() {
@@ -25,10 +26,6 @@ export class TypeScriptDocument extends Document {
       },
     });
 
-    // Biome doesn't support diff - it just returns one edit
-    // we don't want to loose the cursor position so we use this
-    const state = this.code_view.saveState();
     applyTextEdits(text_edits, this.buffer);
-    await this.code_view.restoreState(state);
   }
 }

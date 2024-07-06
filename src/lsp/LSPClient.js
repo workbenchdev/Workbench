@@ -299,7 +299,7 @@ export default class LSPClient {
       },
       position: {
         line: iter_cursor.get_line(),
-        character: iter_cursor.get_line_offset() - 1,
+        character: iter_cursor.get_line_offset(),
       },
     });
 
