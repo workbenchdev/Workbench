@@ -8,16 +8,13 @@
     "outDir": "compiled_javascript",
     "baseUrl": ".",
     "paths": {
-      "*": [
-        "*",
-        "/app/share/re.sonny.Workbench.Devel/langs/typescript/gi-types/*"
-      ]
+      "*": ["*", "@pkgdatadir@/langs/typescript/gi-types/*"]
     },
     "skipLibCheck": true
   },
   "include": [
     "main.ts",
-    "/app/share/re.sonny.Workbench.Devel/langs/typescript/types/ambient.d.ts",
-    "/app/share/re.sonny.Workbench.Devel/langs/typescript/gi-types/gi.d.ts"
+    "@pkgdatadir@/langs/typescript/types/ambient.d.ts",
+    "@pkgdatadir@/langs/typescript/gi-types/gi.d.ts"
   ]
 }
