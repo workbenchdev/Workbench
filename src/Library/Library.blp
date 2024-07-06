@@ -16,82 +16,217 @@ Adw.Window window {
       };
     }
 
-    content: Adw.PreferencesPage {
-      Adw.PreferencesGroup {
-        Box {
-          halign: center;
-          vexpand: false;
+    content: ScrolledWindow {
+      hscrollbar-policy: never;
 
-          Picture picture_illustration {
-            can-shrink: false;
-            margin-bottom: 32;
+      child: Adw.Clamp {
+        maximum-size: 576;
+        margin-end: 12;
+        margin-start: 12;
+
+        child: Box {
+          orientation: vertical;
+          spacing: 12;
+
+          Box {
+            orientation: vertical;
+
+            Box {
+              halign: center;
+              vexpand: false;
+
+              Picture picture_illustration {
+                can-shrink: false;
+                margin-bottom: 32;
+                margin-top: 24;
+              }
+            }
+
+            Label {
+              label: _("Learn, Test, Remix");
+
+              styles [
+                "title-1"
+              ]
+            }
+
+            SearchEntry search_entry {
+              search-delay: 100;
+              placeholder-text: _("Search demos");
+              activates-default: true;
+              width-request: 400;
+              margin-top: 32;
+            }
           }
-        }
 
-        Label {
-          label: _("Learn, Test, Remix");
+          ListBox library_uncategorized {
+            selection-mode: none;
 
-          styles [
-            "title-1"
-          ]
-        }
+            styles [
+              "boxed-list"
+            ]
+          }
 
-        SearchEntry search_entry {
-          search-delay: 100;
-          placeholder-text: _("Search demos");
-          activates-default: true;
-          width-request: 400;
-          margin-top: 32;
-        }
-      }
+          Label label_tools {
+            label: _("Tools");
+            halign: start;
+            margin-top: 12;
 
-      Adw.PreferencesGroup library_uncategorized {}
+            styles [
+              "title-4"
+            ]
+          }
 
-      Adw.PreferencesGroup library_tools {
-        title: _("Tools");
-      }
+          ListBox library_tools {
+            selection-mode: none;
 
-      Adw.PreferencesGroup library_network {
-        title: _("Network");
-      }
+            styles [
+              "boxed-list"
+            ]
+          }
 
-      Adw.PreferencesGroup library_controls {
-        title: _("Controls");
-      }
+          Label label_network {
+            label: _("Network");
+            halign: start;
+            margin-top: 12;
 
-      Adw.PreferencesGroup library_layout {
-        title: _("Layout");
-      }
+            styles [
+              "title-4"
+            ]
+          }
 
-      Adw.PreferencesGroup library_feedback {
-        title: _("Feedback");
-      }
+          ListBox library_network {
+            selection-mode: none;
 
-      Adw.PreferencesGroup library_navigation {
-        title: _("Navigation");
-      }
+            styles [
+              "boxed-list"
+            ]
+          }
 
-      Adw.PreferencesGroup library_user_interface {
-        title: _("User Interface");
-      }
+          Label label_controls {
+            label: _("Controls");
+            halign: start;
+            margin-top: 12;
 
-      Adw.PreferencesGroup library_platform {
-        title: _("Platform APIs");
-      }
+            styles [
+              "title-4"
+            ]
+          }
 
-      Adw.PreferencesGroup {
-        vexpand: true;
-        valign: end;
+          ListBox library_controls {
+            selection-mode: none;
 
-        Label {
-          label: _("All examples are dedicated to the public domain\nand <b>can be used freely</b> under the terms of <a href=\"https://creativecommons.org/publicdomain/zero/1.0/\">CC0 1.0</a>");
-          use-markup: true;
+            styles [
+              "boxed-list"
+            ]
+          }
 
-          styles [
-            "caption"
-          ]
-        }
-      }
+          Label label_layout {
+            label: _("Layout");
+            halign: start;
+            margin-top: 12;
+
+            styles [
+              "title-4"
+            ]
+          }
+
+          ListBox library_layout {
+            selection-mode: none;
+
+            styles [
+              "boxed-list"
+            ]
+          }
+
+          Label label_feedback {
+            label: _("Feedback");
+            halign: start;
+            margin-top: 12;
+
+            styles [
+              "title-4"
+            ]
+          }
+
+          ListBox library_feedback {
+            selection-mode: none;
+
+            styles [
+              "boxed-list"
+            ]
+          }
+
+          Label label_navigation {
+            label: _("Navigation");
+            halign: start;
+            margin-top: 12;
+
+            styles [
+              "title-4"
+            ]
+          }
+
+          ListBox library_navigation {
+            selection-mode: none;
+
+            styles [
+              "boxed-list"
+            ]
+          }
+
+          Label label_user_interface {
+            label: _("User Interface");
+            halign: start;
+            margin-top: 12;
+
+            styles [
+              "title-4"
+            ]
+          }
+
+          ListBox library_user_interface {
+            selection-mode: none;
+
+            styles [
+              "boxed-list"
+            ]
+          }
+
+          Label label_platform {
+            label: _("Platform APIs");
+            halign: start;
+            margin-top: 12;
+
+            styles [
+              "title-4"
+            ]
+          }
+
+          ListBox library_platform {
+            selection-mode: none;
+
+            styles [
+              "boxed-list"
+            ]
+          }
+
+          Box {
+            halign: center;
+            margin-bottom: 24;
+            margin-top: 12;
+
+            Label {
+              label: _("All examples are dedicated to the public domain\nand <b>can be used freely</b> under the terms of <a href=\"https://creativecommons.org/publicdomain/zero/1.0/\">CC0 1.0</a>");
+              use-markup: true;
+
+              styles [
+                "caption"
+              ]
+            }
+          }
+        };
+      };
     };
   }
 }

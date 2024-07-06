@@ -50,7 +50,7 @@ export default function Library({ application }) {
     if (!category_map.has(demo.category)) {
       category_map.set(demo.category, objects[`library_${demo.category}`]);
     }
-    objects[`library_${demo.category}`].add(entry_row);
+    objects[`library_${demo.category}`].append(entry_row);
     widgets_map.set(demo.name, { entry_row, category: demo.category });
   });
 
@@ -65,6 +65,8 @@ export default function Library({ application }) {
     });
 
     category_map.forEach((category_widget, category_name) => {
+      const label = objects[`label_${category_name}`];
+      if (label) label.visible = search_term === "";
       category_widget.visible = visible_categories.has(category_name);
     });
   });
