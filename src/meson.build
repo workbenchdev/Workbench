@@ -16,7 +16,7 @@ blueprint_compiler = find_program(
 meson.add_install_script('../build-aux/library.js', pkgdatadir)
 
 subdir('langs/rust/template')
-subdir('langs/typescript/template')
+subdir('langs/typescript')
 
 configure_file(
   input: 'bin.js',
