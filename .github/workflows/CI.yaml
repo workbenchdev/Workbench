@@ -9,7 +9,7 @@ on:
 
 jobs:
   CI:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v3
         with:
@@ -17,13 +17,13 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 20
           cache: "npm"
 
       - name: Install host dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install flatpak flatpak-builder mutter
+          sudo apt-get install flatpak mutter
 
       # Restore caches
       - name: Restore Flatpak dependencies
