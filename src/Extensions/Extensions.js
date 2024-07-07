@@ -51,7 +51,7 @@ let rust_enabled;
 export function isRustEnabled() {
   rust_enabled ??=
     Gio.File.new_for_path("/usr/lib/sdk/rust-stable").query_exists(null) &&
-    Gio.File.new_for_path("/usr/lib/sdk/llvm16").query_exists(null);
+    Gio.File.new_for_path("/usr/lib/sdk/llvm18").query_exists(null);
   return rust_enabled;
 }
 
@@ -66,6 +66,6 @@ let typescript_enabled;
 export function isTypeScriptEnabled() {
   typescript_enabled ??=
     Gio.File.new_for_path("/usr/lib/sdk/typescript").query_exists(null) &&
-    Gio.File.new_for_path("/usr/lib/sdk/node18").query_exists(null);
+    Gio.File.new_for_path("/usr/lib/sdk/node20").query_exists(null);
   return typescript_enabled;
 }
