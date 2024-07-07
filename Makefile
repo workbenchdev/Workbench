@@ -17,7 +17,7 @@ stable:
 	flatpak run --filesystem=~ org.flatpak.Builder --delete-build-dirs --disable-updates --build-only --ccache --force-clean flatpak build-aux/re.sonny.Workbench.json
 
 devel:
-	flatpak-list
+	flatpak list
 	flatpak run --filesystem=~ org.flatpak.Builder --delete-build-dirs --disable-updates --build-only --ccache --force-clean flatpak build-aux/re.sonny.Workbench.Devel.json
 
 build: devel
