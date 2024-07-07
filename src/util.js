@@ -25,17 +25,19 @@ export function ensureDir(file) {
   }
 }
 
+let flatpak_info;
 export function getFlatpakInfo() {
-  const keyFile = new GLib.KeyFile();
+  if (flatpak_info) return flatpak_info;
+  flatpak_info = new GLib.KeyFile();
   try {
-    keyFile.load_from_file("/.flatpak-info", GLib.KeyFileFlags.NONE);
+    flatpak_info.load_from_file("/.flatpak-info", GLib.KeyFileFlags.NONE);
   } catch (err) {
     if (!err.matches(GLib.FileError, GLib.FileError.NOENT)) {
       console.error(err);
     }
     return null;
   }
-  return keyFile;
+  return flatpak_info;
 }
 
 export { getLanguage };
