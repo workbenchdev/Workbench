@@ -14,15 +14,15 @@ setup:
 	@echo "✅ You can use "make build" to build Workbench"
 
 stable:
-	 flatpak run org.flatpak.Builder --delete-build-dirs --disable-updates --build-only --ccache --force-clean flatpak build-aux/re.sonny.Workbench.json
+	flatpak run org.flatpak.Builder --delete-build-dirs --disable-updates --build-only --ccache --force-clean flatpak build-aux/re.sonny.Workbench.json
 
 devel:
-	 flatpak run org.flatpak.Builder --delete-build-dirs --disable-updates --build-only --ccache --force-clean flatpak build-aux/re.sonny.Workbench.Devel.json
+	flatpak run org.flatpak.Builder --delete-build-dirs --disable-updates --build-only --ccache --force-clean flatpak build-aux/re.sonny.Workbench.Devel.json
 
-build: devel
+build: stable
 
 cli:
-	 ./troll/gjspack/bin/gjspack src/cli/main.js --appid=re.sonny.Workbench.cli --prefix=/re/sonny/Workbench --resource-root=src/ --no-executable flatpak/files/share/re.sonny.Workbench.cli/
+	./troll/gjspack/bin/gjspack src/cli/main.js --appid=re.sonny.Workbench.cli --prefix=/re/sonny/Workbench --resource-root=src/ --no-executable flatpak/files/share/re.sonny.Workbench.cli/
 	cp src/cli/bin.js flatpak/files/bin/workbench-cli
 
 lint:
