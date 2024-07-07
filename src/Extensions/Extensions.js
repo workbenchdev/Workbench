@@ -6,6 +6,7 @@ import Interface from "./Extensions.blp" with { type: "uri" };
 import illustration from "./extensions.svg";
 
 import "./Extension.js";
+import { getFlatpakInfo } from "../util.js";
 
 export const action_extensions = new Gio.SimpleAction({
   name: "extensions",
@@ -26,8 +27,13 @@ export function Extensions({ window }) {
   picture_illustration.set_resource(illustration);
 
   extension_rust.enabled = isRustEnabled();
+  extension_rust.command = `flatpak install flathub org.freedesktop.Sdk.Extension.rust-stable//${freedesktop_version} org.freedesktop.Sdk.Extension.${llvm}//${freedesktop_version}`;
+
   extension_vala.enabled = isValaEnabled();
+  extension_vala.command = `flatpak install flathub org.freedesktop.Sdk.Extension.vala//${freedesktop_version}`;
+
   extension_typescript.enabled = isTypeScriptEnabled();
+  extension_typescript.command = `flatpak install flathub org.freedesktop.Sdk.Extension.${node}//${freedesktop_version} org.freedesktop.Sdk.Extension.typescript//${freedesktop_version}`;
 
   for (const extension of [
     extension_rust,
@@ -47,25 +53,30 @@ export function Extensions({ window }) {
   window.add_action(action_extensions);
 }
 
-let rust_enabled;
+let rust_enabled = false;
 export function isRustEnabled() {
   rust_enabled ??=
     Gio.File.new_for_path("/usr/lib/sdk/rust-stable").query_exists(null) &&
-    Gio.File.new_for_path("/usr/lib/sdk/llvm18").query_exists(null);
+    Gio.File.new_for_path(`/usr/lib/sdk/${llvm}`).query_exists(null);
   return rust_enabled;
 }
 
-let vala_enabled;
+let vala_enabled = false;
 export function isValaEnabled() {
   vala_enabled ??=
     Gio.File.new_for_path("/usr/lib/sdk/vala").query_exists(null);
   return vala_enabled;
 }
 
-let typescript_enabled;
+let typescript_enabled = false;
 export function isTypeScriptEnabled() {
   typescript_enabled ??=
     Gio.File.new_for_path("/usr/lib/sdk/typescript").query_exists(null) &&
-    Gio.File.new_for_path("/usr/lib/sdk/node20").query_exists(null);
+    Gio.File.new_for_path(`/usr/lib/sdk/${node}`).query_exists(null);
   return typescript_enabled;
 }
+
+const llvm = "llvm18";
+const node = "node20";
+const runtime = getFlatpakInfo().get_string("Application", "runtime");
+const freedesktop_version = runtime.endsWith("master") ? "24.08beta" : "23.08";
