@@ -47,9 +47,19 @@
       <description translatable="no">
         <ul>
           <li>Library: Add "Button Row" demo</li>
+          <li>Update libshumate to 1.3</li>
         </ul>
       </description>
     </release> -->
+
+    <release version="46.2" date="2024-07-xx">
+      <description translatable="no">
+        <ul>
+          <li>Update Biome to 1.8.3</li>
+          <li>Update gst-plugin-gtk4 to 1.12.7</li>
+        </ul>
+      </description>
+    </release>
 
     <release version="46.1" date="2024-04-30">
       <description translatable="no">

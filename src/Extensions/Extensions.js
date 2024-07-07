@@ -27,13 +27,13 @@ export function Extensions({ window }) {
   picture_illustration.set_resource(illustration);
 
   extension_rust.enabled = isRustEnabled();
-  extension_rust.command = `flatpak install flathub org.freedesktop.Sdk.Extension.rust-stable//${freedesktop_version} org.freedesktop.Sdk.Extension.llvm18//${freedesktop_version}`;
+  extension_rust.command = `flatpak install flathub org.freedesktop.Sdk.Extension.rust-stable//${freedesktop_version} org.freedesktop.Sdk.Extension.${llvm}//${freedesktop_version}`;
 
   extension_vala.enabled = isValaEnabled();
   extension_vala.command = `flatpak install flathub org.freedesktop.Sdk.Extension.vala//${freedesktop_version}`;
 
   extension_typescript.enabled = isTypeScriptEnabled();
-  extension_typescript.command = `flatpak install flathub org.freedesktop.Sdk.Extension.node20//${freedesktop_version} org.freedesktop.Sdk.Extension.typescript//${freedesktop_version}`;
+  extension_typescript.command = `flatpak install flathub org.freedesktop.Sdk.Extension.${node}//${freedesktop_version} org.freedesktop.Sdk.Extension.typescript//${freedesktop_version}`;
 
   for (const extension of [
     extension_rust,

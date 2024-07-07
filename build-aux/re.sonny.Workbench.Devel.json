@@ -2,17 +2,17 @@
   "$schema": "https://raw.githubusercontent.com/flatpak/flatpak-builder/main/data/flatpak-manifest.schema.json",
   "id": "re.sonny.Workbench.Devel",
   "runtime": "org.gnome.Sdk",
-  "runtime-version": "46",
+  "runtime-version": "master",
   "sdk": "org.gnome.Sdk",
   "sdk-extensions": [
     "org.freedesktop.Sdk.Extension.vala",
     "org.freedesktop.Sdk.Extension.rust-stable",
-    "org.freedesktop.Sdk.Extension.llvm16",
-    "org.freedesktop.Sdk.Extension.node18",
+    "org.freedesktop.Sdk.Extension.llvm18",
+    "org.freedesktop.Sdk.Extension.node20",
     "org.freedesktop.Sdk.Extension.typescript"
   ],
   "build-options": {
-    "append-path": "/usr/lib/sdk/vala/bin:/usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/node18/bin:/usr/lib/sdk/typescript/bin",
+    "append-path": "/usr/lib/sdk/vala/bin:/usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/node20/bin:/usr/lib/sdk/typescript/bin",
     "append-ld-library-path": "/usr/lib/sdk/vala/lib"
   },
   "command": "workbench",
