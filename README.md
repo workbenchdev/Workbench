@@ -6,7 +6,7 @@ Learn and prototype with GNOME technologies
 
 ![](data/workbench.gif)
 
-<a href='https://flathub.org/apps/re.sonny.Workbench'><img width='240' height='80' alt='Download on Flathub' src='https://dl.flathub.org/assets/badges/flathub-badge-en.svg'/></a>
+<a href='https://flathub.org/apps/re.sonny.Workbench'><img width='240' alt='Download on Flathub' src='https://flathub.org/api/badge?svg&locale=en'/></a>
 
 Workbench lets you experiment with GNOME technologies, no matter if tinkering for the first time or building and testing a GTK user interface.
 
