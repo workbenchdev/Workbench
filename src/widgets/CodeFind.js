@@ -72,7 +72,7 @@ class Search extends Gtk.Revealer {
   }
 
   onClose() {
-    this.reveal_child = false;
+    this.#endSearch(true);
   }
 
   #addControllers() {
