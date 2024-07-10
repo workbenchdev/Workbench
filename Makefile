@@ -3,12 +3,12 @@ SHELL:=/bin/bash -O globstar
 .DEFAULT_GOAL := setup
 
 setup:
-	flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-	flatpak install --or-update --user --noninteractive flathub org.gnome.Sdk//46 org.flatpak.Builder org.freedesktop.Sdk.Extension.rust-stable//23.08 org.freedesktop.Sdk.Extension.vala//23.08 org.freedesktop.Sdk.Extension.llvm18//23.08 org.freedesktop.Sdk.Extension.node20//23.08 org.freedesktop.Sdk.Extension.typescript//23.08
-	flatpak remote-add --user --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
-	flatpak install --or-update --user --noninteractive flathub-beta org.freedesktop.Sdk.Extension.rust-stable//24.08beta org.freedesktop.Sdk.Extension.vala//24.08beta org.freedesktop.Sdk.Extension.llvm18//24.08beta org.freedesktop.Sdk.Extension.node20//24.08beta org.freedesktop.Sdk.Extension.typescript//24.08beta
-	flatpak remote-add --user --if-not-exists gnome-nightly https://nightly.gnome.org/gnome-nightly.flatpakrepo
-	flatpak install --or-update --user --noninteractive gnome-nightly org.gnome.Sdk//master
+	flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+	flatpak install --or-update --noninteractive flathub org.gnome.Sdk//46 org.flatpak.Builder org.freedesktop.Sdk.Extension.rust-stable//23.08 org.freedesktop.Sdk.Extension.vala//23.08 org.freedesktop.Sdk.Extension.llvm18//23.08 org.freedesktop.Sdk.Extension.node20//23.08 org.freedesktop.Sdk.Extension.typescript//23.08
+	flatpak remote-add --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
+	flatpak install --or-update --noninteractive flathub-beta org.freedesktop.Sdk.Extension.rust-stable//24.08beta org.freedesktop.Sdk.Extension.vala//24.08beta org.freedesktop.Sdk.Extension.llvm18//24.08beta org.freedesktop.Sdk.Extension.node20//24.08beta org.freedesktop.Sdk.Extension.typescript//24.08beta
+	flatpak remote-add --if-not-exists gnome-nightly https://nightly.gnome.org/gnome-nightly.flatpakrepo
+	flatpak install --or-update --noninteractive gnome-nightly org.gnome.Sdk//master
 	git submodule update --init
 	npm install --no-fund
 	@echo "✅ You can use "make build" to build Workbench"
