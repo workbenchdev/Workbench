@@ -16,12 +16,14 @@ jobs:
       - uses: actions/checkout@v4
         with:
           submodules: recursive
+
       - uses: flatpak/flatpak-github-actions/flatpak-builder@v6
         name: "Build"
         with:
           bundle: re.sonny.Workbench.Devel.flatpak
           manifest-path: build-aux/re.sonny.Workbench.Devel.json
           cache-key: flatpak-builder-${{ github.sha }}
+
       - uses: flatpak/flatpak-github-actions/flat-manager@v6
         name: "Deploy"
         with:

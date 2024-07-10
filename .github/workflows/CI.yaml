@@ -9,21 +9,18 @@ on:
 
 jobs:
   CI:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
+    container:
+      image: bilelmoussaoui/flatpak-github-actions:gnome-nightly
+      options: --privileged
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: recursive
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 20
-          cache: "npm"
-
       - name: Install host dependencies
         run: |
-          sudo apt-get update
-          sudo apt-get install flatpak mutter
+          sudo dnf install --assumeyes make flatpak mutter nodejs
 
       # Restore caches
       - name: Restore Flatpak dependencies
