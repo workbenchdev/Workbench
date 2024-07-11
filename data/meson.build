@@ -24,9 +24,11 @@ appstream_file = configure_file(
   install_dir: join_paths(get_option('datadir'), 'metainfo')
 )
 
-appstream_cli = find_program('appstreamcli', required: true)
-test('Validate metainfo file', appstream_cli,
-  args: ['validate', '--override=release-time-missing=info', '--no-net', '--explain', appstream_file]
+appstreamcli = find_program('appstreamcli', required: false)
+test(
+  'Validate appstream file',
+  appstreamcli,
+  args: ['validate', '--no-net', '--explain', appstream_file],
 )
 
 configure_file(
