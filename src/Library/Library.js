@@ -19,7 +19,13 @@ import { build } from "../../troll/src/builder.js";
 
 export default function Library({ application }) {
   const objects = build(resource);
-  const { window, picture_illustration, search_entry } = objects;
+  const {
+    window,
+    picture_illustration,
+    search_entry,
+    dropdown_category,
+    dropdown_language,
+  } = objects;
   window.application = application;
   picture_illustration.set_resource(illustration);
 
@@ -28,6 +34,8 @@ export default function Library({ application }) {
   }
 
   let last_triggered;
+  let current_category = "All Categories";
+  let current_language = "All Languages";
 
   window.connect("close-request", quitOnLastWindowClose);
 
@@ -51,25 +59,56 @@ export default function Library({ application }) {
       category_map.set(demo.category, objects[`library_${demo.category}`]);
     }
     objects[`library_${demo.category}`].append(entry_row);
-    widgets_map.set(demo.name, { entry_row, category: demo.category });
+    widgets_map.set(demo.name, {
+      entry_row,
+      category: demo.category,
+      languages: demo.languages,
+    });
   });
 
-  search_entry.connect("search-changed", () => {
+  function updateVisibility() {
     const search_term = search_entry.get_text().toLowerCase();
     const visible_categories = new Set();
 
-    widgets_map.forEach(({ entry_row, category }, demo_name) => {
-      const is_match = demo_name.toLowerCase().includes(search_term);
+    widgets_map.forEach(({ entry_row, category, languages }, demo_name) => {
+      const category_match =
+        current_category === "All Categories" ||
+        category.includes(current_category.toLowerCase());
+      const language_match =
+        current_language === "All Languages" ||
+        languages.includes(current_language.toLowerCase());
+      const search_match = demo_name.toLowerCase().includes(search_term);
+      const is_match =
+        category_match &&
+        language_match &&
+        (search_term === "" || search_match);
       entry_row.visible = is_match;
       if (is_match) visible_categories.add(category);
     });
 
     category_map.forEach((category_widget, category_name) => {
       const label = objects[`label_${category_name}`];
-      if (label) label.visible = search_term === "";
+      if (label)
+        label.visible =
+          current_category === "All Categories" &&
+          current_language === "All Languages" &&
+          search_term === "";
       category_widget.visible = visible_categories.has(category_name);
     });
+  }
+
+  search_entry.connect("search-changed", updateVisibility);
+
+  dropdown_category.connect("notify::selected", () => {
+    current_category = dropdown_category.get_selected_item().get_string();
+    updateVisibility();
   });
+
+  dropdown_language.connect("notify::selected", () => {
+    current_language = dropdown_language.get_selected_item().get_string();
+    updateVisibility();
+  });
+
   const action_library = new Gio.SimpleAction({
     name: "library",
     parameter_type: null,
