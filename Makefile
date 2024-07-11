@@ -14,10 +14,13 @@ setup:
 	@echo "✅ You can use "make build" to build Workbench"
 
 stable:
-	flatpak --user run org.flatpak.Builder --delete-build-dirs --disable-updates --build-only --ccache --force-clean flatpak build-aux/re.sonny.Workbench.json
+# flatpak --user run org.flatpak.Builder --delete-build-dirs --disable-updates --build-only --ccache --force-clean flatpak build-aux/re.sonny.Workbench.json
+	flatpak-builder --delete-build-dirs --disable-updates --build-only --ccache --force-clean flatpak build-aux/re.sonny.Workbench.json
 
 devel:
-	flatpak --user run org.flatpak.Builder --delete-build-dirs --disable-updates --build-only --ccache --force-clean flatpak build-aux/re.sonny.Workbench.Devel.json
+# flatpak --user run org.flatpak.Builder --delete-build-dirs --disable-updates --build-only --ccache --force-clean flatpak build-aux/re.sonny.Workbench.Devel.json
+	flatpak-builder --delete-build-dirs --disable-updates --build-only --ccache --force-clean flatpak build-aux/re.sonny.Workbench.Devel.json
+
 
 build: devel
 
