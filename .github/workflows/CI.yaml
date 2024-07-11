@@ -25,7 +25,7 @@ jobs:
 
       - name: Install host dependencies
         run: |
-          sudo dnf install --assumeyes make flatpak mutter
+          sudo dnf install --assumeyes make flatpak mutter gcc-c++
 
       # Restore caches
       - name: Restore Flatpak dependencies
