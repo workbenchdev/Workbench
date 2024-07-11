@@ -571,10 +571,10 @@ function serializeDiagnostics({ diagnostics }) {
   );
 }
 
-const keyFile = new GLib.KeyFile();
-keyFile.load_from_file("/.flatpak-info", GLib.KeyFileFlags.NONE);
+const key_file = new GLib.KeyFile();
+key_file.load_from_file("/.flatpak-info", GLib.KeyFileFlags.NONE);
 // runtime/org.gnome.Sdk/x86_64/master
-const [, , , runtime_version] = keyFile
+const [, , , runtime_version] = key_file
   .get_string("Application", "runtime")
   .split("/");
 

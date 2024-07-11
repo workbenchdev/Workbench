@@ -18,9 +18,14 @@ jobs:
         with:
           submodules: recursive
 
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: "npm"
+
       - name: Install host dependencies
         run: |
-          sudo dnf install --assumeyes make flatpak mutter nodejs
+          sudo dnf install --assumeyes make flatpak mutter
 
       # Restore caches
       - name: Restore Flatpak dependencies
