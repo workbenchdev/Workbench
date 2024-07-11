@@ -11,6 +11,7 @@ setup:
 # flatpak install --or-update --user --noninteractive gnome-nightly org.gnome.Sdk//master
 	ls
 	echo $PWD
+	node --version
 # git submodule update --init
 	npm install --no-fund
 	@echo "✅ You can use "make build" to build Workbench"
