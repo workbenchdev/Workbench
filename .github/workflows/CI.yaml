@@ -9,10 +9,7 @@ on:
 
 jobs:
   CI:
-    runs-on: ubuntu-latest
-    container:
-      image: bilelmoussaoui/flatpak-github-actions:gnome-nightly
-      options: --privileged
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v3
         with:
@@ -25,7 +22,7 @@ jobs:
 
       - name: Install host dependencies
         run: |
-          sudo dnf install --assumeyes make flatpak mutter gcc-c++
+          sudo apt-get install flatpak mutter
 
       # Restore caches
       - name: Restore Flatpak dependencies
