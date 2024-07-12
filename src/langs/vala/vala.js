@@ -9,15 +9,9 @@ export function setup({ document }) {
 
   const { file, buffer, code_view } = document;
 
-  const api_file = Gio.File.new_for_path(pkg.pkgdatadir).get_child(
-    "workbench.vala",
-  );
-  api_file.copy(
-    file.get_parent().get_child("workbench.vala"),
-    Gio.FileCopyFlags.OVERWRITE,
-    null,
-    null,
-  );
+  // VLS needs the project to be already setup once it starts,
+  // otherwise it won't pick it up later.
+  setupValaProject(file.get_parent()).catch(console.error);
 
   const lspc = createLSPClient({
     lang: getLanguage("vala"),
