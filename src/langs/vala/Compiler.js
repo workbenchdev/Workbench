@@ -1,49 +1,44 @@
 import Gio from "gi://Gio";
 import dbus_previewer from "../../Previewer/DBusPreviewer.js";
-import { decode } from "../../util.js";
 
 export default function ValaCompiler({ session }) {
   const { file } = session;
 
-  const module_file = file.get_child("libworkbenchcode.so");
-  const file_vala = file.get_child("main.vala");
+  const meson_builddir = "builddir";
+  const module_file = file
+    .get_child(meson_builddir)
+    .get_child("libworkbenchcode.so");
 
   async function compile() {
-    let args;
-
-    try {
-      const [contents] = await file_vala.load_contents_async(null);
-      const code = decode(contents);
-      args = getValaCompilerArguments(code);
-    } catch (error) {
-      console.debug(error);
-      return;
-    }
-
-    const valac_launcher = new Gio.SubprocessLauncher();
-    valac_launcher.set_cwd(file.get_path());
-    const valac = valac_launcher.spawnv([
-      "valac",
-      file_vala.get_path(),
-      "--hide-internal",
-      "-X",
-      "-shared",
-      "-X",
-      "-fpic",
-      "--library",
-      "workbench",
-      "-o",
-      module_file.get_path(),
-      "--vapi",
-      "/dev/null",
-      ...args,
+    // TODO: Do not run setup if the build directory is already
+    // configured
+    const meson_launcher = new Gio.SubprocessLauncher();
+    meson_launcher.set_cwd(file.get_path());
+    const meson_setup = meson_launcher.spawnv([
+      "meson",
+      "setup",
+      meson_builddir,
     ]);
 
-    await valac.wait_async(null);
+    await meson_setup.wait_async(null);
+    const setup_result = meson_setup.get_successful();
+    if (!setup_result) {
+      return false;
+    }
 
-    const result = valac.get_successful();
-    valac_launcher.close();
-    return result;
+    const meson_compile = meson_launcher.spawnv([
+      "meson",
+      "compile",
+      "-C",
+      meson_builddir,
+    ]);
+
+    await meson_compile.wait_async(null);
+    const compile_result = meson_compile.get_successful();
+
+    meson_launcher.close();
+
+    return compile_result;
   }
 
   async function run() {
@@ -59,12 +54,4 @@ export default function ValaCompiler({ session }) {
   }
 
   return { compile, run };
-}
-
-// Takes a string starting with the line
-// #!/usr/bin/env -S vala workbench.vala --pkg gtk4 --pkg libadwaita-1
-// and return ["--pkg", "gtk4", "--pkg", "libadwaita-1"]
-// FIXME: consider using https://docs.gtk.org/glib/struct.OptionContext.html instead
-function getValaCompilerArguments(text) {
-  return text.split("\n")[0]?.split("-S vala ")[1]?.split(" ") || [];
 }

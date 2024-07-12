@@ -30,10 +30,10 @@ dependencies = [
     dependency('webkitgtk-6.0'),
     dependency('gstreamer-1.0'),
     dependency('gtksourceview-5'),
+    dependency('json-glib-1.0'),
 ]
 
-executable('demo', source_files,
-  objects: 'libworkbenchcode.so',
+library('workbenchcode', source_files,
   dependencies: dependencies,
        install: true,
 )

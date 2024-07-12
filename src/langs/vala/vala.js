@@ -2,7 +2,7 @@ import Gio from "gi://Gio";
 
 import { isValaAvailable } from "../../Extensions/Extensions.js";
 import { createLSPClient } from "../../common.js";
-import { getLanguage } from "../../util.js";
+import { getLanguage, copy } from "../../util.js";
 
 export function setup({ document }) {
   if (!isValaAvailable()) return;
@@ -43,4 +43,25 @@ export function setup({ document }) {
   });
 
   return lspc;
+}
+
+const vala_template_dir = Gio.File.new_for_path(
+  pkg.pkgdatadir,
+).resolve_relative_path("langs/vala/template");
+
+export async function setupValaProject(destination) {
+  return Promise.all([
+    copy(
+      "meson.build",
+      vala_template_dir,
+      destination,
+      Gio.FileCopyFlags.OVERWRITE,
+    ),
+    copy(
+      "workbench.vala",
+      vala_template_dir,
+      destination,
+      Gio.FileCopyFlags.OVERWRITE,
+    ),
+  ]);
 }
