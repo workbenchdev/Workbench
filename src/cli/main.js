@@ -352,11 +352,25 @@ async function ci({ filenames }) {
       const languageId = "vala";
       let version = 0;
 
-      const file_api = Gio.File.new_for_path(pkg.pkgdatadir).get_child(
-        "workbench.vala",
-      );
-      file_api.copy(
+      const current_dir = Gio.File.new_for_path(GLib.get_current_dir());
+
+      const template_dir = GLib.getenv("FLATPAK_ID")
+        ? Gio.File.new_for_path(
+            `/app/share/${GLib.getenv("FLATPAK_ID")}/langs/vala/template`,
+          )
+        : current_dir.resolve_relative_path("src/langs/vala/template");
+
+      const api_file = template_dir.get_child("workbench.vala");
+      api_file.copy(
         demo_dir.get_child("workbench.vala"),
+        Gio.FileCopyFlags.OVERWRITE,
+        null,
+        null,
+      );
+
+      const meson_file = template_dir.get_child("meson.build");
+      meson_file.copy(
+        demo_dir.get_child("meson.build"),
         Gio.FileCopyFlags.OVERWRITE,
         null,
         null,
