@@ -4,6 +4,7 @@ import GObject from "gi://GObject";
 import { makeDropdownFlat, settings as global_settings } from "./util.js";
 import { setupRustProject } from "./langs/rust/rust.js";
 import { setupTypeScriptProject } from "./langs/typescript/typescript.js";
+import { setupJavascriptProject } from "./langs/javascript/javascript.js";
 
 export default function PanelCode({
   builder,
@@ -54,6 +55,12 @@ export default function PanelCode({
     panel.language = dropdown_code_lang.selected_item?.string;
     stack_code.visible_child_name = panel.language;
     previewer.useInternal().catch(console.error);
+
+    if (panel.language.toLowerCase() === "javascript") {
+      setupJavascriptProject(file, langs.javascript.document).catch(
+        console.error,
+      );
+    }
 
     if (panel.language.toLowerCase() === "rust") {
       setupRustProject(file).catch(console.error);
