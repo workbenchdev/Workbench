@@ -5,7 +5,9 @@ import Xdp from "gi://Xdp";
 import XdpGtk from "gi://XdpGtk4";
 
 import About from "./about.js";
+import Window from "./window.js";
 import { portal, settings } from "./util.js";
+import { createSession } from "./sessions.js";
 
 export default function Actions({ application }) {
   const quit = new Gio.SimpleAction({
@@ -65,6 +67,15 @@ export default function Actions({ application }) {
   // application.add_action(settings.create_action("safe-mode"));
   // application.add_action(settings.create_action("auto-preview"));
 
+  const action_new_project = new Gio.SimpleAction({
+    name: "new",
+  });
+  action_new_project.connect("activate", (_self, _target) => {
+    new_project({ application }).catch(console.error);
+  });
+  application.add_action(action_new_project);
+  application.set_accels_for_action("app.new", ["<Control>N"]);
+
   const action_open_file = new Gio.SimpleAction({
     name: "open",
     parameter_type: new GLib.VariantType("s"),
@@ -95,6 +106,12 @@ async function showScreenshot({ application, uri }) {
     Xdp.OpenUriFlags.NONE,
     null, // cancellable
   );
+}
+
+async function new_project({ application }) {
+  const session = createSession();
+  const { load } = Window({ application, session });
+  await load();
 }
 
 async function open({ application, hint }) {
