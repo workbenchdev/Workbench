@@ -39,7 +39,6 @@
   ],
   "modules": [
     "modules/blueprint-compiler.json",
-    "modules/biome.json",
     "modules/gst-plugin-gtk4.json",
     "modules/vte.json",
     "modules/libshumate.json",
