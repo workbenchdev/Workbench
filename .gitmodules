@@ -8,6 +8,6 @@
 	path = blueprint-compiler
 	url = https://gitlab.gnome.org/jwestman/blueprint-compiler.git
 [submodule "src/langs/typescript/template/gi-types"]
-	path = src/langs/typescript/gi-types
+	path = gi-types
 	url = https://gitlab.gnome.org/BrainBlasted/gi-typescript-definitions.git
 	branch = nightly

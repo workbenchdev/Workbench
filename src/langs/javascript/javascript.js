@@ -1,5 +1,7 @@
+import Gio from "gi://Gio";
+
 import { createLSPClient } from "../../common.js";
-import { getLanguage } from "../../util.js";
+import { getLanguage, copy } from "../../util.js";
 
 export function setup({ document }) {
   const { file, buffer, code_view } = document;
@@ -29,4 +31,23 @@ export function setup({ document }) {
   });
 
   return lspc;
+}
+
+const javascript_template_dir = Gio.File.new_for_path(
+  pkg.pkgdatadir,
+).resolve_relative_path("langs/javascript/template");
+
+export async function setupJavascriptProject(destination, document) {
+  const destination_file = await copy(
+    "jsconfig.json",
+    javascript_template_dir,
+    destination,
+    Gio.FileCopyFlags.NONE,
+  );
+
+  // Notify the language server that the jsconfig file was created
+  // to initialize diagnostics and type checkings
+  await document.lspc.notify("workspace/didCreateFile", {
+    files: [{ uri: destination_file.get_uri() }],
+  });
 }
