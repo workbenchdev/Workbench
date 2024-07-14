@@ -1,5 +1,3 @@
-import GLib from "gi://GLib";
-
 import LSPClient from "./lsp/LSPClient.js";
 
 const formatting_options = {
@@ -47,14 +45,7 @@ export const languages = [
     document: null,
     default_file: "main.js",
     index: 0,
-    language_server: [
-      "biome",
-      "lsp-proxy",
-      // src/meson.build installs biome.json there
-      GLib.getenv("FLATPAK_ID")
-        ? `--config-path=${pkg.pkgdatadir}`
-        : `--config-path=src/langs/javascript`,
-    ],
+    language_server: ["typescript-language-server", "--stdio"],
     formatting_options: {
       ...formatting_options,
       tabSize: 2,

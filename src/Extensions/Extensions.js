@@ -53,7 +53,7 @@ export function Extensions({ window }) {
   window.add_action(action_extensions);
 }
 
-let rust_enabled = false;
+let rust_enabled = null;
 export function isRustEnabled() {
   rust_enabled ??=
     Gio.File.new_for_path("/usr/lib/sdk/rust-stable").query_exists(null) &&
@@ -61,14 +61,14 @@ export function isRustEnabled() {
   return rust_enabled;
 }
 
-let vala_enabled = false;
+let vala_enabled = null;
 export function isValaEnabled() {
   vala_enabled ??=
     Gio.File.new_for_path("/usr/lib/sdk/vala").query_exists(null);
   return vala_enabled;
 }
 
-let typescript_enabled = false;
+let typescript_enabled = null;
 export function isTypeScriptEnabled() {
   typescript_enabled ??=
     Gio.File.new_for_path("/usr/lib/sdk/typescript").query_exists(null) &&
@@ -77,6 +77,6 @@ export function isTypeScriptEnabled() {
 }
 
 const llvm = "llvm18";
-const node = "node20";
+const node = "node18";
 const runtime = getFlatpakInfo().get_string("Application", "runtime");
 const freedesktop_version = runtime.endsWith("master") ? "24.08beta" : "23.08";
