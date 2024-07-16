@@ -31,7 +31,7 @@ export async function main([action, ...args]) {
 
   if (action === "ci") {
     const filenames = args;
-    const success = await ci({ filenames, current_dir });
+    const success = await ci({ filenames });
     return success ? 0 : 1;
   }
 
@@ -43,12 +43,8 @@ export async function main([action, ...args]) {
   }
 
   if (lang.id === "vala") {
-    const api_file = (
-      GLib.getenv("FLATPAK_ID")
-        ? Gio.File.new_for_path(pkg.pkgdatadir)
-        : current_dir.resolve_relative_path("src/langs/vala")
-    ).get_child("workbench.vala");
-    api_file.copy(
+    const file_api = pkg.pkgdatadir.get_child("workbench.vala");
+    file_api.copy(
       current_dir.get_child("workbench.vala"),
       Gio.FileCopyFlags.OVERWRITE,
       null,
@@ -122,7 +118,7 @@ async function checkFile({ lspc, file, lang, uri }) {
   }
 }
 
-async function ci({ filenames, current_dir }) {
+async function ci({ filenames }) {
   for (const filename of filenames) {
     const demo_dir = Gio.File.new_for_path(filename);
 
@@ -354,12 +350,10 @@ async function ci({ filenames, current_dir }) {
       const languageId = "vala";
       let version = 0;
 
-      const api_file = (
-        GLib.getenv("FLATPAK_ID")
-          ? Gio.File.new_for_path(`/app/share/${GLib.getenv("FLATPAK_ID")}`)
-          : current_dir.resolve_relative_path("src/langs/vala")
-      ).get_child("workbench.vala");
-      api_file.copy(
+      const file_api = Gio.File.new_for_path(pkg.pkgdatadir).get_child(
+        "workbench.vala",
+      );
+      file_api.copy(
         demo_dir.get_child("workbench.vala"),
         Gio.FileCopyFlags.OVERWRITE,
         null,
