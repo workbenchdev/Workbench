@@ -19,7 +19,7 @@
       <li>JavaScript, Rust, Python and Vala support</li>
       <li>Declarative user interface syntax</li>
       <li>Autosave, sessions and projects</li>
-      <li>Code linter and formatter</li>
+      <li>Code diagnostics, completion and formatter</li>
       <li>Terminal output</li>
     </ul>
   </description>
