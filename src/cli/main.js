@@ -43,7 +43,9 @@ export async function main([action, ...args]) {
   }
 
   if (lang.id === "vala") {
-    const file_api = pkg.pkgdatadir.get_child("workbench.vala");
+    const file_api = Gio.File.new_for_path(pkg.pkgdatadir).get_child(
+      "workbench.vala",
+    );
     file_api.copy(
       current_dir.get_child("workbench.vala"),
       Gio.FileCopyFlags.OVERWRITE,
