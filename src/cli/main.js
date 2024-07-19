@@ -111,6 +111,11 @@ async function checkFile({ lspc, file, lang, uri }) {
     print(`  ✅ checks`);
     return true;
   } else {
+    console.log("NOOOOOOO");
+    console.log(buffer_tmp.text.length, buffer.text.length);
+    console.log(`@@${buffer_tmp}@@`);
+    console.log(`@@${buffer.text.length}@@`);
+
     printerr(
       `  ❌ formatting differs - open and run ${file
         .get_parent()
@@ -288,6 +293,18 @@ async function ci({ filenames }) {
       const [contents] = await file_javascript.load_contents_async(null);
       const text = new TextDecoder().decode(contents);
 
+      const file_jsconfig = Gio.File.new_for_path(pkg.pkgdatadir).get_child(
+        "langs/javascript/template/jsconfig.json",
+      );
+      const dest = demo_dir.get_child("jsconfig.json");
+      file_jsconfig.copy(dest, Gio.FileCopyFlags.OVERWRITE, null, null);
+
+      // Notify the language server that the jsconfig file was created
+      // to initialize diagnostics and type checkings
+      await lsp_clients.javascript._notify("workspace/didCreateFile", {
+        files: [{ uri: dest.get_uri() }],
+      });
+
       await lsp_clients.javascript._notify("textDocument/didOpen", {
         textDocument: {
           uri,
@@ -301,6 +318,7 @@ async function ci({ filenames }) {
         uri,
         lspc: lsp_clients.javascript,
       });
+      console.log(diagnostics);
       if (diagnostics.length > 0) {
         printerr(serializeDiagnostics({ diagnostics }));
         return false;
