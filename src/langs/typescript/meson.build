@@ -11,4 +11,7 @@ install_data(
   preserve_path: true,
 )
 
-install_subdir('gi-types', install_dir: join_paths(pkgdatadir, 'langs/typescript'))
+install_subdir(
+  meson.project_source_root() / 'gi-types',
+  install_dir: join_paths(pkgdatadir, 'langs/typescript'),
+)

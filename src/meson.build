@@ -15,6 +15,7 @@ blueprint_compiler = find_program(
 
 meson.add_install_script('../build-aux/library.js', pkgdatadir)
 
+subdir('langs/javascript')
 subdir('langs/rust/template')
 subdir('langs/typescript')
 
@@ -46,7 +47,6 @@ configure_file(
 )
 
 install_data('langs/vala/workbench.vala', install_dir: pkgdatadir)
-install_data('langs/javascript/biome.json', install_dir: pkgdatadir)
 install_data('project-readme.md', install_dir: pkgdatadir)
 subdir('libworkbench')
 subdir('Previewer')

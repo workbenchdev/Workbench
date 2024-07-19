@@ -73,7 +73,6 @@ class CodeView extends Gtk.Widget {
   }
 
   #onUpdate = () => {
-    this.clearDiagnostics();
     this.emit("changed");
   };
 

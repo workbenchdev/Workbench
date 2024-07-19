@@ -17,7 +17,7 @@ Among other things, Workbench comes with
 - JavaScript, Rust, Python and Vala support
 - Declarative user interface syntax
 - Autosave, sessions and projects
-- Code linter and formatter
+- Code diagnostics, completion and formatter
 - Terminal output
 
 ℹ️ Workbench is made possible by Flatpak. Only Flathub Workbench is supported.

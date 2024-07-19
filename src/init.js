@@ -1,5 +1,5 @@
 import "gi://GIRepository?version=2.0";
-import Gtk from "gi://Gtk";
+import Gtk from "gi://Gtk?version=4.0";
 import Source from "gi://GtkSource";
 import Adw from "gi://Adw";
 import Vte from "gi://Vte";

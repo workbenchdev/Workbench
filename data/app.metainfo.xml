@@ -19,7 +19,7 @@
       <li>JavaScript, Rust, Python and Vala support</li>
       <li>Declarative user interface syntax</li>
       <li>Autosave, sessions and projects</li>
-      <li>Code linter and formatter</li>
+      <li>Code diagnostics, completion and formatter</li>
       <li>Terminal output</li>
     </ul>
   </description>
@@ -55,7 +55,7 @@
     <release version="46.2" date="2024-07-xx">
       <description translatable="no">
         <ul>
-          <li>Update Biome to 1.8.3</li>
+          <li>Replace Biome with TypeScript Language Server</li>
           <li>Update gst-plugin-gtk4 to 1.12.7</li>
         </ul>
       </description>
