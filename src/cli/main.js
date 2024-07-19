@@ -111,11 +111,6 @@ async function checkFile({ lspc, file, lang, uri }) {
     print(`  ✅ checks`);
     return true;
   } else {
-    console.log("NOOOOOOO");
-    console.log(buffer_tmp.text.length, buffer.text.length);
-    console.log(`@@${buffer_tmp}@@`);
-    console.log(`@@${buffer.text.length}@@`);
-
     printerr(
       `  ❌ formatting differs - open and run ${file
         .get_parent()
