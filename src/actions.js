@@ -71,7 +71,7 @@ export default function Actions({ application }) {
     name: "new",
   });
   action_new_project.connect("activate", (_self, _target) => {
-    new_project({ application }).catch(console.error);
+    newProject({ application }).catch(console.error);
   });
   application.add_action(action_new_project);
   application.set_accels_for_action("app.new", ["<Control>N"]);
@@ -108,7 +108,7 @@ async function showScreenshot({ application, uri }) {
   );
 }
 
-async function new_project({ application }) {
+async function newProject({ application }) {
   const session = createSession();
   const { load } = Window({ application, session });
   await load();
