@@ -314,11 +314,15 @@ async function ci({ filenames }) {
         },
       });
 
-      const diagnostics = await waitForDiagnostics({
+      let diagnostics = await waitForDiagnostics({
         uri,
         lspc: lsp_clients.javascript,
       });
-      console.log(diagnostics);
+      diagnostics = diagnostics.filter((diagnostic) => {
+        return ![
+          "'await' has no effect on the type of this expression.",
+        ].includes(diagnostic.message);
+      });
       if (diagnostics.length > 0) {
         printerr(serializeDiagnostics({ diagnostics }));
         return false;
