@@ -66,7 +66,7 @@ export default function Library({ application }) {
     });
   });
 
-  function updateVisibility() {
+  function updateList() {
     const search_term = search_entry.get_text().toLowerCase();
     const visible_categories = new Set();
 
@@ -97,16 +97,16 @@ export default function Library({ application }) {
     });
   }
 
-  search_entry.connect("search-changed", updateVisibility);
+  search_entry.connect("search-changed", updateList);
 
   dropdown_category.connect("notify::selected", () => {
     current_category = dropdown_category.get_selected_item().get_string();
-    updateVisibility();
+    updateList();
   });
 
   dropdown_language.connect("notify::selected", () => {
     current_language = dropdown_language.get_selected_item().get_string();
-    updateVisibility();
+    updateList();
   });
 
   const action_library = new Gio.SimpleAction({
