@@ -56,7 +56,7 @@ export async function getSessions() {
   return [...files.values()].map((file) => new Session(file));
 }
 
-function createSession() {
+export function createSession() {
   const id = getNowForFilename();
   const file = sessions_dir.get_child(id);
   ensureDir(file);
