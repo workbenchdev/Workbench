@@ -1,9 +1,11 @@
 import Gio from "gi://Gio";
+import Gtk from "gi://Gtk";
 
 import {
   decode,
   demos_dir,
   getLanguage,
+  makeDropdownFlat,
   settings as global_settings,
   quitOnLastWindowClose,
 } from "../util.js";
@@ -28,21 +30,42 @@ export default function Library({ application }) {
   } = objects;
   window.application = application;
   picture_illustration.set_resource(illustration);
+  makeDropdownFlat(dropdown_category);
+  makeDropdownFlat(dropdown_language);
 
   if (__DEV__) {
     window.add_css_class("devel");
   }
 
   let last_triggered;
-  let current_category = "All Categories";
-  let current_language = "All Languages";
+  let current_category = 0;
+  let current_language = 0;
 
   window.connect("close-request", quitOnLastWindowClose);
 
   const demos = getDemos();
   const widgets_map = new Map();
   const category_map = new Map();
+  const language_model = new Gtk.StringList();
+  const category_model = new Gtk.StringList();
+  language_model.append("All Languages");
+  category_model.append("All Categories");
+  const language_check = ["All Languages"];
+  const category_check = ["All Categories"];
+
   demos.forEach((demo) => {
+    demo.languages.forEach((lang) => {
+      if (!language_check.includes(lang)) {
+        language_check.push(lang);
+        language_model.append(lang);
+      }
+    });
+
+    if (!category_check.includes(demo.category)) {
+      category_check.push(demo.category);
+      category_model.append(demo.category);
+    }
+
     const entry_row = new EntryRow({ demo: demo });
     if (demo.name === "Welcome") last_triggered = entry_row;
 
@@ -61,37 +84,42 @@ export default function Library({ application }) {
     objects[`library_${demo.category}`].append(entry_row);
     widgets_map.set(demo.name, {
       entry_row,
-      category: demo.category,
-      languages: demo.languages,
+      category_index: category_check.indexOf(demo.category),
+      languages_index: demo.languages.map((lang) =>
+        language_check.indexOf(lang),
+      ),
     });
   });
+
+  dropdown_language.set_model(language_model);
+  dropdown_category.set_model(category_model);
 
   function updateList() {
     const search_term = search_entry.get_text().toLowerCase();
     const visible_categories = new Set();
 
-    widgets_map.forEach(({ entry_row, category, languages }, demo_name) => {
-      const category_match =
-        current_category === "All Categories" ||
-        category.includes(current_category.toLowerCase());
-      const language_match =
-        current_language === "All Languages" ||
-        languages.includes(current_language.toLowerCase());
-      const search_match = demo_name.toLowerCase().includes(search_term);
-      const is_match =
-        category_match &&
-        language_match &&
-        (search_term === "" || search_match);
-      entry_row.visible = is_match;
-      if (is_match) visible_categories.add(category);
-    });
+    widgets_map.forEach(
+      ({ entry_row, category_index, languages_index }, demo_name) => {
+        const category_match =
+          current_category === 0 || category_index === current_category;
+        const language_match =
+          current_language === 0 || languages_index.includes(current_language);
+        const search_match = demo_name.toLowerCase().includes(search_term);
+        const is_match =
+          category_match &&
+          language_match &&
+          (search_term === "" || search_match);
+        entry_row.visible = is_match;
+        if (is_match) visible_categories.add(category_check[category_index]);
+      },
+    );
 
     category_map.forEach((category_widget, category_name) => {
       const label = objects[`label_${category_name}`];
       if (label)
         label.visible =
-          current_category === "All Categories" &&
-          current_language === "All Languages" &&
+          current_category === 0 &&
+          current_language === 0 &&
           search_term === "";
       category_widget.visible = visible_categories.has(category_name);
     });
@@ -100,12 +128,12 @@ export default function Library({ application }) {
   search_entry.connect("search-changed", updateList);
 
   dropdown_category.connect("notify::selected", () => {
-    current_category = dropdown_category.get_selected_item().get_string();
+    current_category = dropdown_category.get_selected();
     updateList();
   });
 
   dropdown_language.connect("notify::selected", () => {
-    current_language = dropdown_language.get_selected_item().get_string();
+    current_language = dropdown_language.get_selected();
     updateList();
   });
 
