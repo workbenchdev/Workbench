@@ -227,6 +227,14 @@ Adw.Window window {
             halign: center;
             margin-bottom: 24;
             margin-top: 12;
+            orientation: vertical;
+
+            Label results_empty {
+              visible: false;
+              margin-top: 46;
+              margin-bottom: 70;
+              label: _("No results");
+            }
 
             Label {
               label: _("All examples are dedicated to the public domain\nand <b>can be used freely</b> under the terms of <a href=\"https://creativecommons.org/publicdomain/zero/1.0/\">CC0 1.0</a>");

@@ -27,6 +27,7 @@ export default function Library({ application }) {
     search_entry,
     dropdown_category,
     dropdown_language,
+    results_empty,
   } = objects;
   window.application = application;
   picture_illustration.set_resource(illustration);
@@ -97,7 +98,7 @@ export default function Library({ application }) {
   function updateList() {
     const search_term = search_entry.get_text().toLowerCase();
     const visible_categories = new Set();
-
+    let results_found = false;
     widgets_map.forEach(
       ({ entry_row, category_index, languages_index }, demo_name) => {
         const category_match =
@@ -110,7 +111,10 @@ export default function Library({ application }) {
           language_match &&
           (search_term === "" || search_match);
         entry_row.visible = is_match;
-        if (is_match) visible_categories.add(category_check[category_index]);
+        if (is_match) {
+          results_found = true;
+          visible_categories.add(category_check[category_index]);
+        }
       },
     );
 
@@ -123,6 +127,7 @@ export default function Library({ application }) {
           search_term === "";
       category_widget.visible = visible_categories.has(category_name);
     });
+    results_empty.set_visible(!results_found);
   }
 
   search_entry.connect("search-changed", updateList);
