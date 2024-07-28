@@ -16,6 +16,7 @@ import { createSessionFromDemo } from "../sessions.js";
 import EntryRow from "./EntryRow.js";
 
 import illustration from "./library.svg";
+import { gettext as _ } from "gettext";
 
 import { build } from "../../troll/src/builder.js";
 
@@ -54,17 +55,37 @@ export default function Library({ application }) {
   const language_check = ["All Languages"];
   const category_check = ["All Categories"];
 
+  const language_labels = {
+    javascript: _("JavaScript"),
+    python: _("Python"),
+    rust: _("Rust"),
+    vala: _("Vala"),
+    typescript: _("TypeScript"),
+  };
+
+  const category_labels = {
+    user_interface: _("User Interface"),
+    platform: _("Platform APIs"),
+    controls: _("Controls"),
+    feedback: _("Feedback"),
+    layout: _("Layout"),
+    network: _("Network"),
+    navigation: _("Navigation"),
+    tools: _("Tools"),
+    uncategorized: _("Uncategorized"),
+  };
+
   demos.forEach((demo) => {
     demo.languages.forEach((lang) => {
       if (!language_check.includes(lang)) {
         language_check.push(lang);
-        language_model.append(lang);
+        language_model.append(language_labels[lang]);
       }
     });
 
     if (!category_check.includes(demo.category)) {
       category_check.push(demo.category);
-      category_model.append(demo.category);
+      category_model.append(category_labels[demo.category]);
     }
 
     const entry_row = new EntryRow({ demo: demo });
