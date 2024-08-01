@@ -50,10 +50,10 @@ export default function Library({ application }) {
   const category_map = new Map();
   const language_model = new Gtk.StringList();
   const category_model = new Gtk.StringList();
-  language_model.append("All Languages");
-  category_model.append("All Categories");
-  const language_check = ["All Languages"];
-  const category_check = ["All Categories"];
+  language_model.append(_("All Languages"));
+  category_model.append(_("All Categories"));
+  const language_check = [_("All Languages")];
+  const category_check = [_("All Categories")];
 
   const language_labels = {
     javascript: _("JavaScript"),
