@@ -1,18 +1,16 @@
 {
   "compilerOptions": {
-    "module": "ESNext",
+    "module": "ES2022",
     "moduleResolution": "Bundler",
-    // TODO: should probably be fixed to ES2023, or whatever standard is
-    // currently supported by the latest GJS
-    "target": "ESNext",
+    "target": "ES2022",
     "outDir": "compiled_javascript",
     "baseUrl": ".",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "lib": ["ES2022"]
   },
   "include": [
     "main.ts",
-    "@pkgdatadir@/langs/typescript/gi-types/gi.d.ts",
-    "@pkgdatadir@/langs/typescript/gi-types/gjs.d.ts",
+    "@pkgdatadir@/langs/typescript/gi-types/index.d.ts",
     "@pkgdatadir@/langs/typescript/types/ambient.d.ts"
   ]
 }
