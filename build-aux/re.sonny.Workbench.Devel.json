@@ -49,6 +49,16 @@
     "modules/python-ruff.json",
     "modules/python-python-lsp-ruff.json",
     {
+        "name": "gom",
+        "buildsystem": "meson",
+        "sources": [
+            {
+                "type": "git",
+                "url": "https://gitlab.gnome.org/GNOME/gom.git"
+            }
+        ]
+    },
+    {
       "name": "Workbench",
       "buildsystem": "meson",
       "config-opts": ["-Dprofile=development"],
