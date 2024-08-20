@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "module": "ES2022",
+    "moduleResolution": "Bundler",
+    "target": "ES2022",
+    "skipLibCheck": true,
+    "lib": ["ES2022"],
+  },
+  "include": [
+    "./**/*.ts",
+    "@pkgdatadir@/langs/typescript/gi-types/index.d.ts",
+    "@pkgdatadir@/langs/typescript/types/workbench.d.ts",
+  ]
+}
