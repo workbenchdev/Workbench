@@ -11,6 +11,6 @@
   "include": [
     "main.ts",
     "@pkgdatadir@/langs/typescript/gi-types/index.d.ts",
-    "@pkgdatadir@/langs/typescript/types/ambient.d.ts"
+    "@pkgdatadir@/langs/typescript/types/workbench.d.ts"
   ]
 }

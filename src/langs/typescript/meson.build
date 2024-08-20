@@ -6,8 +6,8 @@ configure_file(
 )
 
 configure_file(
-  input: 'types/ambient.d.ts',
-  output: 'ambient.d.ts',
+  input: 'types/workbench.d.ts',
+  output: 'workbench.d.ts',
   install_dir: join_paths(pkgdatadir, 'langs/typescript/types'),
   configuration: bin_conf,
 )
