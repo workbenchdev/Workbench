@@ -288,6 +288,18 @@ async function ci({ filenames }) {
       const [contents] = await file_javascript.load_contents_async(null);
       const text = new TextDecoder().decode(contents);
 
+      const file_jsconfig = Gio.File.new_for_path(pkg.pkgdatadir).get_child(
+        "langs/javascript/template/jsconfig.json",
+      );
+      const dest = demo_dir.get_child("jsconfig.json");
+      file_jsconfig.copy(dest, Gio.FileCopyFlags.OVERWRITE, null, null);
+
+      // Notify the language server that the jsconfig file was created
+      // to initialize diagnostics and type checkings
+      await lsp_clients.javascript._notify("workspace/didCreateFile", {
+        files: [{ uri: dest.get_uri() }],
+      });
+
       await lsp_clients.javascript._notify("textDocument/didOpen", {
         textDocument: {
           uri,
@@ -297,9 +309,14 @@ async function ci({ filenames }) {
         },
       });
 
-      const diagnostics = await waitForDiagnostics({
+      let diagnostics = await waitForDiagnostics({
         uri,
         lspc: lsp_clients.javascript,
+      });
+      diagnostics = diagnostics.filter((diagnostic) => {
+        return ![
+          "'await' has no effect on the type of this expression.",
+        ].includes(diagnostic.message);
       });
       if (diagnostics.length > 0) {
         printerr(serializeDiagnostics({ diagnostics }));
