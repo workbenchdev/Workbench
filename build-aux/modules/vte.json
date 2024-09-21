@@ -2,6 +2,7 @@
   "name": "vte",
   "buildsystem": "meson",
   "config-opts": [
+    "--libdir=/app/lib",
     "-Ddocs=false",
     "-Dgtk3=false",
     "-Dgtk4=true",

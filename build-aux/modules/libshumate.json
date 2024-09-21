@@ -1,7 +1,7 @@
 {
   "name": "libshumate",
   "buildsystem": "meson",
-  "config-opts": ["-Dgtk_doc=false"],
+  "config-opts": ["--libdir=/app/lib", "-Dgtk_doc=false"],
   "sources": [
     {
       "type": "archive",
