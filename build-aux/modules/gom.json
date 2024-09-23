@@ -1,6 +1,7 @@
 {
   "name": "gom",
   "buildsystem": "meson",
+  "config-opts": ["--libdir=/app/lib", "-Denable-gtk-doc=false"],
   "sources": [
     {
       "type": "archive",

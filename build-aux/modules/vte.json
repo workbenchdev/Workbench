@@ -2,6 +2,7 @@
   "name": "vte",
   "buildsystem": "meson",
   "config-opts": [
+    "--libdir=/app/lib",
     "-Ddocs=false",
     "-Dgtk3=false",
     "-Dgtk4=true",
@@ -11,8 +12,8 @@
   "sources": [
     {
       "type": "archive",
-      "url": "https://download.gnome.org/sources/vte/0.76/vte-0.76.2.tar.xz",
-      "sha256": "e3dc6082d5bd70f8aafaaad2cdfcaf7e51da6ba00a919b11ddac6efa09c72847"
+      "url": "https://download.gnome.org/sources/vte/0.78/vte-0.78.0.tar.xz",
+      "sha256": "07f09c6228a8bb3c1599dd0f5a6ec797b30d3010c3ac91cf21b69d9635dfaf7c"
     }
   ]
 }

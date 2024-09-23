@@ -1,12 +1,12 @@
 {
   "name": "libspelling",
   "buildsystem": "meson",
-  "config-opts": ["-Ddocs=false"],
+  "config-opts": ["--libdir=/app/lib", "-Ddocs=false"],
   "sources": [
     {
       "type": "archive",
-      "url": "https://download.gnome.org/sources/libspelling/0.2/libspelling-0.2.1.tar.xz",
-      "sha256": "7a787b467bd493f6baffb44138dbc4bef78aaab60efb76a7db88b243bf0f6343"
+      "url": "https://download.gnome.org/sources/libspelling/0.4/libspelling-0.4.0.tar.xz",
+      "sha256": "00c63970d708a0ef3bcba40e708a06d7030114cb9f210c74583ffad56d36e3dd"
     }
   ]
 }

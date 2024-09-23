@@ -77,6 +77,6 @@ export function isTypeScriptEnabled() {
 }
 
 const llvm = "llvm18";
-const node = "node18";
+const node = "node20";
 const runtime = getFlatpakInfo().get_string("Application", "runtime");
-const freedesktop_version = runtime.endsWith("master") ? "24.08beta" : "23.08";
+const freedesktop_version = runtime.endsWith("master") ? "24.08" : "24.08";

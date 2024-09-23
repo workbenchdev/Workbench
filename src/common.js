@@ -45,7 +45,13 @@ export const languages = [
     document: null,
     default_file: "main.js",
     index: 0,
-    language_server: ["typescript-language-server", "--stdio"],
+    // language_server: ["typescript-language-server", "--stdio"],
+    language_server: [
+      "biome",
+      "lsp-proxy",
+      // src/meson.build installs biome.json there
+      `--config-path=${pkg.pkgdatadir}`,
+    ],
     formatting_options: {
       ...formatting_options,
       tabSize: 2,
