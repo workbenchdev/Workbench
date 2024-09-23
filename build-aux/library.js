@@ -24,6 +24,8 @@ Gio._promisify(
 
 Gio._promisify(Gio.File.prototype, "copy_async", "copy_finish");
 
+Gio._promisify(Gio.Subprocess.prototype, "wait_async", "wait_finish");
+
 const loop = new GLib.MainLoop(null, false);
 
 const [pkgdatadir] = programArgs;
@@ -95,6 +97,9 @@ const demos = [];
     demos.push(demo);
   }
 
+  // compile TypeScript demos to JavaScript
+  await compileTypeScriptFiles();
+
   await Gio.File.new_for_path(pkgdatadir)
     .get_child("demos/index.json")
     .replace_contents_async(
@@ -113,6 +118,22 @@ const demos = [];
   .then(() => {
     loop.quit();
   });
+
+async function compileTypeScriptFiles() {
+  const tsc_launcher = new Gio.SubprocessLauncher();
+  tsc_launcher.set_cwd(
+    Gio.File.new_for_path(pkgdatadir).get_child("demos").get_path()
+  );
+
+  const tsc = tsc_launcher.spawnv(["tsc"]);
+  await tsc.wait_async(null);
+
+  // TODO: maybe throw when the result is false
+  const successful = tsc.get_successful();
+  tsc_launcher.close();
+
+  if (!successful) throw new Error("One or several errors happened while compiling TypeScript demos to JavaScript")
+}
 
 async function copyDemo(source, destination) {
   try {

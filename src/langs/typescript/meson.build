@@ -5,10 +5,18 @@ configure_file(
   configuration: bin_conf,
 )
 
-install_data(
-  ['types/ambient.d.ts'],
-  install_dir: join_paths(pkgdatadir, 'langs/typescript'),
-  preserve_path: true,
+configure_file(
+  input: 'template/tsconfig.demos.json',
+  output: 'tsconfig.json',
+  install_dir: join_paths(pkgdatadir, 'demos'),
+  configuration: bin_conf,
+)
+
+configure_file(
+  input: 'types/workbench.d.ts',
+  output: 'workbench.d.ts',
+  install_dir: join_paths(pkgdatadir, 'langs/typescript/types'),
+  configuration: bin_conf,
 )
 
 install_subdir(

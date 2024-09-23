@@ -3,14 +3,12 @@
     "module": "ES2022",
     "moduleResolution": "Bundler",
     "target": "ES2022",
-    "outDir": "compiled_javascript",
-    "baseUrl": ".",
     "skipLibCheck": true,
-    "lib": ["ES2022"]
+    "lib": ["ES2022"],
   },
   "include": [
-    "main.ts",
+    "./**/*.ts",
     "@pkgdatadir@/langs/typescript/gi-types/index.d.ts",
-    "@pkgdatadir@/langs/typescript/types/workbench.d.ts"
+    "@pkgdatadir@/langs/typescript/types/workbench.d.ts",
   ]
 }
