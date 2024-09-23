@@ -56,7 +56,7 @@ export default function Library({ application }) {
     vala: _("Vala"),
     typescript: _("TypeScript"),
   };
-  Object.values(language_labels).forEach((str) => language_model.push(str));
+  Object.values(language_labels).forEach((str) => language_model.append(str));
 
   const category_model = new Gtk.StringList();
   category_model.append(_("Any Category"));
@@ -73,7 +73,7 @@ export default function Library({ application }) {
     user_interface: _("User Interface"),
     platform: _("Platform APIs"),
   };
-  Object.values(category_labels).forEach((str) => category_model.push(str));
+  Object.values(category_labels).forEach((str) => category_model.append(str));
 
   demos.forEach((demo) => {
     demo.languages.forEach((lang) => {
