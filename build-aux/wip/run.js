@@ -109,18 +109,18 @@ if (!exists(`${path}/_build`)) {
     "-Dprofile=development",
   ]);
 } else {
-  // await buildCommand(["meson", "install", "-C", "_build"]);
-  await buildCommand([
-    `troll/gjspack/bin/gjspack`,
-    `--appid=${flatpak_id}`,
-    "--prefix=/re/sonny/Workbench",
-    `--project-root=.`,
-    `--resource-root=./src`,
-    "--blueprint-compiler=/app/bin/blueprint-compiler",
-    "--no-executable",
-    `${path}/src/main.js`,
-    `/app/share/${flatpak_id}.src.gresource`,
-  ]);
+  await buildCommand(["meson", "install", "-C", "_build"]);
+  // await buildCommand([
+  //   `troll/gjspack/bin/gjspack`,
+  //   `--appid=${flatpak_id}`,
+  //   "--prefix=/re/sonny/Workbench",
+  //   `--project-root=.`,
+  //   `--resource-root=./src`,
+  //   "--blueprint-compiler=/app/bin/blueprint-compiler",
+  //   "--no-executable",
+  //   `${path}/src/main.js`,
+  //   `/app/share/${flatpak_id}.src.gresource`,
+  // ]);
 }
 
 // starts workbench
