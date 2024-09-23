@@ -5,7 +5,6 @@ import {
   decode,
   demos_dir,
   getLanguage,
-  makeDropdownFlat,
   settings as global_settings,
   quitOnLastWindowClose,
 } from "../util.js";
@@ -29,32 +28,27 @@ export default function Library({ application }) {
     dropdown_category,
     dropdown_language,
     results_empty,
+    button_reset,
   } = objects;
   window.application = application;
   picture_illustration.set_resource(illustration);
-  makeDropdownFlat(dropdown_category);
-  makeDropdownFlat(dropdown_language);
 
   if (__DEV__) {
     window.add_css_class("devel");
   }
 
   let last_triggered;
-  let current_category = 0;
-  let current_language = 0;
 
   window.connect("close-request", quitOnLastWindowClose);
 
   const demos = getDemos();
   const widgets_map = new Map();
   const category_map = new Map();
-  const language_model = new Gtk.StringList();
-  const category_model = new Gtk.StringList();
-  language_model.append(_("All Languages"));
-  category_model.append(_("All Categories"));
-  const language_check = [_("All Languages")];
-  const category_check = [_("All Categories")];
 
+  const language_model = new Gtk.StringList();
+  language_model.append(_("Any Language"));
+  dropdown_language.set_model(language_model);
+  const language_check = [_("Any Language")];
   const language_labels = {
     javascript: _("JavaScript"),
     python: _("Python"),
@@ -62,30 +56,34 @@ export default function Library({ application }) {
     vala: _("Vala"),
     typescript: _("TypeScript"),
   };
+  Object.values(language_labels).forEach((str) => language_model.push(str));
 
+  const category_model = new Gtk.StringList();
+  category_model.append(_("Any Category"));
+  dropdown_category.set_model(category_model);
+  const category_check = [_("Any Category")];
   const category_labels = {
+    uncategorized: _("Uncategorized"),
+    tools: _("Tools"),
+    network: _("Network"),
+    controls: _("Controls"),
+    layout: _("Layout"),
+    feedback: _("Feedback"),
+    navigation: _("Navigation"),
     user_interface: _("User Interface"),
     platform: _("Platform APIs"),
-    controls: _("Controls"),
-    feedback: _("Feedback"),
-    layout: _("Layout"),
-    network: _("Network"),
-    navigation: _("Navigation"),
-    tools: _("Tools"),
-    uncategorized: _("Uncategorized"),
   };
+  Object.values(category_labels).forEach((str) => category_model.push(str));
 
   demos.forEach((demo) => {
     demo.languages.forEach((lang) => {
       if (!language_check.includes(lang)) {
         language_check.push(lang);
-        language_model.append(language_labels[lang]);
       }
     });
 
     if (!category_check.includes(demo.category)) {
       category_check.push(demo.category);
-      category_model.append(category_labels[demo.category]);
     }
 
     const entry_row = new EntryRow({ demo: demo });
@@ -113,10 +111,10 @@ export default function Library({ application }) {
     });
   });
 
-  dropdown_language.set_model(language_model);
-  dropdown_category.set_model(category_model);
-
   function updateList() {
+    const current_category = dropdown_category.get_selected();
+    const current_language = dropdown_language.get_selected();
+
     const search_term = search_entry.get_text().toLowerCase();
     const visible_categories = new Set();
     let results_found = false;
@@ -152,15 +150,13 @@ export default function Library({ application }) {
   }
 
   search_entry.connect("search-changed", updateList);
+  dropdown_category.connect("notify::selected", updateList);
+  dropdown_language.connect("notify::selected", updateList);
 
-  dropdown_category.connect("notify::selected", () => {
-    current_category = dropdown_category.get_selected();
-    updateList();
-  });
-
-  dropdown_language.connect("notify::selected", () => {
-    current_language = dropdown_language.get_selected();
-    updateList();
+  button_reset.connect("clicked", () => {
+    search_entry.text = "";
+    dropdown_category.selected = 0;
+    dropdown_language.selected = 0;
   });
 
   const action_library = new Gio.SimpleAction({

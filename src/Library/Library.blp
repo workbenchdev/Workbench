@@ -50,24 +50,24 @@ Adw.Window window {
               ]
             }
 
-            SearchEntry search_entry {
-              search-delay: 100;
-              placeholder-text: _("Search demos");
-              activates-default: true;
-              width-request: 400;
-              margin-top: 32;
-            }
-          }
+            Box {
+              spacing: 6;
 
-          Box {
-            DropDown dropdown_language {
-              halign: end;
-              margin-end: 12;
-              hexpand: true;
-            }
+              SearchEntry search_entry {
+                search-delay: 100;
+                placeholder-text: _("Search demos");
+                activates-default: true;
+                hexpand: true;
+                margin-top: 32;
+              }
 
-            DropDown dropdown_category {
-              halign: end;
+              DropDown dropdown_language {
+                valign: end;
+              }
+
+              DropDown dropdown_category {
+                valign: end;
+              }
             }
           }
 
@@ -229,15 +229,25 @@ Adw.Window window {
             margin-top: 12;
             orientation: vertical;
 
-            Label results_empty {
+            Box results_empty {
+              orientation: vertical;
               visible: false;
               margin-top: 46;
               margin-bottom: 70;
-              label: _("No results");
+              spacing: 6;
 
-              styles [
-                "title-4"
-              ]
+              Label {
+                label: _("No results");
+
+                styles [
+                  "title-4"
+                ]
+              }
+
+              Button button_reset {
+                label: _("Reset filters");
+                halign: center;
+              }
             }
 
             Label {
