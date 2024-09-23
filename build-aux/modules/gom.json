@@ -1,0 +1,12 @@
+{
+  "name": "gom",
+  "buildsystem": "meson",
+  "config-opts": ["--libdir=/app/lib", "-Denable-gtk-doc=false"],
+  "sources": [
+    {
+      "type": "archive",
+      "url": "https://download.gnome.org/sources/gom/0.5/gom-0.5.3.tar.xz",
+      "sha256": "814fdbf0e0f352e067c6118af5f7454b41e9ef49"
+    }
+  ]
+}

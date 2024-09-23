@@ -19,7 +19,7 @@
       <li>JavaScript, Rust, Python and Vala support</li>
       <li>Declarative user interface syntax</li>
       <li>Autosave, sessions and projects</li>
-      <li>Code linter and formatter</li>
+      <li>Code diagnostics, completion and formatter</li>
       <li>Terminal output</li>
     </ul>
   </description>
@@ -43,20 +43,60 @@
   </screenshots>
   <content_rating type="oars-1.1" />
   <releases>
-    <!-- <release version="47.0" date="2024-xx-xx">
+    <release version="47.0" date="2024-xx-xx">
       <description translatable="no">
         <ul>
-          <li>Library: Add "Button Row" demo</li>
-          <li>Update libshumate to 1.3</li>
+          <li>Use GNOME 47</li>
+          <li>Add code suggestions/completions support</li>
+          <li>Add TypeScript support</li>
+          <li>Add option to create new blank project</li>
         </ul>
-      </description>
-    </release> -->
-
-    <release version="46.2" date="2024-07-xx">
-      <description translatable="no">
+        <p>Library:</p>
         <ul>
-          <li>Replace Biome with TypeScript Language Server</li>
+          <li>Add "Button Row" demo</li>
+          <li>Port "Dialog" to Python</li>
+          <li>Port "Level Bars" to Rust</li>
+          <li>Port "Text Fields" to Rust</li>
+          <li>Port "Column View" to Rust</li>
+          <li>Port "Clamp" to Rust</li>
+          <li>Port "List View" to Rust</li>
+          <li>Port "Frame" to Rust</li>
+          <li>Port "Audio" to Rust</li>
+          <li>Port "File Monitor" to Vala</li>
+          <li>Port "Scrolled Window" to Vala</li>
+          <li>Port "Menu" to Vala</li>
+          <li>Port "HTTP Server" to Vala</li>
+          <li>Port "Map" to Vala</li>
+          <li>Port "Session Monitor and Inhibit" to Vala</li>
+          <li>Port "Save File" to Vala</li>
+          <li>Port "Spin Button" to Vala</li>
+          <li>Port "Progress Bar" to Vala</li>
+          <li>Port "Label" to Vala</li>
+          <li>Port "Power Profile Monitor" to Vala</li>
+          <li>Port "Drawing Area" to Vala</li>
+          <li>Port "Font Dialog" to Vala</li>
+          <li>Port "Select Folder" to Vala</li>
+          <li>Port "Network Monitor" to Vala</li>
+          <li>Port "Toggle Button" to Vala</li>
+          <li>Port "Tooltip" to Vala</li>
+          <li>Port "Spell Checker" to Vala</li>
+          <li>Port "Popovers" to Vala</li>
+          <li>Port "Menu Button" to Vala</li>
+          <li>Port "Frame" to Vala</li>
+          <li>Port "Actions" to Vala</li>
+          <li>Port "Dialog" to Vala</li>
+        </ul>
+        <p>Dependencies:</p>
+        <ul>
+          <!-- <li>Replace Biome with TypeScript Language Server</li> -->
+          <li>Update Biome to 1.9.2</li>
           <li>Update gst-plugin-gtk4 to 1.12.7</li>
+          <li>Update libshumate to 1.3</li>
+          <li>Update Blueprint to 0.14.0</li>
+          <li>Update vte to 0.78.0</li>
+          <li>Update libspelling to 0.4.0</li>
+          <li>Update libportal to 0.8.1</li>
+          <li>Add GOM dependency 0.5.3</li>
         </ul>
       </description>
     </release>
@@ -150,7 +190,6 @@
           <li>Open the Library on start if there are no sessions to restore</li>
           <li>Restore scroll and cusor positions on format and Run</li>
           <li>Add "Copy" and "Select All" to Console</li>
-          <!-- <li>Add find text support</li> -->
           <li>Add Vala formatter support</li>
           <li>Add WebP image format support</li>
           <li>Use Biome instead of prettier as JavaScript formatter</li>

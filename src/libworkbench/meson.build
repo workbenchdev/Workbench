@@ -3,13 +3,13 @@
 # SPDX-FileContributor: Andy Holmes <andyholmes@gnome.org>
 
 prefix = get_option('prefix')
-datadir = join_paths(prefix, get_option('datadir'))
-includedir = join_paths(prefix, get_option('includedir'))
-libdir = join_paths(prefix, get_option('libdir'))
+datadir = prefix / get_option('datadir')
+includedir = prefix / get_option('includedir')
+libdir = prefix / get_option('libdir')
 
-girdir = join_paths(datadir, 'gir-1.0')
-typelibdir = join_paths(libdir, 'girepository-1.0')
-vapidir = join_paths(datadir, 'vala', 'vapi')
+girdir = datadir / 'gir-1.0'
+typelibdir = libdir / 'girepository-1.0'
+vapidir = datadir / 'vala' / 'vapi'
 
 libworkbench_api_version = '0'
 libworkbench_api_name = 'libworkbench-@0@'.format(libworkbench_api_version)
@@ -71,13 +71,13 @@ libworkbench_sources = files([
 ])
 
 install_headers(libworkbench_headers,
-  subdir: join_paths(includedir, 'libworkbench'),
+  subdir: includedir / 'libworkbench',
 )
 
 libworkbench_enums = gnome.mkenums_simple('libworkbench-enums',
          sources: libworkbench_headers,
   install_header: true,
-     install_dir: join_paths(includedir, 'libworkbench'),
+     install_dir: includedir / 'libworkbench',
 )
 
 libworkbench = shared_library('workbench-@0@'.format(libworkbench_api_version),
