@@ -66,28 +66,30 @@ if (!exists(`${path}/.flatpak/repo`)) {
 }
 
 if (!exists(`${path}/.flatpak/flatpak-builder`)) {
-  const module_name = app_module.name;
+  await downloadSources();
+  await buildModules();
+}
 
-  const manifest_relative_path =
-    Gio.File.new_for_path(path).get_relative_path(manifest_file);
+const prefix = [
+  "flatpak-builder",
+  "--ccache",
+  "--force-clean",
+  "--disable-updates",
+];
+const suffix = [
+  `--state-dir=${path}/.flatpak/flatpak-builder`,
+  `--stop-at=${app_module.name}`,
+  `${path}/.flatpak/repo`,
+  Gio.File.new_for_path(path).get_relative_path(manifest_file),
+];
 
-  const prefix = [
-    "flatpak-builder",
-    "--ccache",
-    "--force-clean",
-    "--disable-updates",
-  ];
-
-  const suffix = [
-    `--state-dir=${path}/.flatpak/flatpak-builder`,
-    `--stop-at=${module_name}`,
-    `${path}/.flatpak/repo`,
-    manifest_relative_path,
-  ];
-
-  // downloads sources (de-initializes)
+// de-initializes
+async function downloadSources() {
   await run([...prefix, "--download-only", ...suffix]);
-  // builds modules (de-initializes)
+}
+
+// de-initializes
+async function buildModules() {
   await run([
     ...prefix,
     "--disable-download",

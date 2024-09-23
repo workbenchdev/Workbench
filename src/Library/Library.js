@@ -1,4 +1,5 @@
 import Gio from "gi://Gio";
+import Gtk from "gi://Gtk";
 
 import {
   decode,
@@ -14,12 +15,21 @@ import { createSessionFromDemo } from "../sessions.js";
 import EntryRow from "./EntryRow.js";
 
 import illustration from "./library.svg";
+import { gettext as _ } from "gettext";
 
 import { build } from "../../troll/src/builder.js";
 
 export default function Library({ application }) {
   const objects = build(resource);
-  const { window, picture_illustration, search_entry } = objects;
+  const {
+    window,
+    picture_illustration,
+    search_entry,
+    dropdown_category,
+    dropdown_language,
+    results_empty,
+    button_reset,
+  } = objects;
   window.application = application;
   picture_illustration.set_resource(illustration);
 
@@ -34,7 +44,48 @@ export default function Library({ application }) {
   const demos = getDemos();
   const widgets_map = new Map();
   const category_map = new Map();
+
+  const language_model = new Gtk.StringList();
+  language_model.append(_("Any Language"));
+  dropdown_language.set_model(language_model);
+  const language_check = [_("Any Language")];
+  const language_labels = {
+    javascript: _("JavaScript"),
+    python: _("Python"),
+    rust: _("Rust"),
+    vala: _("Vala"),
+    typescript: _("TypeScript"),
+  };
+  Object.values(language_labels).forEach((str) => language_model.push(str));
+
+  const category_model = new Gtk.StringList();
+  category_model.append(_("Any Category"));
+  dropdown_category.set_model(category_model);
+  const category_check = [_("Any Category")];
+  const category_labels = {
+    uncategorized: _("Uncategorized"),
+    tools: _("Tools"),
+    network: _("Network"),
+    controls: _("Controls"),
+    layout: _("Layout"),
+    feedback: _("Feedback"),
+    navigation: _("Navigation"),
+    user_interface: _("User Interface"),
+    platform: _("Platform APIs"),
+  };
+  Object.values(category_labels).forEach((str) => category_model.push(str));
+
   demos.forEach((demo) => {
+    demo.languages.forEach((lang) => {
+      if (!language_check.includes(lang)) {
+        language_check.push(lang);
+      }
+    });
+
+    if (!category_check.includes(demo.category)) {
+      category_check.push(demo.category);
+    }
+
     const entry_row = new EntryRow({ demo: demo });
     if (demo.name === "Welcome") last_triggered = entry_row;
 
@@ -51,25 +102,63 @@ export default function Library({ application }) {
       category_map.set(demo.category, objects[`library_${demo.category}`]);
     }
     objects[`library_${demo.category}`].append(entry_row);
-    widgets_map.set(demo.name, { entry_row, category: demo.category });
+    widgets_map.set(demo.name, {
+      entry_row,
+      category_index: category_check.indexOf(demo.category),
+      languages_index: demo.languages.map((lang) =>
+        language_check.indexOf(lang),
+      ),
+    });
   });
 
-  search_entry.connect("search-changed", () => {
+  function updateList() {
+    const current_category = dropdown_category.get_selected();
+    const current_language = dropdown_language.get_selected();
+
     const search_term = search_entry.get_text().toLowerCase();
     const visible_categories = new Set();
-
-    widgets_map.forEach(({ entry_row, category }, demo_name) => {
-      const is_match = demo_name.toLowerCase().includes(search_term);
-      entry_row.visible = is_match;
-      if (is_match) visible_categories.add(category);
-    });
+    let results_found = false;
+    widgets_map.forEach(
+      ({ entry_row, category_index, languages_index }, demo_name) => {
+        const category_match =
+          current_category === 0 || category_index === current_category;
+        const language_match =
+          current_language === 0 || languages_index.includes(current_language);
+        const search_match = demo_name.toLowerCase().includes(search_term);
+        const is_match =
+          category_match &&
+          language_match &&
+          (search_term === "" || search_match);
+        entry_row.visible = is_match;
+        if (is_match) {
+          results_found = true;
+          visible_categories.add(category_check[category_index]);
+        }
+      },
+    );
 
     category_map.forEach((category_widget, category_name) => {
       const label = objects[`label_${category_name}`];
-      if (label) label.visible = search_term === "";
+      if (label)
+        label.visible =
+          current_category === 0 &&
+          current_language === 0 &&
+          search_term === "";
       category_widget.visible = visible_categories.has(category_name);
     });
+    results_empty.set_visible(!results_found);
+  }
+
+  search_entry.connect("search-changed", updateList);
+  dropdown_category.connect("notify::selected", updateList);
+  dropdown_language.connect("notify::selected", updateList);
+
+  button_reset.connect("clicked", () => {
+    search_entry.text = "";
+    dropdown_category.selected = 0;
+    dropdown_language.selected = 0;
   });
+
   const action_library = new Gio.SimpleAction({
     name: "library",
     parameter_type: null,
