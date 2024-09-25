@@ -43,7 +43,27 @@ export default function Library({ application }) {
 
   const demos = getDemos();
   const widgets_map = new Map();
-  const category_map = new Map();
+  // const category_map = new Map(
+
+  // );
+
+  // if (!category_map.has(demo.category)) {
+  //   category_map.set(demo.category, objects[`library_${demo.category}`]);
+  // }
+  const categories = [
+    { id: "uncategorized", label: _("Uncategorized"), index: 1 },
+    { id: "tools", label: _("Tools"), index: 2 },
+    { id: "network", label: _("Network"), index: 3 },
+    { id: "controls", label: _("Controls"), index: 4 },
+    { id: "layout", label: _("Layout"), index: 5 },
+    { id: "feedback", label: _("Feedback"), index: 6 },
+    { id: "navigation", label: _("Navigation"), index: 7 },
+    { id: "user_interface", label: _("User Interface"), index: 8 },
+    { id: "platform", label: _("Platform APIs"), index: 9 },
+  ];
+  categories.forEach((category) => {
+    category.widget = objects[`library_${category.id}`];
+  });
 
   const language_model = new Gtk.StringList();
   language_model.append(_("Any Language"));
@@ -60,20 +80,8 @@ export default function Library({ application }) {
 
   const category_model = new Gtk.StringList();
   category_model.append(_("Any Category"));
+  categories.forEach((category) => category_model.append(category.label));
   dropdown_category.set_model(category_model);
-  const category_check = [_("Any Category")];
-  const category_labels = {
-    uncategorized: _("Uncategorized"),
-    tools: _("Tools"),
-    network: _("Network"),
-    controls: _("Controls"),
-    layout: _("Layout"),
-    feedback: _("Feedback"),
-    navigation: _("Navigation"),
-    user_interface: _("User Interface"),
-    platform: _("Platform APIs"),
-  };
-  Object.values(category_labels).forEach((str) => category_model.append(str));
 
   demos.forEach((demo) => {
     demo.languages.forEach((lang) => {
@@ -81,10 +89,6 @@ export default function Library({ application }) {
         language_check.push(lang);
       }
     });
-
-    if (!category_check.includes(demo.category)) {
-      category_check.push(demo.category);
-    }
 
     const entry_row = new EntryRow({ demo: demo });
     if (demo.name === "Welcome") last_triggered = entry_row;
@@ -98,13 +102,13 @@ export default function Library({ application }) {
         language,
       }).catch(console.error);
     });
-    if (!category_map.has(demo.category)) {
-      category_map.set(demo.category, objects[`library_${demo.category}`]);
-    }
-    objects[`library_${demo.category}`].append(entry_row);
+    const category = categories.find(
+      (category) => category.id === demo.category,
+    );
+    category.widget.append(entry_row);
     widgets_map.set(demo.name, {
       entry_row,
-      category_index: category_check.indexOf(demo.category),
+      category_index: category.index,
       languages_index: demo.languages.map((lang) =>
         language_check.indexOf(lang),
       ),
@@ -132,19 +136,21 @@ export default function Library({ application }) {
         entry_row.visible = is_match;
         if (is_match) {
           results_found = true;
-          visible_categories.add(category_check[category_index]);
+          visible_categories.add(
+            categories.find((cat) => cat.index === category_index).id,
+          );
         }
       },
     );
 
-    category_map.forEach((category_widget, category_name) => {
-      const label = objects[`label_${category_name}`];
+    categories.forEach((category) => {
+      const label = objects[`label_${category.id}`];
       if (label)
         label.visible =
           current_category === 0 &&
           current_language === 0 &&
           search_term === "";
-      category_widget.visible = visible_categories.has(category_name);
+      category.widget.visible = visible_categories.has(category.id);
     });
     results_empty.set_visible(!results_found);
   }

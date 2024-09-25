@@ -108,20 +108,20 @@ if (!exists(`${path}/_build`)) {
     "_build",
     "-Dprofile=development",
   ]);
-} else {
-  await buildCommand(["meson", "install", "-C", "_build"]);
-  // await buildCommand([
-  //   `troll/gjspack/bin/gjspack`,
-  //   `--appid=${flatpak_id}`,
-  //   "--prefix=/re/sonny/Workbench",
-  //   `--project-root=.`,
-  //   `--resource-root=./src`,
-  //   "--blueprint-compiler=/app/bin/blueprint-compiler",
-  //   "--no-executable",
-  //   `${path}/src/main.js`,
-  //   `/app/share/${flatpak_id}.src.gresource`,
-  // ]);
 }
+
+await buildCommand(["meson", "install", "-C", "_build"]);
+// await buildCommand([
+//   `troll/gjspack/bin/gjspack`,
+//   `--appid=${flatpak_id}`,
+//   "--prefix=/re/sonny/Workbench",
+//   `--project-root=.`,
+//   `--resource-root=./src`,
+//   "--blueprint-compiler=/app/bin/blueprint-compiler",
+//   "--no-executable",
+//   `${path}/src/main.js`,
+//   `/app/share/${flatpak_id}.src.gresource`,
+// ]);
 
 // starts workbench
 await runCommand([manifest.command]);
@@ -211,7 +211,7 @@ async function run(_) {
   return exec(_, { verbose: argv.verbose });
 }
 
-async function exec(argv, { cancellable = null, verbose = false }) {
+async function exec(argv, { cancellable = null /*, verbose = false*/ }) {
   argv = argv.map((arg) => {
     return arg.toString();
   });
@@ -220,9 +220,12 @@ async function exec(argv, { cancellable = null, verbose = false }) {
 
   let cancelId = 0;
 
-  const flags = verbose
-    ? Gio.SubprocessFlags.NONE
-    : Gio.SubprocessFlags.STDOUT_SILENCE;
+  // meson uses stdout for logs
+  // const flags = verbose
+  //   ? Gio.SubprocessFlags.NONE
+  //   : Gio.SubprocessFlags.STDOUT_SILENCE;
+
+  const flags = Gio.SubprocessFlags.NONE;
 
   const proc = new Gio.Subprocess({
     argv,
