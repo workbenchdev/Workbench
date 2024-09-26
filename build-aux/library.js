@@ -95,6 +95,14 @@ const demos = [];
     demos.push(demo);
   }
 
+  demos.sort((a, b) => {
+    if (a.name === "Welcome") return -1;
+    if (b.name === "Welcome") return 1;
+    if (a.name === "Platform Tools") return -1;
+    if (b.name === "Platform Tools") return 1;
+    else return a.name.localeCompare(b.name);
+  });
+
   await Gio.File.new_for_path(pkgdatadir)
     .get_child("demos/index.json")
     .replace_contents_async(

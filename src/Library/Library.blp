@@ -16,7 +16,7 @@ Adw.Window window {
       };
     }
 
-    content: ScrolledWindow {
+    content: ScrolledWindow scrolled_window {
       hscrollbar-policy: never;
 
       child: Adw.Clamp {
@@ -63,159 +63,17 @@ Adw.Window window {
 
               DropDown dropdown_language {
                 valign: end;
+                model: Gtk.StringList {};
               }
 
               DropDown dropdown_category {
                 valign: end;
+                model: Gtk.StringList {};
               }
             }
           }
 
-          ListBox library_uncategorized {
-            selection-mode: none;
-
-            styles [
-              "boxed-list"
-            ]
-          }
-
-          Label label_tools {
-            label: _("Tools");
-            halign: start;
-            margin-top: 12;
-
-            styles [
-              "title-4"
-            ]
-          }
-
-          ListBox library_tools {
-            selection-mode: none;
-
-            styles [
-              "boxed-list"
-            ]
-          }
-
-          Label label_network {
-            label: _("Network");
-            halign: start;
-            margin-top: 12;
-
-            styles [
-              "title-4"
-            ]
-          }
-
-          ListBox library_network {
-            selection-mode: none;
-
-            styles [
-              "boxed-list"
-            ]
-          }
-
-          Label label_controls {
-            label: _("Controls");
-            halign: start;
-            margin-top: 12;
-
-            styles [
-              "title-4"
-            ]
-          }
-
-          ListBox library_controls {
-            selection-mode: none;
-
-            styles [
-              "boxed-list"
-            ]
-          }
-
-          Label label_layout {
-            label: _("Layout");
-            halign: start;
-            margin-top: 12;
-
-            styles [
-              "title-4"
-            ]
-          }
-
-          ListBox library_layout {
-            selection-mode: none;
-
-            styles [
-              "boxed-list"
-            ]
-          }
-
-          Label label_feedback {
-            label: _("Feedback");
-            halign: start;
-            margin-top: 12;
-
-            styles [
-              "title-4"
-            ]
-          }
-
-          ListBox library_feedback {
-            selection-mode: none;
-
-            styles [
-              "boxed-list"
-            ]
-          }
-
-          Label label_navigation {
-            label: _("Navigation");
-            halign: start;
-            margin-top: 12;
-
-            styles [
-              "title-4"
-            ]
-          }
-
-          ListBox library_navigation {
-            selection-mode: none;
-
-            styles [
-              "boxed-list"
-            ]
-          }
-
-          Label label_user_interface {
-            label: _("User Interface");
-            halign: start;
-            margin-top: 12;
-
-            styles [
-              "title-4"
-            ]
-          }
-
-          ListBox library_user_interface {
-            selection-mode: none;
-
-            styles [
-              "boxed-list"
-            ]
-          }
-
-          Label label_platform {
-            label: _("Platform APIs");
-            halign: start;
-            margin-top: 12;
-
-            styles [
-              "title-4"
-            ]
-          }
-
-          ListBox library_platform {
+          ListBox listbox {
             selection-mode: none;
 
             styles [
@@ -240,13 +98,14 @@ Adw.Window window {
                 label: _("No results");
 
                 styles [
-                  "title-4"
+                  "title-3"
                 ]
               }
 
               Button button_reset {
                 label: _("Reset filters");
                 halign: center;
+                styles ["pill"]
               }
             }
 

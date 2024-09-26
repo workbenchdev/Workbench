@@ -1,5 +1,4 @@
 import Gio from "gi://Gio";
-import Gtk from "gi://Gtk";
 
 import {
   decode,
@@ -29,6 +28,8 @@ export default function Library({ application }) {
     dropdown_language,
     results_empty,
     button_reset,
+    listbox,
+    scrolled_window,
   } = objects;
   window.application = application;
   picture_illustration.set_resource(illustration);
@@ -41,56 +42,50 @@ export default function Library({ application }) {
 
   window.connect("close-request", quitOnLastWindowClose);
 
-  const demos = getDemos();
-  const widgets_map = new Map();
-  // const category_map = new Map(
-
-  // );
-
-  // if (!category_map.has(demo.category)) {
-  //   category_map.set(demo.category, objects[`library_${demo.category}`]);
-  // }
   const categories = [
-    { id: "uncategorized", label: _("Uncategorized"), index: 1 },
-    { id: "tools", label: _("Tools"), index: 2 },
-    { id: "network", label: _("Network"), index: 3 },
-    { id: "controls", label: _("Controls"), index: 4 },
-    { id: "layout", label: _("Layout"), index: 5 },
-    { id: "feedback", label: _("Feedback"), index: 6 },
-    { id: "navigation", label: _("Navigation"), index: 7 },
-    { id: "user_interface", label: _("User Interface"), index: 8 },
-    { id: "platform", label: _("Platform APIs"), index: 9 },
+    { id: "all", name: _("Any Category"), index: 0 },
+    { id: "tools", name: _("Tools"), index: 1 },
+    { id: "network", name: _("Network"), index: 2 },
+    { id: "controls", name: _("Controls"), index: 3 },
+    { id: "layout", name: _("Layout"), index: 4 },
+    { id: "feedback", name: _("Feedback"), index: 5 },
+    { id: "navigation", name: _("Navigation"), index: 6 },
+    { id: "user_interface", name: _("User Interface"), index: 7 },
+    { id: "platform", name: _("Platform APIs"), index: 8 },
   ];
+  const categories_by_id = Object.fromEntries(
+    categories.map((category) => [category.id, category]),
+  );
+  const categories_by_index = Object.fromEntries(
+    categories.map((category) => [category.index, category]),
+  );
+  const category_all = categories_by_id["all"];
+
   categories.forEach((category) => {
-    category.widget = objects[`library_${category.id}`];
+    dropdown_category.model.append(category.name);
   });
 
-  const language_model = new Gtk.StringList();
-  language_model.append(_("Any Language"));
-  dropdown_language.set_model(language_model);
-  const language_check = [_("Any Language")];
-  const language_labels = {
-    javascript: _("JavaScript"),
-    python: _("Python"),
-    rust: _("Rust"),
-    vala: _("Vala"),
-    typescript: _("TypeScript"),
-  };
-  Object.values(language_labels).forEach((str) => language_model.append(str));
+  const languages = [
+    { id: "all", name: _("Any Language"), index: 0 },
+    { id: "javascript", name: _("JavaScript"), index: 1 },
+    { id: "python", name: _("Python"), index: 2 },
+    { id: "rust", name: _("Rust"), index: 3 },
+    { id: "vala", name: _("Vala"), index: 4 },
+    { id: "typescript", name: _("TypeScript"), index: 5 },
+  ];
+  const languages_by_id = Object.fromEntries(
+    languages.map((language) => [language.id, language]),
+  );
+  const languages_by_index = Object.fromEntries(
+    languages.map((language) => [language.index, language]),
+  );
+  languages.forEach((language) => {
+    dropdown_language.model.append(language.name);
+  });
 
-  const category_model = new Gtk.StringList();
-  category_model.append(_("Any Category"));
-  categories.forEach((category) => category_model.append(category.label));
-  dropdown_category.set_model(category_model);
-
-  demos.forEach((demo) => {
-    demo.languages.forEach((lang) => {
-      if (!language_check.includes(lang)) {
-        language_check.push(lang);
-      }
-    });
-
-    const entry_row = new EntryRow({ demo: demo });
+  const demos = getDemos();
+  const entries = demos.map((demo) => {
+    const entry_row = new EntryRow({ demo });
     if (demo.name === "Welcome") last_triggered = entry_row;
 
     entry_row.connect("triggered", (_self, language) => {
@@ -102,68 +97,58 @@ export default function Library({ application }) {
         language,
       }).catch(console.error);
     });
-    const category = categories.find(
-      (category) => category.id === demo.category,
-    );
-    category.widget.append(entry_row);
-    widgets_map.set(demo.name, {
-      entry_row,
-      category_index: category.index,
-      languages_index: demo.languages.map((lang) =>
-        language_check.indexOf(lang),
-      ),
-    });
+    listbox.append(entry_row);
+
+    const category = categories_by_id[demo.category];
+    const widget = entry_row;
+    const languages = demo.languages.map((lang) => languages_by_id[lang]);
+
+    return { ...demo, category, widget, languages };
   });
 
+  const language_all = languages_by_id["all"];
+
   function updateList() {
-    const current_category = dropdown_category.get_selected();
-    const current_language = dropdown_language.get_selected();
+    const current_category =
+      categories_by_index[dropdown_category.get_selected()];
+    const current_language =
+      languages_by_index[dropdown_language.get_selected()];
 
     const search_term = search_entry.get_text().toLowerCase();
-    const visible_categories = new Set();
     let results_found = false;
-    widgets_map.forEach(
-      ({ entry_row, category_index, languages_index }, demo_name) => {
-        const category_match =
-          current_category === 0 || category_index === current_category;
-        const language_match =
-          current_language === 0 || languages_index.includes(current_language);
-        const search_match = demo_name.toLowerCase().includes(search_term);
-        const is_match =
-          category_match &&
-          language_match &&
-          (search_term === "" || search_match);
-        entry_row.visible = is_match;
-        if (is_match) {
-          results_found = true;
-          visible_categories.add(
-            categories.find((cat) => cat.index === category_index).id,
-          );
-        }
-      },
-    );
-
-    categories.forEach((category) => {
-      const label = objects[`label_${category.id}`];
-      if (label)
-        label.visible =
-          current_category === 0 &&
-          current_language === 0 &&
-          search_term === "";
-      category.widget.visible = visible_categories.has(category.id);
+    entries.forEach(({ name, description, category, languages, widget }) => {
+      const category_match =
+        current_category === category_all || category === current_category;
+      const language_match =
+        current_language === language_all ||
+        languages.includes(current_language);
+      const search_match =
+        search_term === "" ||
+        name.toLowerCase().includes(search_term) ||
+        description.toLowerCase().includes(search_term) ||
+        category.name.toLowerCase().includes(search_term);
+      const is_match = category_match && language_match && search_match;
+      widget.visible = is_match;
+      if (is_match) {
+        results_found = true;
+      }
     });
-    results_empty.set_visible(!results_found);
+
+    results_empty.visible = !results_found;
   }
 
   search_entry.connect("search-changed", updateList);
   dropdown_category.connect("notify::selected", updateList);
   dropdown_language.connect("notify::selected", updateList);
 
-  button_reset.connect("clicked", () => {
+  function reset() {
+    scrolled_window.vadjustment = null;
     search_entry.text = "";
-    dropdown_category.selected = 0;
-    dropdown_language.selected = 0;
-  });
+    dropdown_category.selected = category_all.index;
+    dropdown_language.selected = language_all.index;
+  }
+  button_reset.connect("clicked", reset);
+  window.connect("show", reset);
 
   const action_library = new Gio.SimpleAction({
     name: "library",
