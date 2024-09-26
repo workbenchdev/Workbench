@@ -168,9 +168,9 @@ async function runCommand(argv) {
       // Non default permissions
       // see Permissions.js
       // consider getting installed overrides instead
-      // "--share=network",
-      // "--socket=pulseaudio",
-      // "--device=input",
+      "--share=network",
+      "--socket=pulseaudio",
+      "--device=input",
 
       "--talk-name=org.freedesktop.portal.*",
       "--talk-name=org.a11y.Bus",
