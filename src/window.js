@@ -33,6 +33,7 @@ import {
   isTypeScriptEnabled,
   isValaEnabled,
 } from "./Extensions/Extensions.js";
+import { Permissions } from "./Permissions/Permissions.js";
 import { JavaScriptDocument } from "./langs/javascript/JavaScriptDocument.js";
 import { BlueprintDocument } from "./langs/blueprint/BlueprintDocument.js";
 import { CssDocument } from "./langs/css/CssDocument.js";
@@ -67,6 +68,7 @@ export default function Window({ application, session }) {
   Extensions({
     window,
   });
+  Permissions({ window });
 
   // Popover menu theme switcher
   const button_menu = builder.get_object("button_menu");

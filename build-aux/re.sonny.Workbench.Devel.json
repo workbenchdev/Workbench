@@ -20,9 +20,7 @@
     "--share=ipc",
     "--socket=fallback-x11",
     "--socket=wayland",
-    "--device=dri",
-    "--share=network",
-    "--socket=pulseaudio"
+    "--device=dri"
   ],
   "cleanup": [
     "#/include",

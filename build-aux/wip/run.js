@@ -164,6 +164,14 @@ async function runCommand(argv) {
       "--allow=devel",
       `--bind-mount=/run/user/1000/doc=/run/user/1000/doc/by-app/${flatpak_id}`,
       ...manifest["finish-args"],
+
+      // Non default permissions
+      // see Permissions.js
+      // consider getting installed overrides instead
+      // "--share=network",
+      // "--socket=pulseaudio",
+      // "--device=input",
+
       "--talk-name=org.freedesktop.portal.*",
       "--talk-name=org.a11y.Bus",
       "--bind-mount=/run/flatpak/at-spi-bus=/run/user/1000/at-spi/bus",
