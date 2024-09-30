@@ -65,11 +65,6 @@ if (!exists(`${path}/.flatpak/repo`)) {
   ]);
 }
 
-if (!exists(`${path}/.flatpak/flatpak-builder`)) {
-  await downloadSources();
-  await buildModules();
-}
-
 const prefix = [
   "flatpak-builder",
   "--ccache",
@@ -97,6 +92,11 @@ async function buildModules() {
     "--keep-build-dirs",
     ...suffix,
   ]);
+}
+
+if (!exists(`${path}/.flatpak/flatpak-builder`)) {
+  await downloadSources();
+  await buildModules();
 }
 
 // builds workbench

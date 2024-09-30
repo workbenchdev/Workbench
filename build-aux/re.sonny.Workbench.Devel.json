@@ -43,6 +43,7 @@
     "modules/libshumate.json",
     "modules/libportal.json",
     "modules/libspelling.json",
+    "modules/gom.json",
     "modules/GTKCssLanguageServer.json",
     "modules/python-python-lsp-server.json",
     "modules/python-ruff.json",
