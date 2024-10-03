@@ -21,6 +21,7 @@ import {
   needsAdditionalPermissions,
   showPermissionsDialog,
 } from "../Permissions/Permissions.js";
+import { isTypeScriptEnabled } from "../Extensions/Extensions.js";
 
 export default function Library({ application }) {
   const objects = build(resource);
@@ -75,8 +76,10 @@ export default function Library({ application }) {
     { id: "python", name: _("Python"), index: 2 },
     { id: "rust", name: _("Rust"), index: 3 },
     { id: "vala", name: _("Vala"), index: 4 },
-    { id: "typescript", name: _("TypeScript"), index: 5 },
   ];
+  if (isTypeScriptEnabled()) {
+    languages.push({ id: "typescript", name: _("TypeScript"), index: 5 });
+  }
   const languages_by_id = Object.fromEntries(
     languages.map((language) => [language.id, language]),
   );
