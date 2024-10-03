@@ -18,6 +18,9 @@
     <key name="first-run" type="b">
       <default>true</default>
     </key>
+    <key name="typescript" type="b">
+      <default>false</default>
+    </key>
   </schema>
   <schema id="@app_id@.Session" path="/re/sonny/Workbench/">
     <key name="show-code" type="b">

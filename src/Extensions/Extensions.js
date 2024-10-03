@@ -6,7 +6,7 @@ import Interface from "./Extensions.blp" with { type: "uri" };
 import illustration from "./extensions.svg";
 
 import "./Extension.js";
-import { getFlatpakInfo } from "../util.js";
+import { getFlatpakInfo, settings } from "../util.js";
 
 export const action_extensions = new Gio.SimpleAction({
   name: "extensions",
@@ -84,5 +84,5 @@ const runtime = getFlatpakInfo().get_string("Application", "runtime");
 const freedesktop_version = runtime.endsWith("master") ? "24.08" : "24.08";
 
 export function isTypeScriptEnabled() {
-  return false;
+  return settings.get_boolean("typescript");
 }
