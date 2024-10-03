@@ -63,11 +63,13 @@ Adw.Window window {
 
               DropDown dropdown_language {
                 valign: end;
+
                 model: Gtk.StringList {};
               }
 
               DropDown dropdown_category {
                 valign: end;
+
                 model: Gtk.StringList {};
               }
             }
@@ -105,7 +107,10 @@ Adw.Window window {
               Button button_reset {
                 label: _("Reset filters");
                 halign: center;
-                styles ["pill"]
+
+                styles [
+                  "pill"
+                ]
               }
             }
 

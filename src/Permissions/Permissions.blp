@@ -1,0 +1,155 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.Dialog dialog {
+  content-height: 750;
+  content-width: 600;
+
+  Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar {}
+
+    content: ScrolledWindow {
+      hscrollbar-policy: never;
+
+      Adw.Clamp {
+        maximum-size: 520;
+        tightening-threshold: 400;
+        margin-start: 12;
+        margin-end: 12;
+        margin-bottom: 24;
+
+        Box {
+          orientation: vertical;
+          halign: fill;
+          spacing: 24;
+          // Gtk.Picture needs to be wrapped in a box to behave properly
+          Box {
+            halign: center;
+
+            Picture picture_illustration {
+              can-shrink: false;
+              margin-bottom: 24;
+            }
+          }
+
+          Label {
+            label: _("Permissions Needed");
+
+            styles [
+              "title-1"
+            ]
+          }
+
+          Label {
+            label: _("Workbench needs additional permissions. Please run the following command in a terminal and restart the app.");
+            wrap: true;
+            justify: center;
+          }
+
+          Label label_command {
+            use-markup: true;
+            wrap: true;
+            wrap-mode: word_char;
+            selectable: true;
+            xalign: 0;
+
+            styles [
+              "command_snippet"
+            ]
+          }
+
+          Box {
+            orientation: vertical;
+
+            Box {
+              margin-bottom: 6;
+
+              Label {
+                label: _("What it does");
+                halign: start;
+                hexpand: true;
+
+                styles [
+                  "heading"
+                ]
+              }
+
+              Button button_info {
+                icon-name: "re.sonny.Workbench-external-link-symbolic";
+
+                styles [
+                  "flat"
+                ]
+              }
+            }
+
+            ListBox {
+              selection-mode: none;
+
+              styles [
+                "boxed-list"
+              ]
+
+              Adw.ActionRow {
+                [prefix]
+                Image {
+                  icon-name: "re.sonny.Workbench-person-symbolic";
+                }
+
+                title: _("--user");
+                subtitle: _("Grant for your account only");
+
+                styles [
+                  "property"
+                ]
+              }
+
+              Adw.ActionRow {
+                [prefix]
+                Image {
+                  icon-name: "re.sonny.Workbench-network-wireless-symbolic";
+                }
+
+                title: _("--share-network");
+                subtitle: _("Network access");
+
+                styles [
+                  "property"
+                ]
+              }
+
+              Adw.ActionRow {
+                [prefix]
+                Image {
+                  icon-name: "re.sonny.Workbench-speakers-symbolic";
+                }
+
+                title: _("--socket=pulseaudio");
+                subtitle: _("Record and play audio");
+
+                styles [
+                  "property"
+                ]
+              }
+
+              Adw.ActionRow {
+                [prefix]
+                Image {
+                  icon-name: "re.sonny.Workbench-gamepad-symbolic";
+                }
+
+                title: _("--device=input");
+                subtitle: _("Access to input device such as gamepads");
+
+                styles [
+                  "property"
+                ]
+              }
+            }
+          }
+        }
+      }
+    };
+  }
+}

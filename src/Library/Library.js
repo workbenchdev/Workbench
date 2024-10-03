@@ -17,6 +17,10 @@ import illustration from "./library.svg";
 import { gettext as _ } from "gettext";
 
 import { build } from "../../troll/src/builder.js";
+import {
+  needsAdditionalPermissions,
+  showPermissionsDialog,
+} from "../Permissions/Permissions.js";
 
 export default function Library({ application }) {
   const objects = build(resource);
@@ -204,8 +208,16 @@ async function openDemo({ application, demo_name, language }) {
     );
   }
 
-  const { load, runCode } = Window({ application, session });
+  const { load, runCode, window } = Window({
+    application,
+    session,
+  });
   await load();
+
+  if (needsAdditionalPermissions({ demo })) {
+    showPermissionsDialog({ window });
+    return;
+  }
 
   const code_language = session.getCodeLanguage();
   const run = autorun && code_language.id === "javascript";
