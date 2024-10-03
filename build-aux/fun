@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
 
 # fun stands for Flatpak Run
-flatpak-builder --run $(dirname $0)/../flatpak $(dirname $0)/re.sonny.Workbench.Devel.json "$@"
+flatpak-builder --env=GTK_DEBUG=iconfallback --run $(dirname $0)/../flatpak $(dirname $0)/re.sonny.Workbench.Devel.json "$@"
 # flatpak-builder --env=G_MESSAGES_DEBUG=workbench-cli --run flatpak build-aux/re.sonny.Workbench.Devel.json "$@"
