@@ -64,6 +64,36 @@ export default function PanelUI({
     code_view_xml.replaceText(xml);
   }
 
+  const showXML = new Gio.SimpleAction({
+    name: "showXML",
+    parameter_type: null,
+  });
+  const showBluePrint = new Gio.SimpleAction({
+    name: "showBlueprint",
+    parameter_type: null,
+  });
+
+  showXML.connect("activate", () => {
+    onChangeLang(lang_xml);
+    dropdown_selected_signal.block();
+    dropdown_ui_lang.set_selected(ui_languages.indexOf(lang_xml));
+    dropdown_selected_signal.unblock();
+  });
+
+  showBluePrint.connect("activate", () => {
+    onChangeLang(lang_blueprint);
+
+    dropdown_selected_signal.block();
+    dropdown_ui_lang.set_selected(ui_languages.indexOf(lang_blueprint));
+    dropdown_selected_signal.unblock();
+  });
+
+  application.add_action(showXML);
+  application.add_action(showBluePrint);
+
+  application.set_accels_for_action("app.showXML", ["<Control><Shift>X"]);
+  application.set_accels_for_action("app.showBlueprint", ["<Control><Shift>B"]);
+
   async function convertToBlueprint() {
     term_console.clear();
     settings.set_boolean("show-console", true);
