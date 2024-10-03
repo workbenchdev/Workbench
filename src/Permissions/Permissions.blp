@@ -63,7 +63,7 @@ Adw.Dialog dialog {
               margin-bottom: 6;
 
               Label {
-                label: _("What does it do");
+                label: _("What it does");
                 halign: start;
                 styles ["heading"]
                 hexpand: true;
@@ -77,6 +77,7 @@ Adw.Dialog dialog {
 
             ListBox {
               selection-mode: none;
+              styles ["boxed-list"]
 
               Adw.ActionRow {
                 [prefix]
