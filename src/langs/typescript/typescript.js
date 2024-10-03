@@ -2,10 +2,10 @@ import Gio from "gi://Gio";
 
 import { createLSPClient } from "../../common.js";
 import { getLanguage, copy } from "../../util.js";
-import { isTypeScriptEnabled } from "../../Extensions/Extensions.js";
+import { isTypeScriptAvailable } from "../../Extensions/Extensions.js";
 
 export function setup({ document }) {
-  if (!isTypeScriptEnabled()) return;
+  if (!isTypeScriptAvailable()) return;
 
   const { file, buffer, code_view } = document;
 

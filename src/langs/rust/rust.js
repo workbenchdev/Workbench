@@ -2,10 +2,10 @@ import Gio from "gi://Gio";
 
 import { createLSPClient } from "../../common.js";
 import { getLanguage, copy } from "../../util.js";
-import { isRustEnabled } from "../../Extensions/Extensions.js";
+import { isRustAvailable } from "../../Extensions/Extensions.js";
 
 export function setup({ document }) {
-  if (!isRustEnabled()) return;
+  if (!isRustAvailable()) return;
 
   const { file, buffer, code_view } = document;
 

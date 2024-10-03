@@ -1,11 +1,11 @@
 import Gio from "gi://Gio";
 
-import { isValaEnabled } from "../../Extensions/Extensions.js";
+import { isValaAvailable } from "../../Extensions/Extensions.js";
 import { createLSPClient } from "../../common.js";
 import { getLanguage } from "../../util.js";
 
 export function setup({ document }) {
-  if (!isValaEnabled()) return;
+  if (!isValaAvailable()) return;
 
   const { file, buffer, code_view } = document;
 

@@ -29,9 +29,9 @@ import {
 import {
   action_extensions,
   Extensions,
-  isRustEnabled,
-  isTypeScriptEnabled,
-  isValaEnabled,
+  isRustAvailable,
+  isTypeScriptAvailable,
+  isValaAvailable,
 } from "./Extensions/Extensions.js";
 import { JavaScriptDocument } from "./langs/javascript/JavaScriptDocument.js";
 import { BlueprintDocument } from "./langs/blueprint/BlueprintDocument.js";
@@ -245,13 +245,13 @@ export default function Window({ application, session }) {
 
   async function runCode() {
     const { language } = panel_code;
-    if (language === "Vala" && !isValaEnabled()) {
+    if (language === "Vala" && !isValaAvailable()) {
       action_extensions.activate(null);
       return;
-    } else if (language === "Rust" && !isRustEnabled()) {
+    } else if (language === "Rust" && !isRustAvailable()) {
       action_extensions.activate(null);
       return;
-    } else if (language === "TypeScript" && !isTypeScriptEnabled()) {
+    } else if (language === "TypeScript" && !isTypeScriptAvailable()) {
       action_extensions.activate(null);
       return;
     }

@@ -4,11 +4,10 @@ env:
 parser: "@babel/eslint-parser"
 parserOptions:
   sourceType: module
-  ecmaVersion: 2023
   requireConfigFile: false
   babelOptions:
     plugins:
-      - "@babel/plugin-syntax-import-assertions"
+      - "@babel/plugin-syntax-import-attributes"
 extends:
   - eslint:recommended
   - plugin:import/errors
