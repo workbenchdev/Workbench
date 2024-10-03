@@ -1,0 +1,4 @@
+[re.sonny.Commit]
+title-length-hint=72
+body-length-wrap=50
+auto-capitalize-title=true

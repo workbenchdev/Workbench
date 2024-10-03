@@ -9,7 +9,7 @@ export default GObject.registerClass(
     Template,
     InternalChildren: [
       "label_title",
-      "image_enabled",
+      "image_available",
       "installation_guide",
       "label_command",
     ],
@@ -21,8 +21,8 @@ export default GObject.registerClass(
         GObject.ParamFlags.READWRITE,
         "",
       ),
-      enabled: GObject.ParamSpec.boolean(
-        "enabled",
+      available: GObject.ParamSpec.boolean(
+        "available",
         "",
         "",
         GObject.ParamFlags.READWRITE,
@@ -49,14 +49,14 @@ export default GObject.registerClass(
       );
 
       this.bind_property(
-        "enabled",
-        this._image_enabled,
+        "available",
+        this._image_available,
         "visible",
         GObject.BindingFlags.SYNC_CREATE,
       );
 
       this.bind_property(
-        "enabled",
+        "available",
         this._installation_guide,
         "visible",
         GObject.BindingFlags.SYNC_CREATE | GObject.BindingFlags.INVERT_BOOLEAN,

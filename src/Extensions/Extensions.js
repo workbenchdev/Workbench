@@ -26,13 +26,13 @@ export function Extensions({ window }) {
 
   picture_illustration.set_resource(illustration);
 
-  extension_rust.enabled = isRustEnabled();
+  extension_rust.available = isRustAvailable();
   extension_rust.command = `flatpak install flathub org.freedesktop.Sdk.Extension.rust-stable//${freedesktop_version} org.freedesktop.Sdk.Extension.${llvm}//${freedesktop_version}`;
 
-  extension_vala.enabled = isValaEnabled();
+  extension_vala.available = isValaAvailable();
   extension_vala.command = `flatpak install flathub org.freedesktop.Sdk.Extension.vala//${freedesktop_version}`;
 
-  extension_typescript.enabled = isTypeScriptEnabled();
+  extension_typescript.available = isTypeScriptAvailable();
   extension_typescript.command = `flatpak install flathub org.freedesktop.Sdk.Extension.${node}//${freedesktop_version} org.freedesktop.Sdk.Extension.typescript//${freedesktop_version}`;
 
   for (const extension of [
@@ -40,7 +40,7 @@ export function Extensions({ window }) {
     extension_vala,
     extension_typescript,
   ]) {
-    if (!extension.enabled) {
+    if (!extension.available) {
       all_set_hint.set_visible(false);
       restart_hint.set_visible(true);
     }
@@ -53,27 +53,27 @@ export function Extensions({ window }) {
   window.add_action(action_extensions);
 }
 
-let rust_enabled = null;
-export function isRustEnabled() {
-  rust_enabled ??=
+let rust_available = null;
+export function isRustAvailable() {
+  rust_available ??=
     Gio.File.new_for_path("/usr/lib/sdk/rust-stable").query_exists(null) &&
     Gio.File.new_for_path(`/usr/lib/sdk/${llvm}`).query_exists(null);
-  return rust_enabled;
+  return rust_available;
 }
 
-let vala_enabled = null;
-export function isValaEnabled() {
-  vala_enabled ??=
+let vala_available = null;
+export function isValaAvailable() {
+  vala_available ??=
     Gio.File.new_for_path("/usr/lib/sdk/vala").query_exists(null);
-  return vala_enabled;
+  return vala_available;
 }
 
-let typescript_enabled = null;
-export function isTypeScriptEnabled() {
-  typescript_enabled ??=
+let typescript_available = null;
+export function isTypeScriptAvailable() {
+  typescript_available ??=
     Gio.File.new_for_path("/usr/lib/sdk/typescript").query_exists(null) &&
     Gio.File.new_for_path(`/usr/lib/sdk/${node}`).query_exists(null);
-  return typescript_enabled;
+  return typescript_available;
 }
 
 const llvm = "llvm18";
