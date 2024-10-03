@@ -35,7 +35,10 @@ Adw.Dialog dialog {
 
           Label {
             label: _("Permissions Needed");
-            styles ["title-1"]
+
+            styles [
+              "title-1"
+            ]
           }
 
           Label {
@@ -65,19 +68,28 @@ Adw.Dialog dialog {
               Label {
                 label: _("What it does");
                 halign: start;
-                styles ["heading"]
                 hexpand: true;
+
+                styles [
+                  "heading"
+                ]
               }
 
               Button button_info {
-                styles ["flat"]
                 icon-name: "re.sonny.Workbench-external-link-symbolic";
+
+                styles [
+                  "flat"
+                ]
               }
             }
 
             ListBox {
               selection-mode: none;
-              styles ["boxed-list"]
+
+              styles [
+                "boxed-list"
+              ]
 
               Adw.ActionRow {
                 [prefix]
@@ -88,7 +100,9 @@ Adw.Dialog dialog {
                 title: _("--user");
                 subtitle: _("Grant for your account only");
 
-                styles ["property"]
+                styles [
+                  "property"
+                ]
               }
 
               Adw.ActionRow {
@@ -100,7 +114,9 @@ Adw.Dialog dialog {
                 title: _("--share-network");
                 subtitle: _("Network access");
 
-                styles ["property"]
+                styles [
+                  "property"
+                ]
               }
 
               Adw.ActionRow {
@@ -112,7 +128,9 @@ Adw.Dialog dialog {
                 title: _("--socket=pulseaudio");
                 subtitle: _("Record and play audio");
 
-                styles ["property"]
+                styles [
+                  "property"
+                ]
               }
 
               Adw.ActionRow {
@@ -124,7 +142,9 @@ Adw.Dialog dialog {
                 title: _("--device=input");
                 subtitle: _("Access to input device such as gamepads");
 
-                styles ["property"]
+                styles [
+                  "property"
+                ]
               }
             }
           }
