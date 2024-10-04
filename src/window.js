@@ -31,6 +31,7 @@ import {
   Extensions,
   isRustAvailable,
   isTypeScriptAvailable,
+  isTypeScriptEnabled,
   isValaAvailable,
 } from "./Extensions/Extensions.js";
 import { Permissions } from "./Permissions/Permissions.js";
@@ -69,6 +70,14 @@ export default function Window({ application, session }) {
     window,
   });
   Permissions({ window });
+
+  const dropdown_code_lang = builder.get_object("dropdown_code_lang");
+  for (const lang of ["JavaScript", "Vala", "Rust", "Python"]) {
+    dropdown_code_lang.model.append(lang);
+  }
+  if (isTypeScriptEnabled()) {
+    dropdown_code_lang.model.append("TypeScript");
+  }
 
   // Popover menu theme switcher
   const button_menu = builder.get_object("button_menu");

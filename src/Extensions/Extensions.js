@@ -6,7 +6,7 @@ import Interface from "./Extensions.blp" with { type: "uri" };
 import illustration from "./extensions.svg";
 
 import "./Extension.js";
-import { getFlatpakInfo } from "../util.js";
+import { getFlatpakInfo, settings } from "../util.js";
 
 export const action_extensions = new Gio.SimpleAction({
   name: "extensions",
@@ -34,6 +34,7 @@ export function Extensions({ window }) {
 
   extension_typescript.available = isTypeScriptAvailable();
   extension_typescript.command = `flatpak install flathub org.freedesktop.Sdk.Extension.${node}//${freedesktop_version} org.freedesktop.Sdk.Extension.typescript//${freedesktop_version}`;
+  extension_typescript.visible = isTypeScriptEnabled();
 
   for (const extension of [
     extension_rust,
@@ -71,6 +72,7 @@ export function isValaAvailable() {
 let typescript_available = null;
 export function isTypeScriptAvailable() {
   typescript_available ??=
+    isTypeScriptEnabled() &&
     Gio.File.new_for_path("/usr/lib/sdk/typescript").query_exists(null) &&
     Gio.File.new_for_path(`/usr/lib/sdk/${node}`).query_exists(null);
   return typescript_available;
@@ -80,3 +82,7 @@ const llvm = "llvm18";
 const node = "node20";
 const runtime = getFlatpakInfo().get_string("Application", "runtime");
 const freedesktop_version = runtime.endsWith("master") ? "24.08" : "24.08";
+
+export function isTypeScriptEnabled() {
+  return settings.get_boolean("typescript");
+}
