@@ -55,8 +55,11 @@
         <p>Library:</p>
         <ul>
           <li>Add "Button Row" demo</li>
+          <li>Add "List View with Sections" demo</li>
           <li>Update "Spinner" to use AdwSpinner</li>
           <li>Port "Dialog" to Python</li>
+          <li>Port "List View" to Python</li>
+          <li>Port "Grid View" to Python</li>
           <li>Port "Level Bars" to Rust</li>
           <li>Port "Text Fields" to Rust</li>
           <li>Port "Column View" to Rust</li>
