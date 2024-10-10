@@ -83,11 +83,11 @@ export default function PanelUI({
     "button_blueprint_documentation",
   );
   button_blueprint_documentation.connect("clicked", () => {
-    Gtk.show_uri(
-      null,
-      "https://jwestman.pages.gitlab.gnome.org/blueprint-compiler/",
-      null,
-    );
+    new Gtk.UriLauncher({
+      uri: "https://jwestman.pages.gitlab.gnome.org/blueprint-compiler/",
+    })
+      .launch(application.get_active_window(), null)
+      .catch(console.error);
   });
 
   let handler_id_xml = null;
