@@ -87,7 +87,15 @@ const window = new Adw.ApplicationWindow();
 
 function createLSPClients({ root_uri }) {
   return Object.fromEntries(
-    ["javascript", "blueprint", "css", "vala", "rust", "python"].map((id) => {
+    [
+      "javascript",
+      "blueprint",
+      "css",
+      "vala",
+      "rust",
+      "python",
+      "typescript",
+    ].map((id) => {
       const lang = languages.find((language) => language.id === id);
       const lspc = createLSPClient({
         lang,
@@ -338,6 +346,73 @@ async function ci({ filenames }) {
       print("  ✅ runs");
 
       await lsp_clients.javascript._notify("textDocument/didClose", {
+        textDocument: {
+          uri,
+        },
+      });
+    }
+
+    const file_typescript = demo_dir.get_child("main.ts");
+    if (file_typescript.query_exists(null)) {
+      print(`  ${file_typescript.get_path()}`);
+
+      const uri = file_typescript.get_uri();
+      const languageId = "typescript";
+      let version = 0;
+
+      const [contents] = await file_typescript.load_contents_async(null);
+      const text = new TextDecoder().decode(contents);
+
+      await lsp_clients.typescript._notify("textDocument/didOpen", {
+        textDocument: {
+          uri,
+          languageId,
+          version: version++,
+          text,
+        },
+      });
+
+      const diagnostics = await waitForDiagnostics({
+        uri,
+        lspc: lsp_clients.typescript,
+      });
+      if (diagnostics.length > 0) {
+        printerr(serializeDiagnostics({ diagnostics }));
+        return false;
+      }
+      print(`  ✅ lints`);
+
+      const checks = await checkFile({
+        lspc: lsp_clients.typescript,
+        file: file_typescript,
+        lang: getLanguage("typescript"),
+        uri,
+      });
+      if (!checks) return false;
+
+      const js_object_ids = getCodeObjectIds(text);
+      for (const object_id of js_object_ids) {
+        if (!blueprint_object_ids.includes(object_id)) {
+          print(`  ❌ Reference to inexistant object id "${object_id}"`);
+          return false;
+        }
+      }
+
+      globalThis.workbench = {
+        window,
+        application,
+        builder,
+        template,
+        resolve(path) {
+          return demo_dir.resolve_relative_path(path).get_uri();
+        },
+        preview() {},
+      };
+
+      await import(`file://${file_typescript.get_path()}`);
+      print("  ✅ runs");
+
+      await lsp_clients.typescript._notify("textDocument/didClose", {
         textDocument: {
           uri,
         },
