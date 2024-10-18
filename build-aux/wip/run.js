@@ -21,10 +21,10 @@ Gio._promisify(
 
 const path = GLib.get_current_dir();
 console.debug(programInvocationName, programArgs);
-const argv = minimist(programArgs, { boolean: true });
+const argv = minimist(programArgs, { boolean: true, "--": true });
 console.debug(argv);
 
-const [manifest_path, ...arg] = argv._;
+const [manifest_path] = argv._;
 if (!manifest_path) {
   // eslint-disable-next-line no-restricted-globals
   print(`${programInvocationName} [--verbose] [--debug] MANIFEST`);
@@ -123,7 +123,7 @@ await buildCommand(["meson", "install", "-C", "_build"]);
 // ]);
 
 // starts workbench
-const command = arg.length ? arg : [manifest.command];
+const command = argv["--"].length ? argv["--"] : [manifest.command];
 await runCommand(command);
 
 function buildCommand(argv) {

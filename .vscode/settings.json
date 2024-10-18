@@ -14,6 +14,12 @@
     "_build/**": true
   },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "rust-analyzer.server.path": "${workspaceFolder}/.flatpak/rust-analyzer.sh",
   "rust-analyzer.runnables.command": "${workspaceFolder}/.flatpak/cargo.sh",
   "rust-analyzer.files.excludeDirs": [
@@ -23,11 +29,5 @@
     "build",
     "builddir"
   ],
-  "[yaml]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
   "vala.languageServerPath": "${workspaceFolder}/.flatpak/vala-language-server.sh"
 }

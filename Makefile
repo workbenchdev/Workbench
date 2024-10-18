@@ -48,6 +48,7 @@ lint:
 
 unit:
 	./build-aux/fun gjs -m ./troll/tst/bin.js test/*.test.js
+#./build-aux/wip/run.js build-aux/re.sonny.Workbench.Devel.json -- gjs -m ./troll/tst/bin.js test/*.test.js
 
 # https://github.com/ximion/appstream/issues/398#issuecomment-1129454985
 # flatpak run org.freedesktop.appstream.cli validate --override=release-time-missing=info --no-net data/app.metainfo.xml
@@ -61,6 +62,7 @@ unit:
 
 test: unit lint
 	./build-aux/fun workbench-cli ci demos/src/Welcome
+#	./build-aux/wip/run.js build-aux/re.sonny.Workbench.Devel.json -- workbench-cli ci demos/src/Welcome/
 
 ci: setup build test
 	./build-aux/fun workbench-cli ci demos/src/*
