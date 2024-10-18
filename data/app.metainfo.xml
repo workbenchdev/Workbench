@@ -55,7 +55,10 @@
         <p>Library:</p>
         <ul>
           <li>Add "Button Row" demo</li>
+          <li>Add "Gamepad" demo</li>
           <li>Add "List View with Sections" demo</li>
+          <li>Add "List View with a Tree" demo</li>
+          <li>Add "Bottom Sheet" demo</li>
           <li>Update "Spinner" to use AdwSpinner</li>
           <li>Port "Dialog" to Python</li>
           <li>Port "List View" to Python</li>
@@ -91,6 +94,7 @@
           <li>Port "Actions" to Vala</li>
           <li>Port "Dialog" to Vala</li>
           <li>Port "CSS Gradients" to Vala</li>
+          <li>Port "Snapshot" to Vala</li>
         </ul>
         <p>Dependencies:</p>
         <ul>

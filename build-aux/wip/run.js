@@ -19,13 +19,12 @@ Gio._promisify(
   "wait_check_finish",
 );
 
-// const path = GLib.get_current_dir();
-const path = "/home/sonny/Projects/Workbench";
+const path = GLib.get_current_dir();
 console.debug(programInvocationName, programArgs);
 const argv = minimist(programArgs, { boolean: true });
 console.debug(argv);
 
-const [manifest_path] = argv._;
+const [manifest_path, ...arg] = argv._;
 if (!manifest_path) {
   // eslint-disable-next-line no-restricted-globals
   print(`${programInvocationName} [--verbose] [--debug] MANIFEST`);
@@ -124,7 +123,8 @@ await buildCommand(["meson", "install", "-C", "_build"]);
 // ]);
 
 // starts workbench
-await runCommand([manifest.command]);
+const command = arg.length ? arg : [manifest.command];
+await runCommand(command);
 
 function buildCommand(argv) {
   let PATH =
@@ -165,9 +165,9 @@ async function runCommand(argv) {
       `--bind-mount=/run/user/1000/doc=/run/user/1000/doc/by-app/${flatpak_id}`,
       ...manifest["finish-args"],
 
-      // Non default permissions
-      // see Permissions.js
-      // consider getting installed overrides instead
+      // Non default permissions, see Permissions.js
+      // consider getting installed overrides instead with
+      // flatpak override --user --show re.sonny.Workbench.Devel
       "--share=network",
       "--socket=pulseaudio",
       "--device=input",
