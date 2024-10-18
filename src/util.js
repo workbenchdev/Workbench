@@ -211,3 +211,25 @@ export async function copy(filename, source_dir, dest_dir, flags) {
 
   return dest_file;
 }
+
+const tmp_dirs = {};
+
+export async function createTmpDir(filename) {
+  if (filename in tmp_dirs) {
+    return tmp_dirs[filename];
+  }
+
+  const tmp_dir = Gio.File.new_for_path(
+    GLib.build_filenamev([GLib.get_tmp_dir(), filename]),
+  );
+
+  try {
+    tmp_dir.make_directory(null);
+    tmp_dirs[filename] = tmp_dir;
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+
+  return tmp_dir;
+}
