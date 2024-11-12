@@ -19,7 +19,7 @@
       <default>true</default>
     </key>
     <key name="typescript" type="b">
-      <default>false</default>
+      <default>true</default>
     </key>
   </schema>
   <schema id="@app_id@.Session" path="/re/sonny/Workbench/">

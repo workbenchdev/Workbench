@@ -43,14 +43,14 @@
   </screenshots>
   <content_rating type="oars-1.1" />
   <releases>
-    <release version="47.0" date="2024-xx-xx">
+    <release version="47.0" date="2024-11-12">
       <description translatable="no">
         <ul>
           <li>Use GNOME 47</li>
           <li>Add code suggestions/completions support</li>
-          <li>Add initial TypeScript support</li>
           <li>Add Language and Category filters to the Library</li>
           <li>Add option to create new blank project</li>
+          <li>Add experimental TypeScript support</li>
         </ul>
         <p>Library:</p>
         <ul>
@@ -59,6 +59,7 @@
           <li>Add "List View with Sections" demo</li>
           <li>Add "List View with a Tree" demo</li>
           <li>Add "Bottom Sheet" demo</li>
+          <li>Add "Database" demo</li>
           <li>Update "Spinner" to use AdwSpinner</li>
           <li>Port "Dialog" to Python</li>
           <li>Port "List View" to Python</li>
