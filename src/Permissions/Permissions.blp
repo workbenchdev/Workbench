@@ -42,7 +42,7 @@ Adw.Dialog dialog {
           }
 
           Label {
-            label: _("Workbench needs additional permissions. Please run the following command in a terminal and restart the app.");
+            label: _("Workbench needs additional permissions. Please run the following command in a terminal and restart Workbench.");
             wrap: true;
             justify: center;
           }
@@ -133,13 +133,13 @@ Adw.Dialog dialog {
                 ]
               }
 
-              Adw.ActionRow {
+              Adw.ActionRow action_row_device {
                 [prefix]
                 Image {
                   icon-name: "re.sonny.Workbench-gamepad-symbolic";
                 }
 
-                title: _("--device=input");
+                // title: _("--device=input");
                 subtitle: _("Access to input device such as gamepads");
 
                 styles [

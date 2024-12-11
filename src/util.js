@@ -3,6 +3,7 @@ import Gio from "gi://Gio";
 import Xdp from "gi://Xdp";
 import GObject from "gi://GObject";
 import { getLanguage } from "./common.js";
+import { getFlatpakId } from "./flatpak.js";
 
 export const portal = new Xdp.Portal();
 
@@ -23,21 +24,6 @@ export function ensureDir(file) {
       throw err;
     }
   }
-}
-
-let flatpak_info;
-export function getFlatpakInfo() {
-  if (flatpak_info) return flatpak_info;
-  flatpak_info = new GLib.KeyFile();
-  try {
-    flatpak_info.load_from_file("/.flatpak-info", GLib.KeyFileFlags.NONE);
-  } catch (err) {
-    if (!err.matches(GLib.FileError, GLib.FileError.NOENT)) {
-      console.error(err);
-    }
-    return null;
-  }
-  return flatpak_info;
 }
 
 export { getLanguage };
@@ -158,8 +144,8 @@ export function makeDropdownFlat(dropdown) {
 
 export function buildRuntimePath(...args) {
   return GLib.build_filenamev([
-    GLib.getenv("XDG_RUNTIME_DIR"),
-    GLib.getenv("FLATPAK_ID"),
+    GLib.get_user_runtime_dir(),
+    getFlatpakId(),
     ...args,
   ]);
 }

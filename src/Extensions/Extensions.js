@@ -6,7 +6,8 @@ import Interface from "./Extensions.blp" with { type: "uri" };
 import illustration from "./extensions.svg";
 
 import "./Extension.js";
-import { getFlatpakInfo, settings } from "../util.js";
+import { settings } from "../util.js";
+import { getFlatpakInfo } from "../flatpak.js";
 
 export const action_extensions = new Gio.SimpleAction({
   name: "extensions",
