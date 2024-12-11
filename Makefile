@@ -65,6 +65,8 @@ test: unit lint
 #	./build-aux/wip/run.js build-aux/re.sonny.Workbench.Devel.json -- workbench-cli ci demos/src/Welcome/
 
 ci: setup build test
+# See Permissions.js
+	flatpak override --user --share=network --socket=pulseaudio --device=input re.sonny.Workbench.Devel
 	./build-aux/fun workbench-cli ci demos/src/*
 
 # Note that if you have Sdk extensions installed they will be used
