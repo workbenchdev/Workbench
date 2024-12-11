@@ -49,7 +49,7 @@
           <li>Use GNOME 47</li>
           <li>Add code suggestions/completions support</li>
           <li>Add Language and Category filters to the Library</li>
-          <li>Add option to create new blank project</li>
+          <li>Add action to create new blank project</li>
           <li>Add experimental TypeScript support</li>
         </ul>
         <p>Library:</p>
