@@ -9,7 +9,7 @@ on:
 
 jobs:
   CI:
-    runs-on: ubuntu-24.10
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v3
         with:
@@ -42,6 +42,10 @@ jobs:
             ${{ runner.os }}-flatpak-builder-
 
       - run: mutter --wayland --no-x11 --headless --wayland-display=wayland-0 --virtual-monitor 1280x720 > /tmp/mutter.log 2>&1 &
+      # See Permissions.js
+      # --device=input is not yet available on Github Actions Ubuntu
+      # - run: flatpak override --user --share=network --socket=pulseaudio --device=input re.sonny.Workbench.Devel
+      - run: flatpak override --user --share=network --socket=pulseaudio re.sonny.Workbench.Devel
       - run: make ci
       - run: cat /tmp/mutter.log
 

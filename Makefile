@@ -66,7 +66,7 @@ test: unit lint
 
 ci: setup build test
 # See Permissions.js
-	flatpak override --user --share=network --socket=pulseaudio --device=input re.sonny.Workbench.Devel
+# flatpak override --user --share=network --socket=pulseaudio --device=input re.sonny.Workbench.Devel
 	./build-aux/fun workbench-cli ci demos/src/*
 
 # Note that if you have Sdk extensions installed they will be used
