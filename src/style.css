@@ -13,12 +13,12 @@
 }
 
 .command_snippet {
-  color: @view_fg_color;
-  background: @view_bg_color;
+  color: var(--view-fg-color);
+  background: var(--view-bg-color);
   font-family: monospace;
   border-radius: 6px;
   padding: 6px;
-  border: 1px solid @borders;
+  border: 1px solid var(--border-color);
 }
 
 /*
@@ -36,7 +36,7 @@ button.pill.small {
 #panel_code,
 #panel_style,
 #panel_ui {
-  border-right: solid 1px @borders;
+  border-right: solid 1px var(--border-color);
   background-color: #fcfcfc;
 }
 
