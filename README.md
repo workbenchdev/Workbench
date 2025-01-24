@@ -31,9 +31,9 @@ Among other things, Workbench comes with
 
 |            | Formatter | Linter | Library demos[1] |
 | ---------- | --------- | ------ | ---------------- |
-| JavaScript | ✅        | ✅     | 99               |
-| Python     | ✅        | ✅     | 95               |
-| Vala       | ✅        | ✅     | 91               |
+| JavaScript | ✅        | ✅     | 103              |
+| Python     | ✅        | ✅     | 98               |
+| Vala       | ✅        | ✅     | 92               |
 | Rust       | ✅        | ✅     | 52               |
 | Blueprint  | ✅        | ✅     |                  |
 | CSS        | ✅        | ✅     |                  |

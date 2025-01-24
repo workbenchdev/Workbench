@@ -104,5 +104,5 @@ function getValaVersion() {
 }
 
 function getBlueprintVersion() {
-  return "Blueprint d47955c5";
+  return "Blueprint 0.16.0";
 }

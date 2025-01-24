@@ -13,6 +13,8 @@ import {
   isDeviceInputOverrideAvailable,
 } from "../flatpak.js";
 
+const device = isDeviceInputOverrideAvailable() ? "input" : "all";
+
 const action_permissions = new Gio.SimpleAction({
   name: "permissions",
   parameter_type: null,
@@ -29,7 +31,6 @@ export function Permissions({ window }) {
 
   picture_illustration.set_resource(illustration);
 
-  const device = isDeviceInputOverrideAvailable() ? "input" : "all";
   label_command.label = `flatpak override --user --share=network --socket=pulseaudio --device=${device} ${getFlatpakId()}`;
   action_row_device.title = `--input=${device}`;
 
@@ -57,7 +58,7 @@ const missing_permissions = (() => {
   return (
     !shared.includes("network") ||
     !sockets.includes("pulseaudio") ||
-    !devices.includes("all")
+    !devices.includes(device)
   );
 })();
 

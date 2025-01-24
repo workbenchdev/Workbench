@@ -15,6 +15,7 @@ install
 __pycache__
 *.pyc
 *.gresource
+.frun
 
 # IDEs / editors
 .idea
