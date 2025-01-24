@@ -2,22 +2,16 @@ import Gio from "gi://Gio";
 
 import { isValaAvailable } from "../../Extensions/Extensions.js";
 import { createLSPClient } from "../../common.js";
-import { getLanguage } from "../../util.js";
+import { getLanguage, copy } from "../../util.js";
 
 export function setup({ document }) {
   if (!isValaAvailable()) return;
 
   const { file, buffer, code_view } = document;
 
-  const api_file = Gio.File.new_for_path(pkg.pkgdatadir).get_child(
-    "workbench.vala",
-  );
-  api_file.copy(
-    file.get_parent().get_child("workbench.vala"),
-    Gio.FileCopyFlags.OVERWRITE,
-    null,
-    null,
-  );
+  // VLS needs the project to be already setup once it starts,
+  // otherwise it won't pick it up later.
+  setupValaProject(file.get_parent()).catch(console.error);
 
   const lspc = createLSPClient({
     lang: getLanguage("vala"),
@@ -43,4 +37,25 @@ export function setup({ document }) {
   });
 
   return lspc;
+}
+
+const vala_template_dir = Gio.File.new_for_path(
+  pkg.pkgdatadir,
+).resolve_relative_path("langs/vala/template");
+
+export async function setupValaProject(destination) {
+  return Promise.all([
+    copy(
+      "meson.build",
+      vala_template_dir,
+      destination,
+      Gio.FileCopyFlags.OVERWRITE,
+    ),
+    copy(
+      "workbench.vala",
+      vala_template_dir,
+      destination,
+      Gio.FileCopyFlags.OVERWRITE,
+    ),
+  ]);
 }
