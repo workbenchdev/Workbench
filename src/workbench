@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# export G_MESSAGES_DEBUG=@app_id@
+# export G_MESSAGES_DEBUG=all
+export GTK_DEBUG=iconfallback
 
 # Required to allow pkgconfig to find pc files in /app/lib/pkgconfig
 export PKG_CONFIG_PATH=/app/lib/pkgconfig/:$PKG_CONFIG_PATH
