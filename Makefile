@@ -43,8 +43,8 @@ lint:
 # CSS
 	./build-aux/fun workbench-cli check css src/**/*.css
 # Flatpak manifests
-	flatpak run --user --command=flatpak-builder-lint org.flatpak.Builder manifest --exceptions build-aux/re.sonny.Workbench.json
-	flatpak run --user --command=flatpak-builder-lint org.flatpak.Builder manifest --exceptions build-aux/re.sonny.Workbench.Devel.json
+	flatpak run --user --command=flatpak-builder-lint org.flatpak.Builder manifest --exceptions --user-exceptions ./build-aux/exceptions.json build-aux/re.sonny.Workbench.json
+	flatpak run --user --command=flatpak-builder-lint org.flatpak.Builder manifest --exceptions --user-exceptions ./build-aux/exceptions.json build-aux/re.sonny.Workbench.Devel.json
 
 unit:
 	./build-aux/fun gjs -m ./troll/tst/bin.js test/*.test.js
