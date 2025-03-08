@@ -100,6 +100,7 @@ if (!exists(`${path}/.flatpak/flatpak-builder`)) {
 
 // builds workbench
 if (!exists(`${path}/_build`)) {
+  await buildModules();
   await buildCommand([
     "meson",
     "--prefix",
