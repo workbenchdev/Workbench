@@ -43,6 +43,26 @@
   </screenshots>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="48.0" date="2025-03-xx">
+      <description translatable="no">
+        <ul>
+          <li>Use GNOME 48</li>
+        </ul>
+        <p>Library:</p>
+        <ul>
+          <li>Add "Shortcuts Window" demo</li>
+        </ul>
+        <p>Dependencies:</p>
+        <ul>
+          <!-- <li>Update Jsonrpc-GLib to 3.44.1</li> -->
+          <li>Update libportal to 0.9.1</li>
+          <li>Update libshumate to 1.4</li>
+          <li>Update libspelling to 0.4.6</li>
+          <li>Update vte to 0.80.0</li>
+        </ul>
+      </description>
+    </release>
+
     <release version="47.1" date="2025-01-24">
       <description translatable="no">
         <ul>

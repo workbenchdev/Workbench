@@ -12,8 +12,8 @@
   "sources": [
     {
       "type": "archive",
-      "url": "https://download.gnome.org/sources/vte/0.78/vte-0.78.2.tar.xz",
-      "sha256": "35d7bcde07356846b4a12881c8e016705b70a9004a9082285eee5834ccc49890"
+      "url": "https://download.gnome.org/sources/vte/0.79/vte-0.79.91.tar.xz",
+      "sha256": "adca667d40ae1839ba258b63701cd05fba249303d72258711cc69294b2cb8646"
     }
   ]
 }

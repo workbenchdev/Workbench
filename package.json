@@ -13,7 +13,7 @@
     "events": "^3.3.0",
     "husky": "^8.0.3",
     "lint-staged": "^14.0.1",
-    "ltx": "git://github.com/xmppjs/ltx.git#d351ffa26ef1c5f2fbee7888d0bcd5047eb8a988",
+    "ltx": "git://github.com/xmppjs/ltx.git#072690a43a51254ddd17b082131a8b9115586e8a",
     "postcss": "^8.4.14",
     "prettier": "3.0.3",
     "rollup": "^2.76.0",
