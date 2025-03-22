@@ -12,8 +12,7 @@ class WorkbenchHoverProvider extends GObject.Object {
   }
 
   findDiagnostics(context) {
-    const iter = new Gtk.TextIter();
-    context.get_iter(iter);
+    const [, iter] = context.get_iter();
 
     const line = iter.get_line();
     // Looks like line_offset starts at 0
