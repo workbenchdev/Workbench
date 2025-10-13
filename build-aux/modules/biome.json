@@ -1,7 +1,7 @@
 {
   "name": "biome",
   "buildsystem": "simple",
-  "build-commands": ["chmod +x biome", "cp biome /app/bin/biome"],
+  "build-commands": ["chmod +x biome", "install -D biome /app/bin/biome"],
   "sources": [
     {
       "type": "file",

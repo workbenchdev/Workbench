@@ -79,10 +79,11 @@ export function isTypeScriptAvailable() {
   return typescript_available;
 }
 
-const llvm = "llvm18";
-const node = "node20";
+// FIXME: read from manifest
+const llvm = "llvm21";
+const node = "node24";
 const runtime = getFlatpakInfo().get_string("Application", "runtime");
-const freedesktop_version = runtime.endsWith("master") ? "24.08" : "24.08";
+const freedesktop_version = runtime.endsWith("master") ? "25.08" : "25.08";
 
 export function isTypeScriptEnabled() {
   return settings.get_boolean("typescript");

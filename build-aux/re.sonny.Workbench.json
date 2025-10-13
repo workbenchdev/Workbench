@@ -2,17 +2,18 @@
   "$schema": "https://raw.githubusercontent.com/flatpak/flatpak-builder/main/data/flatpak-manifest.schema.json",
   "id": "re.sonny.Workbench",
   "runtime": "org.gnome.Sdk",
-  "runtime-version": "48",
+  "runtime-version": "49",
   "sdk": "org.gnome.Sdk",
   "sdk-extensions": [
     "org.freedesktop.Sdk.Extension.vala",
     "org.freedesktop.Sdk.Extension.rust-stable",
-    "org.freedesktop.Sdk.Extension.llvm18",
-    "org.freedesktop.Sdk.Extension.node20",
+    "org.freedesktop.Sdk.Extension.llvm21",
+    "org.freedesktop.Sdk.Extension.node24",
     "org.freedesktop.Sdk.Extension.typescript"
   ],
   "build-options": {
-    "append-path": "/usr/lib/sdk/vala/bin:/usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/node20/bin:/usr/lib/sdk/typescript/bin",
+    "append-path": "/usr/lib/sdk/vala/bin:/usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/llvm21/bin:/usr/lib/sdk/node24/bin:/usr/lib/sdk/typescript/bin",
+    "prepend-ld-library-path": "/usr/lib/sdk/llvm21/lib",
     "append-ld-library-path": "/usr/lib/sdk/vala/lib"
   },
   "command": "workbench",
@@ -36,7 +37,6 @@
     "*.a"
   ],
   "modules": [
-    "modules/blueprint-compiler.json",
     "modules/biome.json",
     "modules/vte.json",
     "modules/libshumate.json",

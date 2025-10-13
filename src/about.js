@@ -23,7 +23,6 @@ GTK ${getGIRepositoryVersion(Gtk)}
 GLib ${getGLibVersion()}
 Flatpak ${flatpak_info.get_string("Instance", "flatpak-version")}
 ${getValaVersion()}
-${getBlueprintVersion()}
 `.trim();
 
   const dialog = new Adw.AboutDialog({
@@ -101,8 +100,4 @@ ${getBlueprintVersion()}
 function getValaVersion() {
   const [, data] = GLib.spawn_command_line_sync("valac --version");
   return new TextDecoder().decode(data).trim();
-}
-
-function getBlueprintVersion() {
-  return "Blueprint 0.16.0";
 }

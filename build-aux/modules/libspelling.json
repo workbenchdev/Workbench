@@ -5,8 +5,8 @@
   "sources": [
     {
       "type": "archive",
-      "url": "https://download.gnome.org/sources/libspelling/0.4/libspelling-0.4.6.tar.xz",
-      "sha256": "3248a9b5336ea2f727d2db912d2f0083accc0505ce707679b3d9b8266c0101f5"
+      "url": "https://download.gnome.org/sources/libspelling/0.4/libspelling-0.4.9.tar.xz",
+      "sha256": "d093fd35ae0f1c98fb58876505287fc0a885e47da9d2411d6d7cd595f34d4ebf"
     }
   ]
 }

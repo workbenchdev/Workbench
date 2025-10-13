@@ -43,10 +43,11 @@
   </screenshots>
   <content_rating type="oars-1.1" />
   <releases>
-    <release version="48.0" date="2025-04-xx">
+    <release version="49.0" date="2025-10-13">
       <description translatable="no">
         <ul>
-          <li>Use GNOME 48</li>
+          <li>Use GNOME 49</li>
+          <li>Temporarily disable experimental TypeScript support</li>
         </ul>
         <p>Library:</p>
         <ul>
@@ -54,11 +55,11 @@
         </ul>
         <p>Dependencies:</p>
         <ul>
-          <!-- <li>Update Jsonrpc-GLib to 3.44.1</li> -->
           <li>Update libportal to 0.9.1</li>
-          <li>Update libshumate to 1.4</li>
-          <li>Update libspelling to 0.4.6</li>
-          <li>Update vte to 0.80.0</li>
+          <li>Update libshumate to 1.5.1</li>
+          <li>Update libspelling to 0.4.9</li>
+          <li>Update vte to 0.82.1</li>
+          <li>Update gom to 0.5.4</li>
         </ul>
       </description>
     </release>
@@ -682,8 +683,9 @@
       </description>
     </release>
     <release version="1.0.0" date="2022-03-02">
-      <description
-      >This is the first release of Workbench. We hope you like it.</description>
+      <description>
+        <p>This is the first release of Workbench. We hope you like it.</p>
+      </description>
     </release>
   </releases>
   <kudos>

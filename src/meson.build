@@ -9,10 +9,6 @@ bin_conf.set('pkgdatadir', pkgdatadir)
 bin_conf.set('sourcedir', meson.project_source_root())
 bin_conf.set('command', 'SHELL=/bin/sh script --flush --quiet --return $XDG_RUNTIME_DIR/$FLATPAK_ID/typescript --command "' + app_id + ' $@"')
 
-blueprint_compiler = find_program(
-  '/app/bin/blueprint-compiler',
-)
-
 meson.add_install_script('../build-aux/library.js', pkgdatadir)
 
 subdir('langs/javascript')
@@ -64,7 +60,6 @@ custom_target('workbench',
     '--prefix', '/re/sonny/Workbench',
     '--project-root', meson.project_source_root(),
     '--resource-root', meson.project_source_root() / 'src',
-    '--blueprint-compiler', blueprint_compiler,
     '--no-executable',
     '@INPUT0@',
     '@OUTDIR@',

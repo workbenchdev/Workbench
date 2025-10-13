@@ -3,7 +3,8 @@ import Gtk from "gi://Gtk";
 import Gio from "gi://Gio";
 import Adw from "gi://Adw";
 import GIRepository from "gi://GIRepository";
-// const repository = GIRepository.Repository.get_default();
+
+const repository = new GIRepository.Repository();
 
 // sort and reverse to make sure GtkSource is before Gtk
 // and so that GtkSourceCompletionProvider matches GtkSource and not Gtk
@@ -158,7 +159,7 @@ export async function detectCrash(str, object_id) {
 }
 
 function getNamespaces() {
-  const search_paths = GIRepository.Repository.get_search_path();
+  const search_paths = repository.get_search_path();
 
   const namespaces = [];
   for (const search_path of search_paths) {
