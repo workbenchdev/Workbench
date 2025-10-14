@@ -5,6 +5,7 @@ import GObject from "gi://GObject";
 
 import { getLanguage } from "../util.js";
 import Template from "./EntryRow.blp" with { type: "uri" };
+import { isTypeScriptEnabled } from "../Extensions/Extensions.js";
 
 class EntryRow extends Adw.ActionRow {
   constructor({ demo, ...params } = {}) {
@@ -32,6 +33,7 @@ class EntryRow extends Adw.ActionRow {
 
   #createLanguageTags(demo) {
     demo.languages.forEach((id) => {
+      if (id === "typescript" && !isTypeScriptEnabled()) return;
       const language = getLanguage(id);
       if (!language) return;
       const language_tag = this.#createLanguageTag(language);
