@@ -50,7 +50,7 @@ export default async function vala({ file, lspc, demo_dir }) {
   await checkFile({
     lspc,
     file,
-    lang: getLanguage("vala"),
+    lang: getLanguage(languageId),
     uri: file.get_uri(),
   });
 
