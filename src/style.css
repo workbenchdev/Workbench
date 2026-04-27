@@ -52,3 +52,15 @@ button.pill.small {
 #toolbar_devtools {
   background-color: #fcfcfc;
 }
+
+@media (prefers-color-scheme: dark) {
+  #panel_code,
+  #panel_style,
+  #panel_ui {
+    background-color: #262626;
+  }
+
+  #toolbar_devtools {
+    background-color: #262626;
+  }
+}

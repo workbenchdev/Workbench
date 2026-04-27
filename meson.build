@@ -1,7 +1,7 @@
 project(
   'Workbench',
   ['vala', 'c', 'rust'],
-  version: '49.0',
+  version: '50.0',
   meson_version: '>= 1.0.0',
   license: 'GPL-3.0-only',
   default_options: [
