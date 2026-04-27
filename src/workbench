@@ -7,7 +7,7 @@ export PKG_CONFIG_PATH=/app/lib/pkgconfig/:$PKG_CONFIG_PATH
 
 source /usr/lib/sdk/rust-stable/enable.sh 2> /dev/null
 source /usr/lib/sdk/vala/enable.sh 2> /dev/null
-source /usr/lib/sdk/llvm11/enable.sh 2> /dev/null
+source /usr/lib/sdk/llvm21/enable.sh 2> /dev/null
 source /usr/lib/sdk/node24/enable.sh 2> /dev/null
 
 ## enabling the typescript extension
