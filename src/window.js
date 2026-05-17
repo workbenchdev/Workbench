@@ -483,7 +483,7 @@ async function onCloseSession({ session, window }) {
   }
 
   if (!session.settings.get_boolean("edited")) {
-    await deleteSession(session);
+    await deleteSession(session).catch(console.error);
     return close(window);
   }
 
@@ -491,7 +491,7 @@ async function onCloseSession({ session, window }) {
   if (response === "cancel") return;
 
   if (response === "discard") {
-    await deleteSession(session);
+    await deleteSession(session).catch(console.error);
   } else if (response === "save") {
     await saveSessionAsProject(session, location);
   }
