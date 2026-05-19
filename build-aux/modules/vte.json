@@ -3,6 +3,7 @@
   "buildsystem": "meson",
   "config-opts": [
     "--libdir=/app/lib",
+    "-Dapp=false",
     "-Ddocs=false",
     "-Dgtk3=false",
     "-Dgtk4=true",
@@ -12,8 +13,8 @@
   "sources": [
     {
       "type": "archive",
-      "url": "https://download.gnome.org/sources/vte/0.82/vte-0.82.1.tar.xz",
-      "sha256": "79376d70402d271e2d38424418e1aea72357934d272e321e3906b71706a78e3a"
+      "url": "https://download.gnome.org/sources/vte/0.84/vte-0.84.0.tar.xz",
+      "sha256": "0414e31583836aeb7878da25f67c515f7e8879917ecc37c92e26b83e8d8fc3e3"
     }
   ],
   "modules": [
@@ -23,8 +24,8 @@
       "sources": [
         {
           "type": "archive",
-          "url": "https://github.com/fastfloat/fast_float/archive/refs/tags/v6.1.6.tar.gz",
-          "sha256": "4458aae4b0eb55717968edda42987cabf5f7fc737aee8fede87a70035dba9ab0"
+          "url": "https://github.com/fastfloat/fast_float/archive/refs/tags/v8.2.5.tar.gz",
+          "sha256": "17c7fb14499fcf42c3f5d143df0fbe22172e92749ec5f75ef13224005421a654"
         }
       ]
     }

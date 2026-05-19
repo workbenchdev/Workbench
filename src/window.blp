@@ -414,7 +414,9 @@ Adw.ApplicationWindow window {
 
                 child: Adw.StatusPage {
                   title: _("Windowed Preview");
-                  description: _("This interface can only be previewed as a separate window.\nWe recommend using “Always on Top”.");
+                  description: _(
+                    "This interface can only be previewed as a separate window.\nWe recommend using “Always on Top”."
+                  );
                   icon-name: "re.sonny.Workbench-multitasking-windows-symbolic";
 
                   Box {
@@ -437,7 +439,9 @@ Adw.ApplicationWindow window {
 
                 child: Adw.StatusPage {
                   title: _("Windowed Preview");
-                  description: _("This interface can only be previewed as a separate window.\nWe recommend using “Always on Top”.");
+                  description: _(
+                    "This interface can only be previewed as a separate window.\nWe recommend using “Always on Top”."
+                  );
                   icon-name: "re.sonny.Workbench-multitasking-windows-symbolic";
 
                   Box {
@@ -649,7 +653,7 @@ menu menu_app {
         item {
           label: _("Blueprint");
           action: "app.open_uri";
-          target: "https://gitlab.gnome.org/jwestman/blueprint-compiler";
+          target: "https://gnome.pages.gitlab.gnome.org/blueprint-compiler";
         }
       }
 

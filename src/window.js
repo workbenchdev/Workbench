@@ -34,7 +34,11 @@ import {
   isTypeScriptEnabled,
   isValaAvailable,
 } from "./Extensions/Extensions.js";
-import { Permissions } from "./Permissions/Permissions.js";
+import {
+  hasNetworkPermission,
+  Permissions,
+  showPermissionsDialog,
+} from "./Permissions/Permissions.js";
 import { JavaScriptDocument } from "./langs/javascript/JavaScriptDocument.js";
 import { BlueprintDocument } from "./langs/blueprint/BlueprintDocument.js";
 import { CssDocument } from "./langs/css/CssDocument.js";
@@ -328,6 +332,10 @@ export default function Window({ application, session }) {
       }
     } else if (language === "Rust") {
       compiler_rust = compiler_rust || RustCompiler({ session });
+      // Rust needs cargo to download dependencies
+      if (!hasNetworkPermission()) {
+        return showPermissionsDialog({ window });
+      }
       const success = await compiler_rust.compile();
       if (success) {
         await previewer.useExternal("rust");

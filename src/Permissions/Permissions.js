@@ -62,6 +62,12 @@ const missing_permissions = (() => {
   );
 })();
 
+export function hasNetworkPermission() {
+  const flatpak_info = getFlatpakInfo();
+  const shared = flatpak_info.get_string_list("Context", "shared");
+  return shared.includes("network");
+}
+
 export function needsAdditionalPermissions({ demo }) {
   if (!demo["flatpak-finish-args"]) return false;
   return missing_permissions;
