@@ -37,7 +37,7 @@ lint:
 	foundry devenv -- blueprint-compiler format $(ROOT)/src/**/*.blp
 	foundry run -- workbench-cli check blueprint $(ROOT)/src/**/*.blp
 # Vala
-	# foundry run -- workbench-cli check vala src/**/*.vala
+	# foundry run -- workbench-cli check vala $(ROOT)/src/**/*.vala
 # CSS
 	foundry run -- workbench-cli check css $(ROOT)/src/**/*.css
 # Flatpak manifests
