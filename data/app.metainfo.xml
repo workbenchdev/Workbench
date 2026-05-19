@@ -49,6 +49,10 @@
           <li>Use GNOME 50</li>
           <li>Fix runnng Rust projects</li>
         </ul>
+        <p>Library:</p>
+        <ul>
+          <li>Correct network permission check</li>
+        </ul>
         <p>Dependencies:</p>
         <ul>
           <li>Update libshumate to 1.6.1</li>
