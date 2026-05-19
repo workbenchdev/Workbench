@@ -47,7 +47,7 @@
       <description translatable="no">
         <ul>
           <li>Use GNOME 50</li>
-          <li>Fix Rust compilation</li>
+          <li>Fix runnng Rust projects</li>
         </ul>
         <p>Dependencies:</p>
         <ul>
