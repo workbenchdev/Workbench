@@ -3,6 +3,7 @@ import GLib from "gi://GLib";
 import Gtk from "gi://Gtk";
 import Gdk from "gi://Gdk";
 
+import { rmrf } from "../troll/src/util.js";
 import {
   data_dir,
   ensureDir,
@@ -11,7 +12,6 @@ import {
   settings as global_settings,
   copyDirectory,
   decode,
-  removeDirectory,
 } from "./util.js";
 import { languages } from "./common.js";
 import { createElement as xml } from "./langs/xml/xml.js";
@@ -90,7 +90,7 @@ export async function createSessionFromDemo(demo) {
 }
 
 export async function deleteSession(session) {
-  return removeDirectory(session.file);
+  return rmrf(session.file);
 }
 
 export async function saveSessionAsProject(session, destination) {
