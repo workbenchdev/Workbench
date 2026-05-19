@@ -67,13 +67,6 @@ ci: setup build test
 # flatpak override --user --share=network --socket=pulseaudio --device=input re.sonny.Workbench.Devel
 	foundry run -- workbench-cli ci $(ROOT)/demos/src/*
 
-# # Note that if you have Sdk extensions installed they will be used
-# # make sure to test without the sdk extensions installed
-# sandbox: setup
-# 	flatpak run org.flatpak.Builder --ccache --user --install --force-clean flatpak build-aux/re.sonny.Workbench.Devel.json
-# # flatpak remove --noninteractive org.freedesktop.Sdk.Extension.rust-stable//25.08 org.freedesktop.Sdk.Extension.vala//25.08 org.freedesktop.Sdk.Extension.llvm20//25.08
-# 	flatpak run --command="bash" re.sonny.Workbench.Devel
-
 flatpak:
 	flatpak run org.flatpak.Builder --ccache --force-clean flatpak build-aux/re.sonny.Workbench.Devel.json
 # This is what Flathub does - consider moving to lint
