@@ -47,10 +47,17 @@
       <description translatable="no">
         <ul>
           <li>Use GNOME 50</li>
+          <li>Fix Rust compilation</li>
+        </ul>
+        <p>Dependencies:</p>
+        <ul>
+          <li>Update libshumate to 1.6.1</li>
+          <li>Update vte to 0.84.0</li>
+          <li>Update gom to 0.5.6</li>
         </ul>
       </description>
     </release>
-  
+
     <release version="49.0" date="2025-10-13">
       <description translatable="no">
         <ul>
