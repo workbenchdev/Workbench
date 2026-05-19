@@ -164,19 +164,6 @@ export function quitOnLastWindowClose(self) {
   return false;
 }
 
-export function removeDirectory(file) {
-  // There is no method to recursively delete a folder so we trash instead
-  // https://github.com/flatpak/xdg-desktop-portal/issues/630 :/
-  // portal.trash_file(file.get_path(), null).catch(console.error);
-  try {
-    file.trash(null);
-  } catch (err) {
-    if (!err.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.EXISTS)) {
-      throw err;
-    }
-  }
-}
-
 export async function copy(filename, source_dir, dest_dir, flags) {
   const file = source_dir.get_child(filename);
   const dest_file = dest_dir.get_child(file.get_basename());

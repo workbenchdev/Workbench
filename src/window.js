@@ -34,7 +34,11 @@ import {
   isTypeScriptEnabled,
   isValaAvailable,
 } from "./Extensions/Extensions.js";
-import { Permissions } from "./Permissions/Permissions.js";
+import {
+  hasNetworkPermission,
+  Permissions,
+  showPermissionsDialog,
+} from "./Permissions/Permissions.js";
 import { JavaScriptDocument } from "./langs/javascript/JavaScriptDocument.js";
 import { BlueprintDocument } from "./langs/blueprint/BlueprintDocument.js";
 import { CssDocument } from "./langs/css/CssDocument.js";
@@ -328,6 +332,10 @@ export default function Window({ application, session }) {
       }
     } else if (language === "Rust") {
       compiler_rust = compiler_rust || RustCompiler({ session });
+      // Rust needs cargo to download dependencies
+      if (!hasNetworkPermission()) {
+        return showPermissionsDialog({ window });
+      }
       const success = await compiler_rust.compile();
       if (success) {
         await previewer.useExternal("rust");
@@ -483,7 +491,7 @@ async function onCloseSession({ session, window }) {
   }
 
   if (!session.settings.get_boolean("edited")) {
-    await deleteSession(session);
+    await deleteSession(session).catch(console.error);
     return close(window);
   }
 
@@ -491,7 +499,7 @@ async function onCloseSession({ session, window }) {
   if (response === "cancel") return;
 
   if (response === "discard") {
-    await deleteSession(session);
+    await deleteSession(session).catch(console.error);
   } else if (response === "save") {
     await saveSessionAsProject(session, location);
   }
