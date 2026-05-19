@@ -17,7 +17,7 @@ stable:
 	foundry build build-aux/re.sonny.Workbench.json
 
 devel:
-	foundry build build-aux/re.sonny.Workbench.json build-aux/re.sonny.Workbench.Devel.json
+	foundry build build-aux/re.sonny.Workbench.Devel.json
 
 build: devel
 
@@ -35,7 +35,7 @@ lint:
 	foundry devenv -- ruff format --config=$(ROOT)/src/langs/python/ruff.toml --check $(ROOT)/src/**/*.py
 # Blueprint
 	foundry devenv -- blueprint-compiler format $(ROOT)/src/**/*.blp
-	foundry devenv -- workbench-cli check blueprint $(ROOT)/src/**/*.blp
+	foundry run -- workbench-cli check blueprint $(ROOT)/src/**/*.blp
 # Vala
 	# foundry run -- workbench-cli check vala src/**/*.vala
 # CSS
