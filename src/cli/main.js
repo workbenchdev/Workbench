@@ -17,7 +17,7 @@ import format from "./format.js";
 import blueprint from "./blueprint.js";
 import css from "./css.js";
 import javascript from "./javascript.js";
-import typescript from "./typescript.js";
+// import typescript from "./typescript.js";
 import vala from "./vala.js";
 import python from "./python.js";
 import rust from "./rust.js";
@@ -110,7 +110,7 @@ function createLSPClients({ root_uri }) {
       "vala",
       "rust",
       "python",
-      "typescript",
+      // "typescript",
     ].map((id) => {
       const lang = languages.find((language) => language.id === id);
       const lspc = createLSPClient({
@@ -175,19 +175,19 @@ async function ci({ filenames }) {
       });
     }
 
-    const file_typescript = demo_dir.get_child("main.ts");
-    if (file_typescript.query_exists(null)) {
-      await typescript({
-        file: file_typescript,
-        lspc: lsp_clients.typescript,
-        blueprint_object_ids,
-        demo_dir,
-        application,
-        builder,
-        template,
-        window,
-      });
-    }
+    // const file_typescript = demo_dir.get_child("main.ts");
+    // if (file_typescript.query_exists(null)) {
+    //   await typescript({
+    //     file: file_typescript,
+    //     lspc: lsp_clients.typescript,
+    //     blueprint_object_ids,
+    //     demo_dir,
+    //     application,
+    //     builder,
+    //     template,
+    //     window,
+    //   });
+    // }
 
     const file_vala = demo_dir.get_child("main.vala");
     if (file_vala.query_exists(null)) {

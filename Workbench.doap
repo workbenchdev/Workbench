@@ -23,7 +23,7 @@
   <maintainer>
     <foaf:Person>
       <foaf:name>Sonny Piers</foaf:name>
-      <foaf:mbox rdf:resource="mailto:sonnyp@gnome.org" />
+      <foaf:mbox rdf:resource="mailto:workbench@sonny.re" />
       <gnome:userid>sonnyp</gnome:userid>
       <foaf:account>
         <foaf:OnlineAccount>

@@ -84,7 +84,7 @@ export default function PanelUI({
   );
   button_blueprint_documentation.connect("clicked", () => {
     new Gtk.UriLauncher({
-      uri: "https://jwestman.pages.gitlab.gnome.org/blueprint-compiler/",
+      uri: "https://gnome.pages.gitlab.gnome.org/blueprint-compiler/",
     })
       .launch(application.get_active_window(), null)
       .catch(console.error);

@@ -65,16 +65,6 @@ See also
 
 Workbench doesn't currently support translations for its user interface. GNOME documentation is only available in English and we do not want to mislead non-English speakers.
 
-<!--
-If you'd like to help translating Workbench into your language, please head over to [Weblate](https://hosted.weblate.org/engage/workbench/).
-
-<a href="https://hosted.weblate.org/engage/workbench/">
-  <img src="https://hosted.weblate.org/widgets/workbench/-/workbench/multi-auto.svg" alt="Translation status" />
-</a>
-
-Thank you for your help!
--->
-
 ## Troubleshooting
 
 ### The app won't build/run anymore - even on clean `main`

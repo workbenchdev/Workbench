@@ -7,6 +7,8 @@ It exposes the formatter and linter used in Workbench for the different language
 ## Hack
 
 ```sh
+# Build
 make cli
-./build-aux/fun workbench-cli ci demos/src/*
+# Run
+foundry run -- workbench-cli ci demos/src/*
 ```
