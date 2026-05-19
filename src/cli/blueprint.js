@@ -45,9 +45,9 @@ export default async function blueprint({ file, lspc }) {
     if (!(err instanceof LSPError)) throw err;
     if (
       ![
-        // https://gitlab.gnome.org/jwestman/blueprint-compiler/-/issues/128
+        // https://gitlab.gnome.org/GNOME/blueprint-compiler/-/work_items/128
         "unsupported XML tag: <condition>",
-        // https://gitlab.gnome.org/jwestman/blueprint-compiler/-/issues/139
+        // https://gitlab.gnome.org/GNOME/blueprint-compiler/-/work_items/139
         "unsupported XML tag: <items>",
       ].includes(err.message)
     ) {
