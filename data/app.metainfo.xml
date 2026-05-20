@@ -6,7 +6,7 @@
   <developer id="re.sonny">
     <name translatable="no">Sonny Piers</name>
   </developer>
-  <update_contact>sonnyp@gnome.org</update_contact>
+  <update_contact>workbench@sonny.re</update_contact>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0</project_license>
   <summary>Prototype with GNOME technologies</summary>

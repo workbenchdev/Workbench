@@ -9,7 +9,7 @@ on:
 
 jobs:
   CI:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     steps:
       - uses: actions/checkout@v3
         with:
@@ -23,7 +23,7 @@ jobs:
       - name: Install host dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install flatpak mutter flatpak-builder
+          sudo apt-get install flatpak mutter flatpak-builder foundry
 
       # Restore caches
       - name: Restore Flatpak dependencies
@@ -40,6 +40,13 @@ jobs:
           key: ${{ runner.os }}-flatpak-builder-${{ github.run_id }}
           restore-keys: |
             ${{ runner.os }}-flatpak-builder-
+      - name: Restore .foundry
+        uses: actions/cache/restore@v3
+        with:
+          path: .foundry
+          key: ${{ runner.os }}-foundry-${{ github.run_id }}
+          restore-keys: |
+            ${{ runner.os }}-foundry-
 
       - run: mutter --wayland --no-x11 --headless --wayland-display=wayland-0 --virtual-monitor 1280x720 > /tmp/mutter.log 2>&1 &
       - run: make ci
@@ -58,3 +65,9 @@ jobs:
         with:
           path: .flatpak-builder
           key: ${{ runner.os }}-flatpak-builder-${{ github.run_id }}
+      - name: Save .foundry
+        uses: actions/cache/save@v3
+        if: always()
+        with:
+          path: .foundry
+          key: ${{ runner.os }}-foundry-${{ github.run_id }}

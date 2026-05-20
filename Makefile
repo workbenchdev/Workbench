@@ -1,4 +1,5 @@
 SHELL:=/bin/bash -O globstar
+ROOT := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 .PHONY: setup build lint unit test ci sandbox flatpak
 .DEFAULT_GOAL := setup
 
@@ -13,41 +14,38 @@ setup:
 	@echo "✅ You can use "make build" to build Workbench"
 
 stable:
-# flatpak --user run org.flatpak.Builder --delete-build-dirs --disable-updates --build-only --ccache --force-clean flatpak build-aux/re.sonny.Workbench.json
-	flatpak-builder --delete-build-dirs --disable-updates --build-only --ccache --force-clean flatpak build-aux/re.sonny.Workbench.json
+	foundry build build-aux/re.sonny.Workbench.json
 
 devel:
-# flatpak --user run org.flatpak.Builder --delete-build-dirs --disable-updates --build-only --ccache --force-clean flatpak build-aux/re.sonny.Workbench.Devel.json
-	flatpak-builder --delete-build-dirs --disable-updates --build-only --ccache --force-clean flatpak build-aux/re.sonny.Workbench.Devel.json
-
+	foundry build build-aux/re.sonny.Workbench.Devel.json
 
 build: devel
 
 cli:
 	./troll/gjspack/bin/gjspack src/cli/main.js --appid=re.sonny.Workbench.cli --prefix=/re/sonny/Workbench --resource-root=src/ --no-executable flatpak/files/share/re.sonny.Workbench.cli/
-	cp src/cli/bin.js flatpak/files/bin/workbench-cli
+	cp src/cli/bin.js flatpak/files/bin/workbench-cli # FIXME
 
 lint:
 # JavaScript
 	./node_modules/.bin/eslint --max-warnings=0 src
 # Rust
-	./build-aux/fun rustfmt --check --edition 2021 src/**/*.rs
+	foundry devenv -- rustfmt --check --edition 2021 $(ROOT)/src/**/*.rs
 # Python
-	./build-aux/fun ruff check --config=src/langs/python/ruff.toml src/**/*.py
-	./build-aux/fun ruff format --config=src/langs/python/ruff.toml --check src/**/*.py
+	foundry devenv -- ruff check --config=$(ROOT)/src/langs/python/ruff.toml $(ROOT)/src/**/*.py
+	foundry devenv -- ruff format --config=$(ROOT)/src/langs/python/ruff.toml --check $(ROOT)/src/**/*.py
 # Blueprint
-	./build-aux/fun blueprint-compiler format src/**/*.blp
-	./build-aux/fun workbench-cli check blueprint src/**/*.blp
+	foundry devenv -- blueprint-compiler format $(ROOT)/src/**/*.blp
+	foundry run -- workbench-cli check blueprint $(ROOT)/src/**/*.blp
 # Vala
-# ./build-aux/fun workbench-cli check vala src/**/*.vala
+	# foundry run -- workbench-cli check vala $(ROOT)/src/**/*.vala
 # CSS
-	./build-aux/fun workbench-cli check css src/**/*.css
+	foundry run -- workbench-cli check css $(ROOT)/src/**/*.css
 # Flatpak manifests
 	flatpak run --user --command=flatpak-builder-lint org.flatpak.Builder manifest --exceptions --user-exceptions ./build-aux/exceptions.json build-aux/re.sonny.Workbench.json
 	flatpak run --user --command=flatpak-builder-lint org.flatpak.Builder manifest --exceptions --user-exceptions ./build-aux/exceptions.json build-aux/re.sonny.Workbench.Devel.json
 
 unit:
-	./build-aux/fun gjs -m ./troll/tst/bin.js test/*.test.js
+	foundry run -- gjs -m $(ROOT)/troll/tst/bin.js $(ROOT)/test/*.test.js
 #./build-aux/wip/run.js build-aux/re.sonny.Workbench.Devel.json -- gjs -m ./troll/tst/bin.js test/*.test.js
 
 # https://github.com/ximion/appstream/issues/398#issuecomment-1129454985
@@ -61,20 +59,13 @@ unit:
 # flatpak run --env=G_DEBUG=fatal-criticals --command=appstream-util org.flatpak.Builder validate data/app.metainfo.xml
 
 test: unit lint
-	./build-aux/fun workbench-cli ci demos/src/Welcome
+	foundry run -- workbench-cli ci $(ROOT)/demos/src/Welcome
 #	./build-aux/wip/run.js build-aux/re.sonny.Workbench.Devel.json -- workbench-cli ci demos/src/Welcome/
 
 ci: setup build test
 # See Permissions.js
 # flatpak override --user --share=network --socket=pulseaudio --device=input re.sonny.Workbench.Devel
-	./build-aux/fun workbench-cli ci demos/src/*
-
-# Note that if you have Sdk extensions installed they will be used
-# make sure to test without the sdk extensions installed
-sandbox: setup
-	flatpak run org.flatpak.Builder --ccache --user --install --force-clean flatpak build-aux/re.sonny.Workbench.Devel.json
-# flatpak remove --noninteractive org.freedesktop.Sdk.Extension.rust-stable//25.08 org.freedesktop.Sdk.Extension.vala//25.08 org.freedesktop.Sdk.Extension.llvm20//25.08
-	flatpak run --command="bash" re.sonny.Workbench.Devel
+	foundry run -- workbench-cli ci $(ROOT)/demos/src/*
 
 flatpak:
 	flatpak run org.flatpak.Builder --ccache --force-clean flatpak build-aux/re.sonny.Workbench.Devel.json
@@ -83,14 +74,3 @@ flatpak:
 	flatpak run --command="desktop-file-validate" --filesystem=host:ro org.freedesktop.Sdk//25.08 flatpak/files/share/applications/re.sonny.Workbench.Devel.desktop
 # appstreamcli validate --override=release-time-missing=info /path/to/your/app.metainfo.xml
 	flatpak run org.flatpak.Builder --run flatpak build-aux/re.sonny.Workbench.Devel.json bash
-
-# Sync with .gitignore
-clean:
-	rm -f re.sonny.Workbench.Devel.flatpak
-	rm -f re.sonny.Workbench.flatpak
-	rm -rf _build
-	rm -rf .flatpak
-	rm -rf .flatpak-builder
-	rm -rf flatpak
-	rm -rf flatpak-builder
-	rm -rf repo
