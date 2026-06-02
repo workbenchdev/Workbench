@@ -43,11 +43,12 @@
   </screenshots>
   <content_rating type="oars-1.1" />
   <releases>
-    <release version="50.0" date="2026-05-01">
+    <release version="50.0" date="2026-06-02">
       <description translatable="no">
         <ul>
           <li>Use GNOME 50</li>
-          <li>Fix runnng Rust projects</li>
+          <li>Fix discarding/closing of sessions</li>
+          <li>Fix running Rust demos</li>
         </ul>
         <p>Library:</p>
         <ul>

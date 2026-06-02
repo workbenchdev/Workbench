@@ -46,7 +46,6 @@ lint:
 
 unit:
 	foundry run -- gjs -m $(ROOT)/troll/tst/bin.js $(ROOT)/test/*.test.js
-#./build-aux/wip/run.js build-aux/re.sonny.Workbench.Devel.json -- gjs -m ./troll/tst/bin.js test/*.test.js
 
 # https://github.com/ximion/appstream/issues/398#issuecomment-1129454985
 # flatpak run org.freedesktop.appstream.cli validate --override=release-time-missing=info --no-net data/app.metainfo.xml
@@ -60,12 +59,20 @@ unit:
 
 test: unit lint
 	foundry run -- workbench-cli ci $(ROOT)/demos/src/Welcome
-#	./build-aux/wip/run.js build-aux/re.sonny.Workbench.Devel.json -- workbench-cli ci demos/src/Welcome/
 
-ci: setup build test
-# See Permissions.js
-# flatpak override --user --share=network --socket=pulseaudio --device=input re.sonny.Workbench.Devel
-	foundry run -- workbench-cli ci $(ROOT)/demos/src/*
+install:
+	artifact=$$(foundry export \
+		| grep -oE 'file://[^[:space:]]+' \
+		| tail -n1 \
+		| sed 's|^file://||'); \
+	test -n "$$artifact" || { echo "No artifact found"; exit 1; }; \
+	flatpak install --user --assumeyes "$$artifact"
+
+ci: setup build test install
+# We install because foundry has no flag to override permissions
+# see Permissions.js for why we need them
+	flatpak run --command="workbench-cli" --share=network --socket=pulseaudio --device=input --filesystem=$(ROOT) re.sonny.Workbench.Devel ci $(ROOT)/demos/src/*
+
 
 flatpak:
 	flatpak run org.flatpak.Builder --ccache --force-clean flatpak build-aux/re.sonny.Workbench.Devel.json

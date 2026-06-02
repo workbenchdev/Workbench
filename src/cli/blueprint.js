@@ -6,8 +6,18 @@ import { getLanguage } from "../common.js";
 import { parse } from "../langs/xml/xml.js";
 import { LSPError } from "../lsp/LSP.js";
 import { checkFile, diagnose } from "./util.js";
+import { ignore_codes } from "../langs/blueprint/blueprint.js";
 
 const languageId = "blueprint";
+
+// No replacements yet
+const ignore_messages = [
+  "Gtk.ShortcutsShortcut is deprecated\nhint: This widget will be removed in GTK 5",
+  "Gtk.ShortcutLabel is deprecated\nhint: This widget will be removed in GTK 5",
+  "Gtk.ShortcutsWindow is deprecated\nhint: This widget will be removed in GTK 5",
+  "Gtk.ShortcutsGroup is deprecated\nhint: This widget will be removed in GTK 5",
+  "Gtk.ShortcutsSection is deprecated\nhint: This widget will be removed in GTK 5",
+];
 
 export default async function blueprint({ file, lspc }) {
   print(`  ${file.get_path()}`);
@@ -17,14 +27,9 @@ export default async function blueprint({ file, lspc }) {
     lspc,
     languageId,
     filter(diagnostic) {
-      // No replacements yet
-      return ![
-        "Gtk.ShortcutsShortcut is deprecated\nhint: This widget will be removed in GTK 5",
-        "Gtk.ShortcutLabel is deprecated\nhint: This widget will be removed in GTK 5",
-        "Gtk.ShortcutsWindow is deprecated\nhint: This widget will be removed in GTK 5",
-        "Gtk.ShortcutsGroup is deprecated\nhint: This widget will be removed in GTK 5",
-        "Gtk.ShortcutsSection is deprecated\nhint: This widget will be removed in GTK 5",
-      ].includes(diagnostic.message);
+      if (ignore_codes.includes(diagnostic.code)) return false;
+      if (ignore_messages.includes(diagnostic.message)) return false;
+      return true;
     },
   });
 

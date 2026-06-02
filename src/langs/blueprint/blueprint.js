@@ -4,6 +4,39 @@ import { createLSPClient } from "../../common.js";
 import { getLanguage } from "../../util.js";
 import { CompletionItemKind } from "../../lsp/LSP.js";
 
+export const ignore_codes = [
+  // FIXME: let's add a11y label to all demo images?
+  "missing_descriptive_text",
+  // This is potentially confusing to newcomers?
+  // Should we update all demos to use Adw.Bin instead of Box?
+  "use_adw_bin",
+  // The top level widget in Workbench demos has no ID
+  "unused_widget",
+  // Fails for:
+  // adjustment: Adjustment {
+  //   lower: 100;
+  //   upper: 1000;
+  //   value: 200;
+  //   step-increment: 10;
+  // };
+  // TODO: file an issue
+  "adjustment_prop_order",
+  // Fails for:
+  // Label {
+  //   label: "<a href=\"...\">foo<a>"
+  //   use-markup: true
+  // }
+  // TODO: file an issue
+  "use_unicode",
+  // TODO: many warnings, investigate
+  "missing_user_facing_text",
+  // "SVG" or "CSS" is all caps and that's fine
+  "avoid_all_caps",
+  // Sometimes we don't want the widget to scroll
+  // e.g. CSS Gradients demo GtkSource.View
+  "scrollable_parent",
+];
+
 export function setup({ document }) {
   const { file, code_view, buffer } = document;
 
@@ -20,7 +53,11 @@ export function setup({ document }) {
       if (params.uri !== file.get_uri()) {
         return;
       }
-      code_view.handleDiagnostics(params.diagnostics);
+      // FIXME: Somehow merge with the similar logic of cli/blueprint.js
+      const diagnostics = params.diagnostics.filter(
+        (diag) => !ignore_codes.includes(diag.code),
+      );
+      code_view.handleDiagnostics(diagnostics);
     },
   );
 

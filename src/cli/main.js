@@ -22,6 +22,7 @@ import vala from "./vala.js";
 import python from "./python.js";
 import rust from "./rust.js";
 import { Interrupt } from "./util.js";
+import { isTypeScriptEnabled } from "../Extensions/Extensions.js";
 
 GObject.type_ensure(Shumate.SimpleMap);
 GObject.type_ensure(WebKit.WebView);
@@ -102,16 +103,12 @@ const application = new Adw.Application();
 const window = new Adw.ApplicationWindow();
 
 function createLSPClients({ root_uri }) {
+  const langs = ["javascript", "blueprint", "css", "vala", "rust", "python"];
+  if (isTypeScriptEnabled()) {
+    langs.push("typescript");
+  }
   return Object.fromEntries(
-    [
-      "javascript",
-      "blueprint",
-      "css",
-      "vala",
-      "rust",
-      "python",
-      "typescript",
-    ].map((id) => {
+    langs.map((id) => {
       const lang = languages.find((language) => language.id === id);
       const lspc = createLSPClient({
         lang,
@@ -175,18 +172,20 @@ async function ci({ filenames }) {
       });
     }
 
-    const file_typescript = demo_dir.get_child("main.ts");
-    if (file_typescript.query_exists(null)) {
-      await typescript({
-        file: file_typescript,
-        lspc: lsp_clients.typescript,
-        blueprint_object_ids,
-        demo_dir,
-        application,
-        builder,
-        template,
-        window,
-      });
+    if (isTypeScriptEnabled()) {
+      const file_typescript = demo_dir.get_child("main.ts");
+      if (file_typescript.query_exists(null)) {
+        await typescript({
+          file: file_typescript,
+          lspc: lsp_clients.typescript,
+          blueprint_object_ids,
+          demo_dir,
+          application,
+          builder,
+          template,
+          window,
+        });
+      }
     }
 
     const file_vala = demo_dir.get_child("main.vala");
