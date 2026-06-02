@@ -2,7 +2,6 @@
   "name": "vte",
   "buildsystem": "meson",
   "config-opts": [
-    "--libdir=/app/lib",
     "-Dapp=false",
     "-Ddocs=false",
     "-Dgtk3=false",
@@ -26,6 +25,22 @@
           "type": "archive",
           "url": "https://github.com/fastfloat/fast_float/archive/refs/tags/v8.2.5.tar.gz",
           "sha256": "17c7fb14499fcf42c3f5d143df0fbe22172e92749ec5f75ef13224005421a654"
+        }
+      ]
+    },
+    {
+      "name": "simdutf",
+      "buildsystem": "cmake-ninja",
+      "config-opts": [
+        "-DCMAKE_CXX_VISIBILITY_PRESET=hidden",
+        "-DCMAKE_POSITION_INDEPENDENT_CODE=TRUE",
+        "-DCMAKE_VISIBILITY_INLINES_HIDDEN=TRUE"
+      ],
+      "sources": [
+        {
+          "type": "archive",
+          "url": "https://github.com/simdutf/simdutf/archive/refs/tags/v7.4.0.tar.gz",
+          "sha256": "8fd729ebfd5ec56cb0395bcc176c4801e1f8a0ea834d166d52279d7b9e801283"
         }
       ]
     }
