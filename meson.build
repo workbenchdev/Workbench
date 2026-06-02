@@ -5,7 +5,6 @@ project(
   meson_version: '>= 1.0.0',
   license: 'GPL-3.0-only',
   default_options: [
-    'libdir=lib',
     'warning_level=2',
     'werror=false',
   ],

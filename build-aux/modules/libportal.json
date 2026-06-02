@@ -2,7 +2,6 @@
   "name": "libportal",
   "buildsystem": "meson",
   "config-opts": [
-    "--libdir=/app/lib",
     "-Dtests=false",
     "-Dbackend-gtk3=disabled",
     "-Dbackend-gtk4=enabled",

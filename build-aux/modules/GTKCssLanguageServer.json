@@ -12,11 +12,7 @@
   "modules": [
     {
       "name": "jsonrpc-glib",
-      "config-opts": [
-        "--libdir=/app/lib",
-        "--buildtype=release",
-        "-Denable_tests=false"
-      ],
+      "config-opts": ["--buildtype=release", "-Denable_tests=false"],
       "buildsystem": "meson",
       "sources": [
         {
