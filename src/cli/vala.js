@@ -42,6 +42,16 @@ export default async function vala({ file, lspc, demo_dir }) {
           diagnostic.message !==
           "`Gtk.StyleContext' has been deprecated since 4.10"
         );
+      } else if (demo_dir.get_basename() === "Drag and Drop") {
+        // I don't see what else we can use
+        // var icon = Gtk.DragIcon.get_for_drag(drag);
+        return !["use `new' operator to create new objects"].includes(
+          diagnostic.message,
+        );
+      } else if (demo_dir.get_basename() === "Shortcuts Window") {
+        return ![
+          "`Gtk.ShortcutsWindow' has been deprecated since 4.18",
+        ].includes(diagnostic.message);
       }
       return true;
     },
