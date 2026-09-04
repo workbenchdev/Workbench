@@ -37,7 +37,7 @@ jobs:
       - name: Cache .foundry
         uses: actions/cache@v4
         with:
-          path: .foundry
+          path: .foundry/cache
           key: foundry-${{ runner.arch }}
 
       - name: Install host dependencies
