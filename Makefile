@@ -4,11 +4,11 @@ ROOT := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 .DEFAULT_GOAL := setup
 
 setup:
-	flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-	flatpak install --or-update --user --noninteractive flathub org.gnome.Sdk//50 org.flatpak.Builder org.freedesktop.Sdk.Extension.rust-stable//25.08 org.freedesktop.Sdk.Extension.vala//25.08 org.freedesktop.Sdk.Extension.llvm21//25.08 org.freedesktop.Sdk.Extension.node24//25.08 org.freedesktop.Sdk.Extension.typescript//25.08
-# flatpak remote-add --user --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
-# flatpak remote-add --user --if-not-exists gnome-nightly https://nightly.gnome.org/gnome-nightly.flatpakrepo
-# flatpak install --or-update --user --noninteractive gnome-nightly org.gnome.Sdk//master
+	flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+	flatpak install --or-update --noninteractive flathub org.gnome.Sdk//50 org.flatpak.Builder org.freedesktop.Sdk.Extension.rust-stable//25.08 org.freedesktop.Sdk.Extension.vala//25.08 org.freedesktop.Sdk.Extension.llvm21//25.08 org.freedesktop.Sdk.Extension.node24//25.08 org.freedesktop.Sdk.Extension.typescript//25.08
+# flatpak remote-add --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
+# flatpak remote-add --if-not-exists gnome-nightly https://nightly.gnome.org/gnome-nightly.flatpakrepo
+# flatpak install --or-update --noninteractive gnome-nightly org.gnome.Sdk//master
 	git submodule update --init
 	npm install --no-fund
 	@echo "✅ You can use "make build" to build Workbench"
@@ -41,8 +41,8 @@ lint:
 # CSS
 	foundry run -- workbench-cli check css $(ROOT)/src/**/*.css
 # Flatpak manifests
-	flatpak run --user --command=flatpak-builder-lint org.flatpak.Builder manifest --exceptions --user-exceptions ./build-aux/exceptions.json build-aux/re.sonny.Workbench.json
-	flatpak run --user --command=flatpak-builder-lint org.flatpak.Builder manifest --exceptions --user-exceptions ./build-aux/exceptions.json build-aux/re.sonny.Workbench.Devel.json
+	flatpak run --command=flatpak-builder-lint org.flatpak.Builder manifest --exceptions --user-exceptions ./build-aux/exceptions.json build-aux/re.sonny.Workbench.json
+	flatpak run --command=flatpak-builder-lint org.flatpak.Builder manifest --exceptions --user-exceptions ./build-aux/exceptions.json build-aux/re.sonny.Workbench.Devel.json
 
 unit:
 	foundry run -- gjs -m $(ROOT)/troll/tst/bin.js $(ROOT)/test/*.test.js
@@ -66,7 +66,7 @@ install:
 		| tail -n1 \
 		| sed 's|^file://||'); \
 	test -n "$$artifact" || { echo "No artifact found"; exit 1; }; \
-	flatpak install --user --assumeyes "$$artifact"
+	flatpak install --assumeyes "$$artifact"
 
 ci: setup build test install
 # We install because foundry has no flag to override permissions
