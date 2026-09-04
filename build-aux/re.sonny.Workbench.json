@@ -8,11 +8,11 @@
     "org.freedesktop.Sdk.Extension.vala",
     "org.freedesktop.Sdk.Extension.rust-stable",
     "org.freedesktop.Sdk.Extension.llvm22",
-    "org.freedesktop.Sdk.Extension.node24",
+    "org.freedesktop.Sdk.Extension.node26",
     "org.freedesktop.Sdk.Extension.typescript"
   ],
   "build-options": {
-    "append-path": "/usr/lib/sdk/vala/bin:/usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/llvm22/bin:/usr/lib/sdk/node24/bin:/usr/lib/sdk/typescript/bin",
+    "append-path": "/usr/lib/sdk/vala/bin:/usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/llvm22/bin:/usr/lib/sdk/node26/bin:/usr/lib/sdk/typescript/bin",
     "prepend-ld-library-path": "/usr/lib/sdk/llvm22/lib",
     "append-ld-library-path": "/usr/lib/sdk/vala/lib"
   },

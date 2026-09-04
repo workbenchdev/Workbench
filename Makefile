@@ -5,7 +5,7 @@ ROOT := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 
 setup:
 	flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-	flatpak install --or-update --noninteractive flathub org.gnome.Sdk//50 org.flatpak.Builder org.freedesktop.Sdk.Extension.rust-stable//25.08 org.freedesktop.Sdk.Extension.vala//25.08 org.freedesktop.Sdk.Extension.llvm22//25.08 org.freedesktop.Sdk.Extension.node24//25.08 org.freedesktop.Sdk.Extension.typescript//25.08
+	flatpak install --or-update --noninteractive flathub org.gnome.Sdk//50 org.flatpak.Builder org.freedesktop.Sdk.Extension.rust-stable//25.08 org.freedesktop.Sdk.Extension.vala//25.08 org.freedesktop.Sdk.Extension.llvm22//25.08 org.freedesktop.Sdk.Extension.node26//25.08 org.freedesktop.Sdk.Extension.typescript//25.08
 # flatpak remote-add --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
 # flatpak remote-add --if-not-exists gnome-nightly https://nightly.gnome.org/gnome-nightly.flatpakrepo
 # flatpak install --or-update --noninteractive gnome-nightly org.gnome.Sdk//master

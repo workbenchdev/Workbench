@@ -9,7 +9,6 @@ on:
 
 jobs:
   CI:
-    # https://github.com/actions/runner-images/issues/13964
     runs-on: ubuntu-26.04
 
     steps:
@@ -52,7 +51,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 24
+          node-version: 26
           cache: "npm"
 
       - run: mutter --wayland --no-x11 --headless --wayland-display=wayland-0 --virtual-monitor 1280x720 > /tmp/mutter.log 2>&1 &
