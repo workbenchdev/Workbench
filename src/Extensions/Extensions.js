@@ -80,7 +80,7 @@ export function isTypeScriptAvailable() {
 }
 
 // FIXME: read from manifest
-const llvm = "llvm21";
+const llvm = "llvm22";
 const node = "node24";
 const runtime = getFlatpakInfo().get_string("Application", "runtime");
 const freedesktop_version = runtime.endsWith("master") ? "25.08" : "25.08";
