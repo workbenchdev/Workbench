@@ -37,7 +37,7 @@ jobs:
       - name: Cache .foundry
         uses: actions/cache@v4
         with:
-          path: .foundry
+          path: .foundry/cache
           key: foundry-${{ runner.arch }}
 
       - name: Install host dependencies
@@ -55,5 +55,5 @@ jobs:
           cache: "npm"
 
       - run: mutter --wayland --no-x11 --headless --wayland-display=wayland-0 --virtual-monitor 1280x720 > /tmp/mutter.log 2>&1 &
-      - run: make ci
+      - run: make FLATPAK_ARGS=--user ci
       - run: cat /tmp/mutter.log
