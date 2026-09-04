@@ -2,10 +2,11 @@ SHELL:=/bin/bash -O globstar
 ROOT := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 .PHONY: setup build lint unit test ci sandbox flatpak
 .DEFAULT_GOAL := setup
+FLATPAK_ARGS ?=
 
 setup:
-	flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-	flatpak install --or-update --noninteractive flathub org.gnome.Sdk//50 org.flatpak.Builder org.freedesktop.Sdk.Extension.rust-stable//25.08 org.freedesktop.Sdk.Extension.vala//25.08 org.freedesktop.Sdk.Extension.llvm22//25.08 org.freedesktop.Sdk.Extension.node26//25.08 org.freedesktop.Sdk.Extension.typescript//25.08
+	flatpak $(FLATPAK_ARGS) remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+	flatpak $(FLATPAK_ARGS) install --or-update --noninteractive flathub org.gnome.Sdk//50 org.flatpak.Builder org.freedesktop.Sdk.Extension.rust-stable//25.08 org.freedesktop.Sdk.Extension.vala//25.08 org.freedesktop.Sdk.Extension.llvm22//25.08 org.freedesktop.Sdk.Extension.node26//25.08 org.freedesktop.Sdk.Extension.typescript//25.08
 # flatpak remote-add --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
 # flatpak remote-add --if-not-exists gnome-nightly https://nightly.gnome.org/gnome-nightly.flatpakrepo
 # flatpak install --or-update --noninteractive gnome-nightly org.gnome.Sdk//master
@@ -66,7 +67,7 @@ install:
 		| tail -n1 \
 		| sed 's|^file://||'); \
 	test -n "$$artifact" || { echo "No artifact found"; exit 1; }; \
-	flatpak install --assumeyes "$$artifact"
+	flatpak $(FLATPAK_ARGS) install --assumeyes "$$artifact"
 
 ci: setup build test install
 # We install because foundry has no flag to override permissions

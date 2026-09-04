@@ -55,5 +55,5 @@ jobs:
           cache: "npm"
 
       - run: mutter --wayland --no-x11 --headless --wayland-display=wayland-0 --virtual-monitor 1280x720 > /tmp/mutter.log 2>&1 &
-      - run: make ci
+      - run: make FLATPAK_ARGS=--user ci
       - run: cat /tmp/mutter.log
