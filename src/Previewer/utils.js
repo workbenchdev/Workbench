@@ -151,11 +151,29 @@ function assertObjectBuildable(el_object, is_root) {
   }
 }
 
-export async function detectCrash(str, object_id) {
-  // const flags =
-  //   Gio.SubprocessFlags.STDOUT_SILENCE | Gio.SubprocessFlags.STDERR_SILENCE;
-  const flags = Gio.SubprocessFlags.NONE;
-  const proc = Gio.Subprocess.new(["workbench-crasher", str, object_id], flags);
+const BROADWAY_DISPLAY = ":5";
+let broadwayd = null;
+
+function ensureBroadway() {
+  if (broadwayd) return;
+  // GTK4's daemon is gtk4-broadwayd (broadwayd is the GTK3 one)
+  broadwayd = Gio.Subprocess.new(
+    ["gtk4-broadwayd", BROADWAY_DISPLAY],
+    Gio.SubprocessFlags.STDOUT_SILENCE | Gio.SubprocessFlags.STDERR_SILENCE,
+  );
+}
+
+export async function detectCrash({ xml, css, object_id }) {
+  ensureBroadway();
+
+  const launcher = new Gio.SubprocessLauncher({
+    flags: Gio.SubprocessFlags.NONE,
+  });
+  launcher.setenv("GDK_BACKEND", "broadway", true);
+  launcher.setenv("BROADWAY_DISPLAY", BROADWAY_DISPLAY, true);
+  launcher.setenv("G_DEBUG", "fatal-criticals", true); // optional: make criticals fail
+
+  const proc = launcher.spawnv(["workbench-crasher", xml, css, object_id]);
 
   const success = await proc.wait_check_async(null).catch((_err) => {
     return false;
