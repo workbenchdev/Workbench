@@ -31,7 +31,7 @@ export function isPreviewable(class_name) {
 
   if (GObject.type_is_a(klass, Adw.Dialog)) return false;
 
-  // GLib-GObject-ERROR: cannot create instance of abstract (non-instantiatable) type 'GtkWidget'
+  // https://github.com/workbenchdev/Workbench/issues/140
   if (GObject.type_test_flags(klass, GObject.TypeFlags.ABSTRACT)) return false;
 
   return GObject.type_is_a(klass, Gtk.Widget);
@@ -62,14 +62,15 @@ function getKlass(el) {
 function assertObjectBuildable(el_object, is_root) {
   const klass = getKlass(el_object);
   if (klass) {
-    // GLib-GObject-ERROR: cannot create instance of abstract (non-instantiatable) type 'GtkWidget'
+    // https://github.com/workbenchdev/Workbench/issues/165
     if (GObject.type_test_flags(klass, GObject.TypeFlags.ABSTRACT)) {
       throw new Error(
         `${klass.$gtype.name} is an abstract type. It cannot be instantiated.`,
       );
     }
 
-    // Gtk:ERROR:../gtk/gtkbuilder.c:1044:_gtk_builder_add: assertion failed: (GTK_IS_BUILDABLE (parent))
+    // https://github.com/workbenchdev/Workbench/issues/49
+    // https://github.com/workbenchdev/Workbench/issues/145
     if (!GObject.type_is_a(klass, Gtk.Buildable)) {
       if (el_object.getChildren("child").length > 0) {
         throw new Error(
@@ -78,21 +79,21 @@ function assertObjectBuildable(el_object, is_root) {
       }
     }
 
-    // Gtk:ERROR:../gtk/gtkwidget.c:2448:gtk_widget_root: assertion failed: (priv->root == NULL)
+    // https://github.com/workbenchdev/Workbench/issues/215
     if (!is_root && GObject.type_is_a(klass, Gtk.Root)) {
       throw new Error(
         `${klass.$gtype.name} is a GtkRoot. GtkRoot objects can only be used at the top-level.`,
       );
     }
 
-    // Adwaita-Trying to add AdwDialog 0x558667ff74d0 to GtkBox 0x558666bd17c0. Use adw_dialog_present() to show dialogs.
+    // https://github.com/workbenchdev/Workbench/pull/880
     if (!is_root && GObject.type_is_a(klass, Adw.Dialog)) {
       throw new Error(
         `${klass.$gtype.name} is a AdwDialog. AdwDialog objects can only be used at the top-level.`,
       );
     }
 
-    // Adwaita-gtk_window_set_titlebar() is not supported for AdwWindow
+    // https://github.com/workbenchdev/Workbench/issues/130
     if (
       GObject.type_is_a(klass, Adw.Window) &&
       getProperty(el_object, "titlebar")
@@ -102,7 +103,7 @@ function assertObjectBuildable(el_object, is_root) {
       );
     }
 
-    // Adwaita-gtk_window_set_child() is not supported for AdwWindow
+    // https://github.com/workbenchdev/Workbench/issues/130
     if (
       GObject.type_is_a(klass, Adw.Window) &&
       getProperty(el_object, "child")
@@ -112,10 +113,14 @@ function assertObjectBuildable(el_object, is_root) {
       );
     }
 
-    // Gtk-ERROR **: 23:19:54.204: GtkStackPage '<unnamed>' [0x55b094802eb0] is missing a child widget
-    if (GObject.type_is_a(klass, Gtk.StackPage)) {
+    // https://github.com/workbenchdev/Workbench/issues/167
+    // https://github.com/workbenchdev/Workbench/issues/278
+    // https://github.com/workbenchdev/Workbench/issues/998
+    if (
+      GObject.type_is_a(klass, Gtk.StackPage) ||
+      GObject.type_is_a(klass, Gtk.NotebookPage)
+    ) {
       const child = getChildProperty(el_object);
-      // log(child);
       if (!child) {
         throw new Error(`${klass.$gtype.name} is missing a child widget.`);
       }

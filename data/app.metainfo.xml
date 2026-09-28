@@ -48,6 +48,7 @@
         <ul>
           <li>Use GNOME 51</li>
           <li>Fix scoping of CSS to the internal preview</li>
+          <li>Do not crash on NotebookPage without child</li>
         </ul>
         <p>Library:</p>
         <ul>
