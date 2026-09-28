@@ -1,0 +1,56 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: _("Tooltip");
+  description: _("Show additional information about controls or app content");
+
+  Box {
+    halign: center;
+    valign: center;
+    spacing: 24;
+    orientation: vertical;
+
+    Box {
+      spacing: 24;
+
+      ToggleButton {
+        tooltip-text: _("Do Not Disturb");
+        icon-name: "notifications-disabled-symbolic";
+      }
+
+      Button {
+        label: _("Open…");
+        tooltip-markup: _("<i>Select a File</i>");
+
+        styles [
+          "pill",
+        ]
+      }
+
+      Button button {
+        has-tooltip: true;
+        label: _("Custom");
+      }
+    }
+
+    Label {
+      label: _("Hover the buttons to see tooltips");
+    }
+
+    Box {
+      orientation: vertical;
+      halign: center;
+
+      LinkButton {
+        label: _("API Reference");
+        uri: "https://docs.gtk.org/gtk4/class.Tooltip.html";
+      }
+
+      LinkButton {
+        label: _("Human Interface Guidelines");
+        uri: "https://developer.gnome.org/hig/patterns/feedback/tooltips";
+      }
+    }
+  }
+}

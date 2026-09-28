@@ -1,0 +1,6 @@
+{
+  "category": "controls",
+  "description": "A simple on/off control",
+  "panels": ["ui", "preview"],
+  "autorun": true
+}

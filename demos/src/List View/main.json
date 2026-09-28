@@ -1,0 +1,6 @@
+{
+  "category": "layout",
+  "description": "Arrange a large and dynamic list of items one after the other",
+  "panels": ["ui", "preview"],
+  "autorun": true
+}

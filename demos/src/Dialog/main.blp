@@ -1,0 +1,72 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: _("Dialog");
+  description: _("An adaptive dialog container");
+
+  Box {
+    orientation: vertical;
+    halign: center;
+    spacing: 28;
+
+    ListBox {
+      width-request: 320;
+      selection-mode: none;
+
+      styles [
+        "boxed-list",
+      ]
+
+      Adw.ComboRow combo_row {
+        title: _("Presentation Mode");
+
+        model: StringList list {
+          strings [
+            _("Auto"),
+            _("Floating"),
+            _("Bottom Sheet"),
+          ]
+        };
+      }
+    }
+
+    Button button {
+      label: _("Open Dialog");
+      halign: center;
+
+      styles [
+        "suggested-action",
+        "pill",
+      ]
+    }
+
+    Box {
+      orientation: vertical;
+
+      LinkButton {
+        label: _("API Reference");
+        uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.6/class.Dialog.html";
+      }
+
+      LinkButton {
+        label: _("Human Interface Guidelines");
+        uri: "https://developer.gnome.org/hig/patterns/feedback/dialogs.html";
+      }
+    }
+  }
+}
+
+Adw.Dialog dialog {
+  can-close: false;
+  presentation-mode: bind combo_row.selected as <Adw.DialogPresentationMode>;
+
+  Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar {}
+
+    Image image {
+      pixel-size: 320;
+    }
+  }
+}

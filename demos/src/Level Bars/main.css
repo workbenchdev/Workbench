@@ -1,0 +1,43 @@
+levelbar block.full {
+  background-color: var(--success-color);
+}
+
+levelbar block.half {
+  background-color: var(--warning-color);
+}
+
+levelbar block.low {
+  background-color: var(--error-color);
+}
+
+levelbar block.very-weak {
+  background-color: var(--red-4);
+}
+
+levelbar block.weak {
+  background-color: var(--orange-4);
+}
+
+levelbar block.moderate {
+  background-color: var(--yellow-4);
+}
+
+levelbar block.strong {
+  background-color: var(--green-4);
+}
+
+.very-weak-label {
+  color: var(--red-4);
+}
+
+.weak-label {
+  color: var(--orange-4);
+}
+
+.moderate-label {
+  color: var(--yellow-4);
+}
+
+.strong-label {
+  color: var(--green-4);
+}

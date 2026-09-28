@@ -1,0 +1,7 @@
+{
+  "category": "feedback",
+  "description": "Display loading state",
+  "panels": ["ui", "preview"],
+  "autorun": true,
+  "runtime-version": "47"
+}

@@ -1,0 +1,6 @@
+{
+  "category": "layout",
+  "description": "Arrange items in a tree like structure",
+  "panels": ["code", "ui", "preview"],
+  "autorun": true
+}

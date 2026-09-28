@@ -1,0 +1,112 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.Window {
+  width-request: 360;
+  height-request: 640;
+  default-width: 640;
+  default-height: 640;
+
+  Adw.ToolbarView toolbar_view {
+    extend-content-to-bottom-edge: bind extend_bottom.active;
+    extend-content-to-top-edge: bind extend_top.active;
+    top-bar-style: bind barstyle_select.selected as <Adw.ToolbarStyle>;
+    bottom-bar-style: bind barstyle_select.selected as <Adw.ToolbarStyle>;
+    reveal-top-bars: bind reveal_topbar.active;
+    reveal-bottom-bars: bind reveal_bottombar.active;
+
+    [top]
+    Adw.HeaderBar header_bar {
+      title-widget: Adw.WindowTitle {
+        title: _("Header Bar");
+      };
+    }
+
+    [bottom]
+    ActionBar action_bar {
+      revealed: true;
+      valign: end;
+
+      [start]
+      Button start_widget {
+        icon-name: "call-start-symbolic";
+      }
+
+      [center]
+      Label {
+        label: _("Action Bar");
+      }
+
+      [end]
+      Button end_widget {
+        icon-name: "view-more-symbolic";
+      }
+    }
+
+    content: Adw.StatusPage {
+      Box {
+        halign: center;
+        orientation: vertical;
+        spacing: 18;
+
+        Label {
+          label: _("Toolbar View");
+
+          styles [
+            "title-1",
+          ]
+        }
+
+        Label {
+          wrap: true;
+          label: _("A widget containing a page, as well as top and/or bottom bars");
+        }
+
+        LinkButton {
+          label: _("API Reference");
+          uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.6/class.ToolbarView.html";
+        }
+
+        ListBox list_box {
+          styles [
+            "boxed-list",
+          ]
+
+          selection-mode: none;
+
+          Adw.ComboRow barstyle_select {
+            title: _("Style");
+
+            model: StringList {
+              strings [
+                _("Flat"),
+                _("Raised"),
+                _("Raised-Border"),
+              ]
+            };
+          }
+
+          Adw.SwitchRow reveal_topbar {
+            title: _("Reveal Top Bar");
+            active: true;
+          }
+
+          Adw.SwitchRow reveal_bottombar {
+            title: _("Reveal Bottom Bar");
+            active: true;
+          }
+
+          Adw.SwitchRow extend_top {
+            title: _("Extend Content Behind Top Bar");
+            active: false;
+          }
+
+          Adw.SwitchRow extend_bottom {
+            title: _("Extend Content Behind Bottom Bar");
+            active: false;
+          }
+        }
+      }
+    };
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "category": "layout",
+  "description": "A widget that surrounds its child with a decorative frame",
+  "panels": ["ui", "preview"],
+  "autorun": true
+}

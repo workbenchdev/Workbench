@@ -1,0 +1,25 @@
+#css_text {
+  color: var(--blue-1); /* Adwaita Named Color */
+}
+
+.css_text {
+  color: var(--green-1); /* Adwaita Named Color */
+}
+
+.my_custom_class {
+  color: var(--red-1);
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+#linked_box > :hover:first-child {
+  background-color: var(--destructive-bg-color);
+}
+
+#linked_box > :hover:nth-child(2) {
+  background-color: var(--success-bg-color);
+}
+
+#linked_box > :hover:last-child {
+  background-color: var(--accent-bg-color);
+}

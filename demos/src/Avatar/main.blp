@@ -1,0 +1,53 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: _("Avatar");
+  description: _("Display a round avatar for image or initials");
+
+  Box {
+    orientation: vertical;
+    halign: center;
+
+    Adw.Avatar {
+      size: 96;
+      show-initials: true;
+      text: _("Jay Doe");
+      margin-bottom: 6;
+    }
+
+    Label {
+      label: _("Initials");
+      margin-bottom: 30;
+    }
+
+    Adw.Avatar avatar_image {
+      size: 96;
+      margin-bottom: 6;
+    }
+
+    Button button {
+      label: _("Image…");
+      margin-bottom: 30;
+
+      styles [
+        "pill",
+      ]
+    }
+
+    Adw.Avatar {
+      size: 96;
+      margin-bottom: 6;
+    }
+
+    Label {
+      label: _("Fallback");
+      margin-bottom: 30;
+    }
+
+    LinkButton {
+      label: _("API Reference");
+      uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.6/class.Avatar.html";
+    }
+  }
+}

@@ -1,0 +1,35 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: _("Snapshot");
+
+  Box box {
+    orientation: vertical;
+    spacing: 12;
+    halign: center;
+
+    Label label {
+      label: _("Drag the knight with your mouse");
+    }
+
+    Box {
+      orientation: vertical;
+
+      LinkButton {
+        label: _("Snapshot API Reference");
+        uri: "https://docs.gtk.org/gtk4/class.Snapshot.html";
+      }
+
+      LinkButton {
+        label: _("Custom Widgets");
+        uri: "https://blog.gtk.org/2020/04/24/custom-widgets-in-gtk-4-drawing/ ";
+      }
+
+      LinkButton {
+        label: _("Drawing Model");
+        uri: "https://docs.gtk.org/gtk4/drawing-model.html";
+      }
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "category": "feedback",
+  "description": "An adaptive dialog container",
+  "panels": ["code", "ui", "preview"],
+  "autorun": true
+}

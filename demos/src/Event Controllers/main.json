@@ -1,0 +1,6 @@
+{
+  "category": "controls",
+  "description": "Ancillary Objects which responds to events",
+  "panels": ["code", "preview"],
+  "autorun": true
+}

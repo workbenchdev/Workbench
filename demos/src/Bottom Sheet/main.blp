@@ -1,0 +1,73 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.Bin {
+  Adw.BottomSheet bottom_sheet {
+    bottom-bar: Label {
+      label: _("Bottom Bar");
+      margin-bottom: 12;
+      margin-end: 12;
+      margin-start: 12;
+      margin-top: 12;
+    };
+
+    content: Adw.StatusPage {
+      description: _("Display content with a bottom sheet");
+      title: _("Bottom Sheet");
+
+      child: Box {
+        orientation: vertical;
+        spacing: 12;
+        halign: center;
+
+        Adw.Clamp {
+          child: Adw.PreferencesGroup {
+            Adw.SwitchRow {
+              active: bind bottom_sheet.full-width bidirectional;
+              title: _("Full Width");
+            }
+
+            Adw.SwitchRow {
+              active: bind bottom_sheet.can-open bidirectional;
+              title: _("Can Open");
+            }
+
+            Adw.SwitchRow {
+              active: bind bottom_sheet.open bidirectional;
+              title: _("Open");
+            }
+          };
+        }
+
+        LinkButton {
+          label: _("API Reference");
+          uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/main/class.BottomSheet.html";
+        }
+      };
+    };
+
+    sheet: Adw.StatusPage {
+      width-request: 360;
+      title: _("Sheet");
+
+      child: Adw.Clamp {
+        child: Adw.PreferencesGroup {
+          Adw.SwitchRow {
+            active: bind bottom_sheet.can-close bidirectional;
+            title: _("Can Close");
+          }
+
+          Adw.SwitchRow {
+            active: bind bottom_sheet.show-drag-handle bidirectional;
+            title: _("Show Drag Handle");
+          }
+
+          Adw.SwitchRow {
+            active: bind bottom_sheet.modal bidirectional;
+            title: _("Modal");
+          }
+        };
+      };
+    };
+  }
+}
