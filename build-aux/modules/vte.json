@@ -12,8 +12,8 @@
   "sources": [
     {
       "type": "archive",
-      "url": "https://download.gnome.org/sources/vte/0.84/vte-0.84.0.tar.xz",
-      "sha256": "0414e31583836aeb7878da25f67c515f7e8879917ecc37c92e26b83e8d8fc3e3"
+      "url": "https://download.gnome.org/sources/vte/0.84/vte-0.84.1.tar.xz",
+      "sha256": "aca1caa8478aebcdbb1d67897fb3511eb7601debae6810e16a15b6fa25f31ac8"
     }
   ],
   "modules": [
@@ -22,25 +22,22 @@
       "buildsystem": "cmake-ninja",
       "sources": [
         {
-          "type": "archive",
-          "url": "https://github.com/fastfloat/fast_float/archive/refs/tags/v8.2.5.tar.gz",
-          "sha256": "17c7fb14499fcf42c3f5d143df0fbe22172e92749ec5f75ef13224005421a654"
+          "type": "git",
+          "url": "https://github.com/fastfloat/fast_float.git",
+          "tag": "v8.2.5",
+          "commit": "05087a303dad9c98768b33c829d398223a649bc6"
         }
       ]
     },
     {
       "name": "simdutf",
       "buildsystem": "cmake-ninja",
-      "config-opts": [
-        "-DCMAKE_CXX_VISIBILITY_PRESET=hidden",
-        "-DCMAKE_POSITION_INDEPENDENT_CODE=TRUE",
-        "-DCMAKE_VISIBILITY_INLINES_HIDDEN=TRUE"
-      ],
       "sources": [
         {
-          "type": "archive",
-          "url": "https://github.com/simdutf/simdutf/archive/refs/tags/v7.4.0.tar.gz",
-          "sha256": "8fd729ebfd5ec56cb0395bcc176c4801e1f8a0ea834d166d52279d7b9e801283"
+          "type": "git",
+          "url": "https://github.com/simdutf/simdutf.git",
+          "tag": "v9.0.0",
+          "commit": "ca7acbcea967b5dcbab490066e99e3a6e6925539"
         }
       ]
     }

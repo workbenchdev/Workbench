@@ -36,7 +36,7 @@ const TreeWidget = GObject.registerClass(
 
 function create_model_func(item) {
   if (item.children.length < 1) return null;
-  const child_model = new Gio.ListStore(TreeNode);
+  const child_model = new Gio.ListStore({ item_type: TreeNode });
   for (const child of item.children) {
     child_model.append(child);
   }
@@ -68,7 +68,7 @@ const root_model = new TreeNode("Root", [
   ]),
 ]);
 
-const tree_model = new Gio.ListStore(TreeNode);
+const tree_model = new Gio.ListStore({ item_type: TreeNode });
 tree_model.append(root_model);
 
 const tree_list_model = Gtk.TreeListModel.new(

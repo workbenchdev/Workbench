@@ -83,7 +83,7 @@ export function isTypeScriptAvailable() {
 const llvm = "llvm22";
 const node = "node26";
 const runtime = getFlatpakInfo().get_string("Application", "runtime");
-const freedesktop_version = runtime.endsWith("master") ? "25.08" : "25.08";
+const freedesktop_version = runtime.endsWith("master") ? "26.08" : "26.08";
 
 export function isTypeScriptEnabled() {
   return settings.get_boolean("typescript");
