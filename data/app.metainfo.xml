@@ -49,6 +49,7 @@
           <li>Use GNOME 51</li>
           <li>Fix scoping of CSS to the internal preview</li>
           <li>Do not crash on NotebookPage without child</li>
+          <li>Build Gtk with DISABLE_ASSERT to prevent crashes</li>
         </ul>
         <p>Library:</p>
         <ul>

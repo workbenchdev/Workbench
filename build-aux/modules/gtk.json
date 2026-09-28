@@ -1,0 +1,23 @@
+{
+  "name": "gtk",
+  "buildsystem": "meson",
+  "build-options": {
+    "cflags": "-DG_DISABLE_ASSERT",
+    "cxxflags": "-DG_DISABLE_ASSERT"
+  },
+  "config-opts": [
+    "-Dbuildtype=release",
+    "-Dbroadway-backend=true",
+    "-Dbuild-testsuite=false",
+    "-Dbuild-examples=false",
+    "-Dbuild-tests=false",
+    "-Dsysprof=enabled"
+  ],
+  "sources": [
+    {
+      "type": "archive",
+      "url": "https://download.gnome.org/sources/gtk/4.24/gtk-4.24.0.tar.xz",
+      "sha256": "28ba4ac1c04f86eac09b79a163cb163a4c2b54442d9f7eccc04679062a581044"
+    }
+  ]
+}

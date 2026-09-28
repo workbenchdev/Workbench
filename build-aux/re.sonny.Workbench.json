@@ -37,6 +37,7 @@
     "*.a"
   ],
   "modules": [
+    "modules/gtk.json",
     "modules/biome.json",
     "modules/vte.json",
     "modules/libshumate.json",
