@@ -1,0 +1,6 @@
+{
+  "category": "layout",
+  "description": "A widget that arranges its child widgets into a single row or column",
+  "panels": ["preview"],
+  "autorun": true
+}

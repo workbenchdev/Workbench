@@ -1,0 +1,63 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: _("Gamepad");
+  description: _("Respond to gamepads and controllers input");
+  icon-name: "gamepad-symbolic";
+
+  Box {
+    orientation: vertical;
+    halign: center;
+    spacing: 24;
+
+    Stack stack {
+      Label {
+        label: _("Press Run");
+
+        styles [
+          "title-2",
+        ]
+      }
+
+      StackPage {
+        name: "connect";
+
+        child: Label {
+          label: _("Please connect a controller");
+
+          styles [
+            "title-2",
+          ]
+        };
+      }
+
+      StackPage {
+        name: "watch";
+
+        child: Box {
+          orientation: vertical;
+          spacing: 6;
+
+          Label {
+            label: _("Press buttons on the controller and watch the Console");
+
+            styles [
+              "title-2",
+            ]
+          }
+
+          Button button_rumble {
+            label: _("Rumble");
+            halign: center;
+          }
+        };
+      }
+    }
+
+    LinkButton {
+      label: _("API Reference");
+      uri: "https://gnome.pages.gitlab.gnome.org/libmanette/";
+    }
+  }
+}

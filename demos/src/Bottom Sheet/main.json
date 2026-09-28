@@ -1,0 +1,6 @@
+{
+  "category": "layout",
+  "description": "Display content with a bottom sheet",
+  "panels": ["ui", "preview"],
+  "autorun": true
+}

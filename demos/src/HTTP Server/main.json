@@ -1,0 +1,7 @@
+{
+  "category": "network",
+  "description": "Interact with HTTP clients and browsers",
+  "panels": ["code", "preview"],
+  "autorun": true,
+  "flatpak-finish-args": ["--share=network"]
+}

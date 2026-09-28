@@ -1,0 +1,6 @@
+{
+  "category": "user_interface",
+  "description": "Display vectorial images at arbitrary sizes",
+  "panels": ["ui", "code", "preview"],
+  "autorun": true
+}

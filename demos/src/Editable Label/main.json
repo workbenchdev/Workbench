@@ -1,0 +1,6 @@
+{
+  "category": "user_interface",
+  "description": "A text widget with an editing mode",
+  "panels": ["ui", "preview"],
+  "autorun": true
+}

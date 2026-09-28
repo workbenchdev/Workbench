@@ -1,0 +1,178 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: _("Preferences Dialog");
+  description: _("A dialog showing application’s preferences");
+
+  Box {
+    spacing: 12;
+    halign: center;
+    orientation: vertical;
+
+    Button button {
+      label: _("Open");
+
+      styles [
+        "suggested-action",
+        "pill",
+      ]
+    }
+
+    FlowBox {
+      orientation: horizontal;
+      margin-top: 12;
+      max-children-per-line: 2;
+      min-children-per-line: 2;
+
+      LinkButton {
+        label: _("PreferencesDialog");
+        uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.6/class.PreferencesDialog.html";
+      }
+
+      LinkButton {
+        label: _("PreferencesPage");
+        uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.6/class.PreferencesPage.html";
+      }
+
+      LinkButton {
+        label: _("PreferencesGroup");
+        uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.6/class.PreferencesGroup.html";
+      }
+
+      LinkButton {
+        label: _("PreferencesRow");
+        uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.6/class.PreferencesRow.html";
+      }
+    }
+  }
+}
+
+Adw.PreferencesDialog dialog {
+  content-width: 800;
+  content-height: 600;
+  title: _("Preferences");
+
+  Adw.PreferencesPage appearance_page {
+    title: _("Appearance");
+    icon-name: "brush-monitor-symbolic";
+
+    Adw.PreferencesGroup {
+      title: _("Color Settings");
+      description: _("Change the color-scheme of the application");
+
+      Adw.SwitchRow dm_switch {
+        title: _("Use Dark Mode");
+      }
+    }
+
+    Adw.PreferencesGroup {
+      title: _("Text Settings");
+      description: _("Customize the appearance of text in the application");
+
+      Adw.SpinRow {
+        title: _("Font Size");
+
+        adjustment: Gtk.Adjustment {
+          lower: 5;
+          upper: 20;
+          value: 11;
+          step-increment: 1;
+        };
+      }
+
+      Adw.ActionRow {
+        title: _("Font Color");
+
+        [suffix]
+        Gtk.ColorDialogButton {
+          halign: center;
+          valign: center;
+
+          dialog: ColorDialog {};
+        }
+      }
+    }
+  }
+
+  Adw.PreferencesPage {
+    title: _("Behavior");
+    icon-name: "settings-symbolic";
+
+    Adw.PreferencesGroup {
+      title: _("Interaction Settings");
+      description: _("Change how the app behaves during user interaction");
+      // Adw.PreferencesGroup can have suffix widgets like Adw.ActionRows
+
+      [header-suffix]
+      Button {
+        halign: center;
+        valign: center;
+        icon-name: "settings-symbolic";
+      }
+
+      Adw.SwitchRow {
+        title: _("Run on Startup");
+      }
+
+      Adw.ActionRow {
+        title: _("Show Toast");
+        activatable-widget: toast_button;
+
+        [suffix]
+        Button toast_button {
+          halign: center;
+          valign: center;
+          label: _("show toast");
+          icon-name: "bread-symbolic";
+        }
+      }
+    }
+
+    Adw.PreferencesGroup {
+      title: _("Data Settings");
+      description: _("Manage user data related settings");
+
+      Adw.SwitchRow {
+        title: _("Enable Debug");
+      }
+
+      Adw.SwitchRow {
+        title: _("Check for updates");
+      }
+
+      Adw.ActionRow subpage_row {
+        title: _("Additional Preferences");
+        activatable: true;
+
+        [suffix]
+        Gtk.Image {
+          icon-name: "go-next-symbolic";
+
+          styles [
+            "dim-label",
+          ]
+        }
+      }
+    }
+  }
+}
+
+Adw.NavigationPage subpage {
+  title: bind subpage_row.title;
+
+  Adw.StatusPage {
+    description: _("Custom Subpage");
+
+    Gtk.Button subpage_button {
+      label: _("Go back");
+      halign: center;
+      valign: center;
+
+      styles [
+        "suggested-action",
+        "pill",
+      ]
+    }
+  }
+}

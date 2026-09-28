@@ -1,0 +1,10 @@
+.ball {
+  min-height: 50px;
+  min-width: 50px;
+  border-radius: 50%;
+  background-image: linear-gradient(var(--green-2), var(--green-5));
+}
+
+.circular {
+  padding: 6px;
+}

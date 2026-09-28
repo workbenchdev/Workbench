@@ -1,0 +1,31 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: _("Using Icons");
+  description: _("Learn how to use icons for UI");
+  // Try using a custom icon instead of cafe-symbolic
+  icon-name: "cafe-symbolic";
+
+  Adw.Clamp {
+    Box {
+      halign: center;
+      orientation: vertical;
+
+      Box {
+        styles [
+          "card",
+        ]
+
+        Label {
+          label: _(
+            "Several widgets such as <tt>GtkImage</tt> and <tt>GtkButton</tt> accept an <tt>icon-name</tt> property. Icons must be properly registered to be referenced by name. \n\nTo includes icons in a project, select “Reveal in Files” in Workbench menu and save them in the icons folder. Make sure to press “Run” to register the new icons.\n\nYou can find icons using the <a href=\"https://flathub.org/apps/org.gnome.design.IconLibrary\">Icon Library app</a> which also explain how to register icons in GNOME applications.\n\nLearn more about UI icons in the <a href=\"https://developer.gnome.org/hig/guidelines/ui-icons.html\">Human Interface Guidelines</a>."
+          );
+          wrap: true;
+          selectable: true;
+          use-markup: true;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,72 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: _("Grid View");
+  description: _("Arrange a large and dynamic list of items in a grid");
+  valign: start;
+
+  Adw.Clamp {
+    maximum-size: 240;
+
+    Box {
+      orientation: vertical;
+      spacing: 18;
+
+      Box {
+        halign: center;
+
+        LinkButton {
+          label: _("API Reference");
+          uri: "https://docs.gtk.org/gtk4/class.GridView.html";
+        }
+
+        LinkButton {
+          label: _("Documentation");
+          uri: "https://docs.gtk.org/gtk4/section-list-widget.html";
+        }
+      }
+
+      Box {
+        halign: center;
+
+        styles [
+          "linked",
+        ]
+
+        Button add {
+          label: _("Add Item");
+          tooltip-text: _("Add Item");
+        }
+
+        Button remove {
+          label: _("Remove Item");
+          tooltip-text: _("Remove Item");
+        }
+      }
+
+      Gtk.Stack stack {
+        transition-type: crossfade;
+        vexpand: true;
+
+        Gtk.StackPage {
+          name: "gridview";
+          title: _("Grid View");
+
+          child: ScrolledWindow {
+            hscrollbar-policy: never;
+            propagate-natural-height: true;
+            has-frame: true;
+            valign: start;
+
+            GridView grid_view {
+              orientation: vertical;
+              max-columns: 2;
+              min-columns: 2;
+            }
+          };
+        }
+      }
+    }
+  }
+}

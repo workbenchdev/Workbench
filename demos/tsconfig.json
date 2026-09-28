@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "module": "ES2022",
+    "moduleResolution": "Bundler",
+    "target": "ES2022",
+    "outDir": "out",
+    "skipLibCheck": true,
+    "lib": ["ES2022"]
+  },
+  "include": [
+    "src/**/*.ts",
+    "./workbench-types/index.d.ts",
+    "./ambient/workbench.d.ts",
+  ]
+}

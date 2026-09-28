@@ -1,0 +1,6 @@
+{
+  "category": "layout",
+  "description": "Divide items in a list view with sections",
+  "panels": ["ui", "preview"],
+  "autorun": true
+}

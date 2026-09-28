@@ -1,0 +1,76 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: _("Button Row");
+  description: _("Use buttons in boxed lists");
+
+  Adw.Clamp {
+    maximum-size: 500;
+
+    Box {
+      orientation: vertical;
+
+      ListBox {
+        selection-mode: none;
+
+        styles [
+          "boxed-list-separate",
+        ]
+
+        Adw.ButtonRow {
+          title: _("Start Icon");
+          start-icon-name: "list-add-symbolic";
+        }
+
+        Adw.ButtonRow {
+          title: _("End Icon");
+          end-icon-name: "go-next-symbolic";
+        }
+
+        Adw.ButtonRow button_row_suggested {
+          title: _("Suggested");
+
+          styles [
+            "suggested-action",
+          ]
+        }
+
+        Adw.ButtonRow button_row_destructive {
+          title: _("Destructive");
+
+          styles [
+            "destructive-action",
+          ]
+        }
+
+        Adw.ButtonRow {
+          title: _("Disabled");
+          sensitive: false;
+        }
+      }
+
+      ListBox {
+        selection-mode: none;
+
+        styles [
+          "boxed-list",
+        ]
+
+        Adw.ActionRow {
+          title: _("Row");
+        }
+
+        Adw.ButtonRow {
+          title: _("Attached");
+        }
+      }
+
+      LinkButton {
+        margin-top: 24;
+        label: _("API Reference");
+        uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/main/class.ButtonRow";
+      }
+    }
+  }
+}

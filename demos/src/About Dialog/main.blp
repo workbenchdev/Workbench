@@ -1,0 +1,27 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: _("About Dialog");
+  description: _("A dialog showing information about the application");
+
+  Box {
+    orientation: vertical;
+    halign: center;
+
+    Button button {
+      label: _("About");
+      margin-bottom: 12;
+
+      styles [
+        'pill',
+        'suggested-action',
+      ]
+    }
+
+    LinkButton {
+      label: _("API Reference");
+      uri: "https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1.6/class.AboutDialog.html";
+    }
+  }
+}

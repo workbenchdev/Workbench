@@ -1,0 +1,140 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: _("Event Controllers");
+  description: _("Ancillary Objects which responds to events");
+
+  child: Box {
+    orientation: vertical;
+    halign: center;
+    spacing: 36;
+
+    Box {
+      orientation: vertical;
+      spacing: 12;
+
+      Label {
+        label: _("EventControllerKey Example");
+
+        styles [
+          "heading",
+        ]
+      }
+
+      Gtk.Button ctrl_button {
+        label: _("Ctrl + Click to Activate");
+        width-request: 200;
+        halign: center;
+      }
+    }
+
+    Box {
+      orientation: vertical;
+      spacing: 12;
+
+      Label {
+        label: _("GestureClick Example");
+
+        styles [
+          "heading",
+        ]
+      }
+
+      Box {
+        halign: center;
+        homogeneous: true;
+
+        styles [
+          "linked",
+        ]
+
+        Button primary_button {
+          label: _("Left");
+        }
+
+        Button middle_button {
+          label: _("Middle");
+        }
+
+        Button secondary_button {
+          label: _("Right");
+        }
+      }
+    }
+
+    Box {
+      orientation: vertical;
+      spacing: 12;
+      halign: center;
+      valign: start;
+
+      Label {
+        label: _("GestureSwipe Example");
+
+        styles [
+          "heading",
+        ]
+      }
+
+      Gtk.StackSwitcher {
+        stack: stack;
+      }
+
+      Box {
+        height-request: 256;
+        width-request: 256;
+        halign: center;
+
+        Stack stack {
+          transition-type: slide_left_right;
+
+          StackPage {
+            title: _("Start");
+            name: "stack_picture_1";
+
+            child: Picture stack_picture_1 {
+              can-shrink: true;
+              content-fit: scale_down;
+            };
+          }
+
+          StackPage {
+            title: _("Finish");
+            name: "stack_picture_2";
+
+            child: Picture stack_picture_2 {
+              can-shrink: true;
+              content-fit: scale_down;
+            };
+          }
+        }
+      }
+
+      Label {
+        label: _("Swipe the picture left or right");
+      }
+    }
+
+    Box {
+      orientation: vertical;
+      halign: center;
+      valign: center;
+
+      LinkButton {
+        label: _("Event Controller Key API Reference");
+        uri: "https://docs.gtk.org/gtk4/class.EventControllerKey.html";
+      }
+
+      LinkButton {
+        label: _("Gesture Click API Reference");
+        uri: "https://docs.gtk.org/gtk4/class.GestureClick.html";
+      }
+
+      LinkButton {
+        label: _("Gesture Swipe API Reference");
+        uri: "https://docs.gtk.org/gtk4/class.GestureSwipe.html";
+      }
+    }
+  };
+}

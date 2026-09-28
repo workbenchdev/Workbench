@@ -1,0 +1,7 @@
+{
+  "category": "network",
+  "description": "Load and display an image from an HTTP URL",
+  "panels": ["code", "preview"],
+  "autorun": true,
+  "flatpak-finish-args": ["--share=network"]
+}

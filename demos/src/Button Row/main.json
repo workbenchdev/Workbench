@@ -1,0 +1,7 @@
+{
+  "category": "controls",
+  "description": "Use buttons in boxed lists",
+  "panels": ["ui", "preview"],
+  "autorun": true,
+  "runtime-version": "47"
+}

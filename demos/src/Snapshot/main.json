@@ -1,0 +1,6 @@
+{
+  "category": "user_interface",
+  "description": "Draw a custom widget by overriding the snapshot function",
+  "panels": ["code", "preview"],
+  "autorun": true
+}

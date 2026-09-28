@@ -1,0 +1,42 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: _("List View with Sections");
+  description: _("Divide items in a list view with sections");
+  valign: start;
+
+  Adw.Clamp {
+    maximum-size: 360;
+
+    Box {
+      orientation: vertical;
+      spacing: 18;
+
+      ScrolledWindow {
+        height-request: 330;
+        has-frame: true;
+
+        child: ListView list_view {
+          factory: SignalListItemFactory item_factory {};
+
+          header-factory: SignalListItemFactory header_factory {};
+        };
+      }
+
+      Box {
+        halign: center;
+
+        LinkButton {
+          label: _("API Reference");
+          uri: "https://docs.gtk.org/gtk4/iface.SectionModel.html";
+        }
+
+        LinkButton {
+          label: _("Documentation");
+          uri: "https://docs.gtk.org/gtk4/section-list-widget.html#sections";
+        }
+      }
+    }
+  }
+}

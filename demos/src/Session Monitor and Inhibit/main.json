@@ -1,0 +1,6 @@
+{
+  "category": "platform",
+  "description": "Monitor the login session state and inhibit session state changes",
+  "panels": ["code", "preview"],
+  "autorun": true
+}

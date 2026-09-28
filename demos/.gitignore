@@ -1,0 +1,43 @@
+.flatpak
+.flatpak-builder
+build
+builddir
+/flatpak
+node_modules
+repo
+install
+.eslintcache
+*~
+*.compiled
+*.flatpak
+.fenv
+.venv
+__pycache__
+*.pyc
+
+# IDEs / editors
+.idea
+.vscode
+
+# compiled typescript
+out
+
+# extra GIRs from Workbench
+workbench-girs
+
+# Project files - sync with Makefile
+src/*/settings
+src/*/workbench.vala
+src/*/main.ui
+src/*/libworkbenchcode.so
+src/*/__pycache__
+src/*/Cargo.lock
+src/*/Cargo.toml
+src/*/lib.rs
+src/*/workbench.rs
+src/*/target
+src/*/*.gresource
+src/*/*.gresource.xml
+src/*/jsconfig.json
+src/*/rustc-ice-*.txt
+src/*/*.sqlite*

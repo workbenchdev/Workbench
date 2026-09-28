@@ -1,0 +1,86 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: _("Database");
+  description: _("Search, load and store data using SQLite");
+
+  Box {
+    orientation: vertical;
+    halign: center;
+    spacing: 18;
+
+    Box {
+      styles [
+        "linked",
+      ]
+
+      Entry text_entry {
+        placeholder-text: _("Enter Text");
+        hexpand: true;
+      }
+
+      Button insert_button {
+        label: _("Insert");
+      }
+    }
+
+    Box {
+      orientation: horizontal;
+      spacing: 18;
+
+      Box {
+        orientation: vertical;
+        spacing: 12;
+        hexpand: true;
+
+        Label {
+          label: _("Search by Text");
+        }
+
+        SearchEntry search_entry {
+          search-delay: 100;
+        }
+      }
+    }
+
+    ScrolledWindow {
+      height-request: 340;
+      width-request: 340;
+      has-frame: true;
+
+      ColumnView column_view {
+        show-column-separators: true;
+
+        ColumnViewColumn column_text {
+          title: _("Text");
+          expand: true;
+
+          factory: SignalListItemFactory {};
+        }
+
+        ColumnViewColumn column_id {
+          title: _("Id");
+          expand: true;
+
+          factory: SignalListItemFactory {};
+        }
+      }
+    }
+
+    Box {
+      orientation: horizontal;
+      halign: center;
+
+      LinkButton {
+        label: _("API Reference");
+        uri: "https://gjs-docs.gnome.org/gom10~1.0/";
+      }
+
+      LinkButton {
+        label: _("SQLite");
+        uri: "https://www.sqlite.org/";
+      }
+    }
+  }
+}

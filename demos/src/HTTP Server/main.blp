@@ -1,0 +1,40 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: _("HTTP Server");
+  description: _("Interact with HTTP clients and browsers");
+
+  Box {
+    halign: center;
+    orientation: vertical;
+    spacing: 12;
+
+    ToggleButton button_server {
+      label: _("Start Server");
+      halign: center;
+
+      styles [
+        "pill",
+      ]
+    }
+
+    Box {
+      margin-top: 12;
+      orientation: vertical;
+      visible: bind button_server.active;
+
+      Label {
+        label: _("Visit");
+      }
+
+      LinkButton linkbutton {
+        label: bind linkbutton.uri;
+      }
+    }
+
+    Label label_greetings {
+      justify: center;
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "category": "navigation",
+  "description": "A dynamic tabbed container",
+  "panels": ["ui", "preview"],
+  "autorun": true
+}

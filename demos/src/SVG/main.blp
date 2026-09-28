@@ -1,0 +1,22 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: _("SVG");
+  description: _("Display vectorial images at arbitrary sizes");
+
+  Box {
+    halign: center;
+    orientation: vertical;
+
+    DrawingArea drawing_area {
+      width-request: 128;
+      height-request: 128;
+    }
+
+    LinkButton {
+      label: _("Librsvg documentation");
+      uri: "https://gnome.pages.gitlab.gnome.org/librsvg/Rsvg-2.0/index.html";
+    }
+  }
+}
