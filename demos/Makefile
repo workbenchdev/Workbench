@@ -1,13 +1,6 @@
 SHELL:=/bin/bash -O globstar
-.PHONY: setup test ci
+.PHONY: format test ci
 .DEFAULT_GOAL := ci
-
-setup:
-	flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-	flatpak install --or-update --user --noninteractive flathub org.freedesktop.Sdk.Extension.rust-stable//25.08 org.freedesktop.Sdk.Extension.vala//25.08 org.freedesktop.Sdk.Extension.node24//25.08 org.freedesktop.Sdk.Extension.typescript//25.08
-# flatpak remote-add --user --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
-	flatpak remote-add --user --if-not-exists gnome-nightly https://nightly.gnome.org/gnome-nightly.flatpakrepo
-	flatpak install --or-update --user --noninteractive gnome-nightly re.sonny.Workbench.Devel
 
 format:
 # npx prettier --write src/*/*.json
@@ -26,7 +19,7 @@ test:
 all:
 	flatpak run --command="workbench-cli" --filesystem=host re.sonny.Workbench.Devel ci src/*
 
-ci: setup test
+ci: test
 
 # Sync with .gitignore
 clean:
