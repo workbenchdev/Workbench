@@ -250,8 +250,7 @@ export default function Internal({
 // it would be great to keep the ast around and pass that to prettier
 // so there is no need to re-parse but that's not supported yet
 // https://github.com/prettier/prettier/issues/9114
-// We are not using https://github.com/pazams/postcss-scopify
-// because it's not compatible with postcss 8
+// TODO: Consider using https://github.com/pazams/postcss-scopify instead
 function scopeStylesheet(style, id) {
   const ast = postcss.parse(style);
   for (const node of ast.nodes) {

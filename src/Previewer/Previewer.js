@@ -189,9 +189,13 @@ export default function Previewer({
 
     if (settings.get_boolean("safe-mode")) {
       // console.time("detectCrash");
-      const crashed = await detectCrash(text, target_id);
-      if (crashed) return;
+      const crashed = await detectCrash({
+        xml: text,
+        css: code_view_css.buffer.text,
+        object_id: target_id,
+      });
       // console.timeEnd("detectCrash");
+      if (crashed) return;
     }
 
     const builder = new Gtk.Builder();
