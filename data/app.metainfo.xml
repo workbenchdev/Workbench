@@ -43,17 +43,13 @@
   </screenshots>
   <content_rating type="oars-1.1" />
   <releases>
-    <release version="51.0" date="2026-09-28">
+    <release version="51.0" date="2026-09-29">
       <description translatable="no">
         <ul>
           <li>Use GNOME 51</li>
           <li>Fix scoping of CSS to the internal preview</li>
           <li>Do not crash on NotebookPage without child</li>
           <li>Build Gtk with DISABLE_ASSERT to prevent crashes</li>
-        </ul>
-        <p>Library:</p>
-        <ul>
-          <li></li>
         </ul>
         <p>Dependencies:</p>
         <ul>
