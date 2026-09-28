@@ -107,7 +107,7 @@ make test
 
 Here is a compilation of resources to learn more about the GNOME platform.
 
-- [Workbench](https://github.com/workbenchdev/Workbench) 😉
+- [Workbench](https://github.com/sonnyp/Workbench) 😉
 - [Human Interface Guidelines](https://developer.gnome.org/hig/)
 
 ### JavaScript

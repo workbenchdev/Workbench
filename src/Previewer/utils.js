@@ -31,7 +31,7 @@ export function isPreviewable(class_name) {
 
   if (GObject.type_is_a(klass, Adw.Dialog)) return false;
 
-  // https://github.com/workbenchdev/Workbench/issues/140
+  // https://github.com/sonnyp/Workbench/issues/140
   if (GObject.type_test_flags(klass, GObject.TypeFlags.ABSTRACT)) return false;
 
   return GObject.type_is_a(klass, Gtk.Widget);
@@ -62,15 +62,15 @@ function getKlass(el) {
 function assertObjectBuildable(el_object, is_root) {
   const klass = getKlass(el_object);
   if (klass) {
-    // https://github.com/workbenchdev/Workbench/issues/165
+    // https://github.com/sonnyp/Workbench/issues/165
     if (GObject.type_test_flags(klass, GObject.TypeFlags.ABSTRACT)) {
       throw new Error(
         `${klass.$gtype.name} is an abstract type. It cannot be instantiated.`,
       );
     }
 
-    // https://github.com/workbenchdev/Workbench/issues/49
-    // https://github.com/workbenchdev/Workbench/issues/145
+    // https://github.com/sonnyp/Workbench/issues/49
+    // https://github.com/sonnyp/Workbench/issues/145
     if (!GObject.type_is_a(klass, Gtk.Buildable)) {
       if (el_object.getChildren("child").length > 0) {
         throw new Error(
@@ -79,21 +79,21 @@ function assertObjectBuildable(el_object, is_root) {
       }
     }
 
-    // https://github.com/workbenchdev/Workbench/issues/215
+    // https://github.com/sonnyp/Workbench/issues/215
     if (!is_root && GObject.type_is_a(klass, Gtk.Root)) {
       throw new Error(
         `${klass.$gtype.name} is a GtkRoot. GtkRoot objects can only be used at the top-level.`,
       );
     }
 
-    // https://github.com/workbenchdev/Workbench/pull/880
+    // https://github.com/sonnyp/Workbench/pull/880
     if (!is_root && GObject.type_is_a(klass, Adw.Dialog)) {
       throw new Error(
         `${klass.$gtype.name} is a AdwDialog. AdwDialog objects can only be used at the top-level.`,
       );
     }
 
-    // https://github.com/workbenchdev/Workbench/issues/130
+    // https://github.com/sonnyp/Workbench/issues/130
     if (
       GObject.type_is_a(klass, Adw.Window) &&
       getProperty(el_object, "titlebar")
@@ -103,7 +103,7 @@ function assertObjectBuildable(el_object, is_root) {
       );
     }
 
-    // https://github.com/workbenchdev/Workbench/issues/130
+    // https://github.com/sonnyp/Workbench/issues/130
     if (
       GObject.type_is_a(klass, Adw.Window) &&
       getProperty(el_object, "child")
@@ -113,9 +113,9 @@ function assertObjectBuildable(el_object, is_root) {
       );
     }
 
-    // https://github.com/workbenchdev/Workbench/issues/167
-    // https://github.com/workbenchdev/Workbench/issues/278
-    // https://github.com/workbenchdev/Workbench/issues/998
+    // https://github.com/sonnyp/Workbench/issues/167
+    // https://github.com/sonnyp/Workbench/issues/278
+    // https://github.com/sonnyp/Workbench/issues/998
     if (
       GObject.type_is_a(klass, Gtk.StackPage) ||
       GObject.type_is_a(klass, Gtk.NotebookPage)

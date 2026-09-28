@@ -29,15 +29,15 @@
   <url type="vcs-browser">https://workbench.sonny.re/source</url>
   <screenshots>
     <screenshot type="default">
-      <image>https://raw.githubusercontent.com/workbenchdev/Workbench/main/data/screenshots/welcome.png</image>
+      <image>https://raw.githubusercontent.com/sonnyp/Workbench/main/data/screenshots/welcome.png</image>
       <caption>Welcome screen</caption>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/workbenchdev/Workbench/main/data/screenshots/code.png</image>
+      <image>https://raw.githubusercontent.com/sonnyp/Workbench/main/data/screenshots/code.png</image>
       <caption>Drawing Area demo</caption>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/workbenchdev/Workbench/main/data/screenshots/library.png</image>
+      <image>https://raw.githubusercontent.com/sonnyp/Workbench/main/data/screenshots/library.png</image>
       <caption>Library window</caption>
     </screenshot>
   </screenshots>

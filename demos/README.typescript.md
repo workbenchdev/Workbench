@@ -5,7 +5,7 @@ GIRs (Gtk4, Adw, GObject, etc..) and other dependencies used by Workbench
 (Libportal/Xdp, Jsonrpc, Shumate, Vte, etc..).
 
 Due to current limitations
-(https://github.com/workbenchdev/Workbench/issues/980), you cannot directly
+(https://github.com/sonnyp/Workbench/issues/980), you cannot directly
 generate the types from within Workbench's sandbox automatically.
 
 ### 0. Copy the built GIRs from Workbench

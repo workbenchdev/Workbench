@@ -1,6 +1,6 @@
 # Demos
 
-This is the repository containing the Library demos of [Workbench](https://github.com/workbenchdev/Workbench).
+This is the repository containing the Library demos of [Workbench](https://github.com/sonnyp/Workbench).
 
 ## Contributing
 

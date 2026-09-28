@@ -75,7 +75,7 @@ application.connect("startup", () => {
   // biome lsp-proxy starts a background server
   // it does not get stopped and leaves a process hanging
   // so manage it manually instead
-  // See https://github.com/workbenchdev/Workbench/issues/828
+  // See https://github.com/sonnyp/Workbench/issues/828
   const subprocess_launcher = Gio.SubprocessLauncher.new(
     Gio.SubprocessFlags.STDERR_SILENCE,
   );

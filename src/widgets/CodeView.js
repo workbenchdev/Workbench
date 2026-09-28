@@ -37,7 +37,7 @@ class CodeView extends Gtk.Widget {
     this.buffer = this._source_view.buffer;
     // TODO: Investigate why the Blueprint defintion does not behave as intended
     // transition-type: slide_up;
-    // https://github.com/workbenchdev/Workbench/pull/853/files#r1443560736
+    // https://github.com/sonnyp/Workbench/pull/853/files#r1443560736
     this._code_find.transition_type = Gtk.RevealerTransitionType.SLIDE_UP;
 
     this._code_find.connect("notify::reveal-child", () => {

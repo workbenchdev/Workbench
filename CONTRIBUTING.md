@@ -1,6 +1,6 @@
 # Contributing
 
-If you are interested in contributing to the Library/demos, please head over to https://github.com/workbenchdev/demos instead.
+If you are interested in contributing to the Library/demos, please head over to [demos](./demos/CONTRIBUTING.md) instead.
 
 Either way, don't hesitate to [get in touch](https://matrix.to/#/%23workbench:gnome.org).
 
@@ -10,7 +10,7 @@ The following is the recommended setup:
 
 1. Install [GNOME Builder from Flathub](https://flathub.org/apps/details/org.gnome.Builder)
 2. Open Builder and select "Clone Repository..."
-3. Clone `https://github.com/workbenchdev/Workbench.git` (or your fork)
+3. Clone `https://github.com/sonnyp/Workbench.git` (or your fork)
 4. Press the Run ▶ button
 
 Make sure that you're building the development target `re.sonny.Workbench.Devel`.
