@@ -43,6 +43,24 @@
   </screenshots>
   <content_rating type="oars-1.1" />
   <releases>
+    <release version="51.0" date="2026-09-28">
+      <description translatable="no">
+        <ul>
+          <li>Use GNOME 51</li>
+        </ul>
+        <p>Library:</p>
+        <ul>
+          <li></li>
+        </ul>
+        <p>Dependencies:</p>
+        <ul>
+          <li>Update libshumate to 1.7.0</li>
+          <li>Update vte to 0.84.1</li>
+          <li>Update libspelling to 0.4.10</li>
+        </ul>
+      </description>
+    </release>
+
     <release version="50.0" date="2026-06-02">
       <description translatable="no">
         <ul>

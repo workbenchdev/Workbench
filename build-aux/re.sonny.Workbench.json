@@ -2,7 +2,7 @@
   "$schema": "https://raw.githubusercontent.com/flatpak/flatpak-builder/main/data/flatpak-manifest.schema.json",
   "id": "re.sonny.Workbench",
   "runtime": "org.gnome.Sdk",
-  "runtime-version": "50",
+  "runtime-version": "51",
   "sdk": "org.gnome.Sdk",
   "sdk-extensions": [
     "org.freedesktop.Sdk.Extension.vala",
@@ -40,7 +40,6 @@
     "modules/biome.json",
     "modules/vte.json",
     "modules/libshumate.json",
-    "modules/libportal.json",
     "modules/libspelling.json",
     "modules/gom.json",
     "modules/GTKCssLanguageServer.json",

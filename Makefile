@@ -6,7 +6,7 @@ FLATPAK_ARGS ?=
 
 setup:
 	flatpak $(FLATPAK_ARGS) remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-	flatpak $(FLATPAK_ARGS) install --or-update --noninteractive flathub org.gnome.Sdk//50 org.flatpak.Builder org.freedesktop.Sdk.Extension.rust-stable//25.08 org.freedesktop.Sdk.Extension.vala//25.08 org.freedesktop.Sdk.Extension.llvm22//25.08 org.freedesktop.Sdk.Extension.node26//25.08 org.freedesktop.Sdk.Extension.typescript//25.08
+	flatpak $(FLATPAK_ARGS) install --or-update --noninteractive flathub org.gnome.Sdk//51 org.flatpak.Builder org.freedesktop.Sdk.Extension.rust-stable//26.08 org.freedesktop.Sdk.Extension.vala//26.08 org.freedesktop.Sdk.Extension.llvm22//26.08 org.freedesktop.Sdk.Extension.node26//26.08 org.freedesktop.Sdk.Extension.typescript//26.08
 # flatpak remote-add --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
 # flatpak remote-add --if-not-exists gnome-nightly https://nightly.gnome.org/gnome-nightly.flatpakrepo
 # flatpak install --or-update --noninteractive gnome-nightly org.gnome.Sdk//master
@@ -79,6 +79,6 @@ flatpak:
 	flatpak run org.flatpak.Builder --ccache --force-clean flatpak build-aux/re.sonny.Workbench.Devel.json
 # This is what Flathub does - consider moving to lint
 	flatpak run --env=G_DEBUG=fatal-criticals --command=appstream-util org.flatpak.Builder validate flatpak/files/share/appdata/re.sonny.Workbench.Devel.appdata.xml
-	flatpak run --command="desktop-file-validate" --filesystem=host:ro org.freedesktop.Sdk//25.08 flatpak/files/share/applications/re.sonny.Workbench.Devel.desktop
+	flatpak run --command="desktop-file-validate" --filesystem=host:ro org.freedesktop.Sdk//26.08 flatpak/files/share/applications/re.sonny.Workbench.Devel.desktop
 # appstreamcli validate --override=release-time-missing=info /path/to/your/app.metainfo.xml
 	flatpak run org.flatpak.Builder --run flatpak build-aux/re.sonny.Workbench.Devel.json bash
