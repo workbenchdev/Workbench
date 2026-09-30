@@ -2,6 +2,6 @@
 	path = troll
 	url = https://github.com/sonnyp/troll.git
 [submodule "src/langs/typescript/template/gi-types"]
-	path = gi-types
+	path = src/langs/typescript/template/gi-types
 	url = https://gitlab.gnome.org/BrainBlasted/gi-typescript-definitions.git
-	branch = nightly
+	branch = main

@@ -20,9 +20,9 @@ export default async function javascript({
   const text = await diagnose({ file, lspc, languageId });
 
   await checkFile({
-    lspc: lspc,
-    file: file,
-    lang: getLanguage("javascript"),
+    lspc,
+    file,
+    lang: getLanguage(languageId),
     uri: file.get_uri(),
   });
 
