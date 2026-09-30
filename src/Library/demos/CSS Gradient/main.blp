@@ -1,0 +1,20 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.StatusPage {
+  title: "CSS Gradient";
+  description: _("Give Gtk widgets a psychedelic touch");
+
+  Box {
+    orientation: vertical;
+    halign: center;
+
+    Button regular {
+      name: "primary";
+      label: "Regular";
+      styles ["pill", "psychedelic-pill"]
+    }
+  }
+  styles ["psychedelic-bg"]
+}
+
